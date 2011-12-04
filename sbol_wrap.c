@@ -4561,10 +4561,10 @@ SWIGINTERN PyObject *_wrap_setCollectionID(PyObject *SWIGUNUSEDPARM(self), PyObj
   arg1 = (Collection *)(argp1);
   res2 = SWIG_AsCharPtrAndSize(obj1, &buf2, NULL, &alloc2);
   if (!SWIG_IsOK(res2)) {
-    SWIG_exception_fail(SWIG_ArgError(res2), "in method '" "setCollectionID" "', argument " "2"" of type '" "char *""'");
+    SWIG_exception_fail(SWIG_ArgError(res2), "in method '" "setCollectionID" "', argument " "2"" of type '" "char const *""'");
   }
   arg2 = (char *)(buf2);
-  setCollectionID(arg1,arg2);
+  setCollectionID(arg1,(char const *)arg2);
   resultobj = SWIG_Py_Void();
   if (alloc2 == SWIG_NEWOBJ) free((char*)buf2);
   return resultobj;
@@ -4594,10 +4594,10 @@ SWIGINTERN PyObject *_wrap_setCollectionName(PyObject *SWIGUNUSEDPARM(self), PyO
   arg1 = (Collection *)(argp1);
   res2 = SWIG_AsCharPtrAndSize(obj1, &buf2, NULL, &alloc2);
   if (!SWIG_IsOK(res2)) {
-    SWIG_exception_fail(SWIG_ArgError(res2), "in method '" "setCollectionName" "', argument " "2"" of type '" "char *""'");
+    SWIG_exception_fail(SWIG_ArgError(res2), "in method '" "setCollectionName" "', argument " "2"" of type '" "char const *""'");
   }
   arg2 = (char *)(buf2);
-  setCollectionName(arg1,arg2);
+  setCollectionName(arg1,(char const *)arg2);
   resultobj = SWIG_Py_Void();
   if (alloc2 == SWIG_NEWOBJ) free((char*)buf2);
   return resultobj;
@@ -4627,10 +4627,10 @@ SWIGINTERN PyObject *_wrap_setCollectionDescription(PyObject *SWIGUNUSEDPARM(sel
   arg1 = (Collection *)(argp1);
   res2 = SWIG_AsCharPtrAndSize(obj1, &buf2, NULL, &alloc2);
   if (!SWIG_IsOK(res2)) {
-    SWIG_exception_fail(SWIG_ArgError(res2), "in method '" "setCollectionDescription" "', argument " "2"" of type '" "char *""'");
+    SWIG_exception_fail(SWIG_ArgError(res2), "in method '" "setCollectionDescription" "', argument " "2"" of type '" "char const *""'");
   }
   arg2 = (char *)(buf2);
-  setCollectionDescription(arg1,arg2);
+  setCollectionDescription(arg1,(char const *)arg2);
   resultobj = SWIG_Py_Void();
   if (alloc2 == SWIG_NEWOBJ) free((char*)buf2);
   return resultobj;
@@ -4660,10 +4660,10 @@ SWIGINTERN PyObject *_wrap_setComponentID(PyObject *SWIGUNUSEDPARM(self), PyObje
   arg1 = (DNAComponent *)(argp1);
   res2 = SWIG_AsCharPtrAndSize(obj1, &buf2, NULL, &alloc2);
   if (!SWIG_IsOK(res2)) {
-    SWIG_exception_fail(SWIG_ArgError(res2), "in method '" "setComponentID" "', argument " "2"" of type '" "char *""'");
+    SWIG_exception_fail(SWIG_ArgError(res2), "in method '" "setComponentID" "', argument " "2"" of type '" "char const *""'");
   }
   arg2 = (char *)(buf2);
-  setComponentID(arg1,arg2);
+  setComponentID(arg1,(char const *)arg2);
   resultobj = SWIG_Py_Void();
   if (alloc2 == SWIG_NEWOBJ) free((char*)buf2);
   return resultobj;
@@ -4693,10 +4693,10 @@ SWIGINTERN PyObject *_wrap_setComponentName(PyObject *SWIGUNUSEDPARM(self), PyOb
   arg1 = (DNAComponent *)(argp1);
   res2 = SWIG_AsCharPtrAndSize(obj1, &buf2, NULL, &alloc2);
   if (!SWIG_IsOK(res2)) {
-    SWIG_exception_fail(SWIG_ArgError(res2), "in method '" "setComponentName" "', argument " "2"" of type '" "char *""'");
+    SWIG_exception_fail(SWIG_ArgError(res2), "in method '" "setComponentName" "', argument " "2"" of type '" "char const *""'");
   }
   arg2 = (char *)(buf2);
-  setComponentName(arg1,arg2);
+  setComponentName(arg1,(char const *)arg2);
   resultobj = SWIG_Py_Void();
   if (alloc2 == SWIG_NEWOBJ) free((char*)buf2);
   return resultobj;
@@ -4726,10 +4726,10 @@ SWIGINTERN PyObject *_wrap_setComponentDescription(PyObject *SWIGUNUSEDPARM(self
   arg1 = (DNAComponent *)(argp1);
   res2 = SWIG_AsCharPtrAndSize(obj1, &buf2, NULL, &alloc2);
   if (!SWIG_IsOK(res2)) {
-    SWIG_exception_fail(SWIG_ArgError(res2), "in method '" "setComponentDescription" "', argument " "2"" of type '" "char *""'");
+    SWIG_exception_fail(SWIG_ArgError(res2), "in method '" "setComponentDescription" "', argument " "2"" of type '" "char const *""'");
   }
   arg2 = (char *)(buf2);
-  setComponentDescription(arg1,arg2);
+  setComponentDescription(arg1,(char const *)arg2);
   resultobj = SWIG_Py_Void();
   if (alloc2 == SWIG_NEWOBJ) free((char*)buf2);
   return resultobj;
@@ -4789,10 +4789,10 @@ SWIGINTERN PyObject *_wrap_setSequenceAnnotationID(PyObject *SWIGUNUSEDPARM(self
   arg1 = (SequenceAnnotation *)(argp1);
   res2 = SWIG_AsCharPtrAndSize(obj1, &buf2, NULL, &alloc2);
   if (!SWIG_IsOK(res2)) {
-    SWIG_exception_fail(SWIG_ArgError(res2), "in method '" "setSequenceAnnotationID" "', argument " "2"" of type '" "char *""'");
+    SWIG_exception_fail(SWIG_ArgError(res2), "in method '" "setSequenceAnnotationID" "', argument " "2"" of type '" "char const *""'");
   }
   arg2 = (char *)(buf2);
-  setSequenceAnnotationID(arg1,arg2);
+  setSequenceAnnotationID(arg1,(char const *)arg2);
   resultobj = SWIG_Py_Void();
   if (alloc2 == SWIG_NEWOBJ) free((char*)buf2);
   return resultobj;

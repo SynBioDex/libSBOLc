@@ -114,6 +114,7 @@ ADD_LIBRARY( _sbol
 TARGET_LINK_LIBRARIES( _sbol
   _sbol
   sbol
+  raptor2
   ${PYTHON_LIBRARY}
 )
 

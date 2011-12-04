@@ -147,28 +147,28 @@ SBOLAPIEXPORTS int getNumPrecedes(SequenceAnnotation annotation);
 SBOLAPIEXPORTS SequenceAnnotation getNthPrecedes(SequenceAnnotation annotation, int n);
 
 /*! \brief set collection id*/
-SBOLAPIEXPORTS void setCollectionID(Collection * collection, char* id);
+SBOLAPIEXPORTS void setCollectionID(Collection * collection, const char* id);
 
 /*! \brief set collection name*/
-SBOLAPIEXPORTS void setCollectionName(Collection * collection, char* name);
+SBOLAPIEXPORTS void setCollectionName(Collection * collection, const char* name);
 
 /*! \brief set collection description*/
-SBOLAPIEXPORTS void setCollectionDescription(Collection * collection, char* descr);
+SBOLAPIEXPORTS void setCollectionDescription(Collection * collection, const char* descr);
 
 /*! \brief set component id*/
-SBOLAPIEXPORTS void setComponentID(DNAComponent * component, char* id);
+SBOLAPIEXPORTS void setComponentID(DNAComponent * component, const char* id);
 
 /*! \brief set component name*/
-SBOLAPIEXPORTS void setComponentName(DNAComponent * component, char* name);
+SBOLAPIEXPORTS void setComponentName(DNAComponent * component, const char* name);
 
 /*! \brief set component description*/
-SBOLAPIEXPORTS void setComponentDescription(DNAComponent * component, char* descr);
+SBOLAPIEXPORTS void setComponentDescription(DNAComponent * component, const char* descr);
 
 /*! \brief add existing component to existing collection*/
 SBOLAPIEXPORTS void addComponentToCollection(DNAComponent * component, Collection * collection);
 
 /*! \brief add existing component to existing collection*/
-SBOLAPIEXPORTS void setSequenceAnnotationID(SequenceAnnotation * annotation, char* id);
+SBOLAPIEXPORTS void setSequenceAnnotationID(SequenceAnnotation * annotation, const char* id);
 
 /*! \brief set sub-component for a sequence annotation*/
 SBOLAPIEXPORTS void setSubComponent(SequenceAnnotation * annotation, DNAComponent * component);
