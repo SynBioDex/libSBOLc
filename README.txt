@@ -50,10 +50,52 @@ Lets say that the liBSBOLc source code is located in a folder called "libSBOLc"
     If you used GCC, you will find a makefile. cd into this folder and run "make"
 
 =====================
+   HOW TO TEST
+=====================
+
+Once you've created the sboltest binary, you can use it to read
+an RDF file and display the resulting SBOL data structures.
+
+1) Move files
+    Copy the file "example.nt" from libSBOLc/ to libSBOLc/BUILD.
+    Alternatively, create a new directory libSBOLc/DIST and put both sboltest and example.nt in it.
+
+2) Run the test:
+    cd into the DIST directory if needed.
+    ./sboltest
+
+It should print the following:
+
+component id = component1
+      num. collections = 1
+         collection = collectionA
+      num. annotations = 3
+         subComponent component2
+            precedes sa3
+            precedes sa3
+         subComponent component3
+         subComponent component3
+
+component id = component2
+      num. collections = 1
+         collection = collectionB
+      num. annotations = 1
+         subComponent component4
+
+component id = component3
+      num. collections = 1
+         collection = collectionB
+      num. annotations = 0
+
+component id = component4
+      num. collections = 1
+         collection = collectionB
+      num. annotations = 0
+
+=====================
    TO DO
 =====================
 - function to write-out the data structures in RDF
 - SWIG wrapper for Python
-
-
+- additional tests
 
