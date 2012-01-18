@@ -39,6 +39,7 @@ bool isCollection(string s)
 	return (allCollections.count(s) > 0);
 }
 
+// free memory used by SBOL data structures
 void cleanup()
 {
 	map<string,Collection>::iterator it1 = allCollections.begin();
@@ -359,32 +360,37 @@ void addPrecedesRelationship(SequenceAnnotation * upstream, SequenceAnnotation *
 	}
 }
 
-/************************************************
-    SBOL read from file
-*************************************************/
+// analyze a single triple and add to
+// SBOL data structures if appropriate
 static void read_triple(void* user_data, raptor_statement* triple)
 {
 	string s;
 	string p;
 	string o;
+
+	// read subject
 	if (triple->subject->type == RAPTOR_TERM_TYPE_URI)
 		s = string((char*)(raptor_uri_as_string(triple->subject->value.uri)));
 	else
 	if (triple->subject->type == RAPTOR_TERM_TYPE_LITERAL)
 		s = string((char*)(triple->subject->value.literal.string));
 
+	// read predicate
 	if (triple->predicate->type == RAPTOR_TERM_TYPE_URI)
 		p = string((char*)(raptor_uri_as_string(triple->predicate->value.uri)));
 	else
 	if (triple->predicate->type == RAPTOR_TERM_TYPE_LITERAL)
 		p = string((char*)(triple->predicate->value.literal.string));
 
+	// read object
 	if (triple->object->type == RAPTOR_TERM_TYPE_URI)
 		o = string((char*)(raptor_uri_as_string(triple->object->value.uri)));
 	else
 	if (triple->object->type == RAPTOR_TERM_TYPE_LITERAL)
 		o = string((char*)(triple->object->value.literal.string));
-		
+	
+	// predicate is rdf:type,
+	// so a new structure needs to be created
 	if (p == string("a"))
 	{
 		if (o.compare("DNAComponent") == 0)
@@ -410,8 +416,11 @@ static void read_triple(void* user_data, raptor_statement* triple)
 			strcpy(collection.id, s.c_str());
 			allCollections[s] = collection;
 		}
+		// else not part of SBOL core
 	}
 	else
+
+	// subject is an existing DNAComponent
 	if (isComponent(s))
 	{
 		if (p.compare("name") == 0)
@@ -435,8 +444,11 @@ static void read_triple(void* user_data, raptor_statement* triple)
 				addComponentToCollection(&component, &collection);
 			}
 		}
+		// else not part of SBOL core
 	}
 	else
+
+	// subject is an existing Collection
 	if (isCollection(s))
 	{
 		if (p.compare("name") == 0)
@@ -450,8 +462,11 @@ static void read_triple(void* user_data, raptor_statement* triple)
 			allCollections[s].description = new char[o.length()];
 			strcpy(allCollections[s].description,o.c_str());
 		}
+		// else not part of SBOL core
 	}
 	else
+
+	// subject is an existing SequenceAnnotation
 	if (isAnnotation(s))
 	{
 		if (p.compare("annotates") == 0)
@@ -471,12 +486,16 @@ static void read_triple(void* user_data, raptor_statement* triple)
 			if (isAnnotation(o))
 				addPrecedesRelationship(&allAnnotations[s], &allAnnotations[o]);
 		}
+		// else not part of SBOL core
 	}
+
+	// else not part of SBOL core
 }
 
+// import from an RDF file using raptor
 void readSBOL(char* filename)
 {
-	const char * format = "ntriples";
+	const char * format = "ntriples"; // TODO other formats?
 	raptor_world *world = NULL;
 	raptor_parser* rdf_parser = NULL;
 	unsigned char *uri_string;
@@ -484,6 +503,7 @@ void readSBOL(char* filename)
 	world = raptor_new_world();
 	rdf_parser = raptor_new_parser(world, format);
 
+	// pass each triple to read_triple for analysis
 	raptor_parser_set_statement_handler(rdf_parser, NULL, &read_triple);
 
 	uri_string = raptor_uri_filename_to_uri_string(filename);
