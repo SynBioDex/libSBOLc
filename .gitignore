@@ -1,0 +1,8 @@
+# folders
+BUILD/
+DIST/
+
+# temp files
+*.swp
+*.swo
+
