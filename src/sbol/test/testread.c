@@ -1,11 +1,11 @@
 #include "../reader.h"
 
-void parse()
+void parse(char* examplepath)
 {
 	int i, j, k, n, m;
 	DNAComponent comp;
 
-	readSBOL("../examples/example.nt");
+	readSBOL(examplepath);
 
 	n = getNumDNAComponents();
 	for (i=0; i < n; ++i)
@@ -36,7 +36,8 @@ void parse()
 }
 
 int main() {
-    printf("parsing example.nt...\n");
-    parse();
+    char* example = "../examples/example.nt";
+    printf("parsing %s\n\n", example);
+    parse(example);
     return 0;
 }
