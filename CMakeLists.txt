@@ -4,12 +4,18 @@
 #   makefiles, MSVC projects, etc. (cross plarform)
 #-------------------------------------------------------------------
 
-#project name
+# project name
 PROJECT( SBOL )
 CMAKE_MINIMUM_REQUIRED( VERSION 2.6 )
 SET(LIBRARY_OUTPUT_PATH ${EXECUTABLE_OUTPUT_PATH})
 
-#include directories
+# stuff for adding libxml++
+set( CMAKE_MODULE_PATH ${CMAKE_MODULE_PATH} "${PROJECT_SOURCE_DIR}/CMakeModules/" )
+find_package( LibXML++ REQUIRED )
+include_directories( ${LibXML++_INCLUDE_DIRS} )
+set( LIBS ${LIBS} ${LibXML++_LIBRARIES} )
+
+# include directories
 INCLUDE_DIRECTORIES( BEFORE
     ${SBOL_SOURCE_DIR}/curl/include
     ${SBOL_SOURCE_DIR}/expat
@@ -17,14 +23,14 @@ INCLUDE_DIRECTORIES( BEFORE
     ${SBOL_SOURCE_DIR}/raptor2/src
 )
 
-#build other required libraries
+# build other required libraries
 ADD_SUBDIRECTORY( curl )      #needed by raptor
 ADD_SUBDIRECTORY( raptor2 )   #RDF parser
 
-#all the source files in the libSBOLc project
+# all the source files in the libSBOLc project
 FILE( GLOB  SBOL_SRC_FILES   ${SBOL_SOURCE_DIR}/parser.cpp)
 
-#create the SBOL library
+# create the SBOL library
 ADD_LIBRARY( sbol
     SHARED
     ${SBOL_SRC_FILES}
@@ -44,10 +50,19 @@ TARGET_LINK_LIBRARIES( sboltest
    sbol
    raptor2
 )
+
+ADD_EXECUTABLE( serialtest
+    serial.cpp
+)
+
+TARGET_LINK_LIBRARIES( serialtest
+    ${LIBS}
+)
+
 #------------------------------------------------------------------
 # The rest is for creating the python module using SWIG
 #------------------------------------------------------------------
-#get Python libs
+# get Python libs
 ADD_DEFINITIONS(-DTC_EXPORTS)
 
 IF( WIN32 AND MINGW)
@@ -70,7 +85,7 @@ IF (DEFINED PYTHON_INCLUDE_DIRS)
    SET(PYTHON_INCLUDE_DIR ${PYTHON_INCLUDE_DIRS})
 ENDIF (DEFINED PYTHON_INCLUDE_DIRS)
 
-#DBL_ definitions are missing in new MinGW -- why did they do that?
+# DBL_ definitions are missing in new MinGW -- why did they do that?
 IF (WIN32 AND MINGW)
     ADD_DEFINITIONS(-DDBL_EPSILON=2.22045e-16)
     ADD_DEFINITIONS(-DDBL_MIN=1e-999)
