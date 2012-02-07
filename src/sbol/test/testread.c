@@ -1,11 +1,11 @@
-#include "reader.h"
+#include "../reader.h"
 
 void parse()
 {
 	int i, j, k, n, m;
 	DNAComponent comp;
 
-	readSBOL("example.nt");
+	readSBOL("../examples/example.nt");
 
 	n = getNumDNAComponents();
 	for (i=0; i < n; ++i)

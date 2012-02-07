@@ -4,9 +4,10 @@
 #   makefiles, MSVC projects, etc. (cross plarform)
 #-------------------------------------------------------------------
 
-# project name
 PROJECT( SBOL )
 CMAKE_MINIMUM_REQUIRED( VERSION 2.6 )
+
+# send executables to DIST dir
 SET(EXECUTABLE_OUTPUT_PATH ${PROJECT_SOURCE_DIR}/../DIST)
 SET(LIBRARY_OUTPUT_PATH ${EXECUTABLE_OUTPUT_PATH})
 
@@ -14,7 +15,6 @@ SET(LIBRARY_OUTPUT_PATH ${EXECUTABLE_OUTPUT_PATH})
 set( CMAKE_MODULE_PATH ${CMAKE_MODULE_PATH} "${PROJECT_SOURCE_DIR}/CMakeModules/" )
 find_package( LibXML++ REQUIRED )
 
-# include directories
 INCLUDE_DIRECTORIES( BEFORE
     ${SBOL_SOURCE_DIR}/curl/include
     ${SBOL_SOURCE_DIR}/expat
@@ -24,14 +24,14 @@ INCLUDE_DIRECTORIES( BEFORE
 )
 
 # build other required libraries
-ADD_SUBDIRECTORY( curl )      #needed by raptor
-ADD_SUBDIRECTORY( raptor2 )   #RDF parser
+ADD_SUBDIRECTORY( curl )    #needed by raptor
+ADD_SUBDIRECTORY( raptor2 ) #RDF parser
 
 # all the source files in the libSBOLc project
 FILE( GLOB  SBOL_SRC_FILES
-    ${SBOL_SOURCE_DIR}/reader.cpp
-    ${SBOL_SOURCE_DIR}/writer.cpp
-    #${SBOL_SOURCE_DIR}/checker.cpp
+    ${SBOL_SOURCE_DIR}/sbol/reader.cpp
+    ${SBOL_SOURCE_DIR}/sbol/writer.cpp
+    #${SBOL_SOURCE_DIR}/sbol/checker.cpp
 )
 
 ### add executables ###
@@ -42,16 +42,16 @@ ADD_LIBRARY( sbol
 )
 
 ADD_EXECUTABLE( check
-    checker.cpp
+    sbol/checker.cpp
 )
 
 ADD_EXECUTABLE( testread
     #SHARED
-    testread.c
+    sbol/test/testread.c
 )
 
 ADD_EXECUTABLE( testreadwrite
-    writer.cpp
+    sbol/writer.cpp # make a separate test file
 )
 
 ### link to libraries ###
@@ -138,7 +138,7 @@ INCLUDE_DIRECTORIES( BEFORE ${PYTHON_INCLUDE_DIR} )
 
 ADD_LIBRARY( _sbol
   SHARED
-  sbol_wrap.c
+  sbol/sbol_wrap.c
 )
 
 TARGET_LINK_LIBRARIES( _sbol
