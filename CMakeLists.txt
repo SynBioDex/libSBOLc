@@ -13,7 +13,6 @@ SET(LIBRARY_OUTPUT_PATH ${EXECUTABLE_OUTPUT_PATH})
 set( CMAKE_MODULE_PATH ${CMAKE_MODULE_PATH} "${PROJECT_SOURCE_DIR}/CMakeModules/" )
 find_package( LibXML++ REQUIRED )
 include_directories( ${LibXML++_INCLUDE_DIRS} )
-set( LIBS ${LIBS} ${LibXML++_LIBRARIES} )
 
 # include directories
 INCLUDE_DIRECTORIES( BEFORE
@@ -30,33 +29,36 @@ ADD_SUBDIRECTORY( raptor2 )   #RDF parser
 # all the source files in the libSBOLc project
 FILE( GLOB  SBOL_SRC_FILES   ${SBOL_SOURCE_DIR}/parser.cpp)
 
-# create the SBOL library
+### add executables ###
+
 ADD_LIBRARY( sbol
     SHARED
     ${SBOL_SRC_FILES}
 )
+
+ADD_EXECUTABLE( testsbol
+    #SHARED
+    testsbol.c
+)
+
+ADD_EXECUTABLE( testwrite
+    writer.cpp
+)
+
+### link to libraries ###
 
 TARGET_LINK_LIBRARIES( sbol
     sbol
     raptor2
 )
 
-ADD_EXECUTABLE( sboltest
-#  SHARED
-    test.c
-)
-
-TARGET_LINK_LIBRARIES( sboltest
+TARGET_LINK_LIBRARIES( testsbol
    sbol
    raptor2
 )
 
-ADD_EXECUTABLE( serialtest
-    serial.cpp
-)
-
-TARGET_LINK_LIBRARIES( serialtest
-    ${LIBS}
+TARGET_LINK_LIBRARIES( testwrite
+    ${LibXML++_LIBRARIES}
 )
 
 #------------------------------------------------------------------
