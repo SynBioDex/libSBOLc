@@ -8,7 +8,7 @@ do
     ./${BINARY} ${SCHEMA} ${valid_doc}
     if [ $? != 0 ]
     then
-        echo "failed to verify ${invalid_doc}"
+        echo "failed to verify ${valid_doc}"
         FAILURES=$((${FAILURES} + 1))
     fi
 done
