@@ -138,7 +138,7 @@ INCLUDE_DIRECTORIES( BEFORE ${PYTHON_INCLUDE_DIR} )
 
 ADD_LIBRARY( _sbol
   SHARED
-  sbol/sbol_wrap.c
+  sbol/swig/sbol_wrap.c
 )
 
 TARGET_LINK_LIBRARIES( _sbol
