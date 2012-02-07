@@ -9,10 +9,9 @@ PROJECT( SBOL )
 CMAKE_MINIMUM_REQUIRED( VERSION 2.6 )
 SET(LIBRARY_OUTPUT_PATH ${EXECUTABLE_OUTPUT_PATH})
 
-# stuff for adding libxml++
+# find libxml++
 set( CMAKE_MODULE_PATH ${CMAKE_MODULE_PATH} "${PROJECT_SOURCE_DIR}/CMakeModules/" )
 find_package( LibXML++ REQUIRED )
-include_directories( ${LibXML++_INCLUDE_DIRS} )
 
 # include directories
 INCLUDE_DIRECTORIES( BEFORE
@@ -20,6 +19,7 @@ INCLUDE_DIRECTORIES( BEFORE
     ${SBOL_SOURCE_DIR}/expat
     ${SBOL_SOURCE_DIR}/expat/lib
     ${SBOL_SOURCE_DIR}/raptor2/src
+    ${LibXML++_INCLUDE_DIRS}
 )
 
 # build other required libraries
@@ -27,7 +27,11 @@ ADD_SUBDIRECTORY( curl )      #needed by raptor
 ADD_SUBDIRECTORY( raptor2 )   #RDF parser
 
 # all the source files in the libSBOLc project
-FILE( GLOB  SBOL_SRC_FILES   ${SBOL_SOURCE_DIR}/parser.cpp)
+FILE( GLOB  SBOL_SRC_FILES
+    ${SBOL_SOURCE_DIR}/reader.cpp
+    ${SBOL_SOURCE_DIR}/writer.cpp
+    #${SBOL_SOURCE_DIR}/checker.cpp
+)
 
 ### add executables ###
 
@@ -36,12 +40,16 @@ ADD_LIBRARY( sbol
     ${SBOL_SRC_FILES}
 )
 
-ADD_EXECUTABLE( testsbol
-    #SHARED
-    testsbol.c
+ADD_EXECUTABLE( check
+    checker.cpp
 )
 
-ADD_EXECUTABLE( testwrite
+ADD_EXECUTABLE( testread
+    #SHARED
+    testread.c
+)
+
+ADD_EXECUTABLE( testreadwrite
     writer.cpp
 )
 
@@ -52,12 +60,16 @@ TARGET_LINK_LIBRARIES( sbol
     raptor2
 )
 
-TARGET_LINK_LIBRARIES( testsbol
+TARGET_LINK_LIBRARIES( check
+    ${LibXML++_LIBRARIES}
+)
+
+TARGET_LINK_LIBRARIES( testread
    sbol
    raptor2
 )
 
-TARGET_LINK_LIBRARIES( testwrite
+TARGET_LINK_LIBRARIES( testreadwrite
     ${LibXML++_LIBRARIES}
 )
 

@@ -1,6 +1,6 @@
-#include "parser.h"
+#include "reader.h"
 
-int main()
+void parse()
 {
 	int i, j, k, n, m;
 	DNAComponent comp;
@@ -33,4 +33,10 @@ int main()
 	}
 
 	cleanup();
+}
+
+int main() {
+    printf("parsing example.nt...\n");
+    parse();
+    return 0;
 }

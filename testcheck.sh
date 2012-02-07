@@ -1,5 +1,5 @@
 SCHEMA="schema/sbol.xsd"
-BINARY="BUILD/validate"
+BINARY="BUILD/checker"
 FAILURES=0
 
 echo "these should be valid:"

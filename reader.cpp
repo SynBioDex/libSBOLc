@@ -4,7 +4,7 @@
 
 extern "C"
 {
-	#include "parser.h"
+	#include "reader.h"
 	#include "raptor.h"  //RDF parser
 }
 

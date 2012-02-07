@@ -2,6 +2,6 @@
 //#include "libxml++/libxml++.h"
 
 int main() {
-    std::cout << "running serial" << std::endl;
+    std::cout << "running writer" << std::endl;
     return 0;
 }
