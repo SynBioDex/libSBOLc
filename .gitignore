@@ -5,4 +5,4 @@ DIST/
 # temp files
 *.swp
 *.swo
-
+*.*~
