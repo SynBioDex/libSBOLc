@@ -1,9 +1,10 @@
-SCHEMA="schema/sbol.xsd"
-BINARY="BUILD/checker"
+TOPDIR="../../.."
+SCHEMA="${TOPDIR}/schema/sbol.xsd"
+BINARY="${TOPDIR}/DIST/check"
 FAILURES=0
 
 echo "these should be valid:"
-for valid_doc in examples/valid*.xml
+for valid_doc in ${TOPDIR}/examples/valid*.xml
 do
     ./${BINARY} ${SCHEMA} ${valid_doc}
     if [ $? != 0 ]
@@ -14,7 +15,7 @@ do
 done
 
 echo "and these should be invalid:"
-for invalid_doc in examples/invalid*.xml
+for invalid_doc in ${TOPDIR}/examples/invalid*.xml
 do
     ./${BINARY} ${SCHEMA} ${invalid_doc}
     if [ $? != 1 ]
