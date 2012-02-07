@@ -26,18 +26,18 @@ FILE( GLOB  SBOL_SRC_FILES   ${SBOL_SOURCE_DIR}/parser.cpp)
 
 #create the SBOL library
 ADD_LIBRARY( sbol
-  SHARED
-  ${SBOL_SRC_FILES}
+    SHARED
+    ${SBOL_SRC_FILES}
 )
 
 TARGET_LINK_LIBRARIES( sbol
-   sbol
-   raptor2
+    sbol
+    raptor2
 )
 
 ADD_EXECUTABLE( sboltest
 #  SHARED
-  test.c
+    test.c
 )
 
 TARGET_LINK_LIBRARIES( sboltest
