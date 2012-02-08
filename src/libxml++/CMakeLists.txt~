@@ -1,9 +1,0 @@
-#project( SBOL )
-cmake_minimum_required( VERSION 2.6 )
-
-# tell cmake how to find libxml++
-set( CMAKE_MODULE_PATH "${CMAKE_CURRENT_SOURCE_DIR}/CMakeModules" ${CMAKE_MODULE_PATH} )
-find_package( LibXML++ REQUIRED )
-include_directories( ${LibXML++_INCLUDE_DIRS} )
-set( LIBS ${LIBS} ${LibXML++_LIBRARIES} )
-
