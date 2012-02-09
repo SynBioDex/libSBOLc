@@ -38,7 +38,7 @@ ADD_LIBRARY( sbol
 
 ADD_EXECUTABLE( testread
     #SHARED
-    testread.c
+    ../test/testread.c #TODO variables for important folders
 )
 
 TARGET_LINK_LIBRARIES( sbol
