@@ -1,14 +1,6 @@
 #include <string.h>
-#include <string>  //std string
-#include <map>  //std map
-
-//TODO purge this file of C++ strings, maps and just use C
-
-extern "C"
-{
-	#include "core.h"
-	#include "raptor.h"  //RDF parser
-}
+#include "core.h"
+#include "raptor.h"  //RDF parser
 
 using namespace std;
 
@@ -16,84 +8,66 @@ using namespace std;
 // SBOL data structures if appropriate
 static void read_triple(void* user_data, raptor_statement* triple)
 {
-	string s;
-	string p;
-	string o;
+	char* s;
+	char* p;
+	char* o;
 	
 	// read subject
 	if (triple->subject->type == RAPTOR_TERM_TYPE_URI)
-		s = string((char*)(raptor_uri_as_string(triple->subject->value.uri)));
+		s = (char*)(raptor_uri_as_string(triple->subject->value.uri));
 	else
 		if (triple->subject->type == RAPTOR_TERM_TYPE_LITERAL)
-			s = string((char*)(triple->subject->value.literal.string));
+			s = (char*)(triple->subject->value.literal.string);
 	
 	// read predicate
 	if (triple->predicate->type == RAPTOR_TERM_TYPE_URI)
-		p = string((char*)(raptor_uri_as_string(triple->predicate->value.uri)));
+		p = (char*)(raptor_uri_as_string(triple->predicate->value.uri));
 	else
 		if (triple->predicate->type == RAPTOR_TERM_TYPE_LITERAL)
-			p = string((char*)(triple->predicate->value.literal.string));
+			p = (char*)(triple->predicate->value.literal.string);
 	
 	// read object
 	if (triple->object->type == RAPTOR_TERM_TYPE_URI)
-		o = string((char*)(raptor_uri_as_string(triple->object->value.uri)));
+		o = (char*)(raptor_uri_as_string(triple->object->value.uri));
 	else
 		if (triple->object->type == RAPTOR_TERM_TYPE_LITERAL)
-			o = string((char*)(triple->object->value.literal.string));
+			o = (char*)(triple->object->value.literal.string);
 	
 	// predicate is rdf:type,
 	// so a new structure needs to be created
-	if (p == string("a"))
+	if (p == "a")
 	{
-		if (o.compare("DNAComponent") == 0)
-		{
-			//DNAComponent component = {0,0,0,0,0,0};
-			//component.id = new char[s.length()];
-			//strcpy(component.id, s.c_str());
-			//getComponent(s.c_str()) = component;
-			newComponent(s.c_str());
-		}
+		if (strcmp(o, "DNAComponent") == 0)
+			newComponent(s);
 		else
-			if (o.compare("SequenceAnnotation") == 0)
-			{
-				//SequenceAnnotation annotation = {0,0,0,0,0};
-				//annotation.id = new char[s.length()];
-				//strcpy(annotation.id, s.c_str());
-				//getSequenceAnnotation(s.c_str()) = annotation;
-                newSequenceAnnotation(s.c_str());
-			}
+			if (strcmp(o, "SequenceAnnotation") == 0)
+                newSequenceAnnotation(s);
 			else
-				if (o.compare("Collection") == 0)
-				{
-					//Collection collection = {0,0,0,0,0};
-					//collection.id = new char[s.length()];
-					//strcpy(collection.id, s.c_str());
-					//allCollections[s] = collection;
-                    newCollection(s.c_str());
-				}
+				if (strcmp(o, "Collection") == 0)
+                    newCollection(s);
 		// else not part of SBOL core
 	}
 
 	// subject is an existing DNAComponent
-	else if (isComponent(s.c_str()))
+	else if (isComponent(s))
 	{
-        DNAComponent com = getComponent(s.c_str());
+        DNAComponent com = getComponent(s);
 
-		if (p.compare("name") == 0)
+		if (strcmp(p, "name") == 0)
 		{
-		    com.name = new char[o.length()];
-			strcpy(com.name, o.c_str());
+		    com.name = new char[ strlen(o) ];
+			strcpy(com.name, o);
 		}
-		else if (p.compare("description") == 0)
+		else if (strcmp(p, "description") == 0)
 		{
-			com.description = new char[o.length()];
-			strcpy(com.description,o.c_str());
+			com.description = new char[ strlen(o) ];
+			strcpy(com.description, o);
 		}
-		else if (p.compare("collection") == 0)
+		else if (strcmp(p, "collection") == 0)
 		{
-			if (isComponent(s.c_str()) && isCollection(o.c_str()) > 0)
+			if (isComponent(s) && isCollection(o) > 0)
 			{
-				Collection col = getCollection(o.c_str());
+				Collection col = getCollection(o);
 				addComponentToCollection(&com, &col);
 			}
 		}
@@ -101,49 +75,49 @@ static void read_triple(void* user_data, raptor_statement* triple)
 	}
 
 	// subject is an existing Collection
-	else if (isCollection(s.c_str()))
+	else if (isCollection(s))
 	{
-        Collection col = getCollection(s.c_str());
+        Collection col = getCollection(s);
 
-		if (p.compare("name") == 0)
+		if (strcmp(p, "name") == 0)
 		{
-			col.name = new char[o.length()];
-			strcpy(col.name, o.c_str());
+			col.name = new char[ strlen(o) ];
+			strcpy(col.name, o);
 		}
-		else if (p.compare("description") == 0)
+		else if (strcmp(p, "description") == 0)
 		{
-			col.description = new char[o.length()];
-			strcpy(col.description, o.c_str());
+			col.description = new char[ strlen(o) ];
+			strcpy(col.description, o);
 		}
 		// else not part of SBOL core
 	}
 				
 	// subject is an existing SequenceAnnotation
-	else if (isAnnotation(s.c_str()))
+	else if (isAnnotation(s))
 	{
-        SequenceAnnotation ann = getSequenceAnnotation(s.c_str());
+        SequenceAnnotation ann = getSequenceAnnotation(s);
 
-		if (p.compare("annotates") == 0)
+		if (strcmp(p, "annotates") == 0)
 		{
-			if (isComponent(o.c_str()))
+			if (isComponent(o))
             {
-                DNAComponent com = getComponent(o.c_str());
+                DNAComponent com = getComponent(o);
 				addSequenceAnnotation(&com, &ann);
             }
 		}
-		else if (p.compare("subComponent") == 0)
+		else if (strcmp(p, "subComponent") == 0)
 		{
-			if (isComponent(o.c_str()))
+			if (isComponent(o))
             {
-                DNAComponent com = getComponent(o.c_str());
+                DNAComponent com = getComponent(o);
 				setSubComponent(&ann, &com);
             }
 		}
-		else if (p.compare("precedes") == 0)
+		else if (strcmp(p, "precedes") == 0)
 		{
-			if (isAnnotation(o.c_str()))
+			if (isAnnotation(o))
             {
-                SequenceAnnotation ann2 = getSequenceAnnotation(o.c_str());
+                SequenceAnnotation ann2 = getSequenceAnnotation(o);
 				addPrecedesRelationship(&ann, &ann2);
             }
 		}

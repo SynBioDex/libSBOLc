@@ -133,9 +133,9 @@ SBOLAPIEXPORTS void cleanup();
 
 //TODO put these in a separate file?
 
-bool isComponent(const char* id);
-bool isAnnotation(const char* id);
-bool isCollection(const char* id);
+int isComponent(const char* id);
+int isAnnotation(const char* id);
+int isCollection(const char* id);
 
 void newComponent(const char* id);
 void newSequenceAnnotation(const char* id);

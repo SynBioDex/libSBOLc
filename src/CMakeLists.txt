@@ -36,20 +36,20 @@ ADD_LIBRARY( sbol
     ${SBOL_SRC_FILES}
 )
 
-ADD_EXECUTABLE( testread
-    #SHARED
-    ../test/testread.c #TODO variables for important folders
-)
+#ADD_EXECUTABLE( testread
+#    #SHARED
+#    ../test/testread.c #TODO variables for important folders
+#)
 
 TARGET_LINK_LIBRARIES( sbol
     sbol
     raptor2
 )
 
-TARGET_LINK_LIBRARIES( testread
-   sbol
-   raptor2
-)
+#TARGET_LINK_LIBRARIES( testread
+#   sbol
+#   raptor2
+#)
 
 #------------------------------------------------------------------
 # These require LibXML++, and I'm trying to do without for now
