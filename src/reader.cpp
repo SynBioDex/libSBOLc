@@ -71,7 +71,7 @@ static void read_triple(void* user_data, raptor_statement* triple)
 	else
 		
 		// subject is an existing DNAComponent
-		if (isComponent(s))
+		if (isComponent(s.c_str()))
 		{
 			if (p.compare("name") == 0)
 			{
@@ -87,7 +87,7 @@ static void read_triple(void* user_data, raptor_statement* triple)
 				else
 					if (p.compare("collection") == 0)
 					{
-						if (isComponent(s) && isCollection(o) > 0)
+						if (isComponent(s.c_str()) && isCollection(o.c_str()) > 0)
 						{
 							DNAComponent & component = allComponents[s];
 							Collection & collection = allCollections[o];
@@ -97,9 +97,9 @@ static void read_triple(void* user_data, raptor_statement* triple)
 			// else not part of SBOL core
 		}
 		else
-			
+
 			// subject is an existing Collection
-			if (isCollection(s))
+			if (isCollection(s.c_str()))
 			{
 				if (p.compare("name") == 0)
 				{
@@ -117,23 +117,23 @@ static void read_triple(void* user_data, raptor_statement* triple)
 			else
 				
 				// subject is an existing SequenceAnnotation
-				if (isAnnotation(s))
+				if (isAnnotation(s.c_str()))
 				{
 					if (p.compare("annotates") == 0)
 					{
-						if (isComponent(o))
+						if (isComponent(o.c_str()))
 							addSequenceAnnotation(&allComponents[o], &allAnnotations[s]);
 					}
 					else
 						if (p.compare("subComponent") == 0)
 						{
-							if (isComponent(o))
+							if (isComponent(o.c_str()))
 								setSubComponent(&allAnnotations[s], &allComponents[o]);
 						}
 						else
 							if (p.compare("precedes") == 0)
 							{
-								if (isAnnotation(o))
+								if (isAnnotation(o.c_str()))
 									addPrecedesRelationship(&allAnnotations[s], &allAnnotations[o]);
 							}
 					// else not part of SBOL core

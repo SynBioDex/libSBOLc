@@ -23,19 +23,19 @@ static map<string, SequenceAnnotation> allAnnotations;
 	  of reading the code
 *****************************************/
 
-bool isComponent(string s)
+bool isComponent(const char* s)
 {
-	return (allComponents.count(s) > 0);
+	return (allComponents.count( string(s) ) > 0);
 }
 
-bool isAnnotation(string s)
+bool isAnnotation(const char* s)
 {
-	return (allAnnotations.count(s) > 0);
+	return (allAnnotations.count( string(s) ) > 0);
 }
 
-bool isCollection(string s)
+bool isCollection(const char* s)
 {
-	return (allCollections.count(s) > 0);
+	return (allCollections.count( string(s) ) > 0);
 }
 
 // free memory used by SBOL data structures

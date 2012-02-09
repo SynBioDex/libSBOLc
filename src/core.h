@@ -49,7 +49,7 @@ struct _SequenceAnnotation;
 struct _Collection;
 
 /************************************************
-        C Structs for the SBOL classes
+        C Structs for the SBOL core classes
 *************************************************/
 
 typedef struct _DNASequence
@@ -87,12 +87,12 @@ typedef struct _Collection
 } Collection;
 
 /************************************************
-       SBOL function declarations
+       SBOL core function declarations
 *************************************************/
 
-SBOLAPIEXPORTS bool isComponent(char* s);
-SBOLAPIEXPORTS bool isAnnotation(char* s);
-SBOLAPIEXPORTS bool isCollection(char* s);
+SBOLAPIEXPORTS bool isComponent(const char* s);
+SBOLAPIEXPORTS bool isAnnotation(const char* s);
+SBOLAPIEXPORTS bool isCollection(const char* s);
 
 SBOLAPIEXPORTS int getNumCollections();
 SBOLAPIEXPORTS int getNumDNAComponents();
