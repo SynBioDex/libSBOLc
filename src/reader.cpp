@@ -73,76 +73,82 @@ static void read_triple(void* user_data, raptor_statement* triple)
 				}
 		// else not part of SBOL core
 	}
-	else
-		
-		// subject is an existing DNAComponent
-		if (isComponent(s.c_str()))
-		{
-			if (p.compare("name") == 0)
-			{
-				getComponent(s.c_str()).name = new char[o.length()];
-				strcpy(getComponent(s.c_str()).name,o.c_str());
-			}
-			else
-				if (p.compare("description") == 0)
-				{
-					getComponent(s.c_str()).description = new char[o.length()];
-					strcpy(getComponent(s.c_str()).description,o.c_str());
-				}
-				else
-					if (p.compare("collection") == 0)
-					{
-						if (isComponent(s.c_str()) && isCollection(o.c_str()) > 0)
-						{
-							DNAComponent component = getComponent(s.c_str());
-							Collection collection = getCollection(o.c_str());
-							addComponentToCollection(&component, &collection);
-						}
-					}
-			// else not part of SBOL core
-		}
-		else
 
-			// subject is an existing Collection
-			if (isCollection(s.c_str()))
+	// subject is an existing DNAComponent
+	else if (isComponent(s.c_str()))
+	{
+        DNAComponent com = getComponent(s.c_str());
+
+		if (p.compare("name") == 0)
+		{
+		    com.name = new char[o.length()];
+			strcpy(com.name, o.c_str());
+		}
+		else if (p.compare("description") == 0)
+		{
+			com.description = new char[o.length()];
+			strcpy(com.description,o.c_str());
+		}
+		else if (p.compare("collection") == 0)
+		{
+			if (isComponent(s.c_str()) && isCollection(o.c_str()) > 0)
 			{
-				if (p.compare("name") == 0)
-				{
-					getCollection(s.c_str()).name = new char[o.length()];
-					strcpy(getCollection(s.c_str()).name,o.c_str());
-				}
-				else
-					if (p.compare("description") == 0)
-					{
-						getCollection(s.c_str()).description = new char[o.length()];
-						strcpy(getCollection(s.c_str()).description,o.c_str());
-					}
-				// else not part of SBOL core
+				Collection col = getCollection(o.c_str());
+				addComponentToCollection(&com, &col);
 			}
-			else
+		}
+		// else not part of SBOL core
+	}
+
+	// subject is an existing Collection
+	else if (isCollection(s.c_str()))
+	{
+        Collection col = getCollection(s.c_str());
+
+		if (p.compare("name") == 0)
+		{
+			col.name = new char[o.length()];
+			strcpy(col.name, o.c_str());
+		}
+		else if (p.compare("description") == 0)
+		{
+			col.description = new char[o.length()];
+			strcpy(col.description, o.c_str());
+		}
+		// else not part of SBOL core
+	}
 				
-				// subject is an existing SequenceAnnotation
-				if (isAnnotation(s.c_str()))
-				{
-					if (p.compare("annotates") == 0)
-					{
-						if (isComponent(o.c_str()))
-							addSequenceAnnotation(&getComponent(o.c_str()), &getSequenceAnnotation(s.c_str()));
-					}
-					else
-						if (p.compare("subComponent") == 0)
-						{
-							if (isComponent(o.c_str()))
-								setSubComponent(&getSequenceAnnotation(s.c_str()), &getComponent(o.c_str()));
-						}
-						else
-							if (p.compare("precedes") == 0)
-							{
-								if (isAnnotation(o.c_str()))
-									addPrecedesRelationship(&getSequenceAnnotation(s.c_str()), &getSequenceAnnotation(o.c_str()));
-							}
-					// else not part of SBOL core
-				}
+	// subject is an existing SequenceAnnotation
+	else if (isAnnotation(s.c_str()))
+	{
+        SequenceAnnotation ann = getSequenceAnnotation(s.c_str());
+
+		if (p.compare("annotates") == 0)
+		{
+			if (isComponent(o.c_str()))
+            {
+                DNAComponent com = getComponent(o.c_str());
+				addSequenceAnnotation(&com, &ann);
+            }
+		}
+		else if (p.compare("subComponent") == 0)
+		{
+			if (isComponent(o.c_str()))
+            {
+                DNAComponent com = getComponent(o.c_str());
+				setSubComponent(&ann, &com);
+            }
+		}
+		else if (p.compare("precedes") == 0)
+		{
+			if (isAnnotation(o.c_str()))
+            {
+                SequenceAnnotation ann2 = getSequenceAnnotation(o.c_str());
+				addPrecedesRelationship(&ann, &ann2);
+            }
+		}
+		// else not part of SBOL core
+	}
 	
 	// else not part of SBOL core
 }

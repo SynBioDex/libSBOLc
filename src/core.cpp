@@ -67,19 +67,19 @@ Collection getCollection(const char* id)
 	  of reading the code
 *****************************************/
 
-bool isComponent(const char* s)
+bool isComponent(const char* id)
 {
-	return (allComponents.count( string(s) ) > 0);
+	return (allComponents.count( string(id) ) > 0);
 }
 
-bool isAnnotation(const char* s)
+bool isAnnotation(const char* id)
 {
-	return (allAnnotations.count( string(s) ) > 0);
+	return (allAnnotations.count( string(id) ) > 0);
 }
 
-bool isCollection(const char* s)
+bool isCollection(const char* id)
 {
-	return (allCollections.count( string(s) ) > 0);
+	return (allCollections.count( string(id) ) > 0);
 }
 
 // free memory used by SBOL data structures

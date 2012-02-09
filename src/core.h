@@ -126,16 +126,16 @@ SBOLAPIEXPORTS void addPrecedesRelationship(SequenceAnnotation * upstream, Seque
 
 SBOLAPIEXPORTS void cleanup();
 
-
 /************************************************
-       "Private" functions not for export
+       "Private" functions that operate
+       on global variables
 *************************************************/
 
 //TODO put these in a separate file?
 
-bool isComponent(const char* s);
-bool isAnnotation(const char* s);
-bool isCollection(const char* s);
+bool isComponent(const char* id);
+bool isAnnotation(const char* id);
+bool isCollection(const char* id);
 
 void newComponent(const char* id);
 void newSequenceAnnotation(const char* id);
