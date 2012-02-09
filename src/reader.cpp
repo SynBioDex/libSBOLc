@@ -8,10 +8,6 @@ extern "C"
 	#include "raptor.h"  //RDF parser
 }
 
-extern map<string, DNAComponent> allComponents;
-extern map<string, Collection> allCollections;
-extern map<string, SequenceAnnotation> allAnnotations;
-
 using namespace std;
 
 // analyze a single triple and add to
