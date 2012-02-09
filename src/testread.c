@@ -35,8 +35,12 @@ void parse(char* examplepath)
 	cleanup();
 }
 
-int main() {
-    char* example = "../examples/example.nt";
+int main(int argc, char** argv) {
+    char* example;
+    if( argc < 2 )
+        example = "../examples/example.nt";
+    else
+        example = argv[1];
     printf("parsing %s\n\n", example);
     parse(example);
     return 0;
