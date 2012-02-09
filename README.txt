@@ -33,9 +33,9 @@ Lets say that the liBSBOLc source code is located in a folder called "libSBOLc"
 2) Run cmake-gui
     In the Cmake program, find two text boxes labeled, "where is the source code" and "where to build"
 
-3) Type the full libSBOLc/ folder path for the line that says "where is the source code"
+3) Type /your/path/to/libSBOLc/src for the line that says "where is the source code"
 
-4) Type libSBOLc/BUILD folder path for the line that says "where to build"
+4) Type /your/path/to/libSBOLc/BUILD for the line that says "where to build"
 
 5) Click the "Configure" button
 
@@ -48,6 +48,7 @@ Lets say that the liBSBOLc source code is located in a folder called "libSBOLc"
 8) Go to the libSBOLc/BUILD folder. 
     If you used Visual Studio as the compiler, you will find a project file (.sln) -- open it and build all
     If you used GCC, you will find a makefile. cd into this folder and run "make"
+    If you used MinGW, cd into this folder from the MinGW shell and run "mingw32-make.exe"
 
 =====================
    HOW TO TEST
