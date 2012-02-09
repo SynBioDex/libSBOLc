@@ -45,6 +45,7 @@ BEGIN_C_DECLS
 
 //forward declaration
 struct _DNAComponent;
+struct _DNASequence;
 struct _SequenceAnnotation;
 struct _Collection;
 
@@ -82,17 +83,13 @@ typedef struct _Collection
 	char* id;
 	char* name;
 	char* description;
-	struct _DNAComponent ** components;  //pointer to a single DNASequence
+	struct _DNAComponent ** components;  //pointer to multiple DNAComponents
 	struct _Collection ** collections; //null terminated array
 } Collection;
 
 /************************************************
        SBOL core function declarations
 *************************************************/
-
-SBOLAPIEXPORTS bool isComponent(const char* s);
-SBOLAPIEXPORTS bool isAnnotation(const char* s);
-SBOLAPIEXPORTS bool isCollection(const char* s);
 
 SBOLAPIEXPORTS int getNumCollections();
 SBOLAPIEXPORTS int getNumDNAComponents();
@@ -128,6 +125,25 @@ SBOLAPIEXPORTS void addSequenceAnnotation(DNAComponent * component, SequenceAnno
 SBOLAPIEXPORTS void addPrecedesRelationship(SequenceAnnotation * upstream, SequenceAnnotation * downstream);
 
 SBOLAPIEXPORTS void cleanup();
+
+
+/************************************************
+       "Private" functions not for export
+*************************************************/
+
+//TODO put these in a separate file?
+
+bool isComponent(const char* s);
+bool isAnnotation(const char* s);
+bool isCollection(const char* s);
+
+void newComponent(const char* id);
+void newSequenceAnnotation(const char* id);
+void newCollection(const char* id);
+
+DNAComponent getComponent(const char* id);
+SequenceAnnotation getSequenceAnnotation(const char* id);
+Collection getCollection(const char* id);
 
 END_C_DECLS
 #endif

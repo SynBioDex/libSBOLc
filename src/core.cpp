@@ -18,6 +18,50 @@ static map<string, DNAComponent> allComponents;
 static map<string, Collection> allCollections;
 static map<string, SequenceAnnotation> allAnnotations;
 
+/**************************************
+   Functions for working with the
+   global vectors
+****************************************/
+
+void newComponent(const char* id)
+{
+    DNAComponent component = {0,0,0,0,0,0};
+	component.id = new char[id.length()];
+	strcpy(component.id, id);
+	allComponents[ string(id) ] = component;
+}
+
+void newSequenceAnnotation(const char* id)
+{
+    SequenceAnnotation annotation = {0,0,0,0,0};
+	annotation.id = new char[id.length()];
+	strcpy(annotation.id, id);
+	allAnnotations[ string(id) ] = annotation;
+}
+
+void newCollection(const char* id)
+{
+    Collection collection = {0,0,0,0,0};
+	collection.id = new char[id.length()];
+	strcpy(collection.id, id);
+	allCollections[ string(id) ] = collection;
+}
+
+DNAComponent getComponent(const char* id)
+{
+    return allComponents[ string(id) ];
+}
+
+SequenceAnnotation getSequenceAnnotation(const char* id)
+{
+    return allAnnotations[ string(id) ];
+}
+
+Collection getCollection(const char* id)
+{
+    return allCollections[ string(id) ];
+}
+
 /****************************************
      The "is.." functions are just for ease
 	  of reading the code
@@ -73,7 +117,7 @@ void cleanup()
 }
 
 /***********************************************
-    SBOL get functions
+    SBOL core get functions
 ************************************************/
 
 int getNumCollections()
@@ -207,7 +251,7 @@ SequenceAnnotation getNthPrecedes(SequenceAnnotation annotation, int n)
 }
 
 /************************************************
-    SBOL set functions
+    SBOL core set functions
 *************************************************/
 void setCollectionID(Collection * collection, const char* id)
 {

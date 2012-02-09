@@ -2,6 +2,8 @@
 #include <string>  //std string
 #include <map>  //std map
 
+//TODO purge this file of C++ strings, maps and just use C
+
 extern "C"
 {
 	#include "core.h"
@@ -45,26 +47,29 @@ static void read_triple(void* user_data, raptor_statement* triple)
 	{
 		if (o.compare("DNAComponent") == 0)
 		{
-			DNAComponent component = {0,0,0,0,0,0};
-			component.id = new char[s.length()];
-			strcpy(component.id, s.c_str());
-			allComponents[s] = component;
+			//DNAComponent component = {0,0,0,0,0,0};
+			//component.id = new char[s.length()];
+			//strcpy(component.id, s.c_str());
+			//getComponent(s.c_str()) = component;
+			newComponent(s.c_str());
 		}
 		else
 			if (o.compare("SequenceAnnotation") == 0)
 			{
-				SequenceAnnotation annotation = {0,0,0,0,0};
-				annotation.id = new char[s.length()];
-				strcpy(annotation.id, s.c_str());
-				allAnnotations[s] = annotation;
+				//SequenceAnnotation annotation = {0,0,0,0,0};
+				//annotation.id = new char[s.length()];
+				//strcpy(annotation.id, s.c_str());
+				//getSequenceAnnotation(s.c_str()) = annotation;
+                newSequenceAnnotation(s.c_str());
 			}
 			else
 				if (o.compare("Collection") == 0)
 				{
-					Collection collection = {0,0,0,0,0};
-					collection.id = new char[s.length()];
-					strcpy(collection.id, s.c_str());
-					allCollections[s] = collection;
+					//Collection collection = {0,0,0,0,0};
+					//collection.id = new char[s.length()];
+					//strcpy(collection.id, s.c_str());
+					//allCollections[s] = collection;
+                    newCollection(s.c_str());
 				}
 		// else not part of SBOL core
 	}
@@ -75,22 +80,22 @@ static void read_triple(void* user_data, raptor_statement* triple)
 		{
 			if (p.compare("name") == 0)
 			{
-				allComponents[s].name = new char[o.length()];
-				strcpy(allComponents[s].name,o.c_str());
+				getComponent(s.c_str()).name = new char[o.length()];
+				strcpy(getComponent(s.c_str()).name,o.c_str());
 			}
 			else
 				if (p.compare("description") == 0)
 				{
-					allComponents[s].description = new char[o.length()];
-					strcpy(allComponents[s].description,o.c_str());
+					getComponent(s.c_str()).description = new char[o.length()];
+					strcpy(getComponent(s.c_str()).description,o.c_str());
 				}
 				else
 					if (p.compare("collection") == 0)
 					{
 						if (isComponent(s.c_str()) && isCollection(o.c_str()) > 0)
 						{
-							DNAComponent & component = allComponents[s];
-							Collection & collection = allCollections[o];
+							DNAComponent component = getComponent(s.c_str());
+							Collection collection = getCollection(o.c_str());
 							addComponentToCollection(&component, &collection);
 						}
 					}
@@ -103,14 +108,14 @@ static void read_triple(void* user_data, raptor_statement* triple)
 			{
 				if (p.compare("name") == 0)
 				{
-					allCollections[s].name = new char[o.length()];
-					strcpy(allCollections[s].name,o.c_str());
+					getCollection(s.c_str()).name = new char[o.length()];
+					strcpy(getCollection(s.c_str()).name,o.c_str());
 				}
 				else
 					if (p.compare("description") == 0)
 					{
-						allCollections[s].description = new char[o.length()];
-						strcpy(allCollections[s].description,o.c_str());
+						getCollection(s.c_str()).description = new char[o.length()];
+						strcpy(getCollection(s.c_str()).description,o.c_str());
 					}
 				// else not part of SBOL core
 			}
@@ -122,19 +127,19 @@ static void read_triple(void* user_data, raptor_statement* triple)
 					if (p.compare("annotates") == 0)
 					{
 						if (isComponent(o.c_str()))
-							addSequenceAnnotation(&allComponents[o], &allAnnotations[s]);
+							addSequenceAnnotation(&getComponent(o.c_str()), &getSequenceAnnotation(s.c_str()));
 					}
 					else
 						if (p.compare("subComponent") == 0)
 						{
 							if (isComponent(o.c_str()))
-								setSubComponent(&allAnnotations[s], &allComponents[o]);
+								setSubComponent(&getSequenceAnnotation(s.c_str()), &getComponent(o.c_str()));
 						}
 						else
 							if (p.compare("precedes") == 0)
 							{
 								if (isAnnotation(o.c_str()))
-									addPrecedesRelationship(&allAnnotations[s], &allAnnotations[o]);
+									addPrecedesRelationship(&getSequenceAnnotation(s.c_str()), &getSequenceAnnotation(o.c_str()));
 							}
 					// else not part of SBOL core
 				}
