@@ -26,9 +26,10 @@ ADD_SUBDIRECTORY( libxml2 ) #XML read/write/validate
 
 # all the source files in the libSBOLc project
 FILE( GLOB  SBOL_SRC_FILES
+    ${SBOL_SOURCE_DIR}/core.h
+    ${SBOL_SOURCE_DIR}/core.cpp
+    ${SBOL_SOURCE_DIR}/reader.h
     ${SBOL_SOURCE_DIR}/reader.cpp
-    #${SBOL_SOURCE_DIR}/writer.cpp
-    #${SBOL_SOURCE_DIR}/checker.cpp
 )
 
 ADD_LIBRARY( sbol
@@ -48,7 +49,6 @@ TARGET_LINK_LIBRARIES( sbol
 
 #TARGET_LINK_LIBRARIES( testread
 #   sbol
-#   raptor2
 #)
 
 #------------------------------------------------------------------

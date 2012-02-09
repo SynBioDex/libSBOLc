@@ -39,12 +39,10 @@ static void read_triple(void* user_data, raptor_statement* triple)
 	{
 		if (strcmp(o, "DNAComponent") == 0)
 			newComponent(s);
-		else
-			if (strcmp(o, "SequenceAnnotation") == 0)
-                newSequenceAnnotation(s);
-			else
-				if (strcmp(o, "Collection") == 0)
-                    newCollection(s);
+		else if (strcmp(o, "SequenceAnnotation") == 0)
+            newSequenceAnnotation(s);
+		else if (strcmp(o, "Collection") == 0)
+            newCollection(s);
 		// else not part of SBOL core
 	}
 
@@ -54,15 +52,9 @@ static void read_triple(void* user_data, raptor_statement* triple)
         DNAComponent com = getComponent(s);
 
 		if (strcmp(p, "name") == 0)
-		{
-		    com.name = new char[ strlen(o) ];
-			strcpy(com.name, o);
-		}
+			setComponentName(&com, o);
 		else if (strcmp(p, "description") == 0)
-		{
-			com.description = new char[ strlen(o) ];
-			strcpy(com.description, o);
-		}
+			setComponentDescription(&com, o);
 		else if (strcmp(p, "collection") == 0)
 		{
 			if (isComponent(s) && isCollection(o) > 0)
@@ -80,18 +72,12 @@ static void read_triple(void* user_data, raptor_statement* triple)
         Collection col = getCollection(s);
 
 		if (strcmp(p, "name") == 0)
-		{
-			col.name = new char[ strlen(o) ];
-			strcpy(col.name, o);
-		}
+			setCollectionName(&col, o);
 		else if (strcmp(p, "description") == 0)
-		{
-			col.description = new char[ strlen(o) ];
-			strcpy(col.description, o);
-		}
+			setCollectionDescription(&col, o);
 		// else not part of SBOL core
 	}
-				
+
 	// subject is an existing SequenceAnnotation
 	else if (isAnnotation(s))
 	{

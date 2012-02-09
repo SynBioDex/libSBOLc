@@ -1,4 +1,3 @@
-#include "../src/core.h"
 #include "../src/reader.h"
 
 void parse(char* examplepath)

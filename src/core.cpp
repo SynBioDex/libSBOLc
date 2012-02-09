@@ -26,7 +26,7 @@ static map<string, SequenceAnnotation> allAnnotations;
 void newComponent(const char* id)
 {
     DNAComponent component = {0,0,0,0,0,0};
-	component.id = new char[id.length()];
+	component.id = new char[ strlen(id) ];
 	strcpy(component.id, id);
 	allComponents[ string(id) ] = component;
 }
@@ -34,7 +34,7 @@ void newComponent(const char* id)
 void newSequenceAnnotation(const char* id)
 {
     SequenceAnnotation annotation = {0,0,0,0,0};
-	annotation.id = new char[id.length()];
+	annotation.id = new char[ strlen(id) ];
 	strcpy(annotation.id, id);
 	allAnnotations[ string(id) ] = annotation;
 }
@@ -42,7 +42,7 @@ void newSequenceAnnotation(const char* id)
 void newCollection(const char* id)
 {
     Collection collection = {0,0,0,0,0};
-	collection.id = new char[id.length()];
+	collection.id = new char[ strlen(id) ];
 	strcpy(collection.id, id);
 	allCollections[ string(id) ] = collection;
 }
