@@ -63,11 +63,12 @@ typedef struct _DNAComponent
 	char* id;
 	char* name;
 	char* description;
-    //int numAnnotations;
-    //int numCollections;
 	struct _DNASequence * dnaSequence;  //pointer to a single DNASequence
 	struct _SequenceAnnotation ** annotations; //null terminated array
 	struct _Collection ** collections; //null terminated array
+
+    int numAnnotations;
+    int numCollections;
 } DNAComponent;
 
 typedef struct _SequenceAnnotation
@@ -77,8 +78,9 @@ typedef struct _SequenceAnnotation
 	struct _DNAComponent * subComponent;
 	int genbankStart;
 	int end;
-    //int numPrecedes;
 	struct _SequenceAnnotation ** precedes; //null terminated array
+
+    int numPrecedes;
 } SequenceAnnotation;
 
 typedef struct _Collection
@@ -86,10 +88,11 @@ typedef struct _Collection
 	char* id;
 	char* name;
 	char* description;
-    //int numComponents;
-    //int numCollections;
 	struct _DNAComponent ** components;  //pointer to multiple DNAComponents
 	struct _Collection ** collections; //null terminated array
+
+    int numComponents;
+    int numCollections;
 } Collection;
 
 /************************************************
@@ -133,7 +136,7 @@ SBOLAPIEXPORTS void cleanup();
 
 /************************************************
        "Private" functions that operate
-       on global variables
+       on global vectors
 *************************************************/
 
 //TODO put these in a separate file?

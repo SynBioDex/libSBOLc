@@ -2,13 +2,12 @@
 
 void parse(char* examplepath)
 {
-	int i, j, k, n, m;
+	int i, j, k;
 	DNAComponent comp;
 
 	readSBOL(examplepath);
 
-	n = getNumDNAComponents();
-	for (i=0; i < n; ++i)
+	for (i=0; i < getNumDNAComponents(); ++i)
 	{
 		comp = getNthDNAComponent(i);
 		printf("component id = %s\n", comp.id);
@@ -20,8 +19,7 @@ void parse(char* examplepath)
 		printf("\tnum. annotations = %i\n", getNumSequenceAnnotationsIn(comp));
 		if (getNumSequenceAnnotationsIn(comp) > 0)
 		{
-			m = getNumSequenceAnnotationsIn(comp);
-			for (j=0; j < m; ++j)
+			for (j=0; j < getNumSequenceAnnotationsIn(comp); ++j)
 			{
 				SequenceAnnotation annotation = getNthSequenceAnnotationIn(comp, j);
 				printf("\tsubComponent %s\n", annotation.subComponent->id);

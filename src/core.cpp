@@ -10,12 +10,12 @@ extern "C"
 using namespace std;
 
 /**************************************
-   A set of global vectors are used to store
-   all the SBOL objects
+   A set of global vectors are used
+   to store all the SBOL objects
 ****************************************/
 
 static map<string, DNAComponent>	   allComponents;
-static map<string, Collection>		 allCollections;
+static map<string, Collection>         allCollections;
 static map<string, SequenceAnnotation> allAnnotations;
 
 /**************************************
@@ -25,7 +25,7 @@ static map<string, SequenceAnnotation> allAnnotations;
 
 void newComponent(const char* id)
 {
-	DNAComponent component = {0,0,0,0,0,0};
+	DNAComponent component = {0,0,0,0,0,0,0,0};
 	component.id = new char[ strlen(id) ];
 	strcpy(component.id, id);
 	allComponents[ string(id) ] = component;
@@ -34,7 +34,7 @@ void newComponent(const char* id)
 
 void newSequenceAnnotation(const char* id)
 {
-	SequenceAnnotation annotation = {0,0,0,0,0};
+	SequenceAnnotation annotation = {0,0,0,0,0,0,0};
 	annotation.id = new char[ strlen(id) ];
 	strcpy(annotation.id, id);
 	allAnnotations[ string(id) ] = annotation;
@@ -43,7 +43,7 @@ void newSequenceAnnotation(const char* id)
 
 void newCollection(const char* id)
 {
-	Collection collection = {0,0,0,0,0};
+	Collection collection = {0,0,0,0,0,0,0};
 	collection.id = new char[ strlen(id) ];
 	strcpy(collection.id, id);
 	allCollections[ string(id) ] = collection;
@@ -72,8 +72,8 @@ Collection getCollection(const char* id)
 }
 
 /****************************************
-	 The "is.." functions are just for ease
-	  of reading the code
+	 The "is.." functions are just
+	 for ease of reading the code
 *****************************************/
 
 int isComponent(const char* id)
@@ -94,7 +94,7 @@ int isCollection(const char* id)
 // free memory used by SBOL data structures
 void cleanup()
 {
-	map<string,Collection>::iterator it1 = allCollections.begin();
+	map<string, Collection>::iterator it1 = allCollections.begin();
 	for (; it1 != allCollections.end(); ++it1)
 	{
 		Collection p = (*it1).second;
@@ -103,9 +103,11 @@ void cleanup()
 		if (p.description) delete p.description;
 		if (p.collections) delete p.collections;
 		if (p.components) delete p.components;		
+		if (p.numComponents) delete &p.numComponents;
+		if (p.numCollections) delete &p.numCollections;
 	}
 
-	map<string,DNAComponent>::iterator it2 = allComponents.begin();
+	map<string, DNAComponent>::iterator it2 = allComponents.begin();
 	for (; it2 != allComponents.end(); ++it2)
 	{
 		DNAComponent p = (*it2).second;
@@ -114,14 +116,17 @@ void cleanup()
 		if (p.description) delete p.description;
 		if (p.collections) delete p.collections;
 		if (p.annotations) delete p.annotations;		
+		if (p.numAnnotations) delete &p.numAnnotations;
+		if (p.numCollections) delete &p.numCollections;
 	}
 
-	map<string,SequenceAnnotation>::iterator it3 = allAnnotations.begin();
+	map<string, SequenceAnnotation>::iterator it3 = allAnnotations.begin();
 	for (; it3 != allAnnotations.end(); ++it3)
 	{
 		SequenceAnnotation p = (*it3).second;
 		if (p.id) delete p.id;
 		if (p.precedes) delete p.precedes;
+		if (p.numPrecedes) delete &p.numPrecedes;
 	}
 }
 
@@ -169,16 +174,12 @@ DNAComponent getNthDNAComponent(int n)
 
 int getNumDNAComponentsIn(Collection collection)
 {
-	int n = 0;
-	if (collection.components)
-		while (collection.components[n]) ++n;
-	return n;
-	//return collection.numComponents;
+	return collection.numComponents;
 }
 
 DNAComponent getNthDNAComponentIn(Collection collection, int n)
 {
-	DNAComponent p = {0,0,0,0,0,0};
+	DNAComponent p = {0,0,0,0,0,0,0};
 	if (collection.components)
 		p = *(collection.components[n]);
 	return p;
@@ -186,20 +187,12 @@ DNAComponent getNthDNAComponentIn(Collection collection, int n)
 
 int getNumCollectionsFor(DNAComponent component)
 {
-	int n = 0;
-	if (component.collections)
-		while (component.collections[n])
-		{
-			++n;
-			//printf("%s has %d collections\n", component.id, n);
-		}
-	return n;
-	//return component.numCollections;
+	return component.numCollections;
 }
 
 Collection getNthCollectionFor(DNAComponent component, int n)
 {
-	Collection p = {0,0,0,0,0};
+	Collection p = {0,0,0,0,0,0,0};
 	if (component.collections)
 		p = *(component.collections[n]);
 	return p;
@@ -215,7 +208,7 @@ int getNumSequenceAnnotations()
 
 SequenceAnnotation getNthSequenceAnnotation(int n)
 {
-	SequenceAnnotation p = {0,0,0,0,0,0};
+	SequenceAnnotation p = {0,0,0,0,0,0,0};
 	map<string,SequenceAnnotation>::iterator it = allAnnotations.begin();
 	for (int i=0; it != allAnnotations.end(); ++it, ++i)
 		if (i == n)
@@ -226,53 +219,33 @@ SequenceAnnotation getNthSequenceAnnotation(int n)
 
 int getNumSequenceAnnotationsIn(DNAComponent component)
 {
-	int n=0;
-	if (component.annotations)
-	{
-		while (component.annotations[n])
-			++n;
-	}
-	return n;
-	//return component.numAnnotations;
+	int num = component.numAnnotations;
+	printf("%s has %d annotations\n", component.id, num);
+	return num;
 }
 
 SequenceAnnotation getNthSequenceAnnotationIn(DNAComponent component, int n)
 {
-	SequenceAnnotation p = {0,0,0,0,0,0};
-	int i=0;
-	if (component.annotations)
-	{
-		while (component.annotations[i] && i < n)
-			++i;
-		if (i == n)
-			p = *(component.annotations[i]);
-	}
+	printf("getting annotation %d from %s\n", n, component.id);
+	SequenceAnnotation p = {0,0,0,0,0,0,0};
+	if (component.numAnnotations >= n) //TODO just > ?
+		p = *(component.annotations[n]);
 	return p;
 }
 
 int getNumPrecedes(SequenceAnnotation annotation)
 {
-	int n=0;
-	if (annotation.precedes)
-	{
-		while (annotation.precedes[n])
-			++n;
-	}
-	return n;
-	//return annotation.numPrecedes;
+	int num = annotation.numPrecedes;
+	//printf("%s has %d precedes\n", annotation.id, num);
+	return num;
 }
 
 SequenceAnnotation getNthPrecedes(SequenceAnnotation annotation, int n)
 {
-	SequenceAnnotation p = {0,0,0,0,0,0};
-	int i=0;
-	if (annotation.precedes)
-	{
-		while (annotation.precedes[i] && i < n)
-			++i;
-		if (i == n)
-			p = *(annotation.precedes[i]);
-	}
+	//printf("getting precedes %d from %s\n", n, annotation.id);
+	SequenceAnnotation p = {0,0,0,0,0,0,0};
+	if (annotation.numPrecedes >= n) //TODO just > ?
+		p = *(annotation.precedes[n]);
 	return p;
 }
 
@@ -350,16 +323,17 @@ void addComponentToCollection(DNAComponent * component, Collection * collection)
 		// then add the new collection
 		if (p1)
 		{
-			i = 0;
-			while (p1[i])
-				++i;
-			n = i; // current number of collections
+			//i = 0;
+			//while (p1[i])
+			//	++i;
+			//n = i; // current number of collections
+            n = component->numCollections;
 
-			component->collections = (Collection**)malloc((n+2) * sizeof(Collection*));
-			for (i=0; i < n; ++i)
+			component->collections = (Collection**)malloc((n+1) * sizeof(Collection*));
+			for (i=0; i < n-1; ++i) //TODO remove multiple nulls?
 				component->collections[i] = p1[i];
-			component->collections[n] = collection;
-			component->collections[n+1] = 0;
+			component->collections[n-1] = collection;
+			component->collections[n] = 0;
 			free(p1);
 		}
 
@@ -370,7 +344,7 @@ void addComponentToCollection(DNAComponent * component, Collection * collection)
 			component->collections[0] = collection;
 			component->collections[1] = 0;
 		}
-		//component->numCollections++;
+		component->numCollections++;
 
 		//printf("%s has the following %d collections:", component->id, n);
 		//while (component->collections[i])
@@ -386,16 +360,17 @@ void addComponentToCollection(DNAComponent * component, Collection * collection)
 		// then add the new component to it
 		if (p2)
 		{
-			i = 0;
-			while (p2[i])
-				++i;
-			n = i; // current number of components
+			//i = 0;
+			//while (p2[i])
+			//	++i;
+			//n = i; // current number of components
+			n = collection->numComponents;
 
-			collection->components = (DNAComponent**)malloc((n+2) * sizeof(DNAComponent*));
-			for (i=0; i < n; ++i)
+			collection->components = (DNAComponent**)malloc((n+1) * sizeof(DNAComponent*));
+			for (i=0; i < n-1; ++i)
 				collection->components[i] = p2[i];
-			collection->components[n] = component;
-			collection->components[n+1] = 0;
+			collection->components[n-1] = component;
+			collection->components[n] = 0;
 			free(p2);
 		}
 
@@ -406,7 +381,7 @@ void addComponentToCollection(DNAComponent * component, Collection * collection)
 			collection->components[0] = component;
 			collection->components[1] = 0;
 		}
-		//collection->numComponents++;
+		collection->numComponents++;
 
 		//printf("%s has the following %d components:", collection->id, n);
 		//while (collection->components[i])
@@ -418,7 +393,7 @@ void addComponentToCollection(DNAComponent * component, Collection * collection)
 
 	}
 	else
-		printf("component or collection was null\n");
+		printf("component or collection is null\n");
 }
 
 void setSequenceAnnotationID(SequenceAnnotation * annotation, const char * id)
@@ -446,18 +421,21 @@ void addSequenceAnnotation(DNAComponent * component, SequenceAnnotation * annota
 		}
 		else
 		{
-			int n=0;
-			while (component->annotations[n]) ++n;
+			//int n=0;
+			//while (component->annotations[n]) ++n;
+			int n = component->numAnnotations;
 
 			SequenceAnnotation ** p = component->annotations;
-			component->annotations = new SequenceAnnotation*[n+2];
-			for (int i=0; i < n; ++i)
+			component->annotations = new SequenceAnnotation*[n+1];
+			for (int i=0; i < n-1; ++i)
 				component->annotations[i] = p[i];
-			component->annotations[n] = annotation;
-			component->annotations[n+1] = 0;
+			component->annotations[n-1] = annotation;
+			component->annotations[n] = 0;
 		}
-		//component->numAnnotations++;
+		component->numAnnotations++;
 	}
+	else
+	    printf("component or annotation is null\n");
 }
 
 void addPrecedesRelationship(SequenceAnnotation * upstream, SequenceAnnotation * downstream)
@@ -472,17 +450,18 @@ void addPrecedesRelationship(SequenceAnnotation * upstream, SequenceAnnotation *
 		}
 		else
 		{
-			int n=0;
-			while (upstream->precedes[n]) ++n;
+			//int n=0;
+			//while (upstream->precedes[n]) ++n;
+			int n = upstream->numPrecedes;
 
 			SequenceAnnotation ** p = upstream->precedes;
-			upstream->precedes = new SequenceAnnotation*[n+2];
-			for (int i=0; i < n; ++i)
+			upstream->precedes = new SequenceAnnotation*[n+1];
+			for (int i=0; i < n-1; ++i)
 				upstream->precedes[i] = p[i];
-			upstream->precedes[n] = downstream;
-			upstream->precedes[n+1] = 0;
+			upstream->precedes[n-1] = downstream;
+			upstream->precedes[n] = 0;
 		}
-		//upstream->numPrecedes++;
+		upstream->numPrecedes++;
 	}
 }
 
