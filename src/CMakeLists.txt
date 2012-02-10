@@ -12,63 +12,63 @@ SET(EXECUTABLE_OUTPUT_PATH ${PROJECT_SOURCE_DIR}/../DIST)
 SET(LIBRARY_OUTPUT_PATH ${EXECUTABLE_OUTPUT_PATH})
 
 INCLUDE_DIRECTORIES( BEFORE
-    ${SBOL_SOURCE_DIR}/curl/include
-    ${SBOL_SOURCE_DIR}/expat
-    ${SBOL_SOURCE_DIR}/expat/lib
-    ${SBOL_SOURCE_DIR}/raptor2/src
-    ${SBOL_SOURCE_DIR}/libxml2/include
+	${SBOL_SOURCE_DIR}/curl/include
+	${SBOL_SOURCE_DIR}/expat
+	${SBOL_SOURCE_DIR}/expat/lib
+	${SBOL_SOURCE_DIR}/raptor2/src
+	${SBOL_SOURCE_DIR}/libxml2/include
 )
 
 # build other required libraries
-ADD_SUBDIRECTORY( curl )    #needed by raptor
+ADD_SUBDIRECTORY( curl )	#needed by raptor
 ADD_SUBDIRECTORY( raptor2 ) #RDF parser
 ADD_SUBDIRECTORY( libxml2 ) #XML read/write/validate
 
 # all the source files in the libSBOLc project
 FILE( GLOB  SBOL_SRC_FILES
-    ${SBOL_SOURCE_DIR}/core.h
-    ${SBOL_SOURCE_DIR}/core.cpp
-    ${SBOL_SOURCE_DIR}/reader.h
-    ${SBOL_SOURCE_DIR}/reader.cpp
+	${SBOL_SOURCE_DIR}/core.h
+	${SBOL_SOURCE_DIR}/core.cpp
+	${SBOL_SOURCE_DIR}/reader.h
+	${SBOL_SOURCE_DIR}/reader.c
 )
 
 ADD_LIBRARY( sbol
-    SHARED
-    ${SBOL_SRC_FILES}
+	SHARED
+	${SBOL_SRC_FILES}
 )
 
-#ADD_EXECUTABLE( testread
-#    #SHARED
-#    ../test/testread.c #TODO variables for important folders
-#)
+ADD_EXECUTABLE( testread
+	#SHARED
+	../test/testread.c #TODO variables for important folders
+)
 
 TARGET_LINK_LIBRARIES( sbol
-    sbol
-    raptor2
+	sbol
+	raptor2
 )
 
-#TARGET_LINK_LIBRARIES( testread
-#   sbol
-#)
+TARGET_LINK_LIBRARIES( testread
+   sbol
+)
 
 #------------------------------------------------------------------
 # These require LibXML++, and I'm trying to do without for now
 #------------------------------------------------------------------
 
 #ADD_EXECUTABLE( check
-#    checker.cpp
+#	checker.cpp
 #)
 
 #ADD_EXECUTABLE( testreadwrite
-#    writer.cpp # make a separate test file
+#	writer.cpp # make a separate test file
 #)
 
 #TARGET_LINK_LIBRARIES( check
-#    ${LibXML++_LIBRARIES}
+#	${LibXML++_LIBRARIES}
 #)
 
 #TARGET_LINK_LIBRARIES( testreadwrite
-#    ${LibXML++_LIBRARIES}
+#	${LibXML++_LIBRARIES}
 #)
 
 
