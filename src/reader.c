@@ -15,90 +15,111 @@ static void read_triple(void* user_data, raptor_statement* triple)
 		s = (char*)(raptor_uri_as_string(triple->subject->value.uri));
 	else if (triple->subject->type == RAPTOR_TERM_TYPE_LITERAL)
 		s = (char*)(triple->subject->value.literal.string);
-	else
-		printf("  subject not URI or literal\n");
 	
 	// read predicate
 	if (triple->predicate->type == RAPTOR_TERM_TYPE_URI)
 		p = (char*)(raptor_uri_as_string(triple->predicate->value.uri));
 	else if (triple->predicate->type == RAPTOR_TERM_TYPE_LITERAL)
 		p = (char*)(triple->predicate->value.literal.string);
-	else
-		printf("  predicate not URI or literal\n");
-		
+    
 	// read object
 	if (triple->object->type == RAPTOR_TERM_TYPE_URI)
 		o = (char*)(raptor_uri_as_string(triple->object->value.uri));
 	else if (triple->object->type == RAPTOR_TERM_TYPE_LITERAL)
 		o = (char*)(triple->object->value.literal.string);
-	else
-		printf("  object not URI or literal\n");
 	
-	//printf("%s %s %s\n", s, p, o);
+	printf("%s %s %s\n", s, p, o);
 
 	// predicate is rdf:type,
 	// so a new structure needs to be created
 	if (strcmp(p, "a") == 0) //TODO or p == rdf:type?
 	{
+	    printf("\tfound new subject\n");
 		if (strcmp(o, "DNAComponent") == 0)
+		{
+			printf("\tcreating new component %s\n", s);
 			newComponent(s);
+	    }
 		else if (strcmp(o, "SequenceAnnotation") == 0)
+		{
+			printf("\tcreating new annotation %s\n", s);
 			newSequenceAnnotation(s);
+		}
 		else if (strcmp(o, "Collection") == 0)
+		{
+			printf("\tcreating new collection %s\n", s);
 			newCollection(s);
+		}
 		else
-			// not part of SBOL core
-			printf("ignoring unknown type %s\n", o);
+			printf("ignoring unknown object %s\n", o);
 	}
 
 	// subject is an existing DNAComponent
 	else if (isComponent(s))
 	{
-		//printf("found info: %s %s %s\n", s, p, o);
+	    printf("\tfound new info about component %s\n", s);
 		DNAComponent com = getComponent(s);
 
 		if (strcmp(p, "name") == 0)
+		{
+			printf("\tsetting %s.name to %s\n", com.id, o);
 			setComponentName(&com, o);
+	    }
 		else if (strcmp(p, "description") == 0)
+		{
+			printf("\tsetting %s.description to %s\n", com.id, o);
 			setComponentDescription(&com, o);
+		}
 		else if (strcmp(p, "collection") == 0)
 		{
 			if (isComponent(s) && isCollection(o) > 0)
 			{
-				//printf("adding %s to %s\n", s, o);
+				printf("adding %s to %s\n", s, o);
 				Collection col = getCollection(o);
-				//printf("start with %d collections\n", getNumCollectionsFor(com));
 				addComponentToCollection(&com, &col);
-				//printf("end with %d collections\n", getNumCollectionsFor(com));
 			}
 		}
-		// else not part of SBOL core
+		else
+			printf("ignoring unknown predicate %s\n", o);
 	}
 
 	// subject is an existing Collection
 	else if (isCollection(s))
 	{
+	    printf("\tfound new info about collection %s\n", s);
 		Collection col = getCollection(s);
 
 		if (strcmp(p, "name") == 0)
+		{
+			printf("\tsetting %s.name to %s\n", col.id, o);
 			setCollectionName(&col, o);
+		}
 		else if (strcmp(p, "description") == 0)
+		{
+			printf("\tsetting %s.description to %s\n", col.id, o);
 			setCollectionDescription(&col, o);
-		// else not part of SBOL core
+		}
+		else
+			printf("\tignoring unknown predicate %s\n", p);
 	}
 
 	// subject is an existing SequenceAnnotation
 	else if (isAnnotation(s))
 	{
+	    printf("\tfound new info about annotation %s\n", s);
 		SequenceAnnotation ann = getSequenceAnnotation(s);
 
 		if (strcmp(p, "annotates") == 0)
 		{
+		    printf("\t%s annotates %s\n", ann.id, o);
 			if (isComponent(o))
 			{
+			    printf("\tsetting %s.annotates %s\n", ann.id, o);
 				DNAComponent com = getComponent(o);
 				addSequenceAnnotation(&com, &ann);
 			}
+			else
+			    printf("\tignoring annotation of nonexistent object %s\n", o);
 		}
 		else if (strcmp(p, "subComponent") == 0)
 		{
