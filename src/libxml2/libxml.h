@@ -77,6 +77,7 @@ void __htmlParseContent(void *ctx);
  */
 void __xmlGlobalInitMutexLock(void);
 void __xmlGlobalInitMutexUnlock(void);
+void __xmlGlobalInitMutexDestroy(void);
 
 #ifdef IN_LIBXML
 #ifdef __GNUC__
@@ -88,5 +89,8 @@ void __xmlGlobalInitMutexUnlock(void);
 #endif
 #endif
 #endif
+#endif
+#if !defined(PIC) && !defined(NOLIBTOOL)
+#  define LIBXML_STATIC
 #endif
 #endif /* ! __XML_LIBXML_H__ */

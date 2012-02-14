@@ -2063,7 +2063,7 @@ xmlSchemaValAtomicListNode(xmlSchemaTypePtr type, const xmlChar *value,
  * Parse an unsigned long into 3 fields.
  *
  * Returns the number of significant digits in the number or
- * -1 if overflow of the capacity
+ * -1 if overflow of the capacity and -2 if it's not a number.
  */
 static int
 xmlSchemaParseUInt(const xmlChar **str, unsigned long *llo,
@@ -2071,6 +2071,9 @@ xmlSchemaParseUInt(const xmlChar **str, unsigned long *llo,
     unsigned long lo = 0, mi = 0, hi = 0;
     const xmlChar *tmp, *cur = *str;
     int ret = 0, i = 0;
+
+    if (!((*cur >= '0') && (*cur <= '9'))) 
+        return(-2);
 
     while (*cur == '0') {        /* ignore leading zeroes */
         cur++;
@@ -2342,9 +2345,9 @@ xmlSchemaValAtomicType(xmlSchemaTypePtr type, const xmlChar * value,
 			    * Terminate the (preparsed) string.
 			    */
 			    if (len != 0) {
-				*cptr = 0; 
+				*cptr = 0;
 				cptr = cval;
-				
+
 				xmlSchemaParseUInt((const xmlChar **)&cptr,
 				    &v->value.decimal.lo,
 				    &v->value.decimal.mi,
@@ -2386,9 +2389,11 @@ xmlSchemaValAtomicType(xmlSchemaTypePtr type, const xmlChar * value,
 		normOnTheFly);
             break;
         case XML_SCHEMAS_FLOAT:
-        case XML_SCHEMAS_DOUBLE:{
+        case XML_SCHEMAS_DOUBLE: {
                 const xmlChar *cur = value;
                 int neg = 0;
+                int digits_before = 0;
+                int digits_after = 0;
 
 		if (normOnTheFly)
 		    while IS_WSP_BLANK_CH(*cur) cur++;
@@ -2461,12 +2466,17 @@ xmlSchemaValAtomicType(xmlSchemaTypePtr type, const xmlChar * value,
                     goto return1;
                 while ((*cur >= '0') && (*cur <= '9')) {
                     cur++;
+                    digits_before++;
                 }
                 if (*cur == '.') {
                     cur++;
-                    while ((*cur >= '0') && (*cur <= '9'))
+                    while ((*cur >= '0') && (*cur <= '9')) {
                         cur++;
+                        digits_after++;
+                    }
                 }
+                if ((digits_before == 0) && (digits_after == 0))
+                    goto return1;
                 if ((*cur == 'e') || (*cur == 'E')) {
                     cur++;
                     if ((*cur == '-') || (*cur == '+'))
@@ -2896,12 +2906,23 @@ xmlSchemaValAtomicType(xmlSchemaTypePtr type, const xmlChar * value,
         case XML_SCHEMAS_ANYURI:{		
                 if (*value != 0) {
 		    xmlURIPtr uri;
+		    xmlChar *tmpval, *cur;
 		    if (normOnTheFly) {		    
 			norm = xmlSchemaCollapseString(value);
 			if (norm != NULL)
 			    value = norm;
 		    }
-                    uri = xmlParseURI((const char *) value);
+		    tmpval = xmlStrdup(value);
+		    for (cur = tmpval; *cur; ++cur) {
+			if (*cur < 32 || *cur >= 127 || *cur == ' ' ||
+			    *cur == '<' || *cur == '>' || *cur == '"' ||
+			    *cur == '{' || *cur == '}' || *cur == '|' ||
+			    *cur == '\\' || *cur == '^' || *cur == '`' ||
+			    *cur == '\'')
+			    *cur = '_';
+		    }
+                    uri = xmlParseURI((const char *) tmpval);
+		    xmlFree(tmpval);
                     if (uri == NULL)
                         goto return1;
                     xmlFreeURI(uri);
@@ -3116,7 +3137,7 @@ xmlSchemaValAtomicType(xmlSchemaTypePtr type, const xmlChar * value,
                 } else if (*cur == '+')
                     cur++;
                 ret = xmlSchemaParseUInt(&cur, &lo, &mi, &hi);
-                if (ret == -1)
+                if (ret < 0)
                     goto return1;
 		if (normOnTheFly)
 		    while IS_WSP_BLANK_CH(*cur) cur++;
@@ -3161,7 +3182,7 @@ xmlSchemaValAtomicType(xmlSchemaTypePtr type, const xmlChar * value,
         case XML_SCHEMAS_BYTE:
         case XML_SCHEMAS_SHORT:
         case XML_SCHEMAS_INT:{
-                 const xmlChar *cur = value;
+                const xmlChar *cur = value;
                 unsigned long lo, mi, hi;
                 int sign = 0;
 

@@ -11,45 +11,44 @@ CMAKE_MINIMUM_REQUIRED( VERSION 2.6 )
 SET(EXECUTABLE_OUTPUT_PATH ${PROJECT_SOURCE_DIR}/../DIST)
 SET(LIBRARY_OUTPUT_PATH ${EXECUTABLE_OUTPUT_PATH})
 
+# make dependencies
+ADD_SUBDIRECTORY( curl    ) # needed by raptor
+ADD_SUBDIRECTORY( raptor2 ) # RDF parser
+ADD_SUBDIRECTORY( libxml2 ) # XML write, validate
+
+# find dependencies
+#SET( CMAKE_MODULE_PATH ${CMAKE_MODULE_PATH} "${CMAKE_SOURCE_DIR}/cmake" )
+#FIND_PACKAGE( LibXML2 )
+
+# tell CMake where to look for headers
 INCLUDE_DIRECTORIES( BEFORE
 	${SBOL_SOURCE_DIR}/curl/include
 	${SBOL_SOURCE_DIR}/expat
 	${SBOL_SOURCE_DIR}/expat/lib
 	${SBOL_SOURCE_DIR}/raptor2/src
+	#${LibXML2_INCLUDE_DIRS}
 	${SBOL_SOURCE_DIR}/libxml2/include
 )
 
-# build other required libraries
-ADD_SUBDIRECTORY( curl )	#needed by raptor
-ADD_SUBDIRECTORY( raptor2 ) #RDF parser
-ADD_SUBDIRECTORY( libxml2 ) #XML read/write/validate
-
-# all the source files in the libSBOLc project
+# list libSBOLc source files
 FILE( GLOB  SBOL_SRC_FILES
 	${SBOL_SOURCE_DIR}/core.h
 	${SBOL_SOURCE_DIR}/core.cpp
 	${SBOL_SOURCE_DIR}/reader.h
 	${SBOL_SOURCE_DIR}/reader.c
+	${SBOL_SOURCE_DIR}/validator.h
+	${SBOL_SOURCE_DIR}/validator.c
 )
 
-ADD_LIBRARY( sbol
-	SHARED
-	${SBOL_SRC_FILES}
-)
+# make the libSBOLc library
+ADD_LIBRARY( sbol SHARED ${SBOL_SRC_FILES} )
+TARGET_LINK_LIBRARIES( sbol sbol raptor2 libxml2 )
 
-ADD_EXECUTABLE( testread
-	#SHARED
-	../test/testread.c #TODO variables for important folders
-)
-
-TARGET_LINK_LIBRARIES( sbol
-	sbol
-	raptor2
-)
-
-TARGET_LINK_LIBRARIES( testread
-   sbol
-)
+# make tests
+ADD_EXECUTABLE( testreadntriples ../test/test_read_ntriples.c )
+ADD_EXECUTABLE( testvalidate     ../test/test_validate.c      )
+TARGET_LINK_LIBRARIES( testreadntriples sbol )
+TARGET_LINK_LIBRARIES( testvalidate     sbol )
 
 #------------------------------------------------------------------
 # These require LibXML++, and I'm trying to do without for now

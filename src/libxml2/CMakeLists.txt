@@ -1,49 +1,115 @@
-#
-# this module look for libxml (http://www.xmlsoft.org) support
-# it will define the following values
-#
-# LibXml2_INCLUDE_DIR  = where libxml/xpath.h can be found
-# LibXml2_LIBRARIES    = the library to link against libxml2
-# LibXml2_FOUND        = set to 1 if libxml2 is found
-#
-IF(EXISTS ${PROJECT_CMAKE}/Libxml2Config.cmake)
-  INCLUDE(${PROJECT_CMAKE}/Libxml2Config.cmake)
-ENDIF(EXISTS ${PROJECT_CMAKE}/Libxml2Config.cmake)
+# LibXml2 CMake build file
+cmake_minimum_required(VERSION 2.6)
+project (LibXml2)
 
-set(Libxml2 xml2)
-if(QMC_BUILD_STATIC)
-  set(Libxml2 libxml2.a)
-endif(QMC_BUILD_STATIC)
+if (NOT LibXml2_SOURCE_NAME)
+        set(LibXml2_SOURCE_NAME libxml2)
+endif (NOT LibXml2_SOURCE_NAME)
 
-IF(Libxml2_INCLUDE_DIRS)
+set(LIBXML_SRC_FOLDER "${CMAKE_SOURCE_DIR}/libxml2" )
 
-  FIND_PATH(LIBXML2_INCLUDE_DIR libxml/xpath.h ${Libxml2_INCLUDE_DIRS})
-  FIND_LIBRARY(LIBXML2_LIBRARY xml2 ${Libxml2_LIBRARY_DIRS})
+# Create variables for include and library
+set(LIBXML2_INCLUDE_DIR ${LIBXML_SRC_FOLDER}/include CACHE STRING
+        "LibXml2 include directory" FORCE)
+set(LIBXML2_LIBRARIES libxml2 CACHE STRING
+        "LibXml2 libraries" FORCE)
+set(libxml_src
+${LIBXML_SRC_FOLDER}/c14n.c
+${LIBXML_SRC_FOLDER}/catalog.c
+${LIBXML_SRC_FOLDER}/chvalid.c
+${LIBXML_SRC_FOLDER}/debugXML.c
+${LIBXML_SRC_FOLDER}/dict.c
+${LIBXML_SRC_FOLDER}/DOCBparser.c
+${LIBXML_SRC_FOLDER}/encoding.c
+${LIBXML_SRC_FOLDER}/entities.c
+${LIBXML_SRC_FOLDER}/error.c
+${LIBXML_SRC_FOLDER}/globals.c
+${LIBXML_SRC_FOLDER}/hash.c
+${LIBXML_SRC_FOLDER}/HTMLparser.c
+${LIBXML_SRC_FOLDER}/HTMLtree.c
+${LIBXML_SRC_FOLDER}/legacy.c
+${LIBXML_SRC_FOLDER}/list.c
+${LIBXML_SRC_FOLDER}/nanoftp.c
+${LIBXML_SRC_FOLDER}/nanohttp.c
+${LIBXML_SRC_FOLDER}/parser.c
+${LIBXML_SRC_FOLDER}/parserInternals.c
+${LIBXML_SRC_FOLDER}/pattern.c
+${LIBXML_SRC_FOLDER}/relaxng.c
+${LIBXML_SRC_FOLDER}/SAX2.c
+${LIBXML_SRC_FOLDER}/SAX.c
+${LIBXML_SRC_FOLDER}/schematron.c
+${LIBXML_SRC_FOLDER}/threads.c
+${LIBXML_SRC_FOLDER}/tree.c
+${LIBXML_SRC_FOLDER}/uri.c
+${LIBXML_SRC_FOLDER}/valid.c
+${LIBXML_SRC_FOLDER}/xinclude.c
+${LIBXML_SRC_FOLDER}/xlink.c
+${LIBXML_SRC_FOLDER}/xmlIO.c
+${LIBXML_SRC_FOLDER}/xmlmemory.c
+${LIBXML_SRC_FOLDER}/xmlreader.c
+${LIBXML_SRC_FOLDER}/xmlregexp.c
+${LIBXML_SRC_FOLDER}/xmlmodule.c
+${LIBXML_SRC_FOLDER}/xmlsave.c
+${LIBXML_SRC_FOLDER}/xmlschemas.c
+${LIBXML_SRC_FOLDER}/xmlschemastypes.c
+${LIBXML_SRC_FOLDER}/xmlunicode.c
+${LIBXML_SRC_FOLDER}/xmlwriter.c
+${LIBXML_SRC_FOLDER}/xpath.c
+${LIBXML_SRC_FOLDER}/xpointer.c
+${LIBXML_SRC_FOLDER}/xmlstring.c
+)
 
-ELSE(Libxml2_INCLUDE_DIRS)
+option(LIBXML2_CONFIG_COMPILER "Reconfigure libxml2?" true)
+# Use the builtin .js script to configure build
+if (LIBXML2_CONFIG_COMPILER)
+        message(STATUS "Configuring LibXml2...")
+        if (WIN32)
+                if (MSVC)
+                        set(libxml_compiler msvc)
+                elseif (BORLAND)
+                        set(libxml_compiler bcb)
+                else (MSVC)
+                        set(libxml_compiler mingw)
+                endif (MSVC)
+                find_program(CSCRIPT cscript)
+                if(CSCRIPT)
+                        execute_process(
+                                COMMAND cscript.exe configure.js iconv=no compiler=${libxml_compiler}
+                                WORKING_DIRECTORY "${LIBXML_SRC_FOLDER}/win32"
+                                ERROR_VARIABLE libxml_configure_output)
+                else(CSCRIPT)
+                        message(STATUS "BLAH")
+                        configure_file(${PROJECT_SOURCE_DIR}/config.h
+                                ${LIBXML_SRC_FOLDER}/config.h
+                                COPYONLY)
+                        configure_file(${PROJECT_SOURCE_DIR}/xmlversion.h
+                                ${LIBXML2_INCLUDE_DIR}/libxml/xmlversion.h
+                                COPYONLY)
+                endif( CSCRIPT )
+        endif (WIN32)
+        message(STATUS "Configuration complete...")
+        set(LIBXML2_CONFIG_COMPILER false CACHE BOOL "Reconfigure libxml2?" FORCE)
+endif (LIBXML2_CONFIG_COMPILER)
 
-  FIND_PATH(LIBXML_INCLUDE_DIR libxml2/libxml/xpath.h PATHS ${LIBXML2_HOME}/include $ENV{LIBXML2_HOME}/include /usr/local/include /usr/include NO_DEFAULT_PATH)
-  if(LIBXML_INCLUDE_DIR)
-    set(LIBXML2_INCLUDE_DIR "${LIBXML_INCLUDE_DIR}/libxml2")
-  else(LIBXML_INCLUDE_DIR)
-    FIND_PATH(LIBXML2_INCLUDE_DIR libxml/xpath.h ${LIBXML2_HOME}/include $ENV{LIBXML2_HOME}/include)
-  endif(LIBXML_INCLUDE_DIR)
+include_directories(${LIBXML2_INCLUDE_DIR})
 
-  FIND_LIBRARY(LIBXML2_LIBRARIES ${Libxml2} 
-    PATHS ${LIBXML2_HOME}/lib $ENV{LIBXML2_HOME}/lib /usr/local/lib /usr/lib NO_DEFAULT_PATH)
+# Creates the project
+add_library(${LIBXML2_LIBRARIES} STATIC ${libxml_src})
+if (NOT LIBXML2_STATICLIB_OUTPUT_PATH)
+        set(LIBXML2_STATICLIB_OUTPUT_PATH "." CACHE STRING
+                "LibXml2 static lib output directory")
+endif (NOT LIBXML2_STATICLIB_OUTPUT_PATH)
+set_target_properties (${LIBXML2_LIBRARIES} PROPERTIES
+        ARCHIVE_OUTPUT_DIRECTORY "${LIBXML2_STATICLIB_OUTPUT_PATH}")
+if (WIN32)
+        target_link_libraries(${LIBXML2_LIBRARIES} ws2_32)
+endif (WIN32)
 
-ENDIF(Libxml2_INCLUDE_DIRS)
+# Some defines needed
+if (MSVC)
+        set(libxml_compile_def
+                _CRT_SECURE_NO_WARNINGS _CRT_NONSTDC_NO_WARNINGS)
+endif (MSVC)
 
-SET(LIBXML2_FOUND FALSE)
-IF(LIBXML2_INCLUDE_DIR AND LIBXML2_LIBRARIES)
-  message(STATUS "LIBXML2_INCLUDE_DIR="${LIBXML2_INCLUDE_DIR})
-  message(STATUS "LIBXML2_LIBRARIES="${LIBXML2_LIBRARIES})
-  SET(LIBXML2_FOUND TRUE)
-ENDIF()
-
-MARK_AS_ADVANCED(
-  LIBXML2_INCLUDE_DIR 
-  LIBXML2_LIBRARIES 
-  LIBXML2_FOUND
-  )
-
+set_target_properties(${LIBXML2_LIBRARIES} PROPERTIES
+        COMPILE_DEFINITIONS "${libxml_compile_def}")

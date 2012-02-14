@@ -997,18 +997,15 @@ xmlLoadFileContent(const char *filename)
     }
 #ifdef HAVE_STAT
     len = read(fd, content, size);
+    close(fd);
 #else
     len = fread(content, 1, size, fd);
+    fclose(fd);
 #endif
     if (len < 0) {
         xmlFree(content);
         return (NULL);
     }
-#ifdef HAVE_STAT
-    close(fd);
-#else
-    fclose(fd);
-#endif
     content[len] = 0;
 
     return(content);
@@ -2616,6 +2613,8 @@ xmlCatalogSGMLResolve(xmlCatalogPtr catal, const xmlChar *pubID,
 	return(ret);
     if (sysID != NULL)
 	ret = xmlCatalogGetSGMLSystem(catal->sgml, sysID);
+    if (ret != NULL)
+	return(ret);
     return(NULL);
 }
 
@@ -2912,7 +2911,7 @@ xmlACatalogResolveURI(xmlCatalogPtr catal, const xmlChar *URI) {
 
 	sgml = xmlCatalogSGMLResolve(catal, NULL, URI);
 	if (sgml != NULL)
-            sgml = xmlStrdup(sgml);
+            ret = xmlStrdup(sgml);
     }
     return(ret);
 }

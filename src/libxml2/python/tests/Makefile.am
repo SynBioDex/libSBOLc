@@ -1,4 +1,5 @@
-EXAMPLE_DIR = $(datadir)/doc/libxml2-python-$(LIBXML_VERSION)/examples
+exampledir = $(datadir)/doc/libxml2-python-$(LIBXML_VERSION)/examples
+dist_example_DATA = $(PYTESTS) $(XMLS)
 
 PYTESTS=	\
     build.py	\
@@ -44,15 +45,15 @@ PYTESTS=	\
     validDTD.py	\
     validSchemas.py \
     validRNG.py \
-    compareNodes.py
+    compareNodes.py \
+    xpathns.py \
+    xpathleak.py
 
 XMLS=		\
     tst.xml	\
     valid.xml	\
     invalid.xml	\
     test.dtd
-
-EXTRA_DIST = $(PYTESTS) $(XMLS)
 
 if WITH_PYTHON
 tests: $(PYTESTS)
@@ -71,9 +72,3 @@ endif
 
 clean:
 	rm -f *.pyc core
-
-install-data-local:
-	$(mkinstalldirs) $(DESTDIR)$(EXAMPLE_DIR)
-	-(for test in $(PYTESTS) $(XMLS); \
-	  do @INSTALL@ -m 0644 $(srcdir)/$$test $(DESTDIR)$(EXAMPLE_DIR) ; done)
-

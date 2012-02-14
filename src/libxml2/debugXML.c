@@ -141,9 +141,9 @@ xmlCtxtDumpSpaces(xmlDebugCtxtPtr ctxt)
         return;
     if ((ctxt->output != NULL) && (ctxt->depth > 0)) {
         if (ctxt->depth < 50)
-            fprintf(ctxt->output, &ctxt->shift[100 - 2 * ctxt->depth]);
+            fprintf(ctxt->output, "%s", &ctxt->shift[100 - 2 * ctxt->depth]);
         else
-            fprintf(ctxt->output, ctxt->shift);
+            fprintf(ctxt->output, "%s", ctxt->shift);
     }
 }
 
@@ -162,7 +162,7 @@ xmlDebugErr(xmlDebugCtxtPtr ctxt, int error, const char *msg)
 		    NULL, ctxt->node, XML_FROM_CHECK,
 		    error, XML_ERR_ERROR, NULL, 0,
 		    NULL, NULL, NULL, 0, 0,
-		    msg);
+		    "%s", msg);
 }
 static void
 xmlDebugErr2(xmlDebugCtxtPtr ctxt, int error, const char *msg, int extra)
@@ -259,7 +259,9 @@ xmlCtxtCheckName(xmlDebugCtxtPtr ctxt, const xmlChar * name)
 			 "Name is not an NCName '%s'", (const char *) name);
 	}
 	if ((ctxt->dict != NULL) &&
-	    (!xmlDictOwns(ctxt->dict, name))) {
+	    (!xmlDictOwns(ctxt->dict, name)) &&
+            ((ctxt->doc == NULL) ||
+             ((ctxt->doc->parseFlags & (XML_PARSE_SAX1 | XML_PARSE_NODICT)) == 0))) {
 	    xmlDebugErr3(ctxt, XML_CHECK_OUTSIDE_DICT,
 			 "Name is not from the document dictionnary '%s'",
 			 (const char *) name);
@@ -320,7 +322,8 @@ xmlCtxtGenericNodeCheck(xmlDebugCtxtPtr ctxt, xmlNodePtr node) {
     }
     if (node->next == NULL) {
 	if ((node->parent != NULL) && (node->type != XML_ATTRIBUTE_NODE) &&
-	    (node->parent->last != node))
+	    (node->parent->last != node) &&
+	    (node->parent->type == XML_ELEMENT_NODE))
 	    xmlDebugErr(ctxt, XML_CHECK_NO_NEXT,
                     "Node has no next and not last of parent list\n");
     } else {
@@ -2800,7 +2803,6 @@ xmlShell(xmlDocPtr doc, char *filename, xmlShellReadlineFunc input,
 {
     char prompt[500] = "/ > ";
     char *cmdline = NULL, *cur;
-    int nbargs;
     char command[100];
     char arg[400];
     int i;
@@ -2852,7 +2854,6 @@ xmlShell(xmlDocPtr doc, char *filename, xmlShellReadlineFunc input,
          * Parse the command itself
          */
         cur = cmdline;
-        nbargs = 0;
         while ((*cur == ' ') || (*cur == '\t'))
             cur++;
         i = 0;
@@ -2865,7 +2866,6 @@ xmlShell(xmlDocPtr doc, char *filename, xmlShellReadlineFunc input,
         command[i] = 0;
         if (i == 0)
             continue;
-        nbargs++;
 
         /*
          * Parse the argument
@@ -2879,8 +2879,6 @@ xmlShell(xmlDocPtr doc, char *filename, xmlShellReadlineFunc input,
             arg[i++] = *cur++;
         }
         arg[i] = 0;
-        if (i != 0)
-            nbargs++;
 
         /*
          * start interpreting the command
@@ -2943,7 +2941,7 @@ xmlShell(xmlDocPtr doc, char *filename, xmlShellReadlineFunc input,
 		xmlGenericError(xmlGenericErrorContext,
                         "Write command requires a filename argument\n");
 	    else
-		xmlShellWrite(ctxt, arg, NULL, NULL);
+		xmlShellWrite(ctxt, arg, ctxt->node, NULL);
 #endif /* LIBXML_OUTPUT_ENABLED */
         } else if (!strcmp(command, "grep")) {
             xmlShellGrep(ctxt, arg, ctxt->node, NULL);
@@ -3244,6 +3242,7 @@ xmlShell(xmlDocPtr doc, char *filename, xmlShellReadlineFunc input,
                             "Unknown command %s\n", command);
         }
         free(cmdline);          /* not xmlFree here ! */
+	cmdline = NULL;
     }
 #ifdef LIBXML_XPATH_ENABLED
     xmlXPathFreeContext(ctxt->pctxt);

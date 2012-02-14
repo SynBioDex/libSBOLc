@@ -320,7 +320,6 @@ xmlHashFree(xmlHashTablePtr table, xmlHashDeallocator f) {
 		inside_table = 0;
 		iter = next;
 	    }
-	    inside_table = 0;
 	}
 	xmlFree(table->table);
     }
@@ -828,7 +827,7 @@ xmlHashScan(xmlHashTablePtr table, xmlHashScanner f, void *data) {
  */
 void
 xmlHashScanFull(xmlHashTablePtr table, xmlHashScannerFull f, void *data) {
-    int i;
+    int i, nb;
     xmlHashEntryPtr iter;
     xmlHashEntryPtr next;
 
@@ -844,10 +843,21 @@ xmlHashScanFull(xmlHashTablePtr table, xmlHashScannerFull f, void *data) {
 	    iter = &(table->table[i]);
 	    while (iter) {
 		next = iter->next;
+                nb = table->nbElems;
 		if ((f != NULL) && (iter->payload != NULL))
 		    f(iter->payload, data, iter->name,
 		      iter->name2, iter->name3);
-		iter = next;
+                if (nb != table->nbElems) {
+                    /* table was modified by the callback, be careful */
+                    if (iter == &(table->table[i])) {
+                        if (table->table[i].valid == 0)
+                            iter = NULL;
+                        if (table->table[i].next != next)
+			    iter = &(table->table[i]);
+                    } else
+		        iter = next;
+                } else
+		    iter = next;
 	    }
 	}
     }

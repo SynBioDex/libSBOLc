@@ -1,6 +1,4 @@
-#include <string.h>
-#include "core.h"
-#include "raptor.h" //RDF parser
+#include "reader.h"
 
 // analyze a single triple and add to
 // SBOL data structures if appropriate

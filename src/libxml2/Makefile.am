@@ -1,5 +1,7 @@
 ## Process this file with automake to produce Makefile.in
 
+ACLOCAL_AMFLAGS = -I m4
+
 SUBDIRS = include . doc example xstc @PYTHON_SUBDIR@
 
 DIST_SUBDIRS = include . doc example python xstc
@@ -8,7 +10,8 @@ INCLUDES = -I$(top_builddir)/include -I@srcdir@/include @THREAD_CFLAGS@ @Z_CFLAG
 
 noinst_PROGRAMS=testSchemas testRelax testSAX testHTML testXPath testURI \
                 testThreads testC14N testAutomata testRegexp \
-                testReader testapi testModule runtest runsuite
+                testReader testapi testModule runtest runsuite testchar \
+		testdict runxmlconf testrecurse
 
 bin_PROGRAMS = xmllint xmlcatalog
 
@@ -17,7 +20,16 @@ bin_SCRIPTS=xml2-config
 lib_LTLIBRARIES = libxml2.la
 libxml2_la_LIBADD = @THREAD_LIBS@ @Z_LIBS@ $(ICONV_LIBS) @M_LIBS@ @WIN32_EXTRA_LIBADD@
 
-libxml2_la_LDFLAGS = @CYGWIN_EXTRA_LDFLAGS@ @WIN32_EXTRA_LDFLAGS@ -version-info @LIBXML_VERSION_INFO@ @MODULE_PLATFORM_LIBS@
+if USE_VERSION_SCRIPT
+LIBXML2_VERSION_SCRIPT = $(VERSION_SCRIPT_FLAGS)$(srcdir)/libxml2.syms
+else
+LIBXML2_VERSION_SCRIPT =
+endif
+
+libxml2_la_LDFLAGS = @CYGWIN_EXTRA_LDFLAGS@ @WIN32_EXTRA_LDFLAGS@ \
+                     $(LIBXML2_VERSION_SCRIPT) \
+		     -version-info @LIBXML_VERSION_INFO@ \
+		     @MODULE_PLATFORM_LIBS@
 
 if WITH_TRIO_SOURCES
 libxml2_la_SOURCES = SAX.c entities.c encoding.c error.c parserInternals.c  \
@@ -54,6 +66,21 @@ runtest_SOURCES=runtest.c
 runtest_LDFLAGS = 
 runtest_DEPENDENCIES = $(DEPS)
 runtest_LDADD= @BASE_THREAD_LIBS@ @RDL_LIBS@ $(LDADDS)
+
+testrecurse_SOURCES=testrecurse.c
+testrecurse_LDFLAGS = 
+testrecurse_DEPENDENCIES = $(DEPS)
+testrecurse_LDADD= @BASE_THREAD_LIBS@ @RDL_LIBS@ $(LDADDS)
+
+testchar_SOURCES=testchar.c
+testchar_LDFLAGS = 
+testchar_DEPENDENCIES = $(DEPS)
+testchar_LDADD= @RDL_LIBS@ $(LDADDS)
+
+testdict_SOURCES=testdict.c
+testdict_LDFLAGS = 
+testdict_DEPENDENCIES = $(DEPS)
+testdict_LDADD= @RDL_LIBS@ $(LDADDS)
 
 runsuite_SOURCES=runsuite.c
 runsuite_LDFLAGS = 
@@ -132,7 +159,7 @@ testModule_LDADD= $(LDADDS)
 
 noinst_LTLIBRARIES = testdso.la
 testdso_la_SOURCES = testdso.c
-testdso_la_LDFLAGS = -module -rpath $(libdir)
+testdso_la_LDFLAGS = -module -no-undefined -avoid-version -rpath $(libdir)
 
 # that one forces the rebuild when "make rebuild" is run on doc/
 rebuild_testapi:
@@ -141,7 +168,7 @@ rebuild_testapi:
 
 # that one is just to make sure it is rebuilt if missing
 # but adding the dependances generate mess
-testapi.c:
+testapi.c: $(srcdir)/gentest.py
 	-@(if [ "$(PYTHON)" != "" ] ; then \
 	    $(PYTHON) $(srcdir)/gentest.py $(srcdir) ; fi )
 
@@ -150,12 +177,27 @@ testapi_LDFLAGS =
 testapi_DEPENDENCIES = $(DEPS)
 testapi_LDADD= $(LDADDS)
 
+runxmlconf_SOURCES=runxmlconf.c
+runxmlconf_LDFLAGS = 
+runxmlconf_DEPENDENCIES = $(DEPS)
+runxmlconf_LDADD= $(LDADDS)
+
 #testOOM_SOURCES=testOOM.c testOOMlib.h testOOMlib.c
 #testOOM_LDFLAGS = 
 #testOOM_DEPENDENCIES = $(DEPS)
 #testOOM_LDADD= $(LDADDS)
 
-check-local: all tests
+runtests:
+	$(CHECKER) ./runtest$(EXEEXT) && $(CHECKER) ./testrecurse$(EXEEXT) &&$(CHECKER) ./testapi$(EXEEXT) && $(CHECKER) ./testchar$(EXEEXT)&& $(CHECKER) ./testdict$(EXEEXT) && $(CHECKER) ./runxmlconf$(EXEEXT)
+	@(if [ "@PYTHON_SUBDIR@" != "" ] ; then cd python ; \
+	    $(MAKE) MAKEFLAGS+=--silent tests ; fi)
+
+check: all runtests
+
+check-valgrind: all
+	@echo '## Running the regression tests under Valgrind'
+	@echo '## Go get a cup of coffee it is gonna take a while ...'
+	$(MAKE) CHECKER='valgrind -q' check
 
 testall : tests SVGtests SAXtests
 
@@ -856,23 +898,23 @@ Automatatests: testAutomata$(EXEEXT)
 	      rm result.$$name ; \
 	  fi ; fi ; done)
 
-$(srcdir)/dba100000.xml: dbgenattr.pl
+dba100000.xml: dbgenattr.pl
 	@echo "## generating dba100000.xml"
-	@($(PERL) $(top_srcdir)/dbgenattr.pl 100000 > $(srcdir)/dba100000.xml)
+	@($(PERL) $(top_srcdir)/dbgenattr.pl 100000 > dba100000.xml)
 
-Timingtests: xmllint$(EXEEXT) $(srcdir)/dba100000.xml
+Timingtests: xmllint$(EXEEXT) dba100000.xml
 	@echo "## Timing tests to try to detect performance"
 	@echo "## as well a memory usage breakage when streaming"
 	@echo "## 1/ using the file interface"
 	@echo "## 2/ using the memory interface"
 	@echo "## 3/ repeated DOM parsing"
 	@echo "## 4/ repeated DOM validation"
-	-@($(top_builddir)/xmllint --stream --timing $(srcdir)/dba100000.xml; \
+	-@($(top_builddir)/xmllint --stream --timing dba100000.xml; \
 	   MEM=`cat .memdump | grep "MEMORY ALLOCATED" | awk '{ print $$7}'`;\
 	   if [ "$$MEM" != "" ] ; then echo Using $$MEM bytes ; fi ; \
 	   grep "MORY ALLO" .memdump  | grep -v "MEMORY ALLOCATED : 0";\
 	   exit 0)
-	-@($(top_builddir)/xmllint --stream --timing --memory $(srcdir)/dba100000.xml; \
+	-@($(top_builddir)/xmllint --stream --timing --memory dba100000.xml; \
 	   MEM=`cat .memdump | grep "MEMORY ALLOCATED" | awk '{ print $$7}'`;\
 	   if [ "$$MEM" != "" ] ; then echo Using $$MEM bytes ; fi ; \
 	   grep "MORY ALLO" .memdump  | grep -v "MEMORY ALLOCATED : 0";\
@@ -892,7 +934,7 @@ VTimingtests: xmllint$(EXEEXT)
 
 C14Ntests : testC14N$(EXEEXT)
 	@echo "## C14N and XPath regression tests"
-	-@(for m in with-comments without-comments exc-without-comments ; do \
+	-@(for m in with-comments without-comments 1-1-without-comments exc-without-comments ; do \
 	    for i in $(srcdir)/test/c14n/$$m/*.xml ; do  \
 		if [ ! -d $$i ] ; then \
 		    name=`basename $$i .xml`; \
@@ -1013,7 +1055,7 @@ Relaxtests: xmllint$(EXEEXT)
 		    > res.$$name 2> err.$$name;\
 	          grep "MORY ALLO" .memdump  | grep -v "MEMORY ALLOCATED : 0";\
 	          diff $(srcdir)/result/relaxng/"$$name"_"$$xno" res.$$name;\
-		  if [ "$$name" != "tutor10_1" -a "$$name" != "tutor10_2" -a "$$name" != "tutor3_2" -a "$$name" != "307377" ] ; then \
+		  if [ "$$name" != "tutor10_1" -a "$$name" != "tutor10_2" -a "$$name" != "tutor3_2" -a "$$name" != "307377" -a "$$name" != "tutor8_2" ] ; then \
 		      diff $(srcdir)/result/relaxng/"$$name"_"$$xno".err \
 			   err.$$name | grep -v "error detected at";\
 		  fi ; grep Unimplemented err.$$name`; \
@@ -1105,10 +1147,12 @@ ModuleTests: testModule$(EXEEXT) testdso.la
 
 cleanup:
 	-@(find . -name .\#\* -exec rm {} \;)
+	-@(find . -name \*.gcda -o *.gcno -exec rm {} \;)
+	-@(find . -name \*.orig -o -name \*.rej -o -name \*.old -exec rm {} \;)
 
 dist-hook: cleanup libxml2.spec
 	-cp libxml2.spec $(distdir)
-	(cd $(srcdir) ; tar -cf - --exclude CVS --exclude .svn win32 macos vms bakefile test result) | (cd $(distdir); tar xf -)
+	(cd $(srcdir) ; tar -cf - --exclude CVS --exclude .svn win32 macos vms VxWorks bakefile test result) | (cd $(distdir); tar xf -)
 
 dist-source: distdir
 	$(AMTAR) -chof - --exclude Tests --exclude test --exclude result $(distdir) | GZIP=$(GZIP_ENV) gzip -c >`echo "$(distdir)" | sed "s+libxml2+libxml2-sources+"`.tar.gz
@@ -1139,7 +1183,7 @@ xml2Conf.sh: xml2Conf.sh.in Makefile
 	       < $(srcdir)/xml2Conf.sh.in > xml2Conf.tmp \
 	&& mv xml2Conf.tmp xml2Conf.sh
 
-CLEANFILES=xml2Conf.sh
+CLEANFILES=xml2Conf.sh *.gcda *.gcno
 
 confexecdir=$(libdir)
 confexec_DATA = xml2Conf.sh
@@ -1154,7 +1198,7 @@ EXTRA_DIST = xml2-config.in xml2Conf.sh.in libxml.spec.in libxml2.spec \
 	     triop.h triodef.h libxml.h elfgcchack.h \
 	     testThreadsWin32.c genUnicode.py TODO_SCHEMAS \
 	     dbgen.pl dbgenattr.pl regressions.py regressions.xml \
-	     README.tests Makefile.tests \
+	     README.tests Makefile.tests libxml2.syms \
 	     $(CVS_EXTRA_DIST)
 
 
@@ -1169,16 +1213,50 @@ DOC_MODULE=libxml2-$(VERSION)
 EXAMPLES_DIR=$(BASE_DIR)/$(DOC_MODULE)/examples
 
 install-data-local: 
-	$(mkinstalldirs) $(DESTDIR)$(BASE_DIR)/$(DOC_MODULE)
+	@MKDIR_P@ $(DESTDIR)$(BASE_DIR)/$(DOC_MODULE)
 	-@INSTALL@ -m 0644 $(srcdir)/Copyright $(DESTDIR)$(BASE_DIR)/$(DOC_MODULE)
-	$(mkinstalldirs) $(DESTDIR)$(EXAMPLES_DIR)
+	@MKDIR_P@ $(DESTDIR)$(EXAMPLES_DIR)
 	-@INSTALL@ -m 0644 $(srcdir)/xmllint.c $(DESTDIR)$(EXAMPLES_DIR)
 	-@INSTALL@ -m 0644 $(srcdir)/testSAX.c $(DESTDIR)$(EXAMPLES_DIR)
 	-@INSTALL@ -m 0644 $(srcdir)/testHTML.c $(DESTDIR)$(EXAMPLES_DIR)
 	-@INSTALL@ -m 0644 $(srcdir)/testXPath.c $(DESTDIR)$(EXAMPLES_DIR)
+
+uninstall-local:
+	rm -f $(DESTDIR)$(EXAMPLES_DIR)/testXPath.c
+	rm -f $(DESTDIR)$(EXAMPLES_DIR)/testHTML.c
+	rm -f $(DESTDIR)$(EXAMPLES_DIR)/testSAX.c
+	rm -f $(DESTDIR)$(EXAMPLES_DIR)/xmllint.c
+	rm -rf $(DESTDIR)$(EXAMPLES_DIR)
+	rm -f $(DESTDIR)$(BASE_DIR)/$(DOC_MODULE)/Copyright
+	rm -rf $(DESTDIR)$(BASE_DIR)/$(DOC_MODULE)
 
 tst: tst.c
 	$(CC) $(CFLAGS) -Iinclude -o tst tst.c .libs/libxml2.a -lpthread -lm -lz
 
 sparse: clean
 	$(MAKE) CC=cgcc
+
+#
+# Coverage support, largely borrowed from libvirt
+# Both binaries comes from the lcov package in Fedora
+#
+LCOV = /usr/bin/lcov
+GENHTML = /usr/bin/genhtml
+
+cov: clean-cov
+	if [ "`echo $(LDFLAGS) | grep coverage`" = "" ] ; then \
+	    echo not configured with coverage; exit 1 ; fi
+	if [ ! -x $(LCOV) -o ! -x $(GENHTML) ] ; then \
+	    echo Need $(LCOV) and $(GENHTML) excecutables; exit 1 ; fi
+	-@($(MAKE) check)
+	-@(./runsuite$(EXEEXT))
+	mkdir $(top_builddir)/coverage
+	$(LCOV) -c -o $(top_builddir)/coverage/libxml2.info.tmp -d $(top_srcdir)
+	$(LCOV) -r $(top_builddir)/coverage/libxml2.info.tmp -o $(top_builddir)/coverage/libxml2.info *usr*
+	rm $(top_builddir)/coverage/libxml2.info.tmp
+	$(GENHTML) -s -t "libxml2" -o $(top_builddir)/coverage --legend $(top_builddir)/coverage/libxml2.info
+	echo "Coverage report is in $(top_builddir)/coverage/index.html"
+
+clean-cov:
+	rm -rf $(top_builddir)/coverage
+
