@@ -12,10 +12,13 @@ CMAKE_MINIMUM_REQUIRED( VERSION 2.6 )
 SET(EXECUTABLE_OUTPUT_PATH ${PROJECT_SOURCE_DIR}/../DIST)
 SET(LIBRARY_OUTPUT_PATH ${EXECUTABLE_OUTPUT_PATH})
 
-# make dependencies
+# find raptor
 ADD_SUBDIRECTORY( curl    ) # needed by raptor
-ADD_SUBDIRECTORY( raptor2 ) # read RDF
-ADD_SUBDIRECTORY( libxml2 ) # write, validate XML
+ADD_SUBDIRECTORY( raptor2 ) # RDF parser
+
+# find libxml2
+SET( CMAKE_MODULE_PATH ${CMAKE_MODULE_PATH} "${CMAKE_SOURCE_DIR}/cmake/" )
+FIND_PACKAGE( LibXml2 REQUIRED )
 
 # tell CMake where to look for headers
 INCLUDE_DIRECTORIES( BEFORE
@@ -23,7 +26,7 @@ INCLUDE_DIRECTORIES( BEFORE
 	${SBOL_SOURCE_DIR}/expat
 	${SBOL_SOURCE_DIR}/expat/lib
 	${SBOL_SOURCE_DIR}/raptor2/src
-	${SBOL_SOURCE_DIR}/libxml2/include
+	${LIBXML2_INCLUDE_DIR}
 )
 
 # list source files to put in the library
