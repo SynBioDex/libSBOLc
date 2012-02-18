@@ -1,21 +1,24 @@
 PROJECT( SBOL )
 CMAKE_MINIMUM_REQUIRED( VERSION 2.8 )
 
-# personal shorthand for common folders
+# shorthand for common folders
 SET( PROJECT_ROOT_DIR    ${PROJECT_SOURCE_DIR}/..    )
 SET( PROJECT_BUILD_DIR   ${PROJECT_ROOT_DIR}/build   )
 SET( PROJECT_RELEASE_DIR ${PROJECT_ROOT_DIR}/release )
 
-# folders to recurse into
-# (each has its own CMakeLists.txt)
+# build libxml2
 ADD_SUBDIRECTORY( libxml2 )
-
-# where to look for headers
 INCLUDE_DIRECTORIES(
     ${PROJECT_SOURCE_DIR}/libxml2/include
 )
 
-# how to build the library
+# build curl
+ADD_SUBDIRECTORY( curl )
+INCLUDE_DIRECTORIES(
+    ${PROJECT_SOURCE_DIR}/curl/include
+)
+
+# build libSBOL
 ADD_LIBRARY( sbol
     SHARED
     ${PROJECT_SOURCE_DIR}/core.h
@@ -24,8 +27,9 @@ ADD_LIBRARY( sbol
 )
 TARGET_LINK_LIBRARIES( sbol
     xml2
+    libcurl
 )
 
-# where to send finished files
+# move finished files
 SET( EXECUTABLE_OUTPUT_PATH ${PROJECT_RELEASE_DIR} )
 SET( LIBRARY_OUTPUT_PATH    ${PROJECT_RELEASE_DIR} )
