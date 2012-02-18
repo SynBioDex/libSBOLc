@@ -12,10 +12,12 @@ INCLUDE_DIRECTORIES(
     ${PROJECT_SOURCE_DIR}/libxml2/include
 )
 
-# build curl
+# build curl, expat
 ADD_SUBDIRECTORY( curl )
 INCLUDE_DIRECTORIES(
     ${PROJECT_SOURCE_DIR}/curl/include
+    ${PROJECT_SOURCE_DIR}/expat
+    ${PROJECT_SOURCE_DIR}/expat/lib
 )
 
 # build libSBOL
