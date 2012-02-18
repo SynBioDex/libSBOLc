@@ -1,0 +1,8 @@
+# temp folders
+build/
+release/
+
+# temp files
+*.swp
+*.swo
+*.*~
