@@ -1,0 +1,37 @@
+<?xml version="1.0"?>
+<rdf:RDF
+	xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
+	xmlns:rdfs="http://www.w3.org/2000/01/rdf-schema#" 
+	xmlns:so="http://purl.obolibrary.org/obo/" 
+	xmlns:s="http://sbols.org/v1#"
+	xmlns:dc="http://purl.org/dc/elements/1.1/"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://sbols.org/v1# ../schema/sbol.xsd http://www.w3.org/1999/02/22-rdf-syntax-ns# ../schema/rdf.xsd">
+	
+	<s:DnaComponent rdf:about="http://example.com/dc1">
+		<s:displayId>DC1</s:displayId>
+		<s:name>DnaComponent1</s:name>
+		<s:description>It is valid to have additional elements in any SBOL element as long as they appear after 
+		the elements defined in SBOL core model. This example adds dc:creator annotations to SBOL elements</s:description>
+		<s:dnaSequence>
+			<s:DnaSequence rdf:about="http://example.com/ds1">
+				<s:nucleotides>tccctatcagtgat</s:nucleotides>
+                <dc:creator>Jane Doe</dc:creator>
+			</s:DnaSequence>
+		</s:dnaSequence>
+		<s:annotation>
+			<s:SequenceAnnotation rdf:about="http://example.com/sa1">
+				<s:subComponent>
+					<s:DnaComponent rdf:about="http://example.com/dc2">
+						<s:displayId>DC2</s:displayId>
+						<s:name>DnaComponent2</s:name>
+						<s:description>Another DNA component</s:description>
+					</s:DnaComponent>
+				</s:subComponent>
+				<dc:creator>John Doe</dc:creator>
+			</s:SequenceAnnotation>
+		</s:annotation>
+		<dc:creator>John Doe</dc:creator>	
+	</s:DnaComponent>
+</rdf:RDF>
+

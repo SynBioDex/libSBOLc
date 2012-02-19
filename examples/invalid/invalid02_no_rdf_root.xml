@@ -1,0 +1,14 @@
+<?xml version="1.0"?>
+<s:DnaComponent
+	xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
+	xmlns:rdfs="http://www.w3.org/2000/01/rdf-schema#" 
+	xmlns:so="http://purl.obolibrary.org/obo/" 
+    xmlns:s="http://sbols.org/v1#"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://sbols.org/v1# ../schema/sbol.xsd http://www.w3.org/1999/02/22-rdf-syntax-ns# ../schema/rdf.xsd">
+	
+	<s:displayId>Some display ID</s:displayId>
+	<s:description>Invalid because missing rdf:RDF element at the top level</s:description>
+
+</s:DnaComponent>
+

@@ -29,10 +29,10 @@ void parse(char* examplepath)
 int main(int argc, char** argv) {
 	char* example;
 	if( argc < 2 )
-		example = "ntriples.nt";
+		// TODO fill in using CMake?
+		example = "../examples/valid/ntriples.nt";
 	else
 		example = argv[1];
-	printf("parsing %s\n", example);
 	parse(example);
 	return 0;
 }
