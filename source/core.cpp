@@ -29,7 +29,6 @@ void newComponent(const char* id)
 	component.id = new char[ strlen(id) ];
 	strcpy(component.id, id);
 	allComponents[ string(id) ] = component;
-	//printf("created component %s\n", id);
 }
 
 void newSequenceAnnotation(const char* id)
@@ -38,7 +37,6 @@ void newSequenceAnnotation(const char* id)
 	annotation.id = new char[ strlen(id) ];
 	strcpy(annotation.id, id);
 	allAnnotations[ string(id) ] = annotation;
-	//printf("created annotation %s\n", id);
 }
 
 void newCollection(const char* id)
@@ -47,28 +45,21 @@ void newCollection(const char* id)
 	collection.id = new char[ strlen(id) ];
 	strcpy(collection.id, id);
 	allCollections[ string(id) ] = collection;
-	//printf("created collection %s\n", id);
 }
 
 DNAComponent getComponent(const char* id)
 {
-	DNAComponent com = allComponents[ string(id) ];
-	//printf("getting %s\n", com.id);
-	return com;
+	return allComponents[ string(id) ];
 }
 
 SequenceAnnotation getSequenceAnnotation(const char* id)
 {
-	SequenceAnnotation ann = allAnnotations[ string(id) ];
-	//printf("getting %s\n", ann.id);
-	return ann;
+	return allAnnotations[ string(id) ];
 }
 
 Collection getCollection(const char* id)
 {
-	Collection col = allCollections[ string(id) ];
-	//printf("getting %s\n", col.id);
-	return col;
+	return allCollections[ string(id) ];
 }
 
 /****************************************
@@ -136,10 +127,7 @@ void cleanup()
 
 int getNumCollections()
 {
-	//printf("getting number of collections...\n");
-	int num = allCollections.size();
-	//printf("number of collections: %d\n", num);
-	return num;
+	return allCollections.size();
 }
 
 Collection getNthCollection(int n)
@@ -155,10 +143,7 @@ Collection getNthCollection(int n)
 
 int getNumDNAComponents()
 {
-	//printf("getting number of components...\n");
-	int num = allComponents.size();
-	//printf("number of components: %d\n", num);
-	return num;
+	return allComponents.size();
 }
 
 DNAComponent getNthDNAComponent(int n)
@@ -200,10 +185,7 @@ Collection getNthCollectionFor(DNAComponent component, int n)
 
 int getNumSequenceAnnotations()
 {
-	//printf("getting number of annotations...\n");
-	int num = allAnnotations.size();
-	//printf("number of annotations: %d\n", num);
-	return num;
+	return allAnnotations.size();
 }
 
 SequenceAnnotation getNthSequenceAnnotation(int n)
@@ -219,9 +201,7 @@ SequenceAnnotation getNthSequenceAnnotation(int n)
 
 int getNumSequenceAnnotationsIn(DNAComponent component)
 {
-	int num = component.numAnnotations;
-	printf("%s has %d annotations\n", component.id, num);
-	return num;
+	return component.numAnnotations;
 }
 
 SequenceAnnotation getNthSequenceAnnotationIn(DNAComponent component, int n)
@@ -235,14 +215,11 @@ SequenceAnnotation getNthSequenceAnnotationIn(DNAComponent component, int n)
 
 int getNumPrecedes(SequenceAnnotation annotation)
 {
-	int num = annotation.numPrecedes;
-	//printf("%s has %d precedes\n", annotation.id, num);
-	return num;
+	return annotation.numPrecedes;
 }
 
 SequenceAnnotation getNthPrecedes(SequenceAnnotation annotation, int n)
 {
-	//printf("getting precedes %d from %s\n", n, annotation.id);
 	SequenceAnnotation p = {0,0,0,0,0,0,0};
 	if (annotation.numPrecedes >= n) //TODO just > ?
 		p = *(annotation.precedes[n]);
@@ -256,57 +233,36 @@ void setCollectionID(Collection * collection, const char* id)
 {
 	if (collection)
 		collection->id = (char*)id;
-	else
-		printf("tried to set id of NULL collection\n");
 }
 
 void setCollectionName(Collection * collection, const char* name)
 {
 	if (collection)
 		collection->name = (char*)name;
-	else
-		printf("tried to set name of NULL collection\n");
 }
 
 void setCollectionDescription(Collection * collection, const char* descr)
 {
 	if (collection)
 		collection->description = (char*)descr;
-	else
-		printf("tried to set descr of NULL collection\n");
 }
 
 void setComponentID(DNAComponent * component, const char* id)
 {
 	if (component)
-	{
-		printf("setting component id to %s\n", id);
 		component->id = (char*)id;
-	}
-	else
-		printf("tried to set id of NULL component\n");
 }
 
 void setComponentName(DNAComponent * component, const char* name)
 {
 	if (component)
-	{
-		printf("setting component name to %s\n", name);
 		component->name = (char*)name;
-	}
-	else
-		printf("tried to set name of NULL component\n");
 }
 
 void setComponentDescription(DNAComponent * component, const char* descr)
 {
 	if (component)
-	{
-		printf("setting component descr to %s\n", descr);
 		component->description = (char*)descr;
-	}
-	else
-		printf("tried to set descr of NULL component\n");
 }
 
 void addComponentToCollection(DNAComponent * component, Collection * collection)
@@ -346,13 +302,8 @@ void addComponentToCollection(DNAComponent * component, Collection * collection)
 		}
 		component->numCollections++;
 
-		//printf("%s has the following %d collections:", component->id, n);
 		//while (component->collections[i])
-		//{
-		//	printf(" %s", component->collections[i]->id);
 		//	i++;
-		//}
-		//printf("\n");
 
 		p2 = collection->components;
 
@@ -383,17 +334,9 @@ void addComponentToCollection(DNAComponent * component, Collection * collection)
 		}
 		collection->numComponents++;
 
-		//printf("%s has the following %d components:", collection->id, n);
 		//while (collection->components[i])
-		//{
-		//	printf(" %s", collection->components[i]->id);
 		//	i++;
-		//}
-		//printf("\n");
-
 	}
-	else
-		printf("component or collection is null\n");
 }
 
 void setSequenceAnnotationID(SequenceAnnotation * annotation, const char * id)
@@ -434,8 +377,6 @@ void addSequenceAnnotation(DNAComponent * component, SequenceAnnotation * annota
 		}
 		component->numAnnotations++;
 	}
-	else
-	    printf("component or annotation is null\n");
 }
 
 void addPrecedesRelationship(SequenceAnnotation * upstream, SequenceAnnotation * downstream)
@@ -464,4 +405,3 @@ void addPrecedesRelationship(SequenceAnnotation * upstream, SequenceAnnotation *
 		upstream->numPrecedes++;
 	}
 }
-
