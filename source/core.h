@@ -145,7 +145,7 @@ int isComponent(const char* id);
 int isAnnotation(const char* id);
 int isCollection(const char* id);
 
-void newComponent(const char* id);
+SBOLAPIEXPORTS void newComponent(const char* id);
 void newSequenceAnnotation(const char* id);
 void newCollection(const char* id);
 
