@@ -20,6 +20,13 @@ FILE( GLOB PROJECT_SOURCE_FILES
     ${PROJECT_SOURCE_DIR}/validator.h
 )
 
+# gather test files
+FILE( GLOB PROJECT_TEST_FILES
+	${PROJECT_TEST_DIR}/CuTest.h
+	${PROJECT_TEST_DIR}/CuTest.c
+	${PROJECT_TEST_DIR}/test_core.c
+)
+
 # where to send finished files
 SET( EXECUTABLE_OUTPUT_PATH ${PROJECT_RELEASE_DIR} )
 SET( LIBRARY_OUTPUT_PATH    ${PROJECT_RELEASE_DIR} )
@@ -74,3 +81,9 @@ ADD_EXECUTABLE( validate
 )
 TARGET_LINK_LIBRARIES( readntriples sbol )
 TARGET_LINK_LIBRARIES( validate     sbol )
+
+# build tests
+ADD_EXECUTABLE( testcore
+	${PROJECT_TEST_FILES}
+)
+TARGET_LINK_LIBRARIES( testcore sbol )
