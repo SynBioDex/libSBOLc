@@ -18,11 +18,6 @@
 
 BEGIN_C_DECLS
 
-// internal functions
-//void registerComponent(_DNAComponent* com);
-//void registerSequenceAnnotation(_SequenceAnnotation* ann);
-//void registerCollection(_Collection* col);
-
 SBOLAPIEXPORTS int isComponent(const char* id);
 SBOLAPIEXPORTS int isAnnotation(const char* id);
 SBOLAPIEXPORTS int isCollection(const char* id);
