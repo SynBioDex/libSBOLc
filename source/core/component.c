@@ -1,4 +1,7 @@
 #include "component.h"
+#include "sequence.h"
+#include "annotation.h"
+#include "collection.h"
 
 /**************************
 	create/destroy

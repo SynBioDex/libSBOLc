@@ -1,3 +1,6 @@
+#include <stdlib.h>
+#include <time.h>
+#include <string.h>
 #include "utilities.h"
 
 char randomChar()

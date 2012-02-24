@@ -1,5 +1,6 @@
 #include <string.h>
 #include "annotation.h"
+#include "component.h"
 
 void newSequenceAnnotation(const char* id)
 {

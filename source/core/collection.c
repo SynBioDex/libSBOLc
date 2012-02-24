@@ -1,4 +1,5 @@
 #include "collection.h"
+#include "component.h"
 
 /**************************
 	create/destroy

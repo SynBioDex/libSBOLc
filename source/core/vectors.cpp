@@ -1,3 +1,7 @@
+#include <stdlib.h> // TODO needed?
+#include <stdio.h> // TODO needed?
+#include <string.h>
+#include <string>
 #include <map>
 
 extern "C"

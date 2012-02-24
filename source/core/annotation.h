@@ -1,8 +1,5 @@
 #ifndef SBOL_CORE_SEQUENCEANNOTATION
 #define SBOL_CORE_SEQUENCEANNOTATION
-#include "component.h"
-
-// TODO move includes to implementation
 
 struct _DNAComponent;
 

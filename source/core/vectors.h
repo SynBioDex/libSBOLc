@@ -1,11 +1,5 @@
 #ifndef SBOL_CORE_VECTORS
 #define SBOL_CORE_VECTORS
-#include <stdlib.h> // TODO needed?
-#include <stdio.h> // TODO needed?
-#include <string.h>
-#include <string>
-
-// TODO move includes to implementation
 
 #ifndef BEGIN_C_DECLS
 #	ifdef __cplusplus

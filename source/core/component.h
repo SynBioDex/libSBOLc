@@ -1,10 +1,5 @@
 #ifndef SBOL_CORE_DNACOMPONENT
 #define SBOL_CORE_DNACOMPONENT
-#include "sequence.h"
-#include "annotation.h"
-#include "collection.h"
-
-// TODO move includes to implementation?
 
 struct _DNASequence;
 struct _SequenceAnnotation;

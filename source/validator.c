@@ -1,3 +1,6 @@
+#include <libxml/parser.h>
+#include <libxml/xmlschemas.h>
+#include "core.h"
 #include "validator.h"
 
 int isValidSBOL(const xmlDocPtr doc)

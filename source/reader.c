@@ -1,3 +1,6 @@
+#include <string.h>
+#include <raptor.h>
+#include "core.h"
 #include "reader.h"
 
 // analyze a single triple and add to

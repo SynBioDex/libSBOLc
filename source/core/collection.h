@@ -1,8 +1,5 @@
 #ifndef SBOL_CORE_COLLECTION
 #define SBOL_CORE_COLLECTION
-#include "component.h"
-
-// TODO move includes to implementation
 
 struct _DNAComponent;
 
