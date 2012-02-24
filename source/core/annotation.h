@@ -3,11 +3,10 @@
 
 struct _DNAComponent;
 
-typedef struct _SequenceAnnotation
-{
+typedef struct _SequenceAnnotation {
 	char* id;
-	struct DNAComponent* annotates;
-	struct DNAComponent* subComponent;
+	struct _DNAComponent* annotates;
+	struct _DNAComponent* subComponent;
 	int genbankStart;
 	int end;
 	struct _SequenceAnnotation** precedes; //null terminated array
@@ -20,8 +19,8 @@ void deleteSequenceAnnotation(SequenceAnnotation* ann);
 
 // constrain order
 void addPrecedesRelationship(SequenceAnnotation* upstream, SequenceAnnotation* downstream);
-int getNumPrecedes(SequenceAnnotation ann);
-SequenceAnnotation getNthPrecedes(SequenceAnnotation ann, int n);
+int getNumPrecedes(SequenceAnnotation* ann);
+SequenceAnnotation getNthPrecedes(SequenceAnnotation* ann, int n);
 
 // TODO is this one needed?
 void setSequenceAnnotationID(SequenceAnnotation* ann, const char* id);

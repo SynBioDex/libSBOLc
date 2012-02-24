@@ -19,16 +19,16 @@ int isAnnotation(const char* id);
 int isCollection(const char* id);
 
 // get struct by ID
-DNAComponent       getComponent(const char* id);
-Collection         getCollection(const char* id);
+DNAComponent getComponent(const char* id);
+Collection getCollection(const char* id);
 SequenceAnnotation getSequenceAnnotation(const char* id);
 
 // iterate through structs
 int getNumCollections();
 int getNumDNAComponents();
 int getNumSequenceAnnotations();
-Collection         getNthCollection(int n);
-DNAComponent       getNthDNAComponent(int n);
+Collection getNthCollection(int n);
+DNAComponent getNthDNAComponent(int n);
 SequenceAnnotation getNthSequenceAnnotation(int n);
 
 // free memory
