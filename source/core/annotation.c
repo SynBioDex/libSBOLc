@@ -1,3 +1,4 @@
+#include <stdlib.h>
 #include <string.h>
 #include "annotation.h"
 #include "component.h"
@@ -5,9 +6,9 @@
 void newSequenceAnnotation(const char* id)
 {
 	SequenceAnnotation annotation = {0,0,0,0,0,0,0};
-	annotation.id = new char[ strlen(id) ];
+	annotation.id = (char*)malloc(sizeof(char) * strlen(id)+1);
 	strcpy(annotation.id, id);
-	allAnnotations[ string(id) ] = annotation;
+	//allAnnotations[ string(id) ] = annotation;
 }
 
 int getNumPrecedes(SequenceAnnotation annotation)
@@ -33,9 +34,11 @@ void addPrecedesRelationship(SequenceAnnotation * upstream, SequenceAnnotation *
 {
 	if (upstream && downstream)
 	{
+	    size_t size;
 		if (!upstream->precedes)
 		{
-			upstream->precedes = new SequenceAnnotation*[2];
+			size = sizeof(SequenceAnnotation*) * 2;
+			upstream->precedes = (SequenceAnnotation**)malloc(size);
 			upstream->precedes[0] = downstream;
 			upstream->precedes[1] = 0;
 		}
@@ -45,9 +48,11 @@ void addPrecedesRelationship(SequenceAnnotation * upstream, SequenceAnnotation *
 			//while (upstream->precedes[n]) ++n;
 			int n = upstream->numPrecedes;
 
+			size = sizeof(SequenceAnnotation*) * (n+1);
 			SequenceAnnotation ** p = upstream->precedes;
-			upstream->precedes = new SequenceAnnotation*[n+1];
-			for (int i=0; i < n-1; ++i)
+			upstream->precedes = (SequenceAnnotation**)malloc(size);
+			int i;
+			for( i=0; i<n-1; ++i )
 				upstream->precedes[i] = p[i];
 			upstream->precedes[n-1] = downstream;
 			upstream->precedes[n] = 0;

@@ -1,3 +1,5 @@
+#include <stdlib.h>
+#include <string.h>
 #include "collection.h"
 #include "component.h"
 
@@ -8,20 +10,20 @@
 void createCollection(const char* id)
 {
 	Collection collection = {0,0,0,0,0,0,0};
-	collection.id = new char[ strlen(id) ];
+	collection.id = (char*)malloc(sizeof(char) * strlen(id)+1);
 	strcpy(collection.id, id);
-	allCollections[ string(id) ] = collection;
+	//allCollections[ string(id) ] = collection;
 }
 
 void deleteCollection(Collection* p)
 {
-	if (p->id) delete p->id;
-	if (p->name) delete p->name;
-	if (p->description) delete p->description;
-	if (p->collections) delete p->collections;
-	if (p->components) delete p->components;		
-	if (p->numComponents) delete &p->numComponents;
-	if (p->numCollections) delete &p->numCollections;
+	if (p->id) free( p->id );
+	if (p->name) free( p->name );
+	if (p->description) free( p->description );
+	if (p->collections) free( p->collections );
+	if (p->components) free( p->components );
+	if (p->numComponents) free( &p->numComponents );
+	if (p->numCollections) free( &p->numCollections );
 }
 
 /**************************
@@ -33,11 +35,11 @@ int getNumDNAComponentsIn(Collection collection)
 	return collection.numComponents;
 }
 
-DNAComponent getNthDNAComponentIn(Collection collection, int n)
+struct _DNAComponent getNthDNAComponentIn(Collection col, int n)
 {
-	DNAComponent p = {0,0,0,0,0,0,0};
-	if (collection.components)
-		p = *(collection.components[n]);
+	struct _DNAComponent p = {0,0,0,0,0,0,0};
+	if (col.components)
+		p = *(col.components[n]);
 	return p;
 }
 
