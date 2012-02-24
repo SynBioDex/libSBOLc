@@ -1,3 +1,4 @@
+#include <string.h>
 #include "annotation.h"
 
 void newSequenceAnnotation(const char* id)

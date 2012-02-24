@@ -4,7 +4,8 @@
 #include <stdio.h> // TODO needed?
 #include <string.h>
 #include <string>
-#include "common.h"
+
+// TODO move includes to implementation
 
 #ifndef BEGIN_C_DECLS
 #	ifdef __cplusplus
@@ -19,25 +20,25 @@
 BEGIN_C_DECLS
 
 // check struct type by ID
-SBOLAPIEXPORTS int isComponent(const char* id);
-SBOLAPIEXPORTS int isAnnotation(const char* id);
-SBOLAPIEXPORTS int isCollection(const char* id);
+int isComponent(const char* id);
+int isAnnotation(const char* id);
+int isCollection(const char* id);
 
 // get struct by ID
-SBOLAPIEXPORTS DNAComponent       getComponent(const char* id);
-SBOLAPIEXPORTS Collection         getCollection(const char* id);
-SBOLAPIEXPORTS SequenceAnnotation getSequenceAnnotation(const char* id);
+DNAComponent       getComponent(const char* id);
+Collection         getCollection(const char* id);
+SequenceAnnotation getSequenceAnnotation(const char* id);
 
 // iterate through structs
-SBOLAPIEXPORTS int getNumCollections();
-SBOLAPIEXPORTS int getNumDNAComponents();
-SBOLAPIEXPORTS int getNumSequenceAnnotations();
-SBOLAPIEXPORTS Collection         getNthCollection(int n);
-SBOLAPIEXPORTS DNAComponent       getNthDNAComponent(int n);
-SBOLAPIEXPORTS SequenceAnnotation getNthSequenceAnnotation(int n);
+int getNumCollections();
+int getNumDNAComponents();
+int getNumSequenceAnnotations();
+Collection         getNthCollection(int n);
+DNAComponent       getNthDNAComponent(int n);
+SequenceAnnotation getNthSequenceAnnotation(int n);
 
 // free memory
-SBOLAPIEXPORTS void cleanup();
+void cleanup();
 
 END_C_DECLS
 

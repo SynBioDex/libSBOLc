@@ -25,10 +25,12 @@
 #  endif
 # endif
 
-struct _DNASequence;
-struct _SequenceAnnotation;
-struct _DNAComponent;
-struct _Collection;
+// TODO move everything out and delete this
+
+struct DNASequence;
+struct SequenceAnnotation;
+struct DNAComponent;
+struct Collection;
 
 // TODO these should return the new objects
 SBOLAPIEXPORTS void createDNASequence(const char* id);
@@ -37,14 +39,14 @@ SBOLAPIEXPORTS void createDNAComponent(const char* id);
 SBOLAPIEXPORTS void createCollection(const char* id);
 
 // TODO registerDNASequence?
-void registerSequenceAnnotation(_SequenceAnnotation* ann);
-void registerComponent(_DNAComponent* com);
-void registerCollection(_Collection* col);
+void registerSequenceAnnotation(SequenceAnnotation* ann);
+void registerComponent(DNAComponent* com);
+void registerCollection(Collection* col);
 
-SBOLAPIEXPORTS void deleteDNASeqeuence(_DNASequence* seq);
-SBOLAPIEXPORTS void deleteSequenceAnnotation(_SequenceAnnotation* ann);
-SBOLAPIEXPORTS void deleteDNAComponent(_DNAComponent* com);
-SBOLAPIEXPORTS void deleteCollection(_Collection* col);
+SBOLAPIEXPORTS void deleteDNASeqeuence(DNASequence* seq);
+SBOLAPIEXPORTS void deleteSequenceAnnotation(SequenceAnnotation* ann);
+SBOLAPIEXPORTS void deleteDNAComponent(DNAComponent* com);
+SBOLAPIEXPORTS void deleteCollection(Collection* col);
 
 void cleanup();
 
