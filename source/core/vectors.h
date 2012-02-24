@@ -4,7 +4,7 @@
 #include <stdio.h> // TODO needed?
 #include <string.h>
 #include <string>
-#include "core_common.h"
+#include "common.h"
 
 #ifndef BEGIN_C_DECLS
 #	ifdef __cplusplus
@@ -18,22 +18,25 @@
 
 BEGIN_C_DECLS
 
+// check struct type by ID
 SBOLAPIEXPORTS int isComponent(const char* id);
 SBOLAPIEXPORTS int isAnnotation(const char* id);
 SBOLAPIEXPORTS int isCollection(const char* id);
 
+// get struct by ID
+SBOLAPIEXPORTS DNAComponent       getComponent(const char* id);
+SBOLAPIEXPORTS Collection         getCollection(const char* id);
+SBOLAPIEXPORTS SequenceAnnotation getSequenceAnnotation(const char* id);
+
+// iterate through structs
 SBOLAPIEXPORTS int getNumCollections();
 SBOLAPIEXPORTS int getNumDNAComponents();
 SBOLAPIEXPORTS int getNumSequenceAnnotations();
-
-SBOLAPIEXPORTS Collection getNthCollection(int n);
-SBOLAPIEXPORTS DNAComponent getNthDNAComponent(int n);
+SBOLAPIEXPORTS Collection         getNthCollection(int n);
+SBOLAPIEXPORTS DNAComponent       getNthDNAComponent(int n);
 SBOLAPIEXPORTS SequenceAnnotation getNthSequenceAnnotation(int n);
 
-SBOLAPIEXPORTS DNAComponent getComponent(const char* id);
-SBOLAPIEXPORTS Collection getCollection(const char* id);
-SBOLAPIEXPORTS SequenceAnnotation getSequenceAnnotation(const char* id);
-
+// free memory
 SBOLAPIEXPORTS void cleanup();
 
 END_C_DECLS

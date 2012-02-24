@@ -1,4 +1,4 @@
-#include "core_collection.h"
+#include "collection.h"
 
 /**************************
 	create/destroy

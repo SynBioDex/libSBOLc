@@ -1,4 +1,4 @@
-#include "core_sequenceannotation.h"
+#include "annotation.h"
 
 void newSequenceAnnotation(const char* id)
 {

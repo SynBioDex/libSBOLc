@@ -11,22 +11,17 @@ SET( PROJECT_TEST_DIR    ${PROJECT_ROOT_DIR}/tests    )
 
 # gather source files
 FILE( GLOB PROJECT_SOURCE_FILES
-    ${PROJECT_SOURCE_DIR}/core.h
-    ${PROJECT_SOURCE_DIR}/core.cpp
-    ${PROJECT_SOURCE_DIR}/reader.h
-    ${PROJECT_SOURCE_DIR}/reader.c
-    ${PROJECT_SOURCE_DIR}/writer.h
-    ${PROJECT_SOURCE_DIR}/validator.c
-    ${PROJECT_SOURCE_DIR}/validator.h
+    ${PROJECT_SOURCE_DIR}/core/*.h
+    ${PROJECT_SOURCE_DIR}/core/*.c
+    ${PROJECT_SOURCE_DIR}/core/*.cpp
+    ${PROJECT_SOURCE_DIR}/*.h
+    ${PROJECT_SOURCE_DIR}/*.c
 )
 
 # gather test files
 FILE( GLOB PROJECT_TEST_FILES
-	${PROJECT_TEST_DIR}/CuTest.h
-	${PROJECT_TEST_DIR}/CuTest.c
-	${PROJECT_TEST_DIR}/utilities.h
-	${PROJECT_TEST_DIR}/utilities.c
-	${PROJECT_TEST_DIR}/test_core.c
+	${PROJECT_TEST_DIR}/*.h
+	${PROJECT_TEST_DIR}/*.c
 )
 
 # where to send finished files

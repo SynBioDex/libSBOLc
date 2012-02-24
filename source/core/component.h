@@ -1,6 +1,6 @@
 #ifndef SBOL_CORE_DNACOMPONENT
 #define SBOL_CORE_DNACOMPONENT
-#include "core_common.h"
+#include "common.h"
 
 typedef struct _DNAComponent
 {
@@ -14,19 +14,23 @@ typedef struct _DNAComponent
     int numCollections;
 } DNAComponent;
 
+// create/destroy
 SBOLAPIEXPORTS void createComponent(const char* id);
-//SBOLAPIEXPORTS void deleteComponent(DNAComponent* com);
+SBOLAPIEXPORTS void deleteComponent(DNAComponent* com);
 
+// tools for iteration
 SBOLAPIEXPORTS int getNumCollectionsFor(DNAComponent com);
 SBOLAPIEXPORTS int getNumSequenceAnnotationsIn(DNAComponent com);
-
-SBOLAPIEXPORTS Collection getNthCollectionFor(DNAComponent com, int n);
+SBOLAPIEXPORTS Collection         getNthCollectionFor(DNAComponent com, int n);
 SBOLAPIEXPORTS SequenceAnnotation getNthSequenceAnnotationIn(DNAComponent com, int n);
 
+// set properties
 SBOLAPIEXPORTS void setComponentID(DNAComponent * com, const char* id);
 SBOLAPIEXPORTS void setComponentName(DNAComponent * com, const char* name);
 SBOLAPIEXPORTS void setComponentDescription(DNAComponent * com, const char* desc);
 
+// TODO where should this go?
+// work with annotations
 SBOLAPIEXPORTS void addSequenceAnnotation(DNAComponent * com, _SequenceAnnotation * ann);
 SBOLAPIEXPORTS void setSubComponent(SequenceAnnotation * ann, DNAComponent * com);
 

@@ -1,6 +1,6 @@
 #ifndef SBOL_CORE_SEQUENCEANNOTATION
 #define SBOL_CORE_SEQUENCEANNOTATION
-#include "core_common.h"
+#include "common.h"
 
 struct _SequenceAnnotation;
 typedef struct _SequenceAnnotation
@@ -15,16 +15,20 @@ typedef struct _SequenceAnnotation
     int numPrecedes;
 } SequenceAnnotation;
 
+// create/destroy
 SBOLAPIEXPORTS void createSequenceAnnotation(const char* id);
 SBOLAPIEXPORTS void deleteSequenceAnnotation(SequenceAnnotation* ann);
 
+// constrain order
 SBOLAPIEXPORTS void addPrecedesRelationship(SequenceAnnotation* upstream, SequenceAnnotation* downstream);
 SBOLAPIEXPORTS int getNumPrecedes(SequenceAnnotation ann);
 SBOLAPIEXPORTS SequenceAnnotation getNthPrecedes(SequenceAnnotation ann, int n);
 
-SBOLAPIEXPORTS void setSequenceAnnotationID(SequenceAnnotation* ann, const char * id);
+// TODO is this one needed?
 SBOLAPIEXPORTS void setSequenceAnnotationID(SequenceAnnotation* ann, const char* id);
 
+// TODO where should this go?
+// attach to parent component
 SBOLAPIEXPORTS void setSubComponent(SequenceAnnotation* ann, DNAComponent* com);
 
 #endif

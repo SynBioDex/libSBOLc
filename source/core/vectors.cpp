@@ -2,7 +2,7 @@
 
 extern "C"
 {
-	#include "core_vectors.h"
+	#include "vectors.h"
 }
 
 using namespace std;

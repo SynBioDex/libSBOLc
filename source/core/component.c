@@ -1,4 +1,4 @@
-#include "core_dnacomponent.h"
+#include "component.h"
 
 /**************************
 	create/destroy
