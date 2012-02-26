@@ -39,11 +39,17 @@ void deleteComponent(DNAComponent* com) {
 ***************************/
 
 int getNumCollectionsFor(const DNAComponent* com) {
-	return com->numCollections;
+	if (com)
+		return com->numCollections;
+	else
+		return NULL;
 }
 
 int getNumSequenceAnnotationsIn(const DNAComponent* com) {
-	return com->numAnnotations;
+	if (com)
+		return com->numAnnotations;
+	else
+		return NULL;
 }
 
 /**************************
@@ -93,36 +99,37 @@ void setComponentDescription(DNAComponent* com, const char* descr) {
 	add annotation
 ***************************/
 
-void addSequenceAnnotation(DNAComponent * component, SequenceAnnotation * annotation)
-{
-	if (component && annotation)
-	{
-		annotation->annotates = component;
-		if (!component->annotations)
-		{
-			component->annotations = new SequenceAnnotation*[2];
-			component->annotations[0] = annotation;
-			component->annotations[1] = 0;
-		}
-		else
-		{
-			//int n=0;
-			//while (component->annotations[n]) ++n;
-			int n = component->numAnnotations;
-
-			SequenceAnnotation ** p = component->annotations;
-			component->annotations = new SequenceAnnotation*[n+1];
-			for (int i=0; i < n-1; ++i)
-				component->annotations[i] = p[i];
-			component->annotations[n-1] = annotation;
-			component->annotations[n] = 0;
-		}
-		component->numAnnotations++;
+void addSequenceAnnotation(DNAComponent* com, SequenceAnnotation* ann) {
+	if (!com || !ann)
+		return;
+	ann->annotates = com;
+	if (!com->annotations) {
+		// create array
+		size_t memory = sizeof(SequenceAnnotation*) * 2;
+		com->annotations = (SequenceAnnotation**)malloc(memory);
+		// add first value
+		com->annotations[0] = ann;
+		// finish with null
+		com->annotations[1] = NULL;
+	} else {
+		// create longer array
+		int n = com->numAnnotations;
+		SequenceAnnotation** old = com->annotations; // TODO memory leak?
+		size_t memory = sizeof(SequenceAnnotation*) * (n+2);
+		com->annotations = (SequenceAnnotation**)malloc(memory);
+		// copy over old values
+		int i;
+		for (i=0; i<n; ++i)
+			com->annotations[i] = old[i];
+		// add the new one
+		com->annotations[n] = ann;
+		// finish with NULL
+		com->annotations[n+1] = NULL;
 	}
+	com->numAnnotations++;
 }
 
-void setSubComponent(SequenceAnnotation * annotation, DNAComponent * component)
-{
-	if (annotation)
-		annotation->subComponent = component;
+void setSubComponent(SequenceAnnotation* ann, DNAComponent* com) {
+	if (ann && com)
+		ann->subComponent = com;
 }
