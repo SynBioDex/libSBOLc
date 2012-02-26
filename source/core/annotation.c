@@ -43,9 +43,9 @@ void deleteSequenceAnnotation(SequenceAnnotation* ann) {
 	if (ann) {
 		if (ann->id) free(ann->id);
 		// TODO will these delete parts of other structs?
-		if (ann->annotates)		free(ann->annotates);
-		if (ann->subComponent)	free(ann->subComponent);
-		if (ann->precedes)		free(ann->precedes);
+		if (ann->annotates)    free(ann->annotates);
+		if (ann->subComponent) free(ann->subComponent);
+		if (ann->precedes)     free(ann->precedes);
 		free(ann);
 	}
 }
@@ -54,8 +54,7 @@ void deleteSequenceAnnotation(SequenceAnnotation* ann) {
  * constrain order
  *******************/
 
-void addPrecedesRelationship(SequenceAnnotation * upstream,
-							SequenceAnnotation * downstream) {
+void addPrecedesRelationship(SequenceAnnotation * upstream, SequenceAnnotation * downstream) {
 	if (!upstream || !downstream)
 		return;
 	if (!upstream->precedes) {

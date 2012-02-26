@@ -1,5 +1,5 @@
-#ifndef SBOL_CORE_SEQUENCEANNOTATION
-#define SBOL_CORE_SEQUENCEANNOTATION
+#ifndef SBOL_CORE_ANNOTATION
+#define SBOL_CORE_ANNOTATION
 
 struct _DNAComponent;
 
@@ -7,7 +7,7 @@ typedef struct _SequenceAnnotation {
 	char* id;
 	int genbankStart;
 	int genbankEnd;
-    int numPrecedes;
+	int numPrecedes;
    	struct _DNAComponent* annotates;
 	struct _DNAComponent* subComponent;
 	struct _SequenceAnnotation** precedes;
