@@ -5,28 +5,23 @@ struct _DNAComponent;
 
 typedef struct _SequenceAnnotation {
 	char* id;
-	struct _DNAComponent* annotates;
-	struct _DNAComponent* subComponent;
 	int genbankStart;
-	int end;
-	struct _SequenceAnnotation** precedes; //null terminated array
+	int genbankEnd;
     int numPrecedes;
+   	struct _DNAComponent* annotates;
+	struct _DNAComponent* subComponent;
+	struct _SequenceAnnotation** precedes;
 } SequenceAnnotation;
 
 // create/destroy
-void createSequenceAnnotation(const char* id);
+SequenceAnnotation* createSequenceAnnotation(const char* id);
+void setSequenceAnnotationID(SequenceAnnotation* ann, const char* id);
 void deleteSequenceAnnotation(SequenceAnnotation* ann);
 
 // constrain order
 void addPrecedesRelationship(SequenceAnnotation* upstream, SequenceAnnotation* downstream);
 int getNumPrecedes(SequenceAnnotation* ann);
-SequenceAnnotation getNthPrecedes(SequenceAnnotation* ann, int n);
-
-// TODO is this one needed?
-void setSequenceAnnotationID(SequenceAnnotation* ann, const char* id);
-
-// TODO where should this go?
-// attach to parent component
-void setSubComponent(SequenceAnnotation* ann, struct _DNAComponent* com);
+SequenceAnnotation* getNthPrecedes(SequenceAnnotation* ann, int n);
+// TODO removePrecedesRelationship?
 
 #endif

@@ -54,33 +54,43 @@ INCLUDE_DIRECTORIES(
 )
 
 # build libSBOL
-ADD_LIBRARY( sbol
-    SHARED
-    ${PROJECT_SOURCE_FILES}
-)
-TARGET_LINK_LIBRARIES( sbol
-    xml2
-    libcurl
-    raptor2
-)
+#ADD_LIBRARY( sbol
+#    SHARED
+#    ${PROJECT_SOURCE_FILES}
+#)
+#TARGET_LINK_LIBRARIES( sbol
+#    xml2
+#    libcurl
+#    raptor2
+#)
 INCLUDE_DIRECTORIES(
     ${PROJECT_SOURCE_DIR}
+	${PROJECT_SOURCE_DIR}/core
 )
 
 # build examples
-ADD_EXECUTABLE( readntriples
-    ${PROJECT_SOURCE_FILES}
-    ${PROJECT_EXAMPLE_DIR}/read_ntriples.c
-)
-ADD_EXECUTABLE( validate
-    ${PROJECT_SOURCE_FILES}
-    ${PROJECT_EXAMPLE_DIR}/validate.c
-)
-TARGET_LINK_LIBRARIES( readntriples sbol )
-TARGET_LINK_LIBRARIES( validate     sbol )
+#ADD_EXECUTABLE( readntriples
+#    ${PROJECT_SOURCE_FILES}
+#    ${PROJECT_EXAMPLE_DIR}/read_ntriples.c
+#)
+#ADD_EXECUTABLE( validate
+#    ${PROJECT_SOURCE_FILES}
+#    ${PROJECT_EXAMPLE_DIR}/validate.c
+#)
+#TARGET_LINK_LIBRARIES( readntriples sbol )
+#TARGET_LINK_LIBRARIES( validate     sbol )
 
 # build tests
-ADD_EXECUTABLE( testcore
-	${PROJECT_TEST_FILES}
+ADD_EXECUTABLE( testannotation
+	${PROJECT_SOURCE_DIR}/core/annotation.h
+	${PROJECT_SOURCE_DIR}/core/annotation.c
+	${PROJECT_TEST_DIR}/CuTest.h
+	${PROJECT_TEST_DIR}/CuTest.c
+	${PROJECT_TEST_DIR}/utilities.h
+	${PROJECT_TEST_DIR}/utilities.c
+	${PROJECT_TEST_DIR}/test_annotation.c
 )
-TARGET_LINK_LIBRARIES( testcore sbol )
+#ADD_EXECUTABLE( testcore
+#	${PROJECT_TEST_FILES}
+#)
+#TARGET_LINK_LIBRARIES( testcore sbol )
