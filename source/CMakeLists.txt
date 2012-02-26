@@ -89,6 +89,8 @@ ADD_EXECUTABLE( testall
 	${PROJECT_SOURCE_DIR}/core/annotation.c
 	${PROJECT_SOURCE_DIR}/core/collection.h
 	${PROJECT_SOURCE_DIR}/core/collection.c
+	${PROJECT_SOURCE_DIR}/core/component.h
+	${PROJECT_SOURCE_DIR}/core/component.c
 	${PROJECT_TEST_DIR}/CuTest.h
 	${PROJECT_TEST_DIR}/CuTest.c
 	${PROJECT_TEST_DIR}/utilities.h
@@ -96,5 +98,6 @@ ADD_EXECUTABLE( testall
 	${PROJECT_TEST_DIR}/test_sequence.c
 	${PROJECT_TEST_DIR}/test_annotation.c
 	${PROJECT_TEST_DIR}/test_collection.c
+	${PROJECT_TEST_DIR}/test_component.c
 	${PROJECT_TEST_DIR}/test_all.c
 )

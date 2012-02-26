@@ -9,6 +9,7 @@
 CuSuite* SequenceGetSuite();
 CuSuite* AnnotationGetSuite();
 CuSuite* CollectionGetSuite();
+CuSuite* ComponentGetSuite();
 
 void RunAllTests(void) {
 	// seed with current time
@@ -21,6 +22,7 @@ void RunAllTests(void) {
 	CuSuiteAddSuite(suite, SequenceGetSuite());
 	CuSuiteAddSuite(suite, AnnotationGetSuite());
 	CuSuiteAddSuite(suite, CollectionGetSuite());
+	CuSuiteAddSuite(suite, ComponentGetSuite());
 	
 	CuSuiteRun(suite);
 	CuSuiteSummary(suite, output);

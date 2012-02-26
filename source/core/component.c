@@ -1,3 +1,5 @@
+#include <stdlib.h>
+#include <string.h>
 #include "component.h"
 #include "sequence.h"
 #include "annotation.h"
@@ -7,69 +9,84 @@
 	create/destroy
 ***************************/
 
-void createComponent(const char* id)
-{
-	DNAComponent component = {0,0,0,0,0,0,0,0};
-	component.id = new char[ strlen(id) ];
-	strcpy(component.id, id);
-	allComponents[ string(id) ] = component;
+DNAComponent* createComponent(const char* id) {
+	DNAComponent* com;
+	com = (DNAComponent*)malloc(sizeof(DNAComponent));
+	com->id          = NULL;
+	com->name        = NULL;
+	com->description = NULL;
+	com->numAnnotations = 0;
+	com->numCollections = 0;
+	com->annotations = NULL;
+	com->collections = NULL;
+	setComponentID(com, id);
+	return com;
+}
+
+void deleteComponent(DNAComponent* com) {
+	if (com) {
+		if (com->id)          free(com->id);
+		if (com->name)        free(com->name);
+		if (com->description) free(com->description);
+		if (com->annotations) free(com->annotations);
+		if (com->collections) free(com->collections);
+		free(com);
+	}
 }
 
 /**************************
 	getNum... functions
 ***************************/
 
-int getNumCollectionsFor(DNAComponent component)
-{
-	return component.numCollections;
+int getNumCollectionsFor(const DNAComponent* com) {
+	return com->numCollections;
 }
 
-int getNumSequenceAnnotationsIn(DNAComponent component)
-{
-	return component.numAnnotations;
+int getNumSequenceAnnotationsIn(const DNAComponent* com) {
+	return com->numAnnotations;
 }
 
 /**************************
 	getNth... functions
 ***************************/
 
-Collection getNthCollectionFor(DNAComponent component, int n)
-{
-	Collection p = {0,0,0,0,0,0,0};
-	if (component.collections)
-		p = *(component.collections[n]);
-	return p;
+struct _Collection* getNthCollectionFor(const DNAComponent* com, int n) {
+	if (com->numCollections >= n)
+		return com->collections[n];
+	else
+		return NULL;
 }
 
-SequenceAnnotation getNthSequenceAnnotationIn(DNAComponent component, int n)
-{
-	printf("getting annotation %d from %s\n", n, component.id);
-	SequenceAnnotation p = {0,0,0,0,0,0,0};
-	if (component.numAnnotations >= n) //TODO just > ?
-		p = *(component.annotations[n]);
-	return p;
+struct _SequenceAnnotation* getNthSequenceAnnotationIn(const DNAComponent* com, int n) {
+	if (com->numAnnotations >= n)
+		return com->annotations[n];
+	else
+		return NULL;
 }
 
 /**************************
 	set... functions
 ***************************/
 
-void setComponentID(DNAComponent * component, const char* id)
-{
-	if (component)
-		component->id = (char*)id;
+void setComponentID(DNAComponent* com, const char* id) {
+	if (com && id) {
+		com->id = (char*)malloc(sizeof(char) * strlen(id)+1);
+		strcpy(com->id, id);
+	}
 }
 
-void setComponentName(DNAComponent * component, const char* name)
-{
-	if (component)
-		component->name = (char*)name;
+void setComponentName(DNAComponent* com, const char* name) {
+	if (com && name) {
+		com->name = (char*)malloc(sizeof(char) * strlen(name)+1);
+		strcpy(com->name, name);
+	}
 }
 
-void setComponentDescription(DNAComponent * component, const char* descr)
-{
-	if (component)
-		component->description = (char*)descr;
+void setComponentDescription(DNAComponent* com, const char* descr) {
+	if (com && descr) {
+		com->description = (char*)malloc(sizeof(char) * strlen(descr)+1);
+		strcpy(com->description, descr);
+	}
 }
 
 /**************************
