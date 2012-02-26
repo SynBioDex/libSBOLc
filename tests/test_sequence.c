@@ -28,18 +28,10 @@ void TestCreateRandomSequence(CuTest* tc) {
 	}
 }
 
-int main(void) {
-	// seed with current time
-	// should only be done once
-	srand( time(NULL) );
-	
-	CuString *output = CuStringNew();
-	CuSuite* suite = CuSuiteNew();
-	SUITE_ADD_TEST(suite, TestCreateRandomSequence);
-	SUITE_ADD_TEST(suite, TestCreateEmptySequence);
-	SUITE_ADD_TEST(suite, TestCreateNullSequence);
-	CuSuiteRun(suite);
-	CuSuiteSummary(suite, output);
-	CuSuiteDetails(suite, output);
-	printf("%s\n", output->buffer);
+CuSuite* SequenceGetSuite() {
+	CuSuite* sequenceTests = CuSuiteNew();
+	SUITE_ADD_TEST(sequenceTests, TestCreateEmptySequence);
+	SUITE_ADD_TEST(sequenceTests, TestCreateNullSequence);
+	SUITE_ADD_TEST(sequenceTests, TestCreateRandomSequence);
+	return sequenceTests;
 }

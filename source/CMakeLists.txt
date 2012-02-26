@@ -66,6 +66,7 @@ INCLUDE_DIRECTORIES(
 INCLUDE_DIRECTORIES(
     ${PROJECT_SOURCE_DIR}
 	${PROJECT_SOURCE_DIR}/core
+	${PROJECT_TEST_DIR}
 )
 
 # build examples
@@ -81,34 +82,19 @@ INCLUDE_DIRECTORIES(
 #TARGET_LINK_LIBRARIES( validate     sbol )
 
 # build tests
-ADD_EXECUTABLE( testsequence
+ADD_EXECUTABLE( testall
 	${PROJECT_SOURCE_DIR}/core/sequence.h
 	${PROJECT_SOURCE_DIR}/core/sequence.c
-	${PROJECT_TEST_DIR}/CuTest.h
-	${PROJECT_TEST_DIR}/CuTest.c
-	${PROJECT_TEST_DIR}/utilities.h
-	${PROJECT_TEST_DIR}/utilities.c
-	${PROJECT_TEST_DIR}/test_sequence.c
-)
-ADD_EXECUTABLE( testannotation
 	${PROJECT_SOURCE_DIR}/core/annotation.h
 	${PROJECT_SOURCE_DIR}/core/annotation.c
-	${PROJECT_TEST_DIR}/CuTest.h
-	${PROJECT_TEST_DIR}/CuTest.c
-	${PROJECT_TEST_DIR}/utilities.h
-	${PROJECT_TEST_DIR}/utilities.c
-	${PROJECT_TEST_DIR}/test_annotation.c
-)
-ADD_EXECUTABLE( testcollection
 	${PROJECT_SOURCE_DIR}/core/collection.h
 	${PROJECT_SOURCE_DIR}/core/collection.c
 	${PROJECT_TEST_DIR}/CuTest.h
 	${PROJECT_TEST_DIR}/CuTest.c
 	${PROJECT_TEST_DIR}/utilities.h
 	${PROJECT_TEST_DIR}/utilities.c
+	${PROJECT_TEST_DIR}/test_sequence.c
+	${PROJECT_TEST_DIR}/test_annotation.c
 	${PROJECT_TEST_DIR}/test_collection.c
+	${PROJECT_TEST_DIR}/test_all.c
 )
-#ADD_EXECUTABLE( testcore
-#	${PROJECT_TEST_FILES}
-#)
-#TARGET_LINK_LIBRARIES( testcore sbol )

@@ -54,18 +54,9 @@ void TestPrecedes(CuTest* tc) {
 	}
 }
 
-int main(void)
-{
-	// seed with current time
-	// should only be done once
-	srand( time(NULL) );
-	
-	CuString *output = CuStringNew();
-	CuSuite* suite = CuSuiteNew();
-	SUITE_ADD_TEST(suite, TestCreateSequenceAnnotation);
-	SUITE_ADD_TEST(suite, TestPrecedes);
-	CuSuiteRun(suite);
-	CuSuiteSummary(suite, output);
-	CuSuiteDetails(suite, output);
-	printf("%s\n", output->buffer);
+CuSuite* AnnotationGetSuite() {
+	CuSuite* annotationTests = CuSuiteNew();
+	SUITE_ADD_TEST(annotationTests, TestCreateSequenceAnnotation);
+	SUITE_ADD_TEST(annotationTests, TestPrecedes);
+	return annotationTests;
 }

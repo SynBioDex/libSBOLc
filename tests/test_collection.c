@@ -34,18 +34,10 @@ void TestCreateRandomCollection(CuTest* tc) {
 	}
 }
 
-int main(void) {
-	// seed with current time
-	// should only be done once
-	srand( time(NULL) );
-	
-	CuString *output = CuStringNew();
-	CuSuite* suite = CuSuiteNew();
-	SUITE_ADD_TEST(suite, TestCreateEmptyCollection);
-	SUITE_ADD_TEST(suite, TestCreateNullCollection);
-	SUITE_ADD_TEST(suite, TestCreateRandomCollection);
-	CuSuiteRun(suite);
-	CuSuiteSummary(suite, output);
-	CuSuiteDetails(suite, output);
-	printf("%s\n", output->buffer);
+CuSuite* CollectionGetSuite() {
+	CuSuite* collectionTests = CuSuiteNew();
+	SUITE_ADD_TEST(collectionTests, TestCreateEmptyCollection);
+	SUITE_ADD_TEST(collectionTests, TestCreateEmptyCollection);
+	SUITE_ADD_TEST(collectionTests, TestCreateRandomCollection);
+	return collectionTests;
 }
