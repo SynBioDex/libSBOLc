@@ -7,14 +7,14 @@ typedef struct _Collection {
 	char* id;
 	char* name;
 	char* description;
-	struct _DNAComponent** components; //pointer to multiple DNAComponents
-	struct _Collection** collections; //null terminated array
     int numComponents;
     int numCollections;
+	struct _DNAComponent** components;
+	struct _Collection**  collections;
 } Collection;
 
 // create/destroy
-void createCollection(const char* id);
+Collection* createCollection(const char* id);
 void deleteCollection(Collection* col);
 
 // iterate

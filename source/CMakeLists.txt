@@ -99,6 +99,15 @@ ADD_EXECUTABLE( testannotation
 	${PROJECT_TEST_DIR}/utilities.c
 	${PROJECT_TEST_DIR}/test_annotation.c
 )
+ADD_EXECUTABLE( testcollection
+	${PROJECT_SOURCE_DIR}/core/collection.h
+	${PROJECT_SOURCE_DIR}/core/collection.c
+	${PROJECT_TEST_DIR}/CuTest.h
+	${PROJECT_TEST_DIR}/CuTest.c
+	${PROJECT_TEST_DIR}/utilities.h
+	${PROJECT_TEST_DIR}/utilities.c
+	${PROJECT_TEST_DIR}/test_collection.c
+)
 #ADD_EXECUTABLE( testcore
 #	${PROJECT_TEST_FILES}
 #)

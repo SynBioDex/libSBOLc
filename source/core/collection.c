@@ -1,5 +1,6 @@
 #include <stdlib.h>
 #include <string.h>
+//#include "api.h"
 #include "collection.h"
 #include "component.h"
 
@@ -7,39 +8,47 @@
 	create/destroy
 ***************************/
 
-void createCollection(const char* id)
-{
-	Collection collection = {0,0,0,0,0,0,0};
-	collection.id = (char*)malloc(sizeof(char) * strlen(id)+1);
-	strcpy(collection.id, id);
-	//allCollections[ string(id) ] = collection;
+Collection* createCollection(const char* id) {
+	Collection* col;
+	col = (Collection*)malloc(sizeof(Collection));
+	col->id          = NULL;
+	col->name        = NULL;
+	col->description = NULL;
+	col->numComponents  = 0;
+	col->numCollections = 0;
+	col->components  = NULL;
+	col->collections = NULL;
+	setCollectionID(col, id);
+	return col;
 }
 
 void deleteCollection(Collection* p)
 {
-	if (p->id) free( p->id );
-	if (p->name) free( p->name );
-	if (p->description) free( p->description );
-	if (p->collections) free( p->collections );
-	if (p->components) free( p->components );
-	if (p->numComponents) free( &p->numComponents );
-	if (p->numCollections) free( &p->numCollections );
+	if (p) {
+		if (p->id) free( p->id );
+		if (p->name) free( p->name );
+		if (p->description) free( p->description );
+		if (p->collections) free( p->collections );
+		if (p->components) free( p->components );
+		if (p->numComponents) free( &p->numComponents );
+		if (p->numCollections) free( &p->numCollections );
+		free(p);
+	}
 }
 
 /**************************
 	get... functions
 ***************************/
 
-int getNumDNAComponentsIn(Collection collection)
+int getNumDNAComponentsIn(Collection* collection)
 {
-	return collection.numComponents;
+	return collection->numComponents;
 }
 
-struct _DNAComponent getNthDNAComponentIn(Collection col, int n)
-{
+struct _DNAComponent getNthDNAComponentIn(Collection* col, int n) {
 	struct _DNAComponent p = {0,0,0,0,0,0,0};
-	if (col.components)
-		p = *(col.components[n]);
+	if (col->components)
+		p = *(col->components[n]);
 	return p;
 }
 
@@ -47,10 +56,10 @@ struct _DNAComponent getNthDNAComponentIn(Collection col, int n)
 	set... functions
 ***************************/
 
-void setCollectionID(Collection * collection, const char* id)
-{
-	if (collection)
-		collection->id = (char*)id;
+void setCollectionID(Collection* col, const char* id) {
+	col->id = (char*)malloc(sizeof(char) * strlen(id)+1);
+	strcpy(col->id, id);
+	// TODO handle null?
 }
 
 void setCollectionName(Collection * collection, const char* name)
