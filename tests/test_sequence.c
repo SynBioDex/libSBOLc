@@ -3,7 +3,7 @@
 #include "utilities.h"
 #include "sequence.h"
 
-#define NUM_FAST_TESTS 100000
+#define NUM_FAST_TESTS 10000
 
 void TestCreateEmptySequence(CuTest* tc) {
 	DNASequence* seq = createDNASequence("");
