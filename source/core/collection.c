@@ -64,7 +64,10 @@ char* getCollectionDescription(Collection* col) {
 }
 
 int getNumDNAComponentsIn(Collection* col) {
-	return col->numComponents;
+	if (col)
+		return col->numComponents;
+	else
+		return -1;
 }
 
 struct _DNAComponent* getNthDNAComponentIn(Collection* col, int n) {

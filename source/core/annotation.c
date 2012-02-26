@@ -77,7 +77,7 @@ int getNumPrecedes(SequenceAnnotation* ann) {
 	if (ann)
 		return ann->numPrecedes;
 	else
-		return NULL;
+		return -1;
 }
 
 SequenceAnnotation* getNthPrecedes(SequenceAnnotation* ann, int n) {

@@ -4,8 +4,8 @@
 #include "utilities.h"
 #include "annotation.h"
 
-#define NUM_FAST_TESTS 100000
-#define NUM_SLOW_TESTS 	10000
+#define NUM_FAST_TESTS 10000
+#define NUM_SLOW_TESTS  1000
 
 void TestCreateSequenceAnnotation(CuTest* tc) {
 	char* id;

@@ -10,8 +10,7 @@
 ***************************/
 
 DNAComponent* createComponent(const char* id) {
-	DNAComponent* com;
-	com = (DNAComponent*)malloc(sizeof(DNAComponent));
+	DNAComponent* com = (DNAComponent*)malloc(sizeof(DNAComponent));
 	com->id          = NULL;
 	com->name        = NULL;
 	com->description = NULL;
@@ -42,14 +41,14 @@ int getNumCollectionsFor(const DNAComponent* com) {
 	if (com)
 		return com->numCollections;
 	else
-		return NULL;
+		return -1;
 }
 
 int getNumSequenceAnnotationsIn(const DNAComponent* com) {
 	if (com)
 		return com->numAnnotations;
 	else
-		return NULL;
+		return -1;
 }
 
 /**************************
@@ -67,6 +66,37 @@ struct _SequenceAnnotation* getNthSequenceAnnotationIn(const DNAComponent* com, 
 	if (com->numAnnotations >= n)
 		return com->annotations[n];
 	else
+		return NULL;
+}
+
+/**************************
+	get... functions
+***************************/
+
+char* getComponentID(const DNAComponent* com) {
+	if (com && com->id) {
+		char* id = (char*)malloc(sizeof(char) * strlen(com->id)+1);
+		strcpy(id, com->id);
+		return id;
+	} else
+		return NULL;
+}
+
+char* getComponentName(const DNAComponent* com) {
+	if (com && com->name) {
+		char* name = (char*)malloc(sizeof(char) * strlen(com->name)+1);
+		strcpy(name, com->name);
+		return name;
+	} else
+		return NULL;
+}
+
+char* getComponentDescription(const DNAComponent* com) {
+	if (com && com->description) {
+		char* descr = (char*)malloc(sizeof(char) * strlen(com->description)+1);
+		strcpy(descr, com->description);
+		return descr;
+	} else
 		return NULL;
 }
 

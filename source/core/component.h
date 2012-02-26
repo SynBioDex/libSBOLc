@@ -27,6 +27,11 @@ int getNumSequenceAnnotationsIn(const DNAComponent* com);
 struct _Collection* getNthCollectionFor(const DNAComponent* com, int n);
 struct _SequenceAnnotation* getNthSequenceAnnotationIn(const DNAComponent* com, int n);
 
+// get properties
+char* getComponentID(const DNAComponent* com);
+char* getComponentName(const DNAComponent* com);
+char* getComponentDescription(const DNAComponent* com);
+
 // set properties
 void setComponentID(DNAComponent* com, const char* id);
 void setComponentName(DNAComponent* com, const char* name);

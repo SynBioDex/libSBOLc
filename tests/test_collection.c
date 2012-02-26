@@ -69,8 +69,8 @@ void TestRandomCollectionProperties(CuTest* tc) {
 		col = createCollection(id);
 		setCollectionName(col, name);
 		setCollectionDescription(col, descr);
-		CuAssertStrEquals(tc, id, getCollectionID(col));
-		CuAssertStrEquals(tc, name, getCollectionName(col));
+		CuAssertStrEquals(tc, id,    getCollectionID(col));
+		CuAssertStrEquals(tc, name,  getCollectionName(col));
 		CuAssertStrEquals(tc, descr, getCollectionDescription(col));
 		deleteCollection(col);
 	}
