@@ -1,6 +1,5 @@
 #include <stdlib.h>
 #include <string.h>
-//#include "api.h"
 #include "collection.h"
 #include "component.h"
 
@@ -37,6 +36,33 @@ void deleteCollection(Collection* col) {
 	get... functions
 ***************************/
 
+char* getCollectionID(Collection* col) {
+	if (col && col->id) {
+		char* id = (char*)malloc(sizeof(char) * strlen(col->id)+1);
+		strcpy(id, col->id);
+		return id;
+	} else
+		return NULL;
+}
+
+char* getCollectionName(Collection* col) {
+	if (col && col->name) {
+		char* name = (char*)malloc(sizeof(char) * strlen(col->name)+1);
+		strcpy(name, col->name);
+		return name;
+	} else
+		return NULL;
+}
+
+char* getCollectionDescription(Collection* col) {
+	if (col && col->description) {
+		char* descr = (char*)malloc(sizeof(char) * strlen(col->description)+1);
+		strcpy(descr, col->description);
+		return descr;
+	} else
+		return NULL;
+}
+
 int getNumDNAComponentsIn(Collection* col) {
 	return col->numComponents;
 }
@@ -59,16 +85,14 @@ void setCollectionID(Collection* col, const char* id) {
 	}
 }
 
-void setCollectionName(Collection* col, const char* name)
-{
+void setCollectionName(Collection* col, const char* name) {
 	if (col && name) {
 		col->name = (char*)malloc(sizeof(char) * strlen(name)+1);
 		strcpy(col->name, name);
 	}
 }
 
-void setCollectionDescription(Collection* col, const char* descr)
-{
+void setCollectionDescription(Collection* col, const char* descr) {
 	if (col && descr) {
 		col->description = (char*)malloc(sizeof(char) * strlen(descr)+1);
 		strcpy(col->description, descr);

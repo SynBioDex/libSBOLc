@@ -3,17 +3,18 @@
 #include <string.h>
 #include "utilities.h"
 
-char randomChar()
-{
+#define MAX_STRING_LENGTH 1000
+
+char randomChar() {
 	// TODO allow other characters?
-	char* allowed = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ";
+	// TODO #define this?
+	char* allowed = " _-abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ";
 	int index = rand() % strlen(allowed);
 	return allowed[index];
 }
 
-char* randomString()
-{
-	int length = rand() % 100;
+char* randomString() {
+	int length = rand() % MAX_STRING_LENGTH;
 	char* string = malloc(sizeof(char*) * length);
 	int i;
 	for( i=0; i<length-1; i++ )
