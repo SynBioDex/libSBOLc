@@ -22,17 +22,14 @@ Collection* createCollection(const char* id) {
 	return col;
 }
 
-void deleteCollection(Collection* p)
-{
-	if (p) {
-		if (p->id) free( p->id );
-		if (p->name) free( p->name );
-		if (p->description) free( p->description );
-		if (p->collections) free( p->collections );
-		if (p->components) free( p->components );
-		if (p->numComponents) free( &p->numComponents );
-		if (p->numCollections) free( &p->numCollections );
-		free(p);
+void deleteCollection(Collection* col) {
+	if (col) {
+		if (col->id)          free(col->id);
+		if (col->name)        free(col->name);
+		if (col->description) free(col->description);
+		if (col->collections) free(col->collections);
+		if (col->components)  free(col->components);
+		free(col);
 	}
 }
 
@@ -40,16 +37,15 @@ void deleteCollection(Collection* p)
 	get... functions
 ***************************/
 
-int getNumDNAComponentsIn(Collection* collection)
-{
-	return collection->numComponents;
+int getNumDNAComponentsIn(Collection* col) {
+	return col->numComponents;
 }
 
-struct _DNAComponent getNthDNAComponentIn(Collection* col, int n) {
-	struct _DNAComponent p = {0,0,0,0,0,0,0};
-	if (col->components)
-		p = *(col->components[n]);
-	return p;
+struct _DNAComponent* getNthDNAComponentIn(Collection* col, int n) {
+	if (col->numComponents >= n)
+		return col->components[n];
+	else
+		return NULL;
 }
 
 /**************************

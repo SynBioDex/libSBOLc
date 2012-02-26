@@ -19,7 +19,7 @@ void deleteCollection(Collection* col);
 
 // iterate
 int getNumDNAComponentsIn(Collection* col);
-struct _DNAComponent getNthDNAComponentIn(Collection* col, int n);
+struct _DNAComponent* getNthDNAComponentIn(Collection* col, int n);
 
 // set properties
 void setCollectionID(Collection* col, const char* id);
