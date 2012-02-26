@@ -57,21 +57,26 @@ struct _DNAComponent getNthDNAComponentIn(Collection* col, int n) {
 ***************************/
 
 void setCollectionID(Collection* col, const char* id) {
-	col->id = (char*)malloc(sizeof(char) * strlen(id)+1);
-	strcpy(col->id, id);
-	// TODO handle null?
+	if (col && id) {
+		col->id = (char*)malloc(sizeof(char) * strlen(id)+1);
+		strcpy(col->id, id);
+	}
 }
 
-void setCollectionName(Collection * collection, const char* name)
+void setCollectionName(Collection* col, const char* name)
 {
-	if (collection)
-		collection->name = (char*)name;
+	if (col && name) {
+		col->name = (char*)malloc(sizeof(char) * strlen(name)+1);
+		strcpy(col->name, name);
+	}
 }
 
-void setCollectionDescription(Collection * collection, const char* descr)
+void setCollectionDescription(Collection* col, const char* descr)
 {
-	if (collection)
-		collection->description = (char*)descr;
+	if (col && descr) {
+		col->description = (char*)malloc(sizeof(char) * strlen(descr)+1);
+		strcpy(col->description, descr);
+	}
 }
 
 /**************************
