@@ -1,10 +1,11 @@
-#ifndef SBOL_CORE_DNASEQUENCE
-#define SBOL_CORE_DNASEQUENCE
+#ifndef SBOL_CORE_SEQUENCE
+#define SBOL_CORE_SEQUENCE
 
 typedef struct _DNASequence {
 	char* nucleotides;
 } DNASequence;
 
-// TODO any functions needed?
+DNASequence* createDNASequence(char* nucleotides); // TODO id?
+void deleteDNASequence(DNASequence* seq);
 
 #endif

@@ -81,6 +81,15 @@ INCLUDE_DIRECTORIES(
 #TARGET_LINK_LIBRARIES( validate     sbol )
 
 # build tests
+ADD_EXECUTABLE( testsequence
+	${PROJECT_SOURCE_DIR}/core/sequence.h
+	${PROJECT_SOURCE_DIR}/core/sequence.c
+	${PROJECT_TEST_DIR}/CuTest.h
+	${PROJECT_TEST_DIR}/CuTest.c
+	${PROJECT_TEST_DIR}/utilities.h
+	${PROJECT_TEST_DIR}/utilities.c
+	${PROJECT_TEST_DIR}/test_sequence.c
+)
 ADD_EXECUTABLE( testannotation
 	${PROJECT_SOURCE_DIR}/core/annotation.h
 	${PROJECT_SOURCE_DIR}/core/annotation.c
