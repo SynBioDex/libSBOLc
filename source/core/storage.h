@@ -17,15 +17,15 @@ void registerSequenceAnnotation(struct _SequenceAnnotation* ann);
 void registerCollection(struct _Collection* col);
 
 // work with the arrays
-GenericArray* createGenericArray();
-void resizeArray(GenericArray arr, int capacity);
-int indexByPtr(const GenericArray arr, const void* obj);
-void insertIntoArray(GenericArray arr, void* obj);
-void removeFromArray(GenericArray arr, int index);
-void expandArray(GenericArray arr);
-void shrinkArray(GenericArray arr);
+GenericArray* startGenericArray();
+void resizeArray(GenericArray* arr, int capacity);
+int indexByPtr(const GenericArray* arr, const void* obj);
+void insertIntoArray(GenericArray* arr, void* obj);
+void removeFromArray(GenericArray* arr, int index);
+void expandArray(GenericArray* arr);
+void shrinkArray(GenericArray* arr);
 
-// check object type by ID
+// check object type
 int isComponentPtr(const void* pointer);
 int isAnnotationPtr(const void* pointer);
 int isCollectionPtr(const void* pointer);
@@ -33,7 +33,7 @@ int isComponentID(const char* id);
 int isAnnotationID(const char* id);
 int isCollectionID(const char* id);
 
-// iterate through objects by type
+// iterate through arrays
 int getNumCollections();
 int getNumDNAComponents();
 int getNumSequenceAnnotations();

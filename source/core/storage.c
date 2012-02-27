@@ -12,26 +12,27 @@
  *	global arrays
  ******************/
 
-static GenericArray allComponents;
-static GenericArray allAnnotations;
-static GenericArray allCollections;
+static GenericArray* allComponents;
+static GenericArray* allAnnotations;
+static GenericArray* allCollections;
 
 /*****************************
  *	functions for operating
  *  on the global arrays
  *****************************/
 
-GenericArray* createGenericArray() {
-	GenericArray* arr = (GenericArray*)malloc(sizeof(void*) * INITIAL_ARRAY_LENGTH);
+GenericArray* startGenericArray() {
+	GenericArray* arr = (GenericArray*)malloc(sizeof(GenericArray));
 	arr->numInUse = 0;
 	arr->numTotal = INITIAL_ARRAY_LENGTH;
-	return arr;	
+	arr->array = (void**)malloc(sizeof(void*) * INITIAL_ARRAY_LENGTH);
+	return arr;
 }
 
-int indexByPtr(const GenericArray arr, const void* obj) {
+int indexByPtr(const GenericArray* arr, const void* obj) {
 	int index = 0;
-	while (arr.array[index]) {
-		if (arr.array[index] == obj)
+	while (arr->array[index]) {
+		if (arr->array[index] == obj)
 			return index;
 		else
 			index++;
@@ -39,42 +40,69 @@ int indexByPtr(const GenericArray arr, const void* obj) {
 	return -1;
 }
 
-void resizeArray(GenericArray arr, int capacity) {
-	if (arr.numInUse==0 || capacity<INITIAL_ARRAY_LENGTH)
+void resizeArray(GenericArray* arr, int capacity) {
+	if (capacity<INITIAL_ARRAY_LENGTH)
 		return;
-	size_t memory = sizeof( arr.array[0] );
-	arr.array = (void**)realloc(arr.array, capacity * memory);
-	arr.numTotal = capacity;
+	arr->array = (void**)realloc(arr->array, capacity * sizeof(void*));
+	arr->numTotal = capacity;
 }
 
-void expandArray(GenericArray arr) {
-	resizeArray(arr, arr.numTotal * ARRAY_SCALING_FACTOR);
+void expandArray(GenericArray* arr) {
+	int capacity;
+	if (arr->numTotal == 0) {
+		capacity = INITIAL_ARRAY_LENGTH;
+	} else
+		capacity = arr->numTotal * ARRAY_SCALING_FACTOR;
+	resizeArray(arr, capacity);
 }
 
-void shrinkArray(GenericArray arr) {
-	if (arr.numTotal>INITIAL_ARRAY_LENGTH*ARRAY_SCALING_FACTOR)
-		resizeArray(arr, arr.numTotal / ARRAY_SCALING_FACTOR);
+void shrinkArray(GenericArray* arr) {
+	if (arr->numTotal>INITIAL_ARRAY_LENGTH*ARRAY_SCALING_FACTOR)
+		resizeArray(arr, arr->numTotal / ARRAY_SCALING_FACTOR);
 }
 
-void removeFromArray(GenericArray arr, int index) {
+void removeFromArray(GenericArray* arr, int index) {
 	// shift everything over
 	int i;
-	for (i=index+1; i<arr.numInUse; i++)
-		arr.array[i-1] = arr.array[i];
-	arr.array[ arr.numInUse-- ] = NULL;
+	for (i=index+1; i<arr->numInUse; i++)
+		arr->array[i-1] = arr->array[i];
+	arr->array[ arr->numInUse-- ] = NULL;
 	// if array is getting empty, shrink it
-	if (arr.numInUse == arr.numTotal/ARRAY_SCALING_FACTOR)
+	if (arr->numInUse == arr->numTotal/ARRAY_SCALING_FACTOR)
 		shrinkArray(arr);
 }
 
-void insertIntoArray(GenericArray arr, void* obj) {
-	if (obj) {
+void insertIntoArray(GenericArray* arr, void* obj) {
+	if (arr && obj) {
 		// if array is full, expand it
-		if (arr.numInUse == arr.numTotal)
+		if (arr->numInUse == arr->numTotal)
 			expandArray(arr);
 		// insert obj
-		arr.array[ arr.numInUse++ ] = obj;
+		arr->array[ arr->numInUse ] = obj;
+		arr->numInUse++;
 	}
+}
+
+/**************************
+ *	register... functions
+ **************************/
+
+void registerComponent(struct _DNAComponent* com) {
+	if (!allComponents)
+		allComponents = startGenericArray();
+	insertIntoArray(allComponents, com);
+}
+
+void registerSequenceAnnotation(struct _SequenceAnnotation* ann) {
+	if (!allAnnotations)
+		allAnnotations = startGenericArray();
+	insertIntoArray(allAnnotations, ann);
+}
+
+void registerCollection(struct _Collection* col) {
+	if (!allCollections)
+		allCollections = startGenericArray();
+	insertIntoArray(allCollections, col);
 }
 
 /**************************
@@ -82,24 +110,32 @@ void insertIntoArray(GenericArray arr, void* obj) {
  **************************/
 
 int isComponentPtr(const void* pointer) {
+	if (!allComponents)
+		allComponents = startGenericArray();
 	return (int) indexByPtr(allComponents, pointer) >= 0;
 }
 
 int isAnnotationPtr(const void* pointer) {
+	if (!allAnnotations)
+		allAnnotations = startGenericArray();
 	return (int) indexByPtr(allAnnotations, pointer) >= 0;
 }
 
 int isCollectionPtr(const void* pointer) {
+	if (!allCollections)
+		allCollections = startGenericArray();
 	return (int) indexByPtr(allCollections, pointer) >= 0;
 }
 
 int isComponentID(const char* id) {
+	if (!allComponents)
+		allComponents = startGenericArray();
 	if (!id)
 		return -1;
 	int index;
 	struct _DNAComponent* com;
-	for (index=0; index<allComponents.numInUse; index++) {
-		com = (struct _DNAComponent*) allComponents.array[index];
+	for (index=0; index<allComponents->numInUse; index++) {
+		com = (struct _DNAComponent*) allComponents->array[index];
 		if (com->id == id)
 			return 1;
 	}
@@ -107,12 +143,14 @@ int isComponentID(const char* id) {
 }
 
 int isSequenceAnnotationID(const char* id) {
+	if (!allAnnotations)
+		allAnnotations = startGenericArray();
 	if (!id)
 		return -1;
 	int index;
 	SequenceAnnotation* ann;
-	for (index=0; index<allAnnotations.numInUse; index++) {
-		ann = (SequenceAnnotation*) allAnnotations.array[index];
+	for (index=0; index<allAnnotations->numInUse; index++) {
+		ann = (SequenceAnnotation*) allAnnotations->array[index];
 		if (ann->id == id)
 			return 1;
 	}
@@ -120,12 +158,14 @@ int isSequenceAnnotationID(const char* id) {
 }
 
 int isCollectionID(const char* id) {
+	if (!allCollections)
+		allCollections = startGenericArray();
 	if (!id)
 		return -1;
 	int index;
 	Collection* col;
-	for (index=0; index<allCollections.numInUse; index++) {
-		col = (Collection*) allCollections.array[index];
+	for (index=0; index<allCollections->numInUse; index++) {
+		col = (Collection*) allCollections->array[index];
 		if (col->id == id)
 			return 1;
 	}
@@ -137,15 +177,21 @@ int isCollectionID(const char* id) {
  **************************/
 
 int getNumDNAComponents() {
-	return allComponents.numInUse;
+	if (!allComponents)
+		allComponents = startGenericArray();
+	return allComponents->numInUse;
 }
 
 int getNumSequenceAnnotations() {
-	return allAnnotations.numInUse;
+	if (!allAnnotations)
+		allAnnotations = startGenericArray();
+	return allAnnotations->numInUse;
 }
 
 int getNumCollections() {
-	return allCollections.numInUse;
+	if (!allCollections)
+		allCollections = startGenericArray();
+	return allCollections->numInUse;
 }
 
 /**************************
@@ -153,22 +199,28 @@ int getNumCollections() {
  **************************/
 
 DNAComponent* getNthDNAComponent(int n) {
-	if (allComponents.numInUse > n)
-		return allComponents.array[n];
+	if (!allComponents)
+		allComponents = startGenericArray();
+	if (allComponents->numInUse > n)
+		return allComponents->array[n];
 	else
 		return NULL;
 }
 
 SequenceAnnotation* getNthSequenceAnnotation(int n) {
-	if (allAnnotations.numInUse > n)
-		return allAnnotations.array[n];
+	if (!allAnnotations)
+		allAnnotations = startGenericArray();
+	if (allAnnotations->numInUse > n)
+		return allAnnotations->array[n];
 	else
 		return NULL;
 }
 
 Collection* getNthCollection(int n) {
-	if (allCollections.numInUse > n)
-		return allCollections.array[n];
+	if (!allCollections)
+		allCollections = startGenericArray();
+	if (allCollections->numInUse > n)
+		return allCollections->array[n];
 	else
 		return NULL;
 }
@@ -178,12 +230,14 @@ Collection* getNthCollection(int n) {
  **************************/
 
 DNAComponent* getComponent(const char* id) {
+	if (!allComponents)
+		allComponents = startGenericArray();
 	if (!id)
 		return NULL;
 	int index;
 	struct _DNAComponent* com;
-	for (index=0; index<allComponents.numInUse; index++) {
-		com = (struct _DNAComponent*) allComponents.array[index];
+	for (index=0; index<allComponents->numInUse; index++) {
+		com = (struct _DNAComponent*) allComponents->array[index];
 		if (com->id == id)
 			return com;
 	}
@@ -191,12 +245,14 @@ DNAComponent* getComponent(const char* id) {
 }
 
 SequenceAnnotation* getSequenceAnnotation(const char* id) {
+	if (!allAnnotations)
+		allAnnotations = startGenericArray();
 	if (!id)
 		return NULL;
 	int index;
 	struct _SequenceAnnotation* ann;
-	for (index=0; index<allAnnotations.numInUse; index++) {
-		ann = (struct _SequenceAnnotation*) allAnnotations.array[index];
+	for (index=0; index<allAnnotations->numInUse; index++) {
+		ann = (struct _SequenceAnnotation*) allAnnotations->array[index];
 		if (ann->id == id)
 			return ann;
 	}
@@ -204,12 +260,14 @@ SequenceAnnotation* getSequenceAnnotation(const char* id) {
 }
 
 Collection* getCollection(const char* id) {
+	if (!allCollections)
+		allCollections = startGenericArray();
 	if (!id)
 		return NULL;
 	int index;
 	struct _Collection* col;
-	for (index=0; index<allCollections.numInUse; index++) {
-		col = (struct _Collection*) allCollections.array[index];
+	for (index=0; index<allCollections->numInUse; index++) {
+		col = (struct _Collection*) allCollections->array[index];
 		if (col->id == id)
 			return col;
 	}
@@ -223,16 +281,18 @@ Collection* getCollection(const char* id) {
 void cleanup() {
 	int index;
 	// delete components
-	for (index=0; allComponents.array[index]; index++) {
-		deleteComponent(allComponents.array[index]);
+	for (index=0; allComponents->array[index]; index++) {
+		deleteComponent(allComponents->array[index]);
 	}
 	// delete annotations
-	for (index=0; allAnnotations.array[index]; index++) {
-		deleteSequenceAnnotation(allAnnotations.array[index]);
+	for (index=0; allAnnotations->array[index]; index++) {
+		if (!allAnnotations)
+			allAnnotations = startGenericArray();
+		deleteSequenceAnnotation(allAnnotations->array[index]);
 	}
 	// delete collections
-	for (index=0; allCollections.array[index]; index++) {
-		deleteCollection(allCollections.array[index]);
+	for (index=0; allCollections->array[index]; index++) {
+		deleteCollection(allCollections->array[index]);
 	}
 	// delete arrays?
 }
