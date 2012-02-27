@@ -23,6 +23,7 @@ void removeCollection(struct _Collection* col);
 
 // work with the arrays
 GenericArray* createGenericArray();
+void deleteGenericArray(GenericArray* arr);
 void resizeArray(GenericArray* arr, int capacity);
 int indexByPtr(const GenericArray* arr, const void* obj);
 void insertIntoArray(GenericArray* arr, void* obj);
@@ -30,6 +31,7 @@ void removeFromArray(GenericArray* arr, int index);
 void expandArray(GenericArray* arr);
 void shrinkArray(GenericArray* arr);
 
+// TODO move to other files
 // check object type
 int isComponentPtr(const void* pointer);
 int isAnnotationPtr(const void* pointer);
@@ -38,6 +40,7 @@ int isComponentID(const char* id);
 int isAnnotationID(const char* id);
 int isCollectionID(const char* id);
 
+// TODO move to other files
 // iterate through arrays
 int getNumCollections();
 int getNumDNAComponents();

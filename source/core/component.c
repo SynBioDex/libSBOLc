@@ -24,11 +24,26 @@ DNAComponent* createComponent(const char* id) {
 
 void deleteComponent(DNAComponent* com) {
 	if (com) {
-		if (com->id)          free(com->id);
-		if (com->name)        free(com->name);
-		if (com->description) free(com->description);
-		if (com->annotations) free(com->annotations);
-		if (com->collections) free(com->collections);
+		if (com->id) {
+			free(com->id);
+			com->id = NULL;
+		}
+		if (com->name) {
+			free(com->name);
+			com->name = NULL;
+		}
+		if (com->description) {
+			free(com->description);
+			com->description = NULL;
+		}
+		if (com->annotations) {
+			free(com->annotations);
+			com->annotations = NULL;
+		}
+		if (com->collections) {
+			free(com->collections);
+			com->collections = NULL;
+		}
 		free(com);
 	}
 }

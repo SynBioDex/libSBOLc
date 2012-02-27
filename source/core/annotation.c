@@ -31,11 +31,23 @@ void setSequenceAnnotationID(SequenceAnnotation* ann, const char* id) {
 
 void deleteSequenceAnnotation(SequenceAnnotation* ann) {
 	if (ann) {
-		if (ann->id) free(ann->id);
+		if (ann->id) {
+			free(ann->id);
+			ann->id = NULL;
+		}
 		// TODO will these delete parts of other structs?
-		if (ann->annotates)    free(ann->annotates);
-		if (ann->subComponent) free(ann->subComponent);
-		if (ann->precedes)     free(ann->precedes);
+		if (ann->annotates) {
+			free(ann->annotates);
+			ann->annotates = NULL;
+		}
+		if (ann->subComponent) {
+			free(ann->subComponent);
+			ann->subComponent = NULL;
+		}
+		if (ann->precedes) {
+			free(ann->precedes);
+			ann->precedes = NULL;
+		}
 		free(ann);
 	}
 }

@@ -30,6 +30,16 @@ GenericArray* createGenericArray() {
 	return arr;
 }
 
+void deleteGenericArray(GenericArray* arr) {
+	if (arr) {
+		if (arr->array) {
+			free(arr->array);
+			arr->array = NULL;
+		}
+		free(arr);
+	}
+}
+
 int indexByPtr(const GenericArray* arr, const void* obj) {
 	int index = 0;
 	while (arr->array[index]) {
@@ -304,24 +314,30 @@ Collection* getCollection(const char* id) {
 }
 
 /**************************
- *	free memory
+ *	free all the structs
  **************************/
 
 void cleanup() {
 	int index;
 	// delete components
-	for (index=0; allComponents->array[index]; index++) {
-		deleteComponent(allComponents->array[index]);
+	if (allComponents) {
+		for (index=allComponents->numInUse; index>0; index--)
+			deleteComponent( allComponents->array[index] );
+		deleteGenericArray(allComponents);
+		allComponents = NULL; // TODO why is this needed?
 	}
 	// delete annotations
-	for (index=0; allAnnotations->array[index]; index++) {
-		if (!allAnnotations)
-			allAnnotations = createGenericArray();
-		deleteSequenceAnnotation(allAnnotations->array[index]);
+	if (allAnnotations) {
+		for (index=allAnnotations->numInUse; index>0; index--)
+			deleteSequenceAnnotation( allAnnotations->array[index] );
+		deleteGenericArray(allAnnotations);
+		allAnnotations = NULL; // TODO why is this needed?
 	}
 	// delete collections
-	for (index=0; allCollections->array[index]; index++) {
-		deleteCollection(allCollections->array[index]);
+	if (allCollections) {
+		for (index=allCollections->numInUse; index>0; index--)
+			deleteCollection( allCollections->array[index] );
+		deleteGenericArray(allCollections);
+		allCollections = NULL; // TODO why is this needed?
 	}
-	// delete arrays?
 }

@@ -16,8 +16,10 @@ DNASequence* createDNASequence(char* nucleotides) {
 
 void deleteDNASequence(DNASequence* seq) {
 	if (seq) {
-		if (seq->nucleotides)
+		if (seq->nucleotides) {
 			free(seq->nucleotides);
+			seq->nucleotides = NULL;
+		}
 		free(seq);
 	}
 }

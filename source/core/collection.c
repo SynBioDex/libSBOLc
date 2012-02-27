@@ -23,11 +23,26 @@ Collection* createCollection(const char* id) {
 
 void deleteCollection(Collection* col) {
 	if (col) {
-		if (col->id)          free(col->id);
-		if (col->name)        free(col->name);
-		if (col->description) free(col->description);
-		if (col->collections) free(col->collections);
-		if (col->components)  free(col->components);
+		if (col->id) {
+			free(col->id);
+			col->id = NULL;
+		}
+		if (col->name) {
+			free(col->name);
+			col->name = NULL;
+		}
+		if (col->description) {
+			free(col->description);
+			col->description = NULL;
+		}
+		if (col->collections) {
+			free(col->collections);
+			col->collections = NULL;
+		}
+		if (col->components) {
+			free(col->components);
+			col->components = NULL;
+		}
 		free(col);
 	}
 }
@@ -132,6 +147,7 @@ void addComponentToCollection(DNAComponent * component, Collection * collection)
 			component->collections[n-1] = collection;
 			component->collections[n] = 0;
 			free(p1);
+			p1 = NULL;
 		}
 
 		// create an array and add the new collection
@@ -164,6 +180,7 @@ void addComponentToCollection(DNAComponent * component, Collection * collection)
 			collection->components[n-1] = component;
 			collection->components[n] = 0;
 			free(p2);
+			p2 = NULL;
 		}
 
 		// start an array of components and add the new one
