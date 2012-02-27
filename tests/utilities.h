@@ -3,5 +3,6 @@
 
 char  randomChar();
 char* randomString();
+int randomNumber(int max);
 
 #endif

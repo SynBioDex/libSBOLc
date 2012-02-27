@@ -22,3 +22,7 @@ char* randomString() {
 	string[length] = '\0';
 	return string;
 }
+
+int randomNumber(int max) {
+    return rand() % max;
+}

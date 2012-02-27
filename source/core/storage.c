@@ -4,6 +4,7 @@
 #include "annotation.h"
 #include "collection.h"
 // TODO include sequence?
+// TODO reject (or replace?) duplicate IDs!
 
 #define INITIAL_ARRAY_LENGTH 10
 #define ARRAY_SCALING_FACTOR  2
@@ -159,7 +160,7 @@ int isComponentID(const char* id) {
 	if (!allComponents)
 		allComponents = createGenericArray();
 	if (!id)
-		return -1;
+		return 0;
 	int index;
 	struct _DNAComponent* com;
 	for (index=0; index<allComponents->numInUse; index++) {
@@ -174,7 +175,7 @@ int isSequenceAnnotationID(const char* id) {
 	if (!allAnnotations)
 		allAnnotations = createGenericArray();
 	if (!id)
-		return -1;
+		return 0;
 	int index;
 	SequenceAnnotation* ann;
 	for (index=0; index<allAnnotations->numInUse; index++) {
@@ -189,7 +190,7 @@ int isCollectionID(const char* id) {
 	if (!allCollections)
 		allCollections = createGenericArray();
 	if (!id)
-		return -1;
+		return 0;
 	int index;
 	Collection* col;
 	for (index=0; index<allCollections->numInUse; index++) {
