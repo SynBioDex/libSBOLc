@@ -16,8 +16,13 @@ void registerComponent(struct _DNAComponent* com);
 void registerSequenceAnnotation(struct _SequenceAnnotation* ann);
 void registerCollection(struct _Collection* col);
 
+// remove from the arrays
+void removeComponent(struct _DNAComponent* com);
+void removeAnnotation(struct _SequenceAnnotation* ann);
+void removeCollection(struct _Collection* col);
+
 // work with the arrays
-GenericArray* startGenericArray();
+GenericArray* createGenericArray();
 void resizeArray(GenericArray* arr, int capacity);
 int indexByPtr(const GenericArray* arr, const void* obj);
 void insertIntoArray(GenericArray* arr, void* obj);

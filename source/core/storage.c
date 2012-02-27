@@ -21,7 +21,7 @@ static GenericArray* allCollections;
  *  on the global arrays
  *****************************/
 
-GenericArray* startGenericArray() {
+GenericArray* createGenericArray() {
 	GenericArray* arr = (GenericArray*)malloc(sizeof(GenericArray));
 	arr->numInUse = 0;
 	arr->numTotal = INITIAL_ARRAY_LENGTH;
@@ -66,7 +66,7 @@ void removeFromArray(GenericArray* arr, int index) {
 	int i;
 	for (i=index+1; i<arr->numInUse; i++)
 		arr->array[i-1] = arr->array[i];
-	arr->array[ arr->numInUse-- ] = NULL;
+	arr->array[ --(arr->numInUse) ] = NULL;
 	// if array is getting empty, shrink it
 	if (arr->numInUse == arr->numTotal/ARRAY_SCALING_FACTOR)
 		shrinkArray(arr);
@@ -89,20 +89,48 @@ void insertIntoArray(GenericArray* arr, void* obj) {
 
 void registerComponent(struct _DNAComponent* com) {
 	if (!allComponents)
-		allComponents = startGenericArray();
+		allComponents = createGenericArray();
 	insertIntoArray(allComponents, com);
 }
 
 void registerSequenceAnnotation(struct _SequenceAnnotation* ann) {
 	if (!allAnnotations)
-		allAnnotations = startGenericArray();
+		allAnnotations = createGenericArray();
 	insertIntoArray(allAnnotations, ann);
 }
 
 void registerCollection(struct _Collection* col) {
 	if (!allCollections)
-		allCollections = startGenericArray();
+		allCollections = createGenericArray();
 	insertIntoArray(allCollections, col);
+}
+
+/**************************
+ *	remove... functions
+ **************************/
+ 
+void removeComponent(struct _DNAComponent* com) {
+	if (!allComponents)
+		allComponents = createGenericArray();
+	int index = indexByPtr(allComponents, com);
+	if (index >= 0)
+		removeFromArray(allComponents, index);
+}
+
+void removeAnnotation(struct _SequenceAnnotation* ann) {
+	if (!allAnnotations)
+		allAnnotations = createGenericArray();
+	int index = indexByPtr(allAnnotations, ann);
+	if (index >= 0)
+		removeFromArray(allAnnotations, index);
+}
+
+void removeCollection(struct _Collection* col) {
+	if (!allCollections)
+		allCollections = createGenericArray();
+	int index = indexByPtr(allCollections, col);
+	if (index >= 0)
+		removeFromArray(allCollections, index);
 }
 
 /**************************
@@ -111,32 +139,32 @@ void registerCollection(struct _Collection* col) {
 
 int isComponentPtr(const void* pointer) {
 	if (!allComponents)
-		allComponents = startGenericArray();
+		allComponents = createGenericArray();
 	return (int) indexByPtr(allComponents, pointer) >= 0;
 }
 
 int isAnnotationPtr(const void* pointer) {
 	if (!allAnnotations)
-		allAnnotations = startGenericArray();
+		allAnnotations = createGenericArray();
 	return (int) indexByPtr(allAnnotations, pointer) >= 0;
 }
 
 int isCollectionPtr(const void* pointer) {
 	if (!allCollections)
-		allCollections = startGenericArray();
+		allCollections = createGenericArray();
 	return (int) indexByPtr(allCollections, pointer) >= 0;
 }
 
 int isComponentID(const char* id) {
 	if (!allComponents)
-		allComponents = startGenericArray();
+		allComponents = createGenericArray();
 	if (!id)
 		return -1;
 	int index;
 	struct _DNAComponent* com;
 	for (index=0; index<allComponents->numInUse; index++) {
 		com = (struct _DNAComponent*) allComponents->array[index];
-		if (com->id == id)
+		if (strcmp(com->id, id) == 0)
 			return 1;
 	}
 	return 0;
@@ -144,14 +172,14 @@ int isComponentID(const char* id) {
 
 int isSequenceAnnotationID(const char* id) {
 	if (!allAnnotations)
-		allAnnotations = startGenericArray();
+		allAnnotations = createGenericArray();
 	if (!id)
 		return -1;
 	int index;
 	SequenceAnnotation* ann;
 	for (index=0; index<allAnnotations->numInUse; index++) {
 		ann = (SequenceAnnotation*) allAnnotations->array[index];
-		if (ann->id == id)
+		if (strcmp(ann->id, id) == 0)
 			return 1;
 	}
 	return 0;
@@ -159,14 +187,14 @@ int isSequenceAnnotationID(const char* id) {
 
 int isCollectionID(const char* id) {
 	if (!allCollections)
-		allCollections = startGenericArray();
+		allCollections = createGenericArray();
 	if (!id)
 		return -1;
 	int index;
 	Collection* col;
 	for (index=0; index<allCollections->numInUse; index++) {
 		col = (Collection*) allCollections->array[index];
-		if (col->id == id)
+		if (strcmp(col->id, id) == 0)
 			return 1;
 	}
 	return 0;
@@ -178,19 +206,19 @@ int isCollectionID(const char* id) {
 
 int getNumDNAComponents() {
 	if (!allComponents)
-		allComponents = startGenericArray();
+		allComponents = createGenericArray();
 	return allComponents->numInUse;
 }
 
 int getNumSequenceAnnotations() {
 	if (!allAnnotations)
-		allAnnotations = startGenericArray();
+		allAnnotations = createGenericArray();
 	return allAnnotations->numInUse;
 }
 
 int getNumCollections() {
 	if (!allCollections)
-		allCollections = startGenericArray();
+		allCollections = createGenericArray();
 	return allCollections->numInUse;
 }
 
@@ -200,7 +228,7 @@ int getNumCollections() {
 
 DNAComponent* getNthDNAComponent(int n) {
 	if (!allComponents)
-		allComponents = startGenericArray();
+		allComponents = createGenericArray();
 	if (allComponents->numInUse > n)
 		return allComponents->array[n];
 	else
@@ -209,7 +237,7 @@ DNAComponent* getNthDNAComponent(int n) {
 
 SequenceAnnotation* getNthSequenceAnnotation(int n) {
 	if (!allAnnotations)
-		allAnnotations = startGenericArray();
+		allAnnotations = createGenericArray();
 	if (allAnnotations->numInUse > n)
 		return allAnnotations->array[n];
 	else
@@ -218,7 +246,7 @@ SequenceAnnotation* getNthSequenceAnnotation(int n) {
 
 Collection* getNthCollection(int n) {
 	if (!allCollections)
-		allCollections = startGenericArray();
+		allCollections = createGenericArray();
 	if (allCollections->numInUse > n)
 		return allCollections->array[n];
 	else
@@ -231,7 +259,7 @@ Collection* getNthCollection(int n) {
 
 DNAComponent* getComponent(const char* id) {
 	if (!allComponents)
-		allComponents = startGenericArray();
+		allComponents = createGenericArray();
 	if (!id)
 		return NULL;
 	int index;
@@ -246,7 +274,7 @@ DNAComponent* getComponent(const char* id) {
 
 SequenceAnnotation* getSequenceAnnotation(const char* id) {
 	if (!allAnnotations)
-		allAnnotations = startGenericArray();
+		allAnnotations = createGenericArray();
 	if (!id)
 		return NULL;
 	int index;
@@ -261,7 +289,7 @@ SequenceAnnotation* getSequenceAnnotation(const char* id) {
 
 Collection* getCollection(const char* id) {
 	if (!allCollections)
-		allCollections = startGenericArray();
+		allCollections = createGenericArray();
 	if (!id)
 		return NULL;
 	int index;
@@ -287,7 +315,7 @@ void cleanup() {
 	// delete annotations
 	for (index=0; allAnnotations->array[index]; index++) {
 		if (!allAnnotations)
-			allAnnotations = startGenericArray();
+			allAnnotations = createGenericArray();
 		deleteSequenceAnnotation(allAnnotations->array[index]);
 	}
 	// delete collections
