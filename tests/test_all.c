@@ -5,11 +5,13 @@
 #include "sequence.h"
 #include "annotation.h"
 #include "collection.h"
+#include "storage.h"
 
 CuSuite* SequenceGetSuite();
 CuSuite* AnnotationGetSuite();
 CuSuite* CollectionGetSuite();
 CuSuite* ComponentGetSuite();
+CuSuite* StorageGetSuite();
 
 void RunAllTests(void) {
 	// seed with current time
@@ -23,6 +25,7 @@ void RunAllTests(void) {
 	CuSuiteAddSuite(suite, AnnotationGetSuite());
 	CuSuiteAddSuite(suite, CollectionGetSuite());
 	CuSuiteAddSuite(suite, ComponentGetSuite());
+	CuSuiteAddSuite(suite, StorageGetSuite());
 	
 	CuSuiteRun(suite);
 	CuSuiteSummary(suite, output);
