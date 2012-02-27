@@ -9,7 +9,8 @@ DNASequence* createDNASequence(char* nucleotides) {
 		// TODO avoid copying large sequences?
 		seq->nucleotides = (char*)malloc(sizeof(char) * strlen(nucleotides)+1);
 		strcpy(seq->nucleotides, nucleotides);
-	}
+	} else
+	    seq->nucleotides = NULL;
 	return seq;
 }
 
