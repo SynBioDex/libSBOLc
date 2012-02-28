@@ -1,8 +1,8 @@
 #include "core.h"
 
 void cleanup() {
-	cleanupComponents();
+	cleanupSequences();
 	cleanupAnnotations();
+	cleanupComponents();
 	cleanupCollections();
 }
-
