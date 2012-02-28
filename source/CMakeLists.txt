@@ -82,8 +82,8 @@ TARGET_LINK_LIBRARIES( validate     sbol )
 
 # build tests
 ADD_EXECUTABLE( testall
-	${PROJECT_SOURCE_DIR}/core/sequence.h
-	${PROJECT_SOURCE_DIR}/core/sequence.c
+	${PROJECT_SOURCE_DIR}/core/dnasequence.h
+	${PROJECT_SOURCE_DIR}/core/dnasequence.c
 	${PROJECT_SOURCE_DIR}/core/sequenceannotation.h
 	${PROJECT_SOURCE_DIR}/core/sequenceannotation.c
 	${PROJECT_SOURCE_DIR}/core/collection.h
@@ -96,7 +96,7 @@ ADD_EXECUTABLE( testall
 	${PROJECT_TEST_DIR}/CuTest.c
 	${PROJECT_TEST_DIR}/utilities.h
 	${PROJECT_TEST_DIR}/utilities.c
-	${PROJECT_TEST_DIR}/test_sequence.c
+	${PROJECT_TEST_DIR}/test_dnasequence.c
 	${PROJECT_TEST_DIR}/test_sequenceannotation.c
 	${PROJECT_TEST_DIR}/test_collection.c
 	${PROJECT_TEST_DIR}/test_component.c

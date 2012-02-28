@@ -1,7 +1,7 @@
 #include "core.h"
 
 void cleanup() {
-	cleanupSequences();
+	cleanupDNASequences();
 	cleanupSequenceAnnotations();
 	cleanupComponents();
 	cleanupCollections();

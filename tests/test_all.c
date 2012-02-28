@@ -2,13 +2,13 @@
 #include "CuTest.h"
 #include "utilities.h"
 //#include "core.h"
-#include "sequence.h"
+#include "dnasequence.h"
 #include "sequenceannotation.h"
 #include "collection.h"
 #include "storage.h"
 
-CuSuite* SequenceGetSuite();
-CuSuite* AnnotationGetSuite();
+CuSuite* DNASequenceGetSuite();
+CuSuite* SequenceAnnotationGetSuite();
 CuSuite* CollectionGetSuite();
 CuSuite* ComponentGetSuite();
 CuSuite* StorageGetSuite();
@@ -21,8 +21,8 @@ void RunAllTests(void) {
 	CuString* output = CuStringNew();
 	CuSuite*  suite  = CuSuiteNew();
 
-	CuSuiteAddSuite(suite, SequenceGetSuite());
-	CuSuiteAddSuite(suite, AnnotationGetSuite());
+	CuSuiteAddSuite(suite, DNASequenceGetSuite());
+	CuSuiteAddSuite(suite, SequenceAnnotationGetSuite());
 	CuSuiteAddSuite(suite, CollectionGetSuite());
 	CuSuiteAddSuite(suite, ComponentGetSuite());
 	CuSuiteAddSuite(suite, StorageGetSuite());

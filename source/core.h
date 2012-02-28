@@ -1,7 +1,7 @@
 #ifndef SBOL_CORE
 #define SBOL_CORE
 #include "api.h"
-#include "core/sequence.h"
+#include "core/dnasequence.h"
 #include "core/sequenceannotation.h"
 #include "core/collection.h"
 #include "core/component.h"
@@ -13,7 +13,7 @@
  * #including them as a group from here.
  ***********************************************/
 
-// from sequence.h
+// from dnasequence.h
 SBOLAPIEXPORTS DNASequence* createDNASequence(char* nucleotides);
 SBOLAPIEXPORTS void deleteDNASequence(DNASequence* seq);
 
@@ -38,7 +38,7 @@ SBOLAPIEXPORTS void setComponentDescription(DNAComponent* com, const char* desc)
 SBOLAPIEXPORTS void addSequenceAnnotation(DNAComponent* com, SequenceAnnotation* ann);
 SBOLAPIEXPORTS void setSubComponent(SequenceAnnotation* ann, DNAComponent* com);
 
-// from annotation.h
+// from sequenceannotation.h
 SBOLAPIEXPORTS int isAnnotationPtr(const void* pointer);
 SBOLAPIEXPORTS int isSequenceAnnotationID(const char* id);
 SBOLAPIEXPORTS SequenceAnnotation* getSequenceAnnotation(const char* id);

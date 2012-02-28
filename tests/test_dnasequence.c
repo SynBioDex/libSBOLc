@@ -1,21 +1,21 @@
 #include <stdio.h>
 #include "CuTest.h"
 #include "utilities.h"
-#include "sequence.h"
+#include "dnasequence.h"
 
 #define NUM_FAST_TESTS 10000
 
-void TestCreateEmptySequence(CuTest* tc) {
+void TestCreateEmptyDNASequence(CuTest* tc) {
 	DNASequence* seq = createDNASequence("");
 	CuAssertStrEquals(tc, "", seq->nucleotides);
 }
 
-void TestCreateNullSequence(CuTest* tc) {
+void TestCreateNullDNASequence(CuTest* tc) {
 	DNASequence* seq = createDNASequence(NULL);
 	CuAssertStrEquals(tc, NULL, seq->nucleotides);
 }
 
-void TestCreateRandomSequence(CuTest* tc) {
+void TestCreateRandomDNASequence(CuTest* tc) {
 	char* nt;
 	DNASequence* seq;
 	int repeat;
@@ -28,10 +28,10 @@ void TestCreateRandomSequence(CuTest* tc) {
 	}
 }
 
-CuSuite* SequenceGetSuite() {
-	CuSuite* sequenceTests = CuSuiteNew();
-	SUITE_ADD_TEST(sequenceTests, TestCreateEmptySequence);
-	SUITE_ADD_TEST(sequenceTests, TestCreateNullSequence);
-	SUITE_ADD_TEST(sequenceTests, TestCreateRandomSequence);
-	return sequenceTests;
+CuSuite* DNASequenceGetSuite() {
+	CuSuite* dnaSequenceTests = CuSuiteNew();
+	SUITE_ADD_TEST(dnaSequenceTests, TestCreateEmptyDNASequence);
+	SUITE_ADD_TEST(dnaSequenceTests, TestCreateNullDNASequence);
+	SUITE_ADD_TEST(dnaSequenceTests, TestCreateRandomDNASequence);
+	return dnaSequenceTests;
 }

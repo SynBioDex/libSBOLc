@@ -2,7 +2,7 @@
 #include <string.h>
 #include "storage.h"
 #include "component.h"
-#include "sequence.h"
+#include "dnasequence.h"
 #include "sequenceannotation.h"
 #include "collection.h"
 

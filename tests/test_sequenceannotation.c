@@ -58,9 +58,9 @@ void TestPrecedes(CuTest* tc) {
 	}
 }
 
-CuSuite* AnnotationGetSuite() {
-	CuSuite* annotationTests = CuSuiteNew();
-	SUITE_ADD_TEST(annotationTests, TestCreateSequenceAnnotation);
-	SUITE_ADD_TEST(annotationTests, TestPrecedes);
-	return annotationTests;
+CuSuite* SequenceAnnotationGetSuite() {
+	CuSuite* sequenceAnnotationTests = CuSuiteNew();
+	SUITE_ADD_TEST(sequenceAnnotationTests, TestCreateSequenceAnnotation);
+	SUITE_ADD_TEST(sequenceAnnotationTests, TestPrecedes);
+	return sequenceAnnotationTests;
 }
