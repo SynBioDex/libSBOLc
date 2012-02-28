@@ -1,16 +1,11 @@
 #include <stdio.h>
 #include "CuTest.h"
 #include "utilities.h"
-//#include "core.h"
-#include "dnasequence.h"
-#include "sequenceannotation.h"
-#include "collection.h"
-#include "storage.h"
 
 CuSuite* DNASequenceGetSuite();
 CuSuite* SequenceAnnotationGetSuite();
 CuSuite* CollectionGetSuite();
-CuSuite* ComponentGetSuite();
+CuSuite* DNAComponentGetSuite();
 CuSuite* StorageGetSuite();
 
 void RunAllTests(void) {
@@ -24,7 +19,7 @@ void RunAllTests(void) {
 	CuSuiteAddSuite(suite, DNASequenceGetSuite());
 	CuSuiteAddSuite(suite, SequenceAnnotationGetSuite());
 	CuSuiteAddSuite(suite, CollectionGetSuite());
-	CuSuiteAddSuite(suite, ComponentGetSuite());
+	CuSuiteAddSuite(suite, DNAComponentGetSuite());
 	CuSuiteAddSuite(suite, StorageGetSuite());
 	
 	CuSuiteRun(suite);

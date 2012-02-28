@@ -88,8 +88,8 @@ ADD_EXECUTABLE( testall
 	${PROJECT_SOURCE_DIR}/core/sequenceannotation.c
 	${PROJECT_SOURCE_DIR}/core/collection.h
 	${PROJECT_SOURCE_DIR}/core/collection.c
-	${PROJECT_SOURCE_DIR}/core/component.h
-	${PROJECT_SOURCE_DIR}/core/component.c
+	${PROJECT_SOURCE_DIR}/core/dnacomponent.h
+	${PROJECT_SOURCE_DIR}/core/dnacomponent.c
 	${PROJECT_SOURCE_DIR}/core/storage.h
 	${PROJECT_SOURCE_DIR}/core/storage.c
 	${PROJECT_TEST_DIR}/CuTest.h
@@ -99,7 +99,7 @@ ADD_EXECUTABLE( testall
 	${PROJECT_TEST_DIR}/test_dnasequence.c
 	${PROJECT_TEST_DIR}/test_sequenceannotation.c
 	${PROJECT_TEST_DIR}/test_collection.c
-	${PROJECT_TEST_DIR}/test_component.c
+	${PROJECT_TEST_DIR}/test_dnacomponent.c
 	${PROJECT_TEST_DIR}/test_storage.c
 	${PROJECT_TEST_DIR}/test_all.c
 )

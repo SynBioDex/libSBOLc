@@ -2,9 +2,9 @@
 #define SBOL_CORE
 #include "api.h"
 #include "core/dnasequence.h"
+#include "core/dnacomponent.h"
 #include "core/sequenceannotation.h"
 #include "core/collection.h"
-#include "core/component.h"
 
 /***********************************************
  * The SBOL core is split into files to ease
@@ -17,24 +17,24 @@
 SBOLAPIEXPORTS DNASequence* createDNASequence(char* nucleotides);
 SBOLAPIEXPORTS void deleteDNASequence(DNASequence* seq);
 
-// from component.h
-SBOLAPIEXPORTS DNAComponent* createComponent(const char* id);
-SBOLAPIEXPORTS void deleteComponent(DNAComponent* com);
-SBOLAPIEXPORTS int isComponentPtr(const void* pointer);
-SBOLAPIEXPORTS int isComponentID(const char* id);
+// from dnacomponent.h
+SBOLAPIEXPORTS DNAComponent* createDNAComponent(const char* id);
+SBOLAPIEXPORTS void deleteDNAComponent(DNAComponent* com);
+SBOLAPIEXPORTS int isDNAComponentPtr(const void* pointer);
+SBOLAPIEXPORTS int isDNAComponentID(const char* id);
 SBOLAPIEXPORTS int getNumDNAComponents();
 SBOLAPIEXPORTS DNAComponent* getNthDNAComponent(int n);
 SBOLAPIEXPORTS int getNumCollectionsFor(const DNAComponent* com);
 SBOLAPIEXPORTS int getNumSequenceAnnotationsIn(const DNAComponent* com);
 SBOLAPIEXPORTS Collection* getNthCollectionFor(const DNAComponent* com, int n);
 SBOLAPIEXPORTS SequenceAnnotation* getNthSequenceAnnotationIn(const DNAComponent* com, int n);
-SBOLAPIEXPORTS DNAComponent* getComponent(const char* id);
-SBOLAPIEXPORTS char* getComponentID(const DNAComponent* com);
-SBOLAPIEXPORTS char* getComponentName(const DNAComponent* com);
-SBOLAPIEXPORTS char* getComponentDescription(const DNAComponent* com);
-SBOLAPIEXPORTS void setComponentID(DNAComponent* com, const char* id);
-SBOLAPIEXPORTS void setComponentName(DNAComponent* com, const char* name);
-SBOLAPIEXPORTS void setComponentDescription(DNAComponent* com, const char* desc);
+SBOLAPIEXPORTS DNAComponent* getDNAComponent(const char* id);
+SBOLAPIEXPORTS char* getDNAComponentID(const DNAComponent* com);
+SBOLAPIEXPORTS char* getDNAComponentName(const DNAComponent* com);
+SBOLAPIEXPORTS char* getDNAComponentDescription(const DNAComponent* com);
+SBOLAPIEXPORTS void setDNAComponentID(DNAComponent* com, const char* id);
+SBOLAPIEXPORTS void setDNAComponentName(DNAComponent* com, const char* name);
+SBOLAPIEXPORTS void setDNAComponentDescription(DNAComponent* com, const char* desc);
 SBOLAPIEXPORTS void addSequenceAnnotation(DNAComponent* com, SequenceAnnotation* ann);
 SBOLAPIEXPORTS void setSubComponent(SequenceAnnotation* ann, DNAComponent* com);
 
@@ -67,7 +67,7 @@ SBOLAPIEXPORTS char* getCollectionDescription(Collection* col);
 SBOLAPIEXPORTS void setCollectionID(Collection* col, const char* id); // TODO remove?
 SBOLAPIEXPORTS void setCollectionName(Collection* col, const char* name);
 SBOLAPIEXPORTS void setCollectionDescription(Collection* col, const char* desc);
-SBOLAPIEXPORTS void addComponentToCollection(DNAComponent* com, Collection* col);
+SBOLAPIEXPORTS void addDNAComponentToCollection(DNAComponent* com, Collection* col);
 
 // from core.c
 SBOLAPIEXPORTS void cleanup();

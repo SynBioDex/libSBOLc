@@ -1,24 +1,24 @@
 #include <stdlib.h>
 #include <string.h>
 #include "storage.h"
-#include "component.h"
+#include "dnacomponent.h"
 #include "dnasequence.h"
 #include "sequenceannotation.h"
 #include "collection.h"
 
-static GenericArray* allComponents;
+static GenericArray* allDNAComponents;
 
 /**************************
 	create/destroy
 ***************************/
 
-void registerComponent(DNAComponent* com) {
-	if (!allComponents)
-		allComponents = createGenericArray();
-	insertIntoArray(allComponents, com);
+void registerDNAComponent(DNAComponent* com) {
+	if (!allDNAComponents)
+		allDNAComponents = createGenericArray();
+	insertIntoArray(allDNAComponents, com);
 }
 
-DNAComponent* createComponent(const char* id) {
+DNAComponent* createDNAComponent(const char* id) {
 	DNAComponent* com = (DNAComponent*)malloc(sizeof(DNAComponent));
 	com->id          = NULL;
 	com->name        = NULL;
@@ -27,22 +27,22 @@ DNAComponent* createComponent(const char* id) {
 	com->numCollections = 0;
 	com->annotations = NULL;
 	com->collections = NULL;
-	setComponentID(com, id);
-	registerComponent(com);
+	setDNAComponentID(com, id);
+	registerDNAComponent(com);
 	return com;
 }
 
-void removeComponent(DNAComponent* com) {
-	if (com && allComponents) {
-		int index = indexByPtr(allComponents, com);
+void removeDNAComponent(DNAComponent* com) {
+	if (com && allDNAComponents) {
+		int index = indexByPtr(allDNAComponents, com);
 		if (index >= 0)
-			removeFromArray(allComponents, index);
+			removeFromArray(allDNAComponents, index);
 	}
 }
 
-void deleteComponent(DNAComponent* com) {
+void deleteDNAComponent(DNAComponent* com) {
 	if (com) {
-		removeComponent(com);
+		removeDNAComponent(com);
 		if (com->id) {
 			free(com->id);
 			com->id = NULL;
@@ -71,21 +71,21 @@ void deleteComponent(DNAComponent* com) {
 	is... functions
 ***************************/
 
-int isComponentPtr(const void* pointer) {
-	if (!allComponents)
-		allComponents = createGenericArray();
-	return (int) indexByPtr(allComponents, pointer) >= 0;
+int isDNAComponentPtr(const void* pointer) {
+	if (!allDNAComponents)
+		allDNAComponents = createGenericArray();
+	return (int) indexByPtr(allDNAComponents, pointer) >= 0;
 }
 
-int isComponentID(const char* id) {
-	if (!allComponents)
-		allComponents = createGenericArray();
+int isDNAComponentID(const char* id) {
+	if (!allDNAComponents)
+		allDNAComponents = createGenericArray();
 	if (!id)
 		return 0;
 	int index;
 	DNAComponent* com;
-	for (index=0; index<allComponents->numInUse; index++) {
-		com = (DNAComponent*) allComponents->array[index];
+	for (index=0; index<allDNAComponents->numInUse; index++) {
+		com = (DNAComponent*) allDNAComponents->array[index];
 		if (strcmp(com->id, id) == 0)
 			return 1;
 	}
@@ -97,9 +97,9 @@ int isComponentID(const char* id) {
 ***************************/
 
 int getNumDNAComponents() {
-	if (!allComponents)
-		allComponents = createGenericArray();
-	return allComponents->numInUse;
+	if (!allDNAComponents)
+		allDNAComponents = createGenericArray();
+	return allDNAComponents->numInUse;
 }
 
 int getNumCollectionsFor(const DNAComponent* com) {
@@ -121,10 +121,10 @@ int getNumSequenceAnnotationsIn(const DNAComponent* com) {
 ***************************/
 
 DNAComponent* getNthDNAComponent(int n) {
-	if (!allComponents)
-		allComponents = createGenericArray();
-	if (allComponents->numInUse > n)
-		return allComponents->array[n];
+	if (!allDNAComponents)
+		allDNAComponents = createGenericArray();
+	if (allDNAComponents->numInUse > n)
+		return allDNAComponents->array[n];
 	else
 		return NULL;
 }
@@ -147,22 +147,22 @@ SequenceAnnotation* getNthSequenceAnnotationIn(const DNAComponent* com, int n) {
 	get... functions
 ***************************/
 
-DNAComponent* getComponent(const char* id) {
-	if (!allComponents)
-		allComponents = createGenericArray();
+DNAComponent* getDNAComponent(const char* id) {
+	if (!allDNAComponents)
+		allDNAComponents = createGenericArray();
 	if (!id)
 		return NULL;
 	int index;
 	DNAComponent* com;
-	for (index=0; index<allComponents->numInUse; index++) {
-		com = (DNAComponent*) allComponents->array[index];
+	for (index=0; index<allDNAComponents->numInUse; index++) {
+		com = (DNAComponent*) allDNAComponents->array[index];
 		if (com->id == id)
 			return com;
 	}
 	return NULL;
 }
 
-char* getComponentID(const DNAComponent* com) {
+char* getDNAComponentID(const DNAComponent* com) {
 	if (com && com->id) {
 		char* id = (char*)malloc(sizeof(char) * strlen(com->id)+1);
 		strcpy(id, com->id);
@@ -171,7 +171,7 @@ char* getComponentID(const DNAComponent* com) {
 		return NULL;
 }
 
-char* getComponentName(const DNAComponent* com) {
+char* getDNAComponentName(const DNAComponent* com) {
 	if (com && com->name) {
 		char* name = (char*)malloc(sizeof(char) * strlen(com->name)+1);
 		strcpy(name, com->name);
@@ -180,7 +180,7 @@ char* getComponentName(const DNAComponent* com) {
 		return NULL;
 }
 
-char* getComponentDescription(const DNAComponent* com) {
+char* getDNAComponentDescription(const DNAComponent* com) {
 	if (com && com->description) {
 		char* descr = (char*)malloc(sizeof(char) * strlen(com->description)+1);
 		strcpy(descr, com->description);
@@ -193,21 +193,21 @@ char* getComponentDescription(const DNAComponent* com) {
 	set... functions
 ***************************/
 
-void setComponentID(DNAComponent* com, const char* id) {
+void setDNAComponentID(DNAComponent* com, const char* id) {
 	if (com && id) {
 		com->id = (char*)malloc(sizeof(char) * strlen(id)+1);
 		strcpy(com->id, id);
 	}
 }
 
-void setComponentName(DNAComponent* com, const char* name) {
+void setDNAComponentName(DNAComponent* com, const char* name) {
 	if (com && name) {
 		com->name = (char*)malloc(sizeof(char) * strlen(name)+1);
 		strcpy(com->name, name);
 	}
 }
 
-void setComponentDescription(DNAComponent* com, const char* descr) {
+void setDNAComponentDescription(DNAComponent* com, const char* descr) {
 	if (com && descr) {
 		com->description = (char*)malloc(sizeof(char) * strlen(descr)+1);
 		strcpy(com->description, descr);
@@ -253,12 +253,12 @@ void setSubComponent(SequenceAnnotation* ann, DNAComponent* com) {
 		ann->subComponent = com;
 }
 
-void cleanupComponents() {
-	if (allComponents) {
+void cleanupDNAComponents() {
+	if (allDNAComponents) {
 		int index;
-		for (index=allComponents->numInUse; index>0; index--)
-			deleteComponent( allComponents->array[index] );
-		deleteGenericArray(allComponents);
-		allComponents = NULL;
+		for (index=allDNAComponents->numInUse; index>0; index--)
+			deleteDNAComponent( allDNAComponents->array[index] );
+		deleteGenericArray(allDNAComponents);
+		allDNAComponents = NULL;
 	}
 }

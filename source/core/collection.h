@@ -40,7 +40,7 @@ void setCollectionDescription(Collection* col, const char* desc);
 
 // TODO where should this go?
 // add component
-void addComponentToCollection(struct _DNAComponent* com, Collection* col);
+void addDNAComponentToCollection(struct _DNAComponent* com, Collection* col);
 
 void cleanupCollections();
 

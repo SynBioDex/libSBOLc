@@ -4,56 +4,56 @@
 #include "CuTest.h"
 #include "utilities.h"
 #include "storage.h"
-#include "component.h"
+#include "dnacomponent.h"
 #include "sequenceannotation.h"
 #include "collection.h"
 
 #define NUM_FAST_TESTS 10000
 
-void TestSingleComponent(CuTest* tc) {
-	cleanupComponents();
+void TestSingleDNAComponent(CuTest* tc) {
+	cleanupDNAComponents();
 	CuAssertIntEquals(tc, 0, getNumDNAComponents());
-	DNAComponent* com = createComponent("one");
+	DNAComponent* com = createDNAComponent("one");
 	CuAssertIntEquals(tc, 1, getNumDNAComponents());
 	CuAssertPtrEquals(tc, com, getNthDNAComponent(0));
-	CuAssertIntEquals(tc, 1, isComponentID("one"));
-	CuAssertIntEquals(tc, 1, isComponentPtr(com));
-	deleteComponent(com);
+	CuAssertIntEquals(tc, 1, isDNAComponentID("one"));
+	CuAssertIntEquals(tc, 1, isDNAComponentPtr(com));
+	deleteDNAComponent(com);
 	CuAssertIntEquals(tc, 0, getNumDNAComponents());
-	CuAssertIntEquals(tc, 0, isComponentID("one"));
-	CuAssertIntEquals(tc, 0, isComponentPtr(com));
+	CuAssertIntEquals(tc, 0, isDNAComponentID("one"));
+	CuAssertIntEquals(tc, 0, isDNAComponentPtr(com));
 }
 
-void TestNumComponents(CuTest* tc) {
-	cleanupComponents();
+void TestNumDNAComponents(CuTest* tc) {
+	cleanupDNAComponents();
 	char* id;
 	DNAComponent* com;
 	int num;
 	for (num=0; num<NUM_FAST_TESTS; num++) {
 		CuAssertIntEquals(tc, num, getNumDNAComponents());
 		id = randomString();
-		com = createComponent(id);
+		com = createDNAComponent(id);
 		CuAssertIntEquals(tc, num+1, getNumDNAComponents());
 	}
 	for (; num>0; num--) {
 		CuAssertIntEquals(tc, num, getNumDNAComponents());
 		com = getNthDNAComponent(0);
-		deleteComponent(com);
+		deleteDNAComponent(com);
 		CuAssertIntEquals(tc, num-1, getNumDNAComponents());
 	}
 	CuAssertIntEquals(tc, 0, getNumDNAComponents());
 }
 
-void TestComponentIndexing(CuTest* tc) {
-	cleanupComponents();
+void TestDNAComponentIndexing(CuTest* tc) {
+	cleanupDNAComponents();
 	char* id;
 	DNAComponent* com;
 	int num;
 	for (num=0; num<NUM_FAST_TESTS; num++) {
 		id = randomString();
-		while (isComponentID(id))
+		while (isDNAComponentID(id))
 			id = randomString();
-		com = createComponent(id);
+		com = createDNAComponent(id);
 	}
 	int index;
 	for (num=NUM_FAST_TESTS; num>0; num--) {
@@ -63,12 +63,12 @@ void TestComponentIndexing(CuTest* tc) {
 		// copy id (because it will be destroyed)
 		id = (char*)malloc(sizeof(char) * strlen(com->id)+1);
 		strcpy(id, com->id);
-		CuAssertIntEquals(tc, 1, isComponentPtr(com));
-		CuAssertIntEquals(tc, 1, isComponentID(id));
-		deleteComponent(com);
+		CuAssertIntEquals(tc, 1, isDNAComponentPtr(com));
+		CuAssertIntEquals(tc, 1, isDNAComponentID(id));
+		deleteDNAComponent(com);
 		CuAssertIntEquals(tc, num-1, getNumDNAComponents());
-		CuAssertIntEquals(tc, 0, isComponentPtr(com));
-		CuAssertIntEquals(tc, 0, isComponentID(id));
+		CuAssertIntEquals(tc, 0, isDNAComponentPtr(com));
+		CuAssertIntEquals(tc, 0, isDNAComponentID(id));
 	}
 }
 
@@ -210,9 +210,9 @@ void TestCollectionIndexing(CuTest* tc) {
 
 CuSuite* StorageGetSuite() {
 	CuSuite* storageTests = CuSuiteNew();
-	SUITE_ADD_TEST(storageTests, TestSingleComponent);
-	SUITE_ADD_TEST(storageTests, TestNumComponents);
-	SUITE_ADD_TEST(storageTests, TestComponentIndexing);
+	SUITE_ADD_TEST(storageTests, TestSingleDNAComponent);
+	SUITE_ADD_TEST(storageTests, TestNumDNAComponents);
+	SUITE_ADD_TEST(storageTests, TestDNAComponentIndexing);
 	SUITE_ADD_TEST(storageTests, TestSingleAnnotation);
 	SUITE_ADD_TEST(storageTests, TestNumAnnotations);
 	SUITE_ADD_TEST(storageTests, TestAnnotationIndexing);

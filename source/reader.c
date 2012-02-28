@@ -33,7 +33,7 @@ void read_triple(void* user_data, raptor_statement* triple) {
 	if (strcmp(p, "a") == 0) //TODO or p == rdf:type?
 	{
 		if (strcmp(o, "DNAComponent") == 0)
-			createComponent(s);
+			createDNAComponent(s);
 		else if (strcmp(o, "SequenceAnnotation") == 0)
 			createSequenceAnnotation(s);
 		else if (strcmp(o, "Collection") == 0)
@@ -41,19 +41,19 @@ void read_triple(void* user_data, raptor_statement* triple) {
 	}
 
 	// subject is an existing DNAComponent
-	else if (isComponentID(s))
+	else if (isDNAComponentID(s))
 	{
-		DNAComponent* com = getComponent(s);
+		DNAComponent* com = getDNAComponent(s);
 
 		if (strcmp(p, "name") == 0)
-			setComponentName(com, o);
+			setDNAComponentName(com, o);
 		else if (strcmp(p, "description") == 0)
-			setComponentDescription(com, o);
+			setDNAComponentDescription(com, o);
 		else if (strcmp(p, "collection") == 0)
-			if (isComponentID(s) && isCollectionID(o) > 0)
+			if (isDNAComponentID(s) && isCollectionID(o) > 0)
 			{
 				Collection* col = getCollection(o);
-				addComponentToCollection(com, col);
+				addDNAComponentToCollection(com, col);
 			}
 	}
 
@@ -72,13 +72,13 @@ void read_triple(void* user_data, raptor_statement* triple) {
 		SequenceAnnotation* ann = getSequenceAnnotation(s);
 
 		if (strcmp(p, "annotates") == 0)
-			if (isComponentID(o)) {
-				DNAComponent* com = getComponent(o);
+			if (isDNAComponentID(o)) {
+				DNAComponent* com = getDNAComponent(o);
 				addSequenceAnnotation(com, ann);
 			}
 		else if (strcmp(p, "subComponent") == 0)
-			if (isComponentID(o)) {
-				DNAComponent* com = getComponent(o);
+			if (isDNAComponentID(o)) {
+				DNAComponent* com = getDNAComponent(o);
 				setSubComponent(ann, com);
 			}
 		else if (strcmp(p, "precedes") == 0)

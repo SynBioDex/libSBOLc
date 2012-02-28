@@ -3,6 +3,6 @@
 void cleanup() {
 	cleanupDNASequences();
 	cleanupSequenceAnnotations();
-	cleanupComponents();
+	cleanupDNAComponents();
 	cleanupCollections();
 }

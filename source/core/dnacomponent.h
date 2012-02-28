@@ -1,5 +1,5 @@
-#ifndef SBOL_CORE_COMPONENT
-#define SBOL_CORE_COMPONENT
+#ifndef SBOL_CORE_DNACOMPONENT
+#define SBOL_CORE_DNACOMPONENT
 
 struct _DNASequence;
 struct _SequenceAnnotation;
@@ -17,37 +17,37 @@ typedef struct _DNAComponent {
 } DNAComponent;
 
 // create/destroy
-DNAComponent* createComponent(const char* id);
-void deleteComponent(DNAComponent* com);
+DNAComponent* createDNAComponent(const char* id);
+void deleteDNAComponent(DNAComponent* com);
 
 // work with storage
-int isComponentPtr(const void* pointer);
-int isComponentID(const char* id);
+int isDNAComponentPtr(const void* pointer);
+int isDNAComponentID(const char* id);
 int getNumDNAComponents();
 DNAComponent* getNthDNAComponent(int n);
 
 // tools for iteration
-DNAComponent* getComponent(const char* id);
+DNAComponent* getDNAComponent(const char* id);
 int getNumCollectionsFor(const DNAComponent* com);
 int getNumSequenceAnnotationsIn(const DNAComponent* com);
 struct _Collection* getNthCollectionFor(const DNAComponent* com, int n);
 struct _SequenceAnnotation* getNthSequenceAnnotationIn(const DNAComponent* com, int n);
 
 // get properties
-char* getComponentID(const DNAComponent* com);
-char* getComponentName(const DNAComponent* com);
-char* getComponentDescription(const DNAComponent* com);
+char* getDNAComponentID(const DNAComponent* com);
+char* getDNAComponentName(const DNAComponent* com);
+char* getDNAComponentDescription(const DNAComponent* com);
 
 // set properties
-void setComponentID(DNAComponent* com, const char* id);
-void setComponentName(DNAComponent* com, const char* name);
-void setComponentDescription(DNAComponent* com, const char* desc);
+void setDNAComponentID(DNAComponent* com, const char* id);
+void setDNAComponentName(DNAComponent* com, const char* name);
+void setDNAComponentDescription(DNAComponent* com, const char* desc);
 
 // TODO where should this go?
 // work with annotations
 void addSequenceAnnotation(DNAComponent* com, struct _SequenceAnnotation* ann);
 void setSubComponent(struct _SequenceAnnotation* ann, DNAComponent* com);
 
-void cleanupComponents();
+void cleanupDNAComponents();
 
 #endif

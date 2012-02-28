@@ -2,7 +2,7 @@
 #include <string.h>
 #include "storage.h"
 #include "collection.h"
-#include "component.h"
+#include "dnacomponent.h"
 
 static GenericArray* allCollections;
 
@@ -203,7 +203,7 @@ void setCollectionDescription(Collection* col, const char* descr) {
 	add component
 ***************************/
 
-void addComponentToCollection(DNAComponent * component, Collection * collection)
+void addDNAComponentToCollection(DNAComponent * component, Collection * collection)
 {
 	Collection   ** p1 = 0;
 	DNAComponent ** p2 = 0;
