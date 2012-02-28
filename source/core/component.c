@@ -3,7 +3,7 @@
 #include "storage.h"
 #include "component.h"
 #include "sequence.h"
-#include "annotation.h"
+#include "sequenceannotation.h"
 #include "collection.h"
 
 static GenericArray* allComponents;

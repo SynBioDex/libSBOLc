@@ -84,8 +84,8 @@ TARGET_LINK_LIBRARIES( validate     sbol )
 ADD_EXECUTABLE( testall
 	${PROJECT_SOURCE_DIR}/core/sequence.h
 	${PROJECT_SOURCE_DIR}/core/sequence.c
-	${PROJECT_SOURCE_DIR}/core/annotation.h
-	${PROJECT_SOURCE_DIR}/core/annotation.c
+	${PROJECT_SOURCE_DIR}/core/sequenceannotation.h
+	${PROJECT_SOURCE_DIR}/core/sequenceannotation.c
 	${PROJECT_SOURCE_DIR}/core/collection.h
 	${PROJECT_SOURCE_DIR}/core/collection.c
 	${PROJECT_SOURCE_DIR}/core/component.h
@@ -97,7 +97,7 @@ ADD_EXECUTABLE( testall
 	${PROJECT_TEST_DIR}/utilities.h
 	${PROJECT_TEST_DIR}/utilities.c
 	${PROJECT_TEST_DIR}/test_sequence.c
-	${PROJECT_TEST_DIR}/test_annotation.c
+	${PROJECT_TEST_DIR}/test_sequenceannotation.c
 	${PROJECT_TEST_DIR}/test_collection.c
 	${PROJECT_TEST_DIR}/test_component.c
 	${PROJECT_TEST_DIR}/test_storage.c

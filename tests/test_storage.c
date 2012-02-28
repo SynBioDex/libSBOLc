@@ -5,7 +5,7 @@
 #include "utilities.h"
 #include "storage.h"
 #include "component.h"
-#include "annotation.h"
+#include "sequenceannotation.h"
 #include "collection.h"
 
 #define NUM_FAST_TESTS 10000
@@ -73,7 +73,7 @@ void TestComponentIndexing(CuTest* tc) {
 }
 
 void TestSingleAnnotation(CuTest* tc) {
-	cleanupAnnotations();
+	cleanupSequenceAnnotations();
 	CuAssertIntEquals(tc, 0, getNumSequenceAnnotations());
 	SequenceAnnotation* ann = createSequenceAnnotation("one");
 	CuAssertIntEquals(tc, 1, getNumSequenceAnnotations());
@@ -87,7 +87,7 @@ void TestSingleAnnotation(CuTest* tc) {
 }
 
 void TestNumAnnotations(CuTest* tc) {
-	cleanupAnnotations();
+	cleanupSequenceAnnotations();
 	char* id;
 	SequenceAnnotation* ann;
 	int num;
@@ -107,7 +107,7 @@ void TestNumAnnotations(CuTest* tc) {
 }
 
 void TestAnnotationIndexing(CuTest* tc) {
-	cleanupAnnotations();
+	cleanupSequenceAnnotations();
 	char* id;
 	SequenceAnnotation* ann;
 	int num;
@@ -135,13 +135,13 @@ void TestAnnotationIndexing(CuTest* tc) {
 	}
 }
 
-void TestCleanupAnnotations(CuTest* tc) {
-	cleanupAnnotations();
+void TestcleanupSequenceAnnotations(CuTest* tc) {
+	cleanupSequenceAnnotations();
 	int num;
 	for (num=0; num<NUM_FAST_TESTS; num++)
 		createSequenceAnnotation( randomString() );
 	CuAssertIntEquals(tc, NUM_FAST_TESTS, getNumSequenceAnnotations());
-	cleanupAnnotations();
+	cleanupSequenceAnnotations();
 	CuAssertIntEquals(tc, 0, getNumSequenceAnnotations());
 }
 
@@ -216,7 +216,7 @@ CuSuite* StorageGetSuite() {
 	SUITE_ADD_TEST(storageTests, TestSingleAnnotation);
 	SUITE_ADD_TEST(storageTests, TestNumAnnotations);
 	SUITE_ADD_TEST(storageTests, TestAnnotationIndexing);
-	SUITE_ADD_TEST(storageTests, TestCleanupAnnotations);
+	SUITE_ADD_TEST(storageTests, TestcleanupSequenceAnnotations);
 	SUITE_ADD_TEST(storageTests, TestSingleCollection);
 	SUITE_ADD_TEST(storageTests, TestNumCollections);
 	SUITE_ADD_TEST(storageTests, TestCollectionIndexing);

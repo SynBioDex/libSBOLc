@@ -1,18 +1,18 @@
 #include <stdlib.h>
 #include <string.h>
 #include "storage.h"
-#include "annotation.h"
+#include "sequenceannotation.h"
 
-static GenericArray* allAnnotations;
+static GenericArray* allSequenceAnnotations;
 
 /*******************
  * create/destroy
  *******************/
 
 void registerSequenceAnnotation(SequenceAnnotation* ann) {
-	if (!allAnnotations)
-		allAnnotations = createGenericArray();
-	insertIntoArray(allAnnotations, ann);
+	if (!allSequenceAnnotations)
+		allSequenceAnnotations = createGenericArray();
+	insertIntoArray(allSequenceAnnotations, ann);
 }
 
 SequenceAnnotation* createSequenceAnnotation(const char* id) {
@@ -30,17 +30,17 @@ SequenceAnnotation* createSequenceAnnotation(const char* id) {
 	return ann;
 }
 
-void removeAnnotation(SequenceAnnotation* ann) {
-	if (ann && allAnnotations) {
-		int index = indexByPtr(allAnnotations, ann);
+void removeSequenceAnnotation(SequenceAnnotation* ann) {
+	if (ann && allSequenceAnnotations) {
+		int index = indexByPtr(allSequenceAnnotations, ann);
 		if (index >= 0)
-			removeFromArray(allAnnotations, index);
+			removeFromArray(allSequenceAnnotations, index);
 	}
 }
 
 void deleteSequenceAnnotation(SequenceAnnotation* ann) {
 	if (ann) {
-		removeAnnotation(ann);
+		removeSequenceAnnotation(ann);
 		if (ann->id) {
 			free(ann->id);
 			ann->id = NULL;
@@ -75,20 +75,20 @@ void setSequenceAnnotationID(SequenceAnnotation* ann, const char* id) {
  *******************/
 
 int isAnnotationPtr(const void* pointer) {
-	if (!allAnnotations)
-		allAnnotations = createGenericArray();
-	return (int) indexByPtr(allAnnotations, pointer) >= 0;
+	if (!allSequenceAnnotations)
+		allSequenceAnnotations = createGenericArray();
+	return (int) indexByPtr(allSequenceAnnotations, pointer) >= 0;
 }
 
 int isSequenceAnnotationID(const char* id) {
-	if (!allAnnotations)
-		allAnnotations = createGenericArray();
+	if (!allSequenceAnnotations)
+		allSequenceAnnotations = createGenericArray();
 	if (!id)
 		return 0;
 	int index;
 	SequenceAnnotation* ann;
-	for (index=0; index<allAnnotations->numInUse; index++) {
-		ann = (SequenceAnnotation*) allAnnotations->array[index];
+	for (index=0; index<allSequenceAnnotations->numInUse; index++) {
+		ann = (SequenceAnnotation*) allSequenceAnnotations->array[index];
 		if (strcmp(ann->id, id) == 0)
 			return 1;
 	}
@@ -100,16 +100,16 @@ int isSequenceAnnotationID(const char* id) {
  ***********************/
 
 int getNumSequenceAnnotations() {
-	if (!allAnnotations)
-		allAnnotations = createGenericArray();
-	return allAnnotations->numInUse;
+	if (!allSequenceAnnotations)
+		allSequenceAnnotations = createGenericArray();
+	return allSequenceAnnotations->numInUse;
 }
 
 SequenceAnnotation* getNthSequenceAnnotation(int n) {
-	if (!allAnnotations)
-		allAnnotations = createGenericArray();
-	if (allAnnotations->numInUse > n)
-		return allAnnotations->array[n];
+	if (!allSequenceAnnotations)
+		allSequenceAnnotations = createGenericArray();
+	if (allSequenceAnnotations->numInUse > n)
+		return allSequenceAnnotations->array[n];
 	else
 		return NULL;
 }
@@ -119,14 +119,14 @@ SequenceAnnotation* getNthSequenceAnnotation(int n) {
  ********************/
 
 SequenceAnnotation* getSequenceAnnotation(const char* id) {
-	if (!allAnnotations)
-		allAnnotations = createGenericArray();
+	if (!allSequenceAnnotations)
+		allSequenceAnnotations = createGenericArray();
 	if (!id)
 		return NULL;
 	int index;
 	SequenceAnnotation* ann;
-	for (index=0; index<allAnnotations->numInUse; index++) {
-		ann = (SequenceAnnotation*) allAnnotations->array[index];
+	for (index=0; index<allSequenceAnnotations->numInUse; index++) {
+		ann = (SequenceAnnotation*) allSequenceAnnotations->array[index];
 		if (ann->id == id)
 			return ann;
 	}
@@ -180,12 +180,12 @@ SequenceAnnotation* getNthPrecedes(SequenceAnnotation* ann, int n) {
 		return NULL;
 }
 
-void cleanupAnnotations() {
-	if (allAnnotations) {
+void cleanupSequenceAnnotations() {
+	if (allSequenceAnnotations) {
 		int index;
-		for (index=allAnnotations->numInUse; index>0; index--)
-			deleteSequenceAnnotation( allAnnotations->array[index] );
-		deleteGenericArray(allAnnotations);
-		allAnnotations = NULL;
+		for (index=allSequenceAnnotations->numInUse; index>0; index--)
+			deleteSequenceAnnotation( allSequenceAnnotations->array[index] );
+		deleteGenericArray(allSequenceAnnotations);
+		allSequenceAnnotations = NULL;
 	}
 }

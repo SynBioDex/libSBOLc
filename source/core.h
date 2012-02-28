@@ -2,7 +2,7 @@
 #define SBOL_CORE
 #include "api.h"
 #include "core/sequence.h"
-#include "core/annotation.h"
+#include "core/sequenceannotation.h"
 #include "core/collection.h"
 #include "core/component.h"
 

@@ -3,7 +3,7 @@
 #include "utilities.h"
 //#include "core.h"
 #include "sequence.h"
-#include "annotation.h"
+#include "sequenceannotation.h"
 #include "collection.h"
 #include "storage.h"
 

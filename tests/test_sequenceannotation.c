@@ -2,13 +2,13 @@
 #include <stdlib.h>
 #include "CuTest.h"
 #include "utilities.h"
-#include "annotation.h"
+#include "sequenceannotation.h"
 
 #define NUM_FAST_TESTS 10000
 #define NUM_SLOW_TESTS  1000
 
 void TestCreateSequenceAnnotation(CuTest* tc) {
-	cleanupAnnotations();
+	cleanupSequenceAnnotations();
 	char* id;
 	SequenceAnnotation* ann;
 	int repeat;
@@ -27,7 +27,7 @@ void TestCreateSequenceAnnotation(CuTest* tc) {
 
 // TODO this leaks 1000 annotations for some reason
 void TestPrecedes(CuTest* tc) {
-	cleanupAnnotations();
+	cleanupSequenceAnnotations();
 	int index;
 	int numDownstream;
 	size_t memory;

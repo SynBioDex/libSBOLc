@@ -21,7 +21,7 @@ void deleteSequenceAnnotation(SequenceAnnotation* ann);
 SequenceAnnotation* getSequenceAnnotation(const char* id);
 
 // work with global arrays
-int isAnnotationPtr(const void* pointer);
+int isSequenceAnnotationPtr(const void* pointer);
 int isSequenceAnnotationID(const char* id);
 int getNumSequenceAnnotations();
 SequenceAnnotation* getNthSequenceAnnotation(int n);
@@ -32,6 +32,6 @@ int getNumPrecedes(SequenceAnnotation* ann);
 SequenceAnnotation* getNthPrecedes(SequenceAnnotation* ann, int n);
 // TODO removePrecedesRelationship?
 
-void cleanupAnnotations();
+void cleanupSequenceAnnotations();
 
 #endif

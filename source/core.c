@@ -2,7 +2,7 @@
 
 void cleanup() {
 	cleanupSequences();
-	cleanupAnnotations();
+	cleanupSequenceAnnotations();
 	cleanupComponents();
 	cleanupCollections();
 }
