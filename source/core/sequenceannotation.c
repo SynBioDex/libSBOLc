@@ -1,6 +1,6 @@
 #include <stdlib.h>
 #include <string.h>
-#include "storage.h"
+#include "genericarray.h"
 #include "sequenceannotation.h"
 
 static GenericArray* allSequenceAnnotations;
@@ -12,7 +12,7 @@ static GenericArray* allSequenceAnnotations;
 void registerSequenceAnnotation(SequenceAnnotation* ann) {
 	if (!allSequenceAnnotations)
 		allSequenceAnnotations = createGenericArray();
-	insertIntoArray(allSequenceAnnotations, ann);
+	insertIntoGenericArray(allSequenceAnnotations, ann);
 }
 
 SequenceAnnotation* createSequenceAnnotation(const char* id) {
@@ -34,7 +34,7 @@ void removeSequenceAnnotation(SequenceAnnotation* ann) {
 	if (ann && allSequenceAnnotations) {
 		int index = indexByPtr(allSequenceAnnotations, ann);
 		if (index >= 0)
-			removeFromArray(allSequenceAnnotations, index);
+			removeFromGenericArray(allSequenceAnnotations, index);
 	}
 }
 

@@ -1,6 +1,6 @@
 #include <stdlib.h>
 #include <string.h>
-#include "storage.h"
+#include "genericarray.h"
 #include "collection.h"
 #include "dnacomponent.h"
 
@@ -13,7 +13,7 @@ static GenericArray* allCollections;
 void registerCollection(Collection* col) {
 	if (!allCollections)
 		allCollections = createGenericArray();
-	insertIntoArray(allCollections, col);
+	insertIntoGenericArray(allCollections, col);
 }
 
 Collection* createCollection(const char* id) {
@@ -36,7 +36,7 @@ void removeCollection(Collection* col) {
 		allCollections = createGenericArray();
 	int index = indexByPtr(allCollections, col);
 	if (index >= 0)
-		removeFromArray(allCollections, index);
+		removeFromGenericArray(allCollections, index);
 }
 
 void deleteCollection(Collection* col) {

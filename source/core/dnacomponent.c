@@ -1,6 +1,6 @@
 #include <stdlib.h>
 #include <string.h>
-#include "storage.h"
+#include "genericarray.h"
 #include "dnacomponent.h"
 #include "dnasequence.h"
 #include "sequenceannotation.h"
@@ -15,7 +15,7 @@ static GenericArray* allDNAComponents;
 void registerDNAComponent(DNAComponent* com) {
 	if (!allDNAComponents)
 		allDNAComponents = createGenericArray();
-	insertIntoArray(allDNAComponents, com);
+	insertIntoGenericArray(allDNAComponents, com);
 }
 
 DNAComponent* createDNAComponent(const char* id) {
@@ -36,7 +36,7 @@ void removeDNAComponent(DNAComponent* com) {
 	if (com && allDNAComponents) {
 		int index = indexByPtr(allDNAComponents, com);
 		if (index >= 0)
-			removeFromArray(allDNAComponents, index);
+			removeFromGenericArray(allDNAComponents, index);
 	}
 }
 

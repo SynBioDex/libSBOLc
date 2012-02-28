@@ -1,6 +1,6 @@
 #include <stdlib.h>
 #include <string.h>
-#include "storage.h"
+#include "genericarray.h"
 #include "dnasequence.h"
 
 static GenericArray* allDNASequences;
@@ -8,7 +8,7 @@ static GenericArray* allDNASequences;
 void registerDNASequence(DNASequence* seq) {
 	if (!allDNASequences)
 		allDNASequences = createGenericArray();
-	insertIntoArray(allDNASequences, seq);
+	insertIntoGenericArray(allDNASequences, seq);
 }
 
 // TODO constrain to actg and sometimes n?
@@ -28,7 +28,7 @@ void removeDNASequence(DNASequence* seq) {
 	if (seq && allDNASequences) {
 		int index = indexByPtr(allDNASequences, seq);
 		if (index >= 0)
-			removeFromArray(allDNASequences, index);
+			removeFromGenericArray(allDNASequences, index);
 	}
 }
 

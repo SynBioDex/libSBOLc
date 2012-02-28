@@ -1,9 +1,9 @@
 #include <stdlib.h>
-#include "storage.h"
+#include "genericarray.h"
 // TODO reject (or replace?) duplicate IDs!
 
-#define INITIAL_ARRAY_LENGTH 10
-#define ARRAY_SCALING_FACTOR  2
+#define GENERICARRAY_INITIAL_LENGTH 10
+#define GENERICARRAY_SCALING_FACTOR  2
 
 /*****************************
  *	functions for operating
@@ -13,8 +13,8 @@
 GenericArray* createGenericArray() {
 	GenericArray* arr = (GenericArray*)malloc(sizeof(GenericArray));
 	arr->numInUse = 0;
-	arr->numTotal = INITIAL_ARRAY_LENGTH;
-	arr->array = (void**)malloc(sizeof(void*) * INITIAL_ARRAY_LENGTH);
+	arr->numTotal = GENERICARRAY_INITIAL_LENGTH;
+	arr->array = (void**)malloc(sizeof(void*) * GENERICARRAY_INITIAL_LENGTH);
 	int num;
 	for (num=0; num<arr->numInUse; num++)
 		arr->array[num] = NULL;
@@ -42,43 +42,43 @@ int indexByPtr(const GenericArray* arr, const void* obj) {
 	return -1;
 }
 
-void resizeArray(GenericArray* arr, int capacity) {
-	if (capacity<INITIAL_ARRAY_LENGTH)
+void resizeGenericArray(GenericArray* arr, int capacity) {
+	if (capacity<GENERICARRAY_INITIAL_LENGTH)
 		return;
 	arr->array = (void**)realloc(arr->array, capacity * sizeof(void*));
 	arr->numTotal = capacity;
 }
 
-void expandArray(GenericArray* arr) {
+void expandGenericArray(GenericArray* arr) {
 	int capacity;
 	if (arr->numTotal == 0) {
-		capacity = INITIAL_ARRAY_LENGTH;
+		capacity = GENERICARRAY_INITIAL_LENGTH;
 	} else
-		capacity = arr->numTotal * ARRAY_SCALING_FACTOR;
-	resizeArray(arr, capacity);
+		capacity = arr->numTotal * GENERICARRAY_SCALING_FACTOR;
+	resizeGenericArray(arr, capacity);
 }
 
-void shrinkArray(GenericArray* arr) {
-	if (arr->numTotal>INITIAL_ARRAY_LENGTH*ARRAY_SCALING_FACTOR)
-		resizeArray(arr, arr->numTotal / ARRAY_SCALING_FACTOR);
+void shrinkGenericArray(GenericArray* arr) {
+	if (arr->numTotal>GENERICARRAY_INITIAL_LENGTH*GENERICARRAY_SCALING_FACTOR)
+		resizeGenericArray(arr, arr->numTotal / GENERICARRAY_SCALING_FACTOR);
 }
 
-void removeFromArray(GenericArray* arr, int index) {
+void removeFromGenericArray(GenericArray* arr, int index) {
 	// shift everything over
 	int i;
 	for (i=index+1; i<arr->numInUse; i++)
 		arr->array[i-1] = arr->array[i];
 	arr->array[ --(arr->numInUse) ] = NULL;
 	// if array is getting empty, shrink it
-	if (arr->numInUse == arr->numTotal/ARRAY_SCALING_FACTOR)
-		shrinkArray(arr);
+	if (arr->numInUse == arr->numTotal/GENERICARRAY_SCALING_FACTOR)
+		shrinkGenericArray(arr);
 }
 
-void insertIntoArray(GenericArray* arr, void* obj) {
+void insertIntoGenericArray(GenericArray* arr, void* obj) {
 	if (arr && obj) {
 		// if array is full, expand it
 		if (arr->numInUse == arr->numTotal)
-			expandArray(arr);
+			expandGenericArray(arr);
 		// insert obj
 		arr->array[ arr->numInUse ] = obj;
 		arr->numInUse++;

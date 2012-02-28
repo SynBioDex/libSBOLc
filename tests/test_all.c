@@ -6,7 +6,7 @@ CuSuite* DNASequenceGetSuite();
 CuSuite* SequenceAnnotationGetSuite();
 CuSuite* CollectionGetSuite();
 CuSuite* DNAComponentGetSuite();
-CuSuite* StorageGetSuite();
+CuSuite* GenericArrayGetSuite();
 
 void RunAllTests(void) {
 	// seed with current time
@@ -20,7 +20,7 @@ void RunAllTests(void) {
 	CuSuiteAddSuite(suite, SequenceAnnotationGetSuite());
 	CuSuiteAddSuite(suite, CollectionGetSuite());
 	CuSuiteAddSuite(suite, DNAComponentGetSuite());
-	CuSuiteAddSuite(suite, StorageGetSuite());
+	CuSuiteAddSuite(suite, GenericArrayGetSuite());
 	
 	CuSuiteRun(suite);
 	CuSuiteSummary(suite, output);

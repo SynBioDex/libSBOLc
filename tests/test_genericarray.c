@@ -3,7 +3,7 @@
 #include <string.h>
 #include "CuTest.h"
 #include "utilities.h"
-#include "storage.h"
+#include "genericarray.h"
 #include "dnacomponent.h"
 #include "sequenceannotation.h"
 #include "collection.h"
@@ -208,17 +208,17 @@ void TestCollectionIndexing(CuTest* tc) {
 	}
 }
 
-CuSuite* StorageGetSuite() {
-	CuSuite* storageTests = CuSuiteNew();
-	SUITE_ADD_TEST(storageTests, TestSingleDNAComponent);
-	SUITE_ADD_TEST(storageTests, TestNumDNAComponents);
-	SUITE_ADD_TEST(storageTests, TestDNAComponentIndexing);
-	SUITE_ADD_TEST(storageTests, TestSingleAnnotation);
-	SUITE_ADD_TEST(storageTests, TestNumAnnotations);
-	SUITE_ADD_TEST(storageTests, TestAnnotationIndexing);
-	SUITE_ADD_TEST(storageTests, TestcleanupSequenceAnnotations);
-	SUITE_ADD_TEST(storageTests, TestSingleCollection);
-	SUITE_ADD_TEST(storageTests, TestNumCollections);
-	SUITE_ADD_TEST(storageTests, TestCollectionIndexing);
-	return storageTests;
+CuSuite* GenericArrayGetSuite() {
+	CuSuite* genericArrayTests = CuSuiteNew();
+	SUITE_ADD_TEST(genericArrayTests, TestSingleDNAComponent);
+	SUITE_ADD_TEST(genericArrayTests, TestNumDNAComponents);
+	SUITE_ADD_TEST(genericArrayTests, TestDNAComponentIndexing);
+	SUITE_ADD_TEST(genericArrayTests, TestSingleAnnotation);
+	SUITE_ADD_TEST(genericArrayTests, TestNumAnnotations);
+	SUITE_ADD_TEST(genericArrayTests, TestAnnotationIndexing);
+	SUITE_ADD_TEST(genericArrayTests, TestcleanupSequenceAnnotations);
+	SUITE_ADD_TEST(genericArrayTests, TestSingleCollection);
+	SUITE_ADD_TEST(genericArrayTests, TestNumCollections);
+	SUITE_ADD_TEST(genericArrayTests, TestCollectionIndexing);
+	return genericArrayTests;
 }
