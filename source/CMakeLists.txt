@@ -13,9 +13,11 @@ SET( PROJECT_TEST_DIR    ${PROJECT_ROOT_DIR}/tests    )
 FILE( GLOB PROJECT_SOURCE_FILES
     ${PROJECT_SOURCE_DIR}/core/*.h
     ${PROJECT_SOURCE_DIR}/core/*.c
-    ${PROJECT_SOURCE_DIR}/core/*.cpp
-    ${PROJECT_SOURCE_DIR}/*.h
-    ${PROJECT_SOURCE_DIR}/*.c
+    #${PROJECT_SOURCE_DIR}/*.h
+    #${PROJECT_SOURCE_DIR}/*.c
+    ${PROJECT_SOURCE_DIR}/api.h
+    ${PROJECT_SOURCE_DIR}/core.h
+    ${PROJECT_SOURCE_DIR}/core.c
 )
 
 # gather test files
@@ -54,15 +56,15 @@ INCLUDE_DIRECTORIES(
 )
 
 # build libSBOL
-#ADD_LIBRARY( sbol
-#    SHARED
-#    ${PROJECT_SOURCE_FILES}
-#)
-#TARGET_LINK_LIBRARIES( sbol
-#    xml2
-#    libcurl
-#    raptor2
-#)
+ADD_LIBRARY( sbol
+    SHARED
+    ${PROJECT_SOURCE_FILES}
+)
+TARGET_LINK_LIBRARIES( sbol
+    xml2
+    libcurl
+    raptor2
+)
 INCLUDE_DIRECTORIES(
     ${PROJECT_SOURCE_DIR}
 	${PROJECT_SOURCE_DIR}/core

@@ -1,6 +1,10 @@
 #ifndef SBOL_CORE
 #define SBOL_CORE
 #include "api.h"
+#include "core/sequence.h"
+#include "core/annotation.h"
+#include "core/collection.h"
+#include "core/component.h"
 
 /***********************************************
  * The SBOL core is split into files to ease
@@ -9,70 +13,64 @@
  * #including them as a group from here.
  ***********************************************/
 
-// forward declarations
-struct _SequenceAnnotation;
-struct _DNAComponent;
-struct _DNASequence;
-struct _Collection;
-
 // from sequence.h
-SBOLAPIEXPORTS struct _DNASequence* createDNASequence(char* nucleotides);
-SBOLAPIEXPORTS void deleteDNASequence(struct _DNASequence* seq);
+SBOLAPIEXPORTS DNASequence* createDNASequence(char* nucleotides);
+SBOLAPIEXPORTS void deleteDNASequence(DNASequence* seq);
 
 // from component.h
-SBOLAPIEXPORTS struct _DNAComponent* createComponent(const char* id);
-SBOLAPIEXPORTS void deleteComponent(struct _DNAComponent* com);
-SBOLAPIEXPORTS void registerComponent(struct _DNAComponent* com);
-SBOLAPIEXPORTS void removeComponent(struct _DNAComponent* com);
+SBOLAPIEXPORTS DNAComponent* createComponent(const char* id);
+SBOLAPIEXPORTS void deleteComponent(DNAComponent* com);
+SBOLAPIEXPORTS void registerComponent(DNAComponent* com);
+SBOLAPIEXPORTS void removeComponent(DNAComponent* com);
 SBOLAPIEXPORTS int isComponentPtr(const void* pointer);
 SBOLAPIEXPORTS int isComponentID(const char* id);
 SBOLAPIEXPORTS int getNumDNAComponents();
-SBOLAPIEXPORTS struct _DNAComponent* getNthDNAComponent(int n);
-SBOLAPIEXPORTS int getNumCollectionsFor(const struct _DNAComponent* com);
-SBOLAPIEXPORTS int getNumSequenceAnnotationsIn(const struct _DNAComponent* com);
-SBOLAPIEXPORTS struct _Collection* getNthCollectionFor(const struct _DNAComponent* com, int n);
-SBOLAPIEXPORTS struct _SequenceAnnotation* getNthSequenceAnnotationIn(const struct _DNAComponent* com, int n);
-SBOLAPIEXPORTS char* getComponentID(const struct _DNAComponent* com);
-SBOLAPIEXPORTS char* getComponentName(const struct _DNAComponent* com);
-SBOLAPIEXPORTS char* getComponentDescription(const struct _DNAComponent* com);
-SBOLAPIEXPORTS void setComponentID(struct _DNAComponent* com, const char* id);
-SBOLAPIEXPORTS void setComponentName(struct _DNAComponent* com, const char* name);
-SBOLAPIEXPORTS void setComponentDescription(struct _DNAComponent* com, const char* desc);
-SBOLAPIEXPORTS void addSequenceAnnotation(struct _DNAComponent* com, struct _SequenceAnnotation* ann);
-SBOLAPIEXPORTS void setSubComponent(struct _SequenceAnnotation* ann, struct _DNAComponent* com);
+SBOLAPIEXPORTS DNAComponent* getNthDNAComponent(int n);
+SBOLAPIEXPORTS int getNumCollectionsFor(const DNAComponent* com);
+SBOLAPIEXPORTS int getNumSequenceAnnotationsIn(const DNAComponent* com);
+SBOLAPIEXPORTS Collection* getNthCollectionFor(const DNAComponent* com, int n);
+SBOLAPIEXPORTS SequenceAnnotation* getNthSequenceAnnotationIn(const DNAComponent* com, int n);
+SBOLAPIEXPORTS char* getComponentID(const DNAComponent* com);
+SBOLAPIEXPORTS char* getComponentName(const DNAComponent* com);
+SBOLAPIEXPORTS char* getComponentDescription(const DNAComponent* com);
+SBOLAPIEXPORTS void setComponentID(DNAComponent* com, const char* id);
+SBOLAPIEXPORTS void setComponentName(DNAComponent* com, const char* name);
+SBOLAPIEXPORTS void setComponentDescription(DNAComponent* com, const char* desc);
+SBOLAPIEXPORTS void addSequenceAnnotation(DNAComponent* com, SequenceAnnotation* ann);
+SBOLAPIEXPORTS void setSubComponent(SequenceAnnotation* ann, DNAComponent* com);
 
 // from annotation.h
-SBOLAPIEXPORTS void registerSequenceAnnotation(struct _SequenceAnnotation* ann);
-SBOLAPIEXPORTS void removeAnnotation(struct _SequenceAnnotation* ann);
+SBOLAPIEXPORTS void registerSequenceAnnotation(SequenceAnnotation* ann);
+SBOLAPIEXPORTS void removeAnnotation(SequenceAnnotation* ann);
 SBOLAPIEXPORTS int isAnnotationPtr(const void* pointer);
 SBOLAPIEXPORTS int isAnnotationID(const char* id);
 SBOLAPIEXPORTS int getNumSequenceAnnotations();
-SBOLAPIEXPORTS struct _SequenceAnnotation* getNthSequenceAnnotation(int n);
-SBOLAPIEXPORTS struct _SequenceAnnotation* createSequenceAnnotation(const char* id);
-SBOLAPIEXPORTS void setSequenceAnnotationID(struct _SequenceAnnotation* ann, const char* id);
-SBOLAPIEXPORTS void deleteSequenceAnnotation(struct _SequenceAnnotation* ann);
-SBOLAPIEXPORTS void addPrecedesRelationship(struct _SequenceAnnotation* upstream, struct _SequenceAnnotation* downstream);
-SBOLAPIEXPORTS int getNumPrecedes(struct _SequenceAnnotation* ann);
-SBOLAPIEXPORTS struct _SequenceAnnotation* getNthPrecedes(struct _SequenceAnnotation* ann, int n);
+SBOLAPIEXPORTS SequenceAnnotation* getNthSequenceAnnotation(int n);
+SBOLAPIEXPORTS SequenceAnnotation* createSequenceAnnotation(const char* id);
+SBOLAPIEXPORTS void setSequenceAnnotationID(SequenceAnnotation* ann, const char* id);
+SBOLAPIEXPORTS void deleteSequenceAnnotation(SequenceAnnotation* ann);
+SBOLAPIEXPORTS void addPrecedesRelationship(SequenceAnnotation* upstream, SequenceAnnotation* downstream);
+SBOLAPIEXPORTS int getNumPrecedes(SequenceAnnotation* ann);
+SBOLAPIEXPORTS SequenceAnnotation* getNthPrecedes(SequenceAnnotation* ann, int n);
 
 // from collection.h
-SBOLAPIEXPORTS struct _Collection* createCollection(const char* id);
-SBOLAPIEXPORTS void deleteCollection(struct _Collection* col);
-SBOLAPIEXPORTS void registerCollection(struct _Collection* col);
-SBOLAPIEXPORTS void removeCollection(struct _Collection* col);
+SBOLAPIEXPORTS Collection* createCollection(const char* id);
+SBOLAPIEXPORTS void deleteCollection(Collection* col);
+SBOLAPIEXPORTS void registerCollection(Collection* col);
+SBOLAPIEXPORTS void removeCollection(Collection* col);
 SBOLAPIEXPORTS int isCollectionPtr(const void* pointer);
 SBOLAPIEXPORTS int isCollectionID(const char* id);
 SBOLAPIEXPORTS int getNumCollections();
-SBOLAPIEXPORTS struct _Collection* getNthCollection(int n);
-SBOLAPIEXPORTS int getNumDNAComponentsIn(struct _Collection* col);
-SBOLAPIEXPORTS struct _DNAComponent* getNthDNAComponentIn(struct _Collection* col, int n);
-SBOLAPIEXPORTS char* getCollectionID(struct _Collection* col);
-SBOLAPIEXPORTS char* getCollectionName(struct _Collection* col);
-SBOLAPIEXPORTS char* getCollectionDescription(struct _Collection* col);
-SBOLAPIEXPORTS void setCollectionID(struct _Collection* col, const char* id); // TODO remove?
-SBOLAPIEXPORTS void setCollectionName(struct _Collection* col, const char* name);
-SBOLAPIEXPORTS void setCollectionDescription(struct _Collection* col, const char* desc);
-SBOLAPIEXPORTS void addComponentToCollection(struct _DNAComponent* com, struct _Collection* col);
+SBOLAPIEXPORTS Collection* getNthCollection(int n);
+SBOLAPIEXPORTS int getNumDNAComponentsIn(Collection* col);
+SBOLAPIEXPORTS DNAComponent* getNthDNAComponentIn(Collection* col, int n);
+SBOLAPIEXPORTS char* getCollectionID(Collection* col);
+SBOLAPIEXPORTS char* getCollectionName(Collection* col);
+SBOLAPIEXPORTS char* getCollectionDescription(Collection* col);
+SBOLAPIEXPORTS void setCollectionID(Collection* col, const char* id); // TODO remove?
+SBOLAPIEXPORTS void setCollectionName(Collection* col, const char* name);
+SBOLAPIEXPORTS void setCollectionDescription(Collection* col, const char* desc);
+SBOLAPIEXPORTS void addComponentToCollection(DNAComponent* com, Collection* col);
 
 // from core.c
 SBOLAPIEXPORTS void cleanup();
