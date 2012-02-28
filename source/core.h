@@ -2,8 +2,8 @@
 #define SBOL_CORE
 #include "api.h"
 #include "core/dnasequence.h"
-#include "core/dnacomponent.h"
 #include "core/sequenceannotation.h"
+#include "core/dnacomponent.h"
 #include "core/collection.h"
 
 /***********************************************
@@ -16,6 +16,19 @@
 // from dnasequence.h
 SBOLAPIEXPORTS DNASequence* createDNASequence(char* nucleotides);
 SBOLAPIEXPORTS void deleteDNASequence(DNASequence* seq);
+
+// from sequenceannotation.h
+SBOLAPIEXPORTS int isAnnotationPtr(const void* pointer);
+SBOLAPIEXPORTS int isSequenceAnnotationID(const char* id);
+SBOLAPIEXPORTS SequenceAnnotation* getSequenceAnnotation(const char* id);
+SBOLAPIEXPORTS int getNumSequenceAnnotations();
+SBOLAPIEXPORTS SequenceAnnotation* getNthSequenceAnnotation(int n);
+SBOLAPIEXPORTS SequenceAnnotation* createSequenceAnnotation(const char* id);
+SBOLAPIEXPORTS void setSequenceAnnotationID(SequenceAnnotation* ann, const char* id);
+SBOLAPIEXPORTS void deleteSequenceAnnotation(SequenceAnnotation* ann);
+SBOLAPIEXPORTS void addPrecedesRelationship(SequenceAnnotation* upstream, SequenceAnnotation* downstream);
+SBOLAPIEXPORTS int getNumPrecedes(SequenceAnnotation* ann);
+SBOLAPIEXPORTS SequenceAnnotation* getNthPrecedes(SequenceAnnotation* ann, int n);
 
 // from dnacomponent.h
 SBOLAPIEXPORTS DNAComponent* createDNAComponent(const char* id);
@@ -37,19 +50,6 @@ SBOLAPIEXPORTS void setDNAComponentName(DNAComponent* com, const char* name);
 SBOLAPIEXPORTS void setDNAComponentDescription(DNAComponent* com, const char* desc);
 SBOLAPIEXPORTS void addSequenceAnnotation(DNAComponent* com, SequenceAnnotation* ann);
 SBOLAPIEXPORTS void setSubComponent(SequenceAnnotation* ann, DNAComponent* com);
-
-// from sequenceannotation.h
-SBOLAPIEXPORTS int isAnnotationPtr(const void* pointer);
-SBOLAPIEXPORTS int isSequenceAnnotationID(const char* id);
-SBOLAPIEXPORTS SequenceAnnotation* getSequenceAnnotation(const char* id);
-SBOLAPIEXPORTS int getNumSequenceAnnotations();
-SBOLAPIEXPORTS SequenceAnnotation* getNthSequenceAnnotation(int n);
-SBOLAPIEXPORTS SequenceAnnotation* createSequenceAnnotation(const char* id);
-SBOLAPIEXPORTS void setSequenceAnnotationID(SequenceAnnotation* ann, const char* id);
-SBOLAPIEXPORTS void deleteSequenceAnnotation(SequenceAnnotation* ann);
-SBOLAPIEXPORTS void addPrecedesRelationship(SequenceAnnotation* upstream, SequenceAnnotation* downstream);
-SBOLAPIEXPORTS int getNumPrecedes(SequenceAnnotation* ann);
-SBOLAPIEXPORTS SequenceAnnotation* getNthPrecedes(SequenceAnnotation* ann, int n);
 
 // from collection.h
 SBOLAPIEXPORTS Collection* createCollection(const char* id);
