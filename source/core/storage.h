@@ -11,16 +11,6 @@ typedef struct _GenericArray {
 	void** array;
 } GenericArray;
 
-// add to the arrays
-void registerComponent(struct _DNAComponent* com);
-void registerSequenceAnnotation(struct _SequenceAnnotation* ann);
-void registerCollection(struct _Collection* col);
-
-// remove from the arrays
-void removeComponent(struct _DNAComponent* com);
-void removeAnnotation(struct _SequenceAnnotation* ann);
-void removeCollection(struct _Collection* col);
-
 // work with the arrays
 GenericArray* createGenericArray();
 void deleteGenericArray(GenericArray* arr);
@@ -30,26 +20,5 @@ void insertIntoArray(GenericArray* arr, void* obj);
 void removeFromArray(GenericArray* arr, int index);
 void expandArray(GenericArray* arr);
 void shrinkArray(GenericArray* arr);
-
-// TODO move to other files
-// check object type
-int isComponentPtr(const void* pointer);
-int isAnnotationPtr(const void* pointer);
-int isCollectionPtr(const void* pointer);
-int isComponentID(const char* id);
-int isAnnotationID(const char* id);
-int isCollectionID(const char* id);
-
-// TODO move to other files
-// iterate through arrays
-int getNumCollections();
-int getNumDNAComponents();
-int getNumSequenceAnnotations();
-struct _Collection* getNthCollection(int n);
-struct _DNAComponent* getNthDNAComponent(int n);
-struct _SequenceAnnotation* getNthSequenceAnnotation(int n);
-
-// delete everything
-void cleanup();
 
 #endif

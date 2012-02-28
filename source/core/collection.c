@@ -1,7 +1,10 @@
 #include <stdlib.h>
 #include <string.h>
+#include "storage.h"
 #include "collection.h"
 #include "component.h"
+
+static GenericArray* allCollections;
 
 /**************************
 	create/destroy
@@ -19,6 +22,20 @@ Collection* createCollection(const char* id) {
 	col->collections = NULL;
 	setCollectionID(col, id);
 	return col;
+}
+
+void registerCollection(Collection* col) {
+	if (!allCollections)
+		allCollections = createGenericArray();
+	insertIntoArray(allCollections, col);
+}
+
+void removeCollection(Collection* col) {
+	if (!allCollections)
+		allCollections = createGenericArray();
+	int index = indexByPtr(allCollections, col);
+	if (index >= 0)
+		removeFromArray(allCollections, index);
 }
 
 void deleteCollection(Collection* col) {
@@ -48,8 +65,48 @@ void deleteCollection(Collection* col) {
 }
 
 /**************************
+ *	is... functions
+ **************************/
+
+int isCollectionPtr(const void* pointer) {
+	if (!allCollections)
+		allCollections = createGenericArray();
+	return (int) indexByPtr(allCollections, pointer) >= 0;
+}
+
+int isCollectionID(const char* id) {
+	if (!allCollections)
+		allCollections = createGenericArray();
+	if (!id)
+		return 0;
+	int index;
+	Collection* col;
+	for (index=0; index<allCollections->numInUse; index++) {
+		col = (Collection*) allCollections->array[index];
+		if (strcmp(col->id, id) == 0)
+			return 1;
+	}
+	return 0;
+}
+
+/**************************
 	get... functions
 ***************************/
+
+Collection* getCollection(const char* id) {
+	if (!allCollections)
+		allCollections = createGenericArray();
+	if (!id)
+		return NULL;
+	int index;
+	Collection* col;
+	for (index=0; index<allCollections->numInUse; index++) {
+		col = (Collection*) allCollections->array[index];
+		if (col->id == id)
+			return col;
+	}
+	return NULL;
+}
 
 char* getCollectionID(Collection* col) {
 	if (col && col->id) {
@@ -78,6 +135,16 @@ char* getCollectionDescription(Collection* col) {
 		return NULL;
 }
 
+/**************************
+ *	getNum... functions
+ **************************/
+
+int getNumCollections() {
+	if (!allCollections)
+		allCollections = createGenericArray();
+	return allCollections->numInUse;
+}
+
 int getNumDNAComponentsIn(Collection* col) {
 	if (col)
 		return col->numComponents;
@@ -85,7 +152,20 @@ int getNumDNAComponentsIn(Collection* col) {
 		return -1;
 }
 
-struct _DNAComponent* getNthDNAComponentIn(Collection* col, int n) {
+/**************************
+ *	getNth... functions
+ **************************/
+
+Collection* getNthCollection(int n) {
+	if (!allCollections)
+		allCollections = createGenericArray();
+	if (allCollections->numInUse > n)
+		return allCollections->array[n];
+	else
+		return NULL;
+}
+
+DNAComponent* getNthDNAComponentIn(Collection* col, int n) {
 	if (col->numComponents >= n)
 		return col->components[n];
 	else
@@ -197,3 +277,12 @@ void addComponentToCollection(DNAComponent * component, Collection * collection)
 	}
 }
 
+void cleanupCollections() {
+	if (allCollections) {
+		int index;
+		for (index=allCollections->numInUse; index>0; index--)
+			deleteCollection( allCollections->array[index] );
+		deleteGenericArray(allCollections);
+		allCollections = NULL;
+	}
+}

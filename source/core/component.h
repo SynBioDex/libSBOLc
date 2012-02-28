@@ -20,6 +20,14 @@ typedef struct _DNAComponent {
 DNAComponent* createComponent(const char* id);
 void deleteComponent(DNAComponent* com);
 
+// work with storage
+void registerComponent(struct _DNAComponent* com);
+void removeComponent(struct _DNAComponent* com);
+int isComponentPtr(const void* pointer);
+int isComponentID(const char* id);
+int getNumDNAComponents();
+struct _DNAComponent* getNthDNAComponent(int n);
+
 // tools for iteration
 int getNumCollectionsFor(const DNAComponent* com);
 int getNumSequenceAnnotationsIn(const DNAComponent* com);
@@ -41,5 +49,7 @@ void setComponentDescription(DNAComponent* com, const char* desc);
 // work with annotations
 void addSequenceAnnotation(DNAComponent* com, struct _SequenceAnnotation* ann);
 void setSubComponent(struct _SequenceAnnotation* ann, DNAComponent* com);
+
+void cleanupComponents();
 
 #endif

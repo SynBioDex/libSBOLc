@@ -18,10 +18,20 @@ SequenceAnnotation* createSequenceAnnotation(const char* id);
 void setSequenceAnnotationID(SequenceAnnotation* ann, const char* id);
 void deleteSequenceAnnotation(SequenceAnnotation* ann);
 
+// work with global arrays
+void registerSequenceAnnotation(struct _SequenceAnnotation* ann);
+void removeAnnotation(struct _SequenceAnnotation* ann);
+int isAnnotationPtr(const void* pointer);
+int isAnnotationID(const char* id);
+int getNumSequenceAnnotations();
+struct _SequenceAnnotation* getNthSequenceAnnotation(int n);
+
 // constrain order
 void addPrecedesRelationship(SequenceAnnotation* upstream, SequenceAnnotation* downstream);
 int getNumPrecedes(SequenceAnnotation* ann);
 SequenceAnnotation* getNthPrecedes(SequenceAnnotation* ann, int n);
 // TODO removePrecedesRelationship?
+
+void cleanupAnnotations();
 
 #endif

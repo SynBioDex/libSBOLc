@@ -1,9 +1,12 @@
 #include <stdlib.h>
 #include <string.h>
+#include "storage.h"
 #include "component.h"
 #include "sequence.h"
 #include "annotation.h"
 #include "collection.h"
+
+static GenericArray* allComponents;
 
 /**************************
 	create/destroy
@@ -20,6 +23,20 @@ DNAComponent* createComponent(const char* id) {
 	com->collections = NULL;
 	setComponentID(com, id);
 	return com;
+}
+
+void registerComponent(DNAComponent* com) {
+	if (!allComponents)
+		allComponents = createGenericArray();
+	insertIntoArray(allComponents, com);
+}
+
+void removeComponent(DNAComponent* com) {
+	if (!allComponents)
+		allComponents = createGenericArray();
+	int index = indexByPtr(allComponents, com);
+	if (index >= 0)
+		removeFromArray(allComponents, index);
 }
 
 void deleteComponent(DNAComponent* com) {
@@ -49,8 +66,39 @@ void deleteComponent(DNAComponent* com) {
 }
 
 /**************************
+	is... functions
+***************************/
+
+int isComponentPtr(const void* pointer) {
+	if (!allComponents)
+		allComponents = createGenericArray();
+	return (int) indexByPtr(allComponents, pointer) >= 0;
+}
+
+int isComponentID(const char* id) {
+	if (!allComponents)
+		allComponents = createGenericArray();
+	if (!id)
+		return 0;
+	int index;
+	DNAComponent* com;
+	for (index=0; index<allComponents->numInUse; index++) {
+		com = (DNAComponent*) allComponents->array[index];
+		if (strcmp(com->id, id) == 0)
+			return 1;
+	}
+	return 0;
+}
+
+/**************************
 	getNum... functions
 ***************************/
+
+int getNumDNAComponents() {
+	if (!allComponents)
+		allComponents = createGenericArray();
+	return allComponents->numInUse;
+}
 
 int getNumCollectionsFor(const DNAComponent* com) {
 	if (com)
@@ -70,14 +118,23 @@ int getNumSequenceAnnotationsIn(const DNAComponent* com) {
 	getNth... functions
 ***************************/
 
-struct _Collection* getNthCollectionFor(const DNAComponent* com, int n) {
+DNAComponent* getNthDNAComponent(int n) {
+	if (!allComponents)
+		allComponents = createGenericArray();
+	if (allComponents->numInUse > n)
+		return allComponents->array[n];
+	else
+		return NULL;
+}
+
+Collection* getNthCollectionFor(const DNAComponent* com, int n) {
 	if (com->numCollections >= n)
 		return com->collections[n];
 	else
 		return NULL;
 }
 
-struct _SequenceAnnotation* getNthSequenceAnnotationIn(const DNAComponent* com, int n) {
+SequenceAnnotation* getNthSequenceAnnotationIn(const DNAComponent* com, int n) {
 	if (com->numAnnotations >= n)
 		return com->annotations[n];
 	else
@@ -87,6 +144,21 @@ struct _SequenceAnnotation* getNthSequenceAnnotationIn(const DNAComponent* com, 
 /**************************
 	get... functions
 ***************************/
+
+DNAComponent* getComponent(const char* id) {
+	if (!allComponents)
+		allComponents = createGenericArray();
+	if (!id)
+		return NULL;
+	int index;
+	DNAComponent* com;
+	for (index=0; index<allComponents->numInUse; index++) {
+		com = (DNAComponent*) allComponents->array[index];
+		if (com->id == id)
+			return com;
+	}
+	return NULL;
+}
 
 char* getComponentID(const DNAComponent* com) {
 	if (com && com->id) {
@@ -177,4 +249,14 @@ void addSequenceAnnotation(DNAComponent* com, SequenceAnnotation* ann) {
 void setSubComponent(SequenceAnnotation* ann, DNAComponent* com) {
 	if (ann && com)
 		ann->subComponent = com;
+}
+
+void cleanupComponents() {
+	int index;
+	if (allComponents) {
+		for (index=allComponents->numInUse; index>0; index--)
+			deleteComponent( allComponents->array[index] );
+		deleteGenericArray(allComponents);
+		allComponents = NULL;
+	}
 }

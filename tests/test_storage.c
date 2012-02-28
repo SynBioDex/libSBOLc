@@ -22,7 +22,7 @@ void TestSingleComponent(CuTest* tc) {
 	CuAssertIntEquals(tc, 0, getNumDNAComponents());
 	CuAssertIntEquals(tc, 0, isComponentID("one"));
 	CuAssertIntEquals(tc, 0, isComponentPtr(com));
-	cleanup();
+	cleanupComponents();
 }
 
 void TestNumComponents(CuTest* tc) {
@@ -43,7 +43,7 @@ void TestNumComponents(CuTest* tc) {
 		CuAssertIntEquals(tc, num-1, getNumDNAComponents());
 	}
 	CuAssertIntEquals(tc, 0, getNumDNAComponents());
-	cleanup();
+	cleanupComponents();
 }
 
 void TestComponentIndexing(CuTest* tc) {
@@ -72,7 +72,7 @@ void TestComponentIndexing(CuTest* tc) {
         CuAssertIntEquals(tc, 0, isComponentPtr(com));
         CuAssertIntEquals(tc, 0, isComponentID(id));
     }
-    cleanup();
+    cleanupComponents();
 }
 
 void TestSingleAnnotation(CuTest* tc) {
@@ -87,7 +87,7 @@ void TestSingleAnnotation(CuTest* tc) {
 	CuAssertIntEquals(tc, 0, getNumSequenceAnnotations());
 	CuAssertIntEquals(tc, 0, isSequenceAnnotationID("one"));
 	CuAssertIntEquals(tc, 0, isAnnotationPtr(ann));
-	cleanup();
+	cleanupAnnotations();
 }
 
 void TestNumAnnotations(CuTest* tc) {
@@ -108,7 +108,7 @@ void TestNumAnnotations(CuTest* tc) {
 		CuAssertIntEquals(tc, num-1, getNumSequenceAnnotations());
 	}
 	CuAssertIntEquals(tc, 0, getNumSequenceAnnotations());
-	cleanup();
+	cleanupAnnotations();
 }
 
 void TestAnnotationIndexing(CuTest* tc) {
@@ -138,7 +138,7 @@ void TestAnnotationIndexing(CuTest* tc) {
         CuAssertIntEquals(tc, 0, isAnnotationPtr(ann));
         CuAssertIntEquals(tc, 0, isSequenceAnnotationID(id));
     }
-    cleanup();
+    cleanupAnnotations();
 }
 
 void TestSingleCollection(CuTest* tc) {
@@ -153,7 +153,7 @@ void TestSingleCollection(CuTest* tc) {
 	CuAssertIntEquals(tc, 0, getNumCollections());
 	CuAssertIntEquals(tc, 0, isCollectionID("one"));
 	CuAssertIntEquals(tc, 0, isCollectionPtr(col));
-	cleanup();
+	cleanupCollections();
 }
 
 void TestNumCollections(CuTest* tc) {
@@ -174,7 +174,7 @@ void TestNumCollections(CuTest* tc) {
 		CuAssertIntEquals(tc, num-1, getNumCollections());
 	}
 	CuAssertIntEquals(tc, 0, getNumCollections());
-	cleanup();
+	cleanupCollections();
 }
 
 void TestCollectionIndexing(CuTest* tc) {
@@ -204,7 +204,7 @@ void TestCollectionIndexing(CuTest* tc) {
         CuAssertIntEquals(tc, 0, isCollectionPtr(col));
         CuAssertIntEquals(tc, 0, isCollectionID(id));
     }
-	cleanup();
+	cleanupCollections();
 }
 
 CuSuite* StorageGetSuite() {
