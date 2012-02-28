@@ -1,5 +1,6 @@
 #include <stdio.h>
-#include <reader.h>
+#include "core.h"
+#include "reader.h"
 
 void parse(char* examplepath)
 {
