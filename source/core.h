@@ -20,8 +20,6 @@ SBOLAPIEXPORTS void deleteDNASequence(DNASequence* seq);
 // from component.h
 SBOLAPIEXPORTS DNAComponent* createComponent(const char* id);
 SBOLAPIEXPORTS void deleteComponent(DNAComponent* com);
-SBOLAPIEXPORTS void registerComponent(DNAComponent* com);
-SBOLAPIEXPORTS void removeComponent(DNAComponent* com);
 SBOLAPIEXPORTS int isComponentPtr(const void* pointer);
 SBOLAPIEXPORTS int isComponentID(const char* id);
 SBOLAPIEXPORTS int getNumDNAComponents();
@@ -41,8 +39,6 @@ SBOLAPIEXPORTS void addSequenceAnnotation(DNAComponent* com, SequenceAnnotation*
 SBOLAPIEXPORTS void setSubComponent(SequenceAnnotation* ann, DNAComponent* com);
 
 // from annotation.h
-SBOLAPIEXPORTS void registerSequenceAnnotation(SequenceAnnotation* ann);
-SBOLAPIEXPORTS void removeAnnotation(SequenceAnnotation* ann);
 SBOLAPIEXPORTS int isAnnotationPtr(const void* pointer);
 SBOLAPIEXPORTS int isSequenceAnnotationID(const char* id);
 SBOLAPIEXPORTS SequenceAnnotation* getSequenceAnnotation(const char* id);
@@ -58,8 +54,6 @@ SBOLAPIEXPORTS SequenceAnnotation* getNthPrecedes(SequenceAnnotation* ann, int n
 // from collection.h
 SBOLAPIEXPORTS Collection* createCollection(const char* id);
 SBOLAPIEXPORTS void deleteCollection(Collection* col);
-SBOLAPIEXPORTS void registerCollection(Collection* col);
-SBOLAPIEXPORTS void removeCollection(Collection* col);
 SBOLAPIEXPORTS int isCollectionPtr(const void* pointer);
 SBOLAPIEXPORTS int isCollectionID(const char* id);
 SBOLAPIEXPORTS int getNumCollections();

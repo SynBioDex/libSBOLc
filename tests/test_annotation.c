@@ -8,22 +8,26 @@
 #define NUM_SLOW_TESTS  1000
 
 void TestCreateSequenceAnnotation(CuTest* tc) {
+	cleanupAnnotations();
 	char* id;
 	SequenceAnnotation* ann;
 	int repeat;
 	for (repeat=0; repeat<NUM_FAST_TESTS; repeat++) {
 		id  = randomString();
 		ann = createSequenceAnnotation(id);
+		CuAssertIntEquals(tc, 1, getNumSequenceAnnotations());
 		CuAssertStrEquals(tc, id, ann->id);
 		CuAssertIntEquals(tc, 0, ann->genbankStart);
 		CuAssertIntEquals(tc, 0, ann->genbankEnd);
 		CuAssertIntEquals(tc, 0, ann->numPrecedes);
 		deleteSequenceAnnotation(ann);
-		// TODO test that deletion worked?
+		CuAssertIntEquals(tc, 0, getNumSequenceAnnotations());
 	}
 }
 
+// TODO this leaks 1000 annotations for some reason
 void TestPrecedes(CuTest* tc) {
+	cleanupAnnotations();
 	int index;
 	int numDownstream;
 	size_t memory;

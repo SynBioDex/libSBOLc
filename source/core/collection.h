@@ -18,12 +18,10 @@ Collection* createCollection(const char* id);
 void deleteCollection(Collection* col);
 
 // work with global array
-void registerCollection(struct _Collection* col);
-void removeCollection(struct _Collection* col);
 int isCollectionPtr(const void* pointer);
 int isCollectionID(const char* id);
 int getNumCollections();
-struct _Collection* getNthCollection(int n);
+Collection* getNthCollection(int n);
 
 // iterate
 Collection* getCollection(const char* id);

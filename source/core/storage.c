@@ -15,6 +15,9 @@ GenericArray* createGenericArray() {
 	arr->numInUse = 0;
 	arr->numTotal = INITIAL_ARRAY_LENGTH;
 	arr->array = (void**)malloc(sizeof(void*) * INITIAL_ARRAY_LENGTH);
+	int num;
+	for (num=0; num<arr->numInUse; num++)
+		arr->array[num] = NULL;
 	return arr;
 }
 

@@ -10,6 +10,12 @@ static GenericArray* allCollections;
 	create/destroy
 ***************************/
 
+void registerCollection(Collection* col) {
+	if (!allCollections)
+		allCollections = createGenericArray();
+	insertIntoArray(allCollections, col);
+}
+
 Collection* createCollection(const char* id) {
 	Collection* col;
 	col = (Collection*)malloc(sizeof(Collection));
@@ -21,13 +27,8 @@ Collection* createCollection(const char* id) {
 	col->components  = NULL;
 	col->collections = NULL;
 	setCollectionID(col, id);
+	registerCollection(col);
 	return col;
-}
-
-void registerCollection(Collection* col) {
-	if (!allCollections)
-		allCollections = createGenericArray();
-	insertIntoArray(allCollections, col);
 }
 
 void removeCollection(Collection* col) {
@@ -40,6 +41,7 @@ void removeCollection(Collection* col) {
 
 void deleteCollection(Collection* col) {
 	if (col) {
+		removeCollection(col);
 		if (col->id) {
 			free(col->id);
 			col->id = NULL;

@@ -11,21 +11,21 @@
 #define NUM_FAST_TESTS 10000
 
 void TestSingleComponent(CuTest* tc) {
+	cleanupComponents();
 	CuAssertIntEquals(tc, 0, getNumDNAComponents());
 	DNAComponent* com = createComponent("one");
-	registerComponent(com);
 	CuAssertIntEquals(tc, 1, getNumDNAComponents());
 	CuAssertPtrEquals(tc, com, getNthDNAComponent(0));
 	CuAssertIntEquals(tc, 1, isComponentID("one"));
 	CuAssertIntEquals(tc, 1, isComponentPtr(com));
-	removeComponent(com);
+	deleteComponent(com);
 	CuAssertIntEquals(tc, 0, getNumDNAComponents());
 	CuAssertIntEquals(tc, 0, isComponentID("one"));
 	CuAssertIntEquals(tc, 0, isComponentPtr(com));
-	cleanupComponents();
 }
 
 void TestNumComponents(CuTest* tc) {
+	cleanupComponents();
 	char* id;
 	DNAComponent* com;
 	int num;
@@ -33,64 +33,61 @@ void TestNumComponents(CuTest* tc) {
 		CuAssertIntEquals(tc, num, getNumDNAComponents());
 		id = randomString();
 		com = createComponent(id);
-		registerComponent(com);
 		CuAssertIntEquals(tc, num+1, getNumDNAComponents());
 	}
 	for (; num>0; num--) {
 		CuAssertIntEquals(tc, num, getNumDNAComponents());
 		com = getNthDNAComponent(0);
-		removeComponent(com);
+		deleteComponent(com);
 		CuAssertIntEquals(tc, num-1, getNumDNAComponents());
 	}
 	CuAssertIntEquals(tc, 0, getNumDNAComponents());
-	cleanupComponents();
 }
 
 void TestComponentIndexing(CuTest* tc) {
-    char* id;
-    DNAComponent* com;
-    int num;
-    for (num=0; num<NUM_FAST_TESTS; num++) {
-        id = randomString();
-        while (isComponentID(id))
-            id = randomString();
-        com = createComponent(id);
-        registerComponent(com);
-    }
-    int index;
-    for (num=NUM_FAST_TESTS; num>0; num--) {
-        CuAssertIntEquals(tc, num, getNumDNAComponents());
-        index = randomNumber(num);
-        com = getNthDNAComponent(index);
-        // copy id (because it will be destroyed)
-        id = (char*)malloc(sizeof(char) * strlen(com->id)+1);
-        strcpy(id, com->id);
-        CuAssertIntEquals(tc, 1, isComponentPtr(com));
-        CuAssertIntEquals(tc, 1, isComponentID(id));
-        removeComponent(com);
-        CuAssertIntEquals(tc, num-1, getNumDNAComponents());
-        CuAssertIntEquals(tc, 0, isComponentPtr(com));
-        CuAssertIntEquals(tc, 0, isComponentID(id));
-    }
-    cleanupComponents();
+	cleanupComponents();
+	char* id;
+	DNAComponent* com;
+	int num;
+	for (num=0; num<NUM_FAST_TESTS; num++) {
+		id = randomString();
+		while (isComponentID(id))
+			id = randomString();
+		com = createComponent(id);
+	}
+	int index;
+	for (num=NUM_FAST_TESTS; num>0; num--) {
+		CuAssertIntEquals(tc, num, getNumDNAComponents());
+		index = randomNumber(num);
+		com = getNthDNAComponent(index);
+		// copy id (because it will be destroyed)
+		id = (char*)malloc(sizeof(char) * strlen(com->id)+1);
+		strcpy(id, com->id);
+		CuAssertIntEquals(tc, 1, isComponentPtr(com));
+		CuAssertIntEquals(tc, 1, isComponentID(id));
+		deleteComponent(com);
+		CuAssertIntEquals(tc, num-1, getNumDNAComponents());
+		CuAssertIntEquals(tc, 0, isComponentPtr(com));
+		CuAssertIntEquals(tc, 0, isComponentID(id));
+	}
 }
 
 void TestSingleAnnotation(CuTest* tc) {
+	cleanupAnnotations();
 	CuAssertIntEquals(tc, 0, getNumSequenceAnnotations());
 	SequenceAnnotation* ann = createSequenceAnnotation("one");
-	registerSequenceAnnotation(ann);
 	CuAssertIntEquals(tc, 1, getNumSequenceAnnotations());
 	CuAssertPtrEquals(tc, ann, getNthSequenceAnnotation(0));
 	CuAssertIntEquals(tc, 1, isSequenceAnnotationID("one"));
 	CuAssertIntEquals(tc, 1, isAnnotationPtr(ann));
-	removeAnnotation(ann);
+	deleteSequenceAnnotation(ann);
 	CuAssertIntEquals(tc, 0, getNumSequenceAnnotations());
 	CuAssertIntEquals(tc, 0, isSequenceAnnotationID("one"));
 	CuAssertIntEquals(tc, 0, isAnnotationPtr(ann));
-	cleanupAnnotations();
 }
 
 void TestNumAnnotations(CuTest* tc) {
+	cleanupAnnotations();
 	char* id;
 	SequenceAnnotation* ann;
 	int num;
@@ -98,65 +95,72 @@ void TestNumAnnotations(CuTest* tc) {
 		CuAssertIntEquals(tc, num, getNumSequenceAnnotations());
 		id = randomString();
 		ann = createSequenceAnnotation(id);
-		registerSequenceAnnotation(ann);
 		CuAssertIntEquals(tc, num+1, getNumSequenceAnnotations());
 	}
 	for (; num>0; num--) {
 		CuAssertIntEquals(tc, num, getNumSequenceAnnotations());
 		ann = getNthSequenceAnnotation(0);
-		removeAnnotation(ann);
+		deleteSequenceAnnotation(ann);
 		CuAssertIntEquals(tc, num-1, getNumSequenceAnnotations());
 	}
 	CuAssertIntEquals(tc, 0, getNumSequenceAnnotations());
-	cleanupAnnotations();
 }
 
 void TestAnnotationIndexing(CuTest* tc) {
-    char* id;
-    SequenceAnnotation* ann;
-    int num;
-    for (num=0; num<NUM_FAST_TESTS; num++) {
-        id = randomString();
-        // avoid duplicates
-        while (isSequenceAnnotationID(id))
-            id = randomString();
-        ann = createSequenceAnnotation(id);
-        registerSequenceAnnotation(ann);
-    }
-    int index;
-    for (num=NUM_FAST_TESTS; num>0; num--) {
-        CuAssertIntEquals(tc, num, getNumSequenceAnnotations());
-        index = randomNumber(num);
-        ann = getNthSequenceAnnotation(index);
-        // copy id (because it will be destroyed)
-        id = (char*)malloc(sizeof(char) * strlen(ann->id)+1);
-        strcpy(id, ann->id);
-        CuAssertIntEquals(tc, 1, isAnnotationPtr(ann));
-        CuAssertIntEquals(tc, 1, isSequenceAnnotationID(id));
-        removeAnnotation(ann);
-        CuAssertIntEquals(tc, num-1, getNumSequenceAnnotations());
-        CuAssertIntEquals(tc, 0, isAnnotationPtr(ann));
-        CuAssertIntEquals(tc, 0, isSequenceAnnotationID(id));
-    }
-    cleanupAnnotations();
+	cleanupAnnotations();
+	char* id;
+	SequenceAnnotation* ann;
+	int num;
+	for (num=0; num<NUM_FAST_TESTS; num++) {
+		id = randomString();
+		// avoid duplicates
+		while (isSequenceAnnotationID(id))
+			id = randomString();
+		ann = createSequenceAnnotation(id);
+	}
+	int index;
+	for (num=NUM_FAST_TESTS; num>0; num--) {
+		CuAssertIntEquals(tc, num, getNumSequenceAnnotations());
+		index = randomNumber(num);
+		ann = getNthSequenceAnnotation(index);
+		// copy id (because it will be destroyed)
+		id = (char*)malloc(sizeof(char) * strlen(ann->id)+1);
+		strcpy(id, ann->id);
+		CuAssertIntEquals(tc, 1, isAnnotationPtr(ann));
+		CuAssertIntEquals(tc, 1, isSequenceAnnotationID(id));
+		deleteSequenceAnnotation(ann);
+		CuAssertIntEquals(tc, num-1, getNumSequenceAnnotations());
+		CuAssertIntEquals(tc, 0, isAnnotationPtr(ann));
+		CuAssertIntEquals(tc, 0, isSequenceAnnotationID(id));
+	}
+}
+
+void TestCleanupAnnotations(CuTest* tc) {
+	cleanupAnnotations();
+	int num;
+	for (num=0; num<NUM_FAST_TESTS; num++)
+		createSequenceAnnotation( randomString() );
+	CuAssertIntEquals(tc, NUM_FAST_TESTS, getNumSequenceAnnotations());
+	cleanupAnnotations();
+	CuAssertIntEquals(tc, 0, getNumSequenceAnnotations());
 }
 
 void TestSingleCollection(CuTest* tc) {
+	cleanupCollections();
 	CuAssertIntEquals(tc, 0, getNumCollections());
 	Collection* col = createCollection("one");
-	registerCollection(col);
 	CuAssertIntEquals(tc, 1, getNumCollections());
 	CuAssertPtrEquals(tc, col, getNthCollection(0));
 	CuAssertIntEquals(tc, 1, isCollectionID("one"));
 	CuAssertIntEquals(tc, 1, isCollectionPtr(col));
-	removeCollection(col);
+	deleteCollection(col);
 	CuAssertIntEquals(tc, 0, getNumCollections());
 	CuAssertIntEquals(tc, 0, isCollectionID("one"));
 	CuAssertIntEquals(tc, 0, isCollectionPtr(col));
-	cleanupCollections();
 }
 
 void TestNumCollections(CuTest* tc) {
+	cleanupCollections();
 	char* id;
 	Collection* col;
 	int num;
@@ -164,47 +168,44 @@ void TestNumCollections(CuTest* tc) {
 		CuAssertIntEquals(tc, num, getNumCollections());
 		id = randomString();
 		col = createCollection(id);
-		registerCollection(col);
 		CuAssertIntEquals(tc, num+1, getNumCollections());
 	}
 	for (; num>0; num--) {
 		CuAssertIntEquals(tc, num, getNumCollections());
 		col = getNthCollection(0);
-		removeCollection(col);
+		deleteCollection(col);
 		CuAssertIntEquals(tc, num-1, getNumCollections());
 	}
 	CuAssertIntEquals(tc, 0, getNumCollections());
-	cleanupCollections();
 }
 
 void TestCollectionIndexing(CuTest* tc) {
-    char* id;
-    Collection* col;
-    int num;
-    for (num=0; num<NUM_FAST_TESTS; num++) {
-        id = randomString();
-        // avoid duplicates
-        while (isCollectionID(id))
-            id = randomString();
-        col = createCollection(id);
-        registerCollection(col);
-    }
-    int index;
-    for (num=NUM_FAST_TESTS; num>0; num--) {
-        CuAssertIntEquals(tc, num, getNumCollections());
-        index = randomNumber(num);
-        col = getNthCollection(index);
-        // copy id (because it will be destroyed)
-        id = (char*)malloc(sizeof(char) * strlen(col->id)+1);
-        strcpy(id, col->id);
-        CuAssertIntEquals(tc, 1, isCollectionPtr(col));
-        CuAssertIntEquals(tc, 1, isCollectionID(id));
-        removeCollection(col);
-        CuAssertIntEquals(tc, num-1, getNumCollections());
-        CuAssertIntEquals(tc, 0, isCollectionPtr(col));
-        CuAssertIntEquals(tc, 0, isCollectionID(id));
-    }
 	cleanupCollections();
+	char* id;
+	Collection* col;
+	int num;
+	for (num=0; num<NUM_FAST_TESTS; num++) {
+		id = randomString();
+		// avoid duplicates
+		while (isCollectionID(id))
+			id = randomString();
+		col = createCollection(id);
+	}
+	int index;
+	for (num=NUM_FAST_TESTS; num>0; num--) {
+		CuAssertIntEquals(tc, num, getNumCollections());
+		index = randomNumber(num);
+		col = getNthCollection(index);
+		// copy id (because it will be destroyed)
+		id = (char*)malloc(sizeof(char) * strlen(col->id)+1);
+		strcpy(id, col->id);
+		CuAssertIntEquals(tc, 1, isCollectionPtr(col));
+		CuAssertIntEquals(tc, 1, isCollectionID(id));
+		deleteCollection(col);
+		CuAssertIntEquals(tc, num-1, getNumCollections());
+		CuAssertIntEquals(tc, 0, isCollectionPtr(col));
+		CuAssertIntEquals(tc, 0, isCollectionID(id));
+	}
 }
 
 CuSuite* StorageGetSuite() {
@@ -215,6 +216,7 @@ CuSuite* StorageGetSuite() {
 	SUITE_ADD_TEST(storageTests, TestSingleAnnotation);
 	SUITE_ADD_TEST(storageTests, TestNumAnnotations);
 	SUITE_ADD_TEST(storageTests, TestAnnotationIndexing);
+	SUITE_ADD_TEST(storageTests, TestCleanupAnnotations);
 	SUITE_ADD_TEST(storageTests, TestSingleCollection);
 	SUITE_ADD_TEST(storageTests, TestNumCollections);
 	SUITE_ADD_TEST(storageTests, TestCollectionIndexing);

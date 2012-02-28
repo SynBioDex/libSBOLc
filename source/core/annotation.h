@@ -1,7 +1,6 @@
 #ifndef SBOL_CORE_ANNOTATION
 #define SBOL_CORE_ANNOTATION
 
-// TODO remove struct _ from annotations
 struct _DNAComponent;
 
 typedef struct _SequenceAnnotation {
@@ -22,12 +21,10 @@ void deleteSequenceAnnotation(SequenceAnnotation* ann);
 SequenceAnnotation* getSequenceAnnotation(const char* id);
 
 // work with global arrays
-void registerSequenceAnnotation(struct _SequenceAnnotation* ann);
-void removeAnnotation(struct _SequenceAnnotation* ann);
 int isAnnotationPtr(const void* pointer);
 int isSequenceAnnotationID(const char* id);
 int getNumSequenceAnnotations();
-struct _SequenceAnnotation* getNthSequenceAnnotation(int n);
+SequenceAnnotation* getNthSequenceAnnotation(int n);
 
 // constrain order
 void addPrecedesRelationship(SequenceAnnotation* upstream, SequenceAnnotation* downstream);

@@ -12,6 +12,12 @@ static GenericArray* allComponents;
 	create/destroy
 ***************************/
 
+void registerComponent(DNAComponent* com) {
+	if (!allComponents)
+		allComponents = createGenericArray();
+	insertIntoArray(allComponents, com);
+}
+
 DNAComponent* createComponent(const char* id) {
 	DNAComponent* com = (DNAComponent*)malloc(sizeof(DNAComponent));
 	com->id          = NULL;
@@ -22,25 +28,21 @@ DNAComponent* createComponent(const char* id) {
 	com->annotations = NULL;
 	com->collections = NULL;
 	setComponentID(com, id);
+	registerComponent(com);
 	return com;
 }
 
-void registerComponent(DNAComponent* com) {
-	if (!allComponents)
-		allComponents = createGenericArray();
-	insertIntoArray(allComponents, com);
-}
-
 void removeComponent(DNAComponent* com) {
-	if (!allComponents)
-		allComponents = createGenericArray();
-	int index = indexByPtr(allComponents, com);
-	if (index >= 0)
-		removeFromArray(allComponents, index);
+	if (com && allComponents) {
+		int index = indexByPtr(allComponents, com);
+		if (index >= 0)
+			removeFromArray(allComponents, index);
+	}
 }
 
 void deleteComponent(DNAComponent* com) {
 	if (com) {
+		removeComponent(com);
 		if (com->id) {
 			free(com->id);
 			com->id = NULL;
@@ -252,8 +254,8 @@ void setSubComponent(SequenceAnnotation* ann, DNAComponent* com) {
 }
 
 void cleanupComponents() {
-	int index;
 	if (allComponents) {
+		int index;
 		for (index=allComponents->numInUse; index>0; index--)
 			deleteComponent( allComponents->array[index] );
 		deleteGenericArray(allComponents);

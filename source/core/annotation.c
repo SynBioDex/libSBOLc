@@ -9,6 +9,12 @@ static GenericArray* allAnnotations;
  * create/destroy
  *******************/
 
+void registerSequenceAnnotation(SequenceAnnotation* ann) {
+	if (!allAnnotations)
+		allAnnotations = createGenericArray();
+	insertIntoArray(allAnnotations, ann);
+}
+
 SequenceAnnotation* createSequenceAnnotation(const char* id) {
 	SequenceAnnotation* ann;
 	ann = (SequenceAnnotation*)malloc(sizeof(SequenceAnnotation));
@@ -20,34 +26,21 @@ SequenceAnnotation* createSequenceAnnotation(const char* id) {
 	ann->subComponent = NULL;
 	ann->precedes     = NULL;
 	setSequenceAnnotationID(ann, id);
-	// TODO register with allAnnotations
+	registerSequenceAnnotation(ann);
 	return ann;
 }
 
-void registerSequenceAnnotation(SequenceAnnotation* ann) {
-	if (!allAnnotations)
-		allAnnotations = createGenericArray();
-	insertIntoArray(allAnnotations, ann);
-}
-
 void removeAnnotation(SequenceAnnotation* ann) {
-	if (!allAnnotations)
-		allAnnotations = createGenericArray();
-	int index = indexByPtr(allAnnotations, ann);
-	if (index >= 0)
-		removeFromArray(allAnnotations, index);
-}
-
-void setSequenceAnnotationID(SequenceAnnotation* ann, const char* id) {
-	if (ann) {
-		if (!ann->id)
-			ann->id = (char*)malloc(sizeof(char) * strlen(id)+1);
-		strcpy(ann->id, id);
+	if (ann && allAnnotations) {
+		int index = indexByPtr(allAnnotations, ann);
+		if (index >= 0)
+			removeFromArray(allAnnotations, index);
 	}
 }
 
 void deleteSequenceAnnotation(SequenceAnnotation* ann) {
 	if (ann) {
+		removeAnnotation(ann);
 		if (ann->id) {
 			free(ann->id);
 			ann->id = NULL;
@@ -66,6 +59,14 @@ void deleteSequenceAnnotation(SequenceAnnotation* ann) {
 			ann->precedes = NULL;
 		}
 		free(ann);
+	}
+}
+
+void setSequenceAnnotationID(SequenceAnnotation* ann, const char* id) {
+	if (ann) {
+		if (!ann->id)
+			ann->id = (char*)malloc(sizeof(char) * strlen(id)+1);
+		strcpy(ann->id, id);
 	}
 }
 

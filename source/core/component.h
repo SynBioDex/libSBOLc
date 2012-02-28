@@ -21,18 +21,15 @@ DNAComponent* createComponent(const char* id);
 void deleteComponent(DNAComponent* com);
 
 // work with storage
-void registerComponent(struct _DNAComponent* com);
-void removeComponent(struct _DNAComponent* com);
 int isComponentPtr(const void* pointer);
 int isComponentID(const char* id);
 int getNumDNAComponents();
-struct _DNAComponent* getNthDNAComponent(int n);
+DNAComponent* getNthDNAComponent(int n);
 
 // tools for iteration
 DNAComponent* getComponent(const char* id);
 int getNumCollectionsFor(const DNAComponent* com);
 int getNumSequenceAnnotationsIn(const DNAComponent* com);
-// TODO return pointers?
 struct _Collection* getNthCollectionFor(const DNAComponent* com, int n);
 struct _SequenceAnnotation* getNthSequenceAnnotationIn(const DNAComponent* com, int n);
 
