@@ -29,6 +29,7 @@ int getNumDNAComponents();
 struct _DNAComponent* getNthDNAComponent(int n);
 
 // tools for iteration
+DNAComponent* getComponent(const char* id);
 int getNumCollectionsFor(const DNAComponent* com);
 int getNumSequenceAnnotationsIn(const DNAComponent* com);
 // TODO return pointers?

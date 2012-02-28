@@ -1,34 +1,30 @@
+#include <stdio.h>
 #include <libxml/parser.h>
 #include <libxml/xmlschemas.h>
 #include "core.h"
 #include "validator.h"
 
-int isValidSBOL(const xmlDocPtr doc)
-{
+int isValidSBOL(const xmlDocPtr doc) {
     xmlDocPtr schema_doc = xmlReadFile(SBOL_SCHEMA_FILENAME, NULL, XML_PARSE_NONET);
-    if (schema_doc == NULL)
-    {
+    if (!schema_doc) {
         // the schema cannot be loaded or is not well-formed
         return -1;
     }
     xmlSchemaParserCtxtPtr parser_ctxt = xmlSchemaNewDocParserCtxt(schema_doc);
-    if (parser_ctxt == NULL)
-    {
+    if (!parser_ctxt) {
         // unable to create a parser context for the schema
         xmlFreeDoc(schema_doc);
         return -2;
     }
     xmlSchemaPtr schema = xmlSchemaParse(parser_ctxt);
-    if (schema == NULL)
-    {
+    if (!schema) {
         // the schema itself is not valid
         xmlSchemaFreeParserCtxt(parser_ctxt);
         xmlFreeDoc(schema_doc);
         return -3;
     }
     xmlSchemaValidCtxtPtr valid_ctxt = xmlSchemaNewValidCtxt(schema);
-    if (valid_ctxt == NULL)
-    {
+    if (!valid_ctxt) {
         // unable to create a validation context for the schema
         xmlSchemaFree(schema);
         xmlSchemaFreeParserCtxt(parser_ctxt);

@@ -26,6 +26,7 @@ int getNumCollections();
 struct _Collection* getNthCollection(int n);
 
 // iterate
+Collection* getCollection(const char* id);
 int getNumDNAComponentsIn(Collection* col);
 struct _DNAComponent* getNthDNAComponentIn(Collection* col, int n);
 

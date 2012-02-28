@@ -13,11 +13,8 @@ SET( PROJECT_TEST_DIR    ${PROJECT_ROOT_DIR}/tests    )
 FILE( GLOB PROJECT_SOURCE_FILES
     ${PROJECT_SOURCE_DIR}/core/*.h
     ${PROJECT_SOURCE_DIR}/core/*.c
-    #${PROJECT_SOURCE_DIR}/*.h
-    #${PROJECT_SOURCE_DIR}/*.c
-    ${PROJECT_SOURCE_DIR}/api.h
-    ${PROJECT_SOURCE_DIR}/core.h
-    ${PROJECT_SOURCE_DIR}/core.c
+    ${PROJECT_SOURCE_DIR}/*.h
+    ${PROJECT_SOURCE_DIR}/*.c
 )
 
 # gather test files
@@ -72,16 +69,16 @@ INCLUDE_DIRECTORIES(
 )
 
 # build examples
-#ADD_EXECUTABLE( readntriples
-#    ${PROJECT_SOURCE_FILES}
-#    ${PROJECT_EXAMPLE_DIR}/read_ntriples.c
-#)
-#ADD_EXECUTABLE( validate
-#    ${PROJECT_SOURCE_FILES}
-#    ${PROJECT_EXAMPLE_DIR}/validate.c
-#)
-#TARGET_LINK_LIBRARIES( readntriples sbol )
-#TARGET_LINK_LIBRARIES( validate     sbol )
+ADD_EXECUTABLE( readntriples
+    ${PROJECT_SOURCE_FILES}
+    ${PROJECT_EXAMPLE_DIR}/read_ntriples.c
+)
+ADD_EXECUTABLE( validate
+    ${PROJECT_SOURCE_FILES}
+    ${PROJECT_EXAMPLE_DIR}/validate.c
+)
+TARGET_LINK_LIBRARIES( readntriples sbol )
+TARGET_LINK_LIBRARIES( validate     sbol )
 
 # build tests
 ADD_EXECUTABLE( testall

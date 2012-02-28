@@ -5,8 +5,7 @@
 
 // analyze a single triple and add to
 // SBOL data structures if appropriate
-static void read_triple(void* user_data, raptor_statement* triple)
-{
+void read_triple(void* user_data, raptor_statement* triple) {
 	char* s;
 	char* p;
 	char* o;
@@ -34,63 +33,58 @@ static void read_triple(void* user_data, raptor_statement* triple)
 	if (strcmp(p, "a") == 0) //TODO or p == rdf:type?
 	{
 		if (strcmp(o, "DNAComponent") == 0)
-			newComponent(s);
+			createComponent(s);
 		else if (strcmp(o, "SequenceAnnotation") == 0)
-			newSequenceAnnotation(s);
+			createSequenceAnnotation(s);
 		else if (strcmp(o, "Collection") == 0)
-			newCollection(s);
+			createCollection(s);
 	}
 
 	// subject is an existing DNAComponent
-	else if (isComponent(s))
+	else if (isComponentID(s))
 	{
-		DNAComponent com = getComponent(s);
+		DNAComponent* com = getComponent(s);
 
 		if (strcmp(p, "name") == 0)
-			setComponentName(&com, o);
+			setComponentName(com, o);
 		else if (strcmp(p, "description") == 0)
-			setComponentDescription(&com, o);
+			setComponentDescription(com, o);
 		else if (strcmp(p, "collection") == 0)
-			if (isComponent(s) && isCollection(o) > 0)
+			if (isComponentID(s) && isCollectionID(o) > 0)
 			{
-				Collection col = getCollection(o);
-				addComponentToCollection(&com, &col);
+				Collection* col = getCollection(o);
+				addComponentToCollection(com, col);
 			}
 	}
 
 	// subject is an existing Collection
-	else if (isCollection(s))
-	{
-		Collection col = getCollection(s);
+	else if (isCollectionID(s)) {
+		Collection* col = getCollection(s);
 
 		if (strcmp(p, "name") == 0)
-			setCollectionName(&col, o);
+			setCollectionName(col, o);
 		else if (strcmp(p, "description") == 0)
-			setCollectionDescription(&col, o);
+			setCollectionDescription(col, o);
 	}
 
 	// subject is an existing SequenceAnnotation
-	else if (isAnnotation(s))
-	{
-		SequenceAnnotation ann = getSequenceAnnotation(s);
+	else if (isSequenceAnnotationID(s)) {
+		SequenceAnnotation* ann = getSequenceAnnotation(s);
 
 		if (strcmp(p, "annotates") == 0)
-			if (isComponent(o))
-			{
-				DNAComponent com = getComponent(o);
-				addSequenceAnnotation(&com, &ann);
+			if (isComponentID(o)) {
+				DNAComponent* com = getComponent(o);
+				addSequenceAnnotation(com, ann);
 			}
 		else if (strcmp(p, "subComponent") == 0)
-			if (isComponent(o))
-			{
-				DNAComponent com = getComponent(o);
-				setSubComponent(&ann, &com);
+			if (isComponentID(o)) {
+				DNAComponent* com = getComponent(o);
+				setSubComponent(ann, com);
 			}
 		else if (strcmp(p, "precedes") == 0)
-			if (isAnnotation(o))
-			{
-				SequenceAnnotation ann2 = getSequenceAnnotation(o);
-				addPrecedesRelationship(&ann, &ann2);
+			if (isSequenceAnnotationID(o)) {
+				SequenceAnnotation* ann2 = getSequenceAnnotation(o);
+				addPrecedesRelationship(ann, ann2);
 			}
 	}
 }
