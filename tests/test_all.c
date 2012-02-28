@@ -16,11 +16,11 @@ void RunAllTests(void) {
 	CuString* output = CuStringNew();
 	CuSuite*  suite  = CuSuiteNew();
 
+	CuSuiteAddSuite(suite, GenericArrayGetSuite());
 	CuSuiteAddSuite(suite, DNASequenceGetSuite());
 	CuSuiteAddSuite(suite, SequenceAnnotationGetSuite());
-	CuSuiteAddSuite(suite, CollectionGetSuite());
 	CuSuiteAddSuite(suite, DNAComponentGetSuite());
-	CuSuiteAddSuite(suite, GenericArrayGetSuite());
+	CuSuiteAddSuite(suite, CollectionGetSuite());
 	
 	CuSuiteRun(suite);
 	CuSuiteSummary(suite, output);
