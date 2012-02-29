@@ -8,10 +8,11 @@ void parse(char* filename) {
 
     // TODO print all structs
     // this prints the resulting DNAComponents
-	printf("components:\n");
 	int i;
+	int num = getNumDNAComponents();
+	printf("%i components:\n", num);
 	DNAComponent* com;
-	for (i=0; i < getNumDNAComponents(); i++) {
+	for (i=0; i < num; i++) {
 		com = getNthDNAComponent(i);
 		printDNAComponent(com, 1);
 	}
@@ -22,10 +23,12 @@ void parse(char* filename) {
 
 int main(int argc, char** argv) {
 	char* example;
-	if( argc < 2 )
+	if( argc < 2 ) {
 		// TODO fill in using CMake?
 		example = "../examples/valid/ntriples.nt";
-	else {
+	    parse(example);
+	    printf("\n");
+    } else {
         int i;
         for (i=1; i<argc; i++) {
             example = argv[i];
