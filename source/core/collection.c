@@ -108,7 +108,7 @@ Collection* getCollection(const char* id) {
 	return NULL;
 }
 
-char* getCollectionID(Collection* col) {
+char* getCollectionID(const Collection* col) {
 	if (col && col->id) {
 		char* id = (char*)malloc(sizeof(char) * strlen(col->id)+1);
 		strcpy(id, col->id);
@@ -117,7 +117,7 @@ char* getCollectionID(Collection* col) {
 		return NULL;
 }
 
-char* getCollectionName(Collection* col) {
+char* getCollectionName(const Collection* col) {
 	if (col && col->name) {
 		char* name = (char*)malloc(sizeof(char) * strlen(col->name)+1);
 		strcpy(name, col->name);
@@ -126,7 +126,7 @@ char* getCollectionName(Collection* col) {
 		return NULL;
 }
 
-char* getCollectionDescription(Collection* col) {
+char* getCollectionDescription(const Collection* col) {
 	if (col && col->description) {
 		char* descr = (char*)malloc(sizeof(char) * strlen(col->description)+1);
 		strcpy(descr, col->description);
@@ -146,14 +146,14 @@ int getNumCollections() {
 		return 0;
 }
 
-int getNumDNAComponentsIn(Collection* col) {
+int getNumDNAComponentsIn(const Collection* col) {
 	if (col)
 		return col->components->numInUse;
 	else
 		return -1;
 }
 
-int getNumCollectionsIn(Collection* col) {
+int getNumCollectionsIn(const Collection* col) {
 	if (col)
 		return col->collections->numInUse;
 	else
@@ -173,7 +173,7 @@ Collection* getNthCollection(int n) {
 		return NULL;
 }
 
-DNAComponent* getNthDNAComponentIn(Collection* col, int n) {
+DNAComponent* getNthDNAComponentIn(const Collection* col, int n) {
 	if (col->components->numInUse >= n)
 		return col->components->array[n];
 	else

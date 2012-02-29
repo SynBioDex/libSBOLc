@@ -142,14 +142,14 @@ void addPrecedesRelationship(SequenceAnnotation * upstream, SequenceAnnotation *
 		insertIntoGenericArray(upstream->precedes, downstream);
 }
 
-int getNumPrecedes(SequenceAnnotation* ann) {
+int getNumPrecedes(const SequenceAnnotation* ann) {
 	if (ann)
 		return ann->precedes->numInUse;
 	else
 		return -1;
 }
 
-SequenceAnnotation* getNthPrecedes(SequenceAnnotation* ann, int n) {
+SequenceAnnotation* getNthPrecedes(const SequenceAnnotation* ann, int n) {
 	if (ann && ann->precedes->numInUse >= n)
 		return (SequenceAnnotation*) ann->precedes->array[n];
 	else

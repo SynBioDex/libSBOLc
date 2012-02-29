@@ -24,14 +24,14 @@ Collection* getNthCollection(int n);
 
 // iterate
 Collection* getCollection(const char* id);
-int getNumDNAComponentsIn(Collection* col);
-int getNumCollectionsIn(Collection* col);
-struct _DNAComponent* getNthDNAComponentIn(Collection* col, int n);
+int getNumDNAComponentsIn(const Collection* col);
+int getNumCollectionsIn(const Collection* col);
+struct _DNAComponent* getNthDNAComponentIn(const Collection* col, int n);
 
 // get properties
-char* getCollectionID(Collection* col);
-char* getCollectionName(Collection* col);
-char* getCollectionDescription(Collection* col);
+char* getCollectionID(const Collection* col);
+char* getCollectionName(const Collection* col);
+char* getCollectionDescription(const Collection* col);
 
 // set properties
 void setCollectionID(Collection* col, const char* id); // TODO remove?

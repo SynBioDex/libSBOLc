@@ -28,8 +28,8 @@ SequenceAnnotation* getNthSequenceAnnotation(int n);
 
 // constrain order
 void addPrecedesRelationship(SequenceAnnotation* upstream, SequenceAnnotation* downstream);
-int getNumPrecedes(SequenceAnnotation* ann);
-SequenceAnnotation* getNthPrecedes(SequenceAnnotation* ann, int n);
+int getNumPrecedes(const SequenceAnnotation* ann);
+SequenceAnnotation* getNthPrecedes(const SequenceAnnotation* ann, int n);
 // TODO removePrecedesRelationship?
 
 void cleanupSequenceAnnotations();
