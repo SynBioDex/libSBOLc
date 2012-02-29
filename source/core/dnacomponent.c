@@ -69,16 +69,14 @@ void deleteDNAComponent(DNAComponent* com) {
 	is... functions
 ***************************/
 
-int isDNAComponentPtr(const void* pointer) {
+int isDNAComponentPtr(const void* ptr) {
 	if (!allDNAComponents)
 		allDNAComponents = createGenericArray();
-	return (int) indexByPtr(allDNAComponents, pointer) >= 0;
+	return (int) indexByPtr(allDNAComponents, ptr) >= 0;
 }
 
 int isDNAComponentID(const char* id) {
-	if (!allDNAComponents)
-		allDNAComponents = createGenericArray();
-	if (!id)
+	if (!allDNAComponents || !id)
 		return 0;
 	int index;
 	DNAComponent* com;
@@ -95,9 +93,10 @@ int isDNAComponentID(const char* id) {
 ***************************/
 
 int getNumDNAComponents() {
-	if (!allDNAComponents)
-		allDNAComponents = createGenericArray();
-	return allDNAComponents->numInUse;
+	if (allDNAComponents)
+		return allDNAComponents->numInUse;
+	else
+		return 0;
 }
 
 int getNumCollectionsFor(const DNAComponent* com) {
@@ -119,9 +118,7 @@ int getNumSequenceAnnotationsIn(const DNAComponent* com) {
 ***************************/
 
 DNAComponent* getNthDNAComponent(int n) {
-	if (!allDNAComponents)
-		allDNAComponents = createGenericArray();
-	if (allDNAComponents->numInUse > n)
+	if (allDNAComponents && allDNAComponents->numInUse > n)
 		return allDNAComponents->array[n];
 	else
 		return NULL;
@@ -135,7 +132,7 @@ Collection* getNthCollectionFor(const DNAComponent* com, int n) {
 }
 
 SequenceAnnotation* getNthSequenceAnnotationIn(const DNAComponent* com, int n) {
-	if (com->annotations->numInUse >= n)
+	if (com && com->annotations->numInUse >= n)
 		return (SequenceAnnotation*) com->annotations->array[n];
 	else
 		return NULL;
@@ -146,9 +143,7 @@ SequenceAnnotation* getNthSequenceAnnotationIn(const DNAComponent* com, int n) {
 ***************************/
 
 DNAComponent* getDNAComponent(const char* id) {
-	if (!allDNAComponents)
-		allDNAComponents = createGenericArray();
-	if (!id)
+	if (!allDNAComponents || !id)
 		return NULL;
 	int index;
 	DNAComponent* com;

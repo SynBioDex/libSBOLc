@@ -1,10 +1,10 @@
 #ifndef SBOL_CORE
 #define SBOL_CORE
-#include "api.h"
 #include "core/dnasequence.h"
 #include "core/sequenceannotation.h"
 #include "core/dnacomponent.h"
 #include "core/collection.h"
+#include "api.h"
 
 /***********************************************
  * The SBOL core is split into files to ease

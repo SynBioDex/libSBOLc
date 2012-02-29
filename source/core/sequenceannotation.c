@@ -99,9 +99,10 @@ int isSequenceAnnotationID(const char* id) {
  ***********************/
 
 int getNumSequenceAnnotations() {
-	if (!allSequenceAnnotations)
-		allSequenceAnnotations = createGenericArray();
-	return allSequenceAnnotations->numInUse;
+	if (allSequenceAnnotations)
+		return allSequenceAnnotations->numInUse;
+	else
+		return 0;
 }
 
 SequenceAnnotation* getNthSequenceAnnotation(int n) {
@@ -149,7 +150,7 @@ int getNumPrecedes(SequenceAnnotation* ann) {
 }
 
 SequenceAnnotation* getNthPrecedes(SequenceAnnotation* ann, int n) {
-	if (ann->precedes->numInUse >= n)
+	if (ann && ann->precedes->numInUse >= n)
 		return (SequenceAnnotation*) ann->precedes->array[n];
 	else
 		return NULL;

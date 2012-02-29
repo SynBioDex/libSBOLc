@@ -140,9 +140,10 @@ char* getCollectionDescription(Collection* col) {
  **************************/
 
 int getNumCollections() {
-	if (!allCollections)
-		allCollections = createGenericArray();
-	return allCollections->numInUse;
+	if (allCollections)
+		return allCollections->numInUse;
+	else
+		return 0;
 }
 
 int getNumDNAComponentsIn(Collection* col) {

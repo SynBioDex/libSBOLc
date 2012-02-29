@@ -32,46 +32,54 @@ void deleteGenericArray(GenericArray* arr) {
 }
 
 int indexByPtr(const GenericArray* arr, const void* obj) {
-	int index = 0;
-	while (arr->array[index]) {
-		if (arr->array[index] == obj)
-			return index;
-		else
-			index++;
+	if (arr && obj) {
+		int index;
+		for (index=0; index<arr->numInUse; index++)
+			if (arr->array[index] == obj)
+				return index;
 	}
 	return -1;
 }
 
 void resizeGenericArray(GenericArray* arr, int capacity) {
-	if (capacity<GENERICARRAY_INITIAL_LENGTH)
-		return;
-	arr->array = (void**)realloc(arr->array, capacity * sizeof(void*));
-	arr->numTotal = capacity;
+	if (arr) {
+		if (capacity<GENERICARRAY_INITIAL_LENGTH)
+			return;
+		arr->array = (void**)realloc(arr->array, capacity * sizeof(void*));
+		arr->numTotal = capacity;
+	}
 }
 
 void expandGenericArray(GenericArray* arr) {
-	int capacity;
-	if (arr->numTotal == 0) {
-		capacity = GENERICARRAY_INITIAL_LENGTH;
-	} else
-		capacity = arr->numTotal * GENERICARRAY_SCALING_FACTOR;
-	resizeGenericArray(arr, capacity);
+	if (arr) {
+		int capacity;
+		if (arr->numTotal == 0)
+			capacity = GENERICARRAY_INITIAL_LENGTH;
+		else
+			capacity = arr->numTotal * GENERICARRAY_SCALING_FACTOR;
+		resizeGenericArray(arr, capacity);
+	}
 }
 
 void shrinkGenericArray(GenericArray* arr) {
-	if (arr->numTotal>GENERICARRAY_INITIAL_LENGTH*GENERICARRAY_SCALING_FACTOR)
-		resizeGenericArray(arr, arr->numTotal / GENERICARRAY_SCALING_FACTOR);
+	if (arr) {
+		int minToShrink = GENERICARRAY_INITIAL_LENGTH*GENERICARRAY_SCALING_FACTOR;
+		if (arr->numTotal>minToShrink)
+			resizeGenericArray(arr, arr->numTotal / GENERICARRAY_SCALING_FACTOR);
+	}
 }
 
 void removeFromGenericArray(GenericArray* arr, int index) {
-	// shift everything over
-	int i;
-	for (i=index+1; i<arr->numInUse; i++)
-		arr->array[i-1] = arr->array[i];
-	arr->array[ --(arr->numInUse) ] = NULL;
-	// if array is getting empty, shrink it
-	if (arr->numInUse == arr->numTotal/GENERICARRAY_SCALING_FACTOR)
-		shrinkGenericArray(arr);
+	if (arr && arr->numInUse>index && index >= 0) {
+		// shift everything over, deleting array[index]
+		int i;
+		for (i=index+1; i<arr->numInUse; i++)
+			arr->array[i-1] = arr->array[i];
+		arr->array[ --(arr->numInUse) ] = NULL;
+		// if array is getting small, shrink it
+		if (arr->numInUse == arr->numTotal/GENERICARRAY_SCALING_FACTOR)
+			shrinkGenericArray(arr);
+	}
 }
 
 void insertIntoGenericArray(GenericArray* arr, void* obj) {
