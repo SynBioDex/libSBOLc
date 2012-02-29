@@ -13,4 +13,9 @@ void printSequenceAnnotation(const struct _SequenceAnnotation* ann, int tabs);
 void printDNAComponent(const struct _DNAComponent* com, int tabs);
 void printCollection(const struct _Collection* col, int tabs);
 
+void printAllDNASequences();
+void printAllSequenceAnnotations();
+void printAllDNAComponents();
+void printAllCollections();
+
 #endif

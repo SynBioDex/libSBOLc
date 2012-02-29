@@ -2,23 +2,10 @@
 #include "core.h"
 #include "reader.h"
 
-void parse(char* filename) {
-    // this does the parsing
+void parseAndPrint(char* filename) {
 	readSBOL(filename);
-
-    // TODO print all structs
-    // this prints the resulting DNAComponents
-	int i;
-	int num = getNumDNAComponents();
-	printf("%i components:\n", num);
-	DNAComponent* com;
-	for (i=0; i < num; i++) {
-		com = getNthDNAComponent(i);
-		printDNAComponent(com, 1);
-	}
-
-	// and this deletes them
-	cleanup();
+	printSBOLCore();
+	cleanupSBOLCore();
 }
 
 int main(int argc, char** argv) {
@@ -26,16 +13,13 @@ int main(int argc, char** argv) {
 	if( argc < 2 ) {
 		// TODO fill in using CMake?
 		example = "../examples/valid/ntriples.nt";
-	    parse(example);
-	    printf("\n");
+	    parseAndPrint(example);
     } else {
         int i;
         for (i=1; i<argc; i++) {
             example = argv[i];
-            parse(example);
-		    printf("\n");
+            parseAndPrint(example);
         }
-
 	}
 	return 0;
 }

@@ -7,6 +7,8 @@
 #include "collection.h"
 #include "debug.h"
 
+// TODO move all this to other core files
+
 #define NUCLEOTIDES_PRINTED 30
 
 void indent(int tabs) {
@@ -24,6 +26,16 @@ void printDNASequence(const DNASequence* seq, int tabs) {
     char* nt = malloc(sizeof(char) * NUCLEOTIDES_PRINTED+1);
     strncpy(nt, seq->nucleotides, NUCLEOTIDES_PRINTED);
     indent(tabs); printf("nucleotides: %s\n", nt);
+}
+
+void printAllDNASequences() {
+    int n;
+    int num = getNumDNASequences();
+    if (num > 0) {
+        printf("%i sequences:\n", num);
+        for (n=0; n<num; n++)
+            printDNASequence(getNthDNASequence(n), 1);
+    }
 }
 
 void printSequenceAnnotation(const SequenceAnnotation* ann, int tabs) {
@@ -48,6 +60,16 @@ void printSequenceAnnotation(const SequenceAnnotation* ann, int tabs) {
                 indent(tabs+2); printf("%s\n", getNthPrecedes(ann, i)->id);
             }
         }
+    }
+}
+
+void printAllSequenceAnnotations() {
+    int n;
+    int num = getNumSequenceAnnotations();
+    if (num > 0) {
+        printf("%i annotations:\n", num);
+        for (n=0; n<num; n++)
+            printSequenceAnnotation(getNthSequenceAnnotation(n), 1);
     }
 }
 
@@ -86,6 +108,16 @@ void printDNAComponent(const DNAComponent* com, int tabs) {
     }
 }
 
+void printAllDNAComponents() {
+    int n;
+    int num = getNumDNAComponents();
+    if (num > 0) {
+        printf("%i components:\n", num);
+        for (n=0; n<num; n++)
+            printDNAComponent(getNthDNAComponent(n), 1);
+    }
+}
+
 void printCollection(const Collection* col, int tabs) {
     if (!col)
         return;
@@ -115,5 +147,15 @@ void printCollection(const Collection* col, int tabs) {
                 indent(tabs+2); printf("%s\n", col2->id);
             }
         }
+    }
+}
+
+void printAllCollections() {
+    int n;
+    int num = getNumCollections();
+    if (num > 0) {
+        printf("%i collections:\n", num);
+        for (n=0; n<num; n++)
+            printCollection(getNthCollection(n), 1);
     }
 }

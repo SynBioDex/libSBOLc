@@ -52,3 +52,17 @@ void cleanupDNASequences() {
 		allDNASequences = NULL;
 	}
 }
+
+int getNumDNASequences() {
+    if (allDNASequences)
+        return allDNASequences->numInUse;
+    else
+        return 0;
+}
+
+DNASequence* getNthDNASequence(int n) {
+    if (!allDNASequences || allDNASequences->numInUse<=n)
+        return NULL;
+    else
+        return allDNASequences->array[n];
+}

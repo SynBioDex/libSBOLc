@@ -7,6 +7,10 @@ typedef struct _DNASequence {
 
 DNASequence* createDNASequence(char* nucleotides); // TODO id?
 void deleteDNASequence(DNASequence* seq);
+
+int getNumDNASequences();
+DNASequence* getNthDNASequence(int n);
+
 void cleanupDNASequences();
 
 #endif

@@ -1,8 +1,15 @@
 #include "core.h"
 
-void cleanup() {
+void cleanupSBOLCore() {
 	cleanupDNASequences();
 	cleanupSequenceAnnotations();
 	cleanupDNAComponents();
 	cleanupCollections();
+}
+
+void printSBOLCore() {
+    printAllDNASequences();
+    printAllSequenceAnnotations();
+    printAllDNAComponents();
+    printAllCollections();
 }

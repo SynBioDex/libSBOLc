@@ -19,6 +19,10 @@ SBOLAPIEXPORTS void printDNASequence(const DNASequence* seq, int tabs);
 SBOLAPIEXPORTS void printSequenceAnnotation(const SequenceAnnotation* ann, int tabs);
 SBOLAPIEXPORTS void printDNAComponent(const DNAComponent* com, int tabs);
 SBOLAPIEXPORTS void printCollection(const Collection* col, int tabs);
+SBOLAPIEXPORTS void printAllDNASequences();
+SBOLAPIEXPORTS void printAllSequenceAnnotations();
+SBOLAPIEXPORTS void printAllDNAComponents();
+SBOLAPIEXPORTS void printAllCollections();
 
 // from dnasequence.h
 SBOLAPIEXPORTS DNASequence* createDNASequence(char* nucleotides);
@@ -78,6 +82,7 @@ SBOLAPIEXPORTS void setCollectionDescription(Collection* col, const char* desc);
 SBOLAPIEXPORTS void addDNAComponentToCollection(DNAComponent* com, Collection* col);
 
 // from core.c
-SBOLAPIEXPORTS void cleanup();
+SBOLAPIEXPORTS void printSBOLCore();
+SBOLAPIEXPORTS void cleanupSBOLCore();
 
 #endif
