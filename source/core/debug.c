@@ -95,7 +95,7 @@ void printCollection(const Collection* col, int tabs) {
         Collection* col2;
         indent(tabs+1); printf("collections:\n");
         for (i=0; i<getNumCollectionsIn(col); i++) {
-            col2 = getNtheCollectionIn(col, i);
+            col2 = getNthCollectionIn(col, i);
             indent(tabs+2); printf("%s\n", col2->id);
         }
     }

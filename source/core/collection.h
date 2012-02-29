@@ -21,6 +21,7 @@ int isCollectionPtr(const void* pointer);
 int isCollectionID(const char* id);
 int getNumCollections();
 Collection* getNthCollection(int n);
+Collection* getNthCollectionIn(const Collection* col, int n);
 
 // iterate
 Collection* getCollection(const char* id);

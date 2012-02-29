@@ -165,16 +165,21 @@ int getNumCollectionsIn(const Collection* col) {
  **************************/
 
 Collection* getNthCollection(int n) {
-	if (!allCollections)
-		allCollections = createGenericArray();
-	if (allCollections->numInUse > n)
+	if (!allCollections || allCollections->numInUse<=n)
+	    return NULL;
+	else
 		return allCollections->array[n];
+}
+
+DNAComponent* getNthDNAComponentIn(const Collection* col, int n) {
+	if (col && col->components->numInUse >= n)
+		return col->components->array[n];
 	else
 		return NULL;
 }
 
-DNAComponent* getNthDNAComponentIn(const Collection* col, int n) {
-	if (col->components->numInUse >= n)
+Collection* getNthCollectionIn(const Collection* col, int n) {
+	if (col && col->collections->numInUse >= n)
 		return col->components->array[n];
 	else
 		return NULL;
