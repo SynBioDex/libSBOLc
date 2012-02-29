@@ -61,7 +61,7 @@ void printDNAComponent(const DNAComponent* com, int tabs) {
     if (com->annotations) {
         SequenceAnnotation* seq;
         indent(tabs+1); printf("annotations:\n");
-        for (i=0; i<getNumAnnotationsIn(com); i++) {
+        for (i=0; i<getNumSequenceAnnotationsIn(com); i++) {
             seq = getNthSequenceAnnotationIn(com, i);
             indent(tabs+2); printf("%s\n", seq->id);
         }
