@@ -23,10 +23,8 @@ DNAComponent* createDNAComponent(const char* id) {
 	com->id          = NULL;
 	com->name        = NULL;
 	com->description = NULL;
-	com->numAnnotations = 0;
-	com->numCollections = 0;
-	com->annotations = NULL;
-	com->collections = NULL;
+	com->annotations = createGenericArray();
+	com->collections = createGenericArray();
 	setDNAComponentID(com, id);
 	registerDNAComponent(com);
 	return com;
@@ -56,11 +54,11 @@ void deleteDNAComponent(DNAComponent* com) {
 			com->description = NULL;
 		}
 		if (com->annotations) {
-			free(com->annotations);
+			deleteGenericArray(com->annotations);
 			com->annotations = NULL;
 		}
 		if (com->collections) {
-			free(com->collections);
+			deleteGenericArray(com->collections);
 			com->collections = NULL;
 		}
 		free(com);
@@ -104,14 +102,14 @@ int getNumDNAComponents() {
 
 int getNumCollectionsFor(const DNAComponent* com) {
 	if (com)
-		return com->numCollections;
+		return com->collections->numInUse;
 	else
 		return -1;
 }
 
 int getNumSequenceAnnotationsIn(const DNAComponent* com) {
 	if (com)
-		return com->numAnnotations;
+		return com->annotations->numInUse;
 	else
 		return -1;
 }
@@ -130,15 +128,15 @@ DNAComponent* getNthDNAComponent(int n) {
 }
 
 Collection* getNthCollectionFor(const DNAComponent* com, int n) {
-	if (com->numCollections >= n)
-		return com->collections[n];
+	if (com->collections->numInUse >= n)
+		return (Collection*) com->collections->array[n];
 	else
 		return NULL;
 }
 
 SequenceAnnotation* getNthSequenceAnnotationIn(const DNAComponent* com, int n) {
-	if (com->numAnnotations >= n)
-		return com->annotations[n];
+	if (com->annotations->numInUse >= n)
+		return (SequenceAnnotation*) com->annotations->array[n];
 	else
 		return NULL;
 }
@@ -219,33 +217,9 @@ void setDNAComponentDescription(DNAComponent* com, const char* descr) {
 ***************************/
 
 void addSequenceAnnotation(DNAComponent* com, SequenceAnnotation* ann) {
-	if (!com || !ann)
-		return;
-	ann->annotates = com;
-	if (!com->annotations) {
-		// create array
-		size_t memory = sizeof(SequenceAnnotation*) * 2;
-		com->annotations = (SequenceAnnotation**)malloc(memory);
-		// add first value
-		com->annotations[0] = ann;
-		// finish with null
-		com->annotations[1] = NULL;
-	} else {
-		// create longer array
-		int n = com->numAnnotations;
-		SequenceAnnotation** old = com->annotations; // TODO memory leak?
-		size_t memory = sizeof(SequenceAnnotation*) * (n+2);
-		com->annotations = (SequenceAnnotation**)malloc(memory);
-		// copy over old values
-		int i;
-		for (i=0; i<n; ++i)
-			com->annotations[i] = old[i];
-		// add the new one
-		com->annotations[n] = ann;
-		// finish with NULL
-		com->annotations[n+1] = NULL;
+	if (com && ann) {
+		insertIntoGenericArray(com->annotations, ann);
 	}
-	com->numAnnotations++;
 }
 
 void setSubComponent(SequenceAnnotation* ann, DNAComponent* com) {

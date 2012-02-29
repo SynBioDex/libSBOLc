@@ -21,10 +21,9 @@ SequenceAnnotation* createSequenceAnnotation(const char* id) {
 	ann->id           = NULL;
 	ann->genbankStart = 0;
 	ann->genbankEnd   = 0;
-	ann->numPrecedes  = 0;
 	ann->annotates    = NULL;
 	ann->subComponent = NULL;
-	ann->precedes     = NULL;
+	ann->precedes = createGenericArray();
 	setSequenceAnnotationID(ann, id);
 	registerSequenceAnnotation(ann);
 	return ann;
@@ -55,7 +54,7 @@ void deleteSequenceAnnotation(SequenceAnnotation* ann) {
 			ann->subComponent = NULL;
 		}
 		if (ann->precedes) {
-			free(ann->precedes);
+			deleteGenericArray(ann->precedes);
 			ann->precedes = NULL;
 		}
 		free(ann);
@@ -138,44 +137,20 @@ SequenceAnnotation* getSequenceAnnotation(const char* id) {
  *******************/
 
 void addPrecedesRelationship(SequenceAnnotation * upstream, SequenceAnnotation * downstream) {
-	if (!upstream || !downstream)
-		return;
-	if (!upstream->precedes) {
-		// create array
-		size_t size = sizeof(SequenceAnnotation*) * 2;
-		upstream->precedes = (SequenceAnnotation**)malloc(size);
-		// add first value
-		upstream->precedes[0] = downstream;
-		// add null terminator
-		upstream->precedes[1] = NULL;
-	} else {
-		// create longer array
-		int n = upstream->numPrecedes;
-		SequenceAnnotation** old = upstream->precedes; // TODO memory leak?
-		size_t size = sizeof(SequenceAnnotation*) * (n+2);
-		upstream->precedes = (SequenceAnnotation**)malloc(size);
-		// copy over old values
-		int i;
-		for (i=0; i<n; ++i)
-			upstream->precedes[i] = old[i];
-		// add the new one
-		upstream->precedes[n] = downstream;
-		// finish with NULL
-		upstream->precedes[n+1] = NULL;
-	}
-	upstream->numPrecedes++;
+	if (upstream && downstream)
+		insertIntoGenericArray(upstream->precedes, downstream);
 }
 
 int getNumPrecedes(SequenceAnnotation* ann) {
 	if (ann)
-		return ann->numPrecedes;
+		return ann->precedes->numInUse;
 	else
 		return -1;
 }
 
 SequenceAnnotation* getNthPrecedes(SequenceAnnotation* ann, int n) {
-	if (ann->numPrecedes >= n)
-		return ann->precedes[n];
+	if (ann->precedes->numInUse >= n)
+		return (SequenceAnnotation*) ann->precedes->array[n];
 	else
 		return NULL;
 }

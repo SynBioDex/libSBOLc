@@ -19,7 +19,7 @@ void TestCreateSequenceAnnotation(CuTest* tc) {
 		CuAssertStrEquals(tc, id, ann->id);
 		CuAssertIntEquals(tc, 0, ann->genbankStart);
 		CuAssertIntEquals(tc, 0, ann->genbankEnd);
-		CuAssertIntEquals(tc, 0, ann->numPrecedes);
+		CuAssertIntEquals(tc, 0, getNumPrecedes(ann));
 		deleteSequenceAnnotation(ann);
 		CuAssertIntEquals(tc, 0, getNumSequenceAnnotations());
 	}

@@ -2,15 +2,14 @@
 #define SBOL_CORE_COLLECTION
 
 struct _DNAComponent;
+struct _GenericArray;
 
 typedef struct _Collection {
 	char* id;
 	char* name;
 	char* description;
-    int numComponents;
-    int numCollections;
-	struct _DNAComponent** components;
-	struct _Collection**  collections;
+	struct _GenericArray* components;
+	struct _GenericArray* collections;
 } Collection;
 
 // create/destroy
@@ -26,6 +25,7 @@ Collection* getNthCollection(int n);
 // iterate
 Collection* getCollection(const char* id);
 int getNumDNAComponentsIn(Collection* col);
+int getNumCollectionsIn(Collection* col);
 struct _DNAComponent* getNthDNAComponentIn(Collection* col, int n);
 
 // get properties

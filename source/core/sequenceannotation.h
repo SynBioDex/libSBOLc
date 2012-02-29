@@ -2,15 +2,15 @@
 #define SBOL_CORE_SEQUENCEANNOTATION
 
 struct _DNAComponent;
+struct _GenericArray;
 
 typedef struct _SequenceAnnotation {
 	char* id;
 	int genbankStart;
 	int genbankEnd;
-	int numPrecedes;
    	struct _DNAComponent* annotates;
 	struct _DNAComponent* subComponent;
-	struct _SequenceAnnotation** precedes;
+	struct _GenericArray* precedes;
 } SequenceAnnotation;
 
 // create/destroy

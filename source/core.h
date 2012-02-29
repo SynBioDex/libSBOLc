@@ -60,6 +60,7 @@ SBOLAPIEXPORTS int getNumCollections();
 SBOLAPIEXPORTS Collection* getCollection(const char* id);
 SBOLAPIEXPORTS Collection* getNthCollection(int n);
 SBOLAPIEXPORTS int getNumDNAComponentsIn(Collection* col);
+SBOLAPIEXPORTS int getNumCollectionsIn(Collection* col);
 SBOLAPIEXPORTS DNAComponent* getNthDNAComponentIn(Collection* col, int n);
 SBOLAPIEXPORTS char* getCollectionID(Collection* col);
 SBOLAPIEXPORTS char* getCollectionName(Collection* col);

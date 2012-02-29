@@ -22,10 +22,8 @@ Collection* createCollection(const char* id) {
 	col->id          = NULL;
 	col->name        = NULL;
 	col->description = NULL;
-	col->numComponents  = 0;
-	col->numCollections = 0;
-	col->components  = NULL;
-	col->collections = NULL;
+	col->components  = createGenericArray();
+	col->collections = createGenericArray();
 	setCollectionID(col, id);
 	registerCollection(col);
 	return col;
@@ -55,11 +53,11 @@ void deleteCollection(Collection* col) {
 			col->description = NULL;
 		}
 		if (col->collections) {
-			free(col->collections);
+			deleteGenericArray(col->collections);
 			col->collections = NULL;
 		}
 		if (col->components) {
-			free(col->components);
+			deleteGenericArray(col->components);
 			col->components = NULL;
 		}
 		free(col);
@@ -149,7 +147,14 @@ int getNumCollections() {
 
 int getNumDNAComponentsIn(Collection* col) {
 	if (col)
-		return col->numComponents;
+		return col->components->numInUse;
+	else
+		return -1;
+}
+
+int getNumCollectionsIn(Collection* col) {
+	if (col)
+		return col->collections->numInUse;
 	else
 		return -1;
 }
@@ -168,8 +173,8 @@ Collection* getNthCollection(int n) {
 }
 
 DNAComponent* getNthDNAComponentIn(Collection* col, int n) {
-	if (col->numComponents >= n)
-		return col->components[n];
+	if (col->components->numInUse >= n)
+		return col->components->array[n];
 	else
 		return NULL;
 }
@@ -203,79 +208,10 @@ void setCollectionDescription(Collection* col, const char* descr) {
 	add component
 ***************************/
 
-void addDNAComponentToCollection(DNAComponent * component, Collection * collection)
-{
-	Collection   ** p1 = 0;
-	DNAComponent ** p2 = 0;
-	int i = 0;
-	int n = 0;
-	if (component && collection)
-	{
-		p1 = component->collections;
-		
-		// create a slightly longer array and copy things over,
-		// then add the new collection
-		if (p1)
-		{
-			//i = 0;
-			//while (p1[i])
-			//	++i;
-			//n = i; // current number of collections
-            n = component->numCollections;
-
-			component->collections = (Collection**)malloc((n+1) * sizeof(Collection*));
-			for (i=0; i < n-1; ++i) //TODO remove multiple nulls?
-				component->collections[i] = p1[i];
-			component->collections[n-1] = collection;
-			component->collections[n] = 0;
-			free(p1);
-			p1 = NULL;
-		}
-
-		// create an array and add the new collection
-		else
-		{
-			component->collections = (Collection**)malloc(2 * sizeof(Collection*));
-			component->collections[0] = collection;
-			component->collections[1] = 0;
-		}
-		component->numCollections++;
-
-		//while (component->collections[i])
-		//	i++;
-
-		p2 = collection->components;
-
-		// create a new array and copy things over,
-		// then add the new component to it
-		if (p2)
-		{
-			//i = 0;
-			//while (p2[i])
-			//	++i;
-			//n = i; // current number of components
-			n = collection->numComponents;
-
-			collection->components = (DNAComponent**)malloc((n+1) * sizeof(DNAComponent*));
-			for (i=0; i < n-1; ++i)
-				collection->components[i] = p2[i];
-			collection->components[n-1] = component;
-			collection->components[n] = 0;
-			free(p2);
-			p2 = NULL;
-		}
-
-		// start an array of components and add the new one
-		else
-		{
-			collection->components = (DNAComponent**)malloc(2 * sizeof(DNAComponent*));
-			collection->components[0] = component;
-			collection->components[1] = 0;
-		}
-		collection->numComponents++;
-
-		//while (collection->components[i])
-		//	i++;
+void addDNAComponentToCollection(DNAComponent* com, Collection* col) {
+	if (com && col) {
+		insertIntoGenericArray(com->collections, col);
+		insertIntoGenericArray(col->components,  com);
 	}
 }
 

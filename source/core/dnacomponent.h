@@ -1,6 +1,7 @@
 #ifndef SBOL_CORE_DNACOMPONENT
 #define SBOL_CORE_DNACOMPONENT
 
+struct _GenericArray;
 struct _DNASequence;
 struct _SequenceAnnotation;
 struct _Collection;
@@ -9,11 +10,9 @@ typedef struct _DNAComponent {
 	char* id;
 	char* name;
 	char* description;
-	int numAnnotations;
-	int numCollections;
 	struct _DNASequence* dnaSequence;
-	struct _SequenceAnnotation** annotations; //null terminated array
-	struct _Collection** collections; //null terminated array
+	struct _GenericArray* annotations;
+	struct _GenericArray* collections;
 } DNAComponent;
 
 // create/destroy
