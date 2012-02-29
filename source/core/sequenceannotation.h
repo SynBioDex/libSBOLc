@@ -32,6 +32,8 @@ int getNumPrecedes(const SequenceAnnotation* ann);
 SequenceAnnotation* getNthPrecedes(const SequenceAnnotation* ann, int n);
 // TODO removePrecedesRelationship?
 
+void printSequenceAnnotation(const SequenceAnnotation* seq, int tabs);
+void printAllSequenceAnnotations();
 void cleanupSequenceAnnotations();
 
 #endif

@@ -1,3 +1,4 @@
+#include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
 #include "genericarray.h"
@@ -230,4 +231,49 @@ void cleanupDNAComponents() {
 		deleteGenericArray(allDNAComponents);
 		allDNAComponents = NULL;
 	}
+}
+
+void printDNAComponent(const DNAComponent* com, int tabs) {
+    if (!com)
+        return;
+    indent(tabs);   printf("%s\n", com->id);
+    indent(tabs+1); printf("name: %s\n", com->name);
+    indent(tabs+1); printf("description: %s\n", com->description);
+    if (com->dnaSequence) {
+        printDNASequence(com->dnaSequence, tabs+1);
+    }
+    int i;
+    int num;
+    if (com->annotations) {
+        SequenceAnnotation* seq;
+        num = getNumSequenceAnnotationsIn(com);
+        if (num > 0) {
+            indent(tabs+1); printf("%i annotations:\n", num);
+            for (i=0; i<num; i++) {
+                seq = getNthSequenceAnnotationIn(com, i);
+                indent(tabs+2); printf("%s\n", seq->id);
+            }
+        }
+    }
+    if (com->collections) {
+        Collection* col;
+        num = getNumCollectionsFor(com);
+        if (num > 0) {
+            indent(tabs+1); printf("%i collections:\n", num);
+            for (i=0; i<num; i++) {
+                col = getNthCollectionFor(com, i);
+                indent(tabs+2); printf("%s\n", col->id);
+            }
+        }
+    }
+}
+
+void printAllDNAComponents() {
+    int n;
+    int num = getNumDNAComponents();
+    if (num > 0) {
+        printf("%i components:\n", num);
+        for (n=0; n<num; n++)
+            printDNAComponent(getNthDNAComponent(n), 1);
+    }
 }

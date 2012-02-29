@@ -11,6 +11,9 @@ void deleteDNASequence(DNASequence* seq);
 int getNumDNASequences();
 DNASequence* getNthDNASequence(int n);
 
+void printDNASequence(const DNASequence* seq, int tabs);
+void printAllDNASequences();
+
 void cleanupDNASequences();
 
 #endif

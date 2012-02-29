@@ -1,7 +1,10 @@
+#include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
 #include "genericarray.h"
 #include "dnasequence.h"
+
+#define NUCLEOTIDES_PRINTED 30
 
 static GenericArray* allDNASequences;
 
@@ -65,4 +68,23 @@ DNASequence* getNthDNASequence(int n) {
         return NULL;
     else
         return allDNASequences->array[n];
+}
+
+void printDNASequence(const DNASequence* seq, int tabs) {
+    if (!seq)
+        return;
+    //print just the beginning of the sequence
+    char* nt = malloc(sizeof(char) * NUCLEOTIDES_PRINTED+1);
+    strncpy(nt, seq->nucleotides, NUCLEOTIDES_PRINTED);
+    indent(tabs); printf("nucleotides: %s\n", nt);
+}
+
+void printAllDNASequences() {
+    int n;
+    int num = getNumDNASequences();
+    if (num > 0) {
+        printf("%i sequences:\n", num);
+        for (n=0; n<num; n++)
+            printDNASequence(getNthDNASequence(n), 1);
+    }
 }

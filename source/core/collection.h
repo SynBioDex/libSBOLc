@@ -43,6 +43,9 @@ void setCollectionDescription(Collection* col, const char* desc);
 // add component
 void addDNAComponentToCollection(struct _DNAComponent* com, Collection* col);
 
+void printCollection(const Collection* col, int tabs);
+void printAllCollections();
+
 void cleanupCollections();
 
 #endif

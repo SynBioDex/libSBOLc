@@ -1,6 +1,8 @@
+#include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
 #include "genericarray.h"
+#include "dnacomponent.h"
 #include "sequenceannotation.h"
 
 static GenericArray* allSequenceAnnotations;
@@ -164,4 +166,39 @@ void cleanupSequenceAnnotations() {
 		deleteGenericArray(allSequenceAnnotations);
 		allSequenceAnnotations = NULL;
 	}
+}
+
+void printSequenceAnnotation(const SequenceAnnotation* ann, int tabs) {
+    if (!ann)
+        return;
+    indent(tabs); printf("%s\n", ann->id);
+    int start = ann->genbankStart;
+    int end = ann->genbankEnd;
+    indent(tabs+1); printf("%i --> %i\n", start, end);
+    if (ann->annotates) {
+        indent(tabs+1); printf("annotates: %s\n", ann->annotates->id);
+    }
+    if (ann->subComponent) {
+        indent(tabs+1); printf("subComponent: %s\n", ann->subComponent->id);
+    }
+    if (ann->precedes) {
+        int num = getNumPrecedes(ann);
+        if (num > 0) {
+            indent(tabs+1); printf("%i precedes:\n", ann);
+            int i;
+            for (i=0; i<num; i++) {
+                indent(tabs+2); printf("%s\n", getNthPrecedes(ann, i)->id);
+            }
+        }
+    }
+}
+
+void printAllSequenceAnnotations() {
+    int n;
+    int num = getNumSequenceAnnotations();
+    if (num > 0) {
+        printf("%i annotations:\n", num);
+        for (n=0; n<num; n++)
+            printSequenceAnnotation(getNthSequenceAnnotation(n), 1);
+    }
 }

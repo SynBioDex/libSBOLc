@@ -1,6 +1,5 @@
 #ifndef SBOL_CORE
 #define SBOL_CORE
-#include "core/debug.h"
 #include "core/dnasequence.h"
 #include "core/sequenceannotation.h"
 #include "core/dnacomponent.h"
@@ -14,19 +13,11 @@
  * #including them as a group from here.
  ***********************************************/
 
-// from debug.h
-SBOLAPIEXPORTS void printDNASequence(const DNASequence* seq, int tabs);
-SBOLAPIEXPORTS void printSequenceAnnotation(const SequenceAnnotation* ann, int tabs);
-SBOLAPIEXPORTS void printDNAComponent(const DNAComponent* com, int tabs);
-SBOLAPIEXPORTS void printCollection(const Collection* col, int tabs);
-SBOLAPIEXPORTS void printAllDNASequences();
-SBOLAPIEXPORTS void printAllSequenceAnnotations();
-SBOLAPIEXPORTS void printAllDNAComponents();
-SBOLAPIEXPORTS void printAllCollections();
-
 // from dnasequence.h
 SBOLAPIEXPORTS DNASequence* createDNASequence(char* nucleotides);
 SBOLAPIEXPORTS void deleteDNASequence(DNASequence* seq);
+SBOLAPIEXPORTS void printDNASequence(const DNASequence* seq, int tabs);
+SBOLAPIEXPORTS void printAllDNASequences();
 
 // from sequenceannotation.h
 SBOLAPIEXPORTS int isAnnotationPtr(const void* pointer);
@@ -40,6 +31,8 @@ SBOLAPIEXPORTS void deleteSequenceAnnotation(SequenceAnnotation* ann);
 SBOLAPIEXPORTS void addPrecedesRelationship(SequenceAnnotation* upstream, SequenceAnnotation* downstream);
 SBOLAPIEXPORTS int getNumPrecedes(const SequenceAnnotation* ann);
 SBOLAPIEXPORTS SequenceAnnotation* getNthPrecedes(const SequenceAnnotation* ann, int n);
+SBOLAPIEXPORTS void printSequenceAnnotation(const SequenceAnnotation* ann, int tabs);
+SBOLAPIEXPORTS void printAllSequenceAnnotations();
 
 // from dnacomponent.h
 SBOLAPIEXPORTS DNAComponent* createDNAComponent(const char* id);
@@ -61,6 +54,8 @@ SBOLAPIEXPORTS void setDNAComponentName(DNAComponent* com, const char* name);
 SBOLAPIEXPORTS void setDNAComponentDescription(DNAComponent* com, const char* desc);
 SBOLAPIEXPORTS void addSequenceAnnotation(DNAComponent* com, SequenceAnnotation* ann);
 SBOLAPIEXPORTS void setSubComponent(SequenceAnnotation* ann, DNAComponent* com);
+SBOLAPIEXPORTS void printDNAComponent(const DNAComponent* com, int tabs);
+SBOLAPIEXPORTS void printAllDNAComponents();
 
 // from collection.h
 SBOLAPIEXPORTS Collection* createCollection(const char* id);
@@ -80,8 +75,11 @@ SBOLAPIEXPORTS void setCollectionID(Collection* col, const char* id); // TODO re
 SBOLAPIEXPORTS void setCollectionName(Collection* col, const char* name);
 SBOLAPIEXPORTS void setCollectionDescription(Collection* col, const char* desc);
 SBOLAPIEXPORTS void addDNAComponentToCollection(DNAComponent* com, Collection* col);
+SBOLAPIEXPORTS void printCollection(const Collection* col, int tabs);
+SBOLAPIEXPORTS void printAllCollections();
 
 // from core.c
+void indent(int tabs); // TODO put somewhere better
 SBOLAPIEXPORTS void printSBOLCore();
 SBOLAPIEXPORTS void cleanupSBOLCore();
 

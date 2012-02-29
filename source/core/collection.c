@@ -1,3 +1,4 @@
+#include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
 #include "genericarray.h"
@@ -229,4 +230,46 @@ void cleanupCollections() {
 		deleteGenericArray(allCollections);
 		allCollections = NULL;
 	}
+}
+
+void printCollection(const Collection* col, int tabs) {
+    if (!col)
+        return;
+    indent(tabs);   printf("%s\n", col->id);
+    indent(tabs+1); printf("name: %s\n", col->name);
+    indent(tabs+1); printf("description: %s\n", col->description);
+    int i;
+    int num;
+    if (col->components) {
+        DNAComponent* com;
+        num = getNumDNAComponentsIn(col);
+        if (num > 0) {
+            indent(tabs+1); printf("%i components:\n", num);
+            for (i=0; i<num; i++) {
+                com = getNthDNAComponentIn(col, i);
+                indent(tabs+2); printf("%s\n", com->id);
+            }
+        }
+    }
+    if (col->collections) {
+        Collection* col2;
+        num = getNumCollectionsIn(col);
+        if (num > 0) {
+            indent(tabs+1); printf("%i collections:\n", num);
+            for (i=0; i<num; i++) {
+                col2 = getNthCollectionIn(col, i);
+                indent(tabs+2); printf("%s\n", col2->id);
+            }
+        }
+    }
+}
+
+void printAllCollections() {
+    int n;
+    int num = getNumCollections();
+    if (num > 0) {
+        printf("%i collections:\n", num);
+        for (n=0; n<num; n++)
+            printCollection(getNthCollection(n), 1);
+    }
 }

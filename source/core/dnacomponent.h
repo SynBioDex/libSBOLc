@@ -47,6 +47,8 @@ void setDNAComponentDescription(DNAComponent* com, const char* desc);
 void addSequenceAnnotation(DNAComponent* com, struct _SequenceAnnotation* ann);
 void setSubComponent(struct _SequenceAnnotation* ann, DNAComponent* com);
 
+void printDNAComponent(const DNAComponent* com, int tabs);
+void printAllDNAComponents();
 void cleanupDNAComponents();
 
 #endif
