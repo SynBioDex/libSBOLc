@@ -1,5 +1,6 @@
 #ifndef SBOL_CORE
 #define SBOL_CORE
+#include "core/debug.h"
 #include "core/dnasequence.h"
 #include "core/sequenceannotation.h"
 #include "core/dnacomponent.h"
@@ -12,6 +13,9 @@
  * interdependent you should probably stick to
  * #including them as a group from here.
  ***********************************************/
+
+// from debug.h
+SBOLAPIEXPORTS void indent(int tabs);
 
 // from dnasequence.h
 SBOLAPIEXPORTS DNASequence* createDNASequence(char* nucleotides);
@@ -79,7 +83,6 @@ SBOLAPIEXPORTS void printCollection(const Collection* col, int tabs);
 SBOLAPIEXPORTS void printAllCollections();
 
 // from core.c
-void indent(int tabs); // TODO put somewhere better
 SBOLAPIEXPORTS void printSBOLCore();
 SBOLAPIEXPORTS void cleanupSBOLCore();
 

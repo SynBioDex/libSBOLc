@@ -1,4 +1,5 @@
 #include <stdlib.h>
+#include "debug.h"
 #include "genericarray.h"
 // TODO reject (or replace?) duplicate IDs!
 
