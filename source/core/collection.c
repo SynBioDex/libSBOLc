@@ -2,6 +2,7 @@
 #include <stdlib.h>
 #include <string.h>
 #include "debug.h"
+#include "property.h"
 #include "genericarray.h"
 #include "collection.h"
 #include "dnacomponent.h"
@@ -21,7 +22,7 @@ void registerCollection(Collection* col) {
 Collection* createCollection(const char* id) {
 	Collection* col;
 	col = (Collection*)malloc(sizeof(Collection));
-	col->id          = NULL;
+	col->id          = createProperty();
 	col->name        = NULL;
 	col->description = NULL;
 	col->components  = createGenericArray();
@@ -43,7 +44,7 @@ void deleteCollection(Collection* col) {
 	if (col) {
 		removeCollection(col);
 		if (col->id) {
-			free(col->id);
+			deleteProperty(col->id);
 			col->id = NULL;
 		}
 		if (col->name) {
@@ -85,7 +86,7 @@ int isCollectionID(const char* id) {
 	Collection* col;
 	for (index=0; index<allCollections->numInUse; index++) {
 		col = (Collection*) allCollections->array[index];
-		if (strcmp(col->id, id) == 0)
+		if (compareProperty(col->id, id) == 0)
 			return 1;
 	}
 	return 0;
@@ -104,7 +105,7 @@ Collection* getCollection(const char* id) {
 	Collection* col;
 	for (index=0; index<allCollections->numInUse; index++) {
 		col = (Collection*) allCollections->array[index];
-		if (col->id == id)
+		if (compareProperty(col->id, id) == 0)
 			return col;
 	}
 	return NULL;
@@ -112,9 +113,7 @@ Collection* getCollection(const char* id) {
 
 char* getCollectionID(const Collection* col) {
 	if (col && col->id) {
-		char* id = (char*)malloc(sizeof(char) * strlen(col->id)+1);
-		strcpy(id, col->id);
-		return id;
+		return getProperty(col->id);
 	} else
 		return NULL;
 }
@@ -192,10 +191,7 @@ Collection* getNthCollectionIn(const Collection* col, int n) {
 ***************************/
 
 void setCollectionID(Collection* col, const char* id) {
-	if (col && id) {
-		col->id = (char*)malloc(sizeof(char) * strlen(id)+1);
-		strcpy(col->id, id);
-	}
+    setProperty(col->id, id);
 }
 
 void setCollectionName(Collection* col, const char* name) {
@@ -236,7 +232,7 @@ void cleanupCollections() {
 void printCollection(const Collection* col, int tabs) {
     if (!col)
         return;
-    indent(tabs);   printf("%s\n", col->id);
+    indent(tabs);   printProperty(col->id);
     indent(tabs+1); printf("name: %s\n", col->name);
     indent(tabs+1); printf("description: %s\n", col->description);
     int i;

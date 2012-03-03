@@ -1,11 +1,12 @@
 #ifndef SBOL_CORE_COLLECTION
 #define SBOL_CORE_COLLECTION
 
+struct _Property;
 struct _DNAComponent;
 struct _GenericArray;
 
 typedef struct _Collection {
-	char* id;
+	struct _Property* id;
 	char* name;
 	char* description;
 	struct _GenericArray* components;

@@ -1,6 +1,7 @@
 #ifndef SBOL_CORE
 #define SBOL_CORE
 #include "core/debug.h"
+#include "core/property.h"
 #include "core/dnasequence.h"
 #include "core/sequenceannotation.h"
 #include "core/dnacomponent.h"
@@ -16,6 +17,15 @@
 
 // from debug.h
 SBOLAPIEXPORTS void indent(int tabs);
+
+// from property.h
+// TODO these shouldn't be exported
+SBOLAPIEXPORTS Property* createProperty();
+SBOLAPIEXPORTS void deleteProperty(Property* pro);
+SBOLAPIEXPORTS int compareProperty(const Property* pro, const char* value);
+SBOLAPIEXPORTS char* getProperty(const Property* pro);
+SBOLAPIEXPORTS void setProperty(Property* pro, const char* value);
+SBOLAPIEXPORTS void printProperty(const Property* pro);
 
 // from dnasequence.h
 SBOLAPIEXPORTS DNASequence* createDNASequence(char* nucleotides);
