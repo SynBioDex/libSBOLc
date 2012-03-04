@@ -19,7 +19,7 @@ void deleteProperty(Property* pro) {
 }
 
 int compareProperty(const Property* pro, const char* value) {
-    if (!pro || !value)
+    if (!pro || !pro->data || !value)
         // TODO is this a good error value for strcmp?
         return -1;
     return strcmp(pro->data, value);
