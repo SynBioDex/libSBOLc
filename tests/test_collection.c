@@ -8,7 +8,7 @@
 
 void TestCreateEmptyCollection(CuTest* tc) {
 	Collection* col = createCollection("");
-	CuAssertStrEquals(tc, getProperty(col->id), "");
+	CuAssertStrEquals(tc, "", getProperty(col->id));
 	deleteCollection(col);
 }
 

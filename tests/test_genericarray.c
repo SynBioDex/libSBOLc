@@ -196,16 +196,14 @@ void TestCollectionIndexing(CuTest* tc) {
 		CuAssertIntEquals(tc, num, getNumCollections());
 		index = randomNumber(num);
 		col = getNthCollection(index);
-		// copy id (because it will be destroyed)
-		id = (char*)malloc(sizeof(char) * strlen(col->id)+1);
-		strcpy(id, col->id);
+		id = getProperty(col->id); // copy id (because it will be destroyed)
 		CuAssertIntEquals(tc, 1, isCollectionPtr(col));
 		CuAssertIntEquals(tc, 1, isCollectionID(id));
 		deleteCollection(col);
 		CuAssertIntEquals(tc, num-1, getNumCollections());
 		CuAssertIntEquals(tc, 0, isCollectionPtr(col));
 		CuAssertIntEquals(tc, 0, isCollectionID(id));
-	}
+	}	
 }
 
 CuSuite* GenericArrayGetSuite() {
