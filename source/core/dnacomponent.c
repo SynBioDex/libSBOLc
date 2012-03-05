@@ -2,6 +2,7 @@
 #include <stdlib.h>
 #include <string.h>
 #include "debug.h"
+#include "property.h"
 #include "genericarray.h"
 #include "dnacomponent.h"
 #include "dnasequence.h"
@@ -22,7 +23,7 @@ void registerDNAComponent(DNAComponent* com) {
 
 DNAComponent* createDNAComponent(const char* id) {
 	DNAComponent* com = (DNAComponent*)malloc(sizeof(DNAComponent));
-	com->id          = NULL;
+	com->id          = createProperty();
 	com->name        = NULL;
 	com->description = NULL;
 	com->annotations = createGenericArray();
@@ -44,7 +45,7 @@ void deleteDNAComponent(DNAComponent* com) {
 	if (com) {
 		removeDNAComponent(com);
 		if (com->id) {
-			free(com->id);
+			deleteProperty(com->id);
 			com->id = NULL;
 		}
 		if (com->name) {
@@ -84,7 +85,7 @@ int isDNAComponentID(const char* id) {
 	DNAComponent* com;
 	for (index=0; index<allDNAComponents->numInUse; index++) {
 		com = (DNAComponent*) allDNAComponents->array[index];
-		if (strcmp(com->id, id) == 0)
+		if (compareProperty(com->id, id) == 0)
 			return 1;
 	}
 	return 0;
@@ -151,19 +152,14 @@ DNAComponent* getDNAComponent(const char* id) {
 	DNAComponent* com;
 	for (index=0; index<allDNAComponents->numInUse; index++) {
 		com = (DNAComponent*) allDNAComponents->array[index];
-		if (com->id == id)
+		if (compareProperty(com->id, id) == 0)
 			return com;
 	}
 	return NULL;
 }
 
 char* getDNAComponentID(const DNAComponent* com) {
-	if (com && com->id) {
-		char* id = (char*)malloc(sizeof(char) * strlen(com->id)+1);
-		strcpy(id, com->id);
-		return id;
-	} else
-		return NULL;
+    return getProperty(com->id);
 }
 
 char* getDNAComponentName(const DNAComponent* com) {
@@ -189,10 +185,7 @@ char* getDNAComponentDescription(const DNAComponent* com) {
 ***************************/
 
 void setDNAComponentID(DNAComponent* com, const char* id) {
-	if (com && id) {
-		com->id = (char*)malloc(sizeof(char) * strlen(id)+1);
-		strcpy(com->id, id);
-	}
+    setProperty(com->id, id);
 }
 
 void setDNAComponentName(DNAComponent* com, const char* name) {
@@ -237,7 +230,7 @@ void cleanupDNAComponents() {
 void printDNAComponent(const DNAComponent* com, int tabs) {
     if (!com)
         return;
-    indent(tabs);   printf("%s\n", com->id);
+    indent(tabs);   printf("%s\n", getDNAComponentID(com));
     indent(tabs+1); printf("name: %s\n", com->name);
     indent(tabs+1); printf("description: %s\n", com->description);
     if (com->dnaSequence) {

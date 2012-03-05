@@ -8,13 +8,13 @@
 
 void TestCreateEmptyDNAComponent(CuTest* tc) {
 	DNAComponent* com = createDNAComponent("");
-	CuAssertStrEquals(tc, "", com->id);
+	CuAssertStrEquals(tc, "", getDNAComponentID(com));
 	deleteDNAComponent(com);
 }
 
 void TestCreateNullDNAComponent(CuTest* tc) {
 	DNAComponent* com = createDNAComponent(NULL);
-	CuAssertStrEquals(tc, NULL, com->id);
+	CuAssertStrEquals(tc, NULL, getDNAComponentID(com));
 	deleteDNAComponent(com);
 }
 

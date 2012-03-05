@@ -5,9 +5,10 @@ struct _GenericArray;
 struct _DNASequence;
 struct _SequenceAnnotation;
 struct _Collection;
+struct _Property;
 
 typedef struct _DNAComponent {
-	char* id;
+	struct _Property* id;
 	char* name;
 	char* description;
 	struct _DNASequence* dnaSequence;

@@ -61,8 +61,7 @@ void TestDNAComponentIndexing(CuTest* tc) {
 		index = randomNumber(num);
 		com = getNthDNAComponent(index);
 		// copy id (because it will be destroyed)
-		id = (char*)malloc(sizeof(char) * strlen(com->id)+1);
-		strcpy(id, com->id);
+		id = getDNAComponentID(com);
 		CuAssertIntEquals(tc, 1, isDNAComponentPtr(com));
 		CuAssertIntEquals(tc, 1, isDNAComponentID(id));
 		deleteDNAComponent(com);
