@@ -231,7 +231,7 @@ void printCollection(const Collection* col, int tabs) {
             indent(tabs+1); printf("%i components:\n", num);
             for (i=0; i<num; i++) {
                 com = getNthDNAComponentIn(col, i);
-                indent(tabs+2); printf("%s\n", com->id);
+                indent(tabs+2); printf("%s\n", getDNAComponentID(com));
             }
         }
     }

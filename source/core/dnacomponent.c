@@ -232,7 +232,7 @@ void printDNAComponent(const DNAComponent* com, int tabs) {
             indent(tabs+1); printf("%i annotations:\n", num);
             for (i=0; i<num; i++) {
                 seq = getNthSequenceAnnotationIn(com, i);
-                indent(tabs+2); printf("%s\n", seq->id);
+                indent(tabs+2); printf("%s\n", getSequenceAnnotationID(seq));
             }
         }
     }
@@ -243,7 +243,7 @@ void printDNAComponent(const DNAComponent* com, int tabs) {
             indent(tabs+1); printf("%i collections:\n", num);
             for (i=0; i<num; i++) {
                 col = getNthCollectionFor(com, i);
-                indent(tabs+2); printf("%s\n", col->id);
+                indent(tabs+2); printf("%s\n", getCollectionID(col));
             }
         }
     }

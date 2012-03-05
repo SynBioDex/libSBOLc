@@ -12,6 +12,7 @@ GenericArray* createGenericArray();
 void deleteGenericArray(GenericArray* arr);
 void resizeGenericArray(GenericArray* arr, int capacity);
 int indexByPtr(const GenericArray* arr, const void* obj);
+int genericArrayContains(const GenericArray* arr, const void* obj);
 void insertIntoGenericArray(GenericArray* arr, void* obj);
 void removeFromGenericArray(GenericArray* arr, int index);
 void expandGenericArray(GenericArray* arr);

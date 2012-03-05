@@ -42,6 +42,10 @@ int indexByPtr(const GenericArray* arr, const void* obj) {
 	return -1;
 }
 
+int genericArrayContains(const GenericArray* arr, const void* obj) {
+    return (int) indexByPtr(arr, obj) >= 0;
+}
+
 void resizeGenericArray(GenericArray* arr, int capacity) {
 	if (arr) {
 		if (capacity<GENERICARRAY_INITIAL_LENGTH)

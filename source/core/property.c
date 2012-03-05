@@ -41,5 +41,5 @@ void setProperty(Property* pro, const char* value) {
 }
 
 void printProperty(const Property* pro) {
-    printf("%s", pro->data);
+    printf("%s\n", pro->data);
 }
