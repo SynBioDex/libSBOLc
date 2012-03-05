@@ -8,13 +8,13 @@
 
 void TestCreateEmptyCollection(CuTest* tc) {
 	Collection* col = createCollection("");
-	CuAssertStrEquals(tc, "", getProperty(col->id));
+	CuAssertStrEquals(tc, "", getCollectionID(col));
 	deleteCollection(col);
 }
 
 void TestCreateNullCollection(CuTest* tc) {
 	Collection* col = createCollection(NULL);
-	CuAssertStrEquals(tc, NULL, getProperty(col->id));
+	CuAssertStrEquals(tc, NULL, getCollectionID(col));
 	deleteCollection(col);
 }
 
@@ -25,9 +25,9 @@ void TestCreateRandomCollection(CuTest* tc) {
 	for (repeat=0; repeat<NUM_FAST_TESTS; repeat++) {
 		id = randomString();
 		col = createCollection(id);
-		CuAssertStrEquals(tc, id,   getProperty(col->id));
-		CuAssertStrEquals(tc, NULL, col->name);
-		CuAssertStrEquals(tc, NULL, col->description);
+		CuAssertStrEquals(tc, id,   getCollectionID(col));
+		CuAssertStrEquals(tc, NULL, getCollectionName(col));
+		CuAssertStrEquals(tc, NULL, getCollectionDescription(col));
 		CuAssertIntEquals(tc, 0,    getNumDNAComponentsIn(col));
 		CuAssertIntEquals(tc, 0,    getNumCollectionsIn(col));
 		deleteCollection(col);

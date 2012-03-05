@@ -196,7 +196,7 @@ void TestCollectionIndexing(CuTest* tc) {
 		CuAssertIntEquals(tc, num, getNumCollections());
 		index = randomNumber(num);
 		col = getNthCollection(index);
-		id = getProperty(col->id); // copy id (because it will be destroyed)
+		id = getCollectionID(col); // copy id (because it will be destroyed)
 		CuAssertIntEquals(tc, 1, isCollectionPtr(col));
 		CuAssertIntEquals(tc, 1, isCollectionID(id));
 		deleteCollection(col);

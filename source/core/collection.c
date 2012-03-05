@@ -23,8 +23,8 @@ Collection* createCollection(const char* id) {
 	Collection* col;
 	col = (Collection*)malloc(sizeof(Collection));
 	col->id          = createProperty();
-	col->name        = NULL;
-	col->description = NULL;
+	col->name        = createProperty();
+	col->description = createProperty();
 	col->components  = createGenericArray();
 	col->collections = createGenericArray();
 	setCollectionID(col, id);
@@ -48,11 +48,11 @@ void deleteCollection(Collection* col) {
 			col->id = NULL;
 		}
 		if (col->name) {
-			free(col->name);
+			deleteProperty(col->name);
 			col->name = NULL;
 		}
 		if (col->description) {
-			free(col->description);
+			deleteProperty(col->description);
 			col->description = NULL;
 		}
 		if (col->collections) {
@@ -112,28 +112,15 @@ Collection* getCollection(const char* id) {
 }
 
 char* getCollectionID(const Collection* col) {
-	if (col && col->id) {
-		return getProperty(col->id);
-	} else
-		return NULL;
+	return getProperty(col->id);
 }
 
 char* getCollectionName(const Collection* col) {
-	if (col && col->name) {
-		char* name = (char*)malloc(sizeof(char) * strlen(col->name)+1);
-		strcpy(name, col->name);
-		return name;
-	} else
-		return NULL;
+	return getProperty(col->name);
 }
 
 char* getCollectionDescription(const Collection* col) {
-	if (col && col->description) {
-		char* descr = (char*)malloc(sizeof(char) * strlen(col->description)+1);
-		strcpy(descr, col->description);
-		return descr;
-	} else
-		return NULL;
+	return getProperty(col->description);
 }
 
 /**************************
@@ -195,17 +182,11 @@ void setCollectionID(Collection* col, const char* id) {
 }
 
 void setCollectionName(Collection* col, const char* name) {
-	if (col && name) {
-		col->name = (char*)malloc(sizeof(char) * strlen(name)+1);
-		strcpy(col->name, name);
-	}
+	setProperty(col->name, name);
 }
 
 void setCollectionDescription(Collection* col, const char* descr) {
-	if (col && descr) {
-		col->description = (char*)malloc(sizeof(char) * strlen(descr)+1);
-		strcpy(col->description, descr);
-	}
+	setProperty(col->description, descr);
 }
 
 /**************************
@@ -233,8 +214,8 @@ void printCollection(const Collection* col, int tabs) {
     if (!col)
         return;
     indent(tabs);   printProperty(col->id);
-    indent(tabs+1); printf("name: %s\n", col->name);
-    indent(tabs+1); printf("description: %s\n", col->description);
+    indent(tabs+1); printf("name: %s\n", getCollectionName(col));
+    indent(tabs+1); printf("description: %s\n", getCollectionDescription(col));
     int i;
     int num;
     if (col->components) {

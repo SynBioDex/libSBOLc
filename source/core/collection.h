@@ -7,8 +7,8 @@ struct _GenericArray;
 
 typedef struct _Collection {
 	struct _Property* id;
-	char* name;
-	char* description;
+	struct _Property* name;
+	struct _Property* description;
 	struct _GenericArray* components;
 	struct _GenericArray* collections;
 } Collection;
