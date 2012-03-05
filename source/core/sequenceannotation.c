@@ -50,11 +50,9 @@ void deleteSequenceAnnotation(SequenceAnnotation* ann) {
 		}
 		// TODO will these delete parts of other structs?
 		if (ann->annotates) {
-			free(ann->annotates);
 			ann->annotates = NULL;
 		}
 		if (ann->subComponent) {
-			free(ann->subComponent);
 			ann->subComponent = NULL;
 		}
 		if (ann->precedes) {

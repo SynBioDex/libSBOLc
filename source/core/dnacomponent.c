@@ -196,6 +196,7 @@ void setDNAComponentDescription(DNAComponent* com, const char* descr) {
 void addSequenceAnnotation(DNAComponent* com, SequenceAnnotation* ann) {
 	if (com && ann) {
 		insertIntoGenericArray(com->annotations, ann);
+		ann->annotates = com;
 	}
 }
 
