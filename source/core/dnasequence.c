@@ -2,6 +2,7 @@
 #include <stdlib.h>
 #include <string.h>
 #include "debug.h"
+#include "property.h"
 #include "genericarray.h"
 #include "dnasequence.h"
 
@@ -17,11 +18,11 @@ void registerDNASequence(DNASequence* seq) {
 
 // TODO constrain to actg and sometimes n?
 DNASequence* createDNASequence(char* nucleotides) {
-	DNASequence* seq = (DNASequence*)malloc(sizeof(DNASequence));
+	DNASequence* seq = malloc(sizeof(DNASequence));
 	if (nucleotides) {
 		// TODO avoid copying large sequences?
-		seq->nucleotides = (char*)malloc(sizeof(char) * strlen(nucleotides)+1);
-		strcpy(seq->nucleotides, nucleotides);
+		seq->nucleotides = createProperty();
+		setProperty(seq->nucleotides, nucleotides);
 	} else
 	    seq->nucleotides = NULL;
 	registerDNASequence(seq);
@@ -64,11 +65,16 @@ int getNumDNASequences() {
         return 0;
 }
 
+char* getNucleotides(const DNASequence* seq) {
+    if (seq)
+        return getProperty(seq->nucleotides);
+}
+
 DNASequence* getNthDNASequence(int n) {
     if (!allDNASequences || allDNASequences->numInUse<=n)
         return NULL;
     else
-        return allDNASequences->array[n];
+        return (DNASequence*) getNthArrayElement(allDNASequences, n);
 }
 
 void printDNASequence(const DNASequence* seq, int tabs) {
@@ -76,7 +82,7 @@ void printDNASequence(const DNASequence* seq, int tabs) {
         return;
     //print just the beginning of the sequence
     char* nt = malloc(sizeof(char) * NUCLEOTIDES_PRINTED+1);
-    strncpy(nt, seq->nucleotides, NUCLEOTIDES_PRINTED);
+    strncpy(nt, getNucleotides(seq), NUCLEOTIDES_PRINTED);
     indent(tabs); printf("nucleotides: %s\n", nt);
 }
 

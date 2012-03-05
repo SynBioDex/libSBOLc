@@ -2,6 +2,7 @@
 #include <stdlib.h>
 #include <string.h>
 #include "debug.h"
+#include "property.h"
 #include "genericarray.h"
 #include "dnacomponent.h"
 #include "sequenceannotation.h"
@@ -21,7 +22,7 @@ void registerSequenceAnnotation(SequenceAnnotation* ann) {
 SequenceAnnotation* createSequenceAnnotation(const char* id) {
 	SequenceAnnotation* ann;
 	ann = (SequenceAnnotation*)malloc(sizeof(SequenceAnnotation));
-	ann->id           = NULL;
+	ann->id           = createProperty();
 	ann->genbankStart = 0;
 	ann->genbankEnd   = 0;
 	ann->annotates    = NULL;
@@ -44,7 +45,7 @@ void deleteSequenceAnnotation(SequenceAnnotation* ann) {
 	if (ann) {
 		removeSequenceAnnotation(ann);
 		if (ann->id) {
-			free(ann->id);
+			deleteProperty(ann->id);
 			ann->id = NULL;
 		}
 		// TODO will these delete parts of other structs?
@@ -65,11 +66,8 @@ void deleteSequenceAnnotation(SequenceAnnotation* ann) {
 }
 
 void setSequenceAnnotationID(SequenceAnnotation* ann, const char* id) {
-	if (ann) {
-		if (!ann->id)
-			ann->id = (char*)malloc(sizeof(char) * strlen(id)+1);
-		strcpy(ann->id, id);
-	}
+    if (ann)
+        setProperty(ann->id, id);
 }
 
 /*******************
@@ -89,9 +87,9 @@ int isSequenceAnnotationID(const char* id) {
 		return 0;
 	int index;
 	SequenceAnnotation* ann;
-	for (index=0; index<allSequenceAnnotations->numInUse; index++) {
-		ann = (SequenceAnnotation*) allSequenceAnnotations->array[index];
-		if (strcmp(ann->id, id) == 0)
+	for (index=0; index<getNumSequenceAnnotations(); index++) {
+		ann = getNthSequenceAnnotation(index);
+		if (ann && compareProperty(ann->id, id) == 0)
 			return 1;
 	}
 	return 0;
@@ -121,6 +119,11 @@ SequenceAnnotation* getNthSequenceAnnotation(int n) {
  * get... functions
  ********************/
 
+char* getSequenceAnnotationID(const SequenceAnnotation* ann) {
+    if (ann)
+        return getProperty(ann->id);
+}
+
 SequenceAnnotation* getSequenceAnnotation(const char* id) {
 	if (!allSequenceAnnotations)
 		allSequenceAnnotations = createGenericArray();
@@ -130,7 +133,7 @@ SequenceAnnotation* getSequenceAnnotation(const char* id) {
 	SequenceAnnotation* ann;
 	for (index=0; index<allSequenceAnnotations->numInUse; index++) {
 		ann = (SequenceAnnotation*) allSequenceAnnotations->array[index];
-		if (ann->id == id)
+		if (compareProperty(ann->id, id) == 0)
 			return ann;
 	}
 	return NULL;
@@ -172,15 +175,15 @@ void cleanupSequenceAnnotations() {
 void printSequenceAnnotation(const SequenceAnnotation* ann, int tabs) {
     if (!ann)
         return;
-    indent(tabs); printf("%s\n", ann->id);
+    indent(tabs); printf("%s\n", getSequenceAnnotationID(ann));
     int start = ann->genbankStart;
     int end = ann->genbankEnd;
     indent(tabs+1); printf("%i --> %i\n", start, end);
     if (ann->annotates) {
-        indent(tabs+1); printf("annotates: %s\n", ann->annotates->id);
+        indent(tabs+1); printf("annotates: %s\n", getDNAComponentID(ann->annotates));
     }
     if (ann->subComponent) {
-        indent(tabs+1); printf("subComponent: %s\n", ann->subComponent->id);
+        indent(tabs+1); printf("subComponent: %s\n", getDNAComponentID(ann->subComponent));
     }
     if (ann->precedes) {
         int num = getNumPrecedes(ann);
@@ -188,7 +191,7 @@ void printSequenceAnnotation(const SequenceAnnotation* ann, int tabs) {
             indent(tabs+1); printf("%i precedes:\n", ann);
             int i;
             for (i=0; i<num; i++) {
-                indent(tabs+2); printf("%s\n", getNthPrecedes(ann, i)->id);
+                indent(tabs+2); printf("%s\n", getSequenceAnnotationID(getNthPrecedes(ann, i)));
             }
         }
     }

@@ -22,7 +22,7 @@ void registerDNAComponent(DNAComponent* com) {
 }
 
 DNAComponent* createDNAComponent(const char* id) {
-	DNAComponent* com = (DNAComponent*)malloc(sizeof(DNAComponent));
+	DNAComponent* com = malloc(sizeof(DNAComponent));
 	com->id          = createProperty();
 	com->name        = createProperty();
 	com->description = createProperty();

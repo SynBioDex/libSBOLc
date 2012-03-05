@@ -123,8 +123,7 @@ void TestAnnotationIndexing(CuTest* tc) {
 		index = randomNumber(num);
 		ann = getNthSequenceAnnotation(index);
 		// copy id (because it will be destroyed)
-		id = (char*)malloc(sizeof(char) * strlen(ann->id)+1);
-		strcpy(id, ann->id);
+		id = getSequenceAnnotationID(ann);
 		CuAssertIntEquals(tc, 1, isAnnotationPtr(ann));
 		CuAssertIntEquals(tc, 1, isSequenceAnnotationID(id));
 		deleteSequenceAnnotation(ann);

@@ -7,12 +7,12 @@
 
 void TestCreateEmptyDNASequence(CuTest* tc) {
 	DNASequence* seq = createDNASequence("");
-	CuAssertStrEquals(tc, "", seq->nucleotides);
+	CuAssertStrEquals(tc, "", getNucleotides(seq));
 }
 
 void TestCreateNullDNASequence(CuTest* tc) {
 	DNASequence* seq = createDNASequence(NULL);
-	CuAssertStrEquals(tc, NULL, seq->nucleotides);
+	CuAssertStrEquals(tc, NULL, getNucleotides(seq));
 }
 
 void TestCreateRandomDNASequence(CuTest* tc) {
@@ -22,7 +22,7 @@ void TestCreateRandomDNASequence(CuTest* tc) {
 	for (repeat=0; repeat<NUM_FAST_TESTS; repeat++) {
 		nt = randomString();
 		seq = createDNASequence(nt);
-		CuAssertStrEquals(tc, nt, seq->nucleotides);
+		CuAssertStrEquals(tc, nt, getNucleotides(seq));
 		deleteDNASequence(seq);
 		// TODO check that delete worked?
 	}

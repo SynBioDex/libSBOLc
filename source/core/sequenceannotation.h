@@ -3,9 +3,10 @@
 
 struct _DNAComponent;
 struct _GenericArray;
+struct _Property;
 
 typedef struct _SequenceAnnotation {
-	char* id;
+	struct _Property* id;
 	int genbankStart;
 	int genbankEnd;
    	struct _DNAComponent* annotates;
@@ -15,6 +16,7 @@ typedef struct _SequenceAnnotation {
 
 // create/destroy
 SequenceAnnotation* createSequenceAnnotation(const char* id);
+char* getSequenceAnnotationID(const SequenceAnnotation* ann);
 void setSequenceAnnotationID(SequenceAnnotation* ann, const char* id);
 void deleteSequenceAnnotation(SequenceAnnotation* ann);
 

@@ -93,3 +93,10 @@ void insertIntoGenericArray(GenericArray* arr, void* obj) {
 		arr->numInUse++;
 	}
 }
+
+void* getNthArrayElement(const GenericArray* arr, int n) {
+	if (!arr || arr->numInUse<=n)
+	    return NULL;
+	else
+		return arr->array[n];
+}

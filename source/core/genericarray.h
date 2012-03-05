@@ -16,5 +16,7 @@ void insertIntoGenericArray(GenericArray* arr, void* obj);
 void removeFromGenericArray(GenericArray* arr, int index);
 void expandGenericArray(GenericArray* arr);
 void shrinkGenericArray(GenericArray* arr);
+void genericArrayLength(const GenericArray* arr);
+void* getNthArrayElement(const GenericArray* arr, int n);
 
 #endif

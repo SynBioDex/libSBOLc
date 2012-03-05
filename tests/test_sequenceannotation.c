@@ -16,7 +16,7 @@ void TestCreateSequenceAnnotation(CuTest* tc) {
 		id  = randomString();
 		ann = createSequenceAnnotation(id);
 		CuAssertIntEquals(tc, 1, getNumSequenceAnnotations());
-		CuAssertStrEquals(tc, id, ann->id);
+		CuAssertStrEquals(tc, id, getSequenceAnnotationID(ann));
 		CuAssertIntEquals(tc, 0, ann->genbankStart);
 		CuAssertIntEquals(tc, 0, ann->genbankEnd);
 		CuAssertIntEquals(tc, 0, getNumPrecedes(ann));
