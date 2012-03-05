@@ -112,15 +112,18 @@ Collection* getCollection(const char* id) {
 }
 
 char* getCollectionID(const Collection* col) {
-	return getProperty(col->id);
+	if (col)
+	    return getProperty(col->id);
 }
 
 char* getCollectionName(const Collection* col) {
-	return getProperty(col->name);
+	if (col)
+	    return getProperty(col->name);
 }
 
 char* getCollectionDescription(const Collection* col) {
-	return getProperty(col->description);
+	if (col)
+	    return getProperty(col->description);
 }
 
 /**************************
@@ -178,15 +181,18 @@ Collection* getNthCollectionIn(const Collection* col, int n) {
 ***************************/
 
 void setCollectionID(Collection* col, const char* id) {
-    setProperty(col->id, id);
+    if (col)
+        setProperty(col->id, id);
 }
 
 void setCollectionName(Collection* col, const char* name) {
-	setProperty(col->name, name);
+	if (col)
+	    setProperty(col->name, name);
 }
 
 void setCollectionDescription(Collection* col, const char* descr) {
-	setProperty(col->description, descr);
+	if (col)
+	    setProperty(col->description, descr);
 }
 
 /**************************

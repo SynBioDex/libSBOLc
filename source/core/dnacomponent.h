@@ -9,8 +9,8 @@ struct _Property;
 
 typedef struct _DNAComponent {
 	struct _Property* id;
-	char* name;
-	char* description;
+	struct _Property* name;
+	struct _Property* description;
 	struct _DNASequence* dnaSequence;
 	struct _GenericArray* annotations;
 	struct _GenericArray* collections;

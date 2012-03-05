@@ -24,8 +24,8 @@ void registerDNAComponent(DNAComponent* com) {
 DNAComponent* createDNAComponent(const char* id) {
 	DNAComponent* com = (DNAComponent*)malloc(sizeof(DNAComponent));
 	com->id          = createProperty();
-	com->name        = NULL;
-	com->description = NULL;
+	com->name        = createProperty();
+	com->description = createProperty();
 	com->annotations = createGenericArray();
 	com->collections = createGenericArray();
 	setDNAComponentID(com, id);
@@ -49,11 +49,11 @@ void deleteDNAComponent(DNAComponent* com) {
 			com->id = NULL;
 		}
 		if (com->name) {
-			free(com->name);
+			deleteProperty(com->name);
 			com->name = NULL;
 		}
 		if (com->description) {
-			free(com->description);
+			deleteProperty(com->description);
 			com->description = NULL;
 		}
 		if (com->annotations) {
@@ -163,21 +163,12 @@ char* getDNAComponentID(const DNAComponent* com) {
 }
 
 char* getDNAComponentName(const DNAComponent* com) {
-	if (com && com->name) {
-		char* name = (char*)malloc(sizeof(char) * strlen(com->name)+1);
-		strcpy(name, com->name);
-		return name;
-	} else
-		return NULL;
+    return getProperty(com->name);
 }
 
 char* getDNAComponentDescription(const DNAComponent* com) {
-	if (com && com->description) {
-		char* descr = (char*)malloc(sizeof(char) * strlen(com->description)+1);
-		strcpy(descr, com->description);
-		return descr;
-	} else
-		return NULL;
+    if (com)
+        return getProperty(com->description);
 }
 
 /**************************
@@ -189,17 +180,13 @@ void setDNAComponentID(DNAComponent* com, const char* id) {
 }
 
 void setDNAComponentName(DNAComponent* com, const char* name) {
-	if (com && name) {
-		com->name = (char*)malloc(sizeof(char) * strlen(name)+1);
-		strcpy(com->name, name);
-	}
+    if (com)
+        setProperty(com->name, name);
 }
 
 void setDNAComponentDescription(DNAComponent* com, const char* descr) {
-	if (com && descr) {
-		com->description = (char*)malloc(sizeof(char) * strlen(descr)+1);
-		strcpy(com->description, descr);
-	}
+    if (com)
+        setProperty(com->description, descr);
 }
 
 /**************************
@@ -231,8 +218,8 @@ void printDNAComponent(const DNAComponent* com, int tabs) {
     if (!com)
         return;
     indent(tabs);   printf("%s\n", getDNAComponentID(com));
-    indent(tabs+1); printf("name: %s\n", com->name);
-    indent(tabs+1); printf("description: %s\n", com->description);
+    indent(tabs+1); printf("name: %s\n", getDNAComponentName(com));
+    indent(tabs+1); printf("description: %s\n", getDNAComponentDescription(com));
     if (com->dnaSequence) {
         printDNASequence(com->dnaSequence, tabs+1);
     }
