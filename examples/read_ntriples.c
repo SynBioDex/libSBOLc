@@ -3,7 +3,7 @@
 #include "reader.h"
 
 void parseAndPrint(char* filename) {
-	readSBOL(filename);
+	readSBOLCore(filename);
 	printSBOLCore();
 	cleanupSBOLCore();
 }

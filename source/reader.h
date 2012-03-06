@@ -2,6 +2,6 @@
 #define SBOL_READER
 #include "api.h"
 
-SBOLAPIEXPORTS void readSBOL(char* filename);
+SBOLAPIEXPORTS void readSBOLCore(char* filename);
 
 #endif

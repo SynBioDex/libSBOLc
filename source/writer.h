@@ -2,6 +2,6 @@
 #define SBOL_WRITER
 #include "api.h"
 
-SBOLAPIEXPORTS void writeSBOL(char* filename);
+SBOLAPIEXPORTS void writeSBOLCore(const char* filename);
 
 #endif

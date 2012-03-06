@@ -91,7 +91,7 @@ void read_triple(void* user_data, raptor_statement* triple) {
 }
 
 // import from an RDF file using raptor
-void readSBOL(char* filename)
+void readSBOLCore(char* filename)
 {
 	const char * format = "ntriples"; // TODO other formats?
 	raptor_world *world = NULL;
