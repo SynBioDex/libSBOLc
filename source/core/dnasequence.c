@@ -17,16 +17,31 @@ void registerDNASequence(DNASequence* seq) {
 }
 
 // TODO constrain to actg and sometimes n?
-DNASequence* createDNASequence(char* nucleotides) {
+DNASequence* createDNASequence(char* id) {
 	DNASequence* seq = malloc(sizeof(DNASequence));
-	if (nucleotides) {
-		// TODO avoid copying large sequences?
-		seq->nucleotides = createProperty();
-		setProperty(seq->nucleotides, nucleotides);
-	} else
-	    seq->nucleotides = NULL;
+	seq->id          = createProperty();
+	seq->nucleotides = createProperty();
+	
+	//if (id) {
+	//	// TODO avoid copying large sequences?
+	//	seq->nucleotides = createProperty();
+	//	setProperty(seq->nucleotides, nucleotides);
+	//} else
+	//    seq->nucleotides = NULL;
+	
+	setDNASequenceID(seq, id);
 	registerDNASequence(seq);
 	return seq;
+}
+
+void setDNASequenceID(DNASequence* seq, const char* id) {
+	if (seq)
+		setProperty(seq->id, id);
+}
+
+void setNucleotides(DNASequence* seq, const char* nucleotides) {
+	if (seq)
+		setProperty(seq->nucleotides, nucleotides);
 }
 
 void removeDNASequence(DNASequence* seq) {
@@ -65,6 +80,43 @@ int getNumDNASequences() {
         return 0;
 }
 
+DNASequence* getDNASequence(const char* id) {
+	if (!allDNASequences)
+		allDNASequences = createGenericArray();
+	if (!id)
+		return NULL;
+	int index;
+	DNASequence* seq;
+	for (index=0; index<allDNASequences->numInUse; index++) {
+		seq = (DNASequence*) allDNASequences->array[index];
+		if (compareProperty(seq->id, id) == 0)
+			return seq;
+	}
+	return NULL;
+}
+
+char* getDNASequenceID(DNASequence* seq) {
+	if (seq)
+		return getProperty(seq->id);
+	else
+		return NULL;
+}
+
+int isDNASequenceID(const char* id) {
+	if (!allDNASequences)
+		allDNASequences = createGenericArray();
+	if (!id)
+		return 0;
+	int index;
+	DNASequence* seq;
+	for (index=0; index<getNumDNASequences(); index++) {
+		seq = getNthDNASequence(index);
+		if (seq && compareProperty(seq->id, id) == 0)
+			return 1;
+	}
+	return 0;
+}
+
 char* getNucleotides(const DNASequence* seq) {
     if (seq)
         return getProperty(seq->nucleotides);
@@ -93,5 +145,6 @@ void printAllDNASequences() {
         printf("%i sequences:\n", num);
         for (n=0; n<num; n++)
             printDNASequence(getNthDNASequence(n), 1);
-    }
+    } else
+    	printf("no sequences\n");
 }
