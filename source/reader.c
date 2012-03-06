@@ -71,21 +71,22 @@ void read_triple(void* user_data, raptor_statement* triple) {
 	else if (isSequenceAnnotationID(s)) {
 		SequenceAnnotation* ann = getSequenceAnnotation(s);
 
-		if (strcmp(p, "annotates") == 0)
+		if (strcmp(p, "annotates") == 0) {
 			if (isDNAComponentID(o)) {
 				DNAComponent* com = getDNAComponent(o);
 				addSequenceAnnotation(com, ann);
 			}
-		else if (strcmp(p, "subComponent") == 0)
+		} else if (strcmp(p, "subComponent") == 0) {
 			if (isDNAComponentID(o)) {
 				DNAComponent* com = getDNAComponent(o);
 				setSubComponent(ann, com);
 			}
-		else if (strcmp(p, "precedes") == 0)
+		} else if (strcmp(p, "precedes") == 0) {
 			if (isSequenceAnnotationID(o)) {
 				SequenceAnnotation* ann2 = getSequenceAnnotation(o);
 				addPrecedesRelationship(ann, ann2);
 			}
+		}
 	}
 }
 

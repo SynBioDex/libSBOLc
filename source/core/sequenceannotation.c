@@ -104,6 +104,13 @@ int getNumSequenceAnnotations() {
 		return 0;
 }
 
+int getNumPrecedes(const SequenceAnnotation* ann) {
+	if (ann && ann->precedes)
+		return ann->precedes->numInUse;
+	else
+		return 0;
+}
+
 SequenceAnnotation* getNthSequenceAnnotation(int n) {
 	if (!allSequenceAnnotations)
 		allSequenceAnnotations = createGenericArray();
@@ -146,13 +153,6 @@ void addPrecedesRelationship(SequenceAnnotation * upstream, SequenceAnnotation *
 		insertIntoGenericArray(upstream->precedes, downstream);
 }
 
-int getNumPrecedes(const SequenceAnnotation* ann) {
-	if (ann)
-		return ann->precedes->numInUse;
-	else
-		return -1;
-}
-
 SequenceAnnotation* getNthPrecedes(const SequenceAnnotation* ann, int n) {
 	if (ann && ann->precedes->numInUse >= n)
 		return (SequenceAnnotation*) ann->precedes->array[n];
@@ -183,14 +183,12 @@ void printSequenceAnnotation(const SequenceAnnotation* ann, int tabs) {
     if (ann->subComponent) {
         indent(tabs+1); printf("subComponent: %s\n", getDNAComponentID(ann->subComponent));
     }
-    if (ann->precedes) {
-        int num = getNumPrecedes(ann);
-        if (num > 0) {
-            indent(tabs+1); printf("%i precedes:\n", ann);
-            int i;
-            for (i=0; i<num; i++) {
-                indent(tabs+2); printf("%s\n", getSequenceAnnotationID(getNthPrecedes(ann, i)));
-            }
+    int num = getNumPrecedes(ann);
+    if (num > 0) {
+        indent(tabs+1); printf("%i precedes:\n", num);
+        int i;
+        for (i=0; i<num; i++) {
+            indent(tabs+2); printf("%s\n", getSequenceAnnotationID(getNthPrecedes(ann, i)));
         }
     }
 }
