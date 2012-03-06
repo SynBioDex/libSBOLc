@@ -1,0 +1,25 @@
+<component1>	<a>	<DNAComponent>.
+<component2>	<a>	<DNAComponent>.
+<component3>	<a>	<DNAComponent>.
+<component4>	<a>	<DNAComponent>.
+
+<component1> <name> <com1>.
+<component2> <name> <com2>.
+<component3> <name> <com3>.
+<component4> <name> <com4>.
+
+<component1> <description> 	<com1 is a test component>.
+<component2> <description> 	<com2 is a test component>.
+<component3> <description> 	<com3 is a test component>.
+<component4> <description> 	<com4 is a test component>.
+
+<sa1>	<a>	<SequenceAnnotation>.
+<sa2>	<a>	<SequenceAnnotation>.
+<sa3>	<a>	<SequenceAnnotation>.
+<sa4>	<a>	<SequenceAnnotation>.
+
+<sa1>	<annotates>	<component1>.
+<sa2>	<annotates>	<component1>.
+<sa3>	<annotates>	<component1>.
+<sa4>	<annotates>	<component2>.
+
