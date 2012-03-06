@@ -22,9 +22,9 @@
 <sa4>	<a>	<SequenceAnnotation>.
 
 <sa1>	<annotates>	<component1>.
-<sa2>	<annotates>	<component1>.
-<sa3>	<annotates>	<component1>.
-<sa4>	<annotates>	<component2>.
+<sa2>	<annotates>	<component2>.
+<sa3>	<annotates>	<component3>.
+<sa4>	<annotates>	<component4>.
 
 <sa1>	<subComponent>	<component2>.
 <sa2>	<subComponent>	<component3>.

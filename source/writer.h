@@ -13,7 +13,7 @@ void endSBOLDocument();
 
 void writeDNASequence(const DNASequence* seq);
 void writeDNAComponent(const DNAComponent* com, int includeContents);
-void writeCollection(const Collection* col);
+void writeCollection(const Collection* col, int includeContents);
 
 SBOLAPIEXPORTS void writeSBOLCore(const char* filename);
 

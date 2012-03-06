@@ -63,20 +63,20 @@ void endSBOLDocument() {
 
 void writeDNASequence(const DNASequence* seq);
 
-void writeSequenceAnnotation(const SequenceAnnotation* ann) {
+void writeSequenceAnnotation(const SequenceAnnotation* ann, int includeContents) {
 	if (!ann)
 		return;
 	xmlTextWriterStartElement(WRITER, "s:SequenceAnnotation");
 	xmlTextWriterWriteAttribute(WRITER, "rdf:about", getSequenceAnnotationID(ann));
-	indentMore();
-	if (ann->subComponent) {
-		xmlTextWriterStartElement(WRITER, "s:subComponent");
+	if (includeContents) {
 		indentMore();
-		writeDNAComponent(ann->subComponent, INCLUDE_URI_ONLY);
+		if (ann->subComponent) {
+			xmlTextWriterStartElement(WRITER, "s:subComponent");
+			xmlTextWriterWriteAttribute(WRITER, "rdf:resource", getDNAComponentID(ann->subComponent));
+			xmlTextWriterEndElement(WRITER);
+		}
 		indentLess();
-		xmlTextWriterEndElement(WRITER);
 	}
-	indentLess();
 	xmlTextWriterEndElement(WRITER);
 }
 
@@ -84,8 +84,8 @@ void writeDNAComponent(const DNAComponent* com, int includeContents) {
 	if (!com)
 		return;
 	xmlTextWriterStartElement(WRITER, "s:DnaComponent");
-	xmlTextWriterWriteAttribute(WRITER, "rdf:about", getDNAComponentID(com));
 	if (includeContents) {
+		xmlTextWriterWriteAttribute(WRITER, "rdf:about", getDNAComponentID(com));
 		xmlTextWriterWriteElement(WRITER, "s:displayId", getDNAComponentName(com));
 		xmlTextWriterWriteElement(WRITER, "s:description", getDNAComponentDescription(com));
 		
@@ -102,17 +102,18 @@ void writeDNAComponent(const DNAComponent* com, int includeContents) {
 			for (n=0; n<num; n++) {
 				ann = getNthSequenceAnnotationIn(com, n);
 				indentMore();
-				writeSequenceAnnotation(ann);
+				writeSequenceAnnotation(ann, INCLUDE_CONTENTS);
 				indentLess();
 			}
 			xmlTextWriterEndElement(WRITER);
 			indentLess();
 		}
-	}
+	} else
+		xmlTextWriterWriteAttribute(WRITER, "rdf:resource", getDNAComponentID(com));
 	xmlTextWriterEndElement(WRITER);
 }
 
-void writeCollection(const Collection* col);
+void writeCollection(const Collection* col, int includeContents);
 
 /***********************
  * main write function
@@ -121,17 +122,25 @@ void writeCollection(const Collection* col);
 void writeSBOLCore(const char* filename) {
 	printf("writeSBOL(%s)\n", filename);
 	startSBOLDocument(filename);
+	indentMore();
+	int n;
 	
 	// write components
-	int n;
 	DNAComponent* com;
-	indentMore();
+
 	for (n=0; n<getNumDNAComponents(); n++) {
 		com = getNthDNAComponent(n);
 		writeDNAComponent(com, INCLUDE_CONTENTS);
 	}
-	indentLess();
 	
+	//// write annotations
+	//SequenceAnnotation* ann;
+	//for (n=0; n<getNumSequenceAnnotations(); n++) {
+	//	ann = getNthSequenceAnnotation(n);
+	//	writeSequenceAnnotation(ann, INCLUDE_CONTENTS);
+	//}
+	
+	indentLess();
 	endSBOLDocument();
     return;
 }
