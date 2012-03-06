@@ -12,6 +12,7 @@ int main(int argc, char** argv) {
 	char* example;
 	if( argc < 2 ) {
 		// TODO fill in using CMake?
+		// TODO read sbol format!
 		example = "../examples/valid/ntriples.nt";
 	    parseAndPrint(example);
     } else {

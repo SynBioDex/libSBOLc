@@ -79,8 +79,13 @@ ADD_EXECUTABLE( validate
 	${PROJECT_SOURCE_FILES}
 	${PROJECT_EXAMPLE_DIR}/validate.c
 )
+ADD_EXECUTABLE( writesbol
+	${PROJECT_SOURCE_FILES}
+	${PROJECT_EXAMPLE_DIR}/writesbol.c
+)
 TARGET_LINK_LIBRARIES( readntriples sbol )
-TARGET_LINK_LIBRARIES( validate	 sbol )
+TARGET_LINK_LIBRARIES( validate	    sbol )
+TARGET_LINK_LIBRARIES( writesbol    sbol )
 
 # TODO link this to the actual library
 # build tests
