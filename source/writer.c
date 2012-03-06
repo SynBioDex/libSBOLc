@@ -9,6 +9,9 @@
  * set up generic SBOL document
  ********************************/
 
+#define INCLUDE_URI_ONLY 0
+#define INCLUDE_CONTENTS 1
+
 //#define XML_ENCODING "ISO-8859-1"
 #define XMLNS_RDF "http://www.w3.org/1999/02/22-rdf-syntax-ns#"
 #define XMLNS_RDFS "http://www.w3.org/2000/01/rdf-schema#"
@@ -58,44 +61,58 @@ void endSBOLDocument() {
  * serialize SBOL core
  ***********************/
 
-void writeDNASequence(DNASequence* seq);
-void writeSequenceAnnotation(SequenceAnnotation* ann);
+void writeDNASequence(const DNASequence* seq);
 
-void writeDNAComponent(DNAComponent* com) {
-	if (!com)
+void writeSequenceAnnotation(const SequenceAnnotation* ann) {
+	if (!ann)
 		return;
-	xmlTextWriterStartElement(WRITER, "s:DnaComponent");
-	
-	xmlTextWriterWriteAttribute(WRITER, "rdf:about", getDNAComponentID(com));
-	xmlTextWriterWriteElement(WRITER, "s:displayId", getDNAComponentName(com));
-	xmlTextWriterWriteElement(WRITER, "s:description", getDNAComponentDescription(com));
-	
-	// TODO write sequence
-	//if (com->sequence)
-	//	writeDNASequence(com->sequence);
-	
-	int n;
-	SequenceAnnotation* ann;
-	char* id;
-	int num = getNumSequenceAnnotationsIn(com);
-	if (num>0) {
+	xmlTextWriterStartElement(WRITER, "s:SequenceAnnotation");
+	xmlTextWriterWriteAttribute(WRITER, "rdf:about", getSequenceAnnotationID(ann));
+	indentMore();
+	if (ann->subComponent) {
+		xmlTextWriterStartElement(WRITER, "s:subComponent");
 		indentMore();
-		xmlTextWriterStartElement(WRITER, "s:annotation");
-		for (n=0; n<num; n++) {
-			ann = getNthSequenceAnnotationIn(com, n);
-			id  = getSequenceAnnotationID(ann);
-			xmlTextWriterStartElement(WRITER, "s:SequenceAnnotation");
-			xmlTextWriterWriteAttribute(WRITER, "rdf:about", id);
-			xmlTextWriterEndElement(WRITER);
-		}
-		xmlTextWriterEndElement(WRITER);
+		writeDNAComponent(ann->subComponent, INCLUDE_URI_ONLY);
 		indentLess();
+		xmlTextWriterEndElement(WRITER);
 	}
-	
+	indentLess();
 	xmlTextWriterEndElement(WRITER);
 }
 
-void writeCollection(Collection* col);
+void writeDNAComponent(const DNAComponent* com, int includeContents) {
+	if (!com)
+		return;
+	xmlTextWriterStartElement(WRITER, "s:DnaComponent");
+	xmlTextWriterWriteAttribute(WRITER, "rdf:about", getDNAComponentID(com));
+	if (includeContents) {
+		xmlTextWriterWriteElement(WRITER, "s:displayId", getDNAComponentName(com));
+		xmlTextWriterWriteElement(WRITER, "s:description", getDNAComponentDescription(com));
+		
+		// TODO write sequence
+		//if (com->sequence)
+		//	writeDNASequence(com->sequence);
+		
+		int n;
+		int num = getNumSequenceAnnotationsIn(com);
+		SequenceAnnotation* ann;
+		if (num>0) {
+			indentMore();
+			xmlTextWriterStartElement(WRITER, "s:annotation");
+			for (n=0; n<num; n++) {
+				ann = getNthSequenceAnnotationIn(com, n);
+				indentMore();
+				writeSequenceAnnotation(ann);
+				indentLess();
+			}
+			xmlTextWriterEndElement(WRITER);
+			indentLess();
+		}
+	}
+	xmlTextWriterEndElement(WRITER);
+}
+
+void writeCollection(const Collection* col);
 
 /***********************
  * main write function
@@ -111,7 +128,7 @@ void writeSBOLCore(const char* filename) {
 	indentMore();
 	for (n=0; n<getNumDNAComponents(); n++) {
 		com = getNthDNAComponent(n);
-		writeDNAComponent(com);
+		writeDNAComponent(com, INCLUDE_CONTENTS);
 	}
 	indentLess();
 	
