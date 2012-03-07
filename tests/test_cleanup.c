@@ -26,11 +26,7 @@ void TestReadThenCleanup(CuTest* tc) {
 	num += (int) (getNumDNAComponents()       > 0);
 	num += (int) (getNumCollections()         > 0);
 	CuAssertIntEquals(tc, 4, num);
-	//cleanupSBOLCore();
-	//cleanupDNASequences();
-	cleanupSequenceAnnotations();
-	//cleanupDNAComponents();
-	//cleanupCollections();
+	cleanupSBOLCore();
 	// check that none are left after cleanup
 	num = 0;
 	num += (int) (getNumDNASequences()        == 0);
@@ -57,7 +53,7 @@ CuSuite* CleanupGetSuite() {
 	CuSuite* cleanupTests = CuSuiteNew();
 	SUITE_ADD_TEST(cleanupTests, TestCleanupFirst);
 	SUITE_ADD_TEST(cleanupTests, TestMultipleCleanupFirst);
-	//SUITE_ADD_TEST(cleanupTests, TestReadThenCleanup);
+	SUITE_ADD_TEST(cleanupTests, TestReadThenCleanup);
 	SUITE_ADD_TEST(cleanupTests, TestMultipleDeleteProperty);
 	return cleanupTests;
 }

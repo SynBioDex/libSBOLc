@@ -208,9 +208,12 @@ void addDNAComponentToCollection(DNAComponent* com, Collection* col) {
 
 void cleanupCollections() {
 	if (allCollections) {
-		int index;
-		for (index=allCollections->numInUse; index>0; index--)
-			deleteCollection( allCollections->array[index] );
+		int n;
+		Collection* col;
+		for (n=getNumCollections()-1; n>=0; n--) {
+            col = getNthCollection(n);
+			deleteCollection(col);
+		}
 		deleteGenericArray(allCollections);
 		allCollections = NULL;
 	}

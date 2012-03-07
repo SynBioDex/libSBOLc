@@ -65,9 +65,11 @@ void deleteDNASequence(DNASequence* seq) {
 
 void cleanupDNASequences() {
 	if (allDNASequences) {
-		int index;
-		for (index=allDNASequences->numInUse; index>0; index--) {
-			deleteDNASequence( allDNASequences->array[index] );
+		int n;
+		DNASequence* seq;
+		for (n=getNumDNASequences()-1; n>=0; n--) {
+		    seq = getNthDNASequence(n);
+			deleteDNASequence(seq);
 		}
 		deleteGenericArray(allDNASequences);
 		allDNASequences = NULL;

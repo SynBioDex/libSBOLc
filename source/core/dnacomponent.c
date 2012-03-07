@@ -207,9 +207,12 @@ void setSubComponent(SequenceAnnotation* ann, DNAComponent* com) {
 
 void cleanupDNAComponents() {
 	if (allDNAComponents) {
-		int index;
-		for (index=allDNAComponents->numInUse; index>0; index--)
-			deleteDNAComponent( allDNAComponents->array[index] );
+		int n;
+		DNAComponent* com;
+		for (n=getNumDNAComponents()-1; n>=0; n--) {
+			com = getNthDNAComponent(n);
+			deleteDNAComponent(com);
+	    }
 		deleteGenericArray(allDNAComponents);
 		allDNAComponents = NULL;
 	}

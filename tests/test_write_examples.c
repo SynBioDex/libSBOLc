@@ -13,13 +13,13 @@ void TestNTriplesSimple(CuTest* tc) {
 	cleanupSBOLCore();
 	readSBOLCore(SIMPLE_INFILE);
 	//writeSBOLCore(SIMPLE_OUTFILE); // CAUSES SEGFAULT
-	//cleanupSBOLCore();             // CAUSES SEGFAULT
+	cleanupSBOLCore();
     xmlDocPtr doc = xmlParseFile(SIMPLE_OUTFILE);
 	CuAssertIntEquals(tc, 1, isValidSBOL(doc));
 }
 
 CuSuite* WriteExamplesGetSuite() {
 	CuSuite* writeExamplesTests = CuSuiteNew();
-	//SUITE_ADD_TEST(writeExamplesTests, TestNTriplesSimple);
+	SUITE_ADD_TEST(writeExamplesTests, TestNTriplesSimple);
 	return writeExamplesTests;
 }

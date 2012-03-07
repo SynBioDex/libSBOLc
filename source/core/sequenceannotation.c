@@ -165,7 +165,7 @@ void cleanupSequenceAnnotations() {
 	if (allSequenceAnnotations) {
 		int n;
 		SequenceAnnotation* seq;
-		for (n=getNumSequenceAnnotations(); n>0; n--) {
+		for (n=getNumSequenceAnnotations()-1; n>=0; n--) {
 			seq = getNthSequenceAnnotation(n);
 			deleteSequenceAnnotation(seq);
 		}
