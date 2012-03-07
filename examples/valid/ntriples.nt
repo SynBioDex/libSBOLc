@@ -43,3 +43,5 @@
 <component2> <description> 	<com2 is a test component>.
 <component3> <description> 	<com3 is a test component>.
 <component4> <description> 	<com4 is a test component>.
+
+<seq1> <a> <DNASequence>.

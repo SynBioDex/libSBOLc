@@ -61,7 +61,18 @@ void endSBOLDocument() {
  * serialize SBOL core
  ***********************/
 
-void writeDNASequence(const DNASequence* seq);
+void writeDNASequence(const DNASequence* seq, int includeContents) {
+	if (!seq)
+		return;
+	xmlTextWriterStartElement(WRITER, "s:DnaSequence");
+	char* id = getDNASequenceID(seq);
+	xmlTextWriterWriteAttribute(WRITER, "rdf:about", id);
+	if (includeContents)
+		xmlTextWriterWriteElement(WRITER, "s:nucleotides", getNucleotides(seq));
+	else
+		xmlTextWriterWriteAttribute(WRITER, "rdf:resource", id);
+	xmlTextWriterEndElement(WRITER);
+}
 
 void writeSequenceAnnotation(const SequenceAnnotation* ann, int includeContents) {
 	if (!ann)
@@ -90,8 +101,8 @@ void writeDNAComponent(const DNAComponent* com, int includeContents) {
 		xmlTextWriterWriteElement(WRITER, "s:description", getDNAComponentDescription(com));
 		
 		// TODO write sequence
-		//if (com->sequence)
-		//	writeDNASequence(com->sequence);
+		if (com->dnaSequence)
+			writeDNASequence(com->dnaSequence, INCLUDE_URI_ONLY);
 		
 		int n;
 		int num = getNumSequenceAnnotationsIn(com);
@@ -120,11 +131,15 @@ void writeCollection(const Collection* col, int includeContents);
  ***********************/
 
 void writeSBOLCore(const char* filename) {
-	printf("writeSBOL(%s)\n", filename);
 	startSBOLDocument(filename);
 	indentMore();
 	int n;
-	
+	// write sequences
+	DNASequence* seq;
+	for (n=0; n<getNumDNASequences(); n++) {
+		seq = getNthDNASequence(n);
+		writeDNASequence(seq, INCLUDE_CONTENTS);
+	}
 	// write components
 	DNAComponent* com;
 
@@ -132,14 +147,6 @@ void writeSBOLCore(const char* filename) {
 		com = getNthDNAComponent(n);
 		writeDNAComponent(com, INCLUDE_CONTENTS);
 	}
-	
-	//// write annotations
-	//SequenceAnnotation* ann;
-	//for (n=0; n<getNumSequenceAnnotations(); n++) {
-	//	ann = getNthSequenceAnnotation(n);
-	//	writeSequenceAnnotation(ann, INCLUDE_CONTENTS);
-	//}
-	
 	indentLess();
 	endSBOLDocument();
     return;

@@ -18,7 +18,7 @@ char* getNucleotides(const DNASequence* seq);
 void setDNASequenceID(DNASequence* seq, const char* id);
 void setNucleotides(DNASequence* seq, const char* nucleotides);
 int isDNASequenceID(const char* id);
-char* getDNASequenceID(DNASequence* seq);
+char* getDNASequenceID(const DNASequence* seq);
 
 void printDNASequence(const DNASequence* seq, int tabs);
 void printAllDNASequences();

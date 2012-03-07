@@ -3,11 +3,12 @@
 #include "reader.h"
 #include "writer.h"
 
+#define INFILE  "../examples/valid/ntriples_simple.nt"
+#define OUTFILE "ntriples_simple.xml"
+
 int main() {
-	char* infile =  "../examples/valid/ntriples_component.nt";
-	char* outfile = "ntriples_component.xml";
-	readSBOLCore(infile);
-	writeSBOLCore(outfile);
+	readSBOLCore(INFILE);
+	writeSBOLCore(OUTFILE);
 	cleanupSBOLCore();
     return 0;
 }

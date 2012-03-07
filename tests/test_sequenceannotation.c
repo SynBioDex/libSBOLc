@@ -8,7 +8,6 @@
 #define NUM_SLOW_TESTS  1000
 
 void TestCreateSequenceAnnotation(CuTest* tc) {
-	cleanupSequenceAnnotations();
 	char* id;
 	SequenceAnnotation* ann;
 	int repeat;
@@ -27,10 +26,8 @@ void TestCreateSequenceAnnotation(CuTest* tc) {
 
 // TODO this leaks 1000 annotations for some reason
 void TestPrecedes(CuTest* tc) {
-	cleanupSequenceAnnotations();
 	int index;
-	int numDownstream;
-	size_t memory;
+	char* id;
 	SequenceAnnotation* upstream;
 	SequenceAnnotation** downstream;
 	
@@ -38,14 +35,14 @@ void TestPrecedes(CuTest* tc) {
 	upstream = createSequenceAnnotation( randomString() );
 	
 	// and also some others
-	numDownstream = NUM_SLOW_TESTS;
-	memory = numDownstream * sizeof(SequenceAnnotation*);
-	downstream = (SequenceAnnotation**)malloc(memory);
-	for (index=0; index<numDownstream; index++)
-		downstream[index] = createSequenceAnnotation( randomString() );
+	downstream = malloc(NUM_SLOW_TESTS * sizeof(SequenceAnnotation*));
+	for (index=0; index<NUM_SLOW_TESTS; index++) {
+		id = randomString();
+		downstream[index] = createSequenceAnnotation(id);
+	}
 	
 	// restrict the main one to coming before each of the others
-	for (index=0; index<numDownstream; index++) {
+	for (index=0; index<NUM_SLOW_TESTS; index++) {
 		// check that numPrecedes increments as expected
 		CuAssertIntEquals(tc, index, getNumPrecedes(upstream));
 		addPrecedesRelationship(upstream, downstream[index]);
@@ -56,6 +53,7 @@ void TestPrecedes(CuTest* tc) {
 		SequenceAnnotation* actual = getNthPrecedes(upstream, index);
 		CuAssertPtrEquals(tc, expected, actual);
 	}
+	cleanupSBOLCore();
 }
 
 CuSuite* SequenceAnnotationGetSuite() {

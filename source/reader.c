@@ -32,12 +32,22 @@ void read_triple(void* user_data, raptor_statement* triple) {
 	// so a new structure needs to be created
 	if (strcmp(p, "a") == 0) //TODO or p == rdf:type?
 	{
+		if (strcmp(o, "DNASequence") == 0)
+			createDNASequence(s);
+		else 
 		if (strcmp(o, "DNAComponent") == 0)
 			createDNAComponent(s);
 		else if (strcmp(o, "SequenceAnnotation") == 0)
 			createSequenceAnnotation(s);
 		else if (strcmp(o, "Collection") == 0)
 			createCollection(s);
+	}
+
+	// subject is an existing DNASequence
+	else if (isDNASequenceID(s)) {
+		DNASequence* seq = getDNASequence(s);
+		if (strcmp(p, "nucleotides") == 0)
+			setNucleotides(seq, o);
 	}
 
 	// subject is an existing DNAComponent
@@ -49,12 +59,13 @@ void read_triple(void* user_data, raptor_statement* triple) {
 			setDNAComponentName(com, o);
 		else if (strcmp(p, "description") == 0)
 			setDNAComponentDescription(com, o);
-		else if (strcmp(p, "collection") == 0)
+		else if (strcmp(p, "collection") == 0) {
 			if (isDNAComponentID(s) && isCollectionID(o) > 0)
 			{
 				Collection* col = getCollection(o);
 				addDNAComponentToCollection(com, col);
 			}
+		}
 	}
 
 	// subject is an existing Collection

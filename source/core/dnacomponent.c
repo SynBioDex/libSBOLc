@@ -223,6 +223,8 @@ void printDNAComponent(const DNAComponent* com, int tabs) {
     indent(tabs+1); printf("description: %s\n", getDNAComponentDescription(com));
     if (com->dnaSequence) {
         printDNASequence(com->dnaSequence, tabs+1);
+    } else {
+    	indent(tabs+1); printf("no sequence\n");
     }
     int i;
     int num;

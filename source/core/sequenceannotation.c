@@ -57,6 +57,7 @@ void deleteSequenceAnnotation(SequenceAnnotation* ann) {
 		}
 		if (ann->precedes) {
 			deleteGenericArray(ann->precedes);
+			//free(ann->precedes);
 			ann->precedes = NULL;
 		}
 		free(ann);
@@ -162,9 +163,12 @@ SequenceAnnotation* getNthPrecedes(const SequenceAnnotation* ann, int n) {
 
 void cleanupSequenceAnnotations() {
 	if (allSequenceAnnotations) {
-		int index;
-		for (index=allSequenceAnnotations->numInUse; index>0; index--)
-			deleteSequenceAnnotation( allSequenceAnnotations->array[index] );
+		int n;
+		SequenceAnnotation* seq;
+		for (n=getNumSequenceAnnotations(); n>0; n--) {
+			seq = getNthSequenceAnnotation(n);
+			deleteSequenceAnnotation(seq);
+		}
 		deleteGenericArray(allSequenceAnnotations);
 		allSequenceAnnotations = NULL;
 	}

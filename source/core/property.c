@@ -12,10 +12,10 @@ Property* createProperty() {
 
 void deleteProperty(Property* pro) {
     if (pro) {
-        if (pro->data)
-            free(pro->data);
-        free(pro);
+        free(pro->data);
+        pro->data = NULL;
     }
+    free(pro);
 }
 
 int compareProperty(const Property* pro, const char* value) {

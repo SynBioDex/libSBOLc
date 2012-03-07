@@ -8,6 +8,9 @@
 #include "core/collection.h"
 #include "api.h"
 
+// TODO readSBOLCore --> loadSBOLCore and writeSBOLCore --> saveSBOLCore
+// TODO delete* --> free* ?
+
 /***********************************************
  * The SBOL core is split into files to ease
  * maintenance, but since all the structs are

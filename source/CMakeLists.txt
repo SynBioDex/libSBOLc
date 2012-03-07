@@ -92,3 +92,4 @@ TARGET_LINK_LIBRARIES( writesbol    sbol )
 ADD_EXECUTABLE( testall
 	${PROJECT_TEST_FILES}
 )
+TARGET_LINK_LIBRARIES( testall sbol )

@@ -2,6 +2,10 @@
 #define SBOL_WRITER
 #include "api.h"
 
+struct _DNASequence;
+struct _DNAComponent;
+struct _Collection;
+
 void indentMore();
 void indentLess();
 
@@ -11,9 +15,9 @@ void deleteSBOLWriter();
 void startSBOLDocument(const char* filename);
 void endSBOLDocument();
 
-void writeDNASequence(const DNASequence* seq);
-void writeDNAComponent(const DNAComponent* com, int includeContents);
-void writeCollection(const Collection* col, int includeContents);
+void writeDNASequence(const struct _DNASequence* seq, int includeContents);
+void writeDNAComponent(const struct _DNAComponent* com, int includeContents);
+void writeCollection(const struct _Collection* col, int includeContents);
 
 SBOLAPIEXPORTS void writeSBOLCore(const char* filename);
 

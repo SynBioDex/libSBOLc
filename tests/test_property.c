@@ -20,12 +20,10 @@ void TestGetSetCompareProperty(CuTest* tc) {
 	pro = createProperty();
 	setProperty(pro, NULL);
 	CuAssertPtrEquals(tc, NULL, getProperty(pro));
-	deleteProperty(pro);
 	// test empty
 	pro = createProperty();
 	setProperty(pro, "");
 	CuAssertStrEquals(tc, "", getProperty(pro));
-	deleteProperty(pro);
 	// test lots of random variations
 	for (repeat=0; repeat<NUM_FAST_TESTS; repeat++) {
 		data = randomString();
@@ -33,7 +31,7 @@ void TestGetSetCompareProperty(CuTest* tc) {
 		setProperty(pro, data);
 		CuAssertStrEquals(tc, data, getProperty(pro));
 		CuAssertIntEquals(tc, 0, compareProperty(pro, data));
-		deleteProperty(pro);
+		deleteProperty(pro); // TODO why does this segfault?
 	}
 }
 

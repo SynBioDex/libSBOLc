@@ -8,6 +8,8 @@ CuSuite* CollectionGetSuite();
 CuSuite* DNAComponentGetSuite();
 CuSuite* GenericArrayGetSuite();
 CuSuite* PropertyGetSuite();
+CuSuite* WriteExamplesGetSuite();
+CuSuite* CleanupGetSuite();
 
 void RunAllTests(void) {
 	// seed with current time
@@ -23,7 +25,9 @@ void RunAllTests(void) {
 	CuSuiteAddSuite(suite, DNAComponentGetSuite());
 	CuSuiteAddSuite(suite, CollectionGetSuite());
 	CuSuiteAddSuite(suite, PropertyGetSuite());
-		
+	CuSuiteAddSuite(suite, CleanupGetSuite());
+	CuSuiteAddSuite(suite, WriteExamplesGetSuite());
+	
 	CuSuiteRun(suite);
 	CuSuiteSummary(suite, output);
 	CuSuiteDetails(suite, output);

@@ -55,10 +55,10 @@ void removeDNASequence(DNASequence* seq) {
 void deleteDNASequence(DNASequence* seq) {
 	if (seq) {
 		removeDNASequence(seq);
-		if (seq->nucleotides) {
-			free(seq->nucleotides);
-			seq->nucleotides = NULL;
-		}
+		deleteProperty(seq->id);
+		deleteProperty(seq->nucleotides);
+		seq->id = NULL;
+		seq->nucleotides = NULL;
 		free(seq);
 	}
 }
@@ -66,8 +66,9 @@ void deleteDNASequence(DNASequence* seq) {
 void cleanupDNASequences() {
 	if (allDNASequences) {
 		int index;
-		for (index=allDNASequences->numInUse; index>0; index--)
+		for (index=allDNASequences->numInUse; index>0; index--) {
 			deleteDNASequence( allDNASequences->array[index] );
+		}
 		deleteGenericArray(allDNASequences);
 		allDNASequences = NULL;
 	}
@@ -95,7 +96,7 @@ DNASequence* getDNASequence(const char* id) {
 	return NULL;
 }
 
-char* getDNASequenceID(DNASequence* seq) {
+char* getDNASequenceID(const DNASequence* seq) {
 	if (seq)
 		return getProperty(seq->id);
 	else
