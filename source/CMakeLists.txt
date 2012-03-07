@@ -2,12 +2,12 @@ PROJECT( SBOL )
 CMAKE_MINIMUM_REQUIRED( VERSION 2.8 )
 
 # shorthand for common folders
-SET( PROJECT_ROOT_DIR    ${PROJECT_SOURCE_DIR}/..     )
+SET( PROJECT_ROOT_DIR    ${PROJECT_SOURCE_DIR}/..      )
 SET( PROJECT_BUILD_DIR   ${PROJECT_ROOT_DIR}/build    )
 SET( PROJECT_RELEASE_DIR ${PROJECT_ROOT_DIR}/release  )
 SET( PROJECT_EXAMPLE_DIR ${PROJECT_ROOT_DIR}/examples )
 SET( PROJECT_SCHEMA_DIR  ${PROJECT_ROOT_DIR}/schemas  )
-SET( PROJECT_TEST_DIR    ${PROJECT_ROOT_DIR}/tests    )
+SET( PROJECT_TEST_DIR    ${PROJECT_ROOT_DIR}/tests     )
 
 # gather source files
 FILE( GLOB PROJECT_SOURCE_FILES
@@ -32,12 +32,10 @@ SET( LIBRARY_OUTPUT_PATH	${PROJECT_RELEASE_DIR} )
 # find libxml2, or build if needed
 IF( WIN32 )
 	ADD_SUBDIRECTORY( libxml2 )
+	INCLUDE_DIRECTORIES( ${PROJECT_SOURCE_DIR}/libxml2/include )
 ELSE()
 	FIND_PACKAGE( LibXml2 )
 ENDIF()
-INCLUDE_DIRECTORIES(
-	${PROJECT_SOURCE_DIR}/libxml2/include
-)
 
 # build raptor dependencies
 # (except expat, which comes next)
@@ -84,12 +82,12 @@ ADD_EXECUTABLE( writesbol
 	${PROJECT_EXAMPLE_DIR}/writesbol.c
 )
 TARGET_LINK_LIBRARIES( readntriples sbol )
-TARGET_LINK_LIBRARIES( validate	    sbol )
+TARGET_LINK_LIBRARIES( validate     sbol )
 TARGET_LINK_LIBRARIES( writesbol    sbol )
 
-# TODO link this to the actual library
 # build tests
 ADD_EXECUTABLE( testall
+	${PROJECT_SOURCE_FILES}
 	${PROJECT_TEST_FILES}
 )
 TARGET_LINK_LIBRARIES( testall sbol )
