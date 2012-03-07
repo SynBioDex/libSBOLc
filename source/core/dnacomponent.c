@@ -26,6 +26,7 @@ DNAComponent* createDNAComponent(const char* id) {
 	com->id          = createProperty();
 	com->name        = createProperty();
 	com->description = createProperty();
+	com->dnaSequence = NULL;
 	com->annotations = createGenericArray();
 	com->collections = createGenericArray();
 	setDNAComponentID(com, id);
@@ -159,16 +160,24 @@ DNAComponent* getDNAComponent(const char* id) {
 }
 
 char* getDNAComponentID(const DNAComponent* com) {
-    return getProperty(com->id);
+    if (com)
+    	return getProperty(com->id);
+    else
+    	return NULL;
 }
 
 char* getDNAComponentName(const DNAComponent* com) {
-    return getProperty(com->name);
+    if (com)
+    	return getProperty(com->name);
+    else
+    	return NULL;
 }
 
 char* getDNAComponentDescription(const DNAComponent* com) {
     if (com)
         return getProperty(com->description);
+    else
+    	return NULL;
 }
 
 /**************************

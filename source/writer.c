@@ -65,7 +65,8 @@ void writeDNASequence(const DNASequence* seq, int includeContents) {
 	if (!seq)
 		return;
 	xmlTextWriterStartElement(WRITER, "s:DnaSequence");
-	char* id = getDNASequenceID(seq);
+	char* id;
+	id = getDNASequenceID(seq);
 	xmlTextWriterWriteAttribute(WRITER, "rdf:about", id);
 	if (includeContents)
 		xmlTextWriterWriteElement(WRITER, "s:nucleotides", getNucleotides(seq));
