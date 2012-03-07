@@ -9,6 +9,7 @@
 #include "collection.h"
 
 #define NUM_FAST_TESTS 10000
+#define NUM_SLOW_TESTS  1000
 
 void TestSingleDNAComponent(CuTest* tc) {
 	cleanupDNAComponents();
@@ -49,14 +50,14 @@ void TestDNAComponentIndexing(CuTest* tc) {
 	char* id;
 	DNAComponent* com;
 	int num;
-	for (num=0; num<NUM_FAST_TESTS; num++) {
+	for (num=0; num<NUM_SLOW_TESTS; num++) {
 		id = randomString();
 		while (isDNAComponentID(id))
 			id = randomString();
 		com = createDNAComponent(id);
 	}
 	int index;
-	for (num=NUM_FAST_TESTS; num>0; num--) {
+	for (num=NUM_SLOW_TESTS; num>0; num--) {
 		CuAssertIntEquals(tc, num, getNumDNAComponents());
 		index = randomNumber(num);
 		com = getNthDNAComponent(index);
@@ -110,7 +111,7 @@ void TestAnnotationIndexing(CuTest* tc) {
 	char* id;
 	SequenceAnnotation* ann;
 	int num;
-	for (num=0; num<NUM_FAST_TESTS; num++) {
+	for (num=0; num<NUM_SLOW_TESTS; num++) {
 		id = randomString();
 		// avoid duplicates
 		while (isSequenceAnnotationID(id))
@@ -118,7 +119,7 @@ void TestAnnotationIndexing(CuTest* tc) {
 		ann = createSequenceAnnotation(id);
 	}
 	int index;
-	for (num=NUM_FAST_TESTS; num>0; num--) {
+	for (num=NUM_SLOW_TESTS; num>0; num--) {
 		CuAssertIntEquals(tc, num, getNumSequenceAnnotations());
 		index = randomNumber(num);
 		ann = getNthSequenceAnnotation(index);
@@ -182,7 +183,7 @@ void TestCollectionIndexing(CuTest* tc) {
 	char* id;
 	Collection* col;
 	int num;
-	for (num=0; num<NUM_FAST_TESTS; num++) {
+	for (num=0; num<NUM_SLOW_TESTS; num++) {
 		id = randomString();
 		// avoid duplicates
 		while (isCollectionID(id))
@@ -190,7 +191,7 @@ void TestCollectionIndexing(CuTest* tc) {
 		col = createCollection(id);
 	}
 	int index;
-	for (num=NUM_FAST_TESTS; num>0; num--) {
+	for (num=NUM_SLOW_TESTS; num>0; num--) {
 		CuAssertIntEquals(tc, num, getNumCollections());
 		index = randomNumber(num);
 		col = getNthCollection(index);

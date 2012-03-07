@@ -245,7 +245,7 @@ void printCollection(const Collection* col, int tabs) {
             indent(tabs+1); printf("%i collections:\n", num);
             for (i=0; i<num; i++) {
                 col2 = getNthCollectionIn(col, i);
-                indent(tabs+2); printf("%s\n", col2->id);
+                indent(tabs+2); printf("%s\n", getCollectionID(col2));
             }
         }
     }
