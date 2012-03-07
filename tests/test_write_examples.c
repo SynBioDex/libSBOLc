@@ -12,7 +12,7 @@
 void TestNTriplesSimple(CuTest* tc) {
 	cleanupSBOLCore();
 	readSBOLCore(SIMPLE_INFILE);
-	writeSBOLCore(SIMPLE_OUTFILE); // CAUSES SEGFAULT
+	writeSBOLCore(SIMPLE_OUTFILE);
 	cleanupSBOLCore();
     xmlDocPtr doc = xmlParseFile(SIMPLE_OUTFILE);
 	CuAssertIntEquals(tc, 1, isValidSBOL(doc));
