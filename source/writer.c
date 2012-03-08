@@ -211,6 +211,13 @@ int writeSBOLCore(const char* filename) {
 	int n;
 	startSBOLDocument();
 
+	// write collections
+	Collection* col;
+	for (n=0; n<getNumCollections(); n++) {
+		col = getNthCollection(n);
+		writeCollection(col, INCLUDE_CONTENTS);
+	}
+	
 	// write sequences
 	DNASequence* seq;
 	for (n=0; n<getNumDNASequences(); n++) {
@@ -225,8 +232,6 @@ int writeSBOLCore(const char* filename) {
 		if (getNumCollectionsFor(com) != 1)
 			writeDNAComponent(com, INCLUDE_CONTENTS);
 	}
-	
-	// write collections
 	
 	endSBOLDocument();
 	cleanupSBOLWriter;

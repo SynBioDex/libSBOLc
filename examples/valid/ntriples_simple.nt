@@ -30,3 +30,16 @@
 
 <sa1>	<precedes>	<sa2>.
 <sa1>	<precedes>	<sa3>.
+
+<collectionA>	<a>	<Collection>.
+<collectionB>	<a>	<Collection>.
+
+<collectionA>	<name>	"Collections -- A".
+<collectionB>	<name>	"Collections -- B".
+<collectionA>	<description>	"This is the collection of composite parts".
+<collectionB>	<description>	"This is the collection of smaller parts".
+
+<component2>	<collection>	<collectionB>.
+<component3>	<collection>	<collectionB>.
+
+
