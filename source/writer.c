@@ -41,12 +41,12 @@ void startSBOLDocument(const char* filename) {
 	createSBOLWriter(filename);
 	xmlTextWriterStartDocument(WRITER, NULL, NULL, NULL);
 	xmlTextWriterStartElement(WRITER, "rdf:RDF");
-	xmlTextWriterWriteAttribute(WRITER, "xmlns:rdf",  XMLNS_RDF);
-	xmlTextWriterWriteAttribute(WRITER, "xmlns:rdfs", XMLNS_RDFS);
-	xmlTextWriterWriteAttribute(WRITER, "xmlns:so",   XMLNS_SO);
-	xmlTextWriterWriteAttribute(WRITER, "xmlns:s",    XMLNS_S);
-	xmlTextWriterWriteAttribute(WRITER, "xmlns:xsi",  XMLNS_XSI);
-	xmlTextWriterWriteAttribute(WRITER, "xsi:schemaLocation", SCHEMA_LOCATION);
+	xmlTextWriterWriteAttribute(WRITER, "\n\txmlns:rdf",  XMLNS_RDF);
+	xmlTextWriterWriteAttribute(WRITER, "\n\txmlns:rdfs", XMLNS_RDFS);
+	xmlTextWriterWriteAttribute(WRITER, "\n\txmlns:so",   XMLNS_SO);
+	xmlTextWriterWriteAttribute(WRITER, "\n\txmlns:s",    XMLNS_S);
+	xmlTextWriterWriteAttribute(WRITER, "\n\txmlns:xsi",  XMLNS_XSI);
+	xmlTextWriterWriteAttribute(WRITER, "\n\txsi:schemaLocation", SCHEMA_LOCATION);
 	indentMore();
 }
 
@@ -135,6 +135,7 @@ void writeSBOLCore(const char* filename) {
 	startSBOLDocument(filename);
 	indentMore();
 	int n;
+	
 	// write sequences
 	DNASequence* seq;
 	for (n=0; n<getNumDNASequences(); n++) {
