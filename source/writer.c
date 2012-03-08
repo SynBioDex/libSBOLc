@@ -212,6 +212,7 @@ int writeSBOLCore(const char* filename) {
 	startSBOLDocument();
 
 	// write collections
+	// (and components in just one collection)
 	Collection* col;
 	for (n=0; n<getNumCollections(); n++) {
 		col = getNthCollection(n);
@@ -226,6 +227,7 @@ int writeSBOLCore(const char* filename) {
 	}
 	
 	// write components
+	// (unless they were included in a collection above)
 	DNAComponent* com;
 	for (n=0; n<getNumDNAComponents(); n++) {
 		com = getNthDNAComponent(n);
