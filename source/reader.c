@@ -101,20 +101,51 @@ void read_triple(void* user_data, raptor_statement* triple) {
 	}
 }
 
-// import from an RDF file using raptor
-void readSBOLCore(char* filename)
-{
-	const char * format = "ntriples"; // TODO other formats?
-	raptor_world *world = NULL;
+char* getExtension(char* filename) {
+	if (!filename)
+		return NULL;
+	int i;
+	int len;
+	char* ext;
+	
+	// determine index of dot
+	len = strlen(filename);
+	for (i=len-1; i>=0; i--) {
+		if (filename[i] == '.') {
+			i++; // go back in front of the dot
+			break;
+		}
+	}
+	if (i==0)
+		return NULL;
+	
+	// return chars after dot
+	return &filename[i];
+}
+
+void readSBOLCore(char* filename) {
+	// raptor stuff
+	// (copied from http://librdf.org/raptor/api/tutorial-parser-example.html)
+	raptor_world* world = NULL;
 	raptor_parser* rdf_parser = NULL;
 	unsigned char *uri_string;
 	raptor_uri *uri, *base_uri;
 	world = raptor_new_world();
-	rdf_parser = raptor_new_parser(world, format);
+	
+	// choose parse format
+	char* ext = getExtension(filename);
+	if (strcmp(ext, "nt") == 0)
+		rdf_parser = raptor_new_parser(world, "ntriples");
+	else {
+		if (strcmp(ext, "xml") != 0)
+			printf("WARNING: Unrecognized extension '%s'. Parsing as rdfxml.\n", ext);
+		rdf_parser = raptor_new_parser(world, "rdfxml");
+	}
 	
 	// pass each triple to read_triple for analysis
 	raptor_parser_set_statement_handler(rdf_parser, NULL, &read_triple);
 	
+	// more raptor stuff
 	uri_string = raptor_uri_filename_to_uri_string(filename);
 	uri = raptor_new_uri(world, uri_string);
 	base_uri = raptor_uri_copy(uri);
@@ -123,6 +154,5 @@ void readSBOLCore(char* filename)
 	raptor_free_uri(base_uri);
 	raptor_free_uri(uri);
 	raptor_free_memory(uri_string);
-	
 	raptor_free_world(world);
 }

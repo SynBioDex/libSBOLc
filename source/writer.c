@@ -65,7 +65,7 @@ int saveSBOLDocument(const char* filename) {
 	int invalid = 0;
 	if (!isValidSBOL(OUTPUT)) {
 		invalid = 1;
-		printf("WARNING: invalid document! Check for mistakes in %s\n", filename);
+		printf("WARNING: %s is not valid SBOL. Saving anyway.\n", filename);
 	}
 	int written = xmlSaveFile(filename, OUTPUT);
 	return (int) invalid || written == -1;
