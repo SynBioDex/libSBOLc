@@ -120,6 +120,7 @@ char* getExtension(char* filename) {
 		return NULL;
 	
 	// return chars after dot
+	// TODO is returning part of the same string dangerous?
 	return &filename[i];
 }
 
