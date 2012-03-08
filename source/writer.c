@@ -1,9 +1,9 @@
 #include <stdio.h>
 #include <string.h>
-#include <libxml/encoding.h>
 #include <libxml/xmlwriter.h>
 #include "core.h"
 #include "writer.h"
+#include "validator.h"
 
 /************************
  * set up SBOL document
@@ -12,7 +12,6 @@
 #define INCLUDE_URI_ONLY 0
 #define INCLUDE_CONTENTS 1
 
-//#define XML_ENCODING "ISO-8859-1"
 #define XMLNS_RDF "http://www.w3.org/1999/02/22-rdf-syntax-ns#"
 #define XMLNS_RDFS "http://www.w3.org/2000/01/rdf-schema#"
 #define XMLNS_SO "http://purl.obolibrary.org/obo/"
@@ -22,31 +21,37 @@
 
 static int INDENT;
 static xmlTextWriterPtr WRITER;
+static xmlDocPtr OUTPUT;
 
 void indentMore() { xmlTextWriterSetIndent(WRITER, ++INDENT); }
 void indentLess() { xmlTextWriterSetIndent(WRITER, --INDENT); }
 
-void createSBOLWriter(const char* filename) {
+void createSBOLWriter() {
 	INDENT = 0;
-	WRITER = xmlNewTextWriterFilename(filename, 0);
+	WRITER = xmlNewTextWriterDoc(&OUTPUT, 0);
 	xmlTextWriterSetIndentString(WRITER, "\t");
 	xmlTextWriterSetIndent(WRITER, INDENT);
 }
 
-void deleteSBOLWriter() {
+void cleanupSBOLWriter() {
 	xmlFreeTextWriter(WRITER);
+	xmlFreeDoc(OUTPUT);
+	WRITER = NULL;
+	OUTPUT = NULL;
+	xmlCleanupParser();
 }
 
-void startSBOLDocument(const char* filename) {
-	createSBOLWriter(filename);
+void startSBOLDocument() {
+	createSBOLWriter();
 	xmlTextWriterStartDocument(WRITER, NULL, NULL, NULL);
 	xmlTextWriterStartElement(WRITER, "rdf:RDF");
-	xmlTextWriterWriteAttribute(WRITER, "\n\txmlns:rdf",  XMLNS_RDF);
-	xmlTextWriterWriteAttribute(WRITER, "\n\txmlns:rdfs", XMLNS_RDFS);
-	xmlTextWriterWriteAttribute(WRITER, "\n\txmlns:so",   XMLNS_SO);
-	xmlTextWriterWriteAttribute(WRITER, "\n\txmlns:s",    XMLNS_S);
-	xmlTextWriterWriteAttribute(WRITER, "\n\txmlns:xsi",  XMLNS_XSI);
-	xmlTextWriterWriteAttribute(WRITER, "\n\txsi:schemaLocation", SCHEMA_LOCATION);
+	// TODO add newlines, indents for easier reading
+	xmlTextWriterWriteAttribute(WRITER, "xmlns:rdf",  XMLNS_RDF);
+	xmlTextWriterWriteAttribute(WRITER, "xmlns:rdfs", XMLNS_RDFS);
+	xmlTextWriterWriteAttribute(WRITER, "xmlns:so",   XMLNS_SO);
+	xmlTextWriterWriteAttribute(WRITER, "xmlns:s",    XMLNS_S);
+	xmlTextWriterWriteAttribute(WRITER, "xmlns:xsi",  XMLNS_XSI);
+	xmlTextWriterWriteAttribute(WRITER, "xsi:schemaLocation", SCHEMA_LOCATION);
 	indentMore();
 }
 
@@ -54,7 +59,16 @@ void endSBOLDocument() {
 	indentLess();
 	xmlTextWriterEndElement(WRITER);
 	xmlTextWriterEndDocument(WRITER);
-	deleteSBOLWriter();
+}
+
+int saveSBOLDocument(const char* filename) {
+	int invalid = 0;
+	if (!isValidSBOL(OUTPUT)) {
+		invalid = 1;
+		printf("WARNING: invalid document! Check for mistakes in %s\n", filename);
+	}
+	int written = xmlSaveFile(filename, OUTPUT);
+	return (int) invalid || written == -1;
 }
 
 /***********************
@@ -193,11 +207,10 @@ void writeCollection(const Collection* col, int includeContents) {
  * main write function
  ***********************/
 
-void writeSBOLCore(const char* filename) {
-	startSBOLDocument(filename);
-	indentMore();
+int writeSBOLCore(const char* filename) {
 	int n;
-	
+	startSBOLDocument();
+
 	// write sequences
 	DNASequence* seq;
 	for (n=0; n<getNumDNASequences(); n++) {
@@ -213,7 +226,9 @@ void writeSBOLCore(const char* filename) {
 			writeDNAComponent(com, INCLUDE_CONTENTS);
 	}
 	
-	indentLess();
+	// write collections
+	
 	endSBOLDocument();
-    return;
+	cleanupSBOLWriter;
+	return saveSBOLDocument(filename);
 }
