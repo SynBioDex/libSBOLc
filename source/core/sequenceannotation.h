@@ -28,6 +28,11 @@ int isSequenceAnnotationID(const char* id);
 int getNumSequenceAnnotations();
 SequenceAnnotation* getNthSequenceAnnotation(int n);
 
+int getBioStart(const SequenceAnnotation* ann);
+int getBioEnd(const SequenceAnnotation* ann);
+void setBioStart(SequenceAnnotation* ann, int start);
+void setBioEnd(SequenceAnnotation* ann, int end);
+
 // constrain order
 void addPrecedesRelationship(SequenceAnnotation* upstream, SequenceAnnotation* downstream);
 int getNumPrecedes(const SequenceAnnotation* ann);

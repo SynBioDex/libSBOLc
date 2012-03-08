@@ -3,6 +3,8 @@
 #include "reader.h"
 #include "writer.h"
 
+// TODO check that the new file is information-equivalent to the old one?
+
 #define DEFAULT_INFILE  "../examples/valid/ntriples_simple.nt"
 #define DEFAULT_OUTFILE "ntriples_simple.xml"
 

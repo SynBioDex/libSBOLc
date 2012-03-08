@@ -1,3 +1,8 @@
+<component2>	<a>	<DNAComponent>.
+<seq1> <a> <DNASequence>.
+<seq1> <nucleotides> "actactacg".
+<component2> <dnaSequence> <seq1>.
+
 <collectionA>	<a>	<Collection>.
 <collectionB>	<a>	<Collection>.
 
@@ -7,7 +12,6 @@
 <collectionB>	<description>	"This is the collection of smaller parts".
 
 <component1>	<a>	<DNAComponent>.
-<component2>	<a>	<DNAComponent>.
 <component3>	<a>	<DNAComponent>.
 <component4>	<a>	<DNAComponent>.
 
@@ -43,6 +47,3 @@
 <component2> <description> 	<com2 is a test component>.
 <component3> <description> 	<com3 is a test component>.
 <component4> <description> 	<com4 is a test component>.
-
-<seq1> <a> <DNASequence>.
-<seq1> <nucleotides> "actactacg".

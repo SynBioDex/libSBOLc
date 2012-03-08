@@ -128,8 +128,8 @@ void printDNASequence(const DNASequence* seq, int tabs) {
 	if (!seq)
 	    return;
 	// TODO print just the beginning of the sequence?
-	indent(tabs);
-	printf("nucleotides: %s\n", getNucleotides(seq));
+	indent(tabs); printf("%s\n", getDNASequenceID(seq));
+	indent(tabs+1); printf("nucleotides: %s\n", getNucleotides(seq));
 }
 
 void printAllDNASequences() {

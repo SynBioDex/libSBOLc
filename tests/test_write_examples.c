@@ -44,7 +44,7 @@ void TestValid2(CuTest* tc) {
 CuSuite* WriteExamplesGetSuite() {
 	CuSuite* writeExamplesTests = CuSuiteNew();
 	SUITE_ADD_TEST(writeExamplesTests, TestNTriplesSimple);
-	SUITE_ADD_TEST(writeExamplesTests, TestValid1);
-	SUITE_ADD_TEST(writeExamplesTests, TestValid2);
+	//SUITE_ADD_TEST(writeExamplesTests, TestValid1);
+	//SUITE_ADD_TEST(writeExamplesTests, TestValid2);
 	return writeExamplesTests;
 }

@@ -37,6 +37,8 @@ SBOLAPIEXPORTS void printDNASequence(const DNASequence* seq, int tabs);
 SBOLAPIEXPORTS void printAllDNASequences();
 
 // from sequenceannotation.h
+SBOLAPIEXPORTS void setBioStart(SequenceAnnotation* ann, int start);
+SBOLAPIEXPORTS void setBioEnd(SequenceAnnotation* ann, int end);
 SBOLAPIEXPORTS int isAnnotationPtr(const void* pointer);
 SBOLAPIEXPORTS int isSequenceAnnotationID(const char* id);
 SBOLAPIEXPORTS SequenceAnnotation* getSequenceAnnotation(const char* id);

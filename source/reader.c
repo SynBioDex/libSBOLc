@@ -3,6 +3,93 @@
 #include "core.h"
 #include "reader.h"
 
+// TODO will this sequential read miss things declared in certain orders?
+
+int sameString(char* string1, char* string2) {
+	if (!string1 || !string2)
+		return 0;
+	else
+		return (int) strcmp(string1, string2) == 0;
+}
+
+void createNewObject(char* id, char* type) {
+	if (!id || !type)
+		return;
+	else if (sameString(type, "DNASequence"))
+		createDNASequence(id);
+	else if (sameString(type, "DNAComponent"))
+		createDNAComponent(id);
+	else if (sameString(type, "SequenceAnnotation"))
+		createSequenceAnnotation(id);
+	else if (sameString(type, "Collection"))
+		createCollection(id);
+}
+
+void addToDNASequence(char* id, char* field, char* value) {
+	if (!id || !field || !value)
+		return;
+	DNASequence* seq = getDNASequence(id);
+	if (sameString(field, "nucleotides"))
+		setNucleotides(seq, value);
+}
+
+void addToDNAComponent(char* id, char* field, char* value) {
+	if (!id || !field || !value)
+		return;
+	DNAComponent* com = getDNAComponent(id);
+	if (sameString(field, "name"))
+		setDNAComponentName(com, value);
+	else if (sameString(field, "description"))
+		setDNAComponentDescription(com, value);
+	else if (sameString(field, "collection")) {
+		Collection* col;
+		if (isCollectionID(value)) // something about > 0?
+			col = getCollection(value);
+		else
+			col = createCollection(value);
+		addDNAComponentToCollection(com, col);
+	}
+}
+
+void addToCollection(char* id, char* field, char* value) {
+	if (!id || !field || !value)
+		return;
+	Collection* col = getCollection(id);
+	if (sameString(field, "name"))
+		setCollectionName(col, value);
+	else if (sameString(field, "description"))
+		setCollectionDescription(col, value);
+}
+
+void addToSequenceAnnotation(char* id, char* field, char* value) {
+	if (!id || !field || !value)
+		return;
+	SequenceAnnotation* ann = getSequenceAnnotation(id);
+	DNAComponent* com;
+	if (sameString(field, "annotates") || sameString(field, "subComponent")) {
+		if (!isDNAComponentID(value))
+			com = createDNAComponent(value);
+		else
+			com = getDNAComponent(value);
+	}
+	if (sameString(field, "annotates"))
+		addSequenceAnnotation(com, ann);
+	else if (sameString(field, "subComponent"))
+		setSubComponent(ann, com);
+	else if (sameString(field, "precedes")) {
+		SequenceAnnotation* ann2;
+		if (!isSequenceAnnotationID(value))
+			ann2 = createSequenceAnnotation(value);
+		else
+			ann2 = getSequenceAnnotation(value);
+		addPrecedesRelationship(ann, ann2);
+	}
+	else if (sameString(field, "bioStart"))
+		setBioStart(ann, atoi(value));
+	else if (sameString(field, "bioEnd"))
+		setBioEnd(ann, atoi(value));
+}
+
 // analyze a single triple and add to
 // SBOL data structures if appropriate
 void read_triple(void* user_data, raptor_statement* triple) {
@@ -28,77 +115,17 @@ void read_triple(void* user_data, raptor_statement* triple) {
 	else if (triple->object->type == RAPTOR_TERM_TYPE_LITERAL)
 		o = (char*)(triple->object->value.literal.string);
 	
-	// predicate is rdf:type,
-	// so a new structure needs to be created
+	// adjust SBOL core to match
 	if (strcmp(p, "a") == 0) //TODO or p == rdf:type?
-	{
-		if (strcmp(o, "DNASequence") == 0)
-			createDNASequence(s);
-		else 
-		if (strcmp(o, "DNAComponent") == 0)
-			createDNAComponent(s);
-		else if (strcmp(o, "SequenceAnnotation") == 0)
-			createSequenceAnnotation(s);
-		else if (strcmp(o, "Collection") == 0)
-			createCollection(s);
-	}
-
-	// subject is an existing DNASequence
-	else if (isDNASequenceID(s)) {
-		DNASequence* seq = getDNASequence(s);
-		if (strcmp(p, "nucleotides") == 0)
-			setNucleotides(seq, o);
-	}
-
-	// subject is an existing DNAComponent
+		createNewObject(s, o);
+	else if (isDNASequenceID(s))
+		addToDNASequence(s, p, o);
 	else if (isDNAComponentID(s))
-	{
-		DNAComponent* com = getDNAComponent(s);
-
-		if (strcmp(p, "name") == 0)
-			setDNAComponentName(com, o);
-		else if (strcmp(p, "description") == 0)
-			setDNAComponentDescription(com, o);
-		else if (strcmp(p, "collection") == 0) {
-			if (isDNAComponentID(s) && isCollectionID(o) > 0)
-			{
-				Collection* col = getCollection(o);
-				addDNAComponentToCollection(com, col);
-			}
-		}
-	}
-
-	// subject is an existing Collection
-	else if (isCollectionID(s)) {
-		Collection* col = getCollection(s);
-
-		if (strcmp(p, "name") == 0)
-			setCollectionName(col, o);
-		else if (strcmp(p, "description") == 0)
-			setCollectionDescription(col, o);
-	}
-
-	// subject is an existing SequenceAnnotation
-	else if (isSequenceAnnotationID(s)) {
-		SequenceAnnotation* ann = getSequenceAnnotation(s);
-
-		if (strcmp(p, "annotates") == 0) {
-			if (isDNAComponentID(o)) {
-				DNAComponent* com = getDNAComponent(o);
-				addSequenceAnnotation(com, ann);
-			}
-		} else if (strcmp(p, "subComponent") == 0) {
-			if (isDNAComponentID(o)) {
-				DNAComponent* com = getDNAComponent(o);
-				setSubComponent(ann, com);
-			}
-		} else if (strcmp(p, "precedes") == 0) {
-			if (isSequenceAnnotationID(o)) {
-				SequenceAnnotation* ann2 = getSequenceAnnotation(o);
-				addPrecedesRelationship(ann, ann2);
-			}
-		}
-	}
+		addToDNAComponent(s, p, o);
+	else if (isCollectionID(s))
+		addToCollection(s, p, o);
+	else if (isSequenceAnnotationID(s))
+		addToSequenceAnnotation(s, p, o);
 }
 
 char* getExtension(char* filename) {
@@ -107,18 +134,16 @@ char* getExtension(char* filename) {
 	int i;
 	int len;
 	char* ext;
-	
 	// determine index of dot
 	len = strlen(filename);
 	for (i=len-1; i>=0; i--) {
 		if (filename[i] == '.') {
-			i++; // go back in front of the dot
+			i++; // don't include the dot itself
 			break;
 		}
 	}
 	if (i==0)
 		return NULL;
-	
 	// return chars after dot
 	// TODO is returning part of the same string dangerous?
 	return &filename[i];

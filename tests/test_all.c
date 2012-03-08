@@ -10,6 +10,7 @@ CuSuite* GenericArrayGetSuite();
 CuSuite* PropertyGetSuite();
 CuSuite* WriteExamplesGetSuite();
 CuSuite* CleanupGetSuite();
+CuSuite* RoundTripGetSuite();
 
 void RunAllTests(void) {
 	// seed with current time
@@ -27,6 +28,7 @@ void RunAllTests(void) {
 	CuSuiteAddSuite(suite, PropertyGetSuite());
 	CuSuiteAddSuite(suite, CleanupGetSuite());
 	CuSuiteAddSuite(suite, WriteExamplesGetSuite());
+	CuSuiteAddSuite(suite, RoundTripGetSuite());
 	
 	CuSuiteRun(suite);
 	CuSuiteSummary(suite, output);

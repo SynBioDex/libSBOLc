@@ -26,6 +26,37 @@ static xmlDocPtr OUTPUT;
 void indentMore() { xmlTextWriterSetIndent(WRITER, ++INDENT); }
 void indentLess() { xmlTextWriterSetIndent(WRITER, --INDENT); }
 
+// TODO put this somewhere better
+char* intToStr(int input) {
+	int i;
+	int digits;
+	int lastDigit;
+	char* output;
+	// determine number of digits
+	digits = 0;
+	i = input;
+	while (i>0) {
+		i /= 10;
+		digits++;
+	}
+	if (digits==0) {
+		output = malloc(sizeof(char)*2);
+		output[0] = '0';
+		output[1] = '\0';
+	} else {
+		// create string to hold that many chars
+		output = malloc(sizeof(char) * (digits+1));
+		// copy over each digit as a char
+		for (i=digits-1; i>=0; i--) {
+			lastDigit = input%10;
+			output[i] = (char) (((int)'0')+lastDigit);
+			input /= 10;
+		}
+		output[digits] = '\0';
+	}
+	return output;
+}
+
 void createSBOLWriter() {
 	INDENT = 0;
 	WRITER = xmlNewTextWriterDoc(&OUTPUT, 0);
@@ -96,6 +127,14 @@ void writeSequenceAnnotation(const SequenceAnnotation* ann, int includeContents)
 	xmlTextWriterStartElement(WRITER, "s:SequenceAnnotation");
 	xmlTextWriterWriteAttribute(WRITER, "rdf:about", getSequenceAnnotationID(ann));
 	
+	// start, end
+	int start = getBioStart(ann);
+	int end   = getBioEnd(ann);
+	if (start>0)
+		xmlTextWriterWriteElement(WRITER, "s:bioStart", intToStr(start));
+	if (end>0)
+		xmlTextWriterWriteElement(WRITER, "s:bioEnd",   intToStr(end));
+	
 	// subComponent
 	char* id;
 	if (includeContents) {
@@ -117,11 +156,16 @@ void writeDNAComponent(const DNAComponent* com, int includeContents) {
 		return;
 	xmlTextWriterStartElement(WRITER, "s:DnaComponent");
 	if (includeContents) {
+		xmlTextWriterWriteAttribute(WRITER, "rdf:about", getDNAComponentID(com));
 		
 		// properties
-		xmlTextWriterWriteAttribute(WRITER, "rdf:about", getDNAComponentID(com));
-		xmlTextWriterWriteElement(WRITER, "s:displayId", getDNAComponentName(com));
-		xmlTextWriterWriteElement(WRITER, "s:description", getDNAComponentDescription(com));
+		char* data;
+		data = getDNAComponentName(com);
+		if (data)
+			xmlTextWriterWriteElement(WRITER, "s:displayId", data);
+		data = getDNAComponentDescription(com);
+		if (data)
+			xmlTextWriterWriteElement(WRITER, "s:description", data);
 		
 		// sequence
 		if (com->dnaSequence)

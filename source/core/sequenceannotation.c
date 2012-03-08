@@ -69,6 +69,16 @@ void setSequenceAnnotationID(SequenceAnnotation* ann, const char* id) {
         setProperty(ann->id, id);
 }
 
+void setBioStart(SequenceAnnotation* ann, int start) {
+	if (ann)
+		ann->genbankStart = start;
+}
+
+void setBioEnd(SequenceAnnotation* ann, int end) {
+	if (ann)
+		ann->genbankEnd = end;
+}
+
 /*******************
  * is... functions
  *******************/
@@ -145,6 +155,20 @@ SequenceAnnotation* getSequenceAnnotation(const char* id) {
 	return NULL;
 }
 
+int getBioStart(const SequenceAnnotation* ann) {
+	if (!ann)
+		return -1;
+	else
+		return ann->genbankStart;
+}
+
+int getBioEnd(const SequenceAnnotation* ann) {
+	if (!ann)
+		return -1;
+	else
+		return ann->genbankEnd;
+}
+
 /*******************
  * constrain order
  *******************/
@@ -180,7 +204,9 @@ void printSequenceAnnotation(const SequenceAnnotation* ann, int tabs) {
     indent(tabs); printf("%s\n", getSequenceAnnotationID(ann));
     int start = ann->genbankStart;
     int end = ann->genbankEnd;
-    indent(tabs+1); printf("%i --> %i\n", start, end);
+    if (start != 0 || end != 0) {
+    	indent(tabs+1); printf("%i --> %i\n", start, end);
+    }
     if (ann->annotates) {
         indent(tabs+1); printf("annotates: %s\n", getDNAComponentID(ann->annotates));
     }

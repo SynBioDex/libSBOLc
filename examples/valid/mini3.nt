@@ -1,0 +1,9 @@
+<sa1>	<a>				<SequenceAnnotation>.
+<sa1>	<bioStart>		<1>.
+<sa1>	<bioEnd>		<1234>.
+
+<com1>	<a>				<DNAComponent>.
+<com1>	<name>			<component 1>.
+
+<sa1>	<annotates>		<com1>.
+<sa1>	<subComponent>	<com1>.
