@@ -28,6 +28,7 @@ void TestNTriplesSimple(CuTest* tc) {
 void TestValid1(CuTest* tc) {
 	int result;
 	readSBOLCore(VALID1_INFILE);
+	printSBOLCore();
 	result = writeSBOLCore(VALID1_OUTFILE);
 	cleanupSBOLCore();
 	CuAssertIntEquals(tc, 0, result);

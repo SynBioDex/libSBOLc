@@ -116,7 +116,7 @@ void read_triple(void* user_data, raptor_statement* triple) {
 		o = (char*)(triple->object->value.literal.string);
 	
 	// adjust SBOL core to match
-	if (strcmp(p, "a") == 0) //TODO or p == rdf:type?
+	if (sameString(p, "a")) //TODO or p == rdf:type?
 		createNewObject(s, o);
 	else if (isDNASequenceID(s))
 		addToDNASequence(s, p, o);
@@ -163,10 +163,10 @@ void readSBOLCore(char* filename) {
 	
 	// choose parse format
 	char* ext = getExtension(filename);
-	if (strcmp(ext, "nt") == 0)
+	if (sameString(ext, "nt"))
 		rdf_parser = raptor_new_parser(world, "ntriples");
 	else {
-		if (strcmp(ext, "xml") != 0)
+		if (!sameString(ext, "xml"))
 			printf("WARNING: Unrecognized extension '%s'. Parsing as rdfxml.\n", ext);
 		rdf_parser = raptor_new_parser(world, "rdfxml");
 	}

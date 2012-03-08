@@ -41,7 +41,7 @@ char* intToStr(int input) {
 	}
 	if (digits==0) {
 		output = malloc(sizeof(char)*2);
-		output[0] = '0';
+		output[0] = (char) (((int)'0')+input);
 		output[1] = '\0';
 	} else {
 		// create string to hold that many chars

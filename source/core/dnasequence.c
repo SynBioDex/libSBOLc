@@ -139,6 +139,5 @@ void printAllDNASequences() {
 	    printf("%i sequences:\n", num);
 	    for (n=0; n<num; n++)
 	        printDNASequence(getNthDNASequence(n), 1);
-	} else
-		printf("no sequences\n");
+	}
 }
