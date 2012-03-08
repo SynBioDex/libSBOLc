@@ -125,6 +125,9 @@ char* getExtension(char* filename) {
 }
 
 void readSBOLCore(char* filename) {
+	if (!filename)
+		return;
+
 	// raptor stuff
 	// (copied from http://librdf.org/raptor/api/tutorial-parser-example.html)
 	raptor_world* world = NULL;

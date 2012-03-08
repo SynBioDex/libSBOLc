@@ -21,14 +21,6 @@ DNASequence* createDNASequence(char* id) {
 	DNASequence* seq = malloc(sizeof(DNASequence));
 	seq->id          = createProperty();
 	seq->nucleotides = createProperty();
-	
-	//if (id) {
-	//	// TODO avoid copying large sequences?
-	//	seq->nucleotides = createProperty();
-	//	setProperty(seq->nucleotides, nucleotides);
-	//} else
-	//    seq->nucleotides = NULL;
-	
 	setDNASequenceID(seq, id);
 	registerDNASequence(seq);
 	return seq;
@@ -68,7 +60,7 @@ void cleanupDNASequences() {
 		int n;
 		DNASequence* seq;
 		for (n=getNumDNASequences()-1; n>=0; n--) {
-		    seq = getNthDNASequence(n);
+			seq = getNthDNASequence(n);
 			deleteDNASequence(seq);
 		}
 		deleteGenericArray(allDNASequences);
@@ -77,10 +69,10 @@ void cleanupDNASequences() {
 }
 
 int getNumDNASequences() {
-    if (allDNASequences)
-        return allDNASequences->numInUse;
-    else
-        return 0;
+	if (allDNASequences)
+	    return allDNASequences->numInUse;
+	else
+	    return 0;
 }
 
 DNASequence* getDNASequence(const char* id) {
@@ -121,33 +113,32 @@ int isDNASequenceID(const char* id) {
 }
 
 char* getNucleotides(const DNASequence* seq) {
-    if (seq)
-        return getProperty(seq->nucleotides);
+	if (seq)
+	    return getProperty(seq->nucleotides);
 }
 
 DNASequence* getNthDNASequence(int n) {
-    if (!allDNASequences || allDNASequences->numInUse<=n)
-        return NULL;
-    else
-        return (DNASequence*) getNthArrayElement(allDNASequences, n);
+	if (!allDNASequences || allDNASequences->numInUse<=n)
+	    return NULL;
+	else
+	    return (DNASequence*) getNthArrayElement(allDNASequences, n);
 }
 
 void printDNASequence(const DNASequence* seq, int tabs) {
-    if (!seq)
-        return;
-    //print just the beginning of the sequence
-    char* nt = malloc(sizeof(char) * NUCLEOTIDES_PRINTED+1);
-    strncpy(nt, getNucleotides(seq), NUCLEOTIDES_PRINTED);
-    indent(tabs); printf("nucleotides: %s\n", nt);
+	if (!seq)
+	    return;
+	// TODO print just the beginning of the sequence?
+	indent(tabs);
+	printf("nucleotides: %s\n", getNucleotides(seq));
 }
 
 void printAllDNASequences() {
-    int n;
-    int num = getNumDNASequences();
-    if (num > 0) {
-        printf("%i sequences:\n", num);
-        for (n=0; n<num; n++)
-            printDNASequence(getNthDNASequence(n), 1);
-    } else
-    	printf("no sequences\n");
+	int n;
+	int num = getNumDNASequences();
+	if (num > 0) {
+	    printf("%i sequences:\n", num);
+	    for (n=0; n<num; n++)
+	        printDNASequence(getNthDNASequence(n), 1);
+	} else
+		printf("no sequences\n");
 }
