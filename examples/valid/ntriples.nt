@@ -45,3 +45,4 @@
 <component4> <description> 	<com4 is a test component>.
 
 <seq1> <a> <DNASequence>.
+<seq1> <nucleotides> "actactacg".
