@@ -3,12 +3,12 @@
 	xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
 	xmlns:rdfs="http://www.w3.org/2000/01/rdf-schema#" 
 	xmlns:so="http://purl.obolibrary.org/obo/" 
-	xmlns="http://sbols.org/v1#"
-	
-	>
+	xmlns:s="http://sbols.org/v1#"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://sbols.org/v1# ../schema/sbol.xsd http://www.w3.org/1999/02/22-rdf-syntax-ns# ../schema/rdf.xsd">
 		
-	<DnaComponent rdf:about="http://example.com/dc1">
-		<description>Invalid because displayId field is missing</description>
-	</DnaComponent>
+	<s:DnaComponent rdf:about="http://example.com/dc1">
+		<s:description>Invalid because displayId field is missing</s:description>
+	</s:DnaComponent>
 </rdf:RDF>
 
