@@ -3,15 +3,15 @@
 	xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
 	xmlns:rdfs="http://www.w3.org/2000/01/rdf-schema#" 
 	xmlns:so="http://purl.obolibrary.org/obo/" 
-	xmlns:s="http://sbols.org/v1#"
-	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-	xsi:schemaLocation="http://sbols.org/v1# ../schema/sbol.xsd http://www.w3.org/1999/02/22-rdf-syntax-ns# ../schema/rdf.xsd">
+	xmlns="http://sbols.org/v1#"
+	
+	>
 		
-	<s:DnaComponent rdf:about="http://example.com/dc1">
-		<s:name>DnaComponent1</s:name>
-		<s:displayId>DC1</s:displayId>
-		<s:description>Invalid because of ordering constraints. The element displayId should come first.</s:description>	
-	</s:DnaComponent>
+	<DnaComponent rdf:about="http://example.com/dc1">
+		<name>DnaComponent1</name>
+		<displayId>DC1</displayId>
+		<description>Invalid because of ordering constraints. The element displayId should come first.</description>	
+	</DnaComponent>
 	
 </rdf:RDF>
 

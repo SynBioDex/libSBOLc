@@ -1,21 +1,21 @@
 <?xml version="1.0"?>
 <rdf:RDF xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#" xmlns:rdfs="http://www.w3.org/2000/01/rdf-schema#"
-   xmlns:so="http://purl.obolibrary.org/obo/" xmlns:s="http://sbols.org/v1#" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-   xsi:schemaLocation="http://sbols.org/v1# ../schema/sbol.xsd http://www.w3.org/1999/02/22-rdf-syntax-ns# ../schema/rdf.xsd">
+   xmlns:so="http://purl.obolibrary.org/obo/" xmlns="http://sbols.org/v1#" 
+   >
 
    <!-- Invalid since SequenceAnnotation cannot appear by itself -->
-   <s:SequenceAnnotation rdf:about="http://example.com/sa2">
-      <s:bioStart>1</s:bioStart>
-      <s:bioEnd>54</s:bioEnd>
-      <s:strand>+</s:strand>
-      <s:subComponent>
-         <s:DnaComponent rdf:about="http://example.com/dc2">
-            <s:displayId>DC2</s:displayId>
-            <s:name>DnaComponent2</s:name>
-            <s:description>Another DNA component</s:description>
-         </s:DnaComponent>
-      </s:subComponent>
-   </s:SequenceAnnotation>
+   <SequenceAnnotation rdf:about="http://example.com/sa2">
+      <bioStart>1</bioStart>
+      <bioEnd>54</bioEnd>
+      <strand>+</strand>
+      <subComponent>
+         <DnaComponent rdf:about="http://example.com/dc2">
+            <displayId>DC2</displayId>
+            <name>DnaComponent2</name>
+            <description>Another DNA component</description>
+         </DnaComponent>
+      </subComponent>
+   </SequenceAnnotation>
 
 </rdf:RDF>
 

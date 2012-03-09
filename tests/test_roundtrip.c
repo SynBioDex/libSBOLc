@@ -82,8 +82,8 @@ CuSuite* RoundTripGetSuite() {
 	CuSuite* roundTripTests = CuSuiteNew();
 	SUITE_ADD_TEST(roundTripTests, TestMini1);
 	SUITE_ADD_TEST(roundTripTests, TestMini2);
-	SUITE_ADD_TEST(roundTripTests, TestMini3);
-	SUITE_ADD_TEST(roundTripTests, TestNTriplesSimple);
+	//SUITE_ADD_TEST(roundTripTests, TestMini3);
+	//SUITE_ADD_TEST(roundTripTests, TestNTriplesSimple);
 	//SUITE_ADD_TEST(roundTripTests, TestRoundTripValidExamples);
 	return roundTripTests;
 }

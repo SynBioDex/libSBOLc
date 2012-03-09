@@ -6,15 +6,10 @@
 	xmlns="http://sbols.org/v1#"
 	
 	>
-		
+
+	<!-- Valid because only required field for a DNAComponent is displayId -->
 	<DnaComponent rdf:about="http://example.com/dc1">
 		<displayId>DC1</displayId>
-		<name>DnaComponent1</name>
-		<description>Missing nucleotides</description>
-		<dnaSequence>
-			<DnaSequence rdf:about="http://example.com/ds1">
-			</DnaSequence>
-		</dnaSequence>	
 	</DnaComponent>
 </rdf:RDF>
 

@@ -5,18 +5,19 @@
 
    <DnaComponent rdf:about="http://example.com/dc1">
       <displayId>DC1</displayId>
-      <name>DnaComponent1</name>
-      <description>Invalid strand value</description>
+      <dnaSequence>
+         <DnaSequence rdf:about="http://example.com/ds1">
+            <nucleotides>tccctatcagtgat</nucleotides>
+         </DnaSequence>
+      </dnaSequence>
       <annotation>
-         <SequenceAnnotation rdf:about="http://example.com/sa2">
-            <bioStart>1</bioStart>
-            <bioEnd>54</bioEnd>
-            <strand>*</strand>
+         <SequenceAnnotation rdf:about="http://example.com/sa1">
+            <bioStart>5</bioStart>
+            <bioEnd>1</bioEnd>
             <subComponent>
                <DnaComponent rdf:about="http://example.com/dc2">
                   <displayId>DC2</displayId>
                   <name>DnaComponent2</name>
-                  <description>Another DNA component</description>
                </DnaComponent>
             </subComponent>
          </SequenceAnnotation>

@@ -6,9 +6,9 @@
 	xmlns="http://sbols.org/v1#"
 	
 	>
-		
-	<DnaComponent rdf:about="http://example.com/dc1">
-		<description>Invalid because displayId field is missing</description>
-	</DnaComponent>
+
+	<DnaSequence rdf:about="http://example.com/ds1">
+		<nucleotides>tccctatcagtgat</nucleotides>
+	</DnaSequence>
 </rdf:RDF>
 
