@@ -15,7 +15,9 @@ static char**   VALID_EXAMPLES;
 static char** INVALID_EXAMPLES;
 
 void TestMini1(CuTest* tc) {
-	readSBOLCore("../examples/valid/mini1.nt");
+	char* filename = "../examples/valid/mini1.nt";
+	printf("testing %s\n", filename);
+	readSBOLCore(filename);
 	CuAssertIntEquals(tc, 1, getNumDNAComponents());
 	DNAComponent* com = getNthDNAComponent(0);
 	CuAssertStrEquals(tc, "com1", getDNAComponentName(com));
@@ -28,7 +30,9 @@ void TestMini1(CuTest* tc) {
 }
 
 void TestMini2(CuTest* tc) {
-	readSBOLCore("../examples/valid/mini2.nt");
+	char* filename = "../examples/valid/mini2.nt";
+	printf("testing %s\n", filename);
+	readSBOLCore(filename);
 	CuAssertIntEquals(tc, 1, getNumDNASequences());
 	DNASequence* seq = getNthDNASequence(0);
 	CuAssertStrEquals(tc, "sequence1", getDNASequenceID(seq));
@@ -40,7 +44,9 @@ void TestMini2(CuTest* tc) {
 }
 
 void TestMini3(CuTest* tc) {
-	readSBOLCore("../examples/valid/mini3.nt");
+	char* filename = "../examples/valid/mini3.nt";
+	printf("testing %s\n", filename);
+	readSBOLCore(filename);
 	CuAssertIntEquals(tc, 1, getNumSequenceAnnotations());
 	SequenceAnnotation* ann = getNthSequenceAnnotation(0);
 	CuAssertStrEquals(tc, "sa1", getSequenceAnnotationID(ann));
@@ -54,7 +60,9 @@ void TestMini3(CuTest* tc) {
 
 void TestNTriplesSimple(CuTest* tc) {
 	int result;
-	readSBOLCore("../examples/valid/ntriples_simple.nt");
+	char* filename = "../examples/valid/ntriples_simple.nt";
+	printf("testing %s\n", filename);
+	readSBOLCore(filename);
 	result = writeSBOLCore(OUTPUT_FILE);
 	cleanupSBOLCore();
 	CuAssertIntEquals(tc, 0, result);
@@ -66,24 +74,22 @@ void TestRoundTripValidExamples(CuTest* tc) {
 	int i;
 	char* filename;
 	int result;
-	int failures;
 	i = 0;
 	while (filename = VALID_EXAMPLES[i++]) {
+		printf("testing %s\n", filename);
 		readSBOLCore(filename);
 		result = writeSBOLCore(OUTPUT_FILE);
 		cleanupSBOLCore();
-		if (result != 0)
-			failures++;
+		CuAssertIntEquals(tc, 0, result);
 	}
-	CuAssertIntEquals(tc, 0, failures);
 }
 
 CuSuite* RoundTripGetSuite() {
 	CuSuite* roundTripTests = CuSuiteNew();
 	SUITE_ADD_TEST(roundTripTests, TestMini1);
-	SUITE_ADD_TEST(roundTripTests, TestMini2);
+	//SUITE_ADD_TEST(roundTripTests, TestMini2);
 	//SUITE_ADD_TEST(roundTripTests, TestMini3);
 	//SUITE_ADD_TEST(roundTripTests, TestNTriplesSimple);
-	//SUITE_ADD_TEST(roundTripTests, TestRoundTripValidExamples);
+	SUITE_ADD_TEST(roundTripTests, TestRoundTripValidExamples);
 	return roundTripTests;
 }

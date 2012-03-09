@@ -205,8 +205,13 @@ void TestCollectionIndexing(CuTest* tc) {
 	}	
 }
 
+void PrintGenericArrayTestInfo() {
+	printf("testing core/genericarray\n");
+}
+
 CuSuite* GenericArrayGetSuite() {
 	CuSuite* genericArrayTests = CuSuiteNew();
+	SUITE_ADD_TEST(genericArrayTests, PrintGenericArrayTestInfo);
 	SUITE_ADD_TEST(genericArrayTests, TestSingleDNAComponent);
 	SUITE_ADD_TEST(genericArrayTests, TestNumDNAComponents);
 	SUITE_ADD_TEST(genericArrayTests, TestDNAComponentIndexing);

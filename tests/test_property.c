@@ -35,8 +35,13 @@ void TestGetSetCompareProperty(CuTest* tc) {
 	}
 }
 
+void PrintPropertyTestInfo() {
+	printf("testing core/property\n");
+}
+
 CuSuite* PropertyGetSuite() {
 	CuSuite* properyTests = CuSuiteNew();
+	SUITE_ADD_TEST(properyTests, PrintPropertyTestInfo);
 	SUITE_ADD_TEST(properyTests, TestCreateProperty);
 	SUITE_ADD_TEST(properyTests, TestGetSetCompareProperty);
 	return properyTests;

@@ -74,8 +74,13 @@ void TestRandomCollectionProperties(CuTest* tc) {
 	}
 }
 
+void PrintCollectionTestInfo() {
+	printf("testing core/collection\n");
+}
+
 CuSuite* CollectionGetSuite() {
 	CuSuite* collectionTests = CuSuiteNew();
+	SUITE_ADD_TEST(collectionTests, PrintCollectionTestInfo);
 	SUITE_ADD_TEST(collectionTests, TestCreateEmptyCollection);
 	SUITE_ADD_TEST(collectionTests, TestCreateEmptyCollection);
 	SUITE_ADD_TEST(collectionTests, TestCreateRandomCollection);

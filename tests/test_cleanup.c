@@ -49,8 +49,13 @@ void TestMultipleDeleteProperty(CuTest* tc) {
 	}
 }
 
+void PrintCleanupTestInfo() {
+	printf("testing memory cleanup\n");
+}
+
 CuSuite* CleanupGetSuite() {
 	CuSuite* cleanupTests = CuSuiteNew();
+	SUITE_ADD_TEST(cleanupTests, PrintCleanupTestInfo);
 	SUITE_ADD_TEST(cleanupTests, TestCleanupFirst);
 	SUITE_ADD_TEST(cleanupTests, TestMultipleCleanupFirst);
 	SUITE_ADD_TEST(cleanupTests, TestReadThenCleanup);

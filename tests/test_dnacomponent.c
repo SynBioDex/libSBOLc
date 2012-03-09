@@ -78,8 +78,13 @@ void TestRandomDNAComponentProperties(CuTest* tc) {
 	}
 }
 
+void PrintDNAComponentTestInfo() {
+	printf("testing core/dnacomponent\n");
+}
+
 CuSuite* DNAComponentGetSuite() {
 	CuSuite* dnaComponentTests = CuSuiteNew();
+	SUITE_ADD_TEST(dnaComponentTests, PrintDNAComponentTestInfo);
 	SUITE_ADD_TEST(dnaComponentTests, TestCreateEmptyDNAComponent);
 	SUITE_ADD_TEST(dnaComponentTests, TestCreateNullDNAComponent);
 	SUITE_ADD_TEST(dnaComponentTests, TestCreateRandomDNAComponent);

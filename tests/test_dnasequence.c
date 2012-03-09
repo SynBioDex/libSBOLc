@@ -37,8 +37,13 @@ void TestCreateRandomDNASequence(CuTest* tc) {
 	}
 }
 
+void PrintDNASequenceTestInfo() {
+	printf("testing core/dnasequence\n");
+}
+
 CuSuite* DNASequenceGetSuite() {
 	CuSuite* dnaSequenceTests = CuSuiteNew();
+	SUITE_ADD_TEST(dnaSequenceTests, PrintDNASequenceTestInfo);
 	SUITE_ADD_TEST(dnaSequenceTests, TestCreateEmptyDNASequence);
 	SUITE_ADD_TEST(dnaSequenceTests, TestCreateNullDNASequence);
 	SUITE_ADD_TEST(dnaSequenceTests, TestCreateRandomDNASequence);

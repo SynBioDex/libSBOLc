@@ -56,8 +56,13 @@ void TestPrecedes(CuTest* tc) {
 	cleanupSBOLCore();
 }
 
+void PrintSequenceAnnotationTestInfo() {
+	printf("testing core/sequenceannotation\n");
+}
+
 CuSuite* SequenceAnnotationGetSuite() {
 	CuSuite* sequenceAnnotationTests = CuSuiteNew();
+	SUITE_ADD_TEST(sequenceAnnotationTests, PrintSequenceAnnotationTestInfo);
 	SUITE_ADD_TEST(sequenceAnnotationTests, TestCreateSequenceAnnotation);
 	SUITE_ADD_TEST(sequenceAnnotationTests, TestPrecedes);
 	return sequenceAnnotationTests;
