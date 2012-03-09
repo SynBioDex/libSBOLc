@@ -15,9 +15,9 @@
 #define XMLNS_RDF "http://www.w3.org/1999/02/22-rdf-syntax-ns#"
 #define XMLNS_RDFS "http://www.w3.org/2000/01/rdf-schema#"
 #define XMLNS_SO "http://purl.obolibrary.org/obo/"
-#define XMLNS_S "http://sbols.org/v1#"
-#define XMLNS_XSI "http://www.w3.org/2001/XMLSchema-instance"
-#define SCHEMA_LOCATION "http://sbols.org/v1# ../schema/sbol.xsd http://www.w3.org/1999/02/22-rdf-syntax-ns# ../schema/rdf.xsd"
+#define XMLNS_SBOL "http://sbols.org/v1#"
+//#define XMLNS_XSI "http://www.w3.org/2001/XMLSchema-instance"
+//#define SCHEMA_LOCATION "http://sbols.org/v1# ../schema/sbol.xsd http://www.w3.org/1999/02/22-rdf-syntax-ns# ../schema/rdf.xsd"
 
 static int INDENT;
 static xmlTextWriterPtr WRITER;
@@ -40,6 +40,7 @@ char* intToStr(int input) {
 		digits++;
 	}
 	if (digits==0) {
+		// create a single-char string
 		output = malloc(sizeof(char)*2);
 		output[0] = (char) (((int)'0')+input);
 		output[1] = '\0';
@@ -80,9 +81,9 @@ void startSBOLDocument() {
 	xmlTextWriterWriteAttribute(WRITER, "xmlns:rdf",  XMLNS_RDF);
 	xmlTextWriterWriteAttribute(WRITER, "xmlns:rdfs", XMLNS_RDFS);
 	xmlTextWriterWriteAttribute(WRITER, "xmlns:so",   XMLNS_SO);
-	xmlTextWriterWriteAttribute(WRITER, "xmlns:s",    XMLNS_S);
-	xmlTextWriterWriteAttribute(WRITER, "xmlns:xsi",  XMLNS_XSI);
-	xmlTextWriterWriteAttribute(WRITER, "xsi:schemaLocation", SCHEMA_LOCATION);
+	xmlTextWriterWriteAttribute(WRITER, "xmlns",      XMLNS_SBOL);
+	//xmlTextWriterWriteAttribute(WRITER, "xmlns:xsi",  XMLNS_XSI);
+	//xmlTextWriterWriteAttribute(WRITER, "xsi:schemaLocation", SCHEMA_LOCATION);
 	indentMore();
 }
 
@@ -109,12 +110,12 @@ int saveSBOLDocument(const char* filename) {
 void writeDNASequence(const DNASequence* seq, int includeContents) {
 	if (!seq)
 		return;
-	xmlTextWriterStartElement(WRITER, "s:DnaSequence");
+	xmlTextWriterStartElement(WRITER, "DnaSequence");
 	xmlTextWriterWriteAttribute(WRITER, "rdf:about", getDNASequenceID(seq));
 	
 	// nucleotides
 	if (includeContents)
-		xmlTextWriterWriteElement(WRITER, "s:nucleotides", getNucleotides(seq));
+		xmlTextWriterWriteElement(WRITER, "nucleotides", getNucleotides(seq));
 	
 	else
 		xmlTextWriterWriteAttribute(WRITER, "rdf:resource", getDNASequenceID(seq));
@@ -124,16 +125,16 @@ void writeDNASequence(const DNASequence* seq, int includeContents) {
 void writeSequenceAnnotation(const SequenceAnnotation* ann, int includeContents) {
 	if (!ann)
 		return;
-	xmlTextWriterStartElement(WRITER, "s:SequenceAnnotation");
+	xmlTextWriterStartElement(WRITER, "SequenceAnnotation");
 	xmlTextWriterWriteAttribute(WRITER, "rdf:about", getSequenceAnnotationID(ann));
 	
 	// start, end
 	int start = getBioStart(ann);
 	int end   = getBioEnd(ann);
 	if (start>0)
-		xmlTextWriterWriteElement(WRITER, "s:bioStart", intToStr(start));
+		xmlTextWriterWriteElement(WRITER, "bioStart", intToStr(start));
 	if (end>0)
-		xmlTextWriterWriteElement(WRITER, "s:bioEnd",   intToStr(end));
+		xmlTextWriterWriteElement(WRITER, "bioEnd",   intToStr(end));
 	
 	// subComponent
 	char* id;
@@ -141,7 +142,7 @@ void writeSequenceAnnotation(const SequenceAnnotation* ann, int includeContents)
 		indentMore();
 		if (ann->subComponent) {
 			id = getDNAComponentID(ann->subComponent);
-			xmlTextWriterStartElement(WRITER, "s:subComponent");
+			xmlTextWriterStartElement(WRITER, "subComponent");
 			xmlTextWriterWriteAttribute(WRITER, "rdf:resource", id);
 			xmlTextWriterEndElement(WRITER);
 		}
@@ -154,7 +155,7 @@ void writeSequenceAnnotation(const SequenceAnnotation* ann, int includeContents)
 void writeDNAComponent(const DNAComponent* com, int includeContents) {
 	if (!com)
 		return;
-	xmlTextWriterStartElement(WRITER, "s:DnaComponent");
+	xmlTextWriterStartElement(WRITER, "DnaComponent");
 	if (includeContents) {
 		xmlTextWriterWriteAttribute(WRITER, "rdf:about", getDNAComponentID(com));
 		
@@ -162,10 +163,10 @@ void writeDNAComponent(const DNAComponent* com, int includeContents) {
 		char* data;
 		data = getDNAComponentName(com);
 		if (data)
-			xmlTextWriterWriteElement(WRITER, "s:displayId", data);
+			xmlTextWriterWriteElement(WRITER, "displayId", data);
 		data = getDNAComponentDescription(com);
 		if (data)
-			xmlTextWriterWriteElement(WRITER, "s:description", data);
+			xmlTextWriterWriteElement(WRITER, "description", data);
 		
 		// sequence
 		if (com->dnaSequence)
@@ -177,7 +178,7 @@ void writeDNAComponent(const DNAComponent* com, int includeContents) {
 		SequenceAnnotation* ann;
 		if (num>0) {
 			indentMore();
-			xmlTextWriterStartElement(WRITER, "s:annotation");
+			xmlTextWriterStartElement(WRITER, "annotation");
 			for (n=0; n<num; n++) {
 				ann = getNthSequenceAnnotationIn(com, n);
 				indentMore();
@@ -196,15 +197,15 @@ void writeDNAComponent(const DNAComponent* com, int includeContents) {
 void writeCollection(const Collection* col, int includeContents) {
 	if (!col)
 		return;
-	xmlTextWriterStartElement(WRITER, "s:Collection");
+	xmlTextWriterStartElement(WRITER, "Collection");
 	if (includeContents) {
 		int n;
 		int num;
 		
 		// properties
 		xmlTextWriterWriteAttribute(WRITER, "rdf:about", getCollectionID(col));
-		xmlTextWriterWriteElement(WRITER, "s:displayId", getCollectionName(col));
-		xmlTextWriterWriteElement(WRITER, "s:description", getCollectionDescription(col));
+		xmlTextWriterWriteElement(WRITER, "displayId", getCollectionName(col));
+		xmlTextWriterWriteElement(WRITER, "description", getCollectionDescription(col));
 		
 		// components
 		DNAComponent* com;
@@ -212,7 +213,7 @@ void writeCollection(const Collection* col, int includeContents) {
 		if (num>0) {
 			indentMore();
 			for (n=0; n<num; n++) {
-				xmlTextWriterStartElement(WRITER, "s:component");
+				xmlTextWriterStartElement(WRITER, "component");
 				com = getNthDNAComponentIn(col, n);
 				indentMore();
 				if (getNumCollectionsFor(com) == 1)
@@ -231,7 +232,7 @@ void writeCollection(const Collection* col, int includeContents) {
 		if (num>0) {
 			indentMore();
 			for (n=0; n<num; n++) {
-				xmlTextWriterStartElement(WRITER, "s:collection");
+				xmlTextWriterStartElement(WRITER, "collection");
 				col2 = getNthCollectionIn(col, n);
 				indentMore();
 				// TODO sometimes don't include contents?
