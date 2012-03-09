@@ -29,6 +29,22 @@ void TestMini1(CuTest* tc) {
 	CuAssertIntEquals(tc, 0, getNumDNAComponents());
 }
 
+void TestRoundTripValidOne(CuTest* tc) {
+	char* filename = "../examples/valid/valid1.xml";
+	printf("testing %s\n", filename);
+	readSBOLCore(filename);
+	CuAssertIntEquals(tc, 1, getNumDNAComponents());
+	DNAComponent* com = getNthDNAComponent(0);
+	CuAssertStrEquals(tc, "Some display ID", getDNAComponentName(com));
+	CuAssertStrEquals(tc,
+			"Valid because only required field for a DNAComponent is displayId", 
+			getDNAComponentDescription(com));
+	int result = writeSBOLCore(OUTPUT_FILE);
+	CuAssertIntEquals(tc, 0, result);
+	cleanupSBOLCore();
+	CuAssertIntEquals(tc, 0, getNumDNAComponents());
+}
+
 void TestMini2(CuTest* tc) {
 	char* filename = "../examples/valid/mini2.nt";
 	printf("testing %s\n", filename);
@@ -86,10 +102,11 @@ void TestRoundTripValidExamples(CuTest* tc) {
 
 CuSuite* RoundTripGetSuite() {
 	CuSuite* roundTripTests = CuSuiteNew();
-	SUITE_ADD_TEST(roundTripTests, TestMini1);
+	//SUITE_ADD_TEST(roundTripTests, TestMini1);
 	//SUITE_ADD_TEST(roundTripTests, TestMini2);
 	//SUITE_ADD_TEST(roundTripTests, TestMini3);
 	//SUITE_ADD_TEST(roundTripTests, TestNTriplesSimple);
-	SUITE_ADD_TEST(roundTripTests, TestRoundTripValidExamples);
+	SUITE_ADD_TEST(roundTripTests, TestRoundTripValidOne);
+	//SUITE_ADD_TEST(roundTripTests, TestRoundTripValidExamples);
 	return roundTripTests;
 }
