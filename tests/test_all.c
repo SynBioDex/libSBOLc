@@ -8,7 +8,6 @@ CuSuite* CollectionGetSuite();
 CuSuite* DNAComponentGetSuite();
 CuSuite* GenericArrayGetSuite();
 CuSuite* PropertyGetSuite();
-CuSuite* WriteExamplesGetSuite();
 CuSuite* CleanupGetSuite();
 CuSuite* RoundTripGetSuite();
 
@@ -27,7 +26,6 @@ void RunAllTests(void) {
 	CuSuiteAddSuite(suite, CollectionGetSuite());
 	CuSuiteAddSuite(suite, PropertyGetSuite());
 	CuSuiteAddSuite(suite, CleanupGetSuite());
-	CuSuiteAddSuite(suite, WriteExamplesGetSuite());
 	CuSuiteAddSuite(suite, RoundTripGetSuite());
 	
 	CuSuiteRun(suite);
