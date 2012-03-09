@@ -162,6 +162,7 @@ void readSBOLCore(char* filename) {
 	world = raptor_new_world();
 	
 	// choose parse format
+	// TODO have raptor guess this
 	char* ext = getExtension(filename);
 	if (sameString(ext, "nt"))
 		rdf_parser = raptor_new_parser(world, "ntriples");

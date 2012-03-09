@@ -71,6 +71,10 @@ INCLUDE_DIRECTORIES(
 )
 
 # build examples
+ADD_EXECUTABLE( sbol_print
+	${PROJECT_SOURCE_FILES}
+	${PROJECT_EXAMPLE_DIR}/sbol_print.c
+)
 ADD_EXECUTABLE( sbol_parse
 	${PROJECT_SOURCE_FILES}
 	${PROJECT_EXAMPLE_DIR}/sbol_parse.c
@@ -83,6 +87,7 @@ ADD_EXECUTABLE( sbol_roundtrip
 	${PROJECT_SOURCE_FILES}
 	${PROJECT_EXAMPLE_DIR}/sbol_roundtrip.c
 )
+TARGET_LINK_LIBRARIES( sbol_print     sbol )
 TARGET_LINK_LIBRARIES( sbol_parse     sbol )
 TARGET_LINK_LIBRARIES( sbol_validate  sbol )
 TARGET_LINK_LIBRARIES( sbol_roundtrip sbol )
