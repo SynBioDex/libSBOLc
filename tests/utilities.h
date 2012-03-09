@@ -4,5 +4,6 @@
 char  randomChar();
 char* randomString();
 int randomNumber(int max);
+char** getFilenames(char* dirname);
 
 #endif

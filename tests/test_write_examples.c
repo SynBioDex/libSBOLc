@@ -1,5 +1,6 @@
 #include <stdio.h>
 #include <stdlib.h>
+#include <dirent.h>
 #include "CuTest.h"
 #include "utilities.h"
 #include "core.h"
@@ -11,33 +12,39 @@
 #define NTRIPLES_INFILE  "../examples/valid/ntriples_simple.nt"
 #define NTRIPLES_OUTFILE "ntriples_simple.xml"
 
-#define VALID1_INFILE  "../examples/valid/valid1.xml"
-#define VALID1_OUTFILE "valid1.xml"
+#define   VALID_EXAMPLES_DIR "../examples/valid/"
+#define INVALID_EXAMPLES_DIR "../examples/invalid/"
 
-#define VALID2_INFILE  "../examples/valid/valid2.xml"
-#define VALID2_OUTFILE "valid2.xml"
+#define OUTPUT_FILE "output.xml"
+
+static char**   VALID_EXAMPLES;
+static char** INVALID_EXAMPLES;
 
 void TestNTriplesSimple(CuTest* tc) {
 	int result;
 	readSBOLCore(NTRIPLES_INFILE);
-	result = writeSBOLCore(NTRIPLES_OUTFILE);
+	result = writeSBOLCore(OUTPUT_FILE);
 	cleanupSBOLCore();
 	CuAssertIntEquals(tc, 0, result);
 }
 
 void TestValid1(CuTest* tc) {
+	if (!VALID_EXAMPLES)
+		VALID_EXAMPLES = getFilenames(VALID_EXAMPLES_DIR);
 	int result;
-	readSBOLCore(VALID1_INFILE);
+	readSBOLCore(VALID_EXAMPLES[0]);
 	printSBOLCore();
-	result = writeSBOLCore(VALID1_OUTFILE);
+	result = writeSBOLCore(OUTPUT_FILE);
 	cleanupSBOLCore();
 	CuAssertIntEquals(tc, 0, result);
 }
 
 void TestValid2(CuTest* tc) {
+	if (!VALID_EXAMPLES)
+		VALID_EXAMPLES = getFilenames(VALID_EXAMPLES_DIR);
 	int result;
-	readSBOLCore(VALID2_INFILE);
-	result = writeSBOLCore(VALID2_OUTFILE);
+	readSBOLCore(VALID_EXAMPLES[1]);
+	result = writeSBOLCore(OUTPUT_FILE);
 	cleanupSBOLCore();
 	CuAssertIntEquals(tc, 0, result);
 }
