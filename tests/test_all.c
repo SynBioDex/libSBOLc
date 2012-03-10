@@ -11,11 +11,7 @@ CuSuite* PropertyGetSuite();
 CuSuite* CleanupGetSuite();
 CuSuite* RoundTripGetSuite();
 
-void RunAllTests(void) {
-	// seed with current time
-	// should only be done once
-	srand( time(NULL) );
-	
+void RunUnitTests() {
 	CuString* output = CuStringNew();
 	CuSuite*  suite  = CuSuiteNew();
 
@@ -26,15 +22,32 @@ void RunAllTests(void) {
 	CuSuiteAddSuite(suite, CollectionGetSuite());
 	CuSuiteAddSuite(suite, PropertyGetSuite());
 	CuSuiteAddSuite(suite, CleanupGetSuite());
-	CuSuiteAddSuite(suite, RoundTripGetSuite());
 	
+	printf("\nRunning unit tests...\n");
 	CuSuiteRun(suite);
 	CuSuiteSummary(suite, output);
 	CuSuiteDetails(suite, output);
-	
 	printf("%s\n", output->buffer);
 }
 
-int main(void) {
-	RunAllTests();
+void RunExampleTests() {
+	CuString* output = CuStringNew();
+	CuSuite*  suite  = CuSuiteNew();
+
+	CuSuiteAddSuite(suite, RoundTripGetSuite());
+	
+	printf("\nChecking that examples are handled correctly...\n");
+	CuSuiteRun(suite);
+	CuSuiteSummary(suite, output);
+	CuSuiteDetails(suite, output);
+	printf("%s\n", output->buffer);
+}
+
+void main(void) {
+	// seed with current time
+	// should only be done once
+	srand( time(NULL) );
+
+	RunUnitTests();
+	RunExampleTests();
 }

@@ -2,26 +2,21 @@
 #include <raptor.h>
 #include "core.h"
 #include "reader.h"
+#include "types.h"
+#include "utilities.h"
 
 // TODO will this sequential read miss things declared in certain orders?
-
-int sameString(char* string1, char* string2) {
-	if (!string1 || !string2)
-		return 0;
-	else
-		return (int) strcmp(string1, string2) == 0;
-}
 
 void createNewObject(char* id, char* type) {
 	if (!id || !type)
 		return;
-	else if (sameString(type, "DNASequence"))
+	else if (sameString(type, SBOL_DNASEQUENCE))
 		createDNASequence(id);
-	else if (sameString(type, "DNAComponent"))
+	else if (sameString(type, SBOL_DNACOMPONENT))
 		createDNAComponent(id);
-	else if (sameString(type, "SequenceAnnotation"))
+	else if (sameString(type, SBOL_SEQUENCEANNOTATION))
 		createSequenceAnnotation(id);
-	else if (sameString(type, "Collection"))
+	else if (sameString(type, SBOL_COLLECTION))
 		createCollection(id);
 }
 
@@ -29,7 +24,7 @@ void addToDNASequence(char* id, char* field, char* value) {
 	if (!id || !field || !value)
 		return;
 	DNASequence* seq = getDNASequence(id);
-	if (sameString(field, "nucleotides"))
+	if (sameString(field, SBOL_NUCLEOTIDES))
 		setNucleotides(seq, value);
 }
 
@@ -37,11 +32,11 @@ void addToDNAComponent(char* id, char* field, char* value) {
 	if (!id || !field || !value)
 		return;
 	DNAComponent* com = getDNAComponent(id);
-	if (sameString(field, "name"))
+	if (sameString(field, SBOL_NAME))
 		setDNAComponentName(com, value);
-	else if (sameString(field, "description"))
+	else if (sameString(field, SBOL_DESCRIPTION))
 		setDNAComponentDescription(com, value);
-	else if (sameString(field, "collection")) {
+	else if (sameString(field, SBOL_COLLECTION)) {
 		Collection* col;
 		if (isCollectionID(value)) // something about > 0?
 			col = getCollection(value);
@@ -55,9 +50,9 @@ void addToCollection(char* id, char* field, char* value) {
 	if (!id || !field || !value)
 		return;
 	Collection* col = getCollection(id);
-	if (sameString(field, "name"))
+	if (sameString(field, SBOL_NAME))
 		setCollectionName(col, value);
-	else if (sameString(field, "description"))
+	else if (sameString(field, SBOL_DESCRIPTION))
 		setCollectionDescription(col, value);
 }
 
@@ -66,17 +61,17 @@ void addToSequenceAnnotation(char* id, char* field, char* value) {
 		return;
 	SequenceAnnotation* ann = getSequenceAnnotation(id);
 	DNAComponent* com;
-	if (sameString(field, "annotates") || sameString(field, "subComponent")) {
+	if (sameString(field, SBOL_ANNOTATES) || sameString(field, SBOL_SUBCOMPONENT)) {
 		if (!isDNAComponentID(value))
 			com = createDNAComponent(value);
 		else
 			com = getDNAComponent(value);
 	}
-	if (sameString(field, "annotates"))
+	if (sameString(field, SBOL_ANNOTATES))
 		addSequenceAnnotation(com, ann);
-	else if (sameString(field, "subComponent"))
+	else if (sameString(field, SBOL_SUBCOMPONENT))
 		setSubComponent(ann, com);
-	else if (sameString(field, "precedes")) {
+	else if (sameString(field, SBOL_PRECEDES)) {
 		SequenceAnnotation* ann2;
 		if (!isSequenceAnnotationID(value))
 			ann2 = createSequenceAnnotation(value);
@@ -84,10 +79,15 @@ void addToSequenceAnnotation(char* id, char* field, char* value) {
 			ann2 = getSequenceAnnotation(value);
 		addPrecedesRelationship(ann, ann2);
 	}
-	else if (sameString(field, "bioStart"))
+	else if (sameString(field, SBOL_BIOSTART))
 		setBioStart(ann, atoi(value));
-	else if (sameString(field, "bioEnd"))
+	else if (sameString(field, SBOL_BIOEND))
 		setBioEnd(ann, atoi(value));
+}
+
+static void print_triple(raptor_statement* triple) {
+  raptor_statement_print_as_ntriples(triple, stdout);
+  fputc('\n', stdout);
 }
 
 // analyze a single triple and add to
@@ -114,9 +114,13 @@ void read_triple(void* user_data, raptor_statement* triple) {
 		o = (char*)(raptor_uri_as_string(triple->object->value.uri));
 	else if (triple->object->type == RAPTOR_TERM_TYPE_LITERAL)
 		o = (char*)(triple->object->value.literal.string);
+
+	// for debugging
+	//print_triple(triple);
+	//printf("%s %s %s\n", s, p, o);
 	
 	// adjust SBOL core to match
-	if (sameString(p, "a")) //TODO or p == rdf:type?
+	if (sameString(p, RDF_TYPE))
 		createNewObject(s, o);
 	else if (isDNASequenceID(s))
 		addToDNASequence(s, p, o);
@@ -126,27 +130,6 @@ void read_triple(void* user_data, raptor_statement* triple) {
 		addToCollection(s, p, o);
 	else if (isSequenceAnnotationID(s))
 		addToSequenceAnnotation(s, p, o);
-}
-
-char* getExtension(char* filename) {
-	if (!filename)
-		return NULL;
-	int i;
-	int len;
-	char* ext;
-	// determine index of dot
-	len = strlen(filename);
-	for (i=len-1; i>=0; i--) {
-		if (filename[i] == '.') {
-			i++; // don't include the dot itself
-			break;
-		}
-	}
-	if (i==0)
-		return NULL;
-	// return chars after dot
-	// TODO is returning part of the same string dangerous?
-	return &filename[i];
 }
 
 void readSBOLCore(char* filename) {
@@ -162,7 +145,6 @@ void readSBOLCore(char* filename) {
 	world = raptor_new_world();
 	
 	// choose parse format
-	// TODO have raptor guess this
 	char* ext = getExtension(filename);
 	if (sameString(ext, "nt"))
 		rdf_parser = raptor_new_parser(world, "ntriples");

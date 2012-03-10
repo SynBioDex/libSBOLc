@@ -4,6 +4,7 @@
 #include "core.h"
 #include "writer.h"
 #include "validator.h"
+#include "types.h"
 
 /************************
  * set up SBOL document
@@ -11,13 +12,6 @@
 
 #define INCLUDE_URI_ONLY 0
 #define INCLUDE_CONTENTS 1
-
-#define XMLNS_RDF "http://www.w3.org/1999/02/22-rdf-syntax-ns#"
-#define XMLNS_RDFS "http://www.w3.org/2000/01/rdf-schema#"
-#define XMLNS_SO "http://purl.obolibrary.org/obo/"
-#define XMLNS_SBOL "http://sbols.org/v1#"
-//#define XMLNS_XSI "http://www.w3.org/2001/XMLSchema-instance"
-//#define SCHEMA_LOCATION "http://sbols.org/v1# ../schema/sbol.xsd http://www.w3.org/1999/02/22-rdf-syntax-ns# ../schema/rdf.xsd"
 
 static int INDENT;
 static xmlTextWriterPtr WRITER;
