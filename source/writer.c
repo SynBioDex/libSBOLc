@@ -101,18 +101,18 @@ int saveSBOLDocument(const char* filename) {
  * serialize SBOL core
  ***********************/
 
+// TODO move node names to types.h
+
 void writeDNASequence(const DNASequence* seq, int includeContents) {
 	if (!seq)
 		return;
 	xmlTextWriterStartElement(WRITER, "DnaSequence");
 	xmlTextWriterWriteAttribute(WRITER, "rdf:about", getDNASequenceID(seq));
-	
+
 	// nucleotides
 	if (includeContents)
 		xmlTextWriterWriteElement(WRITER, "nucleotides", getNucleotides(seq));
 	
-	else
-		xmlTextWriterWriteAttribute(WRITER, "rdf:resource", getDNASequenceID(seq));
 	xmlTextWriterEndElement(WRITER);
 }
 
@@ -163,25 +163,31 @@ void writeDNAComponent(const DNAComponent* com, int includeContents) {
 			xmlTextWriterWriteElement(WRITER, "description", data);
 		
 		// sequence
-		if (com->dnaSequence)
-			writeDNASequence(com->dnaSequence, INCLUDE_URI_ONLY);
+		if (com->dnaSequence) {
+			xmlTextWriterStartElement(WRITER, "dnaSequence");
+			indentMore();
+			// TODO sometimes no contents?
+			writeDNASequence(com->dnaSequence, INCLUDE_CONTENTS);
+			indentLess();
+			xmlTextWriterEndElement(WRITER);
+		}
 		
 		// annotations
 		int n;
 		int num = getNumSequenceAnnotationsIn(com);
 		SequenceAnnotation* ann;
+		indentMore();
 		if (num>0) {
-			indentMore();
-			xmlTextWriterStartElement(WRITER, "annotation");
 			for (n=0; n<num; n++) {
 				ann = getNthSequenceAnnotationIn(com, n);
 				indentMore();
+				xmlTextWriterStartElement(WRITER, "annotation");
 				writeSequenceAnnotation(ann, INCLUDE_CONTENTS);
+				xmlTextWriterEndElement(WRITER);
 				indentLess();
 			}
-			xmlTextWriterEndElement(WRITER);
-			indentLess();
 		}
+		indentLess();
 		
 	} else
 		xmlTextWriterWriteAttribute(WRITER, "rdf:resource", getDNAComponentID(com));

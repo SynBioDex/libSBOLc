@@ -160,24 +160,31 @@ DNAComponent* getDNAComponent(const char* id) {
 }
 
 char* getDNAComponentID(const DNAComponent* com) {
-    if (com)
-    	return getProperty(com->id);
-    else
-    	return NULL;
+	if (com)
+		return getProperty(com->id);
+	else
+		return NULL;
 }
 
 char* getDNAComponentName(const DNAComponent* com) {
-    if (com)
-    	return getProperty(com->name);
-    else
-    	return NULL;
+	if (com)
+		return getProperty(com->name);
+	else
+		return NULL;
 }
 
 char* getDNAComponentDescription(const DNAComponent* com) {
-    if (com)
-        return getProperty(com->description);
-    else
-    	return NULL;
+	if (com)
+		return getProperty(com->description);
+	else
+		return NULL;
+}
+
+DNASequence* getDNAComponentSequence(DNAComponent* com) {
+	if (com && com->dnaSequence)
+		return com->dnaSequence;
+	else
+		return NULL;
 }
 
 /**************************
@@ -185,17 +192,22 @@ char* getDNAComponentDescription(const DNAComponent* com) {
 ***************************/
 
 void setDNAComponentID(DNAComponent* com, const char* id) {
-    setProperty(com->id, id);
+	setProperty(com->id, id);
 }
 
 void setDNAComponentName(DNAComponent* com, const char* name) {
-    if (com)
-        setProperty(com->name, name);
+	if (com)
+		setProperty(com->name, name);
 }
 
 void setDNAComponentDescription(DNAComponent* com, const char* descr) {
-    if (com)
-        setProperty(com->description, descr);
+	if (com)
+		setProperty(com->description, descr);
+}
+
+void setDNAComponentSequence(DNAComponent* com, struct _DNASequence* seq) {
+	if (com && seq)
+		com->dnaSequence = seq;
 }
 
 /**************************
@@ -221,55 +233,55 @@ void cleanupDNAComponents() {
 		for (n=getNumDNAComponents()-1; n>=0; n--) {
 			com = getNthDNAComponent(n);
 			deleteDNAComponent(com);
-	    }
+		}
 		deleteGenericArray(allDNAComponents);
 		allDNAComponents = NULL;
 	}
 }
 
 void printDNAComponent(const DNAComponent* com, int tabs) {
-    if (!com)
-        return;
-    indent(tabs);   printf("%s\n", getDNAComponentID(com));
-    indent(tabs+1); printf("name: %s\n", getDNAComponentName(com));
-    indent(tabs+1); printf("description: %s\n", getDNAComponentDescription(com));
-    if (com->dnaSequence) {
-        printDNASequence(com->dnaSequence, tabs+1);
-    } else {
-    	indent(tabs+1); printf("no sequence\n");
-    }
-    int i;
-    int num;
-    if (com->annotations) {
-        SequenceAnnotation* seq;
-        num = getNumSequenceAnnotationsIn(com);
-        if (num > 0) {
-            indent(tabs+1); printf("%i annotations:\n", num);
-            for (i=0; i<num; i++) {
-                seq = getNthSequenceAnnotationIn(com, i);
-                indent(tabs+2); printf("%s\n", getSequenceAnnotationID(seq));
-            }
-        }
-    }
-    if (com->collections) {
-        Collection* col;
-        num = getNumCollectionsFor(com);
-        if (num > 0) {
-            indent(tabs+1); printf("%i collections:\n", num);
-            for (i=0; i<num; i++) {
-                col = getNthCollectionFor(com, i);
-                indent(tabs+2); printf("%s\n", getCollectionID(col));
-            }
-        }
-    }
+	if (!com)
+		return;
+	indent(tabs);   printf("%s\n", getDNAComponentID(com));
+	indent(tabs+1); printf("name: %s\n", getDNAComponentName(com));
+	indent(tabs+1); printf("description: %s\n", getDNAComponentDescription(com));
+	if (com->dnaSequence) {
+		printDNASequence(com->dnaSequence, tabs+1);
+	} else {
+		indent(tabs+1); printf("no sequence\n");
+	}
+	int i;
+	int num;
+	if (com->annotations) {
+		SequenceAnnotation* seq;
+		num = getNumSequenceAnnotationsIn(com);
+		if (num > 0) {
+			indent(tabs+1); printf("%i annotations:\n", num);
+			for (i=0; i<num; i++) {
+				seq = getNthSequenceAnnotationIn(com, i);
+				indent(tabs+2); printf("%s\n", getSequenceAnnotationID(seq));
+			}
+		}
+	}
+	if (com->collections) {
+		Collection* col;
+		num = getNumCollectionsFor(com);
+		if (num > 0) {
+			indent(tabs+1); printf("%i collections:\n", num);
+			for (i=0; i<num; i++) {
+				col = getNthCollectionFor(com, i);
+				indent(tabs+2); printf("%s\n", getCollectionID(col));
+			}
+		}
+	}
 }
 
 void printAllDNAComponents() {
-    int n;
-    int num = getNumDNAComponents();
-    if (num > 0) {
-        printf("%i components:\n", num);
-        for (n=0; n<num; n++)
-            printDNAComponent(getNthDNAComponent(n), 1);
-    }
+	int n;
+	int num = getNumDNAComponents();
+	if (num > 0) {
+		printf("%i components:\n", num);
+		for (n=0; n<num; n++)
+			printDNAComponent(getNthDNAComponent(n), 1);
+	}
 }

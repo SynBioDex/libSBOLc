@@ -37,11 +37,13 @@ struct _SequenceAnnotation* getNthSequenceAnnotationIn(const DNAComponent* com, 
 char* getDNAComponentID(const DNAComponent* com);
 char* getDNAComponentName(const DNAComponent* com);
 char* getDNAComponentDescription(const DNAComponent* com);
+struct _DNASequence* getDNAComponentSequence(DNAComponent* com);
 
 // set properties
 void setDNAComponentID(DNAComponent* com, const char* id);
 void setDNAComponentName(DNAComponent* com, const char* name);
 void setDNAComponentDescription(DNAComponent* com, const char* desc);
+void setDNAComponentSequence(DNAComponent* com, struct _DNASequence* seq);
 
 // TODO where should this go?
 // work with annotations
