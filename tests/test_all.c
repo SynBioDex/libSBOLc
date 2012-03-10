@@ -10,6 +10,7 @@ CuSuite* GenericArrayGetSuite();
 CuSuite* PropertyGetSuite();
 CuSuite* CleanupGetSuite();
 CuSuite* RoundTripGetSuite();
+CuSuite* ReaderGetSuite();
 
 void RunUnitTests() {
 	CuString* output = CuStringNew();
@@ -34,6 +35,7 @@ void RunExampleTests() {
 	CuString* output = CuStringNew();
 	CuSuite*  suite  = CuSuiteNew();
 
+	CuSuiteAddSuite(suite, ReaderGetSuite());
 	CuSuiteAddSuite(suite, RoundTripGetSuite());
 	
 	printf("\nChecking that examples are handled correctly...\n");

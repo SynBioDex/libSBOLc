@@ -117,7 +117,6 @@ void read_triple(void* user_data, raptor_statement* triple) {
 
 	// for debugging
 	//print_triple(triple);
-	//printf("%s %s %s\n", s, p, o);
 	
 	// adjust SBOL core to match
 	if (sameString(p, RDF_TYPE))
