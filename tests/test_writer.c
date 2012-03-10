@@ -6,6 +6,7 @@
 // TODO write equality test functions and use them to test that these are identical to originals
 // TODO need a separate notion of displayID! (or really URI probably)
 // TODO establish easy patterns for adding subparts ect.
+// TODO store whether each thing has been printed to avoid duplicates
 
 void TestRecreateValid1(CuTest* tc) {
 	char* filename = "valid1.xml";
@@ -16,12 +17,15 @@ void TestRecreateValid1(CuTest* tc) {
 	writeSBOLCore(filename);
 }
 
+// TODO sa3 is completely missing. wtf?
+// and dc1, ds1 appear twice.
 void TestRecreateValid2(CuTest* tc) {
 	// dna components
 	DNAComponent* dc1 = createDNAComponent("http://example.com/dc1");
 	DNAComponent* dc2 = createDNAComponent("http://example.com/dc2");
 	DNAComponent* dc3 = createDNAComponent("http://example.com/dc3");
 	DNAComponent* dc4 = createDNAComponent("http://example.com/dc4");
+	// TODO displayID field
 	setDNAComponentName(dc1, "DnaComponent1");
 	setDNAComponentName(dc2, "DnaComponent2");
 	setDNAComponentName(dc3, "DnaComponent3");

@@ -7,6 +7,10 @@
 #include "types.h"
 #include "utilities.h"
 
+// TODO don't write the same sequence more than once!
+// (store how many times it's used?)
+// (or whether each thing has been printed already?)
+
 /************************
  * set up SBOL document
  ************************/
@@ -199,8 +203,8 @@ void writeCollection(const Collection* col, int includeContents) {
 		Collection* col2;
 		num = getNumCollectionsIn(col);
 		if (num>0) {
-			indentMore();
 			for (n=0; n<num; n++) {
+				indentMore();
 				xmlTextWriterStartElement(WRITER, "collection");
 				col2 = getNthCollectionIn(col, n);
 				indentMore();
@@ -208,8 +212,8 @@ void writeCollection(const Collection* col, int includeContents) {
 				writeCollection(col2, INCLUDE_CONTENTS);
 				indentLess();
 				xmlTextWriterEndElement(WRITER);
+				indentLess();
 			}
-			indentLess();
 		}
 		
 	} else
