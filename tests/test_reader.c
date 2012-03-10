@@ -9,7 +9,7 @@
 
 void TestMini1(CuTest* tc) {
 	char* filename = "../examples/valid/mini1.nt";
-	printf("testing %s\n", filename);
+	printf("reading %s\n", filename);
 	readSBOLCore(filename);
 	CuAssertIntEquals(tc, 1, getNumDNAComponents());
 	DNAComponent* com = getNthDNAComponent(0);
@@ -24,7 +24,7 @@ void TestMini1(CuTest* tc) {
 
 void TestMini2(CuTest* tc) {
 	char* filename = "../examples/valid/mini2.nt";
-	printf("testing %s\n", filename);
+	printf("reading %s\n", filename);
 	readSBOLCore(filename);
 	CuAssertIntEquals(tc, 1, getNumDNASequences());
 	DNASequence* seq = getNthDNASequence(0);
@@ -38,7 +38,7 @@ void TestMini2(CuTest* tc) {
 
 void TestMini3(CuTest* tc) {
 	char* filename = "../examples/valid/mini3.nt";
-	printf("testing %s\n", filename);
+	printf("reading %s\n", filename);
 	readSBOLCore(filename);
 	CuAssertIntEquals(tc, 1, getNumSequenceAnnotations());
 	SequenceAnnotation* ann = getNthSequenceAnnotation(0);
@@ -51,10 +51,28 @@ void TestMini3(CuTest* tc) {
 	CuAssertIntEquals(tc, 0, getNumSequenceAnnotations());
 }
 
+void TestValid1(CuTest* tc) {
+	char* filename = "../examples/valid/valid1.xml";
+	printf("reading %s\n", filename);
+	readSBOLCore(filename);
+	printSBOLCore();
+	CuAssertIntEquals(tc, 1, getNumDNAComponents());
+	DNAComponent* com = getNthDNAComponent(0);
+	CuAssertStrEquals(tc, "http://example.com/dc1", getDNAComponentID(com));
+	CuAssertStrEquals(tc, "Some display ID", getDNAComponentName(com)); // TODO is this backward?
+	CuAssertStrEquals(tc, "Valid because only required field for a DNAComponent is displayId",
+			getDNAComponentDescription(com));
+	int result = writeSBOLCore(OUTPUT_FILE);
+	CuAssertIntEquals(tc, 0, result);
+	cleanupSBOLCore();
+	CuAssertIntEquals(tc, 0, getNumDNAComponents());
+}
+
 CuSuite* ReaderGetSuite() {
 	CuSuite* readerTests = CuSuiteNew();
 	SUITE_ADD_TEST(readerTests, TestMini1);
 	SUITE_ADD_TEST(readerTests, TestMini2);
 	SUITE_ADD_TEST(readerTests, TestMini3);
+	//SUITE_ADD_TEST(readerTests, TestValid1);
 	return readerTests;
 }

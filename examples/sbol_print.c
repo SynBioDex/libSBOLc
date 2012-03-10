@@ -23,18 +23,19 @@ int main (int argc, char *argv[]) {
   else {
     if (strcmp(ext, "xml") != 0)
       printf("WARNING: Unrecognized extension '%s'. Parsing as rdfxml.\n", ext);
+
     rdf_parser = raptor_new_parser(world, "rdfxml");
   }
 
+  printf("\nprinting %s\n", argv[1]);
   unsigned char* uri_string = raptor_uri_filename_to_uri_string(argv[1]);
   raptor_uri* uri           = raptor_new_uri(world, uri_string);
-  raptor_uri* base_uri      = raptor_uri_copy(uri);
 
   raptor_parser_set_statement_handler(rdf_parser, NULL, print_triple);
-  raptor_parser_parse_file(rdf_parser, uri, base_uri);
+  raptor_parser_parse_file(rdf_parser, uri, NULL);
+  printf("\n");
 
   raptor_free_parser(rdf_parser);
-  raptor_free_uri(base_uri);
   raptor_free_uri(uri);
   raptor_free_memory(uri_string);
   raptor_free_world(world);
