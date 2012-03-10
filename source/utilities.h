@@ -3,5 +3,6 @@
 
 char* getExtension(char* filename);
 int sameString(char* string1, char* string2);
+char* intToStr(int input);
 
 #endif

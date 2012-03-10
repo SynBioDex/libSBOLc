@@ -5,6 +5,7 @@
 #include "writer.h"
 #include "validator.h"
 #include "types.h"
+#include "utilities.h"
 
 /************************
  * set up SBOL document
@@ -19,38 +20,6 @@ static xmlDocPtr OUTPUT;
 
 void indentMore() { xmlTextWriterSetIndent(WRITER, ++INDENT); }
 void indentLess() { xmlTextWriterSetIndent(WRITER, --INDENT); }
-
-// TODO put this somewhere better
-char* intToStr(int input) {
-	int i;
-	int digits;
-	int lastDigit;
-	char* output;
-	// determine number of digits
-	digits = 0;
-	i = input;
-	while (i>0) {
-		i /= 10;
-		digits++;
-	}
-	if (digits==0) {
-		// create a single-char string
-		output = malloc(sizeof(char)*2);
-		output[0] = (char) (((int)'0')+input);
-		output[1] = '\0';
-	} else {
-		// create string to hold that many chars
-		output = malloc(sizeof(char) * (digits+1));
-		// copy over each digit as a char
-		for (i=digits-1; i>=0; i--) {
-			lastDigit = input%10;
-			output[i] = (char) (((int)'0')+lastDigit);
-			input /= 10;
-		}
-		output[digits] = '\0';
-	}
-	return output;
-}
 
 void createSBOLWriter() {
 	INDENT = 0;
