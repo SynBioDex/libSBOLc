@@ -12,6 +12,7 @@ typedef struct _Collection {
 	struct _Property* description;
 	struct _GenericArray* components;
 	struct _GenericArray* collections;
+	int processed;
 } Collection;
 
 // create/destroy

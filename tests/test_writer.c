@@ -55,6 +55,7 @@ void TestRecreateValid2(CuTest* tc) {
 	SequenceAnnotation* sa3 = createSequenceAnnotation("http://example.com/sa3");
 	addPrecedesRelationship(sa3, sa2);
 	setSubComponent(sa3, dc4);
+	addSequenceAnnotation(dc1, sa3);
 	// serialize
 	char* filename = "valid2.xml";
 	printf("recreating %s\n", filename);

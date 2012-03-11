@@ -30,6 +30,7 @@ SequenceAnnotation* createSequenceAnnotation(const char* uri) {
 	ann->annotates    = NULL;
 	ann->subComponent = NULL;
 	ann->precedes = createGenericArray();
+	ann->processed = 0;
 	setSequenceAnnotationURI(ann, uri);
 	registerSequenceAnnotation(ann);
 	return ann;

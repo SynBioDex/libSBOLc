@@ -30,6 +30,7 @@ Collection* createCollection(const char* uri) {
 	col->description = createProperty();
 	col->components  = createGenericArray();
 	col->collections = createGenericArray();
+	col->processed   = 0;
 	setCollectionURI(col, uri);
 	registerCollection(col);
 	return col;

@@ -15,6 +15,7 @@ typedef struct _DNAComponent {
 	struct _DNASequence* dnaSequence;
 	struct _GenericArray* annotations;
 	struct _GenericArray* collections;
+	int processed;
 } DNAComponent;
 
 // create/destroy

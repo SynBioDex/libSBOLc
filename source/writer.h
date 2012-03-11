@@ -26,9 +26,9 @@ struct _DNASequence;
 struct _DNAComponent;
 struct _Collection;
 
-void writeDNASequence(const struct _DNASequence* seq);
-void writeDNAComponent(const struct _DNAComponent* com);
-void writeCollection(const struct _Collection* col);
+void writeDNASequence(struct _DNASequence* seq);
+void writeDNAComponent(struct _DNAComponent* com);
+void writeCollection(struct _Collection* col);
 
 /***********************
  * main write function

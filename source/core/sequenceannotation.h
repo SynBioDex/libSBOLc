@@ -12,6 +12,7 @@ typedef struct _SequenceAnnotation {
    	struct _DNAComponent* annotates;
 	struct _DNAComponent* subComponent;
 	struct _GenericArray* precedes;
+	int processed;
 } SequenceAnnotation;
 
 // create/destroy

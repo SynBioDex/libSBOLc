@@ -6,6 +6,7 @@ struct _Property;
 typedef struct _DNASequence {
 	struct _Property* uri;
 	struct _Property* nucleotides;
+	int processed;
 } DNASequence;
 
 DNASequence* createDNASequence(char* nucleotides); // TODO id?

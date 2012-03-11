@@ -23,6 +23,7 @@ DNASequence* createDNASequence(char* uri) {
 	DNASequence* seq = malloc(sizeof(DNASequence));
 	seq->uri         = createProperty();
 	seq->nucleotides = createProperty();
+	seq->processed   = 0;
 	setDNASequenceURI(seq, uri);
 	registerDNASequence(seq);
 	return seq;

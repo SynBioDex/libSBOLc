@@ -32,6 +32,7 @@ DNAComponent* createDNAComponent(const char* uri) {
 	com->dnaSequence = NULL;
 	com->annotations = createGenericArray();
 	com->collections = createGenericArray();
+	com->processed   = 0;
 	setDNAComponentURI(com, uri);
 	registerDNAComponent(com);
 	return com;
@@ -241,8 +242,10 @@ void addSequenceAnnotation(DNAComponent* com, SequenceAnnotation* ann) {
 }
 
 void setSubComponent(SequenceAnnotation* ann, DNAComponent* com) {
-	if (ann && com)
+	if (ann && com) {
 		ann->subComponent = com;
+		//insertIntoGenericArray(com->annotations, ann);
+	}
 }
 
 void cleanupDNAComponents() {
