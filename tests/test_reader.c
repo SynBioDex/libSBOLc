@@ -8,7 +8,7 @@
 #define OUTPUT_FILE "output.xml"
 
 void TestMini1(CuTest* tc) {
-	char* filename = "../examples/valid/mini1.nt";
+	char* filename = "../examples/ntriples/mini1.nt";
 	printf("reading %s\n", filename);
 	readSBOLCore(filename);
 	CuAssertIntEquals(tc, 1, getNumDNAComponents());
@@ -23,7 +23,7 @@ void TestMini1(CuTest* tc) {
 }
 
 void TestMini2(CuTest* tc) {
-	char* filename = "../examples/valid/mini2.nt";
+	char* filename = "../examples/ntriples/mini2.nt";
 	printf("reading %s\n", filename);
 	readSBOLCore(filename);
 	CuAssertIntEquals(tc, 1, getNumDNASequences());
@@ -37,7 +37,7 @@ void TestMini2(CuTest* tc) {
 }
 
 void TestMini3(CuTest* tc) {
-	char* filename = "../examples/valid/mini3.nt";
+	char* filename = "../examples/ntriples/mini3.nt";
 	printf("reading %s\n", filename);
 	readSBOLCore(filename);
 	CuAssertIntEquals(tc, 1, getNumSequenceAnnotations());
