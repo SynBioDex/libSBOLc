@@ -31,7 +31,7 @@ int getNumCollectionsIn(const Collection* col);
 struct _DNAComponent* getNthDNAComponentIn(const Collection* col, int n);
 
 // get properties
-char* getCollectionID(const Collection* col);
+char* getCollectionURI(const Collection* col);
 char* getCollectionName(const Collection* col);
 char* getCollectionDescription(const Collection* col);
 

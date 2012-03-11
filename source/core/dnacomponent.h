@@ -34,13 +34,13 @@ struct _Collection* getNthCollectionFor(const DNAComponent* com, int n);
 struct _SequenceAnnotation* getNthSequenceAnnotationIn(const DNAComponent* com, int n);
 
 // get properties
-char* getDNAComponentID(const DNAComponent* com);
+char* getDNAComponentURI(const DNAComponent* com);
 char* getDNAComponentName(const DNAComponent* com);
 char* getDNAComponentDescription(const DNAComponent* com);
 struct _DNASequence* getDNAComponentSequence(DNAComponent* com);
 
 // set properties
-void setDNAComponentID(DNAComponent* com, const char* uri);
+void setDNAComponentURI(DNAComponent* com, const char* uri);
 void setDNAComponentName(DNAComponent* com, const char* name);
 void setDNAComponentDescription(DNAComponent* com, const char* desc);
 void setDNAComponentSequence(DNAComponent* com, struct _DNASequence* seq);
