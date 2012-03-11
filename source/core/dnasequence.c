@@ -17,18 +17,18 @@ void registerDNASequence(DNASequence* seq) {
 }
 
 // TODO constrain to actg and sometimes n?
-DNASequence* createDNASequence(char* id) {
+DNASequence* createDNASequence(char* uri) {
 	DNASequence* seq = malloc(sizeof(DNASequence));
-	seq->id          = createProperty();
+	seq->uri         = createProperty();
 	seq->nucleotides = createProperty();
-	setDNASequenceID(seq, id);
+	setDNASequenceURI(seq, uri);
 	registerDNASequence(seq);
 	return seq;
 }
 
-void setDNASequenceID(DNASequence* seq, const char* id) {
+void setDNASequenceURI(DNASequence* seq, const char* uri) {
 	if (seq)
-		setProperty(seq->id, id);
+		setProperty(seq->uri, uri);
 }
 
 void setNucleotides(DNASequence* seq, const char* nucleotides) {
@@ -47,9 +47,9 @@ void removeDNASequence(DNASequence* seq) {
 void deleteDNASequence(DNASequence* seq) {
 	if (seq) {
 		removeDNASequence(seq);
-		deleteProperty(seq->id);
+		deleteProperty(seq->uri);
 		deleteProperty(seq->nucleotides);
-		seq->id = NULL;
+		seq->uri = NULL;
 		seq->nucleotides = NULL;
 		free(seq);
 	}
@@ -75,38 +75,38 @@ int getNumDNASequences() {
 	    return 0;
 }
 
-DNASequence* getDNASequence(const char* id) {
+DNASequence* getDNASequence(const char* uri) {
 	if (!allDNASequences)
 		allDNASequences = createGenericArray();
-	if (!id)
+	if (!uri)
 		return NULL;
 	int index;
 	DNASequence* seq;
 	for (index=0; index<allDNASequences->numInUse; index++) {
 		seq = (DNASequence*) allDNASequences->array[index];
-		if (compareProperty(seq->id, id) == 0)
+		if (compareProperty(seq->uri, uri) == 0)
 			return seq;
 	}
 	return NULL;
 }
 
-char* getDNASequenceID(const DNASequence* seq) {
+char* getDNASequenceURI(const DNASequence* seq) {
 	if (seq)
-		return getProperty(seq->id);
+		return getProperty(seq->uri);
 	else
 		return NULL;
 }
 
-int isDNASequenceID(const char* id) {
+int isDNASequenceURI(const char* uri) {
 	if (!allDNASequences)
 		allDNASequences = createGenericArray();
-	if (!id)
+	if (!uri)
 		return 0;
 	int index;
 	DNASequence* seq;
 	for (index=0; index<getNumDNASequences(); index++) {
 		seq = getNthDNASequence(index);
-		if (seq && compareProperty(seq->id, id) == 0)
+		if (seq && compareProperty(seq->uri, uri) == 0)
 			return 1;
 	}
 	return 0;
@@ -128,7 +128,7 @@ void printDNASequence(const DNASequence* seq, int tabs) {
 	if (!seq)
 	    return;
 	// TODO print just the beginning of the sequence?
-	indent(tabs); printf("%s\n", getDNASequenceID(seq));
+	indent(tabs); printf("%s\n", getDNASequenceURI(seq));
 	indent(tabs+1); printf("nucleotides: %s\n", getNucleotides(seq));
 }
 

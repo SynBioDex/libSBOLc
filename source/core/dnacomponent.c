@@ -21,15 +21,15 @@ void registerDNAComponent(DNAComponent* com) {
 	insertIntoGenericArray(allDNAComponents, com);
 }
 
-DNAComponent* createDNAComponent(const char* id) {
+DNAComponent* createDNAComponent(const char* uri) {
 	DNAComponent* com = malloc(sizeof(DNAComponent));
-	com->id          = createProperty();
+	com->uri         = createProperty();
 	com->name        = createProperty();
 	com->description = createProperty();
 	com->dnaSequence = NULL;
 	com->annotations = createGenericArray();
 	com->collections = createGenericArray();
-	setDNAComponentID(com, id);
+	setDNAComponentURI(com, uri);
 	registerDNAComponent(com);
 	return com;
 }
@@ -45,9 +45,9 @@ void removeDNAComponent(DNAComponent* com) {
 void deleteDNAComponent(DNAComponent* com) {
 	if (com) {
 		removeDNAComponent(com);
-		if (com->id) {
-			deleteProperty(com->id);
-			com->id = NULL;
+		if (com->uri) {
+			deleteProperty(com->uri);
+			com->uri = NULL;
 		}
 		if (com->name) {
 			deleteProperty(com->name);
@@ -79,14 +79,14 @@ int isDNAComponentPtr(const void* ptr) {
 	return (int) indexByPtr(allDNAComponents, ptr) >= 0;
 }
 
-int isDNAComponentID(const char* id) {
-	if (!allDNAComponents || !id)
+int isDNAComponentURI(const char* uri) {
+	if (!allDNAComponents || !uri)
 		return 0;
 	int index;
 	DNAComponent* com;
 	for (index=0; index<allDNAComponents->numInUse; index++) {
 		com = (DNAComponent*) allDNAComponents->array[index];
-		if (compareProperty(com->id, id) == 0)
+		if (compareProperty(com->uri, uri) == 0)
 			return 1;
 	}
 	return 0;
@@ -146,22 +146,22 @@ SequenceAnnotation* getNthSequenceAnnotationIn(const DNAComponent* com, int n) {
 	get... functions
 ***************************/
 
-DNAComponent* getDNAComponent(const char* id) {
-	if (!allDNAComponents || !id)
+DNAComponent* getDNAComponent(const char* uri) {
+	if (!allDNAComponents || !uri)
 		return NULL;
 	int index;
 	DNAComponent* com;
 	for (index=0; index<allDNAComponents->numInUse; index++) {
 		com = (DNAComponent*) allDNAComponents->array[index];
-		if (compareProperty(com->id, id) == 0)
+		if (compareProperty(com->uri, uri) == 0)
 			return com;
 	}
 	return NULL;
 }
 
-char* getDNAComponentID(const DNAComponent* com) {
+char* getDNAComponentURI(const DNAComponent* com) {
 	if (com)
-		return getProperty(com->id);
+		return getProperty(com->uri);
 	else
 		return NULL;
 }
@@ -191,8 +191,8 @@ DNASequence* getDNAComponentSequence(DNAComponent* com) {
 	set... functions
 ***************************/
 
-void setDNAComponentID(DNAComponent* com, const char* id) {
-	setProperty(com->id, id);
+void setDNAComponentURI(DNAComponent* com, const char* uri) {
+	setProperty(com->uri, uri);
 }
 
 void setDNAComponentName(DNAComponent* com, const char* name) {
@@ -242,7 +242,7 @@ void cleanupDNAComponents() {
 void printDNAComponent(const DNAComponent* com, int tabs) {
 	if (!com)
 		return;
-	indent(tabs);   printf("%s\n", getDNAComponentID(com));
+	indent(tabs);   printf("%s\n", getDNAComponentURI(com));
 	indent(tabs+1); printf("name: %s\n", getDNAComponentName(com));
 	indent(tabs+1); printf("description: %s\n", getDNAComponentDescription(com));
 	if (com->dnaSequence) {
@@ -259,7 +259,7 @@ void printDNAComponent(const DNAComponent* com, int tabs) {
 			indent(tabs+1); printf("%i annotations:\n", num);
 			for (i=0; i<num; i++) {
 				seq = getNthSequenceAnnotationIn(com, i);
-				indent(tabs+2); printf("%s\n", getSequenceAnnotationID(seq));
+				indent(tabs+2); printf("%s\n", getSequenceAnnotationURI(seq));
 			}
 		}
 	}
@@ -270,7 +270,7 @@ void printDNAComponent(const DNAComponent* com, int tabs) {
 			indent(tabs+1); printf("%i collections:\n", num);
 			for (i=0; i<num; i++) {
 				col = getNthCollectionFor(com, i);
-				indent(tabs+2); printf("%s\n", getCollectionID(col));
+				indent(tabs+2); printf("%s\n", getCollectionURI(col));
 			}
 		}
 	}

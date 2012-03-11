@@ -8,14 +8,14 @@
 #define NUM_SLOW_TESTS  1000
 
 void TestCreateSequenceAnnotation(CuTest* tc) {
-	char* id;
+	char* uri;
 	SequenceAnnotation* ann;
 	int repeat;
 	for (repeat=0; repeat<NUM_FAST_TESTS; repeat++) {
-		id  = randomString();
-		ann = createSequenceAnnotation(id);
+		uri = randomString();
+		ann = createSequenceAnnotation(uri);
 		CuAssertIntEquals(tc, 1, getNumSequenceAnnotations());
-		CuAssertStrEquals(tc, id, getSequenceAnnotationID(ann));
+		CuAssertStrEquals(tc, uri, getSequenceAnnotationURI(ann));
 		CuAssertIntEquals(tc, 0, ann->genbankStart);
 		CuAssertIntEquals(tc, 0, ann->genbankEnd);
 		CuAssertIntEquals(tc, 0, getNumPrecedes(ann));
@@ -27,7 +27,7 @@ void TestCreateSequenceAnnotation(CuTest* tc) {
 // TODO this leaks 1000 annotations for some reason
 void TestPrecedes(CuTest* tc) {
 	int index;
-	char* id;
+	char* uri;
 	SequenceAnnotation* upstream;
 	SequenceAnnotation** downstream;
 	
@@ -37,8 +37,8 @@ void TestPrecedes(CuTest* tc) {
 	// and also some others
 	downstream = malloc(NUM_SLOW_TESTS * sizeof(SequenceAnnotation*));
 	for (index=0; index<NUM_SLOW_TESTS; index++) {
-		id = randomString();
-		downstream[index] = createSequenceAnnotation(id);
+		uri = randomString();
+		downstream[index] = createSequenceAnnotation(uri);
 	}
 	
 	// restrict the main one to coming before each of the others

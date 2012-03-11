@@ -28,7 +28,7 @@ void TestMini2(CuTest* tc) {
 	readSBOLCore(filename);
 	CuAssertIntEquals(tc, 1, getNumDNASequences());
 	DNASequence* seq = getNthDNASequence(0);
-	CuAssertStrEquals(tc, "sequence1", getDNASequenceID(seq));
+	CuAssertStrEquals(tc, "sequence1", getDNASequenceURI(seq));
 	CuAssertStrEquals(tc, "acgtgacgtagctacgtacgtgtac", getNucleotides(seq));
 	int result = writeSBOLCore(OUTPUT_FILE);
 	CuAssertIntEquals(tc, 0, result);
@@ -42,7 +42,7 @@ void TestMini3(CuTest* tc) {
 	readSBOLCore(filename);
 	CuAssertIntEquals(tc, 1, getNumSequenceAnnotations());
 	SequenceAnnotation* ann = getNthSequenceAnnotation(0);
-	CuAssertStrEquals(tc, "sa1", getSequenceAnnotationID(ann));
+	CuAssertStrEquals(tc, "sa1", getSequenceAnnotationURI(ann));
 	CuAssertIntEquals(tc, 1, getBioStart(ann));
 	CuAssertIntEquals(tc, 1234, getBioEnd(ann));
 	int result = writeSBOLCore(OUTPUT_FILE);
@@ -58,7 +58,7 @@ void TestValid1(CuTest* tc) {
 	printSBOLCore();
 	CuAssertIntEquals(tc, 1, getNumDNAComponents());
 	DNAComponent* com = getNthDNAComponent(0);
-	CuAssertStrEquals(tc, "http://example.com/dc1", getDNAComponentID(com));
+	CuAssertStrEquals(tc, "http://example.com/dc1", getDNAComponentURI(com));
 	CuAssertStrEquals(tc, "Some display ID", getDNAComponentName(com)); // TODO is this backward?
 	CuAssertStrEquals(tc, "Valid because only required field for a DNAComponent is displayId",
 			getDNAComponentDescription(com));

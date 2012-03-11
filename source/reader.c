@@ -7,38 +7,38 @@
 
 // TODO will this sequential read miss things declared in certain orders?
 
-void createNewObject(char* id, char* type) {
-	if (!id || !type)
+void createNewObject(char* uri, char* type) {
+	if (!uri || !type)
 		return;
 	else if (sameString(type, SBOL_DNASEQUENCE))
-		createDNASequence(id);
+		createDNASequence(uri);
 	else if (sameString(type, SBOL_DNACOMPONENT))
-		createDNAComponent(id);
+		createDNAComponent(uri);
 	else if (sameString(type, SBOL_SEQUENCEANNOTATION))
-		createSequenceAnnotation(id);
+		createSequenceAnnotation(uri);
 	else if (sameString(type, SBOL_COLLECTION))
-		createCollection(id);
+		createCollection(uri);
 }
 
-void addToDNASequence(char* id, char* field, char* value) {
-	if (!id || !field || !value)
+void addToDNASequence(char* uri, char* field, char* value) {
+	if (!uri || !field || !value)
 		return;
-	DNASequence* seq = getDNASequence(id);
+	DNASequence* seq = getDNASequence(uri);
 	if (sameString(field, SBOL_NUCLEOTIDES))
 		setNucleotides(seq, value);
 }
 
-void addToDNAComponent(char* id, char* field, char* value) {
-	if (!id || !field || !value)
+void addToDNAComponent(char* uri, char* field, char* value) {
+	if (!uri || !field || !value)
 		return;
-	DNAComponent* com = getDNAComponent(id);
+	DNAComponent* com = getDNAComponent(uri);
 	if (sameString(field, SBOL_NAME))
 		setDNAComponentName(com, value);
 	else if (sameString(field, SBOL_DESCRIPTION))
 		setDNAComponentDescription(com, value);
 	else if (sameString(field, SBOL_COLLECTION)) {
 		Collection* col;
-		if (isCollectionID(value)) // something about > 0?
+		if (isCollectionURI(value)) // something about > 0?
 			col = getCollection(value);
 		else
 			col = createCollection(value);
@@ -46,23 +46,23 @@ void addToDNAComponent(char* id, char* field, char* value) {
 	}
 }
 
-void addToCollection(char* id, char* field, char* value) {
-	if (!id || !field || !value)
+void addToCollection(char* uri, char* field, char* value) {
+	if (!uri || !field || !value)
 		return;
-	Collection* col = getCollection(id);
+	Collection* col = getCollection(uri);
 	if (sameString(field, SBOL_NAME))
 		setCollectionName(col, value);
 	else if (sameString(field, SBOL_DESCRIPTION))
 		setCollectionDescription(col, value);
 }
 
-void addToSequenceAnnotation(char* id, char* field, char* value) {
-	if (!id || !field || !value)
+void addToSequenceAnnotation(char* uri, char* field, char* value) {
+	if (!uri || !field || !value)
 		return;
-	SequenceAnnotation* ann = getSequenceAnnotation(id);
+	SequenceAnnotation* ann = getSequenceAnnotation(uri);
 	DNAComponent* com;
 	if (sameString(field, SBOL_ANNOTATES) || sameString(field, SBOL_SUBCOMPONENT)) {
-		if (!isDNAComponentID(value))
+		if (!isDNAComponentURI(value))
 			com = createDNAComponent(value);
 		else
 			com = getDNAComponent(value);
@@ -73,7 +73,7 @@ void addToSequenceAnnotation(char* id, char* field, char* value) {
 		setSubComponent(ann, com);
 	else if (sameString(field, SBOL_PRECEDES)) {
 		SequenceAnnotation* ann2;
-		if (!isSequenceAnnotationID(value))
+		if (!isSequenceAnnotationURI(value))
 			ann2 = createSequenceAnnotation(value);
 		else
 			ann2 = getSequenceAnnotation(value);
@@ -121,13 +121,13 @@ void read_triple(void* user_data, raptor_statement* triple) {
 	// adjust SBOL core to match
 	if (sameString(p, RDF_TYPE))
 		createNewObject(s, o);
-	else if (isDNASequenceID(s))
+	else if (isDNASequenceURI(s))
 		addToDNASequence(s, p, o);
-	else if (isDNAComponentID(s))
+	else if (isDNAComponentURI(s))
 		addToDNAComponent(s, p, o);
-	else if (isCollectionID(s))
+	else if (isCollectionURI(s))
 		addToCollection(s, p, o);
-	else if (isSequenceAnnotationID(s))
+	else if (isSequenceAnnotationURI(s))
 		addToSequenceAnnotation(s, p, o);
 }
 

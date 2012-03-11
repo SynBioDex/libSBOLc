@@ -6,7 +6,7 @@ struct _DNAComponent;
 struct _GenericArray;
 
 typedef struct _Collection {
-	struct _Property* id;
+	struct _Property* uri;
 	struct _Property* name;
 	struct _Property* description;
 	struct _GenericArray* components;
@@ -14,18 +14,18 @@ typedef struct _Collection {
 } Collection;
 
 // create/destroy
-Collection* createCollection(const char* id);
+Collection* createCollection(const char* uri);
 void deleteCollection(Collection* col);
 
 // work with global array
 int isCollectionPtr(const void* pointer);
-int isCollectionID(const char* id);
+int isCollectionURI(const char* uri);
 int getNumCollections();
 Collection* getNthCollection(int n);
 Collection* getNthCollectionIn(const Collection* col, int n);
 
 // iterate
-Collection* getCollection(const char* id);
+Collection* getCollection(const char* uri);
 int getNumDNAComponentsIn(const Collection* col);
 int getNumCollectionsIn(const Collection* col);
 struct _DNAComponent* getNthDNAComponentIn(const Collection* col, int n);
@@ -36,7 +36,7 @@ char* getCollectionName(const Collection* col);
 char* getCollectionDescription(const Collection* col);
 
 // set properties
-void setCollectionID(Collection* col, const char* id); // TODO remove?
+void setCollectionURI(Collection* col, const char* uri); // TODO remove?
 void setCollectionName(Collection* col, const char* name);
 void setCollectionDescription(Collection* col, const char* desc);
 

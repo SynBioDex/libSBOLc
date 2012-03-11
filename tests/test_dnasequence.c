@@ -8,30 +8,30 @@
 void TestCreateEmptyDNASequence(CuTest* tc) {
 	DNASequence* seq = createDNASequence("");
 	setNucleotides(seq, "");
-	CuAssertStrEquals(tc, "", getDNASequenceID(seq));
+	CuAssertStrEquals(tc, "", getDNASequenceURI(seq));
 	CuAssertStrEquals(tc, "", getNucleotides(seq));
 }
 
 void TestCreateNullDNASequence(CuTest* tc) {
 	DNASequence* seq = createDNASequence(NULL);
-	CuAssertStrEquals(tc, NULL, getDNASequenceID(seq));
+	CuAssertStrEquals(tc, NULL, getDNASequenceURI(seq));
 	CuAssertPtrEquals(tc, NULL, getNucleotides(seq));
 }
 
 void TestCreateRandomDNASequence(CuTest* tc) {
-	char* id;
+	char* uri;
 	char* nt;
 	DNASequence* seq;
 	int repeat;
 	for (repeat=0; repeat<NUM_FAST_TESTS; repeat++) {
-		id = randomString();
+		uri = randomString();
 		nt = randomString();
 		// avoid duplicates
-		while (strcmp(id, nt) == 0)
+		while (strcmp(uri, nt) == 0)
 			nt = randomString();
-		seq = createDNASequence(id);
+		seq = createDNASequence(uri);
 		setNucleotides(seq, nt);
-		CuAssertStrEquals(tc, id, getDNASequenceID(seq));
+		CuAssertStrEquals(tc, uri, getDNASequenceURI(seq));
 		CuAssertStrEquals(tc, nt, getNucleotides(seq));
 		deleteDNASequence(seq);
 	}

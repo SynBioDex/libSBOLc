@@ -19,15 +19,15 @@ void registerCollection(Collection* col) {
 	insertIntoGenericArray(allCollections, col);
 }
 
-Collection* createCollection(const char* id) {
+Collection* createCollection(const char* uri) {
 	Collection* col;
 	col = (Collection*)malloc(sizeof(Collection));
-	col->id          = createProperty();
+	col->uri         = createProperty();
 	col->name        = createProperty();
 	col->description = createProperty();
 	col->components  = createGenericArray();
 	col->collections = createGenericArray();
-	setCollectionID(col, id);
+	setCollectionURI(col, uri);
 	registerCollection(col);
 	return col;
 }
@@ -43,9 +43,9 @@ void removeCollection(Collection* col) {
 void deleteCollection(Collection* col) {
 	if (col) {
 		removeCollection(col);
-		if (col->id) {
-			deleteProperty(col->id);
-			col->id = NULL;
+		if (col->uri) {
+			deleteProperty(col->uri);
+			col->uri = NULL;
 		}
 		if (col->name) {
 			deleteProperty(col->name);
@@ -77,16 +77,16 @@ int isCollectionPtr(const void* pointer) {
 	return (int) indexByPtr(allCollections, pointer) >= 0;
 }
 
-int isCollectionID(const char* id) {
+int isCollectionURI(const char* uri) {
 	if (!allCollections)
 		allCollections = createGenericArray();
-	if (!id)
+	if (!uri)
 		return 0;
 	int index;
 	Collection* col;
 	for (index=0; index<allCollections->numInUse; index++) {
 		col = (Collection*) allCollections->array[index];
-		if (compareProperty(col->id, id) == 0)
+		if (compareProperty(col->uri, uri) == 0)
 			return 1;
 	}
 	return 0;
@@ -96,24 +96,24 @@ int isCollectionID(const char* id) {
 	get... functions
 ***************************/
 
-Collection* getCollection(const char* id) {
+Collection* getCollection(const char* uri) {
 	if (!allCollections)
 		allCollections = createGenericArray();
-	if (!id)
+	if (!uri)
 		return NULL;
 	int index;
 	Collection* col;
 	for (index=0; index<allCollections->numInUse; index++) {
 		col = (Collection*) allCollections->array[index];
-		if (compareProperty(col->id, id) == 0)
+		if (compareProperty(col->uri, uri) == 0)
 			return col;
 	}
 	return NULL;
 }
 
-char* getCollectionID(const Collection* col) {
+char* getCollectionURI(const Collection* col) {
 	if (col)
-	    return getProperty(col->id);
+	    return getProperty(col->uri);
 }
 
 char* getCollectionName(const Collection* col) {
@@ -180,9 +180,9 @@ Collection* getNthCollectionIn(const Collection* col, int n) {
 	set... functions
 ***************************/
 
-void setCollectionID(Collection* col, const char* id) {
+void setCollectionURI(Collection* col, const char* uri) {
     if (col)
-        setProperty(col->id, id);
+        setProperty(col->uri, uri);
 }
 
 void setCollectionName(Collection* col, const char* name) {
@@ -222,7 +222,7 @@ void cleanupCollections() {
 void printCollection(const Collection* col, int tabs) {
     if (!col)
         return;
-    indent(tabs);   printProperty(col->id);
+    indent(tabs);   printProperty(col->uri);
     indent(tabs+1); printf("name: %s\n", getCollectionName(col));
     indent(tabs+1); printf("description: %s\n", getCollectionDescription(col));
     int i;
@@ -234,7 +234,7 @@ void printCollection(const Collection* col, int tabs) {
             indent(tabs+1); printf("%i components:\n", num);
             for (i=0; i<num; i++) {
                 com = getNthDNAComponentIn(col, i);
-                indent(tabs+2); printf("%s\n", getDNAComponentID(com));
+                indent(tabs+2); printf("%s\n", getDNAComponentURI(com));
             }
         }
     }
@@ -245,7 +245,7 @@ void printCollection(const Collection* col, int tabs) {
             indent(tabs+1); printf("%i collections:\n", num);
             for (i=0; i<num; i++) {
                 col2 = getNthCollectionIn(col, i);
-                indent(tabs+2); printf("%s\n", getCollectionID(col2));
+                indent(tabs+2); printf("%s\n", getCollectionURI(col2));
             }
         }
     }

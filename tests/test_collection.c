@@ -8,24 +8,24 @@
 
 void TestCreateEmptyCollection(CuTest* tc) {
 	Collection* col = createCollection("");
-	CuAssertStrEquals(tc, "", getCollectionID(col));
+	CuAssertStrEquals(tc, "", getCollectionURI(col));
 	deleteCollection(col);
 }
 
 void TestCreateNullCollection(CuTest* tc) {
 	Collection* col = createCollection(NULL);
-	CuAssertStrEquals(tc, NULL, getCollectionID(col));
+	CuAssertStrEquals(tc, NULL, getCollectionURI(col));
 	deleteCollection(col);
 }
 
 void TestCreateRandomCollection(CuTest* tc) {
-	char* id;
+	char* uri;
 	Collection* col;
 	int repeat;
 	for (repeat=0; repeat<NUM_FAST_TESTS; repeat++) {
-		id = randomString();
-		col = createCollection(id);
-		CuAssertStrEquals(tc, id,   getCollectionID(col));
+		uri = randomString();
+		col = createCollection(uri);
+		CuAssertStrEquals(tc, uri,   getCollectionURI(col));
 		CuAssertStrEquals(tc, NULL, getCollectionName(col));
 		CuAssertStrEquals(tc, NULL, getCollectionDescription(col));
 		CuAssertIntEquals(tc, 0,    getNumDNAComponentsIn(col));
@@ -38,7 +38,7 @@ void TestEmptyCollectionProperties(CuTest* tc) {
 	Collection* col = createCollection("");
 	setCollectionName(col, "");
 	setCollectionDescription(col, "");
-	CuAssertStrEquals(tc, "", getCollectionID(col));
+	CuAssertStrEquals(tc, "", getCollectionURI(col));
 	CuAssertStrEquals(tc, "", getCollectionName(col));
 	CuAssertStrEquals(tc, "", getCollectionDescription(col));
 	deleteCollection(col);
@@ -48,26 +48,26 @@ void TestNullCollectionProperties(CuTest* tc) {
 	Collection* col = createCollection(NULL);
 	setCollectionName(col, NULL);
 	setCollectionDescription(col, NULL);
-	CuAssertStrEquals(tc, NULL, getCollectionID(col));
+	CuAssertStrEquals(tc, NULL, getCollectionURI(col));
 	CuAssertStrEquals(tc, NULL, getCollectionName(col));
 	CuAssertStrEquals(tc, NULL, getCollectionDescription(col));
 	deleteCollection(col);
 }
 
 void TestRandomCollectionProperties(CuTest* tc) {
-	char* id;
+	char* uri;
 	char* name;
 	char* descr;
 	Collection* col;
 	int repeat;
 	for (repeat=0; repeat<NUM_FAST_TESTS; repeat++) {
-		id    = randomString();
+		uri   = randomString();
 		name  = randomString();
 		descr = randomString();
-		col = createCollection(id);
+		col = createCollection(uri);
 		setCollectionName(col, name);
 		setCollectionDescription(col, descr);
-		CuAssertStrEquals(tc, id,    getCollectionID(col));
+		CuAssertStrEquals(tc, uri,   getCollectionURI(col));
 		CuAssertStrEquals(tc, name,  getCollectionName(col));
 		CuAssertStrEquals(tc, descr, getCollectionDescription(col));
 		deleteCollection(col);

@@ -6,7 +6,7 @@ struct _GenericArray;
 struct _Property;
 
 typedef struct _SequenceAnnotation {
-	struct _Property* id;
+	struct _Property* uri;
 	int genbankStart;
 	int genbankEnd;
    	struct _DNAComponent* annotates;
@@ -15,16 +15,16 @@ typedef struct _SequenceAnnotation {
 } SequenceAnnotation;
 
 // create/destroy
-SequenceAnnotation* createSequenceAnnotation(const char* id);
-char* getSequenceAnnotationID(const SequenceAnnotation* ann);
-void setSequenceAnnotationID(SequenceAnnotation* ann, const char* id);
+SequenceAnnotation* createSequenceAnnotation(const char* uri);
+char* getSequenceAnnotationURI(const SequenceAnnotation* ann);
+void setSequenceAnnotationURI(SequenceAnnotation* ann, const char* uri);
 void deleteSequenceAnnotation(SequenceAnnotation* ann);
 
-SequenceAnnotation* getSequenceAnnotation(const char* id);
+SequenceAnnotation* getSequenceAnnotation(const char* uri);
 
 // work with global arrays
 int isSequenceAnnotationPtr(const void* pointer);
-int isSequenceAnnotationID(const char* id);
+int isSequenceAnnotationURI(const char* uri);
 int getNumSequenceAnnotations();
 SequenceAnnotation* getNthSequenceAnnotation(int n);
 

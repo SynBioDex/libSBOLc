@@ -5,6 +5,8 @@ typedef struct _Property {
     char* data;
 } Property;
 
+// TODO get/setProperty --> get/setPropertyData
+
 Property* createProperty();
 void deleteProperty(Property* pro);
 // TODO compare to other property rather than string?

@@ -8,30 +8,30 @@
 
 void TestCreateEmptyDNAComponent(CuTest* tc) {
 	DNAComponent* com = createDNAComponent("");
-	CuAssertStrEquals(tc, "", getDNAComponentID(com));
+	CuAssertStrEquals(tc, "", getDNAComponentURI(com));
 	deleteDNAComponent(com);
 }
 
 void TestCreateNullDNAComponent(CuTest* tc) {
 	DNAComponent* com = createDNAComponent(NULL);
-	CuAssertStrEquals(tc, NULL, getDNAComponentID(com));
+	CuAssertStrEquals(tc, NULL, getDNAComponentURI(com));
 	deleteDNAComponent(com);
 }
 
 void TestCreateRandomDNAComponent(CuTest* tc) {
-	char* id;
+	char* uri;
 	char* name;
 	char* descr;
 	DNAComponent* com;
 	int repeat;
 	for (repeat=0; repeat<NUM_FAST_TESTS; repeat++) {
-		id    = randomString();
+		uri   = randomString();
 		name  = randomString();
 		descr = randomString();
-		com = createDNAComponent(id);
+		com = createDNAComponent(uri);
 		setDNAComponentName(com, name);
 		setDNAComponentDescription(com, descr);
-		CuAssertStrEquals(tc, id,    getDNAComponentID(com));
+		CuAssertStrEquals(tc, uri,   getDNAComponentURI(com));
 		CuAssertStrEquals(tc, name,  getDNAComponentName(com));
 		CuAssertStrEquals(tc, descr, getDNAComponentDescription(com));
 		deleteDNAComponent(com);
@@ -42,7 +42,7 @@ void TestEmptyDNAComponentProperties(CuTest* tc) {
 	DNAComponent* com = createDNAComponent("");
 	setDNAComponentName(com, "");
 	setDNAComponentDescription(com, "");
-	CuAssertStrEquals(tc, "", getDNAComponentID(com));
+	CuAssertStrEquals(tc, "", getDNAComponentURI(com));
 	CuAssertStrEquals(tc, "", getDNAComponentName(com));
 	CuAssertStrEquals(tc, "", getDNAComponentDescription(com));
 	deleteDNAComponent(com);
@@ -52,26 +52,26 @@ void TestNullDNAComponentProperties(CuTest* tc) {
 	DNAComponent* com = createDNAComponent(NULL);
 	setDNAComponentName(com, NULL);
 	setDNAComponentDescription(com, NULL);
-	CuAssertStrEquals(tc, NULL, getDNAComponentID(com));
+	CuAssertStrEquals(tc, NULL, getDNAComponentURI(com));
 	CuAssertStrEquals(tc, NULL, getDNAComponentName(com));
 	CuAssertStrEquals(tc, NULL, getDNAComponentDescription(com));
 	deleteDNAComponent(com);
 }
 
 void TestRandomDNAComponentProperties(CuTest* tc) {
-	char* id;
+	char* uri;
 	char* name;
 	char* descr;
 	DNAComponent* com;
 	int repeat;
 	for (repeat=0; repeat<NUM_FAST_TESTS; repeat++) {
-		id    = randomString();
+		uri   = randomString();
 		name  = randomString();
 		descr = randomString();
-		com = createDNAComponent(id);
+		com = createDNAComponent(uri);
 		setDNAComponentName(com, name);
 		setDNAComponentDescription(com, descr);
-		CuAssertStrEquals(tc, id,    getDNAComponentID(com));
+		CuAssertStrEquals(tc, uri,   getDNAComponentURI(com));
 		CuAssertStrEquals(tc, name,  getDNAComponentName(com));
 		CuAssertStrEquals(tc, descr, getDNAComponentDescription(com));
 		deleteDNAComponent(com);

@@ -8,7 +8,7 @@ struct _Collection;
 struct _Property;
 
 typedef struct _DNAComponent {
-	struct _Property* id;
+	struct _Property* uri;
 	struct _Property* name;
 	struct _Property* description;
 	struct _DNASequence* dnaSequence;
@@ -17,17 +17,17 @@ typedef struct _DNAComponent {
 } DNAComponent;
 
 // create/destroy
-DNAComponent* createDNAComponent(const char* id);
+DNAComponent* createDNAComponent(const char* uri);
 void deleteDNAComponent(DNAComponent* com);
 
 // work with storage
 int isDNAComponentPtr(const void* pointer);
-int isDNAComponentID(const char* id);
+int isDNAComponentID(const char* uri);
 int getNumDNAComponents();
 DNAComponent* getNthDNAComponent(int n);
 
 // tools for iteration
-DNAComponent* getDNAComponent(const char* id);
+DNAComponent* getDNAComponent(const char* uri);
 int getNumCollectionsFor(const DNAComponent* com);
 int getNumSequenceAnnotationsIn(const DNAComponent* com);
 struct _Collection* getNthCollectionFor(const DNAComponent* com, int n);
@@ -40,7 +40,7 @@ char* getDNAComponentDescription(const DNAComponent* com);
 struct _DNASequence* getDNAComponentSequence(DNAComponent* com);
 
 // set properties
-void setDNAComponentID(DNAComponent* com, const char* id);
+void setDNAComponentID(DNAComponent* com, const char* uri);
 void setDNAComponentName(DNAComponent* com, const char* name);
 void setDNAComponentDescription(DNAComponent* com, const char* desc);
 void setDNAComponentSequence(DNAComponent* com, struct _DNASequence* seq);

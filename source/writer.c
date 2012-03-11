@@ -80,7 +80,7 @@ void writeDNASequence(const DNASequence* seq, int includeContents) {
 	if (!seq)
 		return;
 	xmlTextWriterStartElement(WRITER, "DnaSequence");
-	xmlTextWriterWriteAttribute(WRITER, "rdf:about", getDNASequenceID(seq));
+	xmlTextWriterWriteAttribute(WRITER, "rdf:about", getDNASequenceURI(seq));
 
 	// nucleotides
 	if (includeContents)
@@ -93,7 +93,7 @@ void writeSequenceAnnotation(const SequenceAnnotation* ann, int includeContents)
 	if (!ann)
 		return;
 	xmlTextWriterStartElement(WRITER, "SequenceAnnotation");
-	xmlTextWriterWriteAttribute(WRITER, "rdf:about", getSequenceAnnotationID(ann));
+	xmlTextWriterWriteAttribute(WRITER, "rdf:about", getSequenceAnnotationURI(ann));
 	
 	// start, end
 	int start = getBioStart(ann);
@@ -104,13 +104,13 @@ void writeSequenceAnnotation(const SequenceAnnotation* ann, int includeContents)
 		xmlTextWriterWriteElement(WRITER, "bioEnd",   intToStr(end));
 	
 	// subComponent
-	char* id;
+	char* uri;
 	if (includeContents) {
 		indentMore();
 		if (ann->subComponent) {
-			id = getDNAComponentID(ann->subComponent);
+			uri = getDNAComponentURI(ann->subComponent);
 			xmlTextWriterStartElement(WRITER, "subComponent");
-			xmlTextWriterWriteAttribute(WRITER, "rdf:resource", id);
+			xmlTextWriterWriteAttribute(WRITER, "rdf:resource", uri);
 			xmlTextWriterEndElement(WRITER);
 		}
 		indentLess();
@@ -124,7 +124,7 @@ void writeDNAComponent(const DNAComponent* com, int includeContents) {
 		return;
 	xmlTextWriterStartElement(WRITER, "DnaComponent");
 	if (includeContents) {
-		xmlTextWriterWriteAttribute(WRITER, "rdf:about", getDNAComponentID(com));
+		xmlTextWriterWriteAttribute(WRITER, "rdf:about", getDNAComponentURI(com));
 		
 		// properties
 		char* data;
@@ -163,7 +163,7 @@ void writeDNAComponent(const DNAComponent* com, int includeContents) {
 		indentLess();
 		
 	} else
-		xmlTextWriterWriteAttribute(WRITER, "rdf:resource", getDNAComponentID(com));
+		xmlTextWriterWriteAttribute(WRITER, "rdf:resource", getDNAComponentURI(com));
 	xmlTextWriterEndElement(WRITER);
 }
 
@@ -176,7 +176,7 @@ void writeCollection(const Collection* col, int includeContents) {
 		int num;
 		
 		// properties
-		xmlTextWriterWriteAttribute(WRITER, "rdf:about", getCollectionID(col));
+		xmlTextWriterWriteAttribute(WRITER, "rdf:about", getCollectionURI(col));
 		xmlTextWriterWriteElement(WRITER, "displayId", getCollectionName(col));
 		xmlTextWriterWriteElement(WRITER, "description", getCollectionDescription(col));
 		
@@ -217,7 +217,7 @@ void writeCollection(const Collection* col, int includeContents) {
 		}
 		
 	} else
-		xmlTextWriterWriteAttribute(WRITER, "rdf:resource", getCollectionID(col));
+		xmlTextWriterWriteAttribute(WRITER, "rdf:resource", getCollectionURI(col));
 	xmlTextWriterEndElement(WRITER);
 }
 
