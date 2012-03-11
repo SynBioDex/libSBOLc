@@ -20,9 +20,12 @@
 #define SBOL_DISPLAYID     XMLNS_SBOL "displayId"
 #define SBOL_DESCRIPTION   XMLNS_SBOL "description"
 #define SBOL_ANNOTATES     XMLNS_SBOL "annotates"
+#define SBOL_ANNOTATION    XMLNS_SBOL "annotation"
 #define SBOL_SUBCOMPONENT  XMLNS_SBOL "subComponent"
+#define SBOL_SEQUENCE      XMLNS_SBOL "dnaSequence"
 #define SBOL_BIOSTART      XMLNS_SBOL "bioStart"
 #define SBOL_BIOEND        XMLNS_SBOL "bioEnd"
 #define SBOL_NUCLEOTIDES   XMLNS_SBOL "nucleotides"
+#define SBOL_STRAND        XMLNS_SBOL "strand"
 
 #endif

@@ -9,6 +9,7 @@
 // TODO store whether each thing has been printed to avoid duplicates
 
 void TestRecreateValid1(CuTest* tc) {
+	cleanupSBOLCore();
 	char* filename = "valid1.xml";
 	printf("recreating %s\n", filename);
 	DNAComponent* com = createDNAComponent("http://example.com/dc1");
@@ -21,6 +22,7 @@ void TestRecreateValid1(CuTest* tc) {
 // TODO sa3 is completely missing. wtf?
 // and dc1, ds1 appear twice.
 void TestRecreateValid2(CuTest* tc) {
+	cleanupSBOLCore();
 	// dna components
 	DNAComponent* dc1 = createDNAComponent("http://example.com/dc1");
 	DNAComponent* dc2 = createDNAComponent("http://example.com/dc2");

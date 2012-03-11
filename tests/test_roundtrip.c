@@ -44,6 +44,7 @@ void TestRoundTripValidExamples(CuTest* tc) {
 		cleanupSBOLCore();
 		CuAssertIntEquals(tc, 0, result);
 	}
+	cleanupSBOLCore();
 }
 
 CuSuite* RoundTripGetSuite() {

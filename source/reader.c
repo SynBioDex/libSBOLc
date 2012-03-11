@@ -8,7 +8,7 @@
 // TODO will this sequential read miss things declared in certain orders?
 
 void createNewObject(char* uri, char* type) {
-	if (!uri || !type)
+	if (!uri || !type || isDuplicateURI(uri))
 		return;
 	else if (sameString(type, SBOL_DNASEQUENCE))
 		createDNASequence(uri);
@@ -38,13 +38,27 @@ void addToDNAComponent(char* uri, char* field, char* value) {
 		setDNAComponentDisplayID(com, value);
 	else if (sameString(field, SBOL_DESCRIPTION))
 		setDNAComponentDescription(com, value);
-	else if (sameString(field, SBOL_COLLECTION)) {
+	else if (sameString(field, SBOL_SEQUENCE)) {
+		DNASequence* seq;
+		if (isDNASequenceURI(value))
+			seq = getDNASequence(value);
+		else
+			seq = createDNASequence(value);
+		setDNAComponentSequence(com, seq);
+	} else if (sameString(field, SBOL_COLLECTION)) {
 		Collection* col;
 		if (isCollectionURI(value)) // something about > 0?
 			col = getCollection(value);
 		else
 			col = createCollection(value);
 		addDNAComponentToCollection(com, col);
+	} else if (sameString(field, SBOL_ANNOTATION)) {
+		SequenceAnnotation* ann;
+		if (isSequenceAnnotationURI(value))
+			ann = getSequenceAnnotation(value);
+		else
+			ann = createSequenceAnnotation(value);
+		addSequenceAnnotation(com, ann);
 	}
 }
 
@@ -56,6 +70,17 @@ void addToCollection(char* uri, char* field, char* value) {
 		setCollectionName(col, value);
 	else if (sameString(field, SBOL_DESCRIPTION))
 		setCollectionDescription(col, value);
+}
+
+int polarity(char* strand) {
+	if (!strand)
+		return -1;
+	else if (sameString(strand, "+"))
+		return 1;
+	else if (sameString(strand, "-"))
+		return 0;
+	else
+		return -1;
 }
 
 void addToSequenceAnnotation(char* uri, char* field, char* value) {
@@ -85,6 +110,8 @@ void addToSequenceAnnotation(char* uri, char* field, char* value) {
 		setBioStart(ann, atoi(value));
 	else if (sameString(field, SBOL_BIOEND))
 		setBioEnd(ann, atoi(value));
+	else if (sameString(field, SBOL_STRAND))
+		setStrandPolarity(ann, polarity(value));
 }
 
 static void print_triple(raptor_statement* triple) {

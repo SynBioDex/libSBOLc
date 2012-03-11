@@ -53,6 +53,8 @@ SBOLAPIEXPORTS int getNumPrecedes(const SequenceAnnotation* ann);
 SBOLAPIEXPORTS SequenceAnnotation* getNthPrecedes(const SequenceAnnotation* ann, int n);
 SBOLAPIEXPORTS void printSequenceAnnotation(const SequenceAnnotation* ann, int tabs);
 SBOLAPIEXPORTS void printAllSequenceAnnotations();
+SBOLAPIEXPORTS DNAComponent* getSubComponent(const SequenceAnnotation* ann);
+SBOLAPIEXPORTS int precedes(const SequenceAnnotation* seq1, const SequenceAnnotation* seq2);
 
 // from dnacomponent.h
 SBOLAPIEXPORTS DNAComponent* createDNAComponent(const char* uri);

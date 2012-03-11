@@ -27,6 +27,7 @@ SequenceAnnotation* createSequenceAnnotation(const char* uri) {
 	ann->uri          = createProperty();
 	ann->genbankStart = 0;
 	ann->genbankEnd   = 0;
+	ann->strand       = 1;
 	ann->annotates    = NULL;
 	ann->subComponent = NULL;
 	ann->precedes = createGenericArray();
@@ -80,6 +81,12 @@ void setBioStart(SequenceAnnotation* ann, int start) {
 void setBioEnd(SequenceAnnotation* ann, int end) {
 	if (ann)
 		ann->genbankEnd = end;
+}
+
+void setStrandPolarity(SequenceAnnotation* ann, int polarity) {
+	if (!ann || polarity < -1 || polarity > 1)
+		return;
+	ann->strand = polarity;
 }
 
 /*******************
@@ -172,6 +179,20 @@ int getBioEnd(const SequenceAnnotation* ann) {
 		return ann->genbankEnd;
 }
 
+DNAComponent* getSubComponent(const SequenceAnnotation* ann) {
+	if (ann)
+		return ann->subComponent;
+	else
+		return NULL;
+}
+
+int getStrandPolarity(const SequenceAnnotation* ann) {
+	if (ann)
+		return ann->strand;
+	else
+		return -1;
+}
+
 /*******************
  * constrain order
  *******************/
@@ -186,6 +207,19 @@ SequenceAnnotation* getNthPrecedes(const SequenceAnnotation* ann, int n) {
 		return (SequenceAnnotation*) ann->precedes->array[n];
 	else
 		return NULL;
+}
+
+int precedes(const SequenceAnnotation* ann1, const SequenceAnnotation* ann2) {
+	if (!ann1 || !ann2 || getNumPrecedes(ann1) < 1)
+		return 0;
+	int n;
+	SequenceAnnotation* candidate;
+	for (n=0; n<getNumPrecedes(ann1); n++) {
+		candidate = getNthPrecedes(ann1, n);
+		if (candidate == ann2)
+			return 1;
+	}
+	return 0;
 }
 
 void cleanupSequenceAnnotations() {
