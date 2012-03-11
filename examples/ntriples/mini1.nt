@@ -1,3 +1,3 @@
-<component1> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://sbols.org/v1#DNAComponent>.
-<component1> <http://sbols.org/v1#displayID> <com1>.
+<component1> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://sbols.org/v1#DnaComponent>.
+<component1> <http://sbols.org/v1#displayId> <com1>.
 <component1> <http://sbols.org/v1#description> <com1 is a test component>.

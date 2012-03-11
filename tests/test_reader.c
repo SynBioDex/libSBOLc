@@ -52,14 +52,13 @@ void TestMini3(CuTest* tc) {
 }
 
 void TestValid1(CuTest* tc) {
-	char* filename = "../examples/valid/valid1.xml";
+	char* filename = "../examples/ntriples/valid1.nt";
 	printf("reading %s\n", filename);
 	readSBOLCore(filename);
-	printSBOLCore();
 	CuAssertIntEquals(tc, 1, getNumDNAComponents());
 	DNAComponent* com = getNthDNAComponent(0);
 	CuAssertStrEquals(tc, "http://example.com/dc1", getDNAComponentURI(com));
-	CuAssertStrEquals(tc, "Some display ID", getDNAComponentName(com)); // TODO is this backward?
+	CuAssertStrEquals(tc, "Some display ID", getDNAComponentDisplayID(com));
 	CuAssertStrEquals(tc, "Valid because only required field for a DNAComponent is displayId",
 			getDNAComponentDescription(com));
 	int result = writeSBOLCore(OUTPUT_FILE);
@@ -73,6 +72,6 @@ CuSuite* ReaderGetSuite() {
 	SUITE_ADD_TEST(readerTests, TestMini1);
 	SUITE_ADD_TEST(readerTests, TestMini2);
 	SUITE_ADD_TEST(readerTests, TestMini3);
-	//SUITE_ADD_TEST(readerTests, TestValid1);
+	SUITE_ADD_TEST(readerTests, TestValid1);
 	return readerTests;
 }

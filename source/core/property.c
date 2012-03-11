@@ -34,7 +34,7 @@ char* getProperty(const Property* pro) {
 }
 
 void setProperty(Property* pro, const char* value) {
-    if (!pro || !value)
+    if (!value)
         return;
     pro->data = realloc(pro->data, sizeof(char) * strlen(value)+1);
     strcpy(pro->data, value);
