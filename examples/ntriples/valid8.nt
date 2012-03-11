@@ -1,0 +1,17 @@
+<http://example.com/dc1> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://sbols.org/v1#DnaComponent> .
+<http://example.com/dc1> <http://sbols.org/v1#displayId> "DC1" .
+<http://example.com/dc1> <http://sbols.org/v1#name> "DnaComponent1" .
+<http://example.com/dc1> <http://sbols.org/v1#description> "It is valid to have additional elements in any SBOL element as long as they appear after \n\t\tthe elements defined in SBOL core model. This example adds dc:creator annotations to SBOL elements" .
+<http://example.com/ds1> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://sbols.org/v1#DnaSequence> .
+<http://example.com/ds1> <http://sbols.org/v1#nucleotides> "tccctatcagtgat" .
+<http://example.com/ds1> <http://purl.org/dc/elements/1.1/creator> "Jane Doe" .
+<http://example.com/dc1> <http://sbols.org/v1#dnaSequence> <http://example.com/ds1> .
+<http://example.com/sa1> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://sbols.org/v1#SequenceAnnotation> .
+<http://example.com/dc2> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://sbols.org/v1#DnaComponent> .
+<http://example.com/dc2> <http://sbols.org/v1#displayId> "DC2" .
+<http://example.com/dc2> <http://sbols.org/v1#name> "DnaComponent2" .
+<http://example.com/dc2> <http://sbols.org/v1#description> "Another DNA component" .
+<http://example.com/sa1> <http://sbols.org/v1#subComponent> <http://example.com/dc2> .
+<http://example.com/sa1> <http://purl.org/dc/elements/1.1/creator> "John Doe" .
+<http://example.com/dc1> <http://sbols.org/v1#annotation> <http://example.com/sa1> .
+<http://example.com/dc1> <http://purl.org/dc/elements/1.1/creator> "John Doe" .

@@ -1,0 +1,7 @@
+<http://example.com/dc1> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://sbols.org/v1#DnaComponent> .
+<http://example.com/dc1> <http://sbols.org/v1#displayId> "DC1" .
+<http://example.com/dc1> <http://sbols.org/v1#name> "DnaComponent1" .
+<http://example.com/dc1> <http://sbols.org/v1#description> "Multiple DNA components at the top level are allowed even without a collection" .
+<http://example.com/dc2> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://sbols.org/v1#DnaComponent> .
+<http://example.com/dc2> <http://sbols.org/v1#displayId> "DC2" .
+<http://example.com/dc2> <http://sbols.org/v1#name> "DnaComponent2" .

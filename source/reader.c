@@ -92,6 +92,10 @@ static void print_triple(raptor_statement* triple) {
   fputc('\n', stdout);
 }
 
+// TODO read twice:
+//			the first time create all the objects,
+//			and the second time add their characteristics
+
 // analyze a single triple and add to
 // SBOL data structures if appropriate
 void read_triple(void* user_data, raptor_statement* triple) {

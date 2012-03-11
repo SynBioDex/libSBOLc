@@ -1,0 +1,4 @@
+<http://example.com/dc1> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://sbols.org/v1#Collection> .
+<http://example.com/dc1> <http://sbols.org/v1#displayId> "DC1" .
+<http://example.com/dc1> <http://sbols.org/v1#name> "DnaComponent1" .
+<http://example.com/dc1> <http://sbols.org/v1#description> "A collection may be empty" .

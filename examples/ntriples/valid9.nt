@@ -1,0 +1,8 @@
+<http://example.com/dc1> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://sbols.org/v1#DnaComponent> .
+<http://example.com/dc1> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://purl.obolibrary.org/obo/SO_0000167> .
+<http://example.com/dc1> <http://sbols.org/v1#displayId> "DC1" .
+<http://example.com/dc1> <http://sbols.org/v1#name> "DnaComponent1" .
+<http://example.com/dc1> <http://sbols.org/v1#description> "A DnaComponent can optionally use a type from Sequence Ontology" .
+<http://example.com/ds1> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://sbols.org/v1#DnaSequence> .
+<http://example.com/ds1> <http://sbols.org/v1#nucleotides> "tccctatcagtgat" .
+<http://example.com/dc1> <http://sbols.org/v1#dnaSequence> <http://example.com/ds1> .
