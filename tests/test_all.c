@@ -52,6 +52,6 @@ void main(void) {
 	// should only be done once
 	srand( time(NULL) );
 
-	RunUnitTests();
+	//RunUnitTests();
 	RunExampleTests();
 }

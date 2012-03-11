@@ -6,17 +6,41 @@
 #include "validator.h"
 #include "types.h"
 #include "utilities.h"
+#include "core/genericarray.h" // TODO shouldn't break abstraction
 
-// TODO don't write the same sequence more than once!
-// (store how many times it's used?)
-// (or whether each thing has been printed already?)
+/***************************************
+ * avoid writing things multiple times
+ ***************************************/
+
+static GenericArray* WRITTEN;
+
+void resetWritten() {
+    if (WRITTEN)
+        deleteGenericArray(WRITTEN);
+    WRITTEN = createGenericArray();
+}
+
+void markWritten(const void* obj) {
+    if (obj) {
+        int address = (int) obj;
+        insertIntoGenericArray(WRITTEN, (void*) address);
+    }
+}
+
+int alreadyWritten(const void* obj) {
+    if (obj) {
+        int address = (int) obj;
+        int index = indexByPtr(WRITTEN, (void*) address);
+        if (index >= 0)
+            printf("%i already written (index %i)\n", address, index);
+        return (int) (index >= 0);
+    } else
+        return 0;
+}
 
 /************************
  * set up SBOL document
  ************************/
-
-#define INCLUDE_URI_ONLY 0
-#define INCLUDE_CONTENTS 1
 
 static int INDENT;
 static xmlTextWriterPtr WRITER;
@@ -41,6 +65,7 @@ void cleanupSBOLWriter() {
 }
 
 void startSBOLDocument() {
+	resetWritten();
 	createSBOLWriter();
 	xmlTextWriterStartDocument(WRITER, NULL, NULL, NULL);
 	xmlTextWriterStartElement(WRITER, "rdf:RDF");
@@ -49,8 +74,6 @@ void startSBOLDocument() {
 	xmlTextWriterWriteAttribute(WRITER, "xmlns:rdfs", XMLNS_RDFS);
 	xmlTextWriterWriteAttribute(WRITER, "xmlns:so",   XMLNS_SO);
 	xmlTextWriterWriteAttribute(WRITER, "xmlns",      XMLNS_SBOL);
-	//xmlTextWriterWriteAttribute(WRITER, "xmlns:xsi",  XMLNS_XSI);
-	//xmlTextWriterWriteAttribute(WRITER, "xsi:schemaLocation", SCHEMA_LOCATION);
 	indentMore();
 }
 
@@ -76,20 +99,23 @@ int saveSBOLDocument(const char* filename) {
 
 // TODO move node names to types.h
 
-void writeDNASequence(const DNASequence* seq, int includeContents) {
+void writeDNASequence(const DNASequence* seq) {
 	if (!seq)
 		return;
 	xmlTextWriterStartElement(WRITER, "DnaSequence");
 	xmlTextWriterWriteAttribute(WRITER, "rdf:about", getDNASequenceURI(seq));
 
 	// nucleotides
-	if (includeContents)
+	if (!alreadyWritten(seq)) {
 		xmlTextWriterWriteElement(WRITER, "nucleotides", getNucleotides(seq));
+    }
 	
 	xmlTextWriterEndElement(WRITER);
+	markWritten(&seq);
 }
 
-void writeSequenceAnnotation(const SequenceAnnotation* ann, int includeContents) {
+void writeSequenceAnnotation(const SequenceAnnotation* ann) {
+	printf("writing %s\n", getSequenceAnnotationURI(ann));
 	if (!ann)
 		return;
 	xmlTextWriterStartElement(WRITER, "SequenceAnnotation");
@@ -105,25 +131,26 @@ void writeSequenceAnnotation(const SequenceAnnotation* ann, int includeContents)
 	
 	// subComponent
 	char* uri;
-	if (includeContents) {
-		indentMore();
-		if (ann->subComponent) {
-			uri = getDNAComponentURI(ann->subComponent);
-			xmlTextWriterStartElement(WRITER, "subComponent");
-			xmlTextWriterWriteAttribute(WRITER, "rdf:resource", uri);
-			xmlTextWriterEndElement(WRITER);
-		}
-		indentLess();
-	}
+    indentMore();
+    if (ann->subComponent) {
+        uri = getDNAComponentURI(ann->subComponent);
+        xmlTextWriterStartElement(WRITER, "subComponent");
+        xmlTextWriterWriteAttribute(WRITER, "rdf:resource", uri);
+        xmlTextWriterEndElement(WRITER);
+    }
+    indentLess();
 	
 	xmlTextWriterEndElement(WRITER);
+	markWritten(ann);
 }
 
-void writeDNAComponent(const DNAComponent* com, int includeContents) {
+void writeDNAComponent(const DNAComponent* com) {
 	if (!com)
 		return;
 	xmlTextWriterStartElement(WRITER, "DnaComponent");
-	if (includeContents) {
+	if (!alreadyWritten(com)) {
+	    printf("writing %s for the first time\n", getDNAComponentURI(com));
+		markWritten(&com);
 		xmlTextWriterWriteAttribute(WRITER, "rdf:about", getDNAComponentURI(com));
 		
 		// properties
@@ -143,7 +170,7 @@ void writeDNAComponent(const DNAComponent* com, int includeContents) {
 			xmlTextWriterStartElement(WRITER, "dnaSequence");
 			indentMore();
 			// TODO sometimes no contents?
-			writeDNASequence(com->dnaSequence, INCLUDE_CONTENTS);
+			writeDNASequence(com->dnaSequence);
 			indentLess();
 			xmlTextWriterEndElement(WRITER);
 		}
@@ -158,23 +185,25 @@ void writeDNAComponent(const DNAComponent* com, int includeContents) {
 				ann = getNthSequenceAnnotationIn(com, n);
 				indentMore();
 				xmlTextWriterStartElement(WRITER, "annotation");
-				writeSequenceAnnotation(ann, INCLUDE_CONTENTS);
+				writeSequenceAnnotation(ann);
 				xmlTextWriterEndElement(WRITER);
 				indentLess();
 			}
 		}
 		indentLess();
 		
-	} else
+	} else {
+	    printf("writing %s again\n", getDNAComponentURI(com));
 		xmlTextWriterWriteAttribute(WRITER, "rdf:resource", getDNAComponentURI(com));
+    }
 	xmlTextWriterEndElement(WRITER);
 }
 
-void writeCollection(const Collection* col, int includeContents) {
+void writeCollection(const Collection* col) {
 	if (!col)
 		return;
 	xmlTextWriterStartElement(WRITER, "Collection");
-	if (includeContents) {
+	if (!alreadyWritten(col)) {
 		int n;
 		int num;
 		
@@ -192,10 +221,7 @@ void writeCollection(const Collection* col, int includeContents) {
 				xmlTextWriterStartElement(WRITER, "component");
 				com = getNthDNAComponentIn(col, n);
 				indentMore();
-				if (getNumCollectionsFor(com) == 1)
-					writeDNAComponent(com, INCLUDE_CONTENTS);
-				else
-					writeDNAComponent(com, INCLUDE_URI_ONLY);
+			    writeDNAComponent(com);
 				indentLess();
 				xmlTextWriterEndElement(WRITER);
 			}
@@ -212,7 +238,7 @@ void writeCollection(const Collection* col, int includeContents) {
 				col2 = getNthCollectionIn(col, n);
 				indentMore();
 				// TODO sometimes don't include contents?
-				writeCollection(col2, INCLUDE_CONTENTS);
+				writeCollection(col2);
 				indentLess();
 				xmlTextWriterEndElement(WRITER);
 				indentLess();
@@ -222,6 +248,7 @@ void writeCollection(const Collection* col, int includeContents) {
 	} else
 		xmlTextWriterWriteAttribute(WRITER, "rdf:resource", getCollectionURI(col));
 	xmlTextWriterEndElement(WRITER);
+	markWritten(&col);
 }
 
 /***********************
@@ -233,29 +260,43 @@ int writeSBOLCore(const char* filename) {
 	startSBOLDocument();
 
 	// write collections
-	// (and components in just one collection)
 	Collection* col;
 	for (n=0; n<getNumCollections(); n++) {
 		col = getNthCollection(n);
-		writeCollection(col, INCLUDE_CONTENTS);
+		if (!alreadyWritten(col))
+		    writeCollection(col);
 	}
-	
-	// write sequences
-	DNASequence* seq;
-	for (n=0; n<getNumDNASequences(); n++) {
-		seq = getNthDNASequence(n);
-		writeDNASequence(seq, INCLUDE_CONTENTS);
-	}
-	
+
 	// write components
-	// (unless they were included in a collection above)
 	DNAComponent* com;
 	for (n=0; n<getNumDNAComponents(); n++) {
 		com = getNthDNAComponent(n);
-		if (getNumCollectionsFor(com) != 1)
-			writeDNAComponent(com, INCLUDE_CONTENTS);
+		if (!alreadyWritten(com))
+			writeDNAComponent(com);
 	}
 	
+	// write sequences
+	// (there shouldn't be any left at this point,
+	// but better to write them and fail the schema validation
+	// than just lose them silently)
+	DNASequence* seq;
+	for (n=0; n<getNumDNASequences(); n++) {
+		seq = getNthDNASequence(n);
+		if (!alreadyWritten(seq))
+		    writeDNASequence(seq);
+	}
+	
+	// write annotations
+	// (there shouldn't be any left at this point,
+	// but better to write them and fail the schema validation
+	// than just lose them silently)
+	SequenceAnnotation* ann;
+	for (n=0; n<getNumSequenceAnnotations(); n++) {
+		ann = getNthSequenceAnnotation(n);
+		if (!alreadyWritten(ann))
+		    writeSequenceAnnotation(ann);
+	}
+
 	endSBOLDocument();
 	cleanupSBOLWriter;
 	return saveSBOLDocument(filename);
