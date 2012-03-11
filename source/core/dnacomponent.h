@@ -9,6 +9,7 @@ struct _Property;
 
 typedef struct _DNAComponent {
 	struct _Property* uri;
+	struct _Property* displayID;
 	struct _Property* name;
 	struct _Property* description;
 	struct _DNASequence* dnaSequence;
@@ -35,12 +36,14 @@ struct _SequenceAnnotation* getNthSequenceAnnotationIn(const DNAComponent* com, 
 
 // get properties
 char* getDNAComponentURI(const DNAComponent* com);
+char* getDNAComponentDisplayID(const DNAComponent* com);
 char* getDNAComponentName(const DNAComponent* com);
 char* getDNAComponentDescription(const DNAComponent* com);
 struct _DNASequence* getDNAComponentSequence(DNAComponent* com);
 
 // set properties
 void setDNAComponentURI(DNAComponent* com, const char* uri);
+void setDNAComponentDisplayID(DNAComponent* com, const char* id);
 void setDNAComponentName(DNAComponent* com, const char* name);
 void setDNAComponentDescription(DNAComponent* com, const char* desc);
 void setDNAComponentSequence(DNAComponent* com, struct _DNASequence* seq);

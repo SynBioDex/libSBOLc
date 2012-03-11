@@ -24,6 +24,7 @@ void registerDNAComponent(DNAComponent* com) {
 DNAComponent* createDNAComponent(const char* uri) {
 	DNAComponent* com = malloc(sizeof(DNAComponent));
 	com->uri         = createProperty();
+	com->displayID   = createProperty();
 	com->name        = createProperty();
 	com->description = createProperty();
 	com->dnaSequence = NULL;
@@ -48,6 +49,10 @@ void deleteDNAComponent(DNAComponent* com) {
 		if (com->uri) {
 			deleteProperty(com->uri);
 			com->uri = NULL;
+		}
+		if (com->displayID) {
+		    deleteProperty(com->displayID);
+		    com->displayID = NULL;
 		}
 		if (com->name) {
 			deleteProperty(com->name);
@@ -166,6 +171,13 @@ char* getDNAComponentURI(const DNAComponent* com) {
 		return NULL;
 }
 
+char* getDNAComponentDisplayID(const DNAComponent* com) {
+    if (com)
+        return getProperty(com->displayID);
+    else
+        return NULL;
+}
+
 char* getDNAComponentName(const DNAComponent* com) {
 	if (com)
 		return getProperty(com->name);
@@ -193,6 +205,11 @@ DNASequence* getDNAComponentSequence(DNAComponent* com) {
 
 void setDNAComponentURI(DNAComponent* com, const char* uri) {
 	setProperty(com->uri, uri);
+}
+
+void setDNAComponentDisplayID(DNAComponent* com, const char* id) {
+    if (com)
+        setProperty(com->displayID, id);
 }
 
 void setDNAComponentName(DNAComponent* com, const char* name) {

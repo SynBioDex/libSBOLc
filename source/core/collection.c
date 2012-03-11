@@ -23,6 +23,7 @@ Collection* createCollection(const char* uri) {
 	Collection* col;
 	col = (Collection*)malloc(sizeof(Collection));
 	col->uri         = createProperty();
+	col->displayID   = createProperty();
 	col->name        = createProperty();
 	col->description = createProperty();
 	col->components  = createGenericArray();
@@ -46,6 +47,10 @@ void deleteCollection(Collection* col) {
 		if (col->uri) {
 			deleteProperty(col->uri);
 			col->uri = NULL;
+		}
+		if (col->displayID) {
+			deleteProperty(col->displayID);
+			col->displayID = NULL;
 		}
 		if (col->name) {
 			deleteProperty(col->name);
@@ -116,14 +121,25 @@ char* getCollectionURI(const Collection* col) {
 	    return getProperty(col->uri);
 }
 
+char* getCollectionDisplayID(const Collection* col) {
+    if (col)
+        return getProperty(col->displayID);
+    else
+        return NULL;
+}
+
 char* getCollectionName(const Collection* col) {
 	if (col)
 	    return getProperty(col->name);
+    else
+        return NULL;
 }
 
 char* getCollectionDescription(const Collection* col) {
 	if (col)
 	    return getProperty(col->description);
+    else
+        return NULL;
 }
 
 /**************************
@@ -183,6 +199,11 @@ Collection* getNthCollectionIn(const Collection* col, int n) {
 void setCollectionURI(Collection* col, const char* uri) {
     if (col)
         setProperty(col->uri, uri);
+}
+
+void setCollectionDisplayID(Collection* col, const char* id) {
+    if (col && id)
+        setProperty(col->displayID, id);
 }
 
 void setCollectionName(Collection* col, const char* name) {
