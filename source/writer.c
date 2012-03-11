@@ -128,9 +128,12 @@ void writeDNAComponent(const DNAComponent* com, int includeContents) {
 		
 		// properties
 		char* data;
-		data = getDNAComponentName(com);
+		data = getDNAComponentDisplayID(com);
 		if (data)
 			xmlTextWriterWriteElement(WRITER, "displayId", data);
+		data = getDNAComponentName(com);
+		if (data)
+			xmlTextWriterWriteElement(WRITER, "name", data);
 		data = getDNAComponentDescription(com);
 		if (data)
 			xmlTextWriterWriteElement(WRITER, "description", data);

@@ -18,6 +18,7 @@
 #define SBOL_PRECEDES      XMLNS_SBOL "precedes"
 //#define SBOL_DISPLAYID     XMLNS_SBOL ":"
 #define SBOL_NAME          XMLNS_SBOL "name"
+#define SBOL_DISPLAYID     XMLNS_SBOL "displayID"
 #define SBOL_DESCRIPTION   XMLNS_SBOL "description"
 #define SBOL_ANNOTATES     XMLNS_SBOL "annotates"
 #define SBOL_SUBCOMPONENT  XMLNS_SBOL "subComponent"

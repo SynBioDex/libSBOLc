@@ -13,7 +13,7 @@ void TestMini1(CuTest* tc) {
 	readSBOLCore(filename);
 	CuAssertIntEquals(tc, 1, getNumDNAComponents());
 	DNAComponent* com = getNthDNAComponent(0);
-	CuAssertStrEquals(tc, "com1", getDNAComponentName(com));
+	CuAssertStrEquals(tc, "com1", getDNAComponentDisplayID(com));
 	CuAssertStrEquals(tc, "com1 is a test component", 
 			getDNAComponentDescription(com));
 	int result = writeSBOLCore(OUTPUT_FILE);

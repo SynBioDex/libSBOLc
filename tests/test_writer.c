@@ -12,9 +12,10 @@ void TestRecreateValid1(CuTest* tc) {
 	char* filename = "valid1.xml";
 	printf("recreating %s\n", filename);
 	DNAComponent* com = createDNAComponent("http://example.com/dc1");
-	setDNAComponentName(com, "DnaComponent1");
+	setDNAComponentDisplayID(com, "Some display ID");
 	setDNAComponentDescription(com, "Valid because only required field for a DNAComponent is displayId");
 	writeSBOLCore(filename);
+	cleanupSBOLCore();
 }
 
 // TODO sa3 is completely missing. wtf?
@@ -25,7 +26,10 @@ void TestRecreateValid2(CuTest* tc) {
 	DNAComponent* dc2 = createDNAComponent("http://example.com/dc2");
 	DNAComponent* dc3 = createDNAComponent("http://example.com/dc3");
 	DNAComponent* dc4 = createDNAComponent("http://example.com/dc4");
-	// TODO displayID field
+    setDNAComponentDisplayID(dc1, "DC1");
+    setDNAComponentDisplayID(dc2, "DC2");
+    setDNAComponentDisplayID(dc3, "DC3");
+    setDNAComponentDisplayID(dc4, "DC4");
 	setDNAComponentName(dc1, "DnaComponent1");
 	setDNAComponentName(dc2, "DnaComponent2");
 	setDNAComponentName(dc3, "DnaComponent3");
@@ -56,6 +60,7 @@ void TestRecreateValid2(CuTest* tc) {
 	printf("recreating %s\n", filename);
 	int result = writeSBOLCore(filename);
 	CuAssertIntEquals(tc, 0, result);
+	cleanupSBOLCore();
 }
 
 CuSuite* WriterGetSuite() {

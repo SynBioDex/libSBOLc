@@ -34,6 +34,8 @@ void addToDNAComponent(char* uri, char* field, char* value) {
 	DNAComponent* com = getDNAComponent(uri);
 	if (sameString(field, SBOL_NAME))
 		setDNAComponentName(com, value);
+	else if (sameString(field, SBOL_DISPLAYID))
+		setDNAComponentDisplayID(com, value);
 	else if (sameString(field, SBOL_DESCRIPTION))
 		setDNAComponentDescription(com, value);
 	else if (sameString(field, SBOL_COLLECTION)) {
