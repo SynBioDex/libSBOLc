@@ -140,25 +140,14 @@ void readSBOLCore(char* filename) {
 	// raptor stuff
 	// (copied from http://librdf.org/raptor/api/tutorial-parser-example.html)
 	raptor_world* world = NULL;
-	raptor_parser* rdf_parser = NULL;
 	unsigned char *uri_string;
 	raptor_uri *uri, *base_uri;
 	world = raptor_new_world();
-	
-	// choose parse format
-	char* ext = getExtension(filename);
-	if (sameString(ext, "nt"))
-		rdf_parser = raptor_new_parser(world, "ntriples");
-	else {
-		if (!sameString(ext, "xml"))
-			printf("WARNING: Unrecognized extension '%s'. Parsing as rdfxml.\n", ext);
-		rdf_parser = raptor_new_parser(world, "rdfxml");
-	}
-	
+	raptor_parser* rdf_parser = raptor_new_parser(world, "guess");
+
 	// pass each triple to read_triple for analysis
 	raptor_parser_set_statement_handler(rdf_parser, NULL, &read_triple);
 	
-	// more raptor stuff
 	uri_string = raptor_uri_filename_to_uri_string(filename);
 	uri = raptor_new_uri(world, uri_string);
 	base_uri = raptor_uri_copy(uri);

@@ -14,22 +14,11 @@ static void print_triple(void* user_data, raptor_statement* triple) {
 
 int main (int argc, char *argv[]) {
   raptor_world*  world = raptor_new_world();
+  raptor_parser* rdf_parser = raptor_new_parser(world, "guess");
 
-  // choose parse format
-  char* ext = getExtension(argv[1]);
-  raptor_parser* rdf_parser;
-  if (strcmp(ext, "nt") == 0)
-    rdf_parser = raptor_new_parser(world, "ntriples");
-  else {
-    if (strcmp(ext, "xml") != 0)
-      printf("WARNING: Unrecognized extension '%s'. Parsing as rdfxml.\n", ext);
-
-    rdf_parser = raptor_new_parser(world, "rdfxml");
-  }
-
-  printf("\nprinting %s\n", argv[1]);
   unsigned char* uri_string = raptor_uri_filename_to_uri_string(argv[1]);
-  raptor_uri* uri           = raptor_new_uri(world, uri_string);
+  printf("\nprinting %s\n", uri_string);
+  raptor_uri* uri = raptor_new_uri(world, uri_string);	
 
   raptor_parser_set_statement_handler(rdf_parser, NULL, print_triple);
   raptor_parser_parse_file(rdf_parser, uri, NULL);
