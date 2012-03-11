@@ -12,7 +12,7 @@ void TestCreateSequenceAnnotation(CuTest* tc) {
 	SequenceAnnotation* ann;
 	int repeat;
 	for (repeat=0; repeat<NUM_FAST_TESTS; repeat++) {
-		uri = randomString();
+		uri = randomUniqueURI();
 		ann = createSequenceAnnotation(uri);
 		CuAssertIntEquals(tc, 1, getNumSequenceAnnotations());
 		CuAssertStrEquals(tc, uri, getSequenceAnnotationURI(ann));
@@ -32,12 +32,12 @@ void TestPrecedes(CuTest* tc) {
 	SequenceAnnotation** downstream;
 	
 	// create the main annotation to test
-	upstream = createSequenceAnnotation( randomString() );
+	upstream = createSequenceAnnotation( randomUniqueURI() );
 	
 	// and also some others
 	downstream = malloc(NUM_SLOW_TESTS * sizeof(SequenceAnnotation*));
 	for (index=0; index<NUM_SLOW_TESTS; index++) {
-		uri = randomString();
+		uri = randomUniqueURI();
 		downstream[index] = createSequenceAnnotation(uri);
 	}
 	

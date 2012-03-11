@@ -25,7 +25,7 @@ void TestCreateRandomDNAComponent(CuTest* tc) {
 	DNAComponent* com;
 	int repeat;
 	for (repeat=0; repeat<NUM_FAST_TESTS; repeat++) {
-		uri   = randomString();
+		uri   = randomUniqueURI();
 		name  = randomString();
 		descr = randomString();
 		com = createDNAComponent(uri);
@@ -65,7 +65,7 @@ void TestRandomDNAComponentProperties(CuTest* tc) {
 	DNAComponent* com;
 	int repeat;
 	for (repeat=0; repeat<NUM_FAST_TESTS; repeat++) {
-		uri   = randomString();
+		uri   = randomUniqueURI();
 		name  = randomString();
 		descr = randomString();
 		com = createDNAComponent(uri);

@@ -101,5 +101,6 @@ SBOLAPIEXPORTS void printAllCollections();
 // from core.c
 SBOLAPIEXPORTS void printSBOLCore();
 SBOLAPIEXPORTS void cleanupSBOLCore();
+int isDuplicateURI(const char* uri);
 
 #endif

@@ -3,6 +3,7 @@
 #include <string.h>
 #include "utilities.h"
 #include <dirent.h>
+#include "core.h"
 
 #define MAX_STRING_LENGTH 1000
 
@@ -22,6 +23,13 @@ char* randomString() {
 		string[i] = randomChar();
 	string[length] = '\0';
 	return string;
+}
+
+char* randomUniqueURI() {
+    char* uri = randomString();
+    while (isDuplicateURI(uri))
+        uri = randomString();
+    return uri;
 }
 
 int randomNumber(int max) {

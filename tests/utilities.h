@@ -3,6 +3,7 @@
 
 char  randomChar();
 char* randomString();
+char* randomUniqueURI();
 int randomNumber(int max);
 char** getFilenames(char* dirname);
 

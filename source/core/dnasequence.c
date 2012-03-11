@@ -18,6 +18,8 @@ void registerDNASequence(DNASequence* seq) {
 
 // TODO constrain to actg and sometimes n?
 DNASequence* createDNASequence(char* uri) {
+	if (!uri || isDuplicateURI(uri))
+	    return NULL;
 	DNASequence* seq = malloc(sizeof(DNASequence));
 	seq->uri         = createProperty();
 	seq->nucleotides = createProperty();

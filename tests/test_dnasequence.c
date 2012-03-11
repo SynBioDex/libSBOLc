@@ -24,7 +24,7 @@ void TestCreateRandomDNASequence(CuTest* tc) {
 	DNASequence* seq;
 	int repeat;
 	for (repeat=0; repeat<NUM_FAST_TESTS; repeat++) {
-		uri = randomString();
+		uri = randomUniqueURI();
 		nt = randomString();
 		// avoid duplicates
 		while (strcmp(uri, nt) == 0)

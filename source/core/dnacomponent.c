@@ -22,6 +22,8 @@ void registerDNAComponent(DNAComponent* com) {
 }
 
 DNAComponent* createDNAComponent(const char* uri) {
+	if (!uri || isDuplicateURI(uri))
+	    return NULL;
 	DNAComponent* com = malloc(sizeof(DNAComponent));
 	com->uri         = createProperty();
 	com->displayID   = createProperty();

@@ -20,6 +20,8 @@ void registerSequenceAnnotation(SequenceAnnotation* ann) {
 }
 
 SequenceAnnotation* createSequenceAnnotation(const char* uri) {
+	if (!uri || isDuplicateURI(uri))
+	    return NULL;
 	SequenceAnnotation* ann;
 	ann = (SequenceAnnotation*)malloc(sizeof(SequenceAnnotation));
 	ann->uri          = createProperty();

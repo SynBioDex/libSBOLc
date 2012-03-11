@@ -20,6 +20,8 @@ void registerCollection(Collection* col) {
 }
 
 Collection* createCollection(const char* uri) {
+	if (!uri || isDuplicateURI(uri))
+	    return NULL;
 	Collection* col;
 	col = (Collection*)malloc(sizeof(Collection));
 	col->uri         = createProperty();

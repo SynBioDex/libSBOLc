@@ -27,13 +27,13 @@ void TestSingleDNAComponent(CuTest* tc) {
 
 void TestNumDNAComponents(CuTest* tc) {
 	cleanupDNAComponents();
-	char* id;
+	char* uri;
 	DNAComponent* com;
 	int num;
 	for (num=0; num<NUM_FAST_TESTS; num++) {
 		CuAssertIntEquals(tc, num, getNumDNAComponents());
-		id = randomString();
-		com = createDNAComponent(id);
+		uri = randomUniqueURI();
+		com = createDNAComponent(uri);
 		CuAssertIntEquals(tc, num+1, getNumDNAComponents());
 	}
 	for (; num>0; num--) {
@@ -51,9 +51,9 @@ void TestDNAComponentIndexing(CuTest* tc) {
 	DNAComponent* com;
 	int num;
 	for (num=0; num<NUM_SLOW_TESTS; num++) {
-		uri = randomString();
+		uri = randomUniqueURI();
 		while (isDNAComponentURI(uri))
-			uri = randomString();
+			uri = randomUniqueURI();
 		com = createDNAComponent(uri);
 	}
 	int index;
@@ -93,7 +93,7 @@ void TestNumAnnotations(CuTest* tc) {
 	int num;
 	for (num=0; num<NUM_FAST_TESTS; num++) {
 		CuAssertIntEquals(tc, num, getNumSequenceAnnotations());
-		uri = randomString();
+		uri = randomUniqueURI();
 		ann = createSequenceAnnotation(uri);
 		CuAssertIntEquals(tc, num+1, getNumSequenceAnnotations());
 	}
@@ -112,10 +112,10 @@ void TestAnnotationIndexing(CuTest* tc) {
 	SequenceAnnotation* ann;
 	int num;
 	for (num=0; num<NUM_SLOW_TESTS; num++) {
-		uri = randomString();
+		uri = randomUniqueURI();
 		// avoid duplicates
 		while (isSequenceAnnotationURI(uri))
-			uri = randomString();
+			uri = randomUniqueURI();
 		ann = createSequenceAnnotation(uri);
 	}
 	int index;
@@ -138,7 +138,7 @@ void TestcleanupSequenceAnnotations(CuTest* tc) {
 	cleanupSequenceAnnotations();
 	int num;
 	for (num=0; num<NUM_FAST_TESTS; num++)
-		createSequenceAnnotation( randomString() );
+		createSequenceAnnotation( randomUniqueURI() );
 	CuAssertIntEquals(tc, NUM_FAST_TESTS, getNumSequenceAnnotations());
 	cleanupSequenceAnnotations();
 	CuAssertIntEquals(tc, 0, getNumSequenceAnnotations());
@@ -165,7 +165,7 @@ void TestNumCollections(CuTest* tc) {
 	int num;
 	for (num=0; num<NUM_FAST_TESTS; num++) {
 		CuAssertIntEquals(tc, num, getNumCollections());
-		uri = randomString();
+		uri = randomUniqueURI();
 		col = createCollection(uri);
 		CuAssertIntEquals(tc, num+1, getNumCollections());
 	}
@@ -184,10 +184,10 @@ void TestCollectionIndexing(CuTest* tc) {
 	Collection* col;
 	int num;
 	for (num=0; num<NUM_SLOW_TESTS; num++) {
-		uri = randomString();
+		uri = randomUniqueURI();
 		// avoid duplicates
 		while (isCollectionURI(uri))
-			uri = randomString();
+			uri = randomUniqueURI();
 		col = createCollection(uri);
 	}
 	int index;
