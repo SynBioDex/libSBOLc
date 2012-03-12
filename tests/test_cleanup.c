@@ -38,15 +38,15 @@ void TestReadThenCleanup(CuTest* tc) {
 	cleanupSBOLCore();
 }
 
-void TestMultipleDeleteProperty(CuTest* tc) {
+void TestMultipleDeleteTextProperty(CuTest* tc) {
 	int n;
 	char* data;
-	Property* pro;
+	TextProperty* pro;
 	for (n=0; n<NUM_SLOW_TESTS; n++) {
 		data = randomString();
-		pro = createProperty();
-		setProperty(pro, data);
-		deleteProperty(pro);
+		pro = createText();
+		setText(pro, data);
+		deleteText(pro);
 	}
 }
 
@@ -60,6 +60,6 @@ CuSuite* CleanupGetSuite() {
 	SUITE_ADD_TEST(cleanupTests, TestCleanupFirst);
 	SUITE_ADD_TEST(cleanupTests, TestMultipleCleanupFirst);
 	//SUITE_ADD_TEST(cleanupTests, TestReadThenCleanup);
-	SUITE_ADD_TEST(cleanupTests, TestMultipleDeleteProperty);
+	SUITE_ADD_TEST(cleanupTests, TestMultipleDeleteTextProperty);
 	return cleanupTests;
 }

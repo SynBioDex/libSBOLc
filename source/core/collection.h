@@ -1,15 +1,16 @@
 #ifndef SBOL_CORE_COLLECTION
 #define SBOL_CORE_COLLECTION
 
-struct _Property;
+struct _URIProperty;
+struct _TextProperty;
 struct _DNAComponent;
 struct _GenericArray;
 
 typedef struct _Collection {
-	struct _Property* uri;
-	struct _Property* displayID;
-	struct _Property* name;
-	struct _Property* description;
+	struct _URIProperty* uri;
+	struct _TextProperty* displayID;
+	struct _TextProperty* name;
+	struct _TextProperty* description;
 	struct _GenericArray* components;
 	struct _GenericArray* collections;
 	int processed;

@@ -1,15 +1,16 @@
 #ifndef SBOL_CORE_DNASEQUENCE
 #define SBOL_CORE_DNASEQUENCE
 
-struct _Property;
+struct _URIProperty;
+struct _TextProperty;
 
 typedef struct _DNASequence {
-	struct _Property* uri;
-	struct _Property* nucleotides;
+	struct _URIProperty* uri;
+	struct _TextProperty* nucleotides;
 	int processed;
 } DNASequence;
 
-DNASequence* createDNASequence(char* nucleotides); // TODO id?
+DNASequence* createDNASequence(char* nucleotides); // TODO id instead
 void deleteDNASequence(DNASequence* seq);
 
 int getNumDNASequences();

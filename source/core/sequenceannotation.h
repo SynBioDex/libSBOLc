@@ -3,10 +3,10 @@
 
 struct _DNAComponent;
 struct _GenericArray;
-struct _Property;
+struct _URIProperty;
 
 typedef struct _SequenceAnnotation {
-	struct _Property* uri;
+	struct _URIProperty* uri;
 	int genbankStart;
 	int genbankEnd;
 	int strand;

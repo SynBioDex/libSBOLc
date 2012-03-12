@@ -21,8 +21,8 @@ DNASequence* createDNASequence(char* uri) {
 	if (!uri || isDuplicateURI(uri))
 	    return NULL;
 	DNASequence* seq = malloc(sizeof(DNASequence));
-	seq->uri         = createProperty();
-	seq->nucleotides = createProperty();
+	seq->uri         = createURI();
+	seq->nucleotides = createText();
 	seq->processed   = 0;
 	setDNASequenceURI(seq, uri);
 	registerDNASequence(seq);
@@ -31,12 +31,12 @@ DNASequence* createDNASequence(char* uri) {
 
 void setDNASequenceURI(DNASequence* seq, const char* uri) {
 	if (seq)
-		setProperty(seq->uri, uri);
+		setURI(seq->uri, uri);
 }
 
 void setNucleotides(DNASequence* seq, const char* nucleotides) {
 	if (seq)
-		setProperty(seq->nucleotides, nucleotides);
+		setText(seq->nucleotides, nucleotides);
 }
 
 void removeDNASequence(DNASequence* seq) {
@@ -50,8 +50,8 @@ void removeDNASequence(DNASequence* seq) {
 void deleteDNASequence(DNASequence* seq) {
 	if (seq) {
 		removeDNASequence(seq);
-		deleteProperty(seq->uri);
-		deleteProperty(seq->nucleotides);
+		deleteURI(seq->uri);
+		deleteText(seq->nucleotides);
 		seq->uri = NULL;
 		seq->nucleotides = NULL;
 		free(seq);
@@ -84,10 +84,12 @@ DNASequence* getDNASequence(const char* uri) {
 	if (!uri)
 		return NULL;
 	int index;
+	char* candidate;
 	DNASequence* seq;
 	for (index=0; index<allDNASequences->numInUse; index++) {
 		seq = (DNASequence*) allDNASequences->array[index];
-		if (compareProperty(seq->uri, uri) == 0)
+		candidate = getURI(seq->uri);
+		if (strcmp(candidate, uri) == 0)
 			return seq;
 	}
 	return NULL;
@@ -95,7 +97,7 @@ DNASequence* getDNASequence(const char* uri) {
 
 char* getDNASequenceURI(const DNASequence* seq) {
 	if (seq)
-		return getProperty(seq->uri);
+		return getURI(seq->uri);
 	else
 		return NULL;
 }
@@ -106,10 +108,12 @@ int isDNASequenceURI(const char* uri) {
 	if (!uri)
 		return 0;
 	int index;
+	char* candidate;
 	DNASequence* seq;
 	for (index=0; index<getNumDNASequences(); index++) {
 		seq = getNthDNASequence(index);
-		if (seq && compareProperty(seq->uri, uri) == 0)
+		candidate = getURI(seq->uri);
+		if (seq && strcmp(candidate, uri) == 0)
 			return 1;
 	}
 	return 0;
@@ -117,7 +121,7 @@ int isDNASequenceURI(const char* uri) {
 
 char* getNucleotides(const DNASequence* seq) {
 	if (seq)
-	    return getProperty(seq->nucleotides);
+	    return getText(seq->nucleotides);
 }
 
 DNASequence* getNthDNASequence(int n) {

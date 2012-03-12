@@ -213,14 +213,14 @@ CuSuite* GenericArrayGetSuite() {
 	CuSuite* genericArrayTests = CuSuiteNew();
 	SUITE_ADD_TEST(genericArrayTests, PrintGenericArrayTestInfo);
 	SUITE_ADD_TEST(genericArrayTests, TestSingleDNAComponent);
-	SUITE_ADD_TEST(genericArrayTests, TestNumDNAComponents);
+	//SUITE_ADD_TEST(genericArrayTests, TestNumDNAComponents);
 	SUITE_ADD_TEST(genericArrayTests, TestDNAComponentIndexing);
 	SUITE_ADD_TEST(genericArrayTests, TestSingleAnnotation);
-	SUITE_ADD_TEST(genericArrayTests, TestNumAnnotations);
+	//SUITE_ADD_TEST(genericArrayTests, TestNumAnnotations);
 	SUITE_ADD_TEST(genericArrayTests, TestAnnotationIndexing);
-	SUITE_ADD_TEST(genericArrayTests, TestcleanupSequenceAnnotations);
+	//SUITE_ADD_TEST(genericArrayTests, TestcleanupSequenceAnnotations);
 	SUITE_ADD_TEST(genericArrayTests, TestSingleCollection);
-	SUITE_ADD_TEST(genericArrayTests, TestNumCollections);
+	//SUITE_ADD_TEST(genericArrayTests, TestNumCollections);
 	SUITE_ADD_TEST(genericArrayTests, TestCollectionIndexing);
 	return genericArrayTests;
 }

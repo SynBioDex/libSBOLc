@@ -24,7 +24,7 @@ SequenceAnnotation* createSequenceAnnotation(const char* uri) {
 	    return NULL;
 	SequenceAnnotation* ann;
 	ann = (SequenceAnnotation*)malloc(sizeof(SequenceAnnotation));
-	ann->uri          = createProperty();
+	ann->uri          = createURI();
 	ann->genbankStart = 0;
 	ann->genbankEnd   = 0;
 	ann->strand       = 1;
@@ -49,7 +49,7 @@ void deleteSequenceAnnotation(SequenceAnnotation* ann) {
 	if (ann) {
 		removeSequenceAnnotation(ann);
 		if (ann->uri) {
-			deleteProperty(ann->uri);
+			deleteURI(ann->uri);
 			ann->uri = NULL;
 		}
 		// TODO will these delete parts of other structs?
@@ -70,7 +70,7 @@ void deleteSequenceAnnotation(SequenceAnnotation* ann) {
 
 void setSequenceAnnotationURI(SequenceAnnotation* ann, const char* uri) {
     if (ann)
-        setProperty(ann->uri, uri);
+        setURI(ann->uri, uri);
 }
 
 void setBioStart(SequenceAnnotation* ann, int start) {
@@ -105,11 +105,15 @@ int isSequenceAnnotationURI(const char* uri) {
 	if (!uri)
 		return 0;
 	int index;
+	char* candidate;
 	SequenceAnnotation* ann;
 	for (index=0; index<getNumSequenceAnnotations(); index++) {
 		ann = getNthSequenceAnnotation(index);
-		if (ann && compareProperty(ann->uri, uri) == 0)
-			return 1;
+		if (ann) {
+			candidate = getURI(ann->uri);
+			if (strcmp(candidate, uri) == 0)
+				return 1;
+		}
 	}
 	return 0;
 }
@@ -147,7 +151,7 @@ SequenceAnnotation* getNthSequenceAnnotation(int n) {
 
 char* getSequenceAnnotationURI(const SequenceAnnotation* ann) {
     if (ann)
-        return getProperty(ann->uri);
+        return getURI(ann->uri);
 }
 
 SequenceAnnotation* getSequenceAnnotation(const char* uri) {
@@ -156,10 +160,12 @@ SequenceAnnotation* getSequenceAnnotation(const char* uri) {
 	if (!uri)
 		return NULL;
 	int index;
+	char* candidate;
 	SequenceAnnotation* ann;
 	for (index=0; index<allSequenceAnnotations->numInUse; index++) {
 		ann = (SequenceAnnotation*) allSequenceAnnotations->array[index];
-		if (compareProperty(ann->uri, uri) == 0)
+		candidate = getURI(ann->uri);
+		if (strcmp(candidate, uri) == 0)
 			return ann;
 	}
 	return NULL;

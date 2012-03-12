@@ -23,12 +23,46 @@ SBOLAPIEXPORTS void indent(int tabs);
 
 // from property.h
 // TODO these shouldn't be exported
-SBOLAPIEXPORTS Property* createProperty();
-SBOLAPIEXPORTS void deleteProperty(Property* pro);
-SBOLAPIEXPORTS int compareProperty(const Property* pro, const char* value);
-SBOLAPIEXPORTS char* getProperty(const Property* pro);
-SBOLAPIEXPORTS void setProperty(Property* pro, const char* value);
-SBOLAPIEXPORTS void printProperty(const Property* pro);
+
+// TextProperty
+SBOLAPIEXPORTS TextProperty* createText();
+SBOLAPIEXPORTS void deleteText(TextProperty* pro);
+SBOLAPIEXPORTS void setText(TextProperty* pro, const char* text);
+SBOLAPIEXPORTS char* getText(const TextProperty* pro);
+SBOLAPIEXPORTS int compareText(const TextProperty* pro1, const TextProperty* pro2);
+SBOLAPIEXPORTS void printText(const TextProperty* pro);
+
+// URIProperty
+SBOLAPIEXPORTS URIProperty* createURI();
+SBOLAPIEXPORTS void deleteURI(URIProperty* pro);
+SBOLAPIEXPORTS void setURI(URIProperty* pro, const char* uri);
+SBOLAPIEXPORTS char* getURI(const URIProperty* pro);
+SBOLAPIEXPORTS int compareURI(const URIProperty* pro1, const URIProperty* pro2);
+SBOLAPIEXPORTS void printURI(const URIProperty* pro);
+
+// IntProperty
+SBOLAPIEXPORTS IntProperty* createInt();
+SBOLAPIEXPORTS void deleteInt(IntProperty* pro);
+SBOLAPIEXPORTS void setInt(IntProperty* pro, const int value);
+SBOLAPIEXPORTS int getInt(const IntProperty* pro);
+SBOLAPIEXPORTS int compareInt(const IntProperty* pro1, const IntProperty* pro2);
+SBOLAPIEXPORTS void printInt(const IntProperty* pro);
+
+// PositionProperty
+SBOLAPIEXPORTS PositionProperty* createPosition();
+SBOLAPIEXPORTS void deletePosition(PositionProperty* pro);
+SBOLAPIEXPORTS void setPosition(PositionProperty* pro, const int value);
+SBOLAPIEXPORTS int getPosition(const PositionProperty* pro);
+SBOLAPIEXPORTS int comparePosition(const PositionProperty* pro1, const PositionProperty* pro2);
+SBOLAPIEXPORTS void printPosition(const PositionProperty* pro);
+
+// PolarityProperty
+SBOLAPIEXPORTS PolarityProperty* createPolarity();
+SBOLAPIEXPORTS void deletePolarity(PolarityProperty* pro);
+SBOLAPIEXPORTS void setPolarity(PolarityProperty* pro, const int value);
+SBOLAPIEXPORTS int getPolarity(const PolarityProperty* pro);
+SBOLAPIEXPORTS int comparePolarity(const PolarityProperty* pro1, const PolarityProperty* pro2);
+SBOLAPIEXPORTS void printPolarity(const PolarityProperty* pro);
 
 // from dnasequence.h
 // TODO create with URI and not sequence
