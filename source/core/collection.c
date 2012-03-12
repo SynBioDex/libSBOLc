@@ -250,7 +250,7 @@ void cleanupCollections() {
 void printCollection(const Collection* col, int tabs) {
     if (!col)
         return;
-    indent(tabs);   printf("uri:         %s\n", getCollectionURI(col->uri));
+    indent(tabs);   printf("uri:         %s\n", getCollectionURI(col));
     indent(tabs+1); printf("name:        %s\n", getCollectionName(col));
     indent(tabs+1); printf("description: %s\n", getCollectionDescription(col));
     int i;

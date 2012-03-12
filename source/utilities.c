@@ -3,7 +3,7 @@
 #include <stdlib.h>
 #include "utilities.h"
 
-#define BUFFER_CHARS 10000
+#define BUFFER_CHARS 100
 
 char* getExtension(char* filename) {
 	if (!filename)
@@ -72,8 +72,8 @@ int sameContent(const char* filename1, const char* filename2) {
 	int linecount = 0;
 	fpread  = fopen(filename1, "r");
 	fpread2 = fopen(filename2, "r");
-	while (((fgets(filebuff,  BUFFER_CHARS, fpread))
-		 && (fgets(filebuff2, BUFFER_CHARS, fpread2))) != NULL) {
+	while ( fgets(filebuff,  BUFFER_CHARS, fpread)  != NULL
+		 && fgets(filebuff2, BUFFER_CHARS, fpread2) != NULL ) {
 		++linecount;
 		var = strcmp(filebuff, filebuff2);           
 		if (var != 0){
