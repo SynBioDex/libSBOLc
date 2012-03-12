@@ -105,4 +105,7 @@ SBOLAPIEXPORTS void printSBOLCore();
 SBOLAPIEXPORTS void cleanupSBOLCore();
 int isDuplicateURI(const char* uri);
 
+// from utilities.c
+SBOLAPIEXPORTS int sameContent(const char* filename1, const char* filename2);
+
 #endif

@@ -1,6 +1,9 @@
 #include <string.h>
+#include <stdio.h>
 #include <stdlib.h>
 #include "utilities.h"
+
+#define BUFFER_CHARS 10000
 
 char* getExtension(char* filename) {
 	if (!filename)
@@ -23,7 +26,7 @@ char* getExtension(char* filename) {
 	return &filename[i];
 }
 
-int sameString(char* string1, char* string2) {
+int sameString(const char* string1, const char* string2) {
 	if (!string1 || !string2)
 		return 0;
 	else
@@ -59,4 +62,28 @@ char* intToStr(int input) {
 		output[digits] = '\0';
 	}
 	return output;
+}
+
+int sameContent(const char* filename1, const char* filename2) {
+	FILE *fpread, *fpread2;	
+	char  filebuff[BUFFER_CHARS];
+	char filebuff2[BUFFER_CHARS];
+	int var = 0;
+	int linecount = 0;
+	fpread  = fopen(filename1, "r");
+	fpread2 = fopen(filename2, "r");
+	while (((fgets(filebuff,  BUFFER_CHARS, fpread))
+		 && (fgets(filebuff2, BUFFER_CHARS, fpread2))) != NULL) {
+		++linecount;
+		var = strcmp(filebuff, filebuff2);           
+		if (var != 0){
+			printf("mismatch:\n%s\n%s\n", filebuff, filebuff2);
+			fclose(fpread);
+			fclose(fpread2);
+			return 0;
+		}
+	}
+	fclose(fpread);
+	fclose(fpread2);
+	return 1;
 }
