@@ -32,12 +32,11 @@ SET( LIBRARY_OUTPUT_PATH    ${PROJECT_RELEASE_DIR} )
 # find libxml2, or build if needed
 IF( WIN32 )
 	ADD_SUBDIRECTORY( libxml2 )
+	INCLUDE_DIRECTORIES( ${PROJECT_SOURCE_DIR}/libxml2/include )
 ELSE()
 	FIND_PACKAGE( LibXml2 )
+	INCLUDE_DIRECTORIES( ${LIBXML2_INCLUDE_DIR} )
 ENDIF()
-INCLUDE_DIRECTORIES(
-	${PROJECT_SOURCE_DIR}/libxml2/include
-)
 
 # build raptor dependencies
 # (except expat, which comes next)
@@ -50,9 +49,7 @@ INCLUDE_DIRECTORIES(
 
 # build raptor
 ADD_SUBDIRECTORY( raptor2 ) # includes expat
-INCLUDE_DIRECTORIES(
-	${PROJECT_SOURCE_DIR}/raptor2/src
-)
+INCLUDE_DIRECTORIES( ${PROJECT_SOURCE_DIR}/raptor2/src )
 
 # build libSBOL
 ADD_LIBRARY( sbol
