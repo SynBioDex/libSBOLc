@@ -25,10 +25,10 @@ DNAComponent* createDNAComponent(const char* uri) {
 	if (!uri || isDuplicateURI(uri))
 	    return NULL;
 	DNAComponent* com = malloc(sizeof(DNAComponent));
-	com->uri         = createURI();
-	com->displayID   = createText();
-	com->name        = createText();
-	com->description = createText();
+	com->uri         = createURIProperty();
+	com->displayID   = createTextProperty();
+	com->name        = createTextProperty();
+	com->description = createTextProperty();
 	com->dnaSequence = NULL;
 	com->annotations = createGenericArray();
 	com->collections = createGenericArray();
@@ -50,19 +50,19 @@ void deleteDNAComponent(DNAComponent* com) {
 	if (com) {
 		removeDNAComponent(com);
 		if (com->uri) {
-			deleteURI(com->uri);
+			deleteURIProperty(com->uri);
 			com->uri = NULL;
 		}
 		if (com->displayID) {
-		    deleteText(com->displayID);
+		    deleteTextProperty(com->displayID);
 		    com->displayID = NULL;
 		}
 		if (com->name) {
-			deleteText(com->name);
+			deleteTextProperty(com->name);
 			com->name = NULL;
 		}
 		if (com->description) {
-			deleteText(com->description);
+			deleteTextProperty(com->description);
 			com->description = NULL;
 		}
 		if (com->annotations) {
@@ -95,7 +95,7 @@ int isDNAComponentURI(const char* uri) {
 	DNAComponent* com;
 	for (index=0; index<allDNAComponents->numInUse; index++) {
 		com = (DNAComponent*) allDNAComponents->array[index];
-		candidate = getURI(com->uri);
+		candidate = getURIProperty(com->uri);
 		if (strcmp(candidate, uri) == 0)
 			return 1;
 	}
@@ -164,7 +164,7 @@ DNAComponent* getDNAComponent(const char* uri) {
 	DNAComponent* com;
 	for (index=0; index<allDNAComponents->numInUse; index++) {
 		com = (DNAComponent*) allDNAComponents->array[index];
-		candidate = getURI(com->uri);
+		candidate = getURIProperty(com->uri);
 		if (strcmp(candidate, uri) == 0)
 			return com;
 	}
@@ -173,28 +173,28 @@ DNAComponent* getDNAComponent(const char* uri) {
 
 char* getDNAComponentURI(const DNAComponent* com) {
 	if (com)
-		return getURI(com->uri);
+		return getURIProperty(com->uri);
 	else
 		return NULL;
 }
 
 char* getDNAComponentDisplayID(const DNAComponent* com) {
     if (com)
-        return getText(com->displayID);
+        return getTextProperty(com->displayID);
     else
         return NULL;
 }
 
 char* getDNAComponentName(const DNAComponent* com) {
 	if (com)
-		return getText(com->name);
+		return getTextProperty(com->name);
 	else
 		return NULL;
 }
 
 char* getDNAComponentDescription(const DNAComponent* com) {
 	if (com)
-		return getText(com->description);
+		return getTextProperty(com->description);
 	else
 		return NULL;
 }
@@ -212,22 +212,22 @@ DNASequence* getDNAComponentSequence(DNAComponent* com) {
 
 void setDNAComponentURI(DNAComponent* com, const char* uri) {
 	if (com)
-		setURI(com->uri, uri);
+		setURIProperty(com->uri, uri);
 }
 
 void setDNAComponentDisplayID(DNAComponent* com, const char* id) {
     if (com)
-        setText(com->displayID, id);
+        setTextProperty(com->displayID, id);
 }
 
 void setDNAComponentName(DNAComponent* com, const char* name) {
 	if (com)
-		setText(com->name, name);
+		setTextProperty(com->name, name);
 }
 
 void setDNAComponentDescription(DNAComponent* com, const char* descr) {
 	if (com)
-		setText(com->description, descr);
+		setTextProperty(com->description, descr);
 }
 
 void setDNAComponentSequence(DNAComponent* com, struct _DNASequence* seq) {

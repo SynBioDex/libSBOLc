@@ -7,9 +7,9 @@
 #define NUM_FAST_TESTS 10000
 
 void TestCreateTextProperty(CuTest* tc) {
-	TextProperty* pro = createText();
-	CuAssertPtrEquals(tc, NULL, getText(pro));
-	deleteText(pro);
+	TextProperty* pro = createTextProperty();
+	CuAssertPtrEquals(tc, NULL, getTextProperty(pro));
+	deleteTextProperty(pro);
 }
 
 void TestGetSetCompareProperty(CuTest* tc) {
@@ -17,21 +17,21 @@ void TestGetSetCompareProperty(CuTest* tc) {
 	char* data;
 	int repeat;
 	// test null
-	pro = createText();
-	setText(pro, NULL);
-	CuAssertPtrEquals(tc, NULL, getText(pro));
+	pro = createTextProperty();
+	setTextProperty(pro, NULL);
+	CuAssertPtrEquals(tc, NULL, getTextProperty(pro));
 	// test empty
-	pro = createText();
-	setText(pro, "");
-	CuAssertStrEquals(tc, "", getText(pro));
+	pro = createTextProperty();
+	setTextProperty(pro, "");
+	CuAssertStrEquals(tc, "", getTextProperty(pro));
 	// test lots of random variations
 	for (repeat=0; repeat<NUM_FAST_TESTS; repeat++) {
 		data = randomString();
-		pro  = createText();
-		setText(pro, data);
-		CuAssertStrEquals(tc, data, getText(pro));
-		CuAssertIntEquals(tc, 0, strcmp(getText(pro), data));
-		deleteText(pro); // TODO why does this segfault?
+		pro  = createTextProperty();
+		setTextProperty(pro, data);
+		CuAssertStrEquals(tc, data, getTextProperty(pro));
+		CuAssertIntEquals(tc, 0, strcmp(getTextProperty(pro), data));
+		deleteTextProperty(pro);
 	}
 }
 

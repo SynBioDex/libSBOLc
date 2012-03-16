@@ -24,7 +24,7 @@ SequenceAnnotation* createSequenceAnnotation(const char* uri) {
 	    return NULL;
 	SequenceAnnotation* ann;
 	ann = (SequenceAnnotation*)malloc(sizeof(SequenceAnnotation));
-	ann->uri          = createURI();
+	ann->uri          = createURIProperty();
 	ann->genbankStart = 0;
 	ann->genbankEnd   = 0;
 	ann->strand       = 1;
@@ -49,7 +49,7 @@ void deleteSequenceAnnotation(SequenceAnnotation* ann) {
 	if (ann) {
 		removeSequenceAnnotation(ann);
 		if (ann->uri) {
-			deleteURI(ann->uri);
+			deleteURIProperty(ann->uri);
 			ann->uri = NULL;
 		}
 		// TODO will these delete parts of other structs?
@@ -70,7 +70,7 @@ void deleteSequenceAnnotation(SequenceAnnotation* ann) {
 
 void setSequenceAnnotationURI(SequenceAnnotation* ann, const char* uri) {
     if (ann)
-        setURI(ann->uri, uri);
+        setURIProperty(ann->uri, uri);
 }
 
 void setBioStart(SequenceAnnotation* ann, int start) {
@@ -110,7 +110,7 @@ int isSequenceAnnotationURI(const char* uri) {
 	for (index=0; index<getNumSequenceAnnotations(); index++) {
 		ann = getNthSequenceAnnotation(index);
 		if (ann) {
-			candidate = getURI(ann->uri);
+			candidate = getURIProperty(ann->uri);
 			if (strcmp(candidate, uri) == 0)
 				return 1;
 		}
@@ -151,7 +151,7 @@ SequenceAnnotation* getNthSequenceAnnotation(int n) {
 
 char* getSequenceAnnotationURI(const SequenceAnnotation* ann) {
     if (ann)
-        return getURI(ann->uri);
+        return getURIProperty(ann->uri);
 }
 
 SequenceAnnotation* getSequenceAnnotation(const char* uri) {
@@ -164,7 +164,7 @@ SequenceAnnotation* getSequenceAnnotation(const char* uri) {
 	SequenceAnnotation* ann;
 	for (index=0; index<allSequenceAnnotations->numInUse; index++) {
 		ann = (SequenceAnnotation*) allSequenceAnnotations->array[index];
-		candidate = getURI(ann->uri);
+		candidate = getURIProperty(ann->uri);
 		if (strcmp(candidate, uri) == 0)
 			return ann;
 	}

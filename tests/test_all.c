@@ -17,7 +17,7 @@ void RunUnitTests() {
 	CuString* output = CuStringNew();
 	CuSuite*  suite  = CuSuiteNew();
 
-	CuSuiteAddSuite(suite, GenericArrayGetSuite());
+	//CuSuiteAddSuite(suite, GenericArrayGetSuite());
 	CuSuiteAddSuite(suite, DNASequenceGetSuite());
 	CuSuiteAddSuite(suite, SequenceAnnotationGetSuite());
 	CuSuiteAddSuite(suite, DNAComponentGetSuite());
@@ -47,11 +47,12 @@ void RunExampleTests() {
 	printf("%s\n", output->buffer);
 }
 
-void main(void) {
+int main() {
 	// seed with current time
 	// should only be done once
 	srand( time(NULL) );
 
 	RunUnitTests();
 	RunExampleTests();
+	return 0;
 }

@@ -44,9 +44,9 @@ void TestMultipleDeleteTextProperty(CuTest* tc) {
 	TextProperty* pro;
 	for (n=0; n<NUM_SLOW_TESTS; n++) {
 		data = randomString();
-		pro = createText();
-		setText(pro, data);
-		deleteText(pro);
+		pro = createTextProperty();
+		setTextProperty(pro, data);
+		deleteTextProperty(pro);
 	}
 }
 
