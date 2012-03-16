@@ -15,8 +15,8 @@ typedef struct _SBOLObject {
 SBOLObject* createSBOLObject(const char* uri);
 void        deleteSBOLObject(SBOLObject* obj);
 
-void  setURI(SBOLObject* obj, const char* uri);
-char* getURI(const SBOLObject* obj);
+void  setSBOLObjectURI(SBOLObject* obj, const char* uri);
+char* getSBOLObjectURI(const SBOLObject* obj);
 
 /**********************
  * SBOLCompoundObject
@@ -32,13 +32,16 @@ typedef struct _SBOLCompoundObject {
 SBOLCompoundObject* createSBOLCompoundObject(const char* uri);
 void                deleteSBOLCompoundObject(SBOLCompoundObject* obj);
 
-void  setDisplayID(SBOLCompoundObject* obj, const char* id);
-char* getDisplayID(const SBOLCompoundObject* obj);
+void  setSBOLCompoundObjectURI(SBOLCompoundObject* obj, const char* uri);
+char* getSBOLCompoundObjectURI(const SBOLCompoundObject* obj);
 
-void  setName(SBOLCompoundObject* obj, const char* name);
-char* getName(const SBOLCompoundObject* obj);
+void  setSBOLCompoundObjectDisplayID(SBOLCompoundObject* obj, const char* id);
+char* getSBOLCompoundObjectDisplayID(const SBOLCompoundObject* obj);
 
-void  setDescription(SBOLCompoundObject* obj, const char* descr);
-char* getDescription(const SBOLCompoundObject* obj);
+void  setSBOLCompoundObjectName(SBOLCompoundObject* obj, const char* name);
+char* getSBOLCompoundObjectName(const SBOLCompoundObject* obj);
+
+void  setSBOLCompoundObjectDescription(SBOLCompoundObject* obj, const char* descr);
+char* getSBOLCompoundObjectDescription(const SBOLCompoundObject* obj);
 
 #endif

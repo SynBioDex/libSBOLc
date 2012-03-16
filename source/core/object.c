@@ -17,7 +17,7 @@ SBOLObject* createSBOLObject(const char* uri) {
 		return NULL;
 	SBOLObject* obj = malloc(sizeof(SBOLObject));
 	obj->uri = createURIProperty();
-	setURIProperty(obj->uri, uri);
+	setSBOLObjectURI(obj, uri);
 	return obj;
 }
 
@@ -28,12 +28,12 @@ void deleteSBOLObject(SBOLObject* obj) {
 	}
 }
 
-void setURI(SBOLObject* obj, const char* uri) {
+void setSBOLObjectURI(SBOLObject* obj, const char* uri) {
 	if (obj && uri)
 		setURIProperty(obj->uri, uri);
 }
 
-char* getURI(const SBOLObject* obj) {
+char* getSBOLObjectURI(const SBOLObject* obj) {
 	if (obj)
 		return getURIProperty(obj->uri);
 	else
@@ -72,39 +72,50 @@ void deleteSBOLCompoundObject(SBOLCompoundObject* obj) {
 	}
 }
 
-void setDisplayID(SBOLCompoundObject* obj, const char* id) {
+void setSBOLCompoundObjectURI(SBOLCompoundObject* obj, const char* uri) {
+	setSBOLObjectURI((SBOLObject*) obj, uri);
+}
+
+char* getSBOLCompoundObjectURI(const SBOLCompoundObject* obj) {
+	if (obj)
+		return getSBOLObjectURI((SBOLObject*) obj);
+	else
+		return NULL;
+}
+
+void setSBOLCompoundObjectDisplayID(SBOLCompoundObject* obj, const char* id) {
 	if (obj && id) {
 		setTextProperty(obj->displayID, id);
 	}
 }
 
-char* getDisplayID(const SBOLCompoundObject* obj) {
+char* getSBOLCompoundObjectDisplayID(const SBOLCompoundObject* obj) {
 	if (obj)
 		return getTextProperty(obj->displayID);
 	else
 		return NULL;
 }
 
-void setName(SBOLCompoundObject* obj, const char* name) {
+void setSBOLCompoundObjectName(SBOLCompoundObject* obj, const char* name) {
 	if (obj && name) {
 		setTextProperty(obj->name, name);
 	}
 }
 
-char* getName(const SBOLCompoundObject* obj) {
+char* getSBOLCompoundObjectName(const SBOLCompoundObject* obj) {
 	if (obj)
 		return getTextProperty(obj->name);
 	else
 		return NULL;
 }
 
-void setDescription(SBOLCompoundObject* obj, const char* descr) {
+void setSBOLCompoundObjectDescription(SBOLCompoundObject* obj, const char* descr) {
 	if (obj && descr) {
 		setTextProperty(obj->description, descr);
 	}
 }
 
-char* getDescription(const SBOLCompoundObject* obj) {
+char* getSBOLCompoundObjectDescription(const SBOLCompoundObject* obj) {
 	if (obj)
 		return getTextProperty(obj->description);
 	else
