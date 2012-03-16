@@ -15,6 +15,14 @@ typedef struct _SBOLObject {
 SBOLObject* createSBOLObject(const char* uri);
 void        deleteSBOLObject(SBOLObject* obj);
 
+// TODO remove once it's clear these aren't needed
+int getNumSBOLObjects();
+int isSBOLObjectURI(const char* uri);
+SBOLObject* getNthSBOLObject(int n);
+SBOLObject* getSBOLObject(const char* uri);
+void registerSBOLObject(SBOLObject* obj);
+void removeSBOLObject(SBOLObject* obj);
+
 void  setSBOLObjectURI(SBOLObject* obj, const char* uri);
 char* getSBOLObjectURI(const SBOLObject* obj);
 
@@ -28,6 +36,14 @@ typedef struct _SBOLCompoundObject {
 	struct _TextProperty* name;
 	struct _TextProperty* description;
 } SBOLCompoundObject;
+
+// TODO remove once it's clear these aren't needed
+int getNumSBOLCompoundObjects();
+int isSBOLCompoundObjectURI(const char* uri);
+SBOLCompoundObject* getNthSBOLCompoundObject(int n);
+SBOLCompoundObject* getSBOLCompoundObject(const char* uri);
+void registerSBOLCompoundObject(SBOLCompoundObject* obj);
+void removeSBOLCompoundObject(SBOLCompoundObject* obj);
 
 SBOLCompoundObject* createSBOLCompoundObject(const char* uri);
 void                deleteSBOLCompoundObject(SBOLCompoundObject* obj);

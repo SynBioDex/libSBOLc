@@ -12,12 +12,14 @@ CuSuite* CleanupGetSuite();
 CuSuite* RoundTripGetSuite();
 CuSuite* ReaderGetSuite();
 CuSuite* WriterGetSuite();
+CuSuite* SBOLObjectGetSuite();
 
 void RunUnitTests() {
 	CuString* output = CuStringNew();
 	CuSuite*  suite  = CuSuiteNew();
 
 	//CuSuiteAddSuite(suite, GenericArrayGetSuite());
+	CuSuiteAddSuite(suite, SBOLObjectGetSuite());
 	CuSuiteAddSuite(suite, DNASequenceGetSuite());
 	CuSuiteAddSuite(suite, SequenceAnnotationGetSuite());
 	CuSuiteAddSuite(suite, DNAComponentGetSuite());
