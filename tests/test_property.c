@@ -39,7 +39,6 @@ void TestDeleteEmptyProperty(CuTest* tc) {
 	deleteTextProperty(NULL);
 	TextProperty* pro = createTextProperty();
 	deleteTextProperty(pro);
-	deleteTextProperty(pro);
 }
 
 void PrintPropertyTestInfo() {

@@ -21,7 +21,6 @@ void deleteTextProperty(TextProperty* pro) {
         	pro->text = NULL;
         }
         free(pro);
-        pro = NULL;
     }
 }
 
@@ -68,7 +67,6 @@ void deleteURIProperty(URIProperty* pro) {
 		if (pro->uri)
 			deleteTextProperty(pro->uri);
 		free(pro);
-		pro = NULL;
 	}
 }
 
@@ -111,18 +109,17 @@ void deleteIntProperty(IntProperty* pro) {
 		if (pro->number)
 			free(pro->number);
 		free(pro);
-		pro = NULL;
 	}
 }
 
 void setIntProperty(IntProperty* pro, int value) {
 	if (pro)
-		pro->number = value;
+		*(pro->number) = value;
 }
 
 int getIntProperty(const IntProperty* pro) {
 	if (pro)
-		return pro->number;
+		return *(pro->number);
 	// TODO "NULL" value?
 }
 
@@ -153,7 +150,6 @@ void deletePositionProperty(PositionProperty* pro) {
 		if (pro->position)
 			deleteIntProperty(pro->position);
 		free(pro);
-		pro = NULL;
 	}
 }
 
@@ -197,7 +193,6 @@ void deletePolarityProperty(PolarityProperty* pro) {
 		if (pro->polarity)
 			deleteIntProperty(pro->polarity);
 		free(pro);
-		pro = NULL;
 	}
 }
 

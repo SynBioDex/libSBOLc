@@ -56,7 +56,6 @@ void deleteDNASequence(DNASequence* seq) {
 			deleteTextProperty(seq->nucleotides);
 		removeDNASequence(seq);
 		free(seq);
-		seq = NULL;
 	}
 }
 
