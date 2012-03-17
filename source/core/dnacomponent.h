@@ -1,21 +1,18 @@
 #ifndef SBOL_CORE_DNACOMPONENT
 #define SBOL_CORE_DNACOMPONENT
+#include "object.h"
 
+struct _SBOLCompoundObject;
 struct _GenericArray;
 struct _DNASequence;
 struct _SequenceAnnotation;
 struct _Collection;
-struct _URIProperty;
-struct _TextProperty;
 
 typedef struct _DNAComponent {
-	struct _URIProperty* uri;
-	struct _TextProperty* displayID;
-	struct _TextProperty* name;
-	struct _TextProperty* description;
-	struct _DNASequence* dnaSequence;
-	struct _GenericArray* annotations;
-	struct _GenericArray* collections;
+	struct _SBOLCompoundObject* base;
+	struct _DNASequence*        dnaSequence;
+	struct _GenericArray*       annotations;
+	struct _GenericArray*       collections;
 	int processed;
 } DNAComponent;
 
