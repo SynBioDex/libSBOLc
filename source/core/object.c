@@ -22,9 +22,11 @@ SBOLObject* createSBOLObject(const char* uri) {
 
 void deleteSBOLObject(SBOLObject* obj) {
 	if (obj) {
+		if (obj->uri)
+			deleteURIProperty(obj->uri);
 		removeSBOLObject(obj);
-		deleteURIProperty(obj->uri);
 		free(obj);
+		obj = NULL;
 	}
 }
 
@@ -40,9 +42,9 @@ char* getSBOLObjectURI(const SBOLObject* obj) {
 		return NULL;
 }
 
-/***************************
- * SBOLObject Global Array
- ***************************/
+/****************************
+ * SBOLObjects Global Array
+ ****************************/
 
 static GenericArray* allSBOLObjects;
 
@@ -67,6 +69,7 @@ int getNumSBOLObjects() {
 	    return 0;
 }
 
+// TODO generalize this so it's not repeated everywhere
 int isSBOLObjectURI(const char* uri) {
 	if (!allSBOLObjects)
 		allSBOLObjects = createGenericArray();
@@ -78,7 +81,7 @@ int isSBOLObjectURI(const char* uri) {
 	for (index=0; index<getNumSBOLObjects(); index++) {
 		obj = getNthSBOLObject(index);
 		candidate = getSBOLObjectURI(obj);
-		if (obj && strcmp(candidate, uri) == 0)
+		if (candidate && strcmp(candidate, uri) == 0)
 			return 1;
 	}
 	return 0;
@@ -102,10 +105,23 @@ SBOLObject* getSBOLObject(const char* uri) {
 	for (index=0; index<allSBOLObjects->numInUse; index++) {
 		obj = (SBOLObject*) allSBOLObjects->array[index];
 		candidate = getSBOLObjectURI(obj);
-		if (strcmp(candidate, uri) == 0)
+		if (candidate && strcmp(candidate, uri) == 0)
 			return obj;
 	}
 	return NULL;
+}
+
+void cleanupSBOLObjects() {
+	if (allSBOLObjects) {
+		int n;
+		SBOLObject* obj;
+		for (n=getNumSBOLObjects()-1; n>=0; n--) {
+			obj = getNthSBOLObject(n);
+			deleteSBOLObject(obj);
+		}
+		deleteGenericArray(allSBOLObjects);
+		allSBOLObjects = NULL;
+	}
 }
 
 /**********************
@@ -114,11 +130,10 @@ SBOLObject* getSBOLObject(const char* uri) {
 
 SBOLCompoundObject* createSBOLCompoundObject(const char* uri) {
 	// TODO isDuplicateURI
-	if (!uri || isSBOLObjectURI(uri) || isSBOLCompoundObjectURI(uri))
+	if (!uri || isSBOLCompoundObjectURI(uri) || isSBOLObjectURI(uri))
 		return NULL;
-	SBOLCompoundObject* obj = malloc(sizeof(SBOLCompoundObject));
-	SBOLObject* obj2 = (SBOLObject*) &obj;
-	obj2 = createSBOLObject(uri);
+	SBOLCompoundObject* obj = (SBOLCompoundObject*) createSBOLObject(uri);
+	obj = realloc(obj, sizeof(SBOLCompoundObject));
 	obj->displayID   = createTextProperty();
 	obj->name        = createTextProperty();
 	obj->description = createTextProperty();
@@ -137,9 +152,10 @@ void deleteSBOLCompoundObject(SBOLCompoundObject* obj) {
 		if (obj->description)
 			deleteTextProperty(obj->description);
 			obj->description = NULL;
-		//deleteSBOLObject((SBOLObject*) obj); // TODO figure out how to delete this
 		removeSBOLCompoundObject(obj);
-		free(obj);
+		deleteSBOLObject((SBOLObject*) obj);
+		//free(obj); // TODO what's wrong with this?
+		obj = NULL;
 	}
 }
 
@@ -148,10 +164,7 @@ void setSBOLCompoundObjectURI(SBOLCompoundObject* obj, const char* uri) {
 }
 
 char* getSBOLCompoundObjectURI(const SBOLCompoundObject* obj) {
-	if (obj)
-		return getSBOLObjectURI((SBOLObject*) obj);
-	else
-		return NULL;
+	return getSBOLObjectURI((SBOLObject*) obj);
 }
 
 void setSBOLCompoundObjectDisplayID(SBOLCompoundObject* obj, const char* id) {
@@ -231,7 +244,7 @@ int isSBOLCompoundObjectURI(const char* uri) {
 	for (index=0; index<getNumSBOLCompoundObjects(); index++) {
 		obj = getNthSBOLCompoundObject(index);
 		candidate = getSBOLCompoundObjectURI(obj);
-		if (obj && strcmp(candidate, uri) == 0)
+		if (candidate && strcmp(candidate, uri) == 0)
 			return 1;
 	}
 	return 0;
@@ -255,8 +268,21 @@ SBOLCompoundObject* getSBOLCompoundObject(const char* uri) {
 	for (index=0; index<allSBOLCompoundObjects->numInUse; index++) {
 		obj = (SBOLCompoundObject*) allSBOLCompoundObjects->array[index];
 		candidate = getSBOLCompoundObjectURI(obj);
-		if (strcmp(candidate, uri) == 0)
+		if (candidate && strcmp(candidate, uri) == 0)
 			return obj;
 	}
 	return NULL;
+}
+
+void cleanupSBOLCompoundObjects() {
+	if (allSBOLCompoundObjects) {
+		int n;
+		SBOLCompoundObject* obj;
+		for (n=getNumSBOLCompoundObjects()-1; n>=0; n--) {
+			obj = getNthSBOLCompoundObject(n);
+			deleteSBOLCompoundObject(obj);
+		}
+		deleteGenericArray(allSBOLCompoundObjects);
+		allSBOLCompoundObjects = NULL;
+	}
 }

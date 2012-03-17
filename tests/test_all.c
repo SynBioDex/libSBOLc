@@ -49,12 +49,12 @@ void RunExampleTests() {
 	printf("%s\n", output->buffer);
 }
 
-int main() {
+void main() {
 	// seed with current time
 	// should only be done once
 	srand( time(NULL) );
 
 	RunUnitTests();
 	RunExampleTests();
-	return 0;
 }
+

@@ -6,13 +6,12 @@
 #include "core.h"
 
 #define MAX_STRING_LENGTH 1000
+// TODO allow other chars?
+#define ALLOWED_CHARS " _-abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ"
 
 char randomChar() {
-	// TODO allow other characters?
-	// TODO #define this?
-	char* allowed = " _-abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ";
-	int index = rand() % strlen(allowed);
-	return allowed[index];
+	int index = rand() % strlen(ALLOWED_CHARS);
+	return ALLOWED_CHARS[index];
 }
 
 char* randomString() {

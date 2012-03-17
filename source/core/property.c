@@ -16,10 +16,13 @@ TextProperty* createTextProperty() {
 
 void deleteTextProperty(TextProperty* pro) {
     if (pro) {
-        free(pro->text);
-        pro->text = NULL;
+    	if (pro->text) {
+        	free(pro->text);
+        	pro->text = NULL;
+        }
+        //free(pro); // TODO what's wrong with this?
+        pro = NULL;
     }
-    free(pro);
 }
 
 int compareTextProperty(const TextProperty* pro1,
@@ -95,7 +98,10 @@ IntProperty* createIntProperty() {
 
 void deleteIntProperty(IntProperty* pro) {
 	if (pro)
-		free(pro); // does this mean anything?
+		if (pro->number)
+			pro->number = 0;
+		free(pro);  // does this mean anything?
+		pro = NULL;
 }
 
 void setIntProperty(IntProperty* pro, int value) {

@@ -22,6 +22,7 @@ SBOLObject* getNthSBOLObject(int n);
 SBOLObject* getSBOLObject(const char* uri);
 void registerSBOLObject(SBOLObject* obj);
 void removeSBOLObject(SBOLObject* obj);
+void cleanupSBOLObjects();
 
 void  setSBOLObjectURI(SBOLObject* obj, const char* uri);
 char* getSBOLObjectURI(const SBOLObject* obj);
@@ -44,6 +45,7 @@ SBOLCompoundObject* getNthSBOLCompoundObject(int n);
 SBOLCompoundObject* getSBOLCompoundObject(const char* uri);
 void registerSBOLCompoundObject(SBOLCompoundObject* obj);
 void removeSBOLCompoundObject(SBOLCompoundObject* obj);
+void cleanupSBOLCompoundObjects();
 
 SBOLCompoundObject* createSBOLCompoundObject(const char* uri);
 void                deleteSBOLCompoundObject(SBOLCompoundObject* obj);
