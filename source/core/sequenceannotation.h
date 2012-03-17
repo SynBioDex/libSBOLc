@@ -6,7 +6,7 @@ struct _GenericArray;
 struct _URIProperty;
 
 typedef struct _SequenceAnnotation {
-	struct _URIProperty* uri;
+	struct _SBOLObject* base;
 	int genbankStart;
 	int genbankEnd;
 	int strand;

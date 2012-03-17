@@ -22,9 +22,8 @@ void registerSequenceAnnotation(SequenceAnnotation* ann) {
 SequenceAnnotation* createSequenceAnnotation(const char* uri) {
 	if (!uri || isDuplicateURI(uri))
 	    return NULL;
-	SequenceAnnotation* ann;
-	ann = (SequenceAnnotation*)malloc(sizeof(SequenceAnnotation));
-	ann->uri          = createURIProperty();
+	SequenceAnnotation* ann = malloc(sizeof(SequenceAnnotation));
+	ann->base         = createSBOLObject(uri);
 	ann->genbankStart = 0;
 	ann->genbankEnd   = 0;
 	ann->strand       = 1;
@@ -32,7 +31,6 @@ SequenceAnnotation* createSequenceAnnotation(const char* uri) {
 	ann->subComponent = NULL;
 	ann->precedes = createGenericArray();
 	ann->processed = 0;
-	setSequenceAnnotationURI(ann, uri);
 	registerSequenceAnnotation(ann);
 	return ann;
 }
@@ -47,30 +45,25 @@ void removeSequenceAnnotation(SequenceAnnotation* ann) {
 
 void deleteSequenceAnnotation(SequenceAnnotation* ann) {
 	if (ann) {
-		removeSequenceAnnotation(ann);
-		if (ann->uri) {
-			deleteURIProperty(ann->uri);
-			ann->uri = NULL;
-		}
-		// TODO will these delete parts of other structs?
-		if (ann->annotates) {
+		if (ann->base)
+			deleteSBOLObject(ann->base);
+		// TODO will these get deleted correctly?
+		if (ann->annotates)
 			ann->annotates = NULL;
-		}
-		if (ann->subComponent) {
+		if (ann->subComponent)
 			ann->subComponent = NULL;
-		}
 		if (ann->precedes) {
 			deleteGenericArray(ann->precedes);
-			//free(ann->precedes);
 			ann->precedes = NULL;
 		}
+		removeSequenceAnnotation(ann);
 		free(ann);
 	}
 }
 
 void setSequenceAnnotationURI(SequenceAnnotation* ann, const char* uri) {
     if (ann)
-        setURIProperty(ann->uri, uri);
+        setSBOLObjectURI(ann->base, uri);
 }
 
 void setBioStart(SequenceAnnotation* ann, int start) {
@@ -83,6 +76,7 @@ void setBioEnd(SequenceAnnotation* ann, int end) {
 		ann->genbankEnd = end;
 }
 
+// TODO use PolarityProperty
 void setStrandPolarity(SequenceAnnotation* ann, int polarity) {
 	if (!ann || polarity < -1 || polarity > 1)
 		return;
@@ -110,8 +104,8 @@ int isSequenceAnnotationURI(const char* uri) {
 	for (index=0; index<getNumSequenceAnnotations(); index++) {
 		ann = getNthSequenceAnnotation(index);
 		if (ann) {
-			candidate = getURIProperty(ann->uri);
-			if (strcmp(candidate, uri) == 0)
+			candidate = getSequenceAnnotationURI(ann);
+			if (candidate && strcmp(candidate, uri) == 0)
 				return 1;
 		}
 	}
@@ -151,7 +145,9 @@ SequenceAnnotation* getNthSequenceAnnotation(int n) {
 
 char* getSequenceAnnotationURI(const SequenceAnnotation* ann) {
     if (ann)
-        return getURIProperty(ann->uri);
+        return getSBOLObjectURI(ann->base);
+	else
+		return NULL;
 }
 
 SequenceAnnotation* getSequenceAnnotation(const char* uri) {
@@ -164,8 +160,8 @@ SequenceAnnotation* getSequenceAnnotation(const char* uri) {
 	SequenceAnnotation* ann;
 	for (index=0; index<allSequenceAnnotations->numInUse; index++) {
 		ann = (SequenceAnnotation*) allSequenceAnnotations->array[index];
-		candidate = getURIProperty(ann->uri);
-		if (strcmp(candidate, uri) == 0)
+		candidate = getSequenceAnnotationURI(ann);
+		if (candidate && strcmp(candidate, uri) == 0)
 			return ann;
 	}
 	return NULL;
@@ -192,6 +188,7 @@ DNAComponent* getSubComponent(const SequenceAnnotation* ann) {
 		return NULL;
 }
 
+// TODO use PolarityProperty
 int getStrandPolarity(const SequenceAnnotation* ann) {
 	if (ann)
 		return ann->strand;
@@ -222,7 +219,7 @@ int precedes(const SequenceAnnotation* ann1, const SequenceAnnotation* ann2) {
 	SequenceAnnotation* candidate;
 	for (n=0; n<getNumPrecedes(ann1); n++) {
 		candidate = getNthPrecedes(ann1, n);
-		if (candidate == ann2)
+		if (candidate && candidate == ann2)
 			return 1;
 	}
 	return 0;
