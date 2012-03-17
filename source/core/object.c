@@ -22,8 +22,10 @@ SBOLObject* createSBOLObject(const char* uri) {
 
 void deleteSBOLObject(SBOLObject* obj) {
 	if (obj) {
-		if (obj->uri)
+		if (obj->uri) {
 			deleteURIProperty(obj->uri);
+			obj->uri = NULL;
+		}
 		removeSBOLObject(obj);
 		free(obj);
 		obj = NULL;

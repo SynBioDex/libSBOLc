@@ -17,7 +17,7 @@ TextProperty* createTextProperty() {
 void deleteTextProperty(TextProperty* pro) {
     if (pro) {
     	if (pro->text) {
-        	free(pro->text);
+        	//free(pro->text);
         	pro->text = NULL;
         }
         //free(pro); // TODO what's wrong with this?
@@ -63,6 +63,7 @@ URIProperty* createURIProperty() {
 
 void deleteURIProperty(URIProperty* pro) {
 	deleteTextProperty((TextProperty*) pro);
+	pro = NULL; // TODO remove
 }
 
 void setURIProperty(URIProperty* pro, const char* uri) {
@@ -97,11 +98,12 @@ IntProperty* createIntProperty() {
 }
 
 void deleteIntProperty(IntProperty* pro) {
-	if (pro)
+	if (pro) {
 		if (pro->number)
 			pro->number = 0;
 		free(pro);  // does this mean anything?
-		pro = NULL;
+		pro = NULL; // TODO remove
+	}
 }
 
 void setIntProperty(IntProperty* pro, int value) {
@@ -136,6 +138,7 @@ PositionProperty* createPositionProperty() {
 
 void deletePositionProperty(PositionProperty* pro) {
 	deleteIntProperty((IntProperty*) pro);
+	pro = NULL; // TODO remove
 }
 
 void setPositionProperty(PositionProperty* pro, int pos) {
@@ -166,6 +169,7 @@ PolarityProperty* createPolarityProperty() {
 
 void deletePolarityProperty(PolarityProperty* pro) {
 	deleteIntProperty((IntProperty*) pro);
+	pro = NULL; // TODO remove
 }
 
 void setPolarityProperty(PolarityProperty* pro, int pol) {

@@ -21,7 +21,7 @@ void printTextProperty(const TextProperty* pro);
  ***************/
 
 typedef struct _URIProperty {
-	TextProperty* uri;
+	struct _TextProperty uri;
 } URIProperty;
 
 URIProperty* createURIProperty();
@@ -51,7 +51,7 @@ void printIntProperty(const IntProperty* pro);
  ********************/
 
 typedef struct _PositionProperty {
-	IntProperty* position;
+	struct _IntProperty position;
 } PositionProperty;
 
 PositionProperty* createPositionProperty();
@@ -66,7 +66,7 @@ void printPositionProperty(const PositionProperty* pro);
  ********************/
 
 typedef struct _PolarityProperty {
-	IntProperty* polarity;
+	struct _IntProperty polarity;
 } PolarityProperty;
 
 PolarityProperty* createPolarityProperty();

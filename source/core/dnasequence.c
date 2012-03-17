@@ -22,6 +22,7 @@ DNASequence* createDNASequence(char* uri) {
 	if (!uri || isDuplicateURI(uri))
 	    return NULL;
 	DNASequence* seq = (DNASequence*) createSBOLObject(uri);
+	seq = realloc(seq, sizeof(DNASequence));
 	seq->nucleotides = createTextProperty();
 	seq->processed   = 0;
 	registerDNASequence(seq);
@@ -48,11 +49,11 @@ void removeDNASequence(DNASequence* seq) {
 
 void deleteDNASequence(DNASequence* seq) {
 	if (seq) {
-		removeDNASequence(seq);
 		if (seq->nucleotides) {
 			deleteTextProperty(seq->nucleotides);
 			seq->nucleotides = NULL;
 		}
+		removeDNASequence(seq);
 		deleteSBOLObject((SBOLObject*) seq);
 		//free(seq);
 		seq = NULL;
@@ -89,7 +90,7 @@ DNASequence* getDNASequence(const char* uri) {
 	DNASequence* seq;
 	for (index=0; index<allDNASequences->numInUse; index++) {
 		seq = (DNASequence*) allDNASequences->array[index];
-		candidate = getURIProperty(seq->uri);
+		candidate = getSBOLObjectURI((SBOLObject*) seq);
 		if (candidate && strcmp(candidate, uri) == 0)
 			return seq;
 	}
@@ -110,7 +111,7 @@ int isDNASequenceURI(const char* uri) {
 	DNASequence* seq;
 	for (index=0; index<getNumDNASequences(); index++) {
 		seq = getNthDNASequence(index);
-		candidate = getURIProperty(seq->uri);
+		candidate = getSBOLObjectURI((SBOLObject*) seq);
 		if (candidate && strcmp(candidate, uri) == 0)
 			return 1;
 	}

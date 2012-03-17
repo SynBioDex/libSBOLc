@@ -58,7 +58,7 @@ void TestCleanupSBOLObjects(CuTest* tc) {
 	char* uri;
 	SBOLObject* obj;
 	for (n=0; n<NUM_FAST_TESTS; n++) {
-		do { uri = randomString(); } while (isSBOLObjectURI(uri));
+		uri = randomUniqueURI();
 		obj = createSBOLObject(uri);
 		CuAssertPtrEquals(tc, obj, getNthSBOLObject(n));
 		CuAssertStrEquals(tc, uri, getSBOLObjectURI(obj));
@@ -126,7 +126,7 @@ void TestCreateDuplicateSBOLCompoundObject(CuTest* tc) {
 	
 	// create same uri twice
 	char* uri;
-	do { uri = randomString(); } while (isSBOLObjectURI(uri));
+	uri = randomUniqueURI();
 	SBOLCompoundObject* obj1 = createSBOLCompoundObject(uri);
 	SBOLCompoundObject* obj2 = createSBOLCompoundObject(uri);
 	

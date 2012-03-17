@@ -66,7 +66,8 @@ SBOLAPIEXPORTS void printPolarity(const PolarityProperty* pro);
 
 // from dnasequence.h
 // TODO create with URI and not sequence
-SBOLAPIEXPORTS DNASequence* createDNASequence(char* nucleotides);
+SBOLAPIEXPORTS DNASequence* createDNASequence(char* uri);
+SBOLAPIEXPORTS void setNucleotides(DNASequence* seq, const char* nucleotides);
 SBOLAPIEXPORTS void deleteDNASequence(DNASequence* seq);
 SBOLAPIEXPORTS void printDNASequence(const DNASequence* seq, int tabs);
 SBOLAPIEXPORTS void printAllDNASequences();

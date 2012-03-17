@@ -6,6 +6,7 @@
 #define NUM_FAST_TESTS 10000
 
 void TestCreateEmptyDNASequence(CuTest* tc) {
+	cleanupDNASequences();
 	DNASequence* seq = createDNASequence("");
 	setNucleotides(seq, "");
 	CuAssertStrEquals(tc, "", getDNASequenceURI(seq));
@@ -19,16 +20,15 @@ void TestCreateNullDNASequence(CuTest* tc) {
 }
 
 void TestCreateRandomDNASequence(CuTest* tc) {
+	cleanupDNASequences();
+	int repeat;
 	char* uri;
 	char* nt;
 	DNASequence* seq;
-	int repeat;
 	for (repeat=0; repeat<NUM_FAST_TESTS; repeat++) {
 		uri = randomUniqueURI();
-		nt = randomString();
+		nt = randomUniqueURI();
 		// avoid duplicates
-		while (strcmp(uri, nt) == 0)
-			nt = randomString();
 		seq = createDNASequence(uri);
 		setNucleotides(seq, nt);
 		CuAssertStrEquals(tc, uri, getDNASequenceURI(seq));

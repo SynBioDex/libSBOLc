@@ -5,9 +5,10 @@
 #include "property.h"
 #include "genericarray.h"
 #include "dnacomponent.h"
-#include "dnasequence.h"
 #include "sequenceannotation.h"
 #include "collection.h"
+#include "object.h"
+#include "dnasequence.h"
 
 static GenericArray* allDNAComponents;
 

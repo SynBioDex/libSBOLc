@@ -16,7 +16,9 @@ void printSBOLCore() {
 }
 
 int isDuplicateURI(const char* uri) {
-    return (int) (isDNASequenceURI(uri)
+    return (int) (isSBOLObjectURI(uri)
+    		|| isSBOLCompoundObjectURI(uri)
+    		|| isDNASequenceURI(uri)
             || isSequenceAnnotationURI(uri)
             || isDNAComponentURI(uri)
             || isCollectionURI(uri));

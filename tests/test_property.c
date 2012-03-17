@@ -35,6 +35,13 @@ void TestGetSetCompareProperty(CuTest* tc) {
 	}
 }
 
+void TestDeleteEmptyProperty(CuTest* tc) {
+	deleteTextProperty(NULL);
+	TextProperty* pro = createTextProperty();
+	deleteTextProperty(pro);
+	deleteTextProperty(pro);
+}
+
 void PrintPropertyTestInfo() {
 	printf("testing core/property\n");
 }
@@ -44,5 +51,6 @@ CuSuite* PropertyGetSuite() {
 	SUITE_ADD_TEST(properyTests, PrintPropertyTestInfo);
 	SUITE_ADD_TEST(properyTests, TestCreateTextProperty);
 	SUITE_ADD_TEST(properyTests, TestGetSetCompareProperty);
+	SUITE_ADD_TEST(properyTests, TestDeleteEmptyProperty);
 	return properyTests;
 }
