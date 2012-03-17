@@ -24,8 +24,8 @@ void RunUnitTests() {
 	CuSuiteAddSuite(suite, SequenceAnnotationGetSuite());
 	CuSuiteAddSuite(suite, DNAComponentGetSuite());
 	CuSuiteAddSuite(suite, CollectionGetSuite());
-	CuSuiteAddSuite(suite, PropertyGetSuite());
-	CuSuiteAddSuite(suite, CleanupGetSuite());
+	//CuSuiteAddSuite(suite, PropertyGetSuite());
+	//CuSuiteAddSuite(suite, CleanupGetSuite());
 	
 	printf("\nRunning unit tests...\n");
 	CuSuiteRun(suite);
@@ -55,6 +55,6 @@ void main() {
 	srand( time(NULL) );
 
 	RunUnitTests();
-	RunExampleTests();
+	//RunExampleTests();
 }
 

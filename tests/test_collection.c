@@ -7,34 +7,49 @@
 #define NUM_FAST_TESTS 10000
 
 void TestCreateEmptyCollection(CuTest* tc) {
+	cleanupCollections();
+	
 	Collection* col = createCollection("");
 	CuAssertStrEquals(tc, "", getCollectionURI(col));
 	deleteCollection(col);
+
+	cleanupCollections();
 }
 
 void TestCreateNullCollection(CuTest* tc) {
+	cleanupCollections();
+	
 	Collection* col = createCollection(NULL);
 	CuAssertStrEquals(tc, NULL, getCollectionURI(col));
 	deleteCollection(col);
+	
+	cleanupCollections();
 }
 
 void TestCreateRandomCollection(CuTest* tc) {
+	cleanupCollections();
+	
 	char* uri;
 	Collection* col;
 	int repeat;
 	for (repeat=0; repeat<NUM_FAST_TESTS; repeat++) {
 		uri = randomUniqueURI();
 		col = createCollection(uri);
-		CuAssertStrEquals(tc, uri,   getCollectionURI(col));
+		CuAssertStrEquals(tc, uri,  getCollectionURI(col));
+		CuAssertStrEquals(tc, NULL, getCollectionDisplayID(col));
 		CuAssertStrEquals(tc, NULL, getCollectionName(col));
 		CuAssertStrEquals(tc, NULL, getCollectionDescription(col));
 		CuAssertIntEquals(tc, 0,    getNumDNAComponentsIn(col));
 		CuAssertIntEquals(tc, 0,    getNumCollectionsIn(col));
 		deleteCollection(col);
 	}
+	
+	cleanupCollections();
 }
 
 void TestEmptyCollectionProperties(CuTest* tc) {
+	cleanupCollections();
+	
 	Collection* col = createCollection("");
 	setCollectionName(col, "");
 	setCollectionDescription(col, "");
@@ -42,9 +57,13 @@ void TestEmptyCollectionProperties(CuTest* tc) {
 	CuAssertStrEquals(tc, "", getCollectionName(col));
 	CuAssertStrEquals(tc, "", getCollectionDescription(col));
 	deleteCollection(col);
+	
+	cleanupCollections();
 }
 
 void TestNullCollectionProperties(CuTest* tc) {
+	cleanupCollections();
+	
 	Collection* col = createCollection(NULL);
 	setCollectionName(col, NULL);
 	setCollectionDescription(col, NULL);
@@ -52,9 +71,13 @@ void TestNullCollectionProperties(CuTest* tc) {
 	CuAssertStrEquals(tc, NULL, getCollectionName(col));
 	CuAssertStrEquals(tc, NULL, getCollectionDescription(col));
 	deleteCollection(col);
+	
+	cleanupCollections();
 }
 
 void TestRandomCollectionProperties(CuTest* tc) {
+	cleanupCollections();
+	
 	char* uri;
 	char* name;
 	char* descr;
@@ -72,6 +95,8 @@ void TestRandomCollectionProperties(CuTest* tc) {
 		CuAssertStrEquals(tc, descr, getCollectionDescription(col));
 		deleteCollection(col);
 	}
+	
+	cleanupCollections();
 }
 
 void PrintCollectionTestInfo() {

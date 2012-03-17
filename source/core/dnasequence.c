@@ -21,8 +21,8 @@ void registerDNASequence(DNASequence* seq) {
 DNASequence* createDNASequence(char* uri) {
 	if (!uri || isDuplicateURI(uri))
 	    return NULL;
-	DNASequence* seq = (DNASequence*) createSBOLObject(uri);
-	seq = realloc(seq, sizeof(DNASequence));
+	DNASequence* seq = malloc(sizeof(DNASequence));
+	seq->base        = createSBOLObject(uri);
 	seq->nucleotides = createTextProperty();
 	seq->processed   = 0;
 	registerDNASequence(seq);
@@ -30,7 +30,8 @@ DNASequence* createDNASequence(char* uri) {
 }
 
 void setDNASequenceURI(DNASequence* seq, const char* uri) {
-	setSBOLObjectURI((SBOLObject*) seq, uri);
+	if (seq)
+		setSBOLObjectURI(seq->base, uri);
 }
 
 void setNucleotides(DNASequence* seq, const char* nucleotides) {
@@ -49,13 +50,12 @@ void removeDNASequence(DNASequence* seq) {
 
 void deleteDNASequence(DNASequence* seq) {
 	if (seq) {
-		if (seq->nucleotides) {
+		if (seq->base)
+			deleteSBOLObject(seq->base);
+		if (seq->nucleotides)
 			deleteTextProperty(seq->nucleotides);
-			seq->nucleotides = NULL;
-		}
 		removeDNASequence(seq);
-		deleteSBOLObject((SBOLObject*) seq);
-		//free(seq);
+		free(seq);
 		seq = NULL;
 	}
 }
@@ -90,7 +90,7 @@ DNASequence* getDNASequence(const char* uri) {
 	DNASequence* seq;
 	for (index=0; index<allDNASequences->numInUse; index++) {
 		seq = (DNASequence*) allDNASequences->array[index];
-		candidate = getSBOLObjectURI((SBOLObject*) seq);
+		candidate = getSBOLObjectURI(seq->base);
 		if (candidate && strcmp(candidate, uri) == 0)
 			return seq;
 	}
@@ -98,7 +98,10 @@ DNASequence* getDNASequence(const char* uri) {
 }
 
 char* getDNASequenceURI(const DNASequence* seq) {
-	return getSBOLObjectURI((SBOLObject*) seq);
+	if (seq)
+		return getSBOLObjectURI(seq->base);
+	else
+		return NULL;
 }
 
 int isDNASequenceURI(const char* uri) {
@@ -111,7 +114,7 @@ int isDNASequenceURI(const char* uri) {
 	DNASequence* seq;
 	for (index=0; index<getNumDNASequences(); index++) {
 		seq = getNthDNASequence(index);
-		candidate = getSBOLObjectURI((SBOLObject*) seq);
+		candidate = getSBOLObjectURI(seq->base);
 		if (candidate && strcmp(candidate, uri) == 0)
 			return 1;
 	}

@@ -3,6 +3,7 @@
 #include <string.h>
 #include "debug.h"
 #include "property.h"
+#include "object.h"
 #include "genericarray.h"
 #include "collection.h"
 #include "dnacomponent.h"
@@ -22,16 +23,11 @@ void registerCollection(Collection* col) {
 Collection* createCollection(const char* uri) {
 	if (!uri || isDuplicateURI(uri))
 	    return NULL;
-	Collection* col;
-	col = (Collection*)malloc(sizeof(Collection));
-	col->uri         = createURIProperty();
-	col->displayID   = createTextProperty();
-	col->name        = createTextProperty();
-	col->description = createTextProperty();
+	Collection* col = malloc(sizeof(Collection));
+	col->base        = createSBOLCompoundObject(uri);
 	col->components  = createGenericArray();
 	col->collections = createGenericArray();
 	col->processed   = 0;
-	setCollectionURI(col, uri);
 	registerCollection(col);
 	return col;
 }
@@ -46,32 +42,12 @@ void removeCollection(Collection* col) {
 
 void deleteCollection(Collection* col) {
 	if (col) {
+		if (col->base)        deleteSBOLCompoundObject(col->base);
+		if (col->collections) deleteGenericArray(col->collections);
+		if (col->components)  deleteGenericArray(col->components);
 		removeCollection(col);
-		if (col->uri) {
-			deleteURIProperty(col->uri);
-			col->uri = NULL;
-		}
-		if (col->displayID) {
-			deleteTextProperty(col->displayID);
-			col->displayID = NULL;
-		}
-		if (col->name) {
-			deleteTextProperty(col->name);
-			col->name = NULL;
-		}
-		if (col->description) {
-			deleteTextProperty(col->description);
-			col->description = NULL;
-		}
-		if (col->collections) {
-			deleteGenericArray(col->collections);
-			col->collections = NULL;
-		}
-		if (col->components) {
-			deleteGenericArray(col->components);
-			col->components = NULL;
-		}
 		free(col);
+		col = NULL;
 	}
 }
 
@@ -95,8 +71,8 @@ int isCollectionURI(const char* uri) {
 	Collection* col;
 	for (index=0; index<allCollections->numInUse; index++) {
 		col = (Collection*) allCollections->array[index];
-		candidate = getURIProperty(col->uri);
-		if (strcmp(candidate, uri) == 0)
+		candidate = getSBOLCompoundObjectURI(col->base);
+		if (candidate && strcmp(candidate, uri) == 0)
 			return 1;
 	}
 	return 0;
@@ -116,8 +92,8 @@ Collection* getCollection(const char* uri) {
 	Collection* col;
 	for (index=0; index<allCollections->numInUse; index++) {
 		col = (Collection*) allCollections->array[index];
-		candidate = getURIProperty(col->uri);
-		if (strcmp(candidate, uri) == 0)
+		candidate = getSBOLCompoundObjectURI(col->base);
+		if (candidate && strcmp(candidate, uri) == 0)
 			return col;
 	}
 	return NULL;
@@ -125,28 +101,30 @@ Collection* getCollection(const char* uri) {
 
 char* getCollectionURI(const Collection* col) {
 	if (col)
-	    return getURIProperty(col->uri);
+		return getSBOLCompoundObjectURI(col->base);
+	else
+		return NULL;
 }
 
 char* getCollectionDisplayID(const Collection* col) {
     if (col)
-        return getTextProperty(col->displayID);
+    	return getSBOLCompoundObjectDisplayID(col->base);
     else
-        return NULL;
+    	return NULL;
 }
 
 char* getCollectionName(const Collection* col) {
 	if (col)
-	    return getTextProperty(col->name);
-    else
-        return NULL;
+		return getSBOLCompoundObjectName(col->base);
+	else
+		return NULL;
 }
 
 char* getCollectionDescription(const Collection* col) {
 	if (col)
-	    return getTextProperty(col->description);
-    else
-        return NULL;
+		return getSBOLCompoundObjectDescription(col->base);
+	else
+		return NULL;
 }
 
 /**************************
@@ -205,22 +183,22 @@ Collection* getNthCollectionIn(const Collection* col, int n) {
 
 void setCollectionURI(Collection* col, const char* uri) {
     if (col)
-        setURIProperty(col->uri, uri);
+    	setSBOLCompoundObjectURI(col->base, uri);
 }
 
 void setCollectionDisplayID(Collection* col, const char* id) {
-    if (col && id)
-        setTextProperty(col->displayID, id);
+	if (col)
+		setSBOLCompoundObjectDisplayID(col->base, id);
 }
 
 void setCollectionName(Collection* col, const char* name) {
 	if (col)
-	    setTextProperty(col->name, name);
+		setSBOLCompoundObjectName(col->base, name);
 }
 
 void setCollectionDescription(Collection* col, const char* descr) {
 	if (col)
-	    setTextProperty(col->description, descr);
+		setSBOLCompoundObjectDescription(col->base, descr);
 }
 
 /**************************

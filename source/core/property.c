@@ -16,11 +16,11 @@ TextProperty* createTextProperty() {
 
 void deleteTextProperty(TextProperty* pro) {
     if (pro) {
-    	if (pro->text) {
-        	//free(pro->text);
+		if (pro->text) {
+        	free(pro->text);
         	pro->text = NULL;
         }
-        //free(pro); // TODO what's wrong with this?
+        free(pro);
         pro = NULL;
     }
 }
@@ -58,33 +58,42 @@ void printTextProperty(const TextProperty* pro) {
  ***************/
 
 URIProperty* createURIProperty() {
-	return (URIProperty*) createTextProperty();
+	URIProperty* pro = malloc(sizeof(URIProperty));
+	pro->uri = createTextProperty();
+	return pro;
 }
 
 void deleteURIProperty(URIProperty* pro) {
-	deleteTextProperty((TextProperty*) pro);
-	pro = NULL; // TODO remove
+	if (pro) {
+		if (pro->uri)
+			deleteTextProperty(pro->uri);
+		free(pro);
+		pro = NULL;
+	}
 }
 
 void setURIProperty(URIProperty* pro, const char* uri) {
-	if (pro && !isDuplicateURI(uri))
-		setTextProperty((TextProperty*) pro, uri);
+	if (pro && uri && !isDuplicateURI(uri))
+		setTextProperty(pro->uri, uri);
 }
 
 char* getURIProperty(const URIProperty* pro) {
 	if (pro)
-		return getTextProperty((TextProperty*) pro);
+		return getTextProperty(pro->uri);
 	else
 		return NULL;
 }
 
 int compareURIProperty(const URIProperty* pro1,
                        const URIProperty* pro2) {
-	return compareTextProperty((TextProperty*) pro1, (TextProperty*) pro2);
+	if (!pro1 || !pro2) // TODO check pro1->text and pro2->text too?
+		return -1;
+	return compareTextProperty(pro1->uri, pro2->uri);
 }
 
 void printURIProperty(const URIProperty* pro) {
-	printTextProperty((TextProperty*) pro);
+	if (pro)
+		printTextProperty(pro->uri);
 }
 
 /***************
@@ -100,9 +109,9 @@ IntProperty* createIntProperty() {
 void deleteIntProperty(IntProperty* pro) {
 	if (pro) {
 		if (pro->number)
-			pro->number = 0;
-		free(pro);  // does this mean anything?
-		pro = NULL; // TODO remove
+			free(pro->number);
+		free(pro);
+		pro = NULL;
 	}
 }
 
@@ -120,6 +129,7 @@ int getIntProperty(const IntProperty* pro) {
 int compareIntProperty(const IntProperty* pro1,
                        const IntProperty* pro2) {
 	// TODO what's a good NULL value?
+	if (!pro1 || !pro2) // TODO check numbers too?
 	return pro2->number - pro1->number;
 }
 
@@ -133,30 +143,43 @@ void printIntProperty(const IntProperty* pro) {
  ********************/
 
 PositionProperty* createPositionProperty() {
-	return (PositionProperty*) createIntProperty();
+	PositionProperty* pro = malloc(sizeof(PositionProperty));
+	pro->position = createIntProperty();
+	return pro;
 }
 
 void deletePositionProperty(PositionProperty* pro) {
-	deleteIntProperty((IntProperty*) pro);
-	pro = NULL; // TODO remove
+	if (pro) {
+		if (pro->position)
+			deleteIntProperty(pro->position);
+		free(pro);
+		pro = NULL;
+	}
 }
 
 void setPositionProperty(PositionProperty* pro, int pos) {
 	if (pro && pos >= 0)
-		setIntProperty((IntProperty*) pro, pos);
+		setIntProperty(pro->position, pos);
 }
 
 int getPositionProperty(const PositionProperty* pro) {
-	return getIntProperty((IntProperty*) pro);
+	if (pro)
+		return getIntProperty(pro->position);
+	else
+		return -1; // TODO good error value?
 }
 
 int comparePositionProperty(const PositionProperty* pro1,
                             const PositionProperty* pro2) {
-	return compareIntProperty((IntProperty*) pro1, (IntProperty*) pro2);
+	if (!pro1 || !pro2) // TODO check numbers too?
+		return compareIntProperty(pro1->position, pro2->position);
+	else
+		return -1;
 }
 
 void printPositionProperty(const PositionProperty* pro) {
-	printIntProperty((IntProperty*) pro);
+	if (pro)
+		printIntProperty(pro->position);
 }
 
 /********************
@@ -164,35 +187,47 @@ void printPositionProperty(const PositionProperty* pro) {
  ********************/
 
 PolarityProperty* createPolarityProperty() {
-	return (PolarityProperty*) createIntProperty();
+	PolarityProperty* pro = malloc(sizeof(PolarityProperty));
+	pro->polarity = createIntProperty();
+	return pro;
 }
 
 void deletePolarityProperty(PolarityProperty* pro) {
-	deleteIntProperty((IntProperty*) pro);
-	pro = NULL; // TODO remove
+	if (pro) {
+		if (pro->polarity)
+			deleteIntProperty(pro->polarity);
+		free(pro);
+		pro = NULL;
+	}
 }
 
 void setPolarityProperty(PolarityProperty* pro, int pol) {
 	if (pro) {
 		if (pol > 0)
-			setIntProperty((IntProperty*) pro, 1);
+			setIntProperty(pro->polarity, 1);
 		else
-			setIntProperty((IntProperty*) pro, 0);
+			setIntProperty(pro->polarity, 0);
 	}
 }
 
 int getPolarityProperty(const PolarityProperty* pro) {
-	return getIntProperty((IntProperty*) pro);
+	if (pro)
+		return getIntProperty(pro->polarity);
+	else
+		return -1;
 }
 
 int comparePolarityProperty(const PolarityProperty* pro1,
                             const PolarityProperty* pro2) {
-	return compareIntProperty((IntProperty*) pro1, (IntProperty*) pro2);
+	if (pro1 && pro2)
+		return compareIntProperty(pro1->polarity, pro2->polarity);
+	else
+		return -1;
 }
 
 void printPolarityProperty(const PolarityProperty* pro) {
 	if (pro) {
-		if (getIntProperty((IntProperty*) pro) == 1)
+		if (getIntProperty(pro->polarity) == 1)
 			printf("+");
 		else
 			printf("-");

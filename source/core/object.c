@@ -27,7 +27,7 @@ void deleteSBOLObject(SBOLObject* obj) {
 			obj->uri = NULL;
 		}
 		removeSBOLObject(obj);
-		free(obj);
+		//free(obj); // TODO what's wrong with this?q
 		obj = NULL;
 	}
 }
@@ -134,8 +134,8 @@ SBOLCompoundObject* createSBOLCompoundObject(const char* uri) {
 	// TODO isDuplicateURI
 	if (!uri || isSBOLCompoundObjectURI(uri) || isSBOLObjectURI(uri))
 		return NULL;
-	SBOLCompoundObject* obj = (SBOLCompoundObject*) createSBOLObject(uri);
-	obj = realloc(obj, sizeof(SBOLCompoundObject));
+	SBOLCompoundObject* obj = malloc(sizeof(SBOLCompoundObject));
+	obj->base        = createSBOLObject(uri);
 	obj->displayID   = createTextProperty();
 	obj->name        = createTextProperty();
 	obj->description = createTextProperty();
@@ -145,28 +145,38 @@ SBOLCompoundObject* createSBOLCompoundObject(const char* uri) {
 
 void deleteSBOLCompoundObject(SBOLCompoundObject* obj) {
 	if (obj) {
-		if (obj->displayID)
+		if (obj->base) {
+			deleteSBOLObject(obj->base);
+			obj->base = NULL;
+		}
+		if (obj->displayID) {
 			deleteTextProperty(obj->displayID);
 			obj->displayID = NULL;
-		if (obj->name)
+		}
+		if (obj->name) {
 			deleteTextProperty(obj->name);
 			obj->name = NULL;
-		if (obj->description)
+		}
+		if (obj->description) {
 			deleteTextProperty(obj->description);
 			obj->description = NULL;
+		}
 		removeSBOLCompoundObject(obj);
-		deleteSBOLObject((SBOLObject*) obj);
-		//free(obj); // TODO what's wrong with this?
+		free(obj);
 		obj = NULL;
 	}
 }
 
 void setSBOLCompoundObjectURI(SBOLCompoundObject* obj, const char* uri) {
-	setSBOLObjectURI((SBOLObject*) obj, uri);
+	if (obj)
+		setSBOLObjectURI(obj->base, uri);
 }
 
 char* getSBOLCompoundObjectURI(const SBOLCompoundObject* obj) {
-	return getSBOLObjectURI((SBOLObject*) obj);
+	if (obj)
+		return getSBOLObjectURI(obj->base);
+	else
+		return NULL;
 }
 
 void setSBOLCompoundObjectDisplayID(SBOLCompoundObject* obj, const char* id) {
@@ -183,7 +193,7 @@ char* getSBOLCompoundObjectDisplayID(const SBOLCompoundObject* obj) {
 }
 
 void setSBOLCompoundObjectName(SBOLCompoundObject* obj, const char* name) {
-	if (obj && name) {
+	if (obj) {
 		setTextProperty(obj->name, name);
 	}
 }
@@ -196,7 +206,7 @@ char* getSBOLCompoundObjectName(const SBOLCompoundObject* obj) {
 }
 
 void setSBOLCompoundObjectDescription(SBOLCompoundObject* obj, const char* descr) {
-	if (obj && descr) {
+	if (obj) {
 		setTextProperty(obj->description, descr);
 	}
 }

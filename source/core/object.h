@@ -32,7 +32,7 @@ char* getSBOLObjectURI(const SBOLObject* obj);
  **********************/
 
 typedef struct _SBOLCompoundObject {
-	struct _SBOLObject base;
+	struct _SBOLObject*   base;
 	struct _TextProperty* displayID;
 	struct _TextProperty* name;
 	struct _TextProperty* description;

@@ -1,12 +1,12 @@
 #ifndef SBOL_CORE_DNASEQUENCE
 #define SBOL_CORE_DNASEQUENCE
-#include "object.h"
+//#include "object.h"
 
 struct _SBOLObject;
 struct _TextProperty;
 
 typedef struct _DNASequence {
-	struct _SBOLObject base;
+	struct _SBOLObject*   base;
 	struct _TextProperty* nucleotides;
 	int processed; // TODO remove
 } DNASequence;
