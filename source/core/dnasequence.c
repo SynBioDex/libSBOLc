@@ -5,8 +5,9 @@
 #include "property.h"
 #include "genericarray.h"
 #include "dnasequence.h"
+#include "object.h"
 
-#define NUCLEOTIDES_PRINTED 30
+#define NUCLEOTIDES_TO_PRINT 30
 
 static GenericArray* allDNASequences;
 
@@ -20,18 +21,15 @@ void registerDNASequence(DNASequence* seq) {
 DNASequence* createDNASequence(char* uri) {
 	if (!uri || isDuplicateURI(uri))
 	    return NULL;
-	DNASequence* seq = malloc(sizeof(DNASequence));
-	seq->uri         = createURIProperty();
+	DNASequence* seq = (DNASequence*) createSBOLObject(uri);
 	seq->nucleotides = createTextProperty();
 	seq->processed   = 0;
-	setDNASequenceURI(seq, uri);
 	registerDNASequence(seq);
 	return seq;
 }
 
 void setDNASequenceURI(DNASequence* seq, const char* uri) {
-	if (seq)
-		setURIProperty(seq->uri, uri);
+	setSBOLObjectURI((SBOLObject*) seq, uri);
 }
 
 void setNucleotides(DNASequence* seq, const char* nucleotides) {
@@ -39,6 +37,7 @@ void setNucleotides(DNASequence* seq, const char* nucleotides) {
 		setTextProperty(seq->nucleotides, nucleotides);
 }
 
+// TODO generalize this
 void removeDNASequence(DNASequence* seq) {
 	if (seq && allDNASequences) {
 		int index = indexByPtr(allDNASequences, seq);
@@ -50,11 +49,13 @@ void removeDNASequence(DNASequence* seq) {
 void deleteDNASequence(DNASequence* seq) {
 	if (seq) {
 		removeDNASequence(seq);
-		deleteURIProperty(seq->uri);
-		deleteTextProperty(seq->nucleotides);
-		seq->uri = NULL;
-		seq->nucleotides = NULL;
-		free(seq);
+		if (seq->nucleotides) {
+			deleteTextProperty(seq->nucleotides);
+			seq->nucleotides = NULL;
+		}
+		deleteSBOLObject((SBOLObject*) seq);
+		//free(seq);
+		seq = NULL;
 	}
 }
 
@@ -89,17 +90,14 @@ DNASequence* getDNASequence(const char* uri) {
 	for (index=0; index<allDNASequences->numInUse; index++) {
 		seq = (DNASequence*) allDNASequences->array[index];
 		candidate = getURIProperty(seq->uri);
-		if (strcmp(candidate, uri) == 0)
+		if (candidate && strcmp(candidate, uri) == 0)
 			return seq;
 	}
 	return NULL;
 }
 
 char* getDNASequenceURI(const DNASequence* seq) {
-	if (seq)
-		return getURIProperty(seq->uri);
-	else
-		return NULL;
+	return getSBOLObjectURI((SBOLObject*) seq);
 }
 
 int isDNASequenceURI(const char* uri) {
@@ -113,7 +111,7 @@ int isDNASequenceURI(const char* uri) {
 	for (index=0; index<getNumDNASequences(); index++) {
 		seq = getNthDNASequence(index);
 		candidate = getURIProperty(seq->uri);
-		if (seq && strcmp(candidate, uri) == 0)
+		if (candidate && strcmp(candidate, uri) == 0)
 			return 1;
 	}
 	return 0;
@@ -124,6 +122,7 @@ char* getNucleotides(const DNASequence* seq) {
 	    return getTextProperty(seq->nucleotides);
 }
 
+// TODO generalize this further?
 DNASequence* getNthDNASequence(int n) {
 	if (!allDNASequences || allDNASequences->numInUse<=n)
 	    return NULL;
@@ -135,7 +134,12 @@ void printDNASequence(const DNASequence* seq, int tabs) {
 	if (!seq)
 	    return;
 	// TODO print just the beginning of the sequence?
-	indent(tabs); printf("%s\n", getDNASequenceURI(seq));
+	char* uri = getDNASequenceURI(seq);
+	indent(tabs);
+	if (strlen(uri) > NUCLEOTIDES_TO_PRINT)
+		printf("%.NUCLEOTIDES_TO_PRINTs\n", uri);
+	else
+		printf("%s\n", uri);
 	indent(tabs+1); printf("nucleotides: %s\n", getNucleotides(seq));
 }
 
