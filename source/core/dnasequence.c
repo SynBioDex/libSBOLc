@@ -7,8 +7,6 @@
 #include "dnasequence.h"
 #include "object.h"
 
-#define NUCLEOTIDES_TO_PRINT 30
-
 static GenericArray* allDNASequences;
 
 void registerDNASequence(DNASequence* seq) {
@@ -139,8 +137,8 @@ void printDNASequence(const DNASequence* seq, int tabs) {
 	// TODO print just the beginning of the sequence?
 	char* uri = getDNASequenceURI(seq);
 	indent(tabs);
-	if (strlen(uri) > NUCLEOTIDES_TO_PRINT)
-		printf("%.NUCLEOTIDES_TO_PRINTs\n", uri);
+	if (strlen(uri) > 30)
+		printf("%.30s\n", uri);
 	else
 		printf("%s\n", uri);
 	indent(tabs+1); printf("nucleotides: %s\n", getNucleotides(seq));
