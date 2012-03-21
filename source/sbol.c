@@ -1,4 +1,3 @@
-#include <stdio.h>
 #include "sbol.h"
 
 void cleanupSBOLCore() {

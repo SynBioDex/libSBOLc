@@ -1,5 +1,5 @@
-#ifndef SBOL_CORE_DNASEQUENCE
-#define SBOL_CORE_DNASEQUENCE
+#ifndef SBOL_DNASEQUENCE_HEADER
+#define SBOL_DNASEQUENCE_HEADER
 #include "api.h"
 
 struct _SBOLObject;

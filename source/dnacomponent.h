@@ -1,5 +1,5 @@
-#ifndef SBOL_CORE_DNACOMPONENT
-#define SBOL_CORE_DNACOMPONENT
+#ifndef SBOL_DNACOMPONENT_HEADER
+#define SBOL_DNACOMPONENT_HEADER
 #include "api.h"
 
 struct _PointerArray;

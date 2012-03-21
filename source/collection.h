@@ -1,5 +1,5 @@
-#ifndef SBOL_CORE_COLLECTION
-#define SBOL_CORE_COLLECTION
+#ifndef SBOL_COLLECTION_HEADER
+#define SBOL_COLLECTION_HEADER
 #include "api.h"
 
 struct _SBOLCompoundObject;

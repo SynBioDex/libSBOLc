@@ -1,5 +1,5 @@
-#ifndef SBOL_CORE_PROPERTY
-#define SBOL_CORE_PROPERTY
+#ifndef SBOL_PROPERTY_HEADER
+#define SBOL_PROPERTY_HEADER
 
 /****************
  * TextProperty

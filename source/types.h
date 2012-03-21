@@ -1,5 +1,5 @@
-#ifndef SBOL_TYPES
-#define SBOL_TYPES
+#ifndef SBOL_TYPES_HEADER
+#define SBOL_TYPES_HEADER
 
 #define XMLNS_RDF  "http://www.w3.org/1999/02/22-rdf-syntax-ns#"
 #define XMLNS_RDFS "http://www.w3.org/2000/01/rdf-schema#"

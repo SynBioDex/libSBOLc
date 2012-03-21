@@ -1,5 +1,5 @@
-#ifndef SBOL_CORE_API
-#define SBOL_CORE_API
+#ifndef SBOL_API_HEADER
+#define SBOL_API_HEADER
 
 #if defined(_WIN32) || defined(__WIN32__) || defined(__CYGWIN__)
 #	if defined(STATIC_LINKED)

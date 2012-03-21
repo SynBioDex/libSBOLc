@@ -1,12 +1,8 @@
-#ifndef SBOL_CORE
-#define SBOL_CORE
+#ifndef SBOL_HEADER
+#define SBOL_HEADER
 #include "debug.h"
 #include "property.h"
 #include "api.h"
-
-// TODO rename core --> sbol
-// TODO readSBOLCore --> loadSBOLCore and writeSBOLCore --> saveSBOLCore
-// TODO deleteX --> freeX ?
 
 /***********************************************
  * The SBOL core is split into files to ease

@@ -1,5 +1,5 @@
-#ifndef SBOL_UTILITIES
-#define SBOL_UTILITIES
+#ifndef SBOL_UTILITIES_HEADER
+#define SBOL_UTILITIES_HEADER
 
 char* getExtension(char* filename);
 int sameString(const char* string1, const char* string2);

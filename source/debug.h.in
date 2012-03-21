@@ -1,0 +1,13 @@
+#ifndef SBOL_DEBUG_HEADER
+#define SBOL_DEBUG_HEADER
+
+/*************************************
+ * CMake reads this file and uses it
+ * as a template to generate debug.h
+ *************************************/
+
+#cmakedefine SBOL_DEBUG_ACTIVE @SBOL_DEBUG_ACTIVE@
+
+void indent(int tabs);
+
+#endif

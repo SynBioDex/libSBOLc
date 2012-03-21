@@ -1,5 +1,5 @@
-#ifndef SBOL_OBJECT
-#define SBOL_OBJECT
+#ifndef SBOL_OBJECT_HEADER
+#define SBOL_OBJECT_HEADER
 #include "api.h"
 
 struct _TextProperty;

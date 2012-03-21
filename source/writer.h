@@ -1,5 +1,5 @@
-#ifndef SBOL_WRITER
-#define SBOL_WRITER
+#ifndef SBOL_WRITER_HEADER
+#define SBOL_WRITER_HEADER
 #include <libxml/xmlwriter.h>
 #include "sbol.h"
 
@@ -22,13 +22,9 @@ int saveSBOLDocument(const char* filename);
  * serialize SBOL core
  ***********************/
 
-struct _DNASequence;
-struct _DNAComponent;
-struct _Collection;
-
-void writeDNASequence(struct _DNASequence* seq);
-void writeDNAComponent(struct _DNAComponent* com);
-void writeCollection(struct _Collection* col);
+void writeDNASequence(DNASequence* seq);
+void writeDNAComponent(DNAComponent* com);
+void writeCollection(Collection* col);
 
 /***********************
  * main write function
