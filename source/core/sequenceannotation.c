@@ -9,13 +9,17 @@
 
 static PointerArray* allSequenceAnnotations;
 
+void lazyCreateAllSequenceAnnotations() {
+	if (!allSequenceAnnotations)
+		allSequenceAnnotations = createPointerArray();
+}
+
 /*******************
  * create/destroy
  *******************/
 
 void registerSequenceAnnotation(SequenceAnnotation* ann) {
-	if (!allSequenceAnnotations)
-		allSequenceAnnotations = createPointerArray();
+	lazyCreateAllSequenceAnnotations();
 	insertPointerIntoArray(allSequenceAnnotations, ann);
 }
 
@@ -88,14 +92,12 @@ void setStrandPolarity(SequenceAnnotation* ann, int polarity) {
  *******************/
 
 int isAnnotationPtr(const void* pointer) {
-	if (!allSequenceAnnotations)
-		allSequenceAnnotations = createPointerArray();
+	lazyCreateAllSequenceAnnotations();
 	return (int) indexOfPointerInArray(allSequenceAnnotations, pointer) >= 0;
 }
 
 int isSequenceAnnotationURI(const char* uri) {
-	if (!allSequenceAnnotations)
-		allSequenceAnnotations = createPointerArray();
+	lazyCreateAllSequenceAnnotations();
 	if (!uri)
 		return 0;
 	int index;
@@ -131,8 +133,7 @@ int getNumPrecedes(const SequenceAnnotation* ann) {
 }
 
 SequenceAnnotation* getNthSequenceAnnotation(int n) {
-	if (!allSequenceAnnotations)
-		allSequenceAnnotations = createPointerArray();
+	lazyCreateAllSequenceAnnotations();
 	if (getNumSequenceAnnotations() > n)
 		return getNthPointerInArray(allSequenceAnnotations, n);
 	else
@@ -151,8 +152,7 @@ char* getSequenceAnnotationURI(const SequenceAnnotation* ann) {
 }
 
 SequenceAnnotation* getSequenceAnnotation(const char* uri) {
-	if (!allSequenceAnnotations)
-		allSequenceAnnotations = createPointerArray();
+	lazyCreateAllSequenceAnnotations();
 	if (!uri)
 		return NULL;
 	int n;

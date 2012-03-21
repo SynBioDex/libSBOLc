@@ -9,9 +9,13 @@
 
 static PointerArray* allDNASequences;
 
-void registerDNASequence(DNASequence* seq) {
+void lazyCreateAllDNASequences() {
 	if (!allDNASequences)
 		allDNASequences = createPointerArray();
+}
+
+void registerDNASequence(DNASequence* seq) {
+	lazyCreateAllDNASequences();
 	insertPointerIntoArray(allDNASequences, seq);
 }
 
@@ -84,8 +88,7 @@ int getNumDNASequences() {
 }
 
 DNASequence* getDNASequence(const char* uri) {
-	if (!allDNASequences)
-		allDNASequences = createPointerArray();
+	lazyCreateAllDNASequences();
 	if (!uri)
 		return NULL;
 	int n;
@@ -108,8 +111,7 @@ char* getDNASequenceURI(const DNASequence* seq) {
 }
 
 int isDNASequenceURI(const char* uri) {
-	if (!allDNASequences)
-		allDNASequences = createPointerArray();
+	lazyCreateAllDNASequences();
 	if (!uri)
 		return 0;
 	int n;

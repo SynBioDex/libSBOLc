@@ -50,9 +50,13 @@ char* getSBOLObjectURI(const SBOLObject* obj) {
 
 static PointerArray* allSBOLObjects;
 
-void registerSBOLObject(SBOLObject* obj) {
+void lazyCreateAllSBOLObjects() {
 	if (!allSBOLObjects)
 		allSBOLObjects = createPointerArray();
+}
+
+void registerSBOLObject(SBOLObject* obj) {
+	lazyCreateAllSBOLObjects();
 	insertPointerIntoArray(allSBOLObjects, obj);
 }
 
@@ -73,8 +77,7 @@ int getNumSBOLObjects() {
 
 // TODO generalize this so it's not repeated everywhere
 int isSBOLObjectURI(const char* uri) {
-	if (!allSBOLObjects)
-		allSBOLObjects = createPointerArray();
+	lazyCreateAllSBOLObjects();
 	if (!uri)
 		return 0;
 	int n;
@@ -97,8 +100,7 @@ SBOLObject* getNthSBOLObject(int n) {
 }
 
 SBOLObject* getSBOLObject(const char* uri) {
-	if (!allSBOLObjects)
-		allSBOLObjects = createPointerArray();
+	lazyCreateAllSBOLObjects();
 	if (!uri)
 		return NULL;
 	int n;
@@ -224,9 +226,13 @@ char* getSBOLCompoundObjectDescription(const SBOLCompoundObject* obj) {
 
 static PointerArray* allSBOLCompoundObjects;
 
-void registerSBOLCompoundObject(SBOLCompoundObject* obj) {
+void lazyCreateAllSBOLCompoundObjects() {
 	if (!allSBOLCompoundObjects)
 		allSBOLCompoundObjects = createPointerArray();
+}
+
+void registerSBOLCompoundObject(SBOLCompoundObject* obj) {
+	lazyCreateAllSBOLCompoundObjects();
 	insertPointerIntoArray(allSBOLCompoundObjects, obj);
 }
 
@@ -246,8 +252,7 @@ int getNumSBOLCompoundObjects() {
 }
 
 int isSBOLCompoundObjectURI(const char* uri) {
-	if (!allSBOLCompoundObjects)
-		allSBOLCompoundObjects = createPointerArray();
+	lazyCreateAllSBOLCompoundObjects();
 	if (!uri)
 		return 0;
 	int n;
@@ -270,8 +275,7 @@ SBOLCompoundObject* getNthSBOLCompoundObject(int n) {
 }
 
 SBOLCompoundObject* getSBOLCompoundObject(const char* uri) {
-	if (!allSBOLCompoundObjects)
-		allSBOLCompoundObjects = createPointerArray();
+	lazyCreateAllSBOLCompoundObjects();
 	if (!uri)
 		return NULL;
 	int n;

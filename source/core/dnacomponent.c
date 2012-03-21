@@ -12,13 +12,17 @@
 
 static PointerArray* allDNAComponents;
 
+void lazyCreateAllDNAComponents() {
+	if (!allDNAComponents)
+		allDNAComponents = createPointerArray();
+}
+
 /**************************
 	create/destroy
 ***************************/
 
 void registerDNAComponent(DNAComponent* com) {
-	if (!allDNAComponents)
-		allDNAComponents = createPointerArray();
+	lazyCreateAllDNAComponents();
 	insertPointerIntoArray(allDNAComponents, com);
 }
 

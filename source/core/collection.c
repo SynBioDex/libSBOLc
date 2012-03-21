@@ -10,13 +10,17 @@
 
 static PointerArray* allCollections;
 
+void lazyCreateAllCollections() {
+	if (!allCollections)
+		allCollections = createPointerArray();
+}
+
 /**************************
 	create/destroy
 ***************************/
 
 void registerCollection(Collection* col) {
-	if (!allCollections)
-		allCollections = createPointerArray();
+	lazyCreateAllCollections();
 	insertPointerIntoArray(allCollections, col);
 }
 
@@ -33,8 +37,7 @@ Collection* createCollection(const char* uri) {
 }
 
 void removeCollection(Collection* col) {
-	if (!allCollections)
-		allCollections = createPointerArray();
+	lazyCreateAllCollections();
 	int index = indexOfPointerInArray(allCollections, col);
 	if (index >= 0)
 		removePointerFromArray(allCollections, index);
@@ -65,14 +68,12 @@ void deleteCollection(Collection* col) {
  **************************/
 
 int isCollectionPtr(const void* pointer) {
-	if (!allCollections)
-		allCollections = createPointerArray();
+	lazyCreateAllCollections();
 	return (int) indexOfPointerInArray(allCollections, pointer) >= 0;
 }
 
 int isCollectionURI(const char* uri) {
-	if (!allCollections)
-		allCollections = createPointerArray();
+	lazyCreateAllCollections();
 	if (!uri)
 		return 0;
 	int n;
@@ -92,8 +93,7 @@ int isCollectionURI(const char* uri) {
 ***************************/
 
 Collection* getCollection(const char* uri) {
-	if (!allCollections)
-		allCollections = createPointerArray();
+	lazyCreateAllCollections();
 	if (!uri)
 		return NULL;
 	int n;
