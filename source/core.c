@@ -6,6 +6,8 @@ void cleanupSBOLCore() {
 	cleanupSequenceAnnotations();
 	cleanupDNAComponents();
 	cleanupCollections();
+	cleanupSBOLCompoundObjects();
+	cleanupSBOLObjects();
 }
 
 void printSBOLCore() {

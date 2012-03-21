@@ -4,6 +4,7 @@
 #include "debug.h"
 #include "property.h"
 #include "array.h"
+#include "object.h"
 #include "dnacomponent.h"
 #include "sequenceannotation.h"
 

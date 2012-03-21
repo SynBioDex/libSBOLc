@@ -1,0 +1,54 @@
+#ifndef SBOL_CORE_COLLECTION
+#define SBOL_CORE_COLLECTION
+#include "api.h"
+
+struct _SBOLCompoundObject;
+struct _PointerArray;
+struct _DNAComponent;
+
+typedef struct _Collection {
+	struct _SBOLCompoundObject* base;
+	struct _PointerArray *components;
+	struct _PointerArray *collections;
+	int processed;
+} Collection;
+
+// create/destroy
+Collection* createCollection(const char* uri);
+void deleteCollection(Collection* col);
+
+// work with global array
+int isCollectionPtr(const void* pointer); // TODO rename and export
+SBOLAPIEXPORTS int isCollectionURI(const char* uri);
+SBOLAPIEXPORTS int getNumCollections();
+SBOLAPIEXPORTS Collection* getNthCollection(int n);
+SBOLAPIEXPORTS Collection* getNthCollectionIn(const Collection* col, int n);
+
+// iterate
+SBOLAPIEXPORTS Collection* getCollection(const char* uri);
+SBOLAPIEXPORTS int getNumDNAComponentsIn(const Collection* col);
+SBOLAPIEXPORTS int getNumCollectionsIn(const Collection* col);
+SBOLAPIEXPORTS struct _DNAComponent* getNthDNAComponentIn(const Collection* col, int n);
+
+// get properties
+SBOLAPIEXPORTS char* getCollectionURI(const Collection* col);
+SBOLAPIEXPORTS char* getCollectionDisplayID(const Collection* col);
+SBOLAPIEXPORTS char* getCollectionName(const Collection* col);
+SBOLAPIEXPORTS char* getCollectionDescription(const Collection* col);
+
+// set properties
+SBOLAPIEXPORTS void setCollectionURI(Collection* col, const char* uri); // TODO remove?
+SBOLAPIEXPORTS void setCollectionDisplayID(Collection* col, const char* id);
+SBOLAPIEXPORTS void setCollectionName(Collection* col, const char* name);
+SBOLAPIEXPORTS void setCollectionDescription(Collection* col, const char* desc);
+
+// TODO where should this go?
+// add component
+SBOLAPIEXPORTS void addDNAComponentToCollection(struct _DNAComponent* com, Collection* col);
+
+void printCollection(const Collection* col, int tabs);
+void printAllCollections();
+
+void cleanupCollections();
+
+#endif

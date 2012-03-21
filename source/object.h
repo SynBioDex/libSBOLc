@@ -1,5 +1,6 @@
 #ifndef SBOL_OBJECT
 #define SBOL_OBJECT
+#include "api.h"
 
 struct _TextProperty;
 struct _URIProperty;
@@ -16,8 +17,8 @@ SBOLObject* createSBOLObject(const char* uri);
 void        deleteSBOLObject(SBOLObject* obj);
 
 // TODO remove once it's clear these aren't needed
-int getNumSBOLObjects();
-int isSBOLObjectURI(const char* uri);
+SBOLAPIEXPORTS int getNumSBOLObjects();
+SBOLAPIEXPORTS int isSBOLObjectURI(const char* uri);
 SBOLObject* getNthSBOLObject(int n);
 SBOLObject* getSBOLObject(const char* uri);
 void registerSBOLObject(SBOLObject* obj);
@@ -25,7 +26,7 @@ void removeSBOLObject(SBOLObject* obj);
 void cleanupSBOLObjects();
 
 void  setSBOLObjectURI(SBOLObject* obj, const char* uri);
-char* getSBOLObjectURI(const SBOLObject* obj);
+SBOLAPIEXPORTS char* getSBOLObjectURI(const SBOLObject* obj);
 
 /**********************
  * SBOLCompoundObject
