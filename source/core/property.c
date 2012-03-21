@@ -71,7 +71,7 @@ void deleteURIProperty(URIProperty* pro) {
 }
 
 void setURIProperty(URIProperty* pro, const char* uri) {
-	if (pro && uri && !isDuplicateURI(uri))
+	if (pro && uri && !isSBOLObjectURI(uri))
 		setTextProperty(pro->uri, uri);
 }
 

@@ -25,7 +25,7 @@ void registerCollection(Collection* col) {
 }
 
 Collection* createCollection(const char* uri) {
-	if (!uri || isDuplicateURI(uri))
+	if (!uri || isSBOLObjectURI(uri))
 	    return NULL;
 	Collection* col = malloc(sizeof(Collection));
 	col->base        = createSBOLCompoundObject(uri);

@@ -26,7 +26,7 @@ char* randomString() {
 
 char* randomUniqueURI() {
     char* uri = randomString();
-    while (isDuplicateURI(uri))
+    while (isSBOLObjectURI(uri))
         uri = randomString();
     return uri;
 }

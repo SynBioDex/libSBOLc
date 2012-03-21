@@ -21,7 +21,7 @@ void registerDNASequence(DNASequence* seq) {
 
 // TODO constrain to actg and sometimes n?
 DNASequence* createDNASequence(char* uri) {
-	if (!uri || isDuplicateURI(uri))
+	if (!uri || isSBOLObjectURI(uri))
 	    return NULL;
 	DNASequence* seq = malloc(sizeof(DNASequence));
 	seq->base        = createSBOLObject(uri);

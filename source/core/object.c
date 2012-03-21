@@ -133,7 +133,7 @@ void cleanupSBOLObjects() {
  **********************/
 
 SBOLCompoundObject* createSBOLCompoundObject(const char* uri) {
-	// TODO isDuplicateURI
+	// TODO isSBOLObjectURI
 	if (!uri || isSBOLCompoundObjectURI(uri) || isSBOLObjectURI(uri))
 		return NULL;
 	SBOLCompoundObject* obj = malloc(sizeof(SBOLCompoundObject));

@@ -8,7 +8,7 @@
 // TODO will this sequential read miss things declared in certain orders?
 
 void createNewObject(char* uri, char* type) {
-	if (!uri || !type || isDuplicateURI(uri))
+	if (!uri || !type || isSBOLObjectURI(uri))
 		return;
 	else if (sameString(type, SBOL_DNASEQUENCE))
 		createDNASequence(uri);

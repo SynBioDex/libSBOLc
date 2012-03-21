@@ -27,7 +27,7 @@ void registerDNAComponent(DNAComponent* com) {
 }
 
 DNAComponent* createDNAComponent(const char* uri) {
-	if (!uri || isDuplicateURI(uri))
+	if (!uri || isSBOLObjectURI(uri))
 	    return NULL;
 	DNAComponent* com = malloc(sizeof(DNAComponent));
 	com->base        = createSBOLCompoundObject(uri);

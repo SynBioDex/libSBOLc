@@ -72,6 +72,10 @@ SBOLAPIEXPORTS void deleteDNASequence(DNASequence* seq);
 SBOLAPIEXPORTS void printDNASequence(const DNASequence* seq, int tabs);
 SBOLAPIEXPORTS void printAllDNASequences();
 
+// from object.h
+int getNumSBOLObjects();
+int isSBOLObjectURI(const char* uri);
+
 // from sequenceannotation.h
 SBOLAPIEXPORTS void setBioStart(SequenceAnnotation* ann, int start);
 SBOLAPIEXPORTS void setBioEnd(SequenceAnnotation* ann, int end);
@@ -138,7 +142,6 @@ SBOLAPIEXPORTS void printAllCollections();
 // from core.c
 SBOLAPIEXPORTS void printSBOLCore();
 SBOLAPIEXPORTS void cleanupSBOLCore();
-int isDuplicateURI(const char* uri);
 
 // from utilities.c
 SBOLAPIEXPORTS int sameContent(const char* filename1, const char* filename2);

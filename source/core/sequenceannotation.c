@@ -24,7 +24,7 @@ void registerSequenceAnnotation(SequenceAnnotation* ann) {
 }
 
 SequenceAnnotation* createSequenceAnnotation(const char* uri) {
-	if (!uri || isDuplicateURI(uri))
+	if (!uri || isSBOLObjectURI(uri))
 	    return NULL;
 	SequenceAnnotation* ann = malloc(sizeof(SequenceAnnotation));
 	ann->base         = createSBOLObject(uri);
