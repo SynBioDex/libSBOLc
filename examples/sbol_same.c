@@ -1,6 +1,6 @@
 #include <stdio.h>
 #include <string.h>
-#include "core.h"
+#include "sbol.h"
 
 int main(int argc, char** argv) {
 	if (argc != 3)

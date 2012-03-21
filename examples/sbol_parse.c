@@ -1,6 +1,5 @@
 #include <stdio.h>
-#include "core.h"
-#include "reader.h"
+#include "sbol.h"
 
 #define DEFAULT_FILE "../examples/valid/ntriples.nt"
 

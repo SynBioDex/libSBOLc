@@ -3,7 +3,7 @@
 #include <libxml/parser.h>
 #include "CuTest.h"
 #include "utilities.h"
-#include "core.h"
+#include "sbol.h"
 
 // TODO also validate against schema before reading
 

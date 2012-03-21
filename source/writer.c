@@ -1,11 +1,7 @@
 #include <stdio.h>
 #include <string.h>
 #include <libxml/xmlwriter.h>
-#include "core.h"
-#include "writer.h"
-#include "validator.h"
-#include "types.h"
-#include "utilities.h"
+#include "sbol.h"
 
 /************************
  * set up SBOL document

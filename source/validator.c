@@ -1,8 +1,7 @@
 #include <stdio.h>
 #include <libxml/parser.h>
 #include <libxml/xmlschemas.h>
-#include "core.h"
-#include "validator.h"
+#include "sbol.h"
 
 int isValidSBOL(const xmlDocPtr doc) {
     xmlDocPtr schema_doc = xmlReadFile(SBOL_SCHEMA_FILENAME, NULL, XML_PARSE_NONET);

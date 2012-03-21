@@ -4,8 +4,7 @@
 #include <libxml/parser.h>
 #include "CuTest.h"
 #include "utilities.h"
-#include "core.h"
-#include "writer.h"
+#include "sbol.h"
 
 #define VALID_EXAMPLES_DIR   "../examples/valid/"
 #define INVALID_EXAMPLES_DIR "../examples/invalid/"

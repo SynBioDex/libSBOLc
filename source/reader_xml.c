@@ -1,6 +1,4 @@
-#include "core.h"
-#include "types.h"
-#include "reader.h"
+#include "sbol.h"
 
 void readDNASequence();
 void readSequenceAnnotation();

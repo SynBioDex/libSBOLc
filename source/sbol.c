@@ -1,5 +1,5 @@
 #include <stdio.h>
-#include "core.h"
+#include "sbol.h"
 
 void cleanupSBOLCore() {
 	cleanupDNASequences();

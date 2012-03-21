@@ -1,7 +1,7 @@
 #ifndef SBOL_WRITER
 #define SBOL_WRITER
 #include <libxml/xmlwriter.h>
-#include "api.h"
+#include "sbol.h"
 
 /************************
  * set up SBOL document

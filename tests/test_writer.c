@@ -1,7 +1,7 @@
 #include <stdio.h>
 #include "CuTest.h"
 #include "utilities.h"
-#include "core.h"
+#include "sbol.h"
 
 // TODO write equality test functions and use them to test that these are identical to originals
 // TODO need a separate notion of displayID! (or really URI probably)

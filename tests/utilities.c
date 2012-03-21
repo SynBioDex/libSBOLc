@@ -3,7 +3,7 @@
 #include <string.h>
 #include "utilities.h"
 #include <dirent.h>
-#include "core.h"
+#include "sbol.h"
 
 #define MAX_STRING_LENGTH 1000
 // TODO allow other chars?

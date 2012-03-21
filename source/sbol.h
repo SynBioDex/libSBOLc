@@ -16,10 +16,15 @@
  ***********************************************/
 
 // from other files
+#include "utilities.h"
 #include "dnasequence.h"
 #include "sequenceannotation.h"
 #include "dnacomponent.h"
 #include "collection.h"
+#include "types.h"
+#include "validator.h"
+#include "reader.h"
+#include "writer.h"
 
 // from core.c
 SBOLAPIEXPORTS void printSBOLCore();

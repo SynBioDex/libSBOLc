@@ -1,7 +1,5 @@
 #include <stdio.h>
-#include "core.h"
-#include "reader.h"
-#include "writer.h"
+#include "sbol.h"
 
 // TODO check that the new file is information-equivalent to the old one?
 

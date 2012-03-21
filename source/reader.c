@@ -1,9 +1,6 @@
 #include <string.h>
 #include <raptor.h>
-#include "core.h"
-#include "reader.h"
-#include "types.h"
-#include "utilities.h"
+#include "sbol.h"
 
 // TODO will this sequential read miss things declared in certain orders?
 
