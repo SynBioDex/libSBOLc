@@ -18,7 +18,7 @@ void RunUnitTests() {
 	CuString* output = CuStringNew();
 	CuSuite*  suite  = CuSuiteNew();
 
-	//CuSuiteAddSuite(suite, ArrayGetSuite());
+	CuSuiteAddSuite(suite, ArrayGetSuite());
 	CuSuiteAddSuite(suite, SBOLObjectGetSuite());
 	CuSuiteAddSuite(suite, DNASequenceGetSuite());
 	CuSuiteAddSuite(suite, SequenceAnnotationGetSuite());

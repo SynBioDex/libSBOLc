@@ -8,8 +8,8 @@
 #include "sequenceannotation.h"
 #include "collection.h"
 
-#define NUM_FAST_TESTS 1000
-#define NUM_SLOW_TESTS  100
+#define NUM_FAST_TESTS 100
+#define NUM_SLOW_TESTS  10
 
 void TestSingleDNAComponent(CuTest* tc) {
 	cleanupDNAComponents();
