@@ -1,7 +1,7 @@
 #include <stdlib.h>
 #include "debug.h"
 #include "property.h"
-#include "genericarray.h"
+#include "array.h"
 #include "object.h"
 
 // TODO will "object" conflict with other filenames?
@@ -48,25 +48,25 @@ char* getSBOLObjectURI(const SBOLObject* obj) {
  * SBOLObjects Global Array
  ****************************/
 
-static GenericArray* allSBOLObjects;
+static PointerArray* allSBOLObjects;
 
 void registerSBOLObject(SBOLObject* obj) {
 	if (!allSBOLObjects)
-		allSBOLObjects = createGenericArray();
-	insertIntoGenericArray(allSBOLObjects, obj);
+		allSBOLObjects = createPointerArray();
+	insertPointerIntoArray(allSBOLObjects, obj);
 }
 
 void removeSBOLObject(SBOLObject* obj) {
 	if (obj && allSBOLObjects) {
-		int index = indexByPtr(allSBOLObjects, obj);
+		int index = indexOfPointerInArray(allSBOLObjects, obj);
 		if (index >= 0)
-			removeFromGenericArray(allSBOLObjects, index);
+			removePointerFromArray(allSBOLObjects, index);
 	}
 }
 
 int getNumSBOLObjects() {
 	if (allSBOLObjects)
-	    return allSBOLObjects->numInUse;
+	    return getNumPointersInArray(allSBOLObjects);
 	else
 	    return 0;
 }
@@ -74,14 +74,14 @@ int getNumSBOLObjects() {
 // TODO generalize this so it's not repeated everywhere
 int isSBOLObjectURI(const char* uri) {
 	if (!allSBOLObjects)
-		allSBOLObjects = createGenericArray();
+		allSBOLObjects = createPointerArray();
 	if (!uri)
 		return 0;
-	int index;
+	int n;
 	char* candidate;
 	SBOLObject* obj;
-	for (index=0; index<getNumSBOLObjects(); index++) {
-		obj = getNthSBOLObject(index);
+	for (n=0; n < getNumSBOLObjects(); n++) {
+		obj = getNthSBOLObject(n);
 		candidate = getSBOLObjectURI(obj);
 		if (candidate && strcmp(candidate, uri) == 0)
 			return 1;
@@ -90,22 +90,22 @@ int isSBOLObjectURI(const char* uri) {
 }
 
 SBOLObject* getNthSBOLObject(int n) {
-	if (!allSBOLObjects || allSBOLObjects->numInUse<=n)
-	    return NULL;
+	if (getNumSBOLObjects() > n)
+		return (SBOLObject*) getNthPointerInArray(allSBOLObjects, n);
 	else
-	    return (SBOLObject*) getNthArrayElement(allSBOLObjects, n);
+		return NULL;
 }
 
 SBOLObject* getSBOLObject(const char* uri) {
 	if (!allSBOLObjects)
-		allSBOLObjects = createGenericArray();
+		allSBOLObjects = createPointerArray();
 	if (!uri)
 		return NULL;
-	int index;
+	int n;
 	char* candidate;
 	SBOLObject* obj;
-	for (index=0; index<allSBOLObjects->numInUse; index++) {
-		obj = (SBOLObject*) allSBOLObjects->array[index];
+	for (n=0; n < getNumSBOLObjects(); n++) {
+		obj = (SBOLObject*) getNthSBOLObject(n);
 		candidate = getSBOLObjectURI(obj);
 		if (candidate && strcmp(candidate, uri) == 0)
 			return obj;
@@ -121,7 +121,7 @@ void cleanupSBOLObjects() {
 			obj = getNthSBOLObject(n);
 			deleteSBOLObject(obj);
 		}
-		deleteGenericArray(allSBOLObjects);
+		deletePointerArray(allSBOLObjects);
 		allSBOLObjects = NULL;
 	}
 }
@@ -222,39 +222,39 @@ char* getSBOLCompoundObjectDescription(const SBOLCompoundObject* obj) {
  * SBOLCompoundObjects GLobal Array
  ************************************/
 
-static GenericArray* allSBOLCompoundObjects;
+static PointerArray* allSBOLCompoundObjects;
 
 void registerSBOLCompoundObject(SBOLCompoundObject* obj) {
 	if (!allSBOLCompoundObjects)
-		allSBOLCompoundObjects = createGenericArray();
-	insertIntoGenericArray(allSBOLCompoundObjects, obj);
+		allSBOLCompoundObjects = createPointerArray();
+	insertPointerIntoArray(allSBOLCompoundObjects, obj);
 }
 
 void removeSBOLCompoundObject(SBOLCompoundObject* obj) {
 	if (obj && allSBOLCompoundObjects) {
-		int index = indexByPtr(allSBOLCompoundObjects, obj);
+		int index = indexOfPointerInArray(allSBOLCompoundObjects, obj);
 		if (index >= 0)
-			removeFromGenericArray(allSBOLCompoundObjects, index);
+			removePointerFromArray(allSBOLCompoundObjects, index);
 	}
 }
 
 int getNumSBOLCompoundObjects() {
 	if (allSBOLCompoundObjects)
-	    return allSBOLCompoundObjects->numInUse;
+	    return getNumPointersInArray(allSBOLCompoundObjects);
 	else
 	    return 0;
 }
 
 int isSBOLCompoundObjectURI(const char* uri) {
 	if (!allSBOLCompoundObjects)
-		allSBOLCompoundObjects = createGenericArray();
+		allSBOLCompoundObjects = createPointerArray();
 	if (!uri)
 		return 0;
-	int index;
+	int n;
 	char* candidate;
 	SBOLCompoundObject* obj;
-	for (index=0; index<getNumSBOLCompoundObjects(); index++) {
-		obj = getNthSBOLCompoundObject(index);
+	for (n=0; n < getNumSBOLCompoundObjects(); n++) {
+		obj = getNthSBOLCompoundObject(n);
 		candidate = getSBOLCompoundObjectURI(obj);
 		if (candidate && strcmp(candidate, uri) == 0)
 			return 1;
@@ -263,22 +263,22 @@ int isSBOLCompoundObjectURI(const char* uri) {
 }
 
 SBOLCompoundObject* getNthSBOLCompoundObject(int n) {
-	if (!allSBOLCompoundObjects || allSBOLCompoundObjects->numInUse<=n)
-	    return NULL;
+	if (getNumSBOLCompoundObjects() > n && n >= 0)
+		return (SBOLCompoundObject *)getNthPointerInArray(allSBOLCompoundObjects, n);
 	else
-	    return (SBOLCompoundObject*) getNthArrayElement(allSBOLCompoundObjects, n);
+		return NULL;
 }
 
 SBOLCompoundObject* getSBOLCompoundObject(const char* uri) {
 	if (!allSBOLCompoundObjects)
-		allSBOLCompoundObjects = createGenericArray();
+		allSBOLCompoundObjects = createPointerArray();
 	if (!uri)
 		return NULL;
-	int index;
+	int n;
 	char* candidate;
 	SBOLCompoundObject* obj;
-	for (index=0; index<allSBOLCompoundObjects->numInUse; index++) {
-		obj = (SBOLCompoundObject*) allSBOLCompoundObjects->array[index];
+	for (n=0; n < getNumSBOLCompoundObjects(); n++) {
+		obj = getNthSBOLCompoundObject(n);
 		candidate = getSBOLCompoundObjectURI(obj);
 		if (candidate && strcmp(candidate, uri) == 0)
 			return obj;
@@ -294,7 +294,7 @@ void cleanupSBOLCompoundObjects() {
 			obj = getNthSBOLCompoundObject(n);
 			deleteSBOLCompoundObject(obj);
 		}
-		deleteGenericArray(allSBOLCompoundObjects);
+		deletePointerArray(allSBOLCompoundObjects);
 		allSBOLCompoundObjects = NULL;
 	}
 }

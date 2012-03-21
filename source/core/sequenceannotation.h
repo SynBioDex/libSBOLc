@@ -2,7 +2,7 @@
 #define SBOL_CORE_SEQUENCEANNOTATION
 
 struct _DNAComponent;
-struct _GenericArray;
+struct _PointerArray;
 struct _URIProperty;
 
 typedef struct _SequenceAnnotation {
@@ -12,7 +12,7 @@ typedef struct _SequenceAnnotation {
 	int strand;
    	struct _DNAComponent* annotates;
 	struct _DNAComponent* subComponent;
-	struct _GenericArray* precedes;
+	struct _PointerArray* precedes;
 	int processed;
 } SequenceAnnotation;
 

@@ -1,4 +1,5 @@
 #include <stdlib.h>
+#include <stdio.h>
 #include "debug.h"
 #include "array.h"
 
@@ -35,11 +36,18 @@ void deletePointerArray(PointerArray *arr) {
 	}
 }
 
-int getIndexOfPointerInArray(const PointerArray *arr, const void *ptr) {
+int getNumPointersInArray(const PointerArray *arr) {
+	if (arr)
+		return arr->numPointersInUse;
+	else
+		return -1;
+}
+
+int indexOfPointerInArray(const PointerArray *arr, const void *ptr) {
 	if (arr && ptr) {
 		int n;
-		for (n=0; n < arr->numInUse; n++)
-			if (arr->array[n] == ptr)
+		for (n=0; n < getNumPointersInArray(arr); n++)
+			if (getNthPointerInArray(arr, n) == ptr)
 				return n;
 		return -1;
 	}
@@ -55,7 +63,7 @@ int getIndexOfPointerInArray(const PointerArray *arr, const void *ptr) {
 }
 
 int pointerContainedInArray(const PointerArray *arr, const void *ptr) {
-    return (int) getIndexOfPointerInArray(arr, ptr) >= 0;
+    return (int) indexOfPointerInArray(arr, ptr) >= 0;
 }
 
 void resizePointerArray(PointerArray *arr, int capacity) {
@@ -88,7 +96,7 @@ void expandPointerArray(PointerArray *arr) {
 
 void shrinkPointerArray(PointerArray *arr) {
 	if (arr) {
-		if (arr->numTotal > POINTERARRAY_INITIAL_LENGTH * POINTERARRAY_SCALING_FACTOR)
+		if (getNumPointersInArray(arr) > POINTERARRAY_INITIAL_LENGTH * POINTERARRAY_SCALING_FACTOR)
 			resizePointerArray(arr, arr->numPointersTotal / POINTERARRAY_SCALING_FACTOR);
 	}
 	#ifdef SBOL_DEBUG
@@ -98,16 +106,16 @@ void shrinkPointerArray(PointerArray *arr) {
 }
 
 void removePointerFromArray(PointerArray *arr, int index) {
-	if (arr && arr->numInUse > index && index >= 0) {
+	if (arr && getNumPointersInArray(arr) > index && index >= 0) {
 	
 		// shift everything over, deleting array[index]
 		int n;
-		for (n=index+1; n < arr->numPointersInUse; n++)
+		for (n=index+1; n < getNumPointersInArray(arr); n++)
 			arr->pointers[n-1] = arr->pointers[n];
 		arr->pointers[ --(arr->numPointersInUse) ] = NULL;
 
 		// if array is getting small, shrink it
-		if (arr->numPointersInUse == arr->numTotal / POINTERARRAY_SCALING_FACTOR)
+		if (getNumPointersInArray(arr) == arr->numPointersTotal / POINTERARRAY_SCALING_FACTOR)
 			shrinkPointerArray(arr);
 	}
 	
@@ -123,11 +131,11 @@ void insertPointerIntoArray(PointerArray *arr, void *ptr) {
 	if (arr && ptr) {
 	
 		// if array is full, expand it
-		if (arr->numPointersInUse == arr->numPointersTotal)
+		if (getNumPointersInArray(arr) == arr->numPointersTotal)
 			expandPointerArray(arr);
 		
 		// insert ptr
-		arr->pointers[ arr->numPointersInUse ] = ptr;
+		arr->pointers[ getNumPointersInArray(arr) ] = ptr;
 		arr->numPointersInUse++;
 	}
 	
@@ -140,7 +148,7 @@ void insertPointerIntoArray(PointerArray *arr, void *ptr) {
 }
 
 void *getNthPointerInArray(const PointerArray *arr, int n) {
-	if (arr && arr->numPointersInUse > n && n >= 0)
+	if (arr && getNumPointersInArray(arr) > n && n >= 0)
 		return arr->pointers[n];
 	else {
 		#ifdef SBOL_DEBUG

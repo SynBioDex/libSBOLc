@@ -3,16 +3,16 @@
 #include "object.h"
 
 struct _SBOLCompoundObject;
-struct _GenericArray;
+struct _PointerArray;
 struct _DNASequence;
 struct _SequenceAnnotation;
 struct _Collection;
 
 typedef struct _DNAComponent {
 	struct _SBOLCompoundObject* base;
-	struct _DNASequence*        dnaSequence;
-	struct _GenericArray*       annotations;
-	struct _GenericArray*       collections;
+	struct _DNASequence* dnaSequence;
+	struct _PointerArray* annotations;
+	struct _PointerArray* collections;
 	int processed;
 } DNAComponent;
 

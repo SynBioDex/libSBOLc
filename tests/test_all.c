@@ -6,7 +6,7 @@ CuSuite* DNASequenceGetSuite();
 CuSuite* SequenceAnnotationGetSuite();
 CuSuite* CollectionGetSuite();
 CuSuite* DNAComponentGetSuite();
-CuSuite* GenericArrayGetSuite();
+CuSuite* ArrayGetSuite();
 CuSuite* PropertyGetSuite();
 CuSuite* CleanupGetSuite();
 CuSuite* RoundTripGetSuite();
@@ -18,7 +18,7 @@ void RunUnitTests() {
 	CuString* output = CuStringNew();
 	CuSuite*  suite  = CuSuiteNew();
 
-	//CuSuiteAddSuite(suite, GenericArrayGetSuite());
+	//CuSuiteAddSuite(suite, ArrayGetSuite());
 	CuSuiteAddSuite(suite, SBOLObjectGetSuite());
 	CuSuiteAddSuite(suite, DNASequenceGetSuite());
 	CuSuiteAddSuite(suite, SequenceAnnotationGetSuite());

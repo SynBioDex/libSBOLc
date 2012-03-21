@@ -3,11 +3,11 @@
 #include <string.h>
 #include "debug.h"
 #include "property.h"
-#include "genericarray.h"
+#include "array.h"
 #include "dnacomponent.h"
 #include "sequenceannotation.h"
 
-static GenericArray* allSequenceAnnotations;
+static PointerArray* allSequenceAnnotations;
 
 /*******************
  * create/destroy
@@ -15,8 +15,8 @@ static GenericArray* allSequenceAnnotations;
 
 void registerSequenceAnnotation(SequenceAnnotation* ann) {
 	if (!allSequenceAnnotations)
-		allSequenceAnnotations = createGenericArray();
-	insertIntoGenericArray(allSequenceAnnotations, ann);
+		allSequenceAnnotations = createPointerArray();
+	insertPointerIntoArray(allSequenceAnnotations, ann);
 }
 
 SequenceAnnotation* createSequenceAnnotation(const char* uri) {
@@ -29,7 +29,7 @@ SequenceAnnotation* createSequenceAnnotation(const char* uri) {
 	ann->strand       = 1;
 	ann->annotates    = NULL;
 	ann->subComponent = NULL;
-	ann->precedes = createGenericArray();
+	ann->precedes = createPointerArray();
 	ann->processed = 0;
 	registerSequenceAnnotation(ann);
 	return ann;
@@ -37,9 +37,9 @@ SequenceAnnotation* createSequenceAnnotation(const char* uri) {
 
 void removeSequenceAnnotation(SequenceAnnotation* ann) {
 	if (ann && allSequenceAnnotations) {
-		int index = indexByPtr(allSequenceAnnotations, ann);
+		int index = indexOfPointerInArray(allSequenceAnnotations, ann);
 		if (index >= 0)
-			removeFromGenericArray(allSequenceAnnotations, index);
+			removePointerFromArray(allSequenceAnnotations, index);
 	}
 }
 
@@ -53,8 +53,8 @@ void deleteSequenceAnnotation(SequenceAnnotation* ann) {
 		if (ann->subComponent)
 			ann->subComponent = NULL;
 		if (ann->precedes) {
-			deleteGenericArray(ann->precedes);
-			ann->precedes = NULL;
+			deletePointerArray(ann->precedes);
+			ann->precedes = NULL; // TODO needed?
 		}
 		removeSequenceAnnotation(ann);
 		free(ann);
@@ -89,19 +89,19 @@ void setStrandPolarity(SequenceAnnotation* ann, int polarity) {
 
 int isAnnotationPtr(const void* pointer) {
 	if (!allSequenceAnnotations)
-		allSequenceAnnotations = createGenericArray();
-	return (int) indexByPtr(allSequenceAnnotations, pointer) >= 0;
+		allSequenceAnnotations = createPointerArray();
+	return (int) indexOfPointerInArray(allSequenceAnnotations, pointer) >= 0;
 }
 
 int isSequenceAnnotationURI(const char* uri) {
 	if (!allSequenceAnnotations)
-		allSequenceAnnotations = createGenericArray();
+		allSequenceAnnotations = createPointerArray();
 	if (!uri)
 		return 0;
 	int index;
 	char* candidate;
 	SequenceAnnotation* ann;
-	for (index=0; index<getNumSequenceAnnotations(); index++) {
+	for (index=0; index < getNumSequenceAnnotations(); index++) {
 		ann = getNthSequenceAnnotation(index);
 		if (ann) {
 			candidate = getSequenceAnnotationURI(ann);
@@ -118,23 +118,23 @@ int isSequenceAnnotationURI(const char* uri) {
 
 int getNumSequenceAnnotations() {
 	if (allSequenceAnnotations)
-		return allSequenceAnnotations->numInUse;
+		return getNumPointersInArray(allSequenceAnnotations);
 	else
 		return 0;
 }
 
 int getNumPrecedes(const SequenceAnnotation* ann) {
 	if (ann && ann->precedes)
-		return ann->precedes->numInUse;
+		return getNumPointersInArray(ann->precedes);
 	else
 		return 0;
 }
 
 SequenceAnnotation* getNthSequenceAnnotation(int n) {
 	if (!allSequenceAnnotations)
-		allSequenceAnnotations = createGenericArray();
-	if (allSequenceAnnotations->numInUse > n)
-		return allSequenceAnnotations->array[n];
+		allSequenceAnnotations = createPointerArray();
+	if (getNumSequenceAnnotations() > n)
+		return getNthPointerInArray(allSequenceAnnotations, n);
 	else
 		return NULL;
 }
@@ -152,14 +152,14 @@ char* getSequenceAnnotationURI(const SequenceAnnotation* ann) {
 
 SequenceAnnotation* getSequenceAnnotation(const char* uri) {
 	if (!allSequenceAnnotations)
-		allSequenceAnnotations = createGenericArray();
+		allSequenceAnnotations = createPointerArray();
 	if (!uri)
 		return NULL;
-	int index;
+	int n;
 	char* candidate;
 	SequenceAnnotation* ann;
-	for (index=0; index<allSequenceAnnotations->numInUse; index++) {
-		ann = (SequenceAnnotation*) allSequenceAnnotations->array[index];
+	for (n=0; n < getNumSequenceAnnotations(); n++) {
+		ann = getNthSequenceAnnotation(n);
 		candidate = getSequenceAnnotationURI(ann);
 		if (candidate && strcmp(candidate, uri) == 0)
 			return ann;
@@ -202,12 +202,12 @@ int getStrandPolarity(const SequenceAnnotation* ann) {
 
 void addPrecedesRelationship(SequenceAnnotation * upstream, SequenceAnnotation * downstream) {
 	if (upstream && downstream)
-		insertIntoGenericArray(upstream->precedes, downstream);
+		insertPointerIntoArray(upstream->precedes, downstream);
 }
 
 SequenceAnnotation* getNthPrecedes(const SequenceAnnotation* ann, int n) {
-	if (ann && ann->precedes->numInUse >= n)
-		return (SequenceAnnotation*) ann->precedes->array[n];
+	if (ann && getNumPrecedes(ann) >= n)
+		return (SequenceAnnotation*) getNthPointerInArray(ann->precedes, n);
 	else
 		return NULL;
 }
@@ -233,7 +233,7 @@ void cleanupSequenceAnnotations() {
 			seq = getNthSequenceAnnotation(n);
 			deleteSequenceAnnotation(seq);
 		}
-		deleteGenericArray(allSequenceAnnotations);
+		deletePointerArray(allSequenceAnnotations);
 		allSequenceAnnotations = NULL;
 	}
 }

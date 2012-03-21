@@ -4,11 +4,11 @@
 #include "debug.h"
 #include "property.h"
 #include "object.h"
-#include "genericarray.h"
+#include "array.h"
 #include "collection.h"
 #include "dnacomponent.h"
 
-static GenericArray* allCollections;
+static PointerArray* allCollections;
 
 /**************************
 	create/destroy
@@ -16,8 +16,8 @@ static GenericArray* allCollections;
 
 void registerCollection(Collection* col) {
 	if (!allCollections)
-		allCollections = createGenericArray();
-	insertIntoGenericArray(allCollections, col);
+		allCollections = createPointerArray();
+	insertPointerIntoArray(allCollections, col);
 }
 
 Collection* createCollection(const char* uri) {
@@ -25,8 +25,8 @@ Collection* createCollection(const char* uri) {
 	    return NULL;
 	Collection* col = malloc(sizeof(Collection));
 	col->base        = createSBOLCompoundObject(uri);
-	col->components  = createGenericArray();
-	col->collections = createGenericArray();
+	col->components  = createPointerArray();
+	col->collections = createPointerArray();
 	col->processed   = 0;
 	registerCollection(col);
 	return col;
@@ -34,17 +34,26 @@ Collection* createCollection(const char* uri) {
 
 void removeCollection(Collection* col) {
 	if (!allCollections)
-		allCollections = createGenericArray();
-	int index = indexByPtr(allCollections, col);
+		allCollections = createPointerArray();
+	int index = indexOfPointerInArray(allCollections, col);
 	if (index >= 0)
-		removeFromGenericArray(allCollections, index);
+		removePointerFromArray(allCollections, index);
 }
 
 void deleteCollection(Collection* col) {
 	if (col) {
-		if (col->base)        deleteSBOLCompoundObject(col->base);
-		if (col->collections) deleteGenericArray(col->collections);
-		if (col->components)  deleteGenericArray(col->components);
+		if (col->base) {
+			deleteSBOLCompoundObject(col->base);
+			col->base = NULL;
+		}
+		if (col->collections) {
+			deletePointerArray(col->collections);
+			col->collections = NULL;
+		}
+		if (col->components) {
+			deletePointerArray(col->components);
+			col->components = NULL;
+		}
 		removeCollection(col);
 		free(col);
 		col = NULL;
@@ -57,21 +66,21 @@ void deleteCollection(Collection* col) {
 
 int isCollectionPtr(const void* pointer) {
 	if (!allCollections)
-		allCollections = createGenericArray();
-	return (int) indexByPtr(allCollections, pointer) >= 0;
+		allCollections = createPointerArray();
+	return (int) indexOfPointerInArray(allCollections, pointer) >= 0;
 }
 
 int isCollectionURI(const char* uri) {
 	if (!allCollections)
-		allCollections = createGenericArray();
+		allCollections = createPointerArray();
 	if (!uri)
 		return 0;
-	int index;
+	int n;
 	char* candidate;
 	Collection* col;
-	for (index=0; index<allCollections->numInUse; index++) {
-		col = (Collection*) allCollections->array[index];
-		candidate = getSBOLCompoundObjectURI(col->base);
+	for (n=0; n < getNumCollections(); n++) {
+		col = getNthCollection(n);
+		candidate = getCollectionURI(col);
 		if (candidate && strcmp(candidate, uri) == 0)
 			return 1;
 	}
@@ -84,15 +93,15 @@ int isCollectionURI(const char* uri) {
 
 Collection* getCollection(const char* uri) {
 	if (!allCollections)
-		allCollections = createGenericArray();
+		allCollections = createPointerArray();
 	if (!uri)
 		return NULL;
-	int index;
+	int n;
 	char* candidate;
 	Collection* col;
-	for (index=0; index<allCollections->numInUse; index++) {
-		col = (Collection*) allCollections->array[index];
-		candidate = getSBOLCompoundObjectURI(col->base);
+	for (n=0; n < getNumCollections(); n++) {
+		col = getNthCollection(n);
+		candidate = getCollectionURI(col);
 		if (candidate && strcmp(candidate, uri) == 0)
 			return col;
 	}
@@ -133,21 +142,21 @@ char* getCollectionDescription(const Collection* col) {
 
 int getNumCollections() {
 	if (allCollections)
-		return allCollections->numInUse;
+		return getNumPointersInArray(allCollections);
 	else
 		return 0;
 }
 
 int getNumDNAComponentsIn(const Collection* col) {
 	if (col)
-		return col->components->numInUse;
+		return getNumPointersInArray(col->components);
 	else
 		return -1;
 }
 
 int getNumCollectionsIn(const Collection* col) {
 	if (col)
-		return col->collections->numInUse;
+		return getNumPointersInArray(col->collections);
 	else
 		return -1;
 }
@@ -157,22 +166,22 @@ int getNumCollectionsIn(const Collection* col) {
  **************************/
 
 Collection* getNthCollection(int n) {
-    if (allCollections)
-        return (Collection*) getNthArrayElement(allCollections, n);
+    if (getNumCollections() > n && n >= 0)
+        return (Collection *)getNthPointerInArray(allCollections, n);
     else
         return NULL;
 }
 
 DNAComponent* getNthDNAComponentIn(const Collection* col, int n) {
     if (col)
-        return (DNAComponent*) getNthArrayElement(col->components, n);
+        return (DNAComponent *)getNthPointerInArray(col->components, n);
     else
         return NULL;
 }
 
 Collection* getNthCollectionIn(const Collection* col, int n) {
 	if (col)
-	    return (Collection*) getNthArrayElement(col->collections, n);
+	    return (Collection *)getNthPointerInArray(col->collections, n);
 	else
 		return NULL;
 }
@@ -207,8 +216,8 @@ void setCollectionDescription(Collection* col, const char* descr) {
 
 void addDNAComponentToCollection(DNAComponent* com, Collection* col) {
 	if (com && col) {
-		insertIntoGenericArray(com->collections, col);
-		insertIntoGenericArray(col->components,  com);
+		insertPointerIntoArray(com->collections, col);
+		insertPointerIntoArray(col->components,  com);
 	}
 }
 
@@ -219,8 +228,9 @@ void cleanupCollections() {
 		for (n=getNumCollections()-1; n>=0; n--) {
             col = getNthCollection(n);
 			deleteCollection(col);
+			col = NULL;
 		}
-		deleteGenericArray(allCollections);
+		deletePointerArray(allCollections);
 		allCollections = NULL;
 	}
 }

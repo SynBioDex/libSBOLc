@@ -3,16 +3,16 @@
 #include <string.h>
 #include "debug.h"
 #include "property.h"
-#include "genericarray.h"
+#include "array.h"
 #include "dnasequence.h"
 #include "object.h"
 
-static GenericArray* allDNASequences;
+static PointerArray* allDNASequences;
 
 void registerDNASequence(DNASequence* seq) {
 	if (!allDNASequences)
-		allDNASequences = createGenericArray();
-	insertIntoGenericArray(allDNASequences, seq);
+		allDNASequences = createPointerArray();
+	insertPointerIntoArray(allDNASequences, seq);
 }
 
 // TODO constrain to actg and sometimes n?
@@ -40,20 +40,25 @@ void setNucleotides(DNASequence* seq, const char* nucleotides) {
 // TODO generalize this
 void removeDNASequence(DNASequence* seq) {
 	if (seq && allDNASequences) {
-		int index = indexByPtr(allDNASequences, seq);
+		int index = indexOfPointerInArray(allDNASequences, seq);
 		if (index >= 0)
-			removeFromGenericArray(allDNASequences, index);
+			removePointerFromArray(allDNASequences, index);
 	}
 }
 
 void deleteDNASequence(DNASequence* seq) {
 	if (seq) {
-		if (seq->base)
+		if (seq->base) {
 			deleteSBOLObject(seq->base);
-		if (seq->nucleotides)
+			seq->base = NULL;
+		}
+		if (seq->nucleotides) {
 			deleteTextProperty(seq->nucleotides);
+			seq->nucleotides = NULL;
+		}
 		removeDNASequence(seq);
 		free(seq);
+		seq = NULL;
 	}
 }
 
@@ -64,29 +69,30 @@ void cleanupDNASequences() {
 		for (n=getNumDNASequences()-1; n>=0; n--) {
 			seq = getNthDNASequence(n);
 			deleteDNASequence(seq);
+			seq = NULL;
 		}
-		deleteGenericArray(allDNASequences);
+		deletePointerArray(allDNASequences);
 		allDNASequences = NULL;
 	}
 }
 
 int getNumDNASequences() {
 	if (allDNASequences)
-	    return allDNASequences->numInUse;
+	    return getNumPointersInArray(allDNASequences);
 	else
 	    return 0;
 }
 
 DNASequence* getDNASequence(const char* uri) {
 	if (!allDNASequences)
-		allDNASequences = createGenericArray();
+		allDNASequences = createPointerArray();
 	if (!uri)
 		return NULL;
-	int index;
+	int n;
 	char* candidate;
 	DNASequence* seq;
-	for (index=0; index<allDNASequences->numInUse; index++) {
-		seq = (DNASequence*) allDNASequences->array[index];
+	for (n=0; n < getNumDNASequences(); n++) {
+		seq = getNthDNASequence(n);
 		candidate = getSBOLObjectURI(seq->base);
 		if (candidate && strcmp(candidate, uri) == 0)
 			return seq;
@@ -103,14 +109,14 @@ char* getDNASequenceURI(const DNASequence* seq) {
 
 int isDNASequenceURI(const char* uri) {
 	if (!allDNASequences)
-		allDNASequences = createGenericArray();
+		allDNASequences = createPointerArray();
 	if (!uri)
 		return 0;
-	int index;
+	int n;
 	char* candidate;
 	DNASequence* seq;
-	for (index=0; index<getNumDNASequences(); index++) {
-		seq = getNthDNASequence(index);
+	for (n=0; n < getNumDNASequences(); n++) {
+		seq = getNthDNASequence(n);
 		candidate = getSBOLObjectURI(seq->base);
 		if (candidate && strcmp(candidate, uri) == 0)
 			return 1;
@@ -125,10 +131,10 @@ char* getNucleotides(const DNASequence* seq) {
 
 // TODO generalize this further?
 DNASequence* getNthDNASequence(int n) {
-	if (!allDNASequences || allDNASequences->numInUse<=n)
-	    return NULL;
+	if (getNumDNASequences() > n && n >= 0)
+		return (DNASequence*) getNthPointerInArray(allDNASequences, n);
 	else
-	    return (DNASequence*) getNthArrayElement(allDNASequences, n);
+		return NULL;
 }
 
 void printDNASequence(const DNASequence* seq, int tabs) {

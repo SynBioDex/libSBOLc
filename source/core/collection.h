@@ -3,13 +3,13 @@
 #include "object.h"
 
 struct _SBOLCompoundObject;
-struct _GenericArray;
+struct _PointerArray;
 struct _DNAComponent;
 
 typedef struct _Collection {
 	struct _SBOLCompoundObject* base;
-	struct _GenericArray*       components;
-	struct _GenericArray*       collections;
+	struct _PointerArray *components;
+	struct _PointerArray *collections;
 	int processed;
 } Collection;
 

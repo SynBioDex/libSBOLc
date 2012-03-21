@@ -16,9 +16,9 @@ void          deletePointerArray(PointerArray *arr);
 void insertPointerIntoArray(PointerArray *arr, void *ptr);
 void removePointerFromArray(PointerArray *arr, int index);
 
-void   getNumPointersInArray(const PointerArray *arr);
+int    getNumPointersInArray(const PointerArray *arr);
 void*   getNthPointerInArray(const PointerArray *arr, int n);
-int getIndexOfPointerInArray(const PointerArray *arr, const void *ptr);
+int    indexOfPointerInArray(const PointerArray *arr, const void *ptr);
 int  pointerContainedInArray(const PointerArray *arr, const void *ptr);
 
 #endif
