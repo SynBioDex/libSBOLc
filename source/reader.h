@@ -3,5 +3,6 @@
 #include "api.h"
 
 SBOLAPIEXPORTS void readSBOLCore(char* filename);
+SBOLAPIEXPORTS void readSBOLCore_xml(char* filename);
 
 #endif

@@ -4,6 +4,9 @@
 #include "property.h"
 #include "api.h"
 
+// TODO document that you need to free strings gotten from sbol
+// TODO make a lot of the functions static to simplify things
+
 /***********************************************
  * The SBOL core is split into files to ease
  * maintenance, but since all the structs are

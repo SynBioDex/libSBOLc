@@ -42,7 +42,6 @@ SBOLAPIEXPORTS void setCollectionDisplayID(Collection* col, const char* id);
 SBOLAPIEXPORTS void setCollectionName(Collection* col, const char* name);
 SBOLAPIEXPORTS void setCollectionDescription(Collection* col, const char* desc);
 
-// TODO where should this go?
 // add component
 SBOLAPIEXPORTS void addDNAComponentToCollection(struct _DNAComponent* com, Collection* col);
 

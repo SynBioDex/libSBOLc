@@ -1,16 +1,16 @@
-#include <stdio.h>
 #include "sbol.h"
 
-#define DEFAULT_FILE "../examples/valid/ntriples.nt"
+#define DEFAULT_FILE "../examples/valid/valid1.xml"
 
 void parse(char* filename) {
-	readSBOLCore(filename);
+	printf("parsing %s\n", filename);
+	readSBOLCore_xml(filename);
 	printSBOLCore();
 	cleanupSBOLCore();
 }
 
 int main(int argc, char** argv) {
-	if (argc<2)
+	if (argc < 2)
 		parse(DEFAULT_FILE);
 	else {
 		int i;
