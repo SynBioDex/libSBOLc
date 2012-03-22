@@ -6,7 +6,8 @@
 #define XMLNS_SO   "http://purl.obolibrary.org/obo/"
 #define XMLNS_SBOL "http://sbols.org/v1#"
 
-#define RDF_TYPE XMLNS_RDF "type"
+#define RDF_TYPE  XMLNS_RDF "type"
+#define RDF_ABOUT XMLNS_RDF "about"
 
 #define SBOL_DNASEQUENCE        XMLNS_SBOL "DnaSequence"
 #define SBOL_SEQUENCEANNOTATION XMLNS_SBOL "SequenceAnnotation"

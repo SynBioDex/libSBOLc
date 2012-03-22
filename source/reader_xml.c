@@ -1,4 +1,5 @@
 #include <stdio.h>
+#include <stdlib.h>
 #include <libxml/xmlmemory.h>
 #include <libxml/parser.h>
 #include <libxml/tree.h>
@@ -6,69 +7,48 @@
 #include "debug.h"
 #include "sbol.h"
 
-void readDNASequences();
-void readSequenceAnnotations();
-void readDNAComponents();
-void readCollections();
-void readReferences();
+void readNamespaces();
+void readDNASequence();
+void readSequenceAnnotation();
+void readDNAComponent();
+void readCollection();
+void readReference();
 
-// adapted from http://xmlsoft.org/tutorial/apd.html
-xmlXPathObjectPtr getNodesMatchingPath(xmlDocPtr *doc, xmlChar *path) {
-	xmlXPathContextPtr context;
-	xmlXPathObjectPtr  result;
+void readAttributes(xmlNode *node) {
+	if (!node)
+		return;
 	
-	// create context
-	context = xmlXPathNewContext(*doc);
-	if (!context) {
-		#if SBOL_DEBUG_ACTIVE
-		printf("Error in xmlXPathNewContext\n");
-		#endif
-		return NULL;
+	xmlAttr *attr;
+	xmlChar *namespace;
+	xmlChar *name;
+	for (attr = node->properties; attr; attr = attr->next) {
+		name = xmlGetProp(node, attr->name);
+		printf("attribute->name: %s\n", name);
+		xmlFree(name);
 	}
-	
-	// get results
-	result = xmlXPathEvalExpression(path, context);
-	xmlXPathFreeContext(context);
-	if (result == NULL) {
-		#if SBOL_DEBUG_ACTIVE
-		printf("Error in xmlXPathEvalExpression\n");
-		#endif
-		return NULL;
-	}
-	
-	// if no results, clean up
-	if(xmlXPathNodeSetIsEmpty(result->nodesetval)){
-		xmlXPathFreeObject(result);
-		#if SBOL_DEBUG_ACTIVE
-        printf("No result\n");
-        #endif
-		return NULL;
-	}
-	
-	return result;
-}
-
-// TODO remove
-void print_element_names(xmlNode * a_node) {
-    xmlNode *cur_node = NULL;
-    for (cur_node = a_node; cur_node; cur_node = cur_node->next) {
-        if (cur_node->type == XML_ELEMENT_NODE) {
-            printf("node type: Element, name: %s\n", cur_node->name);
-        }
-        print_element_names(cur_node->children);
-    }
 }
 
 // make a first pass through
 // to create the SBOL objects
-void readSBOLStructs(xmlNode *node) {
-
+void readSBOLStructs(xmlNode *root) {
+	xmlNode *node;
+	for (node = root; node; node = node->next) {
+		readAttributes(node);
+		if (!xmlStrcmp(node->name, (const xmlChar *)"RDF"))
+			printf("found RDF: %s\n", node->name);
+		readSBOLStructs(node->children);
+	}
 }
 
 // go back and link up the objects 
 // according to rdf:resource nodes
-void readSBOLPointers(xmlNode *node) {
-	
+void readSBOLPointers(xmlNode *root) {
+	xmlNode *node;
+	for (node = root; node; node = node->next) {
+		if (node->type == XML_ELEMENT_NODE)
+			printf("%s\n", node->name);
+		readSBOLStructs(node->children);
+	}
 }
 
 // TODO return error codes
@@ -76,7 +56,7 @@ void readSBOLCore_xml(char* filename) {
 	xmlDocPtr  doc;
 	xmlNodePtr root;
 	
-	// this initialize the library and check potential ABI mismatches
+	// this initializes the library and checks potential ABI mismatches
 	// between the version it was compiled for and the actual shared
 	// library used.
     LIBXML_TEST_VERSION
@@ -94,11 +74,11 @@ void readSBOLCore_xml(char* filename) {
 		return;
 	}
 	
-	// import SBOL
+	// import
 	root = xmlDocGetRootElement(doc);
-	print_element_names(root);
 	readSBOLStructs(root);
 	readSBOLPointers(root);
+	
 	printSBOLCore();
 	
 	// clean up
