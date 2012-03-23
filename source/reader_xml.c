@@ -40,6 +40,20 @@ int nodeNameEquals(xmlNode *node, char *name) {
 		return 0;
 }
 
+int isReferenceNode(xmlNode *node) {
+	xmlChar *resource = NULL;
+	if (node)
+		// #define this
+		resource = xmlGetNsProp(node, (const xmlChar *)"resource", (const xmlChar *)XMLNS_RDF);
+	int result;
+	if (resource)
+		result = 1;
+	else
+		result = 0;
+	xmlFree(resource);
+	return result;
+}
+
 /***************************
  * functions for reading
  * individual SBOL objects
@@ -82,6 +96,7 @@ DNASequence *readDNASequence(xmlNode *node) {
 		if (!child->name) continue;
 		content = (char *)xmlNodeGetContent(child);
 		if (!content) continue;
+		// TODO #define this
 		else if (nodeNameEquals(child, "nucleotides")) {
 			setNucleotides(seq, content);
 			break;
@@ -112,6 +127,7 @@ SequenceAnnotation *readSequenceAnnotation(xmlNode *node) {
 		if (!child->name) continue;
 		content = (char *)xmlNodeGetContent(child);
 		if (!content) continue;
+		// TODO #define these
 		else if (nodeNameEquals(child, "bioStart")) setBioStart(ann, strToInt(content));
 		else if (nodeNameEquals(child, "bioEnd"))   setBioEnd(ann, strToInt(content));
 		else if (nodeNameEquals(child, "strand"))   setStrandPolarity(ann, strToPolarity(content));
@@ -156,7 +172,58 @@ Collection *readCollection(xmlNode *node) {
 	return col;
 }
 
-void readReference(xmlNode *node);
+// read a node with an rdf:resource attribute
+// and link up the appropriate SBOL objects
+void readReference(xmlNode *node) {
+	xmlNode *parent;
+	xmlChar *node_uri;
+	xmlChar *parent_uri;
+	// TODO #define this
+	node_uri = xmlGetNsProp(node, (const xmlChar *)"resource", (const xmlChar *)XMLNS_RDF);
+	if (node_uri && isSBOLObjectURI((char *)node_uri)) {
+		parent = node->parent;
+		if (!parent) {
+			#if SBOL_DEBUG_ACTIVE
+			printf("NULL parent node while reading reference\n");
+			#endif
+			return;
+		}
+		parent_uri = getNodeURI(parent);
+		if (!parent_uri) {
+			#if SBOL_DEBUG_ACTIVE
+			printf("NULL parent uri while reading reference\n");
+			#endif
+			return;
+		}
+		if (isSequenceAnnotationURI((char *)parent_uri)) {
+			SequenceAnnotation *ann = getSequenceAnnotation((char *)parent_uri);
+			if (!ann) {
+				#if SBOL_DEBUG_ACTIVE
+				printf("Failed to get SequenceAnnotation %s\n", (char *)node_uri);
+				#endif
+				return;
+			}
+			else if (nodeNameEquals(node, "annotates"))
+				addSequenceAnnotation(getDNAComponent((char *)node_uri), ann);
+			else if (nodeNameEquals(node, "subComponent"))
+				setSubComponent(ann, getDNAComponent((char *)node_uri));
+			// TODO read precedes
+		
+		} else if (isDNAComponentURI((char *)parent_uri)) {
+			// TODO read annotations
+			// TODO read collections
+		
+		} else if (isCollectionURI((char *)parent_uri)) {
+			// TODO read components
+			// TODO read collections
+		}
+	}
+	#if SBOL_DEBUG_ACTIVE
+	else
+		printf("Tried to reference nonexistent object %s\n", node_uri);
+	#endif
+	xmlFree(node_uri);
+}
 
 /**************************
  * main parsing functions
@@ -167,10 +234,10 @@ void readReference(xmlNode *node);
 void readSBOLStructs(xmlNode *root) {
 	xmlNode *node;
 	for (node = root; node; node = node->next) {
-		if      (nodeNameEquals(node, "Collection"))   readCollection(node);
+		if      (nodeNameEquals(node, "Collection"))         readCollection(node);
 		else if (nodeNameEquals(node, "SequenceAnnotation")) readSequenceAnnotation(node);
-		else if (nodeNameEquals(node, "DnaComponent")) readDNAComponent(node);
-		else if (nodeNameEquals(node, "DnaSequence")) readDNASequence(node);
+		else if (nodeNameEquals(node, "DnaComponent"))       readDNAComponent(node);
+		else if (nodeNameEquals(node, "DnaSequence"))        readDNASequence(node);
 		readSBOLStructs(node->children);
 	}
 }
@@ -180,8 +247,9 @@ void readSBOLStructs(xmlNode *root) {
 void readSBOLPointers(xmlNode *root) {
 	xmlNode *node;
 	for (node = root; node; node = node->next) {
-		// TODO do stuff here
-		readSBOLStructs(node->children);
+		if (isReferenceNode(node))
+			readReference(node);
+		readSBOLPointers(node->children);
 	}
 }
 
@@ -211,7 +279,7 @@ void readSBOLCore_xml(char* filename) {
 	// import
 	root = xmlDocGetRootElement(doc);
 	readSBOLStructs(root);
-	//readSBOLPointers(root);
+	readSBOLPointers(root);
 	
 	// clean up
 	xmlFreeDoc(doc);
