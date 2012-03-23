@@ -32,6 +32,7 @@ xmlChar *getNodeNS(xmlNode *node) {
 	return ns;
 }
 
+// TODO also check namespace
 int nodeNameEquals(xmlNode *node, char *name) {
 	if (node && node->name)
 		return (int) !xmlStrcmp(node->name, (const xmlChar *)name);
@@ -51,32 +52,80 @@ SBOLCompoundObject *readSBOLCompoundObject(SBOLCompoundObject *obj, xmlNode *nod
 	for (child = node->children; child; child = child->next) {
 		if (child->name) {
 			content = (char *)xmlNodeGetContent(child);
-			if (!content)
-				continue;
+			if (!content) continue;
 			// TODO #define these
-			else if (nodeNameEquals(child, "displayId"))
-				setSBOLCompoundObjectDisplayID(obj, content);
-			else if (nodeNameEquals(child, "name"))
-				setSBOLCompoundObjectName(obj, content);
-			else if (nodeNameEquals(child, "description"))
-				setSBOLCompoundObjectDescription(obj, content);
+			else if (nodeNameEquals(child, "displayId"))   setSBOLCompoundObjectDisplayID(obj, content);
+			else if (nodeNameEquals(child, "name"))        setSBOLCompoundObjectName(obj, content);
+			else if (nodeNameEquals(child, "description")) setSBOLCompoundObjectDescription(obj, content);
 		}
 	}
 	return obj;
 }
 
-void readDNASequence(xmlNode *node);
-void readSequenceAnnotation(xmlNode *node);
+DNASequence *readDNASequence(xmlNode *node) {
+	xmlChar *uri = getNodeURI(node);
+	if (isSBOLObjectURI(uri)) {
+		#if SBOL_DEBUG_ACTIVE
+		printf("Tried to read %s twice\n", uri);
+		#endif
+		return NULL;
+	}
+	DNASequence *seq = createDNASequence((char *)uri);
+	// TODO read nucleotides
+	xmlFree(uri);
+	return seq;
+}
+
+SequenceAnnotation *readSequenceAnnotation(xmlNode *node) {
+	xmlChar *uri = getNodeURI(node);
+	if (isSBOLObjectURI(uri)) {
+		#if SBOL_DEBUG_ACTIVE
+		printf("Tried to read %s twice\n", uri);
+		#endif
+		return NULL;
+	}
+	SequenceAnnotation *ann = createSequenceAnnotation((char *)uri);
+	// TODO read start, end
+	// TODO read strand
+	// TODO read annotates, subComponent
+	// TODO read precedes
+	xmlFree(uri);
+	return ann;
+}
 
 DNAComponent *readDNAComponent(xmlNode *node) {
 	xmlChar *uri = getNodeURI(node);
+	if (isSBOLObjectURI(uri)) {
+		#if SBOL_DEBUG_ACTIVE
+		printf("Tried to read %s twice\n", uri);
+		#endif
+		return NULL;
+	}
 	DNAComponent *com = createDNAComponent((char *)uri);
 	readSBOLCompoundObject(com->base, node);
+	// TODO read sequence
+	// TODO read annotations
+	// TODO read collections
 	xmlFree(uri);
 	return com;
 }
 
-void readCollection(xmlNode *node);
+Collection *readCollection(xmlNode *node) {
+	xmlChar *uri = getNodeURI(node);
+	if (isSBOLObjectURI(uri)) {
+		#if SBOL_DEBUG_ACTIVE
+		printf("Tried to read %s twice\n", uri);
+		#endif
+		return NULL;
+	}
+	Collection *col = createCollection((char *)uri);
+	readSBOLCompoundObject(col->base, node);
+	// TODO read components
+	// TODO read collections
+	xmlFree(uri);
+	return col;
+}
+
 void readReference(xmlNode *node);
 
 /**************************
@@ -88,15 +137,10 @@ void readReference(xmlNode *node);
 void readSBOLStructs(xmlNode *root) {
 	xmlNode *node;
 	for (node = root; node; node = node->next) {
-		//if (nodeNameEquals(node, "Collection"))
-		//	readCollection(node);
-		//else if (nodeNameEquals(node, "SequenceAnnotation"))
-		//	readSequenceAnnotation(node);
-		//else 
-		if (nodeNameEquals(node, "DnaComponent"))
-			readDNAComponent(node);
-		//else if (nodeNameEquals(node, "DnaSequence"))
-		//	readDNASequence(node);
+		if      (nodeNameEquals(node, "Collection"))   readCollection(node);
+		else if (nodeNameEquals(node, "SequenceAnnotation")) readSequenceAnnotation(node);
+		else if (nodeNameEquals(node, "DnaComponent")) readDNAComponent(node);
+		else if (nodeNameEquals(node, "DnaSequence")) readDNASequence(node);
 		readSBOLStructs(node->children);
 	}
 }
@@ -106,7 +150,7 @@ void readSBOLStructs(xmlNode *root) {
 void readSBOLPointers(xmlNode *root) {
 	xmlNode *node;
 	for (node = root; node; node = node->next) {
-		// do stuff here
+		// TODO do stuff here
 		readSBOLStructs(node->children);
 	}
 }

@@ -7,9 +7,9 @@
 	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
 	xsi:schemaLocation="http://sbols.org/v1# ../schema/sbol.xsd http://www.w3.org/1999/02/22-rdf-syntax-ns# ../schema/rdf.xsd">
 	
-	<s:Collection rdf:about="http://example.com/dc1">
-		<s:displayId>DC1</s:displayId>
-		<s:name>DnaComponent1</s:name>
+	<s:Collection rdf:about="http://example.com/c1">
+		<s:displayId>C1</s:displayId>
+		<s:name>Collection1</s:name>
 		<s:description>A collection may contain multiple components</s:description>
 		<s:component>
 			<s:DnaComponent rdf:about="http://example.com/dc1">
