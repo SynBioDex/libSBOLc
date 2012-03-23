@@ -7,6 +7,7 @@
 #include <libxml/xpath.h>
 #include "debug.h"
 #include "sbol.h"
+#include "object.h"
 
 /*************************
  * functions for reading
@@ -33,7 +34,7 @@ xmlChar *getNodeNS(xmlNode *node) {
 
 int nodeNameEquals(xmlNode *node, char *name) {
 	if (node && node->name)
-		return (int) !strcmp(node->name, (const xmlChar *)name);
+		return (int) !xmlStrcmp(node->name, (const xmlChar *)name);
 	else
 		return 0;
 }
@@ -42,15 +43,40 @@ int nodeNameEquals(xmlNode *node, char *name) {
  * functions for reading
  * individual SBOL objects
  ***************************/
-
 void readNamespaces(xmlNode *node); // TODO is this needed?
+
+SBOLCompoundObject *readSBOLCompoundObject(SBOLCompoundObject *obj, xmlNode *node) {
+	char *id    = NULL;
+	char *name  = NULL;
+	char *descr = NULL;
+	xmlNode *child;
+	char *content;
+	for (child = node->children; child; child = child->next) {
+		if (child->name) {
+			content = (char *)xmlNodeGetContent(child);
+			if (!content)
+				continue;
+			// TODO #define these
+			else if (nodeNameEquals(child, "displayId"))
+				setSBOLCompoundObjectDisplayID(obj, content);
+			else if (nodeNameEquals(child, "name"))
+				setSBOLCompoundObjectName(obj, content);
+			else if (nodeNameEquals(child, "description"))
+				setSBOLCompoundObjectDescription(obj, content);
+		}
+	}
+	return obj;
+}
+
 void readDNASequence(xmlNode *node);
 void readSequenceAnnotation(xmlNode *node);
 
-void readDNAComponent(xmlNode *node) {
+DNAComponent *readDNAComponent(xmlNode *node) {
 	xmlChar *uri = getNodeURI(node);
-	printf("DNAComponent uri: %s\n", uri);
+	DNAComponent *com = createDNAComponent((char *)uri);
+	readSBOLCompoundObject(com->base, node);
 	xmlFree(uri);
+	return com;
 }
 
 void readCollection(xmlNode *node);
@@ -65,14 +91,15 @@ void readReference(xmlNode *node);
 void readSBOLStructs(xmlNode *root) {
 	xmlNode *node;
 	for (node = root; node; node = node->next) {
-		if (nodeNameEquals(node, "Collection"))
-			readCollection(node);
-		else if (nodeNameEquals(node, "SequenceAnnotation"))
-			readSequenceAnnotation(node);
-		else if (nodeNameEquals(node, "DnaComponent"))
+		//if (nodeNameEquals(node, "Collection"))
+		//	readCollection(node);
+		//else if (nodeNameEquals(node, "SequenceAnnotation"))
+		//	readSequenceAnnotation(node);
+		//else 
+		if (nodeNameEquals(node, "DnaComponent"))
 			readDNAComponent(node);
-		else if (nodeNameEquals(node, "DnaSequence"))
-			readDNASequence(node);
+		//else if (nodeNameEquals(node, "DnaSequence"))
+		//	readDNASequence(node);
 		readSBOLStructs(node->children);
 	}
 }
@@ -113,9 +140,7 @@ void readSBOLCore_xml(char* filename) {
 	// import
 	root = xmlDocGetRootElement(doc);
 	readSBOLStructs(root);
-	readSBOLPointers(root);
-	
-	printSBOLCore();
+	//readSBOLPointers(root);
 	
 	// clean up
 	xmlFreeDoc(doc);
