@@ -1,6 +1,6 @@
 #include "sbol.h"
 
-#define DEFAULT_FILE "../examples/valid/valid1.xml"
+#define DEFAULT_FILE "../examples/valid/valid8.xml"
 
 void parse(char* filename) {
 	printf("parsing %s\n", filename);

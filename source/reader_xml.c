@@ -57,6 +57,7 @@ SBOLCompoundObject *readSBOLCompoundObject(SBOLCompoundObject *obj, xmlNode *nod
 			else if (nodeNameEquals(child, "displayId"))   setSBOLCompoundObjectDisplayID(obj, content);
 			else if (nodeNameEquals(child, "name"))        setSBOLCompoundObjectName(obj, content);
 			else if (nodeNameEquals(child, "description")) setSBOLCompoundObjectDescription(obj, content);
+			free(content);
 		}
 	}
 	return obj;
@@ -70,8 +71,24 @@ DNASequence *readDNASequence(xmlNode *node) {
 		#endif
 		return NULL;
 	}
+		
+	// create sequence
 	DNASequence *seq = createDNASequence((char *)uri);
-	// TODO read nucleotides
+	
+	// add nucleotides
+	xmlNode *child;
+	char *content;
+	for (child = node->children; child; child = child->next) {
+		if (!child->name) continue;
+		content = (char *)xmlNodeGetContent(child);
+		if (!content) continue;
+		else if (nodeNameEquals(child, "nucleotides")) {
+			setNucleotides(seq, content);
+			break;
+		}
+		free(content);
+	}
+	
 	xmlFree(uri);
 	return seq;
 }
@@ -84,11 +101,24 @@ SequenceAnnotation *readSequenceAnnotation(xmlNode *node) {
 		#endif
 		return NULL;
 	}
+	
+	// create annotation
 	SequenceAnnotation *ann = createSequenceAnnotation((char *)uri);
-	// TODO read start, end
-	// TODO read strand
-	// TODO read annotates, subComponent
-	// TODO read precedes
+	
+	// configure it based on child nodes
+	xmlNode *child;
+	char *content;
+	for (child = node->children; child; child = child->next) {
+		if (!child->name) continue;
+		content = (char *)xmlNodeGetContent(child);
+		if (!content) continue;
+		else if (nodeNameEquals(child, "bioStart")) setBioStart(ann, strToInt(content));
+		else if (nodeNameEquals(child, "bioEnd"))   setBioEnd(ann, strToInt(content));
+		else if (nodeNameEquals(child, "strand"))   setStrandPolarity(ann, strToPolarity(content));
+		// TODO read annotates, subComponent
+		// TODO read precedes
+	}
+	
 	xmlFree(uri);
 	return ann;
 }

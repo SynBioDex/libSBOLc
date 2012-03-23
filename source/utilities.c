@@ -64,6 +64,28 @@ char* intToStr(int input) {
 	return output;
 }
 
+int strToInt(const char *input) {
+	return atoi(input);
+}
+
+// TODO move to polarityproperty
+int strToPolarity(const char *input) {
+	if (!input)
+		return -1;
+	else if (input[0] == '+')
+		return 1;
+	else
+		return 0;
+}
+
+// TODO move to polarityproperty
+char polarityToChar(int polarity) {
+	if (polarity)
+		return '+';
+	else
+		return '-';
+}
+
 int sameContent(const char* filename1, const char* filename2) {
 	FILE *fpread, *fpread2;	
 	char  filebuff[BUFFER_CHARS];
