@@ -259,7 +259,7 @@ void cleanupDNAComponents() {
 void printDNAComponent(const DNAComponent* com, int tabs) {
 	if (!com)
 		return;
-	indent(tabs);   printf("uri:         %s\n", getDNAComponentURI(com));
+	indent(tabs);   printf("uri: %s\n", getDNAComponentURI(com));
 	indent(tabs+1); printf("displayID:   %s\n", getDNAComponentDisplayID(com));
 	indent(tabs+1); printf("name:        %s\n", getDNAComponentName(com));
 	indent(tabs+1); printf("description: %s\n", getDNAComponentDescription(com));

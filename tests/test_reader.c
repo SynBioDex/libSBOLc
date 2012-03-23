@@ -1,6 +1,5 @@
 #include <stdio.h>
 #include <stdlib.h>
-#include <libxml/parser.h>
 #include "CuTest.h"
 #include "utilities.h"
 #include "sbol.h"
@@ -58,11 +57,11 @@ void TestMini3(CuTest* tc) {
 
 void TestValid1(CuTest* tc) {
 	cleanupSBOLCore();
-	char* filename = "../examples/ntriples/valid1.nt";
+	char* filename = "../examples/valid/valid1.xml";
 	printf("reading %s\n", filename);
-	readSBOLCore(filename);
+	readSBOLCore_xml(filename);
 	CuAssertIntEquals(tc, 1, getNumDNAComponents());
-	DNAComponent* com = getNthDNAComponent(0);
+	DNAComponent *com = getNthDNAComponent(0);
 	CuAssertStrEquals(tc, "http://example.com/dc1", getDNAComponentURI(com));
 	CuAssertStrEquals(tc, "Some display ID", getDNAComponentDisplayID(com));
 	CuAssertStrEquals(tc, "Valid because only required field for a DNAComponent is displayId",

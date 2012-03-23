@@ -46,9 +46,6 @@ int nodeNameEquals(xmlNode *node, char *name) {
 void readNamespaces(xmlNode *node); // TODO is this needed?
 
 SBOLCompoundObject *readSBOLCompoundObject(SBOLCompoundObject *obj, xmlNode *node) {
-	char *id    = NULL;
-	char *name  = NULL;
-	char *descr = NULL;
 	xmlNode *child;
 	char *content;
 	for (child = node->children; child; child = child->next) {
