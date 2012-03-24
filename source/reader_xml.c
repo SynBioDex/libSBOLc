@@ -72,9 +72,12 @@ SBOLCompoundObject *readSBOLCompoundObject(SBOLCompoundObject *obj, xmlNode *nod
 			content = (char *)xmlNodeGetContent(child);
 			if (!content) continue;
 			// TODO #define these
-			else if (nodeNameEquals(child, "displayId"))   setSBOLCompoundObjectDisplayID(obj, content);
-			else if (nodeNameEquals(child, "name"))        setSBOLCompoundObjectName(obj, content);
-			else if (nodeNameEquals(child, "description")) setSBOLCompoundObjectDescription(obj, content);
+			else if (nodeNameEquals(child, "displayId"))
+				setSBOLCompoundObjectDisplayID(obj, content);
+			else if (nodeNameEquals(child, "name"))
+				setSBOLCompoundObjectName(obj, content);
+			else if (nodeNameEquals(child, "description"))
+				setSBOLCompoundObjectDescription(obj, content);
 			free(content);
 		}
 	}
@@ -116,96 +119,129 @@ DNASequence *readDNASequence(xmlNode *node, int pass) {
 	return seq;
 }
 
-PointerArray *readPointerArray(xmlNode *node) {
-	PointerArray *arr = createPointerArray();
-	xmlNode *child;
-	xmlChar *child_uri;
-	for (child = node->children; child; child = child->next) {
-		if (!isReferenceNode(child)) {
-			#if SBOL_DEBUG_ACTIVE
-			printf("Found non-reference node in array of references\n");
-			#endif
-			continue;
-		}
-		child_uri = getReferenceURI(child);
-		if (!child_uri || !isSBOLObjectURI(child_uri)) {
-			#if SBOL_DEBUG_ACTIVE
-			printf("Found unknown node in array of references\n");
-			#endif
-			continue;
-		}
-		
-		xmlFree(child_uri);
-	}
-}
+//PointerArray *readPointerArray(xmlNode *node) {
+//	PointerArray *arr = createPointerArray();
+//	xmlNode *child;
+//	xmlChar *child_uri;
+//	for (child = node->children; child; child = child->next) {
+//		if (!isReferenceNode(child)) {
+//			#if SBOL_DEBUG_ACTIVE
+//			printf("Found non-reference node in array of references\n");
+//			#endif
+//			continue;
+//		}
+//		child_uri = getReferenceURI(child);
+//		if (!child_uri || !isSBOLObjectURI(child_uri)) {
+//			#if SBOL_DEBUG_ACTIVE
+//			printf("Found unknown node in array of references\n");
+//			#endif
+//			continue;
+//		}
+//		
+//		xmlFree(child_uri);
+//	}
+//}
 
 SequenceAnnotation *readSequenceAnnotation(xmlNode *node, int pass) {
-	xmlChar *node_uri = getNodeURI(node);
-	if (!node_uri) {
+	xmlNode *ann_node = NULL;
+	xmlNode *pro_node = NULL;
+	xmlNode *ref_node = NULL;
+
+	xmlChar *ann_uri = NULL;
+	xmlChar *pro_uri = NULL;
+	xmlChar *ref_uri = NULL;
+	
+	SequenceAnnotation *ann = NULL;
+	xmlChar   *pro_contents = NULL;
+	
+	// get annotation uri
+	ann_node = node;
+	ann_uri = getNodeURI(ann_node);
+	if (!ann_uri) {
 		#if SBOL_DEBUG_ACTIVE
 		printf("Failed to get URI for SequenceAnnotation\n");
 		#endif
 		return NULL;
 	}
 	
-	SequenceAnnotation *ann;
-	if (isSequenceAnnotationURI((char *)node_uri))
-		ann = getSequenceAnnotation((char *)node_uri);
-	#if SBOL_DEBUG_ACTIVE
-	else if (isSBOLObjectURI((char *)node_uri))
-		printf("%s not a SequenceAnnotation\n", (char *)node_uri);
-	#endif
-	else
-		ann = createSequenceAnnotation((char *)node_uri);
-	
-	xmlChar *content;
-	xmlNode *child;
-	xmlChar *child_uri;
-	xmlNode *grandchild;
-	xmlChar *grandchild_uri;
-	
-	for (child = node->children; child; child = child->next) {
-		if (!child->name)
-			continue;
-		
+	if (pass == 0) {
 		// create annotation
-		if (pass == 0) {
-			content = xmlNodeGetContent(child);
-			if (!content)
+		if (isSBOLObjectURI((char *)ann_uri)) {
+			#if SBOL_DEBUG_ACTIVE
+			printf("Tried to create duplicate object %s\n", (char *)ann_uri);
+			#endif
+			return NULL;
+		}
+		ann = createSequenceAnnotation((char *)ann_uri);
+	} else {
+		// get annotation
+		if (!isSBOLObjectURI(ann_uri)) {
+			#if SBOL_DEBUG_ACTIVE
+			printf("Failed to create SequenceAnnotation %s\n", (char *)ann_uri);
+			#endif
+			return NULL;
+		} else if (!isSequenceAnnotationURI(ann_uri)) {
+			#if SBOL_DEBUG_ACTIVE
+			printf("%s not a SequenceAnnotation\n", (char *)ann_uri);
+			#endif
+			return NULL;
+		}
+		ann = getSequenceAnnotation((char *)ann_uri);
+	}
+	
+	// add things to annotation
+	for (pro_node = ann_node->children; pro_node; pro_node = pro_node->next) {
+		if (!pro_node->name)
+			continue;
+		else if (pass == 0) {
+			// add basic property
+			pro_contents = xmlNodeGetContent(pro_node);
+			if (!pro_contents)
 				continue;
-			else if (nodeNameEquals(child, "bioStart"))
-				setBioStart(ann, strToInt((char *)content));
-			else if (nodeNameEquals(child, "bioEnd"))
-				setBioEnd(ann, strToInt((char *)content));
-			else if (nodeNameEquals(child, "strand"))
-				setStrandPolarity(ann, strToPolarity((char *)content));
-			xmlFree(content);
+			else if (nodeNameEquals(pro_node, "bioStart"))
+				setBioStart(ann, strToInt((char *)pro_contents));
+			else if (nodeNameEquals(pro_node, "bioEnd"))
+				setBioEnd(ann, strToInt((char *)pro_contents));
+			else if (nodeNameEquals(pro_node, "strand"))
+				setStrandPolarity(ann, strToPolarity((char *)pro_contents));
+			xmlFree(pro_contents);
 		} else {
-		
-			// add references to other SBOL objects
-			for (grandchild = child->children; grandchild; grandchild = grandchild->next) {
-				if (!isReferenceNode(grandchild)) {
-					#if SBOL_DEBUG_ACTIVE
-					printf("Got non-reference node by accident\n");
-					#endif
-					continue;
-				}
-				else if (nodeNameEquals(child, "annotates"))
-					addSequenceAnnotation(getDNAComponent((char *)grandchild_uri), ann);
-				else if (nodeNameEquals(child, "subComponent"))
-					setSubComponent(ann, getDNAComponent((char *)grandchild_uri));
-				else if (nodeNameEquals(child, "precedes"))
-					addPrecedesRelationship(ann, getSequenceAnnotation((char *)grandchild_uri));
+			// objects have all been created;
+			// time to link them together
+			if (isReferenceNode(pro_node)) {
+				//add single pointer to another SBOL object
+				ref_node = pro_node;
+				ref_uri = getReferenceNodeURI(ref_node);
+				if (nodeNameEquals(pro_node, "annotates"))
+					addSequenceAnnotation(getDNAComponent((char *)ref_uri), ann);
+				else if (nodeNameEquals(pro_node, "subComponent"))
+					setSubComponent(ann, getDNAComponent((char *)ref_uri));
+				else if (nodeNameEquals(pro_node, "precedes"))
+					addPrecedesRelationship(ann, getSequenceAnnotation((char *)ref_uri));
 				#if SBOL_DEBUG_ACTIVE
 				else
-					printf("Unknown node referenced by %s\n", ann);
+					printf("Unknown reference node %s\n", ref_node->name);
 				#endif
-				xmlFree(grandchild_uri);
-			}
+				xmlFree(ref_uri);
+			} 
+			
+			// TODO do precedes ever come as a group?
+			//else {
+			//	// add array of pointers
+			//	for (ref_node = pro_node->children; ref_node; ref_node = ref_node->next) {
+			//		ref_uri = getReferenceNodeURI(ref_node);
+			//		if (nodeNameEquals(pro_node, "precedes"))
+			//			addPrecedesRelationship(ann, getSequenceAnnotation((char *)ref_uri));
+			//		#if SBOL_DEBUG_ACTIVE
+			//		else
+			//			printf("Unknown reference node %s\n", ref_node->name);
+			//		#endif
+			//		xmlFree(ref_uri);
+			//	}
+			//}
 		}
-		xmlFree(child_uri);
 	}
-	xmlFree(node_uri);
+	xmlFree(ann_uri);
 	return ann;
 }
 
