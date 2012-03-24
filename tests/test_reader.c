@@ -4,9 +4,9 @@
 #include "utilities.h"
 #include "sbol.h"
 
+// TODO replace with SBOL_DEBUG_ACTIVE
 #define SBOL_TEST_DEBUG 1
 
-#define NUM_VALID_EXAMPLES   1
 #define NUM_INVALID_EXAMPLES 0
 
 #define VALID_EXAMPLES_DIR   "../examples/valid"
@@ -49,27 +49,70 @@ void TestLoadedValid01(CuTest *tc) {
 	CuAssertPtrEquals(tc, NULL, getDNAComponentName(dc1));
 	CuAssertPtrEquals(tc, NULL, getDNAComponentDescription(dc1));
 	CuAssertPtrEquals(tc, NULL, getDNAComponentSequence(dc1));
+	CuAssertIntEquals(tc, 0, getNumSequenceAnnotationsIn(dc1));
 }
 
-/******************************
- * The main test function.
- * It loads the example files
- * and checks that each was
- * interpreted correctly.
- ******************************/
+void TestLoadedValid02(CuTest *tc) {
+	// check how many objects of each type were created
+	CuAssertIntEquals(tc, 1, getNumSBOLObjects());
+	CuAssertIntEquals(tc, 1, getNumSBOLCompoundObjects());
+	CuAssertIntEquals(tc, 0, getNumDNASequences());
+	CuAssertIntEquals(tc, 0, getNumSequenceAnnotations());
+	CuAssertIntEquals(tc, 1, getNumDNAComponents());
+	CuAssertIntEquals(tc, 0, getNumCollections());
+	// check dc1
+	DNAComponent *dc1 = getNthDNAComponent(0);
+	CuAssertStrEquals(tc, "http://example.com/dc1", getDNAComponentURI(dc1));
+	CuAssertStrEquals(tc, "DC1", getDNAComponentDisplayID(dc1));
+	CuAssertStrEquals(tc, "DnaComponent1", getDNAComponentName(dc1));
+	CuAssertStrEquals(tc, "DnaComponent with only name and description", getDNAComponentDescription(dc1));
+	CuAssertPtrEquals(tc, NULL, getDNAComponentSequence(dc1));
+	CuAssertIntEquals(tc, 0, getNumSequenceAnnotationsIn(dc1));
+}
+
+void TestLoadedValid03(CuTest *tc) {
+	// check how many objects of each type were created
+	CuAssertIntEquals(tc, 2, getNumSBOLObjects());
+	CuAssertIntEquals(tc, 1, getNumSBOLCompoundObjects());
+	CuAssertIntEquals(tc, 1, getNumDNASequences());
+	CuAssertIntEquals(tc, 0, getNumSequenceAnnotations());
+	CuAssertIntEquals(tc, 1, getNumDNAComponents());
+	CuAssertIntEquals(tc, 0, getNumCollections());
+	// check dc1
+	DNAComponent *dc1 = getNthDNAComponent(0);
+	CuAssertStrEquals(tc, "http://example.com/dc1", getDNAComponentURI(dc1));
+	CuAssertStrEquals(tc, "DC1", getDNAComponentDisplayID(dc1));
+	CuAssertStrEquals(tc, "DnaComponent1", getDNAComponentName(dc1));
+	CuAssertStrEquals(tc, "DnaComponent with sequence information", getDNAComponentDescription(dc1));
+	CuAssertIntEquals(tc, 0, getNumSequenceAnnotationsIn(dc1));
+	// check ds1
+	DNASequence *ds1 = getNthDNASequence(0);
+	CuAssertStrEquals(tc, "http://example.com/ds1", getDNASequenceURI(ds1));
+	CuAssertStrEquals(tc, "tccctatcagtgat", getNucleotides(ds1));
+	// check pointers
+	CuAssertPtrEquals(tc, ds1, getDNAComponentSequence(dc1));
+}
+
+#define NUM_VALID_EXAMPLES 3
 
 // a list of all the valid example filenames
 // so they can be retrieved by index in a loop
 static char *VALID_EXAMPLE_FILENAMES[NUM_VALID_EXAMPLES] = {
-	VALID_EXAMPLES_DIR "/valid01_dna_component_empty.xml"
+	VALID_EXAMPLES_DIR "/valid01_dna_component_empty.xml",
+	VALID_EXAMPLES_DIR "/valid02_dna_component.xml",
+	VALID_EXAMPLES_DIR "/valid03_dna_component_sequence.xml"
 };
 
 // a list of all the TestLoadedValid* functions
 // so they can be retrieved by index in a loop
 static void (*TEST_LOADED_FUNCTIONS[NUM_VALID_EXAMPLES])() = {
-	TestLoadedValid01
+	TestLoadedValid01,
+	TestLoadedValid02,
+	TestLoadedValid03
 };
 
+// The main test function. It loads the example files
+// and checks that each was interpreted correctly.
 void TestReadValidExamples(CuTest *tc) {
 	int n;
 	for (n=0; n<NUM_VALID_EXAMPLES; n++) {
