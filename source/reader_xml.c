@@ -118,29 +118,6 @@ DNASequence *readDNASequence(xmlNode *node, int pass) {
 	return seq;
 }
 
-//PointerArray *readPointerArray(xmlNode *node) {
-//	PointerArray *arr = createPointerArray();
-//	xmlNode *child;
-//	xmlChar *child_uri;
-//	for (child = node->children; child; child = child->next) {
-//		if (!isReferenceNode(child)) {
-//			#if SBOL_DEBUG_ACTIVE
-//			printf("Found non-reference node in array of references\n");
-//			#endif
-//			continue;
-//		}
-//		child_uri = getReferenceURI(child);
-//		if (!child_uri || !isSBOLObjectURI(child_uri)) {
-//			#if SBOL_DEBUG_ACTIVE
-//			printf("Found unknown node in array of references\n");
-//			#endif
-//			continue;
-//		}
-//		
-//		xmlFree(child_uri);
-//	}
-//}
-
 SequenceAnnotation *readSequenceAnnotation(xmlNode *node, int pass) {
 	xmlNode *ann_node = NULL;
 	xmlNode *pro_node = NULL;
@@ -227,21 +204,6 @@ SequenceAnnotation *readSequenceAnnotation(xmlNode *node, int pass) {
 				#endif
 				xmlFree(ref_uri);
 			} 
-			
-			// TODO do precedes ever come as a group?
-			//else {
-			//	// add array of pointers
-			//	for (ref_node = pro_node->children; ref_node; ref_node = ref_node->next) {
-			//		ref_uri = getNodeURI(ref_node);
-			//		if (nodeNameEquals(pro_node, "precedes"))
-			//			addPrecedesRelationship(ann, getSequenceAnnotation((char *)ref_uri));
-			//		#if SBOL_DEBUG_ACTIVE
-			//		else
-			//			printf("Unknown reference node %s\n", ref_node->name);
-			//		#endif
-			//		xmlFree(ref_uri);
-			//	}
-			//}
 		}
 	}
 	xmlFree(ann_uri);
@@ -287,17 +249,16 @@ DNAComponent *readDNAComponent(xmlNode *node, int pass) {
 		for (pro_node = com_node->children; pro_node; pro_node = pro_node->next) {
 			if (!pro_node->name || pro_node->type == XML_TEXT_NODE)
 				continue;
-			
-			// TODO read annotations
-			// TODO read collections
-			
 			for (ref_node = pro_node->children; ref_node; ref_node = ref_node->next) {
 					if (!ref_node->name || ref_node->type == XML_TEXT_NODE)
 						continue;
-					
 					ref_uri = getNodeURI(ref_node);
 					if (nodeNameEquals(ref_node, "DnaSequence"))
 						setDNAComponentSequence(com, getDNASequence(ref_uri));
+					else if (nodeNameEquals(ref_node, "SequenceAnnotation"))
+						addSequenceAnnotation(com, getSequenceAnnotation((char *)ref_uri));
+					else if (nodeNameEquals(ref_node, "Collection"))
+						addDNAComponentToCollection(com, getCollection((char *)ref_uri));
 					#if SBOL_DEBUG_ACTIVE
 					else
 						printf("Unknown reference node %s\n", ref_node->name);
