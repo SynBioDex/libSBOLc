@@ -16,9 +16,12 @@
 
 xmlChar *getNodeURI(xmlNode *node) {
 	xmlChar *uri = NULL;
-	if (node)
-		// TODO #define "about"
-		uri = xmlGetNsProp(node, (const xmlChar *)"about", (const xmlChar *)XMLNS_RDF);
+	if (node) {
+		if (isReferenceNode(node))
+			uri = xmlGetNsProp(node, (const xmlChar *)"resource", (const xmlChar *)XMLNS_RDF);
+		else
+			uri = xmlGetNsProp(node, (const xmlChar *)"about", (const xmlChar *)XMLNS_RDF);
+	}
 	return uri;
 }
 
@@ -52,10 +55,6 @@ int isReferenceNode(xmlNode *node) {
 		result = 0;
 	xmlFree(resource);
 	return result;
-}
-
-xmlChar *getReferenceNodeURI(xmlNode *node) {
-	return xmlGetNsProp(node, (const xmlChar *)"resource", (const xmlChar *)XMLNS_RDF);
 }
 
 /***************************
@@ -174,6 +173,7 @@ SequenceAnnotation *readSequenceAnnotation(xmlNode *node, int pass) {
 		}
 		ann = createSequenceAnnotation((char *)ann_uri);
 	} else {
+	
 		// get annotation
 		if (!isSBOLObjectURI(ann_uri)) {
 			#if SBOL_DEBUG_ACTIVE
@@ -194,6 +194,7 @@ SequenceAnnotation *readSequenceAnnotation(xmlNode *node, int pass) {
 		if (!pro_node->name)
 			continue;
 		else if (pass == 0) {
+		
 			// add basic property
 			pro_contents = xmlNodeGetContent(pro_node);
 			if (!pro_contents)
@@ -206,12 +207,14 @@ SequenceAnnotation *readSequenceAnnotation(xmlNode *node, int pass) {
 				setStrandPolarity(ann, strToPolarity((char *)pro_contents));
 			xmlFree(pro_contents);
 		} else {
+		
 			// objects have all been created;
 			// time to link them together
 			if (isReferenceNode(pro_node)) {
+			
 				//add single pointer to another SBOL object
 				ref_node = pro_node;
-				ref_uri = getReferenceNodeURI(ref_node);
+				ref_uri = getNodeURI(ref_node);
 				if (nodeNameEquals(pro_node, "annotates"))
 					addSequenceAnnotation(getDNAComponent((char *)ref_uri), ann);
 				else if (nodeNameEquals(pro_node, "subComponent"))
@@ -229,7 +232,7 @@ SequenceAnnotation *readSequenceAnnotation(xmlNode *node, int pass) {
 			//else {
 			//	// add array of pointers
 			//	for (ref_node = pro_node->children; ref_node; ref_node = ref_node->next) {
-			//		ref_uri = getReferenceNodeURI(ref_node);
+			//		ref_uri = getNodeURI(ref_node);
 			//		if (nodeNameEquals(pro_node, "precedes"))
 			//			addPrecedesRelationship(ann, getSequenceAnnotation((char *)ref_uri));
 			//		#if SBOL_DEBUG_ACTIVE
@@ -246,19 +249,60 @@ SequenceAnnotation *readSequenceAnnotation(xmlNode *node, int pass) {
 }
 
 DNAComponent *readDNAComponent(xmlNode *node, int pass) {
-	xmlChar *uri = getNodeURI(node);
-	if (isSBOLObjectURI(uri)) {
-		#if SBOL_DEBUG_ACTIVE
-		printf("Tried to read %s twice\n", uri);
-		#endif
-		return NULL;
+	DNAComponent *com = NULL;
+	
+	xmlNode *pro_node = NULL;
+	xmlNode *ref_node = NULL;
+	
+	xmlChar *com_uri  = NULL;
+	xmlChar *pro_uri  = NULL;
+	xmlChar *ref_uri  = NULL;
+	
+	com_uri = getNodeURI(node);
+	if (pass == 0) {
+		// create component
+		// and add basic properties
+		if (isSBOLObjectURI(com_uri)) {
+			#if SBOL_DEBUG_ACTIVE
+			printf("Tried to read %s twice\n", com_uri);
+			#endif
+			return NULL;
+		}
+		com = createDNAComponent((char *)com_uri);
+		readSBOLCompoundObject(com->base, node);
+	} else {
+	
+		// get component
+		if (!isDNAComponentURI((char *)com_uri)) {
+			#if SBOL_DEBUG_ACTIVE
+			printf("Failed to create DNAComponent %s\n", com_uri);
+			#endif
+			return NULL;
+		}
+		com = getDNAComponent((char *)com_uri);
+		
+		for (pro_node = node->children; pro_node; pro_node = pro_node->next) {
+			if (!pro_node->name)
+				continue;
+			else if (nodeNameEquals(pro_node, "dnaSequence")) {
+			
+				// add sequence
+				ref_node = pro_node->children;
+				if (!ref_node || !nodeNameEquals(ref_node, "DnaSequence"))
+					continue;
+				ref_uri = getNodeURI(ref_node);
+				if (!ref_uri || !isDNASequenceURI((char *)ref_uri))
+					continue;
+				setDNAComponentSequence(com, getDNASequence(ref_uri));
+			
+			} else {
+				// TODO read annotations
+				// TODO read collections
+			}
+		}
 	}
-	DNAComponent *com = createDNAComponent((char *)uri);
-	readSBOLCompoundObject(com->base, node);
-	// TODO read sequence
-	// TODO read annotations
-	// TODO read collections
-	xmlFree(uri);
+	
+	xmlFree(com_uri);
 	return com;
 }
 
