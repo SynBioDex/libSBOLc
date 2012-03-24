@@ -194,8 +194,10 @@ SequenceAnnotation *readSequenceAnnotation(xmlNode *node, int pass) {
 				ref_uri = getNodeURI(ref_node);
 				if (nodeNameEquals(pro_node, "annotates"))
 					addSequenceAnnotation(getDNAComponent((char *)ref_uri), ann);
-				else if (nodeNameEquals(pro_node, "subComponent"))
+				else if (nodeNameEquals(pro_node, "subComponent")) {
+					printf("subComponent: %s\n", (char *)getNodeURI(pro_node));
 					setSubComponent(ann, getDNAComponent((char *)ref_uri));
+				}
 				else if (nodeNameEquals(pro_node, "precedes"))
 					addPrecedesRelationship(ann, getSequenceAnnotation((char *)ref_uri));
 				#if SBOL_DEBUG_ACTIVE
@@ -203,7 +205,20 @@ SequenceAnnotation *readSequenceAnnotation(xmlNode *node, int pass) {
 					printf("Unknown reference node %s\n", ref_node->name);
 				#endif
 				xmlFree(ref_uri);
-			} 
+			} else {
+				for (ref_node = pro_node->children; ref_node; ref_node = ref_node->next) {
+					if (!ref_node->name || ref_node->type == XML_TEXT_NODE)
+						continue;
+					ref_uri = getNodeURI(ref_node);
+					if (nodeNameEquals(ref_node, "DnaComponent"))
+						setSubComponent(ann, getDNAComponent((char *)ref_uri));
+					#if SBOL_DEBUG_ACTIVE
+					else
+						printf("Unknown reference node %s\n", ref_node->name);
+					#endif
+					xmlFree(ref_uri);
+				}
+			}
 		}
 	}
 	xmlFree(ann_uri);
