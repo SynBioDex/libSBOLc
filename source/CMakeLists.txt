@@ -21,8 +21,7 @@ ELSE()
 ENDIF()
 
 # libsbol
-OPTION(SBOL_DEBUG "Compile with debug statements" ON)
-IF( SBOL_DEBUG )
+IF( "${CMAKE_BUILD_TYPE}" STREQUAL "Debug" )
 	SET(SBOL_DEBUG_ACTIVE 1)
 ELSE()
 	SET(SBOL_DEBUG_ACTIVE 0)
