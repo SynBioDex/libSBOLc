@@ -86,7 +86,7 @@ SBOLCompoundObject *readSBOLCompoundObject(SBOLCompoundObject *obj, xmlNode *nod
 DNASequence *readDNASequence(xmlNode *node, int pass) {
 	xmlChar *uri = getNodeURI(node);
 	if (isSBOLObjectURI(uri)) {
-		if (pass > 1)
+		if (pass > 0)
 			return getDNASequence((char *)uri);
 		#if SBOL_DEBUG_ACTIVE
 		else {
@@ -251,14 +251,16 @@ SequenceAnnotation *readSequenceAnnotation(xmlNode *node, int pass) {
 DNAComponent *readDNAComponent(xmlNode *node, int pass) {
 	DNAComponent *com = NULL;
 	
+	xmlNode *com_node = NULL;
 	xmlNode *pro_node = NULL;
 	xmlNode *ref_node = NULL;
 	
-	xmlChar *com_uri  = NULL;
-	xmlChar *pro_uri  = NULL;
-	xmlChar *ref_uri  = NULL;
+	xmlChar *com_uri = NULL;
+	xmlChar *pro_uri = NULL;
+	xmlChar *ref_uri = NULL;
 	
-	com_uri = getNodeURI(node);
+	com_node = node;
+	com_uri = getNodeURI(com_node);
 	if (pass == 0) {
 		// create component
 		// and add basic properties
@@ -269,7 +271,7 @@ DNAComponent *readDNAComponent(xmlNode *node, int pass) {
 			return NULL;
 		}
 		com = createDNAComponent((char *)com_uri);
-		readSBOLCompoundObject(com->base, node);
+		readSBOLCompoundObject(com->base, com_node);
 	} else {
 	
 		// get component
@@ -281,24 +283,28 @@ DNAComponent *readDNAComponent(xmlNode *node, int pass) {
 		}
 		com = getDNAComponent((char *)com_uri);
 		
-		for (pro_node = node->children; pro_node; pro_node = pro_node->next) {
-			if (!pro_node->name)
+		// add links to other SBOL objects
+		for (pro_node = com_node->children; pro_node; pro_node = pro_node->next) {
+			if (!pro_node->name || pro_node->type == XML_TEXT_NODE)
 				continue;
-			else if (nodeNameEquals(pro_node, "dnaSequence")) {
 			
-				// add sequence
-				ref_node = pro_node->children;
-				if (!ref_node || !nodeNameEquals(ref_node, "DnaSequence"))
-					continue;
-				ref_uri = getNodeURI(ref_node);
-				if (!ref_uri || !isDNASequenceURI((char *)ref_uri))
-					continue;
-				setDNAComponentSequence(com, getDNASequence(ref_uri));
+			// TODO read annotations
+			// TODO read collections
 			
-			} else {
-				// TODO read annotations
-				// TODO read collections
+			for (ref_node = pro_node->children; ref_node; ref_node = ref_node->next) {
+					if (!ref_node->name || ref_node->type == XML_TEXT_NODE)
+						continue;
+					
+					ref_uri = getNodeURI(ref_node);
+					if (nodeNameEquals(ref_node, "DnaSequence"))
+						setDNAComponentSequence(com, getDNASequence(ref_uri));
+					#if SBOL_DEBUG_ACTIVE
+					else
+						printf("Unknown reference node %s\n", ref_node->name);
+					#endif
+					xmlFree(ref_uri);
 			}
+
 		}
 	}
 	
