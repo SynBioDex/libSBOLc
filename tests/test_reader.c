@@ -4,83 +4,89 @@
 #include "utilities.h"
 #include "sbol.h"
 
-#define OUTPUT_FILE "output.xml"
+#define SBOL_TEST_DEBUG 1
 
-// TODO remove or adjust
-void TestValid1(CuTest* tc) {
-	cleanupSBOLCore();
-	char* filename = "../examples/valid/valid1.xml";
-	printf("reading %s\n", filename);
-	readSBOLCore(filename);
-	CuAssertIntEquals(tc, 1, getNumDNAComponents());
-	DNAComponent *com = getNthDNAComponent(0);
-	CuAssertStrEquals(tc, "http://example.com/dc1", getDNAComponentURI(com));
-	CuAssertStrEquals(tc, "Some display ID", getDNAComponentDisplayID(com));
-	CuAssertStrEquals(tc, "Valid because only required field for a DNAComponent is displayId",
-			getDNAComponentDescription(com));
-	int result = writeSBOLCore(OUTPUT_FILE);
-	CuAssertIntEquals(tc, 0, result);
-	cleanupSBOLCore();
+#define NUM_VALID_EXAMPLES   1
+#define NUM_INVALID_EXAMPLES 0
+
+#define VALID_EXAMPLES_DIR   "../examples/valid"
+#define INVALID_EXAMPLES_DIR "../examples/invalid"
+#define TEST_OUTPUT_DIR      "./output"
+
+// This verfies that there aren't any
+// SBOL objects loaded. It's good to put
+// at the beginning of each test to prevent
+// contamination by earlier failed tests.
+void TestNothingLoaded(CuTest *tc) {
+	CuAssertIntEquals(tc, 0, getNumSBOLObjects());
+	CuAssertIntEquals(tc, 0, getNumSBOLCompoundObjects());
+	CuAssertIntEquals(tc, 0, getNumDNASequences());
+	CuAssertIntEquals(tc, 0, getNumSequenceAnnotations());
 	CuAssertIntEquals(tc, 0, getNumDNAComponents());
+	CuAssertIntEquals(tc, 0, getNumCollections());
 }
 
-// TODO remove or adjust
-void TestValid2(CuTest* tc) {
-	char* filename = "../examples/valid/valid2.xml";
-	printf("reading %s\n", filename);
-	readSBOLCore(filename);
-	// components
-	CuAssertIntEquals(tc, 4, getNumDNAComponents());
-	CuAssertIntEquals(tc, 1, isDNAComponentURI("http://example.com/dc1"));
-	CuAssertIntEquals(tc, 1, isDNAComponentURI("http://example.com/dc2"));
-	CuAssertIntEquals(tc, 1, isDNAComponentURI("http://example.com/dc3"));
-	CuAssertIntEquals(tc, 1, isDNAComponentURI("http://example.com/dc4"));
-	DNAComponent* dc1 = getDNAComponent("http://example.com/dc1");
-	DNAComponent* dc2 = getDNAComponent("http://example.com/dc2");
-	DNAComponent* dc3 = getDNAComponent("http://example.com/dc3");
-	DNAComponent* dc4 = getDNAComponent("http://example.com/dc4");
-	CuAssertStrEquals(tc, "DC1", getDNAComponentDisplayID(dc1));
-	CuAssertStrEquals(tc, "DC2", getDNAComponentDisplayID(dc2));
-	CuAssertStrEquals(tc, "DC3", getDNAComponentDisplayID(dc3));
-	CuAssertStrEquals(tc, "DC4", getDNAComponentDisplayID(dc4));
-	CuAssertStrEquals(tc, "DnaComponent1", getDNAComponentName(dc1));
-	CuAssertStrEquals(tc, "DnaComponent2", getDNAComponentName(dc2));
-	CuAssertStrEquals(tc, "DnaComponent3", getDNAComponentName(dc3));
-	CuAssertStrEquals(tc, "DnaComponent4", getDNAComponentName(dc4));
-	CuAssertStrEquals(tc, "Various sequence annotations", getDNAComponentDescription(dc1));
-	CuAssertStrEquals(tc, "Another DNA component", getDNAComponentDescription(dc2));
-	CuAssertStrEquals(tc, NULL, getDNAComponentDescription(dc3));
-	CuAssertStrEquals(tc, NULL, getDNAComponentDescription(dc4));
-	// sequence annotations
-	CuAssertIntEquals(tc, 3, getNumSequenceAnnotations());
-	CuAssertIntEquals(tc, 1, isSequenceAnnotationURI("http://example.com/sa1"));
-	CuAssertIntEquals(tc, 1, isSequenceAnnotationURI("http://example.com/sa2"));
-	CuAssertIntEquals(tc, 1, isSequenceAnnotationURI("http://example.com/sa3"));
-	SequenceAnnotation* sa1 = getSequenceAnnotation("http://example.com/sa1");
-	SequenceAnnotation* sa2 = getSequenceAnnotation("http://example.com/sa2");
-	SequenceAnnotation* sa3 = getSequenceAnnotation("http://example.com/sa3");
-	CuAssertPtrEquals(tc, dc2, getSubComponent(sa1));
-	CuAssertPtrEquals(tc, dc3, getSubComponent(sa2));
-	CuAssertIntEquals(tc, 3, getNumSequenceAnnotationsIn(dc1));
-	CuAssertIntEquals(tc, 1, getBioStart(sa2));
-	CuAssertIntEquals(tc, 54, getBioEnd(sa2));
-	CuAssertIntEquals(tc, 1, getStrandPolarity(sa2));
-	CuAssertIntEquals(tc, 1, precedes(sa3, sa2));
-	CuAssertIntEquals(tc, 0, precedes(sa1, sa2));
-	CuAssertIntEquals(tc, 0, precedes(sa2, sa3));
-	// sequences
-	CuAssertIntEquals(tc, 1, getNumDNASequences());
-	CuAssertIntEquals(tc, 1, isDNASequenceURI("http://example.com/ds1"));
-	DNASequence* ds1 = getDNASequence("http://example.com/ds1");
-	CuAssertPtrEquals(tc, ds1, getDNAComponentSequence(dc1));
-	// collections
+/****************************************
+ * These tests check that the content
+ * of each example file was loaded into
+ * memory correctly. They shouldn't be
+ * run on their own, but called from
+ * other tests that read example files.
+ ****************************************/
+
+void TestLoadedValid01(CuTest *tc) {
+	// check how many objects of each type were created
+	CuAssertIntEquals(tc, 1, getNumSBOLObjects());
+	CuAssertIntEquals(tc, 1, getNumSBOLCompoundObjects());
+	CuAssertIntEquals(tc, 0, getNumDNASequences());
+	CuAssertIntEquals(tc, 0, getNumSequenceAnnotations());
+	CuAssertIntEquals(tc, 1, getNumDNAComponents());
 	CuAssertIntEquals(tc, 0, getNumCollections());
-	cleanupSBOLCore();
+	// check dc1
+	DNAComponent *dc1 = getNthDNAComponent(0);
+	CuAssertStrEquals(tc, "http://example.com/dc1", getDNAComponentURI(dc1));
+	CuAssertStrEquals(tc, "DC1", getDNAComponentDisplayID(dc1));
+	CuAssertPtrEquals(tc, NULL, getDNAComponentName(dc1));
+	CuAssertPtrEquals(tc, NULL, getDNAComponentDescription(dc1));
+	CuAssertPtrEquals(tc, NULL, getDNAComponentSequence(dc1));
+}
+
+/******************************
+ * The main test function.
+ * It loads the example files
+ * and checks that each was
+ * interpreted correctly.
+ ******************************/
+
+// a list of all the valid example filenames
+// so they can be retrieved by index in a loop
+static char *VALID_EXAMPLE_FILENAMES[NUM_VALID_EXAMPLES] = {
+	VALID_EXAMPLES_DIR "/valid01_dna_component_empty.xml"
+};
+
+// a list of all the TestLoadedValid* functions
+// so they can be retrieved by index in a loop
+static void (*TEST_LOADED_FUNCTIONS[NUM_VALID_EXAMPLES])() = {
+	TestLoadedValid01
+};
+
+void TestReadValidExamples(CuTest *tc) {
+	int n;
+	for (n=0; n<NUM_VALID_EXAMPLES; n++) {
+		cleanupSBOLCore();
+		TestNothingLoaded(tc);
+ 		printf("reading %s\n", VALID_EXAMPLE_FILENAMES[n]);
+		readSBOLCore(VALID_EXAMPLE_FILENAMES[n]);
+		#if SBOL_TEST_DEBUG
+		printSBOLCore();
+		#endif
+		TEST_LOADED_FUNCTIONS[n](tc);
+		cleanupSBOLCore();
+	}
 }
 
 CuSuite* ReaderGetSuite() {
 	CuSuite* readerTests = CuSuiteNew();
-	//SUITE_ADD_TEST(readerTests, TestValid1);
-	//SUITE_ADD_TEST(readerTests, TestValid2);
+	SUITE_ADD_TEST(readerTests, TestReadValidExamples);
 	return readerTests;
 }

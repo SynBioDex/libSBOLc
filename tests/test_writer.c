@@ -8,65 +8,65 @@
 // TODO establish easy patterns for adding subparts ect.
 // TODO store whether each thing has been printed to avoid duplicates
 
-// TODO remove
-void TestRecreateValid1(CuTest* tc) {
-	cleanupSBOLCore();
-	char* filename = "valid1.xml";
-	printf("recreating %s\n", filename);
-	DNAComponent* com = createDNAComponent("http://example.com/dc1");
-	setDNAComponentDisplayID(com, "Some display ID");
-	setDNAComponentDescription(com, "Valid because only required field for a DNAComponent is displayId");
-	writeSBOLCore(filename);
-	cleanupSBOLCore();
-}
+//// TODO remove
+////void TestRecreateValid1(CuTest* tc) {
+//	cleanupSBOLCore();
+//	char* filename = "valid1.xml";
+//	printf("recreating %s\n", filename);
+//	DNAComponent* com = createDNAComponent("http://example.com/dc1");
+//	setDNAComponentDisplayID(com, "Some display ID");
+//	setDNAComponentDescription(com, "Valid because only required field for a DNAComponent is displayId");
+//	writeSBOLCore(filename);
+//	cleanupSBOLCore();
+//}
 
-// TODO sa3 is completely missing. wtf?
-// TODO remove
-// and dc1, ds1 appear twice.
-void TestRecreateValid2(CuTest* tc) {
-	cleanupSBOLCore();
-	// dna components
-	DNAComponent* dc1 = createDNAComponent("http://example.com/dc1");
-	DNAComponent* dc2 = createDNAComponent("http://example.com/dc2");
-	DNAComponent* dc3 = createDNAComponent("http://example.com/dc3");
-	DNAComponent* dc4 = createDNAComponent("http://example.com/dc4");
-    setDNAComponentDisplayID(dc1, "DC1");
-    setDNAComponentDisplayID(dc2, "DC2");
-    setDNAComponentDisplayID(dc3, "DC3");
-    setDNAComponentDisplayID(dc4, "DC4");
-	setDNAComponentName(dc1, "DnaComponent1");
-	setDNAComponentName(dc2, "DnaComponent2");
-	setDNAComponentName(dc3, "DnaComponent3");
-	setDNAComponentName(dc4, "DnaComponent4");
-	setDNAComponentDescription(dc1, "Various sequence annotations");
-	setDNAComponentDescription(dc2, "Another DNA component");
-	// dna sequences
-	DNASequence* ds1 = createDNASequence("http://example.com/ds1");
-	setNucleotides(ds1, "tccctatcagtgat");
-	setDNAComponentSequence(dc1, ds1);
-	// sa1
-	SequenceAnnotation* sa1 = createSequenceAnnotation("http://example.com/sa1");
-	setSubComponent(sa1, dc2);
-	addSequenceAnnotation(dc1, sa1);
-	// sa2
-	SequenceAnnotation* sa2 = createSequenceAnnotation("http://example.com/sa2");
-	setBioStart(sa2, 1);
-	setBioEnd(sa2, 54);
-	// TODO strand field
-	setSubComponent(sa2, dc3);
-	addSequenceAnnotation(dc1, sa2);
-	// sa3
-	SequenceAnnotation* sa3 = createSequenceAnnotation("http://example.com/sa3");
-	addPrecedesRelationship(sa3, sa2);
-	setSubComponent(sa3, dc4);
-	addSequenceAnnotation(dc1, sa3);
-	// serialize
-	char* filename = "valid2.xml";
-	printf("recreating %s\n", filename);
-	int result = writeSBOLCore(filename);
-	CuAssertIntEquals(tc, 0, result);
-	cleanupSBOLCore();
-}
+//// TODO sa3 is completely missing. wtf?
+//// TODO remove
+//// and dc1, ds1 appear twice.
+//void TestRecreateValid2(CuTest* tc) {
+//	cleanupSBOLCore();
+//	// dna components
+//	DNAComponent* dc1 = createDNAComponent("http://example.com/dc1");
+//	DNAComponent* dc2 = createDNAComponent("http://example.com/dc2");
+//	DNAComponent* dc3 = createDNAComponent("http://example.com/dc3");
+//	DNAComponent* dc4 = createDNAComponent("http://example.com/dc4");
+//  setDNAComponentDisplayID(dc1, "DC1");
+//  setDNAComponentDisplayID(dc2, "DC2");
+//  setDNAComponentDisplayID(dc3, "DC3");
+//    setDNAComponentDisplayID(dc4, "DC4");
+//	setDNAComponentName(dc1, "DnaComponent1");
+//	setDNAComponentName(dc2, "DnaComponent2");
+//	setDNAComponentName(dc3, "DnaComponent3");
+//	setDNAComponentName(dc4, "DnaComponent4");
+//	setDNAComponentDescription(dc1, "Various sequence annotations");
+//	setDNAComponentDescription(dc2, "Another DNA component");
+//	// dna sequences
+//	DNASequence* ds1 = createDNASequence("http://example.com/ds1");
+//	setNucleotides(ds1, "tccctatcagtgat");
+//	setDNAComponentSequence(dc1, ds1);
+//	// sa1
+//	SequenceAnnotation* sa1 = createSequenceAnnotation("http://example.com/sa1");
+//	setSubComponent(sa1, dc2);
+//	addSequenceAnnotation(dc1, sa1);
+//	// sa2
+//	SequenceAnnotation* sa2 = createSequenceAnnotation("http://example.com/sa2");
+//	setBioStart(sa2, 1);
+//	setBioEnd(sa2, 54);
+//	// TODO strand field
+//	setSubComponent(sa2, dc3);
+//	addSequenceAnnotation(dc1, sa2);
+//	// sa3
+//	SequenceAnnotation* sa3 = createSequenceAnnotation("http://example.com/sa3");
+//	addPrecedesRelationship(sa3, sa2);
+//	setSubComponent(sa3, dc4);
+//	addSequenceAnnotation(dc1, sa3);
+//	// serialize
+//	char* filename = "valid2.xml";
+//	printf("recreating %s\n", filename);
+//	int result = writeSBOLCore(filename);
+//	CuAssertIntEquals(tc, 0, result);
+//	cleanupSBOLCore();
+//}
 
 CuSuite* WriterGetSuite() {
 	CuSuite* writerTests = CuSuiteNew();
