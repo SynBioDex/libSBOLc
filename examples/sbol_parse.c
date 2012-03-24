@@ -1,7 +1,5 @@
 #include "sbol.h"
 
-#define DEFAULT_FILE "../examples/valid/valid8.xml"
-
 void parse(char* filename) {
 	printf("parsing %s\n", filename);
 	readSBOLCore(filename);
@@ -11,7 +9,7 @@ void parse(char* filename) {
 
 int main(int argc, char** argv) {
 	if (argc < 2)
-		parse(DEFAULT_FILE);
+		printf("usage: %s doc1.xml [doc2.xml ...]\n", argv[0]);
 	else {
 		int i;
 		for (i=1; i<argc; i++)

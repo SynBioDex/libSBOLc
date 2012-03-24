@@ -6,3 +6,6 @@ release/
 *.swp
 *.swo
 *.*~
+
+# config files
+source/debug.h

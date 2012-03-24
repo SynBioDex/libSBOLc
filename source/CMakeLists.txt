@@ -50,9 +50,6 @@ INCLUDE_DIRECTORIES(
 # examples
 FILE( GLOB SBOL_EXAMPLE_TARGETS
 	${SBOL_EXAMPLE_DIR}/sbol_parse.c
-	${SBOL_EXAMPLE_DIR}/sbol_print.c
-	${SBOL_EXAMPLE_DIR}/sbol_rondtrip.c
-	${SBOL_EXAMPLE_DIR}/sbol_same.c
 	${SBOL_EXAMPLE_DIR}/sbol_validate.c
 )
 FOREACH( TARGET ${SBOL_EXAMPLE_TARGETS} )
