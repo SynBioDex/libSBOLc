@@ -29,8 +29,8 @@ SequenceAnnotation* createSequenceAnnotation(const char* uri) {
 	    return NULL;
 	SequenceAnnotation* ann = malloc(sizeof(SequenceAnnotation));
 	ann->base         = createSBOLObject(uri);
-	ann->genbankStart = 0;
-	ann->genbankEnd   = 0;
+	ann->genbankStart = -1;
+	ann->genbankEnd   = -1;
 	ann->strand       = 1;
 	ann->annotates    = NULL;
 	ann->subComponent = NULL;

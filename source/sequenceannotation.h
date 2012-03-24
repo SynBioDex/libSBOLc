@@ -17,6 +17,8 @@ typedef struct _SequenceAnnotation {
 	int processed;
 } SequenceAnnotation;
 
+// TODO getAnnotates?
+
 // create/destroy
 SBOLAPIEXPORTS SequenceAnnotation* createSequenceAnnotation(const char* uri);
 SBOLAPIEXPORTS char* getSequenceAnnotationURI(const SequenceAnnotation* ann);

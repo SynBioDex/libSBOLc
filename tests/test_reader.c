@@ -5,7 +5,7 @@
 #include "sbol.h"
 
 // TODO replace with SBOL_DEBUG_ACTIVE
-#define SBOL_TEST_DEBUG 1
+#define SBOL_TEST_DEBUG 0
 
 #define NUM_INVALID_EXAMPLES 0
 
@@ -50,6 +50,7 @@ void TestLoadedValid01(CuTest *tc) {
 	CuAssertPtrEquals(tc, NULL, getDNAComponentDescription(dc1));
 	CuAssertPtrEquals(tc, NULL, getDNAComponentSequence(dc1));
 	CuAssertIntEquals(tc, 0, getNumSequenceAnnotationsIn(dc1));
+	CuAssertIntEquals(tc, 0, getNumCollectionsFor(dc1));
 }
 
 void TestLoadedValid02(CuTest *tc) {
@@ -68,6 +69,7 @@ void TestLoadedValid02(CuTest *tc) {
 	CuAssertStrEquals(tc, "DnaComponent with only name and description", getDNAComponentDescription(dc1));
 	CuAssertPtrEquals(tc, NULL, getDNAComponentSequence(dc1));
 	CuAssertIntEquals(tc, 0, getNumSequenceAnnotationsIn(dc1));
+	CuAssertIntEquals(tc, 0, getNumCollectionsFor(dc1));
 }
 
 void TestLoadedValid03(CuTest *tc) {
@@ -85,6 +87,7 @@ void TestLoadedValid03(CuTest *tc) {
 	CuAssertStrEquals(tc, "DnaComponent1", getDNAComponentName(dc1));
 	CuAssertStrEquals(tc, "DnaComponent with sequence information", getDNAComponentDescription(dc1));
 	CuAssertIntEquals(tc, 0, getNumSequenceAnnotationsIn(dc1));
+	CuAssertIntEquals(tc, 0, getNumCollectionsFor(dc1));
 	// check ds1
 	DNASequence *ds1 = getNthDNASequence(0);
 	CuAssertStrEquals(tc, "http://example.com/ds1", getDNASequenceURI(ds1));
@@ -93,14 +96,52 @@ void TestLoadedValid03(CuTest *tc) {
 	CuAssertPtrEquals(tc, ds1, getDNAComponentSequence(dc1));
 }
 
-#define NUM_VALID_EXAMPLES 3
+void TestLoadedValid04(CuTest *tc) {
+	// check overall numbers
+	CuAssertIntEquals(tc, 4, getNumSBOLObjects());
+	CuAssertIntEquals(tc, 2, getNumSBOLCompoundObjects());
+	CuAssertIntEquals(tc, 1, getNumDNASequences());
+	CuAssertIntEquals(tc, 1, getNumSequenceAnnotations());
+	CuAssertIntEquals(tc, 2, getNumDNAComponents());
+	CuAssertIntEquals(tc, 0, getNumCollections());
+	// check sequences
+	DNASequence *ds1 = getDNASequence("http://example.com/ds1");
+	CuAssertStrEquals(tc, "tccctatcagtgat", getNucleotides(ds1));
+	// check components
+	DNAComponent *dc1 = getDNAComponent("http://example.com/dc1");
+	DNAComponent *dc2 = getDNAComponent("http://example.com/dc2");
+	CuAssertStrEquals(tc, "DC1", getDNAComponentDisplayID(dc1));
+	CuAssertStrEquals(tc, "DC2", getDNAComponentDisplayID(dc2));
+	CuAssertStrEquals(tc, "DnaComponent1", getDNAComponentName(dc1));
+	CuAssertStrEquals(tc, "DnaComponent2", getDNAComponentName(dc2));
+	CuAssertStrEquals(tc, "DnaComponent with one sequence annotation", getDNAComponentDescription(dc1));
+	CuAssertStrEquals(tc, "Another DNA component", getDNAComponentDescription(dc2));
+	CuAssertIntEquals(tc, 1, getNumSequenceAnnotationsIn(dc1));
+	CuAssertIntEquals(tc, 0, getNumSequenceAnnotationsIn(dc2));
+	CuAssertIntEquals(tc, 0, getNumCollectionsFor(dc1));
+	CuAssertIntEquals(tc, 0, getNumCollectionsFor(dc2));
+	// check annotations
+	SequenceAnnotation *sa1 = getSequenceAnnotation("http://example.com/sa1");
+	CuAssertIntEquals(tc, -1, getBioStart(sa1));
+	CuAssertIntEquals(tc, -1, getBioEnd(sa1));
+	CuAssertIntEquals(tc, 1, getStrandPolarity(sa1));
+	// check pointers
+	CuAssertPtrEquals(tc, ds1, getDNAComponentSequence(dc1));
+	CuAssertPtrEquals(tc, NULL, getDNAComponentSequence(dc2));
+	CuAssertPtrEquals(tc, dc2, getSubComponent(sa1));
+	CuAssertPtrEquals(tc, sa1, getNthSequenceAnnotationIn(dc1, 0));
+	CuAssertPtrEquals(tc, dc2, getSubComponent(sa1));
+}
+
+#define NUM_VALID_EXAMPLES 4
 
 // a list of all the valid example filenames
 // so they can be retrieved by index in a loop
 static char *VALID_EXAMPLE_FILENAMES[NUM_VALID_EXAMPLES] = {
 	VALID_EXAMPLES_DIR "/valid01_dna_component_empty.xml",
 	VALID_EXAMPLES_DIR "/valid02_dna_component.xml",
-	VALID_EXAMPLES_DIR "/valid03_dna_component_sequence.xml"
+	VALID_EXAMPLES_DIR "/valid03_dna_component_sequence.xml",
+	VALID_EXAMPLES_DIR "/valid04_dna_component_annotation.xml"
 };
 
 // a list of all the TestLoadedValid* functions
@@ -108,7 +149,8 @@ static char *VALID_EXAMPLE_FILENAMES[NUM_VALID_EXAMPLES] = {
 static void (*TEST_LOADED_FUNCTIONS[NUM_VALID_EXAMPLES])() = {
 	TestLoadedValid01,
 	TestLoadedValid02,
-	TestLoadedValid03
+	TestLoadedValid03,
+	TestLoadedValid04
 };
 
 // The main test function. It loads the example files
