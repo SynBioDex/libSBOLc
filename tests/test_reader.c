@@ -6,6 +6,7 @@
 
 #define OUTPUT_FILE "output.xml"
 
+// TODO remove or adjust
 void TestValid1(CuTest* tc) {
 	cleanupSBOLCore();
 	char* filename = "../examples/valid/valid1.xml";
@@ -23,6 +24,7 @@ void TestValid1(CuTest* tc) {
 	CuAssertIntEquals(tc, 0, getNumDNAComponents());
 }
 
+// TODO remove or adjust
 void TestValid2(CuTest* tc) {
 	char* filename = "../examples/valid/valid2.xml";
 	printf("reading %s\n", filename);
@@ -78,7 +80,7 @@ void TestValid2(CuTest* tc) {
 
 CuSuite* ReaderGetSuite() {
 	CuSuite* readerTests = CuSuiteNew();
-	SUITE_ADD_TEST(readerTests, TestValid1);
-	SUITE_ADD_TEST(readerTests, TestValid2);
+	//SUITE_ADD_TEST(readerTests, TestValid1);
+	//SUITE_ADD_TEST(readerTests, TestValid2);
 	return readerTests;
 }
