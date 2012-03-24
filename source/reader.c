@@ -1,13 +1,19 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
+
 #include <libxml/xmlmemory.h>
 #include <libxml/parser.h>
 #include <libxml/tree.h>
 #include <libxml/xpath.h>
+
 #include "debug.h"
-#include "sbol.h"
 #include "object.h"
+#include "types.h"
+#include "dnasequence.h"
+#include "sequenceannotation.h"
+#include "dnacomponent.h"
+#include "collection.h"
 
 /*************************
  * functions for reading
@@ -61,7 +67,8 @@ int isReferenceNode(xmlNode *node) {
  * functions for reading
  * individual SBOL objects
  ***************************/
-void readNamespaces(xmlNode *node); // TODO is this needed?
+
+//void readNamespaces(xmlNode *node); // TODO is this needed?
 
 SBOLCompoundObject *readSBOLCompoundObject(SBOLCompoundObject *obj, xmlNode *node) {
 	xmlNode *child;
@@ -308,8 +315,9 @@ Collection *readCollection(xmlNode *node, int pass) {
  * main parsing functions
  **************************/
 
-// make a first pass through to create the SBOL objects
-// then go back and link them up according to rdf:resource nodes
+// this function should be called twice on every node:
+// the first pass (pass == 0) creates SBOL objects,
+// and the second (pass > 0) links them together with pointers
 void readSBOLObjects(xmlNode *root, int pass) {
 	xmlNode *node;
 	for (node = root; node; node = node->next) {
@@ -322,6 +330,8 @@ void readSBOLObjects(xmlNode *root, int pass) {
 }
 
 // TODO return error codes
+// this function parses an xml file, validates it,
+// and creates matching SBOL objects in memory
 void readSBOLCore(char* filename) {
 	xmlDocPtr  doc;
 	xmlNodePtr root;
