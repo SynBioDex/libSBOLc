@@ -14,15 +14,13 @@ int nodeNameEquals(xmlNode *node, char *name);
 // TODO make static
 void readNamespaces(xmlNode *node); // TODO needed?
 SBOLCompoundObject *readSBOLCompoundObject(SBOLCompoundObject *obj, xmlNode *node);
-DNASequence        *readDNASequence(xmlNode *node);
-SequenceAnnotation *readSequenceAnnotation(xmlNode *node);
-DNAComponent       *readDNAComponent(xmlNode *node);
-Collection         *readCollection(xmlNode *node);
-void readReference(xmlNode *node);
+DNASequence        *readDNASequence(xmlNode *node, int pass);
+SequenceAnnotation *readSequenceAnnotation(xmlNode *node, int pass);
+DNAComponent       *readDNAComponent(xmlNode *node, int pass);
+Collection         *readCollection(xmlNode *node, int pass);
 
 // TODO make static
-void readSBOLStructs(xmlNode *root);
-void readSBOLPointers(xmlNode *root);
+void readSBOLObjects(xmlNode *root, int pass);
 
 // TODO rename
 SBOLAPIEXPORTS void readSBOLCore_xml(char* filename);
