@@ -22,13 +22,15 @@ int isCollectionPtr(const void* pointer); // TODO rename and export
 SBOLAPIEXPORTS int isCollectionURI(const char* uri);
 SBOLAPIEXPORTS int getNumCollections();
 SBOLAPIEXPORTS Collection* getNthCollection(int n);
-SBOLAPIEXPORTS Collection* getNthCollectionIn(const Collection* col, int n);
+SBOLAPIEXPORTS Collection* getNthCollectionInCollection(const Collection* col, int n);
 
 // iterate
 SBOLAPIEXPORTS Collection* getCollection(const char* uri);
 SBOLAPIEXPORTS int getNumDNAComponentsIn(const Collection* col);
 SBOLAPIEXPORTS int getNumCollectionsIn(const Collection* col);
 SBOLAPIEXPORTS struct _DNAComponent* getNthDNAComponentIn(const Collection* col, int n);
+// TODO more consistent naming
+SBOLAPIEXPORTS Collection *getNthCollectionInCollection(const Collection *col, int n);
 
 // get properties
 SBOLAPIEXPORTS char* getCollectionURI(const Collection* col);

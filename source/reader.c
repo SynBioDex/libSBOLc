@@ -287,8 +287,8 @@ DNAComponent *readDNAComponent(xmlNode *node, int pass) {
 					#endif
 					xmlFree(ref_uri);
 			}
-
 		}
+	
 	}
 	
 	xmlFree(com_uri);
@@ -296,18 +296,70 @@ DNAComponent *readDNAComponent(xmlNode *node, int pass) {
 }
 
 Collection *readCollection(xmlNode *node, int pass) {
-	xmlChar *uri = getNodeURI(node);
-	if (isSBOLObjectURI(uri)) {
-		#if SBOL_DEBUG_ACTIVE
-		printf("Tried to read %s twice\n", uri);
-		#endif
-		return NULL;
+	xmlNode *col_node;
+	xmlNode *pro_node;
+	xmlNode *ref_node;
+	xmlChar *col_uri;
+	//xmlChar *pro_uri;
+	xmlChar *ref_uri;
+	Collection *col;
+
+	col_node = node;
+	col_uri = getNodeURI(col_node);
+	if (pass == 0) {
+	
+		// create collection with some basic properties
+		if (isSBOLObjectURI(col_uri)) {
+			#if SBOL_DEBUG_ACTIVE
+			printf("Tried to read %s twice\n", col_uri);
+			#endif
+			return NULL;
+		}
+		col = createCollection((char *)col_uri);
+		readSBOLCompoundObject(col->base, col_node);
+	} else {
+
+		// retrieve the collection
+		if (!isCollectionURI(col_uri)) {
+			#if SBOL_DEBUG_ACTIVE
+			printf("Failed to create Collection %s\n", col_uri);
+			#endif
+			return NULL;
+		}
+		col = getCollection((char *)col_uri);
+		
+		// add links to other SBOL objects
+		for (pro_node = col_node->children; pro_node; pro_node = pro_node->next) {
+			if (!pro_node->name || pro_node->type == XML_TEXT_NODE)
+				continue;
+			// TODO find out if both cases are possible or just one...
+			if (isReferenceNode(pro_node)) {
+				ref_node = pro_node;
+				ref_uri = getNodeURI(ref_node);
+				if (nodeNameEquals(ref_node, "component"))
+					addDNAComponentToCollection(getDNAComponent((char *)ref_uri), col);
+				else if (nodeNameEquals(ref_node, "Collection"))
+					addCollectionToCollection(getCollection((char *)ref_uri), col);
+				xmlFree(ref_uri);
+			} else {
+				for (ref_node = pro_node->children; ref_node; ref_node = ref_node->next) {
+						if (!ref_node->name || ref_node->type == XML_TEXT_NODE)
+							continue;
+						ref_uri = getNodeURI(ref_node);
+						if (nodeNameEquals(ref_node, "DnaComponent"))
+							addDNAComponentToCollection(getDNAComponent((char *)ref_uri), col);
+						else if (nodeNameEquals(ref_node, "Collection"))
+							 addCollectionToCollection(getCollection((char *)ref_uri), col);
+						#if SBOL_DEBUG_ACTIVE
+						else
+							printf("Unknown reference node %s\n", ref_node->name);
+						#endif
+						xmlFree(ref_uri);
+				}
+			}
+		}
 	}
-	Collection *col = createCollection((char *)uri);
-	readSBOLCompoundObject(col->base, node);
-	// TODO read components
-	// TODO read collections
-	xmlFree(uri);
+	xmlFree(col_uri);
 	return col;
 }
 

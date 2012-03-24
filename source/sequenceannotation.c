@@ -251,7 +251,7 @@ void printSequenceAnnotation(const SequenceAnnotation* ann, int tabs) {
     char strand = polarityToChar(ann->strand);
     indent(tabs+1); printf("strand: %c\n", strand);
     if (ann->annotates) {
-        indent(tabs+1); printf("annotates: %s\n", getDNAComponentURI(ann->annotates));
+        indent(tabs+1); printf("annotates:    %s\n", getDNAComponentURI(ann->annotates));
     }
     if (ann->subComponent) {
         indent(tabs+1); printf("subComponent: %s\n", getDNAComponentURI(ann->subComponent));

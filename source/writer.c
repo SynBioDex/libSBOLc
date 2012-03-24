@@ -239,7 +239,7 @@ void writeCollection(Collection* col) {
 			for (n=0; n<num; n++) {
 				indentMore();
 				xmlTextWriterStartElement(WRITER, "collection");
-				col2 = getNthCollectionIn(col, n);
+				col2 = getNthCollectionInCollection(col, n);
 				indentMore();
 				// TODO sometimes don't include contents?
 				writeCollection(col2);

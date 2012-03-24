@@ -179,7 +179,7 @@ DNAComponent* getNthDNAComponentIn(const Collection* col, int n) {
         return NULL;
 }
 
-Collection* getNthCollectionIn(const Collection* col, int n) {
+Collection* getNthCollectionInCollection(const Collection* col, int n) {
 	if (col)
 	    return (Collection *)getNthPointerInArray(col->collections, n);
 	else
@@ -218,6 +218,12 @@ void addDNAComponentToCollection(DNAComponent* com, Collection* col) {
 	if (com && col) {
 		insertPointerIntoArray(com->collections, col);
 		insertPointerIntoArray(col->components,  com);
+	}
+}
+
+void addCollectionToCollection(Collection *inner, Collection *outer) {
+	if (inner && outer) {
+		insertPointerIntoArray(outer->collections, inner);
 	}
 }
 
@@ -260,7 +266,7 @@ void printCollection(const Collection* col, int tabs) {
         if (num > 0) {
             indent(tabs+1); printf("%i collections:\n", num);
             for (i=0; i<num; i++) {
-                col2 = getNthCollectionIn(col, i);
+                col2 = getNthCollectionInCollection(col, i);
                 indent(tabs+2); printf("%s\n", getCollectionURI(col2));
             }
         }
