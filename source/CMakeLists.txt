@@ -20,16 +20,6 @@ ELSE()
 	INCLUDE_DIRECTORIES( ${LIBXML2_INCLUDE_DIR} )
 ENDIF()
 
-# raptor
-ADD_SUBDIRECTORY( curl )
-INCLUDE_DIRECTORIES(
-	${SBOL_SOURCE_DIR}/curl/include
-	${SBOL_SOURCE_DIR}/expat
-	${SBOL_SOURCE_DIR}/expat/lib
-)
-ADD_SUBDIRECTORY( raptor2 )
-INCLUDE_DIRECTORIES( ${SBOL_SOURCE_DIR}/raptor2/src )
-
 # libsbol
 OPTION(SBOL_DEBUG "Compile with debug statements" ON)
 IF( SBOL_DEBUG )
@@ -51,8 +41,6 @@ ADD_LIBRARY( sbol
 )
 TARGET_LINK_LIBRARIES( sbol
 	xml2
-	libcurl
-	raptor2
 )
 INCLUDE_DIRECTORIES(
 	${SBOL_SOURCE_DIR}

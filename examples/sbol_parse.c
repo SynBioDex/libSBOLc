@@ -4,7 +4,7 @@
 
 void parse(char* filename) {
 	printf("parsing %s\n", filename);
-	readSBOLCore_xml(filename);
+	readSBOLCore(filename);
 	printSBOLCore();
 	cleanupSBOLCore();
 }

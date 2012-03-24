@@ -1,9 +1,0 @@
-<sa1>	<http://www.w3.org/1999/02/22-rdf-syntax-ns#type>	<http://sbols.org/v1#SequenceAnnotation>.
-<sa1>	<http://sbols.org/v1#bioStart>				<1>.
-<sa1>	<http://sbols.org/v1#bioEnd>				<1234>.
-
-<com1>	<http://www.w3.org/1999/02/22-rdf-syntax-ns#type>	<http://sbols.org/v1#DnaComponent>.
-<com1>	<http://sbols.org/v1#displayId>				<component 1>.
-
-<sa1>	<http://sbols.org/v1#annotates>				<com1>.
-<sa1>	<http://sbols.org/v1#subComponent>			<com1>.

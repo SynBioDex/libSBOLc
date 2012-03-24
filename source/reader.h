@@ -3,9 +3,6 @@
 #include "api.h"
 #include "object.h"
 
-// TODO remove
-SBOLAPIEXPORTS void readSBOLCore(char* filename);
-
 // TODO make static
 xmlChar *getNodeURI(xmlNode *node);
 xmlChar *getNodeNS(xmlNode *node);
@@ -19,10 +16,6 @@ SequenceAnnotation *readSequenceAnnotation(xmlNode *node, int pass);
 DNAComponent       *readDNAComponent(xmlNode *node, int pass);
 Collection         *readCollection(xmlNode *node, int pass);
 
-// TODO make static
-void readSBOLObjects(xmlNode *root, int pass);
-
-// TODO rename
-SBOLAPIEXPORTS void readSBOLCore_xml(char* filename);
+SBOLAPIEXPORTS void readSBOLCore(char* filename);
 
 #endif

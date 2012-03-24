@@ -1,188 +1,355 @@
+#include <stdio.h>
+#include <stdlib.h>
 #include <string.h>
-#include <raptor.h>
+#include <libxml/xmlmemory.h>
+#include <libxml/parser.h>
+#include <libxml/tree.h>
+#include <libxml/xpath.h>
+#include "debug.h"
 #include "sbol.h"
+#include "object.h"
 
-// TODO will this sequential read miss things declared in certain orders?
+/*************************
+ * functions for reading
+ * node properties
+ *************************/
 
-void createNewObject(char* uri, char* type) {
-	if (!uri || !type || isSBOLObjectURI(uri))
-		return;
-	else if (sameString(type, SBOL_DNASEQUENCE))
-		createDNASequence(uri);
-	else if (sameString(type, SBOL_DNACOMPONENT))
-		createDNAComponent(uri);
-	else if (sameString(type, SBOL_SEQUENCEANNOTATION))
-		createSequenceAnnotation(uri);
-	else if (sameString(type, SBOL_COLLECTION))
-		createCollection(uri);
-}
-
-void addToDNASequence(char* uri, char* field, char* value) {
-	if (!uri || !field || !value)
-		return;
-	DNASequence* seq = getDNASequence(uri);
-	if (sameString(field, SBOL_NUCLEOTIDES))
-		setNucleotides(seq, value);
-}
-
-void addToDNAComponent(char* uri, char* field, char* value) {
-	if (!uri || !field || !value)
-		return;
-	DNAComponent* com = getDNAComponent(uri);
-	if (sameString(field, SBOL_NAME))
-		setDNAComponentName(com, value);
-	else if (sameString(field, SBOL_DISPLAYID))
-		setDNAComponentDisplayID(com, value);
-	else if (sameString(field, SBOL_DESCRIPTION))
-		setDNAComponentDescription(com, value);
-	else if (sameString(field, SBOL_SEQUENCE)) {
-		DNASequence* seq;
-		if (isDNASequenceURI(value))
-			seq = getDNASequence(value);
+xmlChar *getNodeURI(xmlNode *node) {
+	xmlChar *uri = NULL;
+	if (node) {
+		if (isReferenceNode(node))
+			uri = xmlGetNsProp(node, (const xmlChar *)"resource", (const xmlChar *)XMLNS_RDF);
 		else
-			seq = createDNASequence(value);
-		setDNAComponentSequence(com, seq);
-	} else if (sameString(field, SBOL_COLLECTION)) {
-		Collection* col;
-		if (isCollectionURI(value)) // something about > 0?
-			col = getCollection(value);
-		else
-			col = createCollection(value);
-		addDNAComponentToCollection(com, col);
-	} else if (sameString(field, SBOL_ANNOTATION)) {
-		SequenceAnnotation* ann;
-		if (isSequenceAnnotationURI(value))
-			ann = getSequenceAnnotation(value);
-		else
-			ann = createSequenceAnnotation(value);
-		addSequenceAnnotation(com, ann);
+			uri = xmlGetNsProp(node, (const xmlChar *)"about", (const xmlChar *)XMLNS_RDF);
 	}
+	return uri;
 }
 
-void addToCollection(char* uri, char* field, char* value) {
-	if (!uri || !field || !value)
-		return;
-	Collection* col = getCollection(uri);
-	if (sameString(field, SBOL_NAME))
-		setCollectionName(col, value);
-	else if (sameString(field, SBOL_DESCRIPTION))
-		setCollectionDescription(col, value);
+// TODO warn that you need to xmlFree() this
+xmlChar *getNodeNS(xmlNode *node) {
+	xmlChar *ns = NULL;
+	if (node && node->ns && node->ns->href) {
+		ns = calloc(strlen(node->ns->href), sizeof(char));
+		strcpy(ns, node->ns->href);
+	}
+	return ns;
 }
 
-int polarity(char* strand) {
-	if (!strand)
-		return -1;
-	else if (sameString(strand, "+"))
-		return 1;
-	else if (sameString(strand, "-"))
-		return 0;
+// TODO also check namespace
+int nodeNameEquals(xmlNode *node, char *name) {
+	if (node && node->name)
+		return (int) !xmlStrcmp(node->name, (const xmlChar *)name);
 	else
-		return -1;
+		return 0;
 }
 
-void addToSequenceAnnotation(char* uri, char* field, char* value) {
-	if (!uri || !field || !value)
-		return;
-	SequenceAnnotation* ann = getSequenceAnnotation(uri);
-	DNAComponent* com;
-	if (sameString(field, SBOL_ANNOTATES) || sameString(field, SBOL_SUBCOMPONENT)) {
-		if (!isDNAComponentURI(value))
-			com = createDNAComponent(value);
-		else
-			com = getDNAComponent(value);
+int isReferenceNode(xmlNode *node) {
+	xmlChar *resource = NULL;
+	if (node)
+		// #define this
+		resource = xmlGetNsProp(node, (const xmlChar *)"resource", (const xmlChar *)XMLNS_RDF);
+	int result;
+	if (resource)
+		result = 1;
+	else
+		result = 0;
+	xmlFree(resource);
+	return result;
+}
+
+/***************************
+ * functions for reading
+ * individual SBOL objects
+ ***************************/
+void readNamespaces(xmlNode *node); // TODO is this needed?
+
+SBOLCompoundObject *readSBOLCompoundObject(SBOLCompoundObject *obj, xmlNode *node) {
+	xmlNode *child;
+	char *content;
+	for (child = node->children; child; child = child->next) {
+		if (child->name) {
+			content = (char *)xmlNodeGetContent(child);
+			if (!content) continue;
+			// TODO #define these
+			else if (nodeNameEquals(child, "displayId"))
+				setSBOLCompoundObjectDisplayID(obj, content);
+			else if (nodeNameEquals(child, "name"))
+				setSBOLCompoundObjectName(obj, content);
+			else if (nodeNameEquals(child, "description"))
+				setSBOLCompoundObjectDescription(obj, content);
+			free(content);
+		}
 	}
-	if (sameString(field, SBOL_ANNOTATES))
-		addSequenceAnnotation(com, ann);
-	else if (sameString(field, SBOL_SUBCOMPONENT))
-		setSubComponent(ann, com);
-	else if (sameString(field, SBOL_PRECEDES)) {
-		SequenceAnnotation* ann2;
-		if (!isSequenceAnnotationURI(value))
-			ann2 = createSequenceAnnotation(value);
-		else
-			ann2 = getSequenceAnnotation(value);
-		addPrecedesRelationship(ann, ann2);
+	return obj;
+}
+
+DNASequence *readDNASequence(xmlNode *node, int pass) {
+	xmlChar *uri = getNodeURI(node);
+	if (isSBOLObjectURI(uri)) {
+		if (pass > 0)
+			return getDNASequence((char *)uri);
+		#if SBOL_DEBUG_ACTIVE
+		else {
+			printf("Tried to read %s twice\n", uri);
+			return NULL;
+		}
+		#endif
 	}
-	else if (sameString(field, SBOL_BIOSTART))
-		setBioStart(ann, atoi(value));
-	else if (sameString(field, SBOL_BIOEND))
-		setBioEnd(ann, atoi(value));
-	else if (sameString(field, SBOL_STRAND))
-		setStrandPolarity(ann, polarity(value));
+	
+	// create sequence
+	DNASequence *seq = createDNASequence((char *)uri);
+	
+	// add nucleotides
+	xmlNode *child;
+	char *content;
+	for (child = node->children; child; child = child->next) {
+		if (!child->name) continue;
+		content = (char *)xmlNodeGetContent(child);
+		if (!content) continue;
+		// TODO #define this
+		else if (nodeNameEquals(child, "nucleotides")) {
+			setNucleotides(seq, content);
+			break;
+		}
+		free(content);
+	}
+	
+	xmlFree(uri);
+	return seq;
 }
 
-static void print_triple(raptor_statement* triple) {
-  raptor_statement_print_as_ntriples(triple, stdout);
-  fputc('\n', stdout);
+SequenceAnnotation *readSequenceAnnotation(xmlNode *node, int pass) {
+	xmlNode *ann_node = NULL;
+	xmlNode *pro_node = NULL;
+	xmlNode *ref_node = NULL;
+
+	xmlChar *ann_uri = NULL;
+	xmlChar *pro_uri = NULL;
+	xmlChar *ref_uri = NULL;
+	
+	SequenceAnnotation *ann = NULL;
+	xmlChar   *pro_contents = NULL;
+	
+	// get annotation uri
+	ann_node = node;
+	ann_uri = getNodeURI(ann_node);
+	if (!ann_uri) {
+		#if SBOL_DEBUG_ACTIVE
+		printf("Failed to get URI for SequenceAnnotation\n");
+		#endif
+		return NULL;
+	}
+	
+	if (pass == 0) {
+		// create annotation
+		if (isSBOLObjectURI((char *)ann_uri)) {
+			#if SBOL_DEBUG_ACTIVE
+			printf("Tried to create duplicate object %s\n", (char *)ann_uri);
+			#endif
+			return NULL;
+		}
+		ann = createSequenceAnnotation((char *)ann_uri);
+	} else {
+	
+		// get annotation
+		if (!isSBOLObjectURI(ann_uri)) {
+			#if SBOL_DEBUG_ACTIVE
+			printf("Failed to create SequenceAnnotation %s\n", (char *)ann_uri);
+			#endif
+			return NULL;
+		} else if (!isSequenceAnnotationURI(ann_uri)) {
+			#if SBOL_DEBUG_ACTIVE
+			printf("%s not a SequenceAnnotation\n", (char *)ann_uri);
+			#endif
+			return NULL;
+		}
+		ann = getSequenceAnnotation((char *)ann_uri);
+	}
+	
+	// add things to annotation
+	for (pro_node = ann_node->children; pro_node; pro_node = pro_node->next) {
+		if (!pro_node->name)
+			continue;
+		else if (pass == 0) {
+		
+			// add basic property
+			pro_contents = xmlNodeGetContent(pro_node);
+			if (!pro_contents)
+				continue;
+			else if (nodeNameEquals(pro_node, "bioStart"))
+				setBioStart(ann, strToInt((char *)pro_contents));
+			else if (nodeNameEquals(pro_node, "bioEnd"))
+				setBioEnd(ann, strToInt((char *)pro_contents));
+			else if (nodeNameEquals(pro_node, "strand"))
+				setStrandPolarity(ann, strToPolarity((char *)pro_contents));
+			xmlFree(pro_contents);
+		} else {
+		
+			// objects have all been created;
+			// time to link them together
+			if (isReferenceNode(pro_node)) {
+			
+				//add single pointer to another SBOL object
+				ref_node = pro_node;
+				ref_uri = getNodeURI(ref_node);
+				if (nodeNameEquals(pro_node, "annotates"))
+					addSequenceAnnotation(getDNAComponent((char *)ref_uri), ann);
+				else if (nodeNameEquals(pro_node, "subComponent")) {
+					printf("subComponent: %s\n", (char *)getNodeURI(pro_node));
+					setSubComponent(ann, getDNAComponent((char *)ref_uri));
+				}
+				else if (nodeNameEquals(pro_node, "precedes"))
+					addPrecedesRelationship(ann, getSequenceAnnotation((char *)ref_uri));
+				#if SBOL_DEBUG_ACTIVE
+				else
+					printf("Unknown reference node %s\n", ref_node->name);
+				#endif
+				xmlFree(ref_uri);
+			} else {
+				for (ref_node = pro_node->children; ref_node; ref_node = ref_node->next) {
+					if (!ref_node->name || ref_node->type == XML_TEXT_NODE)
+						continue;
+					ref_uri = getNodeURI(ref_node);
+					if (nodeNameEquals(ref_node, "DnaComponent"))
+						setSubComponent(ann, getDNAComponent((char *)ref_uri));
+					#if SBOL_DEBUG_ACTIVE
+					else
+						printf("Unknown reference node %s\n", ref_node->name);
+					#endif
+					xmlFree(ref_uri);
+				}
+			}
+		}
+	}
+	xmlFree(ann_uri);
+	return ann;
 }
 
-// TODO read twice:
-//			the first time create all the objects,
-//			and the second time add their characteristics
+DNAComponent *readDNAComponent(xmlNode *node, int pass) {
+	DNAComponent *com = NULL;
+	
+	xmlNode *com_node = NULL;
+	xmlNode *pro_node = NULL;
+	xmlNode *ref_node = NULL;
+	
+	xmlChar *com_uri = NULL;
+	xmlChar *pro_uri = NULL;
+	xmlChar *ref_uri = NULL;
+	
+	com_node = node;
+	com_uri = getNodeURI(com_node);
+	if (pass == 0) {
+		// create component
+		// and add basic properties
+		if (isSBOLObjectURI(com_uri)) {
+			#if SBOL_DEBUG_ACTIVE
+			printf("Tried to read %s twice\n", com_uri);
+			#endif
+			return NULL;
+		}
+		com = createDNAComponent((char *)com_uri);
+		readSBOLCompoundObject(com->base, com_node);
+	} else {
+	
+		// get component
+		if (!isDNAComponentURI((char *)com_uri)) {
+			#if SBOL_DEBUG_ACTIVE
+			printf("Failed to create DNAComponent %s\n", com_uri);
+			#endif
+			return NULL;
+		}
+		com = getDNAComponent((char *)com_uri);
+		
+		// add links to other SBOL objects
+		for (pro_node = com_node->children; pro_node; pro_node = pro_node->next) {
+			if (!pro_node->name || pro_node->type == XML_TEXT_NODE)
+				continue;
+			for (ref_node = pro_node->children; ref_node; ref_node = ref_node->next) {
+					if (!ref_node->name || ref_node->type == XML_TEXT_NODE)
+						continue;
+					ref_uri = getNodeURI(ref_node);
+					if (nodeNameEquals(ref_node, "DnaSequence"))
+						setDNAComponentSequence(com, getDNASequence(ref_uri));
+					else if (nodeNameEquals(ref_node, "SequenceAnnotation"))
+						addSequenceAnnotation(com, getSequenceAnnotation((char *)ref_uri));
+					else if (nodeNameEquals(ref_node, "Collection"))
+						addDNAComponentToCollection(com, getCollection((char *)ref_uri));
+					#if SBOL_DEBUG_ACTIVE
+					else
+						printf("Unknown reference node %s\n", ref_node->name);
+					#endif
+					xmlFree(ref_uri);
+			}
 
-// analyze a single triple and add to
-// SBOL data structures if appropriate
-void read_triple(void* user_data, raptor_statement* triple) {
-	char* s;
-	char* p;
-	char* o;
+		}
+	}
 	
-	// read subject
-	if (triple->subject->type == RAPTOR_TERM_TYPE_URI)
-		s = (char*)(raptor_uri_as_string(triple->subject->value.uri));
-	else if (triple->subject->type == RAPTOR_TERM_TYPE_LITERAL)
-		s = (char*)(triple->subject->value.literal.string);
-	
-	// read predicate
-	if (triple->predicate->type == RAPTOR_TERM_TYPE_URI)
-		p = (char*)(raptor_uri_as_string(triple->predicate->value.uri));
-	else if (triple->predicate->type == RAPTOR_TERM_TYPE_LITERAL)
-		p = (char*)(triple->predicate->value.literal.string);
-    
-	// read object
-	if (triple->object->type == RAPTOR_TERM_TYPE_URI)
-		o = (char*)(raptor_uri_as_string(triple->object->value.uri));
-	else if (triple->object->type == RAPTOR_TERM_TYPE_LITERAL)
-		o = (char*)(triple->object->value.literal.string);
-
-	// for debugging
-	//print_triple(triple);
-	
-	// adjust SBOL core to match
-	if (sameString(p, RDF_TYPE))
-		createNewObject(s, o);
-	else if (isDNASequenceURI(s))
-		addToDNASequence(s, p, o);
-	else if (isDNAComponentURI(s))
-		addToDNAComponent(s, p, o);
-	else if (isCollectionURI(s))
-		addToCollection(s, p, o);
-	else if (isSequenceAnnotationURI(s))
-		addToSequenceAnnotation(s, p, o);
+	xmlFree(com_uri);
+	return com;
 }
 
+Collection *readCollection(xmlNode *node, int pass) {
+	xmlChar *uri = getNodeURI(node);
+	if (isSBOLObjectURI(uri)) {
+		#if SBOL_DEBUG_ACTIVE
+		printf("Tried to read %s twice\n", uri);
+		#endif
+		return NULL;
+	}
+	Collection *col = createCollection((char *)uri);
+	readSBOLCompoundObject(col->base, node);
+	// TODO read components
+	// TODO read collections
+	xmlFree(uri);
+	return col;
+}
+
+/**************************
+ * main parsing functions
+ **************************/
+
+// make a first pass through to create the SBOL objects
+// then go back and link them up according to rdf:resource nodes
+void readSBOLObjects(xmlNode *root, int pass) {
+	xmlNode *node;
+	for (node = root; node; node = node->next) {
+		if      (nodeNameEquals(node, "Collection"))         readCollection(node, pass);
+		else if (nodeNameEquals(node, "SequenceAnnotation")) readSequenceAnnotation(node, pass);
+		else if (nodeNameEquals(node, "DnaComponent"))       readDNAComponent(node, pass);
+		else if (nodeNameEquals(node, "DnaSequence"))        readDNASequence(node, pass);
+		readSBOLObjects(node->children, pass);
+	}
+}
+
+// TODO return error codes
 void readSBOLCore(char* filename) {
-	if (!filename)
-		return;
+	xmlDocPtr  doc;
+	xmlNodePtr root;
 
-	// raptor stuff
-	// (copied from http://librdf.org/raptor/api/tutorial-parser-example.html)
-	raptor_world* world = NULL;
-	unsigned char *uri_string;
-	raptor_uri *uri, *base_uri;
-	world = raptor_new_world();
-	raptor_parser* rdf_parser = raptor_new_parser(world, "guess");
-
-	// pass each triple to read_triple for analysis
-	raptor_parser_set_statement_handler(rdf_parser, NULL, &read_triple);
+	// this initializes the library and checks potential ABI mismatches
+	// between the version it was compiled for and the actual shared
+	// library used.
+    LIBXML_TEST_VERSION
 	
-	uri_string = raptor_uri_filename_to_uri_string(filename);
-	uri = raptor_new_uri(world, uri_string);
-	base_uri = raptor_uri_copy(uri);
-	raptor_parser_parse_file(rdf_parser, uri, base_uri);
-	raptor_free_parser(rdf_parser);
-	raptor_free_uri(base_uri);
-	raptor_free_uri(uri);
-	raptor_free_memory(uri_string);
-	raptor_free_world(world);
+	// parse
+	doc = xmlParseFile(filename);
+	if (!doc) {
+		printf("Error reading %s\n", filename);
+		return;
+	}
+	
+	// validate
+	if (!isValidSBOL(doc)) {
+		printf("%s is not a valid SBOL document.\n", filename);
+		return;
+	}
+	
+	// import
+	root = xmlDocGetRootElement(doc);
+	readSBOLObjects(root, 0);
+	readSBOLObjects(root, 1);
+	
+	// clean up
+	xmlFreeDoc(doc);
+	xmlCleanupParser();
 }

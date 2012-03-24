@@ -10,7 +10,7 @@ void TestValid1(CuTest* tc) {
 	cleanupSBOLCore();
 	char* filename = "../examples/valid/valid1.xml";
 	printf("reading %s\n", filename);
-	readSBOLCore_xml(filename);
+	readSBOLCore(filename);
 	CuAssertIntEquals(tc, 1, getNumDNAComponents());
 	DNAComponent *com = getNthDNAComponent(0);
 	CuAssertStrEquals(tc, "http://example.com/dc1", getDNAComponentURI(com));
@@ -26,7 +26,7 @@ void TestValid1(CuTest* tc) {
 void TestValid2(CuTest* tc) {
 	char* filename = "../examples/valid/valid2.xml";
 	printf("reading %s\n", filename);
-	readSBOLCore_xml(filename);
+	readSBOLCore(filename);
 	// components
 	CuAssertIntEquals(tc, 4, getNumDNAComponents());
 	CuAssertIntEquals(tc, 1, isDNAComponentURI("http://example.com/dc1"));

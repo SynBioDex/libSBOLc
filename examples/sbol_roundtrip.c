@@ -3,8 +3,8 @@
 
 // TODO check that the new file is information-equivalent to the old one?
 
-#define DEFAULT_INFILE  "../examples/valid/ntriples_simple.nt"
-#define DEFAULT_OUTFILE "ntriples_simple.xml"
+#define DEFAULT_INFILE  "../examples/valid/valid1.xml"
+#define DEFAULT_OUTFILE "output.xml"
 
 int main(int argc, char* argv[]) {
 	char* infile;

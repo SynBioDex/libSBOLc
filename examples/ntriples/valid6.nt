@@ -1,9 +1,0 @@
-<http://example.com/dc1> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://sbols.org/v1#Collection> .
-<http://example.com/dc1> <http://sbols.org/v1#displayId> "DC1" .
-<http://example.com/dc1> <http://sbols.org/v1#name> "DnaComponent1" .
-<http://example.com/dc1> <http://sbols.org/v1#description> "\n\t\tA collection may contain components by reference only and those references may be in \n\t\tanother document too. In this example http://example.com/dc1 reference is to a component\n\t\tin this document and http://example.com/dc2 reference is to a component that is defined elsewhere.\n\t\t" .
-<http://example.com/dc1> <http://sbols.org/v1#component> <http://example.com/dc1> .
-<http://example.com/dc1> <http://sbols.org/v1#component> <http://example.com/dc2> .
-<http://example.com/dc1> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://sbols.org/v1#DnaComponent> .
-<http://example.com/dc1> <http://sbols.org/v1#displayId> "DC1" .
-<http://example.com/dc1> <http://sbols.org/v1#name> "DnaComponent1" .
