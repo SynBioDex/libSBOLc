@@ -24,6 +24,30 @@ char *VALID_EXAMPLE_FILENAMES[NUM_VALID_EXAMPLES] = {
 	VALID_EXAMPLES_DIR "valid13_dna_sequence.xml"
 };
 
+// a list of all the invalid example filenames
+// so they can be retrieved by index in a loop
+char *INVALID_EXAMPLE_FILENAMES[NUM_INVALID_EXAMPLES+6] = {
+	INVALID_EXAMPLES_DIR "invalid01_missing_displayId.xml",
+	INVALID_EXAMPLES_DIR "invalid02_no_rdf_root.xml",
+	INVALID_EXAMPLES_DIR "invalid03_bad_ordering.xml",
+	INVALID_EXAMPLES_DIR "invalid04_bad_nucleotide_char.xml",
+	INVALID_EXAMPLES_DIR "invalid05_empty_nucleotides.xml",
+	INVALID_EXAMPLES_DIR "invalid06_missing_nucleotides.xml",
+	INVALID_EXAMPLES_DIR "invalid07_negative_bioStart.xml",
+	INVALID_EXAMPLES_DIR "invalid08_bioStart_exists_bioEnd_missing.xml",
+	INVALID_EXAMPLES_DIR "invalid09_multiple_bioStart.xml",
+	INVALID_EXAMPLES_DIR "invalid10_bad_strand.xml",
+	INVALID_EXAMPLES_DIR "invalid11_standalone_sequence_annotation.xml",
+	INVALID_EXAMPLES_DIR "invalid12_subComponent_missing.xml",
+	INVALID_EXAMPLES_DIR "invalid13_type_not_so.xml",
+	INVALID_EXAMPLES_DIR "invalid14_cyclic_precedes.xml",
+	INVALID_EXAMPLES_DIR "invalid15_inconsistent_precedes.xml",
+	INVALID_EXAMPLES_DIR "invalid16_bioStart_exceeds_bioEnd.xml",
+	INVALID_EXAMPLES_DIR "invalid17_annotation_dna_sequence_length.xml",
+	INVALID_EXAMPLES_DIR "invalid18_annotation_dna_sequence_contents.xml",
+	INVALID_EXAMPLES_DIR "invalid19_no_uri.xml"
+};
+
 // a list of all the output filenames
 // so they can be retrieved by index in a loop
 char *TEST_OUTPUT_FILENAMES[NUM_VALID_EXAMPLES] = {

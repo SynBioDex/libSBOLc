@@ -13,6 +13,7 @@ CuSuite* RoundTripGetSuite();
 CuSuite* ReaderGetSuite();
 CuSuite* WriterGetSuite();
 CuSuite* SBOLObjectGetSuite();
+CuSuite* ValidatorGetSuite();
 
 void RunUnitTests() {
 	CuString* output = CuStringNew();
@@ -26,6 +27,7 @@ void RunUnitTests() {
 	CuSuiteAddSuite(suite, CollectionGetSuite());
 	CuSuiteAddSuite(suite, PropertyGetSuite());
 	CuSuiteAddSuite(suite, CleanupGetSuite());
+	CuSuiteAddSuite(suite, ValidatorGetSuite());
 	
 	printf("\nRunning unit tests...\n");
 	CuSuiteRun(suite);
@@ -38,6 +40,7 @@ void RunExampleTests() {
 	CuString* output = CuStringNew();
 	CuSuite*  suite  = CuSuiteNew();
 
+	CuSuiteAddSuite(suite, ValidatorGetSuite());
 	CuSuiteAddSuite(suite, ReaderGetSuite());
 	CuSuiteAddSuite(suite, WriterGetSuite());
 	CuSuiteAddSuite(suite, RoundTripGetSuite());
