@@ -1,5 +1,5 @@
-#ifndef SBOL_TEST_UTIL
-#define SBOL_TEST_UTIL
+#ifndef SBOL_TEST_UTILITIES_HEADER
+#define SBOL_TEST_UTILITIES_HEADER
 
 char  randomChar();
 char* randomString();
