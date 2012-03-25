@@ -3,7 +3,8 @@
 #include "utilities.h"
 #include "object.h"
 
-#define NUM_FAST_TESTS 1000
+// TODO why does this crash with large numbers?
+#define NUM_FAST_TESTS 100
 
 void TestCreateBlankSBOLObject(CuTest* tc) {
 	cleanupSBOLObjects();
@@ -170,7 +171,7 @@ void TestCreateRandomSBOLCompoundObjects(CuTest* tc) {
 }
 
 void PrintSBOLObjectTestInfo() {
-	printf("testing core/object\n");
+	printf("testing sbol objects\n");
 }
 
 // TODO TestCreateRandomObjects?

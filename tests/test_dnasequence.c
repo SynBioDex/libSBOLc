@@ -38,7 +38,7 @@ void TestCreateRandomDNASequence(CuTest* tc) {
 }
 
 void PrintDNASequenceTestInfo() {
-	printf("testing core/dnasequence\n");
+	printf("testing dnasequences\n");
 }
 
 CuSuite* DNASequenceGetSuite() {

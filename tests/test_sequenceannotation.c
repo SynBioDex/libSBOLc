@@ -57,7 +57,7 @@ void TestPrecedes(CuTest* tc) {
 }
 
 void PrintSequenceAnnotationTestInfo() {
-	printf("testing core/sequenceannotation\n");
+	printf("testing sequenceannotations\n");
 }
 
 CuSuite* SequenceAnnotationGetSuite() {

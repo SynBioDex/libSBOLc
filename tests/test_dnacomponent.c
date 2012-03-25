@@ -79,7 +79,7 @@ void TestRandomDNAComponentProperties(CuTest* tc) {
 }
 
 void PrintDNAComponentTestInfo() {
-	printf("testing core/dnacomponent\n");
+	printf("testing dnacomponents\n");
 }
 
 CuSuite* DNAComponentGetSuite() {

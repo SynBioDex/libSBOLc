@@ -391,10 +391,16 @@ void readSBOLCore(char* filename) {
 	// this initializes the library and checks potential ABI mismatches
 	// between the version it was compiled for and the actual shared
 	// library used.
-    LIBXML_TEST_VERSION
+	LIBXML_TEST_VERSION
 	
 	// parse
 	doc = xmlParseFile(filename);
+
+	// workaround for a problem with libxml2 and MinGW
+	// google: "using libxml2 on MinGW - xmlFree crashes"
+	if (!xmlFree)
+		xmlMemGet( &xmlFree, &xmlMalloc, &xmlRealloc, NULL );
+
 	if (!doc) {
 		printf("Error reading %s\n", filename);
 		return;

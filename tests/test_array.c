@@ -206,7 +206,7 @@ void TestCollectionIndexing(CuTest* tc) {
 }
 
 void PrintArrayTestInfo() {
-	printf("testing core/array\n");
+	printf("testing arrays\n");
 }
 
 CuSuite* ArrayGetSuite() {

@@ -42,7 +42,7 @@ void TestDeleteEmptyProperty(CuTest* tc) {
 }
 
 void PrintPropertyTestInfo() {
-	printf("testing core/property\n");
+	printf("testing properties\n");
 }
 
 CuSuite* PropertyGetSuite() {

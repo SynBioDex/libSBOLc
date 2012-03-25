@@ -100,7 +100,7 @@ void TestRandomCollectionProperties(CuTest* tc) {
 }
 
 void PrintCollectionTestInfo() {
-	printf("testing core/collection\n");
+	printf("testing collections\n");
 }
 
 CuSuite* CollectionGetSuite() {

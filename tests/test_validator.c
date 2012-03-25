@@ -12,6 +12,12 @@ void TestValidateValidExamples(CuTest *tc) {
 	for (n=0; n<NUM_VALID_EXAMPLES; n++) {
 		printf("validating %s\n", VALID_EXAMPLE_FILENAMES[n]);
 		doc = xmlParseFile(VALID_EXAMPLE_FILENAMES[n]);
+
+		// workaround for a problem with libxml2 and MinGW
+		// google: "using libxml2 on MinGW - xmlFree crashes"
+		if (!xmlFree)
+			xmlMemGet( &xmlFree, &xmlMalloc, &xmlRealloc, NULL );
+
 		CuAssertIntEquals(tc, 1, isValidSBOL(doc));
 		xmlFreeDoc(doc);
 		xmlCleanupParser();
@@ -34,6 +40,12 @@ void TestRejectInvalidExamples(CuTest *tc) {
 	for (n=0; n<NUM_INVALID_EXAMPLES; n++) {
 		printf("rejecting %s\n", INVALID_EXAMPLE_FILENAMES[n]);
 		doc = xmlParseFile(INVALID_EXAMPLE_FILENAMES[n]);
+
+		// workaround for a problem with libxml2 and MinGW
+		// google: "using libxml2 on MinGW - xmlFree crashes"
+		if (!xmlFree)
+			xmlMemGet( &xmlFree, &xmlMalloc, &xmlRealloc, NULL );
+
 		CuAssertIntEquals(tc, 0, isValidSBOL(doc));
 		xmlFreeDoc(doc);
 		xmlCleanupParser();
@@ -43,15 +55,23 @@ void TestRejectInvalidExamples(CuTest *tc) {
 	initGenericErrorDefaultFunc(NULL);
 }
 
+void PrintIgnoreTestsWarning(CuTest *tc) {
+	// The last few examples deal with rejecting documents
+	// that are logically wrong, but aren't caught by the 
+	// SBOL schema. Rejecting them will require more coding.
+	printf("\nWARNING: skipped invalid examples 14-19\n");
+}
+
 CuSuite* ValidatorGetSuite() {
 
 	// this initializes the library and checks potential ABI mismatches
 	// between the version it was compiled for and the actual shared
 	// library used.
-    LIBXML_TEST_VERSION
+	LIBXML_TEST_VERSION
 
 	CuSuite* validatorTests = CuSuiteNew();
 	SUITE_ADD_TEST(validatorTests, TestValidateValidExamples);
 	SUITE_ADD_TEST(validatorTests, TestRejectInvalidExamples);
+	SUITE_ADD_TEST(validatorTests, PrintIgnoreTestsWarning);
 	return validatorTests;
 }
