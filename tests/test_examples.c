@@ -8,20 +8,38 @@
 
 // a list of all the valid example filenames
 // so they can be retrieved by index in a loop
-char *VALID_EXAMPLE_FILENAMES[NUM_VALID_EXAMPLES] = {
+char *VALID_EXAMPLE_FILENAMES[13] = {
 	VALID_EXAMPLES_DIR "valid01_dna_component_empty.xml",
 	VALID_EXAMPLES_DIR "valid02_dna_component.xml",
 	VALID_EXAMPLES_DIR "valid03_dna_component_sequence.xml",
-	VALID_EXAMPLES_DIR "valid04_dna_component_annotation.xml"
+	VALID_EXAMPLES_DIR "valid04_dna_component_annotation.xml",
+	VALID_EXAMPLES_DIR "valid05_dna_component_so_type.xml",
+	VALID_EXAMPLES_DIR "valid06_dna_component_so_types.xml",
+	VALID_EXAMPLES_DIR "valid07_dna_component_extension.xml",
+	VALID_EXAMPLES_DIR "valid08_dna_component_detailed.xml",
+	VALID_EXAMPLES_DIR "valid09_dna_component_multiple.xml",
+	VALID_EXAMPLES_DIR "valid10_collection_empty.xml",
+	VALID_EXAMPLES_DIR "valid11_collection_components.xml",
+	VALID_EXAMPLES_DIR "valid12_collection_multiple.xml",
+	VALID_EXAMPLES_DIR "valid13_dna_sequence.xml"
 };
 
 // a list of all the output filenames
 // so they can be retrieved by index in a loop
-char *TEST_OUTPUT_FILENAMES[NUM_VALID_EXAMPLES] = {
+char *TEST_OUTPUT_FILENAMES[13] = {
 	TEST_OUTPUT_DIR "valid01_dna_component_empty.xml",
 	TEST_OUTPUT_DIR "valid02_dna_component.xml",
 	TEST_OUTPUT_DIR "valid03_dna_component_sequence.xml",
-	TEST_OUTPUT_DIR "valid04_dna_component_annotation.xml"
+	TEST_OUTPUT_DIR "valid04_dna_component_annotation.xml",
+	TEST_OUTPUT_DIR "valid05_dna_component_so_type.xml",
+	TEST_OUTPUT_DIR "valid06_dna_component_so_types.xml",
+	TEST_OUTPUT_DIR "valid07_dna_component_extension.xml",
+	TEST_OUTPUT_DIR "valid08_dna_component_detailed.xml",
+	TEST_OUTPUT_DIR "valid09_dna_component_multiple.xml",
+	TEST_OUTPUT_DIR "valid10_collection_empty.xml",
+	TEST_OUTPUT_DIR "valid11_collection_components.xml",
+	TEST_OUTPUT_DIR "valid12_collection_multiple.xml",
+	TEST_OUTPUT_DIR "valid13_dna_sequence.xml"
 };
 
 // This verfies that there aren't any
@@ -144,11 +162,120 @@ void TestLoadedValid04(CuTest *tc) {
 	CuAssertPtrEquals(tc, dc2, getSubComponent(sa1));
 }
 
+void TestLoadedValid05(CuTest *tc) {
+	// check how many objects of each type were created
+	CuAssertIntEquals(tc, 2, getNumSBOLObjects());
+	CuAssertIntEquals(tc, 1, getNumSBOLCompoundObjects());
+	CuAssertIntEquals(tc, 1, getNumDNASequences());
+	CuAssertIntEquals(tc, 0, getNumSequenceAnnotations());
+	CuAssertIntEquals(tc, 1, getNumDNAComponents());
+	CuAssertIntEquals(tc, 0, getNumCollections());
+	// check dc1
+	DNAComponent *dc1 = getNthDNAComponent(0);
+	CuAssertStrEquals(tc, "http://example.com/dc1", getDNAComponentURI(dc1));
+	// dc1 should have an rdf:type node too, which libSBOLc ignores
+	CuAssertStrEquals(tc, "DC1", getDNAComponentDisplayID(dc1));
+	CuAssertStrEquals(tc, "DnaComponent1", getDNAComponentName(dc1));
+	CuAssertStrEquals(tc, "A DnaComponent can optionally use multiple types from Sequence Ontology",
+						getDNAComponentDescription(dc1));
+	CuAssertIntEquals(tc, 0, getNumSequenceAnnotationsIn(dc1));
+	CuAssertIntEquals(tc, 0, getNumCollectionsFor(dc1));
+	// check ds1
+	DNASequence *ds1 = getNthDNASequence(0);
+	CuAssertStrEquals(tc, "http://example.com/ds1", getDNASequenceURI(ds1));
+	CuAssertStrEquals(tc, "tccctatcagtgat", getNucleotides(ds1));
+	// check pointers
+	CuAssertPtrEquals(tc, ds1, getDNAComponentSequence(dc1));
+}
+
+void TestLoadedValid06(CuTest *tc) {
+	// check how many objects of each type were created
+	CuAssertIntEquals(tc, 2, getNumSBOLObjects());
+	CuAssertIntEquals(tc, 1, getNumSBOLCompoundObjects());
+	CuAssertIntEquals(tc, 1, getNumDNASequences());
+	CuAssertIntEquals(tc, 0, getNumSequenceAnnotations());
+	CuAssertIntEquals(tc, 1, getNumDNAComponents());
+	CuAssertIntEquals(tc, 0, getNumCollections());
+	// check dc1
+	DNAComponent *dc1 = getNthDNAComponent(0);
+	CuAssertStrEquals(tc, "http://example.com/dc1", getDNAComponentURI(dc1));
+	// dc1 should have two rdf:type nodes, which libSBOLc ignores
+	CuAssertStrEquals(tc, "DC1", getDNAComponentDisplayID(dc1));
+	CuAssertStrEquals(tc, "DnaComponent1", getDNAComponentName(dc1));
+	CuAssertStrEquals(tc, "A DnaComponent can optionally use a type from Sequence Ontology",
+						getDNAComponentDescription(dc1));
+	CuAssertIntEquals(tc, 0, getNumSequenceAnnotationsIn(dc1));
+	CuAssertIntEquals(tc, 0, getNumCollectionsFor(dc1));
+	// check ds1
+	DNASequence *ds1 = getNthDNASequence(0);
+	CuAssertStrEquals(tc, "http://example.com/ds1", getDNASequenceURI(ds1));
+	CuAssertStrEquals(tc, "tccctatcagtgat", getNucleotides(ds1));
+	// check pointers
+	CuAssertPtrEquals(tc, ds1, getDNAComponentSequence(dc1));
+}
+
+void TestLoadedValid07(CuTest *tc) {
+	// check overall numbers
+	CuAssertIntEquals(tc, 4, getNumSBOLObjects());
+	CuAssertIntEquals(tc, 2, getNumSBOLCompoundObjects());
+	CuAssertIntEquals(tc, 1, getNumDNASequences());
+	CuAssertIntEquals(tc, 1, getNumSequenceAnnotations());
+	CuAssertIntEquals(tc, 2, getNumDNAComponents());
+	CuAssertIntEquals(tc, 0, getNumCollections());
+	// check sequences
+	DNASequence *ds1 = getDNASequence("http://example.com/ds1");
+	CuAssertStrEquals(tc, "tccctatcagtgat", getNucleotides(ds1));
+	// check components
+	DNAComponent *dc1 = getDNAComponent("http://example.com/dc1");
+	DNAComponent *dc2 = getDNAComponent("http://example.com/dc2");
+	// dc1 should have a dc:creator node that libSBOLc ignores
+	CuAssertStrEquals(tc, "DC1", getDNAComponentDisplayID(dc1));
+	CuAssertStrEquals(tc, "DC2", getDNAComponentDisplayID(dc2));
+	CuAssertStrEquals(tc, "DnaComponent1", getDNAComponentName(dc1));
+	CuAssertStrEquals(tc, "DnaComponent2", getDNAComponentName(dc2));
+	CuAssertStrEquals(tc, "It is valid to have additional elements in any SBOL element as long as they appear after \n\t\tthe elements defined in SBOL core model. This example adds dc:creator annotations to SBOL elements", getDNAComponentDescription(dc1));
+	CuAssertStrEquals(tc, "Another DNA component", getDNAComponentDescription(dc2));
+	CuAssertIntEquals(tc, 1, getNumSequenceAnnotationsIn(dc1));
+	CuAssertIntEquals(tc, 0, getNumSequenceAnnotationsIn(dc2));
+	CuAssertIntEquals(tc, 0, getNumCollectionsFor(dc1));
+	CuAssertIntEquals(tc, 0, getNumCollectionsFor(dc2));
+	// check annotations
+	SequenceAnnotation *sa1 = getSequenceAnnotation("http://example.com/sa1");
+	// sa1 should have a dc:creator node that libSBOLc ignores
+	CuAssertIntEquals(tc, -1, getBioStart(sa1));
+	CuAssertIntEquals(tc, -1, getBioEnd(sa1));
+	CuAssertIntEquals(tc, 1, getStrandPolarity(sa1));
+	// check pointers
+	CuAssertPtrEquals(tc, ds1, getDNAComponentSequence(dc1));
+	CuAssertPtrEquals(tc, NULL, getDNAComponentSequence(dc2));
+	CuAssertPtrEquals(tc, dc2, getSubComponent(sa1));
+	CuAssertPtrEquals(tc, sa1, getNthSequenceAnnotationIn(dc1, 0));
+	CuAssertPtrEquals(tc, dc2, getSubComponent(sa1));
+}
+
+void TestLoadedValid08(CuTest *tc) {}
+void TestLoadedValid09(CuTest *tc) {}
+void TestLoadedValid10(CuTest *tc) {}
+void TestLoadedValid11(CuTest *tc) {}
+void TestLoadedValid12(CuTest *tc) {}
+void TestLoadedValid13(CuTest *tc) {}
+
+// TODO learn macro to de-duplicate this
+
 // a list of all the TestLoadedValid* functions
 // so they can be retrieved by index in a loop
-void (*TEST_LOADED_FUNCTIONS[NUM_VALID_EXAMPLES])() = {
+void (*TEST_LOADED_FUNCTIONS[13])() = {
 	TestLoadedValid01,
 	TestLoadedValid02,
 	TestLoadedValid03,
-	TestLoadedValid04
+	TestLoadedValid04,
+	TestLoadedValid05,
+	TestLoadedValid06,
+	TestLoadedValid07,
+	TestLoadedValid08,
+	TestLoadedValid09,
+	TestLoadedValid10,
+	TestLoadedValid11,
+	TestLoadedValid12,
+	TestLoadedValid13
 };

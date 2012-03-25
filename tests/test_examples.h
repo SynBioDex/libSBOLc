@@ -5,7 +5,7 @@
 // TODO replace with SBOL_DEBUG_ACTIVE
 #define SBOL_TEST_DEBUG 0
 
-#define NUM_VALID_EXAMPLES   4
+#define NUM_VALID_EXAMPLES   7
 #define NUM_INVALID_EXAMPLES 0
 
 #define VALID_EXAMPLES_DIR   "../examples/valid/"
@@ -16,12 +16,12 @@ struct _CuTest;
 
 // arrays of filenames for reading
 // and writing example tests
-char *VALID_EXAMPLE_FILENAMES[NUM_VALID_EXAMPLES];
-char   *TEST_OUTPUT_FILENAMES[NUM_VALID_EXAMPLES];
+char *VALID_EXAMPLE_FILENAMES[13];
+char   *TEST_OUTPUT_FILENAMES[13];
 
 // array of functions for checking that
 // the example content was loaded correctly
-void (*TEST_LOADED_FUNCTIONS[NUM_VALID_EXAMPLES])();
+void (*TEST_LOADED_FUNCTIONS[13])();
 
 void TestNothingLoaded(CuTest *tc);
 
