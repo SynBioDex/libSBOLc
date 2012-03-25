@@ -26,16 +26,22 @@ The first time you click <code>Configure</code>, CMake will list variables, like
 
 The last step is to <code>cd</code> into the <code>libSBOLc/build</code> folder and run the compiler.
 
-For MingGW:
+    make
+
+or
 
     mingw32-make.exe
-
-For gcc:
-
-    make
 
 Binaries will be generated in the <code>libSBOLc/release</code> folder.
 
 ## Testing libSBOLc
+
+Once you've configured and built libSBOLc, you can run some simple tests to make sure everything is working:
+
+    ./release/test_all
+    
+or 
+
+    ./release/test_all.exe
 
 ## Using libSBOLc
