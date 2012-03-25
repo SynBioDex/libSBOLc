@@ -5,7 +5,7 @@
 // TODO replace with SBOL_DEBUG_ACTIVE
 #define SBOL_TEST_DEBUG 0
 
-#define NUM_VALID_EXAMPLES   8
+#define NUM_VALID_EXAMPLES   9
 #define NUM_INVALID_EXAMPLES 0
 
 #define VALID_EXAMPLES_DIR   "../examples/valid/"

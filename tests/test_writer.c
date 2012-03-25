@@ -130,7 +130,21 @@ void TestRecreateValid08(CuTest *tc) {
 	addPrecedesRelationship(sa1, sa3);
 }
 
-void TestRecreateValid09(CuTest *tc) {}
+void TestRecreateValid09(CuTest *tc) {
+	// components
+	DNAComponent *dc1 = createDNAComponent("http://example.com/dc1");
+	DNAComponent *dc2 = createDNAComponent("http://example.com/dc2");
+	setDNAComponentDisplayID(dc1, "DC1");
+	setDNAComponentDisplayID(dc2, "DC2");
+	setDNAComponentName(dc1, "DnaComponent1");
+	setDNAComponentName(dc2, "DnaComponent2");
+	setDNAComponentDescription(dc1, "Multiple DNA components at the top level are allowed even without a collection");
+	// sequence
+	DNASequence *ds1 = createDNASequence("http://example.com/ds1");
+	setNucleotides(ds1, "tccctatcagtgat");
+	setDNAComponentSequence(dc1, ds1);
+}
+
 void TestRecreateValid10(CuTest *tc) {}
 void TestRecreateValid11(CuTest *tc) {}
 void TestRecreateValid12(CuTest *tc) {}

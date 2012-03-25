@@ -302,7 +302,29 @@ void TestLoadedValid08(CuTest *tc) {
 	CuAssertIntEquals(tc, 1, precedes(sa1, sa3));
 }
 
-void TestLoadedValid09(CuTest *tc) {}
+void TestLoadedValid09(CuTest *tc) {
+	// overall numbers
+	CuAssertIntEquals(tc, 1, getNumDNASequences());
+	CuAssertIntEquals(tc, 0, getNumSequenceAnnotations());
+	CuAssertIntEquals(tc, 2, getNumDNAComponents());
+	CuAssertIntEquals(tc, 0, getNumCollections());
+	CuAssertIntEquals(tc, 3, getNumSBOLObjects());
+	CuAssertIntEquals(tc, 2, getNumSBOLCompoundObjects());
+	// components
+	DNAComponent *dc1 = getDNAComponent("http://example.com/dc1");
+	DNAComponent *dc2 = getDNAComponent("http://example.com/dc2");
+	CuAssertStrEquals(tc, "DC1", getDNAComponentDisplayID(dc1));
+	CuAssertStrEquals(tc, "DC2", getDNAComponentDisplayID(dc2));
+	CuAssertStrEquals(tc, "DnaComponent1", getDNAComponentName(dc1));
+	CuAssertStrEquals(tc, "DnaComponent2", getDNAComponentName(dc2));
+	CuAssertStrEquals(tc, "Multiple DNA components at the top level are allowed even without a collection",
+						getDNAComponentDescription(dc1));
+	// sequence
+	DNASequence *ds1 = getDNASequence("http://example.com/ds1");
+	CuAssertStrEquals(tc, "tccctatcagtgat", getNucleotides(ds1));
+	CuAssertPtrEquals(tc, ds1, getDNAComponentSequence(dc1));
+}
+
 void TestLoadedValid10(CuTest *tc) {}
 void TestLoadedValid11(CuTest *tc) {}
 void TestLoadedValid12(CuTest *tc) {}
