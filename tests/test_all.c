@@ -27,8 +27,7 @@ void RunUnitTests() {
 	CuSuiteAddSuite(suite, CollectionGetSuite());
 	CuSuiteAddSuite(suite, PropertyGetSuite());
 	CuSuiteAddSuite(suite, CleanupGetSuite());
-	CuSuiteAddSuite(suite, ValidatorGetSuite());
-	
+
 	printf("\nRunning unit tests...\n");
 	CuSuiteRun(suite);
 	CuSuiteSummary(suite, output);
