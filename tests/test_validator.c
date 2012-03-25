@@ -7,7 +7,7 @@
 
 void TestValidateValidExamples(CuTest *tc) {
 	printf("\n");
-	xmlDocPtr  doc;
+	xmlDocPtr doc;
 	int n;
 	for (n=0; n<NUM_VALID_EXAMPLES; n++) {
 		printf("validating %s\n", VALID_EXAMPLE_FILENAMES[n]);
@@ -18,10 +18,18 @@ void TestValidateValidExamples(CuTest *tc) {
 	}
 }
 
-// TODO keep this from printing errors
+// dummy function that prevents libxml2
+// from printing an error for every invalid example
+void ignore(void *context, const char *message, ...) {}
+
 void TestRejectInvalidExamples(CuTest *tc) {
+
+	// mask errors with dummy function
+	xmlGenericErrorFunc handler = (xmlGenericErrorFunc) ignore;
+	initGenericErrorDefaultFunc(&handler);
+
 	printf("\n");
-	xmlDocPtr  doc;
+	xmlDocPtr doc;
 	int n;
 	for (n=0; n<NUM_INVALID_EXAMPLES; n++) {
 		printf("rejecting %s\n", INVALID_EXAMPLE_FILENAMES[n]);
@@ -30,6 +38,9 @@ void TestRejectInvalidExamples(CuTest *tc) {
 		xmlFreeDoc(doc);
 		xmlCleanupParser();
 	}
+
+	// restore normal error handling
+	initGenericErrorDefaultFunc(NULL);
 }
 
 CuSuite* ValidatorGetSuite() {
