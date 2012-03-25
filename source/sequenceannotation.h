@@ -42,6 +42,8 @@ SBOLAPIEXPORTS void setStrandPolarity(SequenceAnnotation* ann, int polarity);
 
 SBOLAPIEXPORTS struct _DNAComponent* getSubComponent(const SequenceAnnotation* ann);
 
+SBOLAPIEXPORTS int annotates(const SequenceAnnotation *ann, const struct _DNAComponent *com);
+
 // constrain order
 SBOLAPIEXPORTS void addPrecedesRelationship(SequenceAnnotation* upstream, SequenceAnnotation* downstream);
 SBOLAPIEXPORTS int getNumPrecedes(const SequenceAnnotation* ann);

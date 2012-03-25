@@ -92,7 +92,7 @@ SBOLCompoundObject *readSBOLCompoundObject(SBOLCompoundObject *obj, xmlNode *nod
 
 DNASequence *readDNASequence(xmlNode *node, int pass) {
 	xmlChar *uri = getNodeURI(node);
-	if (isSBOLObjectURI(uri)) {
+	if (isSBOLObjectURI((char *)uri)) {
 		if (pass > 0)
 			return getDNASequence((char *)uri);
 		#if SBOL_DEBUG_ACTIVE
@@ -108,17 +108,17 @@ DNASequence *readDNASequence(xmlNode *node, int pass) {
 	
 	// add nucleotides
 	xmlNode *child;
-	char *content;
+	xmlChar *content;
 	for (child = node->children; child; child = child->next) {
 		if (!child->name) continue;
-		content = (char *)xmlNodeGetContent(child);
-		if (!content) continue;
+		content = xmlNodeGetContent(child);
+		if (!(char *)content) continue;
 		// TODO #define this
 		else if (nodeNameEquals(child, "nucleotides")) {
-			setNucleotides(seq, content);
+			setNucleotides(seq, (char *)content);
 			break;
 		}
-		free(content);
+		xmlFree(content);
 	}
 	
 	xmlFree(uri);
@@ -276,7 +276,7 @@ DNAComponent *readDNAComponent(xmlNode *node, int pass) {
 						continue;
 					ref_uri = getNodeURI(ref_node);
 					if (nodeNameEquals(ref_node, "DnaSequence"))
-						setDNAComponentSequence(com, getDNASequence(ref_uri));
+						setDNAComponentSequence(com, getDNASequence((char *)ref_uri));
 					else if (nodeNameEquals(ref_node, "SequenceAnnotation"))
 						addSequenceAnnotation(com, getSequenceAnnotation((char *)ref_uri));
 					else if (nodeNameEquals(ref_node, "Collection"))

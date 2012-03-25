@@ -226,6 +226,12 @@ int precedes(const SequenceAnnotation* ann1, const SequenceAnnotation* ann2) {
 	return 0;
 }
 
+int annotates(const SequenceAnnotation *ann, const DNAComponent *com) {
+	if (!ann || !com || !ann->annotates)
+		return 0;
+	return (int) (ann->annotates == com);
+}
+
 void cleanupSequenceAnnotations() {
 	if (allSequenceAnnotations) {
 		int n;

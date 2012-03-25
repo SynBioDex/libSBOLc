@@ -253,7 +253,55 @@ void TestLoadedValid07(CuTest *tc) {
 	CuAssertPtrEquals(tc, dc2, getSubComponent(sa1));
 }
 
-void TestLoadedValid08(CuTest *tc) {}
+void TestLoadedValid08(CuTest *tc) {
+	// check overall numbers
+	CuAssertIntEquals(tc, 2, getNumDNASequences());
+	CuAssertIntEquals(tc, 3, getNumSequenceAnnotations());
+	CuAssertIntEquals(tc, 4, getNumDNAComponents());
+	CuAssertIntEquals(tc, 0, getNumCollections());
+	CuAssertIntEquals(tc, 9, getNumSBOLObjects());
+	CuAssertIntEquals(tc, 4, getNumSBOLCompoundObjects());
+	// components
+	DNAComponent *dc1 = getDNAComponent("http://example.com/dc1");
+	DNAComponent *dc2 = getDNAComponent("http://example.com/dc2");
+	DNAComponent *dc3 = getDNAComponent("http://example.com/dc3");
+	DNAComponent *dc4 = getDNAComponent("http://example.com/dc4");
+	CuAssertStrEquals(tc, "DC1", getDNAComponentDisplayID(dc1));
+	CuAssertStrEquals(tc, "DC2", getDNAComponentDisplayID(dc2));
+	CuAssertStrEquals(tc, "DC3", getDNAComponentDisplayID(dc3));
+	CuAssertStrEquals(tc, "DC4", getDNAComponentDisplayID(dc4));
+	CuAssertStrEquals(tc, "DnaComponent1", getDNAComponentName(dc1));
+	CuAssertStrEquals(tc, "DnaComponent2", getDNAComponentName(dc2));
+	CuAssertStrEquals(tc, "DnaComponent3", getDNAComponentName(dc3));
+	CuAssertStrEquals(tc, "DnaComponent4", getDNAComponentName(dc4));
+	CuAssertStrEquals(tc, "Various sequence annotations", getDNAComponentDescription(dc1));
+	CuAssertStrEquals(tc, "Another DNA component", getDNAComponentDescription(dc2));
+	// sequences
+	DNASequence *ds1 = getDNASequence("http://example.com/ds1");
+	DNASequence *ds2 = getDNASequence("http://example.com/ds2");
+	CuAssertStrEquals(tc, "tccctatcagtgat", getNucleotides(ds1));
+	CuAssertStrEquals(tc, "tc", getNucleotides(ds2));
+	CuAssertPtrEquals(tc, ds1, getDNAComponentSequence(dc1));
+	CuAssertPtrEquals(tc, ds2, getDNAComponentSequence(dc2));
+	// annotations
+	SequenceAnnotation *sa1 = getSequenceAnnotation("http://example.com/sa1");
+	SequenceAnnotation *sa2 = getSequenceAnnotation("http://example.com/sa2");
+	SequenceAnnotation *sa3 = getSequenceAnnotation("http://example.com/sa3");
+	CuAssertIntEquals(tc, 3, getNumSequenceAnnotationsIn(dc1));
+	CuAssertIntEquals(tc, 1, annotates(sa1, dc1));
+	CuAssertIntEquals(tc, 1, annotates(sa2, dc1));
+	CuAssertIntEquals(tc, 1, annotates(sa3, dc1));
+	CuAssertIntEquals(tc, 1, getBioStart(sa1));
+	CuAssertIntEquals(tc, 3, getBioStart(sa2));
+	CuAssertIntEquals(tc, 2, getBioEnd(sa1));
+	CuAssertIntEquals(tc, 5, getBioEnd(sa2));
+	CuAssertPtrEquals(tc, dc2, getSubComponent(sa1));
+	CuAssertPtrEquals(tc, dc3, getSubComponent(sa2));
+	CuAssertPtrEquals(tc, dc4, getSubComponent(sa3));
+	CuAssertIntEquals(tc, 1, precedes(sa1, sa2));
+	CuAssertIntEquals(tc, 1, precedes(sa1, sa3));
+}
+
 void TestLoadedValid09(CuTest *tc) {}
 void TestLoadedValid10(CuTest *tc) {}
 void TestLoadedValid11(CuTest *tc) {}
