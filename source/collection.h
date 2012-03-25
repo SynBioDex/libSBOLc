@@ -46,6 +46,8 @@ SBOLAPIEXPORTS void setCollectionDescription(Collection* col, const char* desc);
 
 // add component
 SBOLAPIEXPORTS void addDNAComponentToCollection(struct _DNAComponent* com, Collection* col);
+// TODO better name
+SBOLAPIEXPORTS int  dnaComponentInCollection(const struct _DNAComponent *com, const Collection *col);
 
 void printCollection(const Collection* col, int tabs);
 void printAllCollections();

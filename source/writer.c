@@ -213,7 +213,8 @@ void writeCollection(Collection* col) {
 		
 		// properties
 		xmlTextWriterWriteAttribute(WRITER, "rdf:about", getCollectionURI(col));
-		xmlTextWriterWriteElement(WRITER, "displayId", getCollectionName(col));
+		xmlTextWriterWriteElement(WRITER, "displayId", getCollectionDisplayID(col));
+		xmlTextWriterWriteElement(WRITER, "name", getCollectionName(col));
 		xmlTextWriterWriteElement(WRITER, "description", getCollectionDescription(col));
 		
 		// components

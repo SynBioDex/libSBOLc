@@ -8,7 +8,7 @@
 
 // a list of all the valid example filenames
 // so they can be retrieved by index in a loop
-char *VALID_EXAMPLE_FILENAMES[13] = {
+char *VALID_EXAMPLE_FILENAMES[NUM_VALID_EXAMPLES] = {
 	VALID_EXAMPLES_DIR "valid01_dna_component_empty.xml",
 	VALID_EXAMPLES_DIR "valid02_dna_component.xml",
 	VALID_EXAMPLES_DIR "valid03_dna_component_sequence.xml",
@@ -26,7 +26,7 @@ char *VALID_EXAMPLE_FILENAMES[13] = {
 
 // a list of all the output filenames
 // so they can be retrieved by index in a loop
-char *TEST_OUTPUT_FILENAMES[13] = {
+char *TEST_OUTPUT_FILENAMES[NUM_VALID_EXAMPLES] = {
 	TEST_OUTPUT_DIR "valid01_dna_component_empty.xml",
 	TEST_OUTPUT_DIR "valid02_dna_component.xml",
 	TEST_OUTPUT_DIR "valid03_dna_component_sequence.xml",
@@ -325,16 +325,99 @@ void TestLoadedValid09(CuTest *tc) {
 	CuAssertPtrEquals(tc, ds1, getDNAComponentSequence(dc1));
 }
 
-void TestLoadedValid10(CuTest *tc) {}
-void TestLoadedValid11(CuTest *tc) {}
-void TestLoadedValid12(CuTest *tc) {}
-void TestLoadedValid13(CuTest *tc) {}
+void TestLoadedValid10(CuTest *tc) {
+	// overall numbers
+	CuAssertIntEquals(tc, 0, getNumDNASequences());
+	CuAssertIntEquals(tc, 0, getNumSequenceAnnotations());
+	CuAssertIntEquals(tc, 0, getNumDNAComponents());
+	CuAssertIntEquals(tc, 1, getNumCollections());
+	CuAssertIntEquals(tc, 1, getNumSBOLObjects());
+	CuAssertIntEquals(tc, 1, getNumSBOLCompoundObjects());
+	// collection
+	Collection *col = getCollection("http://example.com/collection1");
+	CuAssertStrEquals(tc, "Coll1", getCollectionDisplayID(col));
+	CuAssertStrEquals(tc, "Collection1", getCollectionName(col));
+	CuAssertStrEquals(tc, "A collection may be empty", getCollectionDescription(col));
+	CuAssertIntEquals(tc, 0, getNumDNAComponentsIn(col));
+	CuAssertIntEquals(tc, 0, getNumCollectionsIn(col));
+}
 
-// TODO learn macro to de-duplicate this
+void TestLoadedValid11(CuTest *tc) {
+	// overall numbers
+	CuAssertIntEquals(tc, 1, getNumDNASequences());
+	CuAssertIntEquals(tc, 0, getNumSequenceAnnotations());
+	CuAssertIntEquals(tc, 2, getNumDNAComponents());
+	CuAssertIntEquals(tc, 1, getNumCollections());
+	CuAssertIntEquals(tc, 4, getNumSBOLObjects());
+	CuAssertIntEquals(tc, 3, getNumSBOLCompoundObjects());
+	// collection
+	Collection *col = getCollection("http://example.com/collection1");
+	CuAssertStrEquals(tc, "Coll1", getCollectionDisplayID(col));
+	CuAssertStrEquals(tc, "Collection1", getCollectionName(col));
+	CuAssertStrEquals(tc, "A collection may contain multiple components", getCollectionDescription(col));
+	CuAssertIntEquals(tc, 2, getNumDNAComponentsIn(col));
+	CuAssertIntEquals(tc, 0, getNumCollectionsIn(col));
+	// components
+	DNAComponent *dc1 = getDNAComponent("http://example.com/dc1");
+	DNAComponent *dc2 = getDNAComponent("http://example.com/dc2");
+	CuAssertStrEquals(tc, "DC1", getDNAComponentDisplayID(dc1));
+	CuAssertStrEquals(tc, "DC2", getDNAComponentDisplayID(dc2));
+	CuAssertStrEquals(tc, "DnaComponent1", getDNAComponentName(dc1));
+	CuAssertStrEquals(tc, "DnaComponent2", getDNAComponentName(dc2));
+	CuAssertIntEquals(tc, 1, dnaComponentInCollection(dc1, col));
+	CuAssertIntEquals(tc, 1, dnaComponentInCollection(dc2, col));
+}
+
+void TestLoadedValid12(CuTest *tc) {
+	// overall numbers
+	CuAssertIntEquals(tc, 1, getNumDNASequences());
+	CuAssertIntEquals(tc, 0, getNumSequenceAnnotations());
+	CuAssertIntEquals(tc, 2, getNumDNAComponents());
+	CuAssertIntEquals(tc, 2, getNumCollections());
+	CuAssertIntEquals(tc, 5, getNumSBOLObjects());
+	CuAssertIntEquals(tc, 4, getNumSBOLCompoundObjects());
+	// collection
+	Collection *c1 = getCollection("http://example.com/collection1");
+	Collection *c2 = getCollection("http://example.com/collection2");
+	CuAssertStrEquals(tc, "Coll1", getCollectionDisplayID(c1));
+	CuAssertStrEquals(tc, "Coll2", getCollectionDisplayID(c2));
+	CuAssertStrEquals(tc, "Collection1", getCollectionName(c1));
+	CuAssertStrEquals(tc, "Collection2", getCollectionName(c2));
+	CuAssertStrEquals(tc, "This is the first collection in the document", getCollectionDescription(c1));
+	CuAssertStrEquals(tc, "This is the second collection in the document", getCollectionDescription(c2));
+	CuAssertIntEquals(tc, 1, getNumDNAComponentsIn(c1));
+	CuAssertIntEquals(tc, 1, getNumDNAComponentsIn(c2));
+	CuAssertIntEquals(tc, 0, getNumCollectionsIn(c1));
+	CuAssertIntEquals(tc, 0, getNumCollectionsIn(c2));
+	// components
+	DNAComponent *dc1 = getDNAComponent("http://example.com/dc1");
+	DNAComponent *dc2 = getDNAComponent("http://example.com/dc2");
+	CuAssertStrEquals(tc, "DC1", getDNAComponentDisplayID(dc1));
+	CuAssertStrEquals(tc, "DC2", getDNAComponentDisplayID(dc2));
+	CuAssertStrEquals(tc, "DnaComponent1", getDNAComponentName(dc1));
+	CuAssertStrEquals(tc, "DnaComponent2", getDNAComponentName(dc2));
+	CuAssertIntEquals(tc, 1, dnaComponentInCollection(dc1, c1));
+	CuAssertIntEquals(tc, 1, dnaComponentInCollection(dc2, c2));
+}
+
+void TestLoadedValid13(CuTest *tc) {
+	// overall numbers
+	CuAssertIntEquals(tc, 1, getNumDNASequences());
+	CuAssertIntEquals(tc, 0, getNumSequenceAnnotations());
+	CuAssertIntEquals(tc, 0, getNumDNAComponents());
+	CuAssertIntEquals(tc, 0, getNumCollections());
+	CuAssertIntEquals(tc, 1, getNumSBOLObjects());
+	CuAssertIntEquals(tc, 0, getNumSBOLCompoundObjects());
+	// sequence
+	DNASequence *seq = getDNASequence("http://example.com/ds1");
+	CuAssertStrEquals(tc, "tccctatcagtgat", getNucleotides(seq));
+}
+
+// TODO learn a macro to de-duplicate this
 
 // a list of all the TestLoadedValid* functions
 // so they can be retrieved by index in a loop
-void (*TEST_LOADED_FUNCTIONS[13])() = {
+void (*TEST_LOADED_FUNCTIONS[NUM_VALID_EXAMPLES])() = {
 	TestLoadedValid01,
 	TestLoadedValid02,
 	TestLoadedValid03,

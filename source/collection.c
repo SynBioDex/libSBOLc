@@ -221,6 +221,12 @@ void addDNAComponentToCollection(DNAComponent* com, Collection* col) {
 	}
 }
 
+int dnaComponentInCollection(const struct _DNAComponent *com, const Collection *col) {
+	if (!com || !col || !com->collections)
+		return 0;
+	return pointerContainedInArray(com->collections, col);
+}
+
 void addCollectionToCollection(Collection *inner, Collection *outer) {
 	if (inner && outer) {
 		insertPointerIntoArray(outer->collections, inner);
