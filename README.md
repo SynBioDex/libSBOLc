@@ -8,7 +8,7 @@ To compile libSBOLc, you will need:
 
 * [git](http://git-scm.com/) for downloading the source code
 * [CMake](http://www.cmake.org/cmake/resources/software.html) for generating platform-specific build instructions
-* a C compiler, such as [MinGW](http://www.mingw.org/wiki/InstallationHOWTOforMinGW) or [gcc](http://gcc.gnu.org/)
+* a C compiler, such as [gcc](http://gcc.gnu.org/) or [MinGW](http://www.mingw.org/wiki/InstallationHOWTOforMinGW)
 
 First, download them from the links above. Or if you're on Debian/Ubuntu this command should work too:
 
