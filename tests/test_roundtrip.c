@@ -8,9 +8,10 @@
 #include "test_examples.h"
 
 void TestRoundTripValidExamples(CuTest* tc) {
+	printf("\n");
 	int n;
-	for (n=0; n<1; n++) { // TODO NUM_VALID_EXAMPLES
-		printf("round-tripping %s\n", VALID_EXAMPLE_FILENAMES[n]);
+	for (n=0; n<NUM_VALID_EXAMPLES; n++) {
+		printf("roundtripping %s\n", VALID_EXAMPLE_FILENAMES[n]);
 		
 		// read an example
 		cleanupSBOLCore();

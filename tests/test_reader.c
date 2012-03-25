@@ -8,6 +8,7 @@
 // Loads the example files and checks
 // that each was interpreted correctly.
 void TestReadValidExamples(CuTest *tc) {
+	printf("\n");
 	int n;
 	for (n=0; n<NUM_VALID_EXAMPLES; n++) {
 		cleanupSBOLCore();
