@@ -6,7 +6,7 @@
 #define SBOL_TEST_DEBUG 0
 
 #define NUM_VALID_EXAMPLES   13
-#define NUM_INVALID_EXAMPLES 13 // TODO finish these!
+#define NUM_INVALID_EXAMPLES 13 // TODO finish 14-19
 
 #define VALID_EXAMPLES_DIR   "../examples/valid/"
 #define INVALID_EXAMPLES_DIR "../examples/invalid/"
