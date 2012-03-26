@@ -1,0 +1,12 @@
+<map id="G" name="G">
+<area shape="rect" id="node5" href="$sbol_8h.html" title="sbol.h" alt="" coords="504,83,563,112"/>
+<area shape="rect" id="node9" href="$property_8h.html" title="property.h" alt="" coords="104,160,189,189"/>
+<area shape="rect" id="node11" href="$api_8h.html" title="api.h" alt="" coords="661,237,715,267"/>
+<area shape="rect" id="node13" href="$utilities_8h.html" title="utilities.h" alt="" coords="264,160,341,189"/>
+<area shape="rect" id="node15" href="$sequenceannotation_8h.html" title="sequenceannotation.h" alt="" coords="365,160,531,189"/>
+<area shape="rect" id="node18" href="$dnacomponent_8h.html" title="dnacomponent.h" alt="" coords="555,160,685,189"/>
+<area shape="rect" id="node21" href="$collection_8h.html" title="collection.h" alt="" coords="709,160,803,189"/>
+<area shape="rect" id="node24" href="$types_8h.html" title="types.h" alt="" coords="827,160,896,189"/>
+<area shape="rect" id="node26" href="$validator_8h.html" title="validator.h" alt="" coords="1019,160,1107,189"/>
+<area shape="rect" id="node31" href="$reader_8h.html" title="reader.h" alt="" coords="920,160,995,189"/>
+</map>
