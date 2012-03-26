@@ -36,10 +36,10 @@ Binaries will be generated in the <code>libSBOLc/release</code> folder.
 
 ## Testing
 
-Once you've configured and built libSBOLc, you can run some simple tests to make sure everything is working:
+Once you've configured and built libSBOLc, you can <code>cd</code> into the <code>libSBOLc/release</code> folder and run some simple tests to check that everything works:
 
-    ./release/test_all
-    
+    ./test_all
+
 or 
 
-    ./release/test_all.exe
+    ./test_all.exe
