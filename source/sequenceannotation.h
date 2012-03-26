@@ -14,7 +14,6 @@ typedef struct _SequenceAnnotation {
    	struct _DNAComponent* annotates;
 	struct _DNAComponent* subComponent;
 	struct _PointerArray* precedes;
-	int processed;
 } SequenceAnnotation;
 
 // TODO getAnnotates?

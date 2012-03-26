@@ -8,7 +8,6 @@ struct _TextProperty;
 typedef struct _DNASequence {
 	struct _SBOLObject* base;
 	struct _TextProperty* nucleotides;
-	int processed;
 } DNASequence;
 
 SBOLAPIEXPORTS DNASequence* createDNASequence(char* uri);

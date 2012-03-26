@@ -26,7 +26,6 @@ DNASequence* createDNASequence(char* uri) {
 	DNASequence* seq = malloc(sizeof(DNASequence));
 	seq->base        = createSBOLObject(uri);
 	seq->nucleotides = createTextProperty();
-	seq->processed   = 0;
 	registerDNASequence(seq);
 	return seq;
 }

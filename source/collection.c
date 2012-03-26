@@ -31,7 +31,6 @@ Collection* createCollection(const char* uri) {
 	col->base        = createSBOLCompoundObject(uri);
 	col->components  = createPointerArray();
 	col->collections = createPointerArray();
-	col->processed   = 0;
 	registerCollection(col);
 	return col;
 }

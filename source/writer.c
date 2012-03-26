@@ -2,6 +2,7 @@
 #include <string.h>
 #include <libxml/xmlwriter.h>
 #include "sbol.h"
+#include "array.h"
 
 /************************
  * set up SBOL document
@@ -10,6 +11,7 @@
 static int INDENT;
 static xmlTextWriterPtr WRITER;
 static xmlDocPtr OUTPUT;
+static PointerArray *processed;
 
 void indentMore() { xmlTextWriterSetIndent(WRITER, ++INDENT); }
 void indentLess() { xmlTextWriterSetIndent(WRITER, --INDENT); }
@@ -26,31 +28,22 @@ void cleanupSBOLWriter() {
 	xmlFreeDoc(OUTPUT);
 	WRITER = NULL;
 	OUTPUT = NULL;
+	deletePointerArray(processed);
+	processed = NULL;
 	xmlCleanupParser();
 }
 
+void markProcessed(void *obj) {
+	insertPointerIntoArray(processed, obj);
+}
+
+int alreadyProcessed(void *obj) {
+	return pointerContainedInArray(processed, obj); 
+}
+
 void resetProcessed() {
-	int n;
-	DNASequence* seq;
-	for (n=0; n<getNumDNASequences(); n++) {
-		seq = getNthDNASequence(n);
-		seq->processed = 0;
-	}
-	SequenceAnnotation* ann;
-	for (n=0; n<getNumSequenceAnnotations(); n++) {
-		ann = getNthSequenceAnnotation(n);
-		ann->processed = 0;
-	}
-	DNAComponent* com;
-	for (n=0; n<getNumDNAComponents(); n++) {
-		com = getNthDNAComponent(n);
-		com->processed = 0;
-	}
-	Collection* col;
-	for (n=0; n<getNumCollections(); n++) {
-		col = getNthCollection(n);
-		col->processed = 0;
-	}
+	deletePointerArray(processed);
+	processed = createPointerArray();
 }
 
 void startSBOLDocument() {
@@ -62,7 +55,7 @@ void startSBOLDocument() {
 	xmlTextWriterWriteAttribute(WRITER, "xmlns:rdf",  XMLNS_RDF);
 	xmlTextWriterWriteAttribute(WRITER, "xmlns:rdfs", XMLNS_RDFS);
 	xmlTextWriterWriteAttribute(WRITER, "xmlns:so",   XMLNS_SO);
-	xmlTextWriterWriteAttribute(WRITER, "xmlns",      XMLNS_SBOL);
+	xmlTextWriterWriteAttribute(WRITER, "xmlns",	  XMLNS_SBOL);
 	indentMore();
 }
 
@@ -95,10 +88,10 @@ void writeDNASequence(DNASequence* seq) {
 	xmlTextWriterWriteAttribute(WRITER, "rdf:about", getDNASequenceURI(seq));
 
 	// nucleotides
-	if (!seq->processed) {
+	if (!alreadyProcessed((void *)seq)) {
 		xmlTextWriterWriteElement(WRITER, "nucleotides", getNucleotides(seq));
-		seq->processed = 1;
-    }
+		markProcessed((void *)seq);
+	}
 	
 	xmlTextWriterEndElement(WRITER);
 }
@@ -106,7 +99,7 @@ void writeDNASequence(DNASequence* seq) {
 void writeSequenceAnnotation(SequenceAnnotation* ann) {
 	if (!ann)
 		return;
-	ann->processed = 1;
+	markProcessed((void *)ann);
 	xmlTextWriterStartElement(WRITER, "SequenceAnnotation");
 	xmlTextWriterWriteAttribute(WRITER, "rdf:about", getSequenceAnnotationURI(ann));
 	
@@ -118,7 +111,7 @@ void writeSequenceAnnotation(SequenceAnnotation* ann) {
 		ann2 = getNthPrecedes(ann, n);
 		xmlTextWriterStartElement(WRITER, "precedes");
 		xmlTextWriterWriteAttribute(WRITER, "rdf:resource", getSequenceAnnotationURI(ann2));
-        xmlTextWriterEndElement(WRITER);
+		xmlTextWriterEndElement(WRITER);
 	}
 	indentLess();
 	
@@ -132,20 +125,20 @@ void writeSequenceAnnotation(SequenceAnnotation* ann) {
 	
 	// subComponent
 	char* uri;
-    indentMore();
-    if (ann->subComponent) {
-        uri = getDNAComponentURI(ann->subComponent);
-        xmlTextWriterStartElement(WRITER, "subComponent");
-        if (ann->subComponent->processed)
-        	xmlTextWriterWriteAttribute(WRITER, "rdf:resource", uri);
-        else {
-     		indentMore();
-     		writeDNAComponent(ann->subComponent);
-     		indentLess();
-     	}
-        xmlTextWriterEndElement(WRITER);
-    }
-    indentLess();
+	indentMore();
+	if (ann->subComponent) {
+		uri = getDNAComponentURI(ann->subComponent);
+		xmlTextWriterStartElement(WRITER, "subComponent");
+		if (alreadyProcessed((void *)(ann->subComponent)))
+			xmlTextWriterWriteAttribute(WRITER, "rdf:resource", uri);
+		else {
+	 		indentMore();
+	 		writeDNAComponent(ann->subComponent);
+	 		indentLess();
+	 	}
+		xmlTextWriterEndElement(WRITER);
+	}
+	indentLess();
 	
 	xmlTextWriterEndElement(WRITER);
 }
@@ -154,8 +147,8 @@ void writeDNAComponent(DNAComponent* com) {
 	if (!com)
 		return;
 	xmlTextWriterStartElement(WRITER, "DnaComponent");
-	if (!com->processed) {
-		com->processed = 1;
+	if (!alreadyProcessed((void *)com)) {
+		markProcessed((void *)com);
 		xmlTextWriterWriteAttribute(WRITER, "rdf:about", getDNAComponentURI(com));
 		
 		// properties
@@ -206,8 +199,8 @@ void writeCollection(Collection* col) {
 	if (!col)
 		return;
 	xmlTextWriterStartElement(WRITER, "Collection");
-	if (!col->processed) {
-		col->processed = 1;
+	if (!alreadyProcessed((void *)col)) {
+		markProcessed((void *)col);
 		int n;
 		int num;
 		
@@ -226,7 +219,7 @@ void writeCollection(Collection* col) {
 				xmlTextWriterStartElement(WRITER, "component");
 				com = getNthDNAComponentIn(col, n);
 				indentMore();
-			    writeDNAComponent(com);
+				writeDNAComponent(com);
 				indentLess();
 				xmlTextWriterEndElement(WRITER);
 			}
@@ -267,15 +260,15 @@ int writeSBOLCore(const char* filename) {
 	Collection* col;
 	for (n=0; n<getNumCollections(); n++) {
 		col = getNthCollection(n);
-		if (!col->processed)
-		    writeCollection(col);
+		if (!alreadyProcessed((void *)col))
+			writeCollection(col);
 	}
 
 	// write components
 	DNAComponent* com;
 	for (n=0; n<getNumDNAComponents(); n++) {
 		com = getNthDNAComponent(n);
-		if (!com->processed)
+		if (!alreadyProcessed((void *)com))
 			writeDNAComponent(com);
 	}
 	
@@ -286,8 +279,8 @@ int writeSBOLCore(const char* filename) {
 	DNASequence* seq;
 	for (n=0; n<getNumDNASequences(); n++) {
 		seq = getNthDNASequence(n);
-		if (!seq->processed)
-		    writeDNASequence(seq);
+		if (!alreadyProcessed((void *)seq))
+			writeDNASequence(seq);
 	}
 	
 	// write annotations
@@ -297,8 +290,8 @@ int writeSBOLCore(const char* filename) {
 	SequenceAnnotation* ann;
 	for (n=0; n<getNumSequenceAnnotations(); n++) {
 		ann = getNthSequenceAnnotation(n);
-		if (!ann->processed)
-		    writeSequenceAnnotation(ann);
+		if (!alreadyProcessed((void *)ann))
+			writeSequenceAnnotation(ann);
 	}
 
 	endSBOLDocument();

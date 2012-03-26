@@ -34,7 +34,6 @@ DNAComponent* createDNAComponent(const char* uri) {
 	com->dnaSequence = NULL;
 	com->annotations = createPointerArray();
 	com->collections = createPointerArray();
-	com->processed   = 0;
 	registerDNAComponent(com);
 	return com;
 }

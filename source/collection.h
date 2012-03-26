@@ -10,7 +10,6 @@ typedef struct _Collection {
 	struct _SBOLCompoundObject* base;
 	struct _PointerArray *components;
 	struct _PointerArray *collections;
-	int processed;
 } Collection;
 
 // create/destroy

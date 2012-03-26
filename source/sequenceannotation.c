@@ -35,7 +35,6 @@ SequenceAnnotation* createSequenceAnnotation(const char* uri) {
 	ann->annotates    = NULL;
 	ann->subComponent = NULL;
 	ann->precedes = createPointerArray();
-	ann->processed = 0;
 	registerSequenceAnnotation(ann);
 	return ann;
 }
