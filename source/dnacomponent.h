@@ -19,7 +19,7 @@ struct _Collection;
 /// Implements the SBOL Core DNAComponent object.
 typedef struct _DNAComponent {
 	struct _SBOLCompoundObject* base;  ///< uri, displayID, name, description
-	struct _DNASequence* dnaSequence;
+	struct _DNASequence* dnaSequence;  ///< sequence
 	struct _PointerArray* annotations; ///< array of SequenceAnnotations
 	struct _PointerArray* collections; ///< array of Collections
 } DNAComponent;

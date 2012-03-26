@@ -1,9 +1,10 @@
 ///////////////////////////////////////////////////////////
 /// @file api.h
-/// This file creates macros for exporting functions.
-/// Just add SBOlAPIEXPORTS before a function declaration
-/// and it will be added to libSBOL.
+/// Defines a macro for exporting functions from libSBOL.
+/// Just add SBOlAPIEXPORTS before function declarations.
 ///////////////////////////////////////////////////////////
+
+/// @todo figure out how to put SBOLAPIEXPORTS in doxygen
 
 #ifndef SBOL_API_HEADER
 #define SBOL_API_HEADER

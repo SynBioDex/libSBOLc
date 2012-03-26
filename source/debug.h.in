@@ -1,7 +1,7 @@
 ///////////////////////////////////////////////////////////
 /// @file debug.h
 /// This file contains macros and functions used for
-/// debugging libSBOL. It's generated from debug.h.in
+/// debugging libSBOL. It's used to generate debug.h
 /// during CMake configuration.
 ///////////////////////////////////////////////////////////
 

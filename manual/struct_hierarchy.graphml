@@ -16,7 +16,6 @@
     <data key="d7"/>
     <node id="n0">
       <data key="d4"/>
-      <data key="d5"/>
       <data key="d6">
         <y:UMLClassNode>
           <y:Geometry height="51.0" width="100.0" x="408.0" y="120.0"/>
@@ -38,7 +37,6 @@
     </node>
     <node id="n1">
       <data key="d4"/>
-      <data key="d5"/>
       <data key="d6">
         <y:UMLClassNode>
           <y:Geometry height="95.0" width="160.0" x="562.0" y="221.0"/>
@@ -63,7 +61,6 @@ TextProperty *description</y:AttributeLabel>
     </node>
     <node id="n2">
       <data key="d4"/>
-      <data key="d5"/>
       <data key="d6">
         <y:UMLClassNode>
           <y:Geometry height="66.0" width="160.0" x="66.0" y="366.0"/>
@@ -86,7 +83,6 @@ TextProperty *nucleotides</y:AttributeLabel>
     </node>
     <node id="n3">
       <data key="d4"/>
-      <data key="d5"/>
       <data key="d6">
         <y:UMLClassNode>
           <y:Geometry height="139.0" width="196.0" x="245.0" y="366.0"/>
@@ -114,7 +110,6 @@ PointerArray *precedes</y:AttributeLabel>
     </node>
     <node id="n4">
       <data key="d4"/>
-      <data key="d5"/>
       <data key="d6">
         <y:UMLClassNode>
           <y:Geometry height="95.0" width="173.66666666666674" x="460.0" y="366.0"/>
@@ -139,7 +134,6 @@ PointerArray *collections</y:AttributeLabel>
     </node>
     <node id="n5">
       <data key="d4"/>
-      <data key="d5"/>
       <data key="d6">
         <y:UMLClassNode>
           <y:Geometry height="81.0" width="173.66666666666674" x="652.6666666666667" y="366.0"/>
@@ -161,14 +155,14 @@ PointerArray *collections</y:AttributeLabel>
         </y:UMLClassNode>
       </data>
     </node>
-    <edge id="e0" source="n0" target="n1">
+    <edge id="e0" source="n2" target="n0">
       <data key="d9"/>
       <data key="d10">
         <y:PolyLineEdge>
           <y:Path sx="0.0" sy="0.0" tx="0.0" ty="0.0"/>
           <y:LineStyle color="#000000" type="line" width="1.0"/>
           <y:Arrows source="none" target="standard"/>
-          <y:EdgeLabel alignment="center" distance="2.0" fontFamily="Dialog" fontSize="12" fontStyle="plain" hasBackgroundColor="false" hasLineColor="false" hasText="false" height="4.0" modelName="custom" preferredPlacement="anywhere" ratio="0.5" textColor="#000000" visible="true" width="4.0" x="18.71130975222343" y="47.9307481613323">
+          <y:EdgeLabel alignment="center" distance="2.0" fontFamily="Dialog" fontSize="12" fontStyle="plain" hasBackgroundColor="false" hasLineColor="false" hasText="false" height="4.0" modelName="custom" preferredPlacement="anywhere" ratio="0.5" textColor="#000000" visible="true" width="4.0" x="150.62888637160916" y="-87.35685493676715">
             <y:LabelModel>
               <y:SmartEdgeLabelModel autoRotationEnabled="false" defaultAngle="0.0" defaultDistance="10.0"/>
             </y:LabelModel>
@@ -180,14 +174,14 @@ PointerArray *collections</y:AttributeLabel>
         </y:PolyLineEdge>
       </data>
     </edge>
-    <edge id="e1" source="n1" target="n4">
+    <edge id="e1" source="n3" target="n0">
       <data key="d9"/>
       <data key="d10">
         <y:PolyLineEdge>
           <y:Path sx="0.0" sy="0.0" tx="0.0" ty="0.0"/>
           <y:LineStyle color="#000000" type="line" width="1.0"/>
           <y:Arrows source="none" target="standard"/>
-          <y:EdgeLabel alignment="center" distance="2.0" fontFamily="Dialog" fontSize="12" fontStyle="plain" hasBackgroundColor="false" hasLineColor="false" hasText="false" height="4.0" modelName="custom" preferredPlacement="anywhere" ratio="0.5" textColor="#000000" visible="true" width="4.0" x="-51.20605158271087" y="18.297599863547816">
+          <y:EdgeLabel alignment="center" distance="2.0" fontFamily="Dialog" fontSize="12" fontStyle="plain" hasBackgroundColor="false" hasLineColor="false" hasText="false" height="4.0" modelName="custom" preferredPlacement="anywhere" ratio="0.5" textColor="#000000" visible="true" width="4.0" x="68.13533084398239" y="-97.47964739887817">
             <y:LabelModel>
               <y:SmartEdgeLabelModel autoRotationEnabled="false" defaultAngle="0.0" defaultDistance="10.0"/>
             </y:LabelModel>
@@ -199,14 +193,14 @@ PointerArray *collections</y:AttributeLabel>
         </y:PolyLineEdge>
       </data>
     </edge>
-    <edge id="e2" source="n1" target="n5">
+    <edge id="e2" source="n4" target="n1">
       <data key="d9"/>
       <data key="d10">
         <y:PolyLineEdge>
           <y:Path sx="0.0" sy="0.0" tx="0.0" ty="0.0"/>
           <y:LineStyle color="#000000" type="line" width="1.0"/>
           <y:Arrows source="none" target="standard"/>
-          <y:EdgeLabel alignment="center" distance="2.0" fontFamily="Dialog" fontSize="12" fontStyle="plain" hasBackgroundColor="false" hasLineColor="false" hasText="false" height="4.0" modelName="custom" preferredPlacement="anywhere" ratio="0.5" textColor="#000000" visible="true" width="4.0" x="-17.406363021984134" y="28.184283806724977">
+          <y:EdgeLabel alignment="center" distance="2.0" fontFamily="Dialog" fontSize="12" fontStyle="plain" hasBackgroundColor="false" hasLineColor="false" hasText="false" height="4.0" modelName="custom" preferredPlacement="anywhere" ratio="0.5" textColor="#000000" visible="true" width="4.0" x="47.20607192776288" y="-22.297599863547816">
             <y:LabelModel>
               <y:SmartEdgeLabelModel autoRotationEnabled="false" defaultAngle="0.0" defaultDistance="10.0"/>
             </y:LabelModel>
@@ -218,14 +212,14 @@ PointerArray *collections</y:AttributeLabel>
         </y:PolyLineEdge>
       </data>
     </edge>
-    <edge id="e3" source="n0" target="n3">
+    <edge id="e3" source="n5" target="n1">
       <data key="d9"/>
       <data key="d10">
         <y:PolyLineEdge>
           <y:Path sx="0.0" sy="0.0" tx="0.0" ty="0.0"/>
           <y:LineStyle color="#000000" type="line" width="1.0"/>
           <y:Arrows source="none" target="standard"/>
-          <y:EdgeLabel alignment="center" distance="2.0" fontFamily="Dialog" fontSize="12" fontStyle="plain" hasBackgroundColor="false" hasLineColor="false" hasText="false" height="4.0" modelName="custom" preferredPlacement="anywhere" ratio="0.5" textColor="#000000" visible="true" width="4.0" x="-72.12235771628843" y="93.44693255512811">
+          <y:EdgeLabel alignment="center" distance="2.0" fontFamily="Dialog" fontSize="12" fontStyle="plain" hasBackgroundColor="false" hasLineColor="false" hasText="false" height="4.0" modelName="custom" preferredPlacement="anywhere" ratio="0.5" textColor="#000000" visible="true" width="4.0" x="13.448450742772366" y="-32.12471349422498">
             <y:LabelModel>
               <y:SmartEdgeLabelModel autoRotationEnabled="false" defaultAngle="0.0" defaultDistance="10.0"/>
             </y:LabelModel>
@@ -237,14 +231,14 @@ PointerArray *collections</y:AttributeLabel>
         </y:PolyLineEdge>
       </data>
     </edge>
-    <edge id="e4" source="n0" target="n2">
+    <edge id="e4" source="n1" target="n0">
       <data key="d9"/>
       <data key="d10">
         <y:PolyLineEdge>
           <y:Path sx="0.0" sy="0.0" tx="0.0" ty="0.0"/>
           <y:LineStyle color="#000000" type="line" width="1.0"/>
           <y:Arrows source="none" target="standard"/>
-          <y:EdgeLabel alignment="center" distance="2.0" fontFamily="Dialog" fontSize="12" fontStyle="plain" hasBackgroundColor="false" hasLineColor="false" hasText="false" height="4.0" modelName="custom" preferredPlacement="anywhere" ratio="0.5" textColor="#000000" visible="true" width="4.0" x="-144.23029863122457" y="74.90800239770465">
+          <y:EdgeLabel alignment="center" distance="2.0" fontFamily="Dialog" fontSize="12" fontStyle="plain" hasBackgroundColor="false" hasLineColor="false" hasText="false" height="4.0" modelName="custom" preferredPlacement="anywhere" ratio="0.5" textColor="#000000" visible="true" width="4.0" x="-21.64837353083726" y="-51.22019840464486">
             <y:LabelModel>
               <y:SmartEdgeLabelModel autoRotationEnabled="false" defaultAngle="0.0" defaultDistance="10.0"/>
             </y:LabelModel>
