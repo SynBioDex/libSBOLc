@@ -13,6 +13,23 @@
 
 /// @todo Create Property as a basis for TextProperty and IntProperty
 
+/************
+ * Property
+ ************/
+
+/// Generic Property that forms the base struct for all the others.
+/// Besides making the inheritance diagrams look nice, this provides
+/// a hook for doing something whenever a Property is read or written.
+typedef struct _Property {
+    void *data;
+} Property;
+
+Property *createProperty();
+void deleteProperty(Property *pro);
+void setProperty(Property *pro, void *data);
+void *getProperty(const Property *pro);
+int compareProperty(const Property *pro1, const Property *pro2);
+
 /****************
  * TextProperty
  ****************/
@@ -20,7 +37,7 @@
 /// Base struct for all text-containing Properties.
 /// @todo Make TextProperty derive from Property
 typedef struct _TextProperty {
-	char* text;
+	struct _Property *text;
 } TextProperty;
 
 TextProperty* createTextProperty();
@@ -55,7 +72,7 @@ void printURIProperty(const URIProperty* pro);
 /// Base struct for all integer-valued Properties.
 /// @todo Make IntProperty derive from Property
 typedef struct _IntProperty {
-	int* number;
+    struct _Property *number;
 } IntProperty;
 
 IntProperty* createIntProperty();

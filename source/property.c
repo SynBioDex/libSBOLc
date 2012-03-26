@@ -4,20 +4,63 @@
 //#include "debug.h"
 #include "property.h"
 
+/************
+ * Property
+ ************/
+
+Property *createProperty() {
+    Property *pro = malloc(sizeof(Property));
+    pro->data = NULL;
+    return pro;
+}
+
+void deleteProperty(Property *pro) {
+    if (pro) {
+        if (pro->data) {
+            free(pro->data);
+            pro->data = NULL;
+        }
+        free(pro);
+    }
+}
+
+void setProperty(Property *pro, void *data) {
+    if (pro) {
+        pro->data = realloc(pro->data, sizeof(data));
+        pro->data = data;
+    }
+}
+
+void *getProperty(const Property *pro) {
+    if (!pro)
+        return NULL;
+    else
+        return pro->data;
+}
+
+int compareProperty(const Property *pro1, const Property *pro2) {
+    if ((!pro1 && !pro2) || (!pro1->data && !pro2->data))
+        return 1;
+    else if (!pro1 || !pro2 || !pro1->data || !pro2->data)
+        return 0;
+    else
+        return (int) (pro1->data == pro2->data);
+}
+
 /****************
  * TextProperty
  ****************/
 
 TextProperty* createTextProperty() {
     TextProperty* pro = malloc(sizeof(TextProperty));
-    pro->text = NULL;
+    pro->text = createProperty();
     return pro;
 }
 
 void deleteTextProperty(TextProperty* pro) {
     if (pro) {
 		if (pro->text) {
-        	free(pro->text);
+        	deleteProperty(pro->text);
         	pro->text = NULL;
         }
         free(pro);
@@ -26,25 +69,47 @@ void deleteTextProperty(TextProperty* pro) {
 
 int compareTextProperty(const TextProperty* pro1,
                         const TextProperty* pro2) {
-    if (!pro1 || !pro2 || !pro1->text || !pro2->text)
-        // TODO is this a good error value for strcmp?
-        return -1;
-    return strcmp(pro1->text, pro2->text);
+    if ((!pro1 && !pro2) || (!pro1->text && !pro2->text))
+        return 1;
+    else {
+        char *text1 = (char *) getProperty(pro1->text);
+        char *text2 = (char *) getProperty(pro2->text);
+        if (!text1 && !text2)
+            return 1;
+        else if (!text1 || !text2)
+            return 0;
+        else {
+            int result = strcmp(text1, text2);
+            free(text1);
+            free(text2);
+            return result;
+        }
+    }
 }
 
 char* getTextProperty(const TextProperty* pro) {
     if (!pro || !pro->text)
         return NULL;
-    char* output = malloc(sizeof(char) * strlen(pro->text)+1);
-    strcpy(output, pro->text);
+    char *data = (char *) getProperty(pro->text);
+    char *output = malloc(sizeof(char) * strlen(data)+1);
+    strcpy(output, data);
     return output;
 }
 
+/// @todo remove the pro->text != NULL restriction?
+/// @todo warn that you need to free() anything from a Property
 void setTextProperty(TextProperty* pro, const char* text) {
-    if (!pro || !text)
+    if (!pro)
         return;
-    pro->text = realloc(pro->text, sizeof(char) * strlen(text)+1);
-    strcpy(pro->text, text);
+    else if (!text) {
+        deleteProperty(pro->text);
+        pro->text = createProperty();
+    } else {
+        char *data = (char *) getProperty(pro->text);
+        data = realloc(data, sizeof(char) * strlen(text)+1);
+        strcpy(data, text);
+        setProperty(pro->text, data);
+    }
 }
 
 void printTextProperty(const TextProperty* pro) {
@@ -100,34 +165,42 @@ void printURIProperty(const URIProperty* pro) {
 
 IntProperty* createIntProperty() {
 	IntProperty* pro = malloc(sizeof(IntProperty));
-	pro->number = 0;
+	pro->number = createProperty();
 	return pro;
 }
 
 void deleteIntProperty(IntProperty* pro) {
 	if (pro) {
 		if (pro->number)
-			free(pro->number);
+			deleteProperty(pro->number);
 		free(pro);
 	}
 }
 
 void setIntProperty(IntProperty* pro, int value) {
 	if (pro)
-		*(pro->number) = value;
+		setProperty(pro->number, (void *) value);
 }
 
 int getIntProperty(const IntProperty* pro) {
 	if (pro)
-		return *(pro->number);
-	// TODO "NULL" value?
+		return (int) getProperty(pro->number);
 }
 
 int compareIntProperty(const IntProperty* pro1,
                        const IntProperty* pro2) {
-	// TODO what's a good NULL value?
-	if (!pro1 || !pro2) // TODO check numbers too?
-	return pro2->number - pro1->number;
+	if (!pro1 && !pro2)
+	    return 1;
+    else if (!pro1 || !pro2)
+        return 0;
+    else {
+        int *num1 = (int *) getProperty(pro1->number);
+        int *num2 = (int *) getProperty(pro2->number);
+        int result = *num1 - *num2;
+        free(num1);
+        free(num2);
+        return result;
+    }
 }
 
 void printIntProperty(const IntProperty* pro) {
