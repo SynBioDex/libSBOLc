@@ -44,15 +44,61 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 <h1>Todo List </h1>  </div>
 </div>
 <div class="contents">
+<p><a class="anchor" id="_todo000005"></a> </p>
+<dl>
+<dt>Global <a class="el" href="collection_8h.html#a4d0cd36d8e878c876add221ad47ecfa2">cleanupCollections</a> () </dt>
+<dd>remove this? is it ever used? </dd>
+</dl>
+<p><a class="anchor" id="_todo000004"></a> </p>
+<dl>
+<dt>Global <a class="el" href="collection_8h.html#a1138b98f68aa52d938433855a1e31177">dnaComponentInCollection</a> (const struct _DNAComponent *com, const <a class="el" href="struct_collection.html" title="Implements the SBOL Core Collection object.">Collection</a> *col) </dt>
+<dd>better name </dd>
+</dl>
 <p><a class="anchor" id="_todo000002"></a> </p>
 <dl>
-<dt>Class <a class="el" href="struct_int_property.html">IntProperty</a>  </dt>
-<dd>Make <a class="el" href="struct_int_property.html">IntProperty</a> derive from Property </dd>
+<dt>Global <a class="el" href="collection_8h.html#aba73468edd3d66e0cb93d06b6160a07a">getNthCollectionInCollection</a> (const <a class="el" href="struct_collection.html" title="Implements the SBOL Core Collection object.">Collection</a> *col, int n) </dt>
+<dd>better name </dd>
 </dl>
 <p><a class="anchor" id="_todo000001"></a> </p>
 <dl>
+<dt>Global <a class="el" href="collection_8h.html#ae666b54cc06d48beb50c2e7535e582ba">getNumCollectionsIn</a> (const <a class="el" href="struct_collection.html" title="Implements the SBOL Core Collection object.">Collection</a> *col) </dt>
+<dd>better name </dd>
+</dl>
+<p><a class="anchor" id="_todo000008"></a> </p>
+<dl>
+<dt>Class <a class="el" href="struct_int_property.html">IntProperty</a>  </dt>
+<dd>Make <a class="el" href="struct_int_property.html" title="Base struct for all integer-valued Properties.">IntProperty</a> derive from Property </dd>
+</dl>
+<p><a class="anchor" id="_todo000009"></a> </p>
+<dl>
+<dt>Class <a class="el" href="struct_polarity_property.html">PolarityProperty</a>  </dt>
+<dd><p class="startdd">Separate BooleanProperty? </p>
+<p class="enddd">Base this on chars instead of ints? Like '+', '-', '?' </p>
+</dd>
+</dl>
+<p><a class="anchor" id="_todo000012"></a> </p>
+<dl>
+<dt>Global <a class="el" href="sbol_8h.html#aaeac1fb6c8195ab5ea68a29775a451b6">printSBOLCore</a> () </dt>
+<dd><p class="startdd">document that you need to free strings gotten from sbol </p>
+<p class="enddd">make a lot of the functions static to simplify things </p>
+</dd>
+</dl>
+<p><a class="anchor" id="_todo000011"></a> </p>
+<dl>
+<dt>Global <a class="el" href="reader_8h.html#a0d82bff8870fc632e37de2b7a2993373">readSBOLCore</a> (char *filename) </dt>
+<dd>Return an error code on invalid documents </dd>
+</dl>
+<p><a class="anchor" id="_todo000003"></a> </p>
+<dl>
+<dt>Global <a class="el" href="collection_8h.html#a9ff9ccc9fc15511f2f14ec0353e5b032">setCollectionURI</a> (<a class="el" href="struct_collection.html" title="Implements the SBOL Core Collection object.">Collection</a> *col, const char *uri) </dt>
+<dd>remove this? is there any reason to change uris? </dd>
+</dl>
+<p><a class="anchor" id="_todo000006"></a> </p>
+<dl>
 <dt>Class <a class="el" href="struct_text_property.html">TextProperty</a>  </dt>
-<dd>Make <a class="el" href="struct_text_property.html">TextProperty</a> derive from Property </dd>
+<dd><p class="startdd">Create Property as a basis for <a class="el" href="struct_text_property.html" title="Base struct for all text-containing Properties.">TextProperty</a> and <a class="el" href="struct_int_property.html" title="Base struct for all integer-valued Properties.">IntProperty</a> </p>
+<p class="enddd">Make <a class="el" href="struct_text_property.html" title="Base struct for all text-containing Properties.">TextProperty</a> derive from Property </p>
+</dd>
 </dl>
 </div>
 <!--- window showing the filter options -->
@@ -60,7 +106,7 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
      onmouseover="return searchBox.OnSearchSelectShow()"
      onmouseout="return searchBox.OnSearchSelectHide()"
      onkeydown="return searchBox.OnSearchSelectKey(event)">
-<a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(0)"><span class="SelectionMark">&nbsp;</span>All</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(1)"><span class="SelectionMark">&nbsp;</span>Data Structures</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(2)"><span class="SelectionMark">&nbsp;</span>Files</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(3)"><span class="SelectionMark">&nbsp;</span>Functions</a></div>
+<a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(0)"><span class="SelectionMark">&nbsp;</span>All</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(1)"><span class="SelectionMark">&nbsp;</span>Data Structures</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(2)"><span class="SelectionMark">&nbsp;</span>Files</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(3)"><span class="SelectionMark">&nbsp;</span>Functions</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(4)"><span class="SelectionMark">&nbsp;</span>Variables</a></div>
 
 <!-- iframe showing the search results (closed by default) -->
 <div id="MSearchResultsWindow">
@@ -69,7 +115,7 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 </iframe>
 </div>
 
-<hr class="footer"/><address class="footer"><small>Generated on Mon Mar 26 2012 10:34:29 for libSBOLc by&nbsp;
+<hr class="footer"/><address class="footer"><small>Generated on Mon Mar 26 2012 12:32:47 for libSBOLc by&nbsp;
 <a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.7.1 </small></address>
 </body>

@@ -52,24 +52,28 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 <h1>source/api.h File Reference</h1>  </div>
 </div>
 <div class="contents">
+
+<p>This file creates macros for exporting functions.  
+<a href="#_details">More...</a></p>
 <div class="dynheader">
 This graph shows which files directly or indirectly include this file:</div>
 <div class="dyncontent">
 <div class="center"><img src="api_8h__dep__incl.png" border="0" usemap="#source_2api_8hdep" alt=""/></div>
 <map name="source_2api_8hdep" id="source_2api_8hdep">
-<area shape="rect" id="node3" href="object_8h.html" title="source/object.h" alt="" coords="5,83,125,112"/><area shape="rect" id="node5" href="collection_8h.html" title="source/collection.h" alt="" coords="149,83,291,112"/><area shape="rect" id="node7" href="sbol_8h.html" title="source/sbol.h" alt="" coords="511,160,617,189"/><area shape="rect" id="node12" href="dnacomponent_8h.html" title="source/dnacomponent.h" alt="" coords="365,83,544,112"/><area shape="rect" id="node15" href="sequenceannotation_8h.html" title="source/sequenceannotation.h" alt="" coords="568,83,779,112"/><area shape="rect" id="node18" href="reader_8h.html" title="source/reader.h" alt="" coords="803,83,925,112"/><area shape="rect" id="node22" href="validator_8h.html" title="source/validator.h" alt="" coords="949,83,1083,112"/><area shape="rect" id="node9" href="writer_8h.html" title="source/writer.h" alt="" coords="507,237,621,267"/></map>
+<area shape="rect" id="node3" href="object_8h.html" title="This file defines the SBOLObject struct, as well as functions for operating on it." alt="" coords="5,83,125,112"/><area shape="rect" id="node5" href="collection_8h.html" title="This file defines the Collection struct, as well as functions for operating on it." alt="" coords="149,83,291,112"/><area shape="rect" id="node7" href="sbol_8h.html" title="This file gathers together all the SBOL functions so they can be easily included." alt="" coords="620,160,727,189"/><area shape="rect" id="node12" href="dnacomponent_8h.html" title="This file contains the DNAComponent struct, as well as functions for operating on it..." alt="" coords="365,83,544,112"/><area shape="rect" id="node15" href="sequenceannotation_8h.html" title="This file contains the SequenceAnnotation struct, as well as functions for operating on it..." alt="" coords="568,83,779,112"/><area shape="rect" id="node18" href="dnasequence_8h.html" title="This file defines the DNASequence struct, as well as functions for operating on it." alt="" coords="803,83,968,112"/><area shape="rect" id="node21" href="reader_8h.html" title="This file contains functions for importing SBOL objects from an XML file." alt="" coords="992,83,1115,112"/><area shape="rect" id="node25" href="validator_8h.html" title="This file defines the isValidSBOL function, which is used to verify SBOL documents before parsing..." alt="" coords="1139,83,1272,112"/><area shape="rect" id="node9" href="writer_8h.html" title="This file contains functions for writing the SBOL core to an XML file." alt="" coords="616,237,731,267"/></map>
 </div>
 <table class="memberdecls">
 </table>
 <hr/><a name="_details"></a><h2>Detailed Description</h2>
-<p>This file creates macros for exporting functions. Just add SBOlAPIEXPORTS before a function declaration and it will be added to libSBOL. </p>
+<p>This file creates macros for exporting functions. </p>
+<p>Just add SBOlAPIEXPORTS before a function declaration and it will be added to libSBOL. </p>
 </div>
 <!--- window showing the filter options -->
 <div id="MSearchSelectWindow"
      onmouseover="return searchBox.OnSearchSelectShow()"
      onmouseout="return searchBox.OnSearchSelectHide()"
      onkeydown="return searchBox.OnSearchSelectKey(event)">
-<a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(0)"><span class="SelectionMark">&nbsp;</span>All</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(1)"><span class="SelectionMark">&nbsp;</span>Data Structures</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(2)"><span class="SelectionMark">&nbsp;</span>Files</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(3)"><span class="SelectionMark">&nbsp;</span>Functions</a></div>
+<a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(0)"><span class="SelectionMark">&nbsp;</span>All</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(1)"><span class="SelectionMark">&nbsp;</span>Data Structures</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(2)"><span class="SelectionMark">&nbsp;</span>Files</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(3)"><span class="SelectionMark">&nbsp;</span>Functions</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(4)"><span class="SelectionMark">&nbsp;</span>Variables</a></div>
 
 <!-- iframe showing the search results (closed by default) -->
 <div id="MSearchResultsWindow">
@@ -78,7 +82,7 @@ This graph shows which files directly or indirectly include this file:</div>
 </iframe>
 </div>
 
-<hr class="footer"/><address class="footer"><small>Generated on Mon Mar 26 2012 10:34:29 for libSBOLc by&nbsp;
+<hr class="footer"/><address class="footer"><small>Generated on Mon Mar 26 2012 12:32:47 for libSBOLc by&nbsp;
 <a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.7.1 </small></address>
 </body>

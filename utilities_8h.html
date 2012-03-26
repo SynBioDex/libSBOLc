@@ -52,12 +52,15 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 <h1>source/utilities.h File Reference</h1>  </div>
 </div>
 <div class="contents">
+
+<p>This file defines SBOL utility functions that don't really fit in anywhere else.  
+<a href="#_details">More...</a></p>
 <div class="dynheader">
 This graph shows which files directly or indirectly include this file:</div>
 <div class="dyncontent">
 <div class="center"><img src="utilities_8h__dep__incl.png" border="0" usemap="#source_2utilities_8hdep" alt=""/></div>
 <map name="source_2utilities_8hdep" id="source_2utilities_8hdep">
-<area shape="rect" id="node3" href="sbol_8h.html" title="source/sbol.h" alt="" coords="15,83,121,112"/><area shape="rect" id="node5" href="writer_8h.html" title="source/writer.h" alt="" coords="11,160,125,189"/></map>
+<area shape="rect" id="node3" href="sbol_8h.html" title="This file gathers together all the SBOL functions so they can be easily included." alt="" coords="15,83,121,112"/><area shape="rect" id="node5" href="writer_8h.html" title="This file contains functions for writing the SBOL core to an XML file." alt="" coords="11,160,125,189"/></map>
 </div>
 <table class="memberdecls">
 <tr><td colspan="2"><h2><a name="func-members"></a>
@@ -72,14 +75,15 @@ char *&nbsp;</td><td class="memItemRight" valign="bottom"><b>intToStr</b> (int i
 int&nbsp;</td><td class="memItemRight" valign="bottom"><b>sameContent</b> (const char *filename1, const char *filename2)</td></tr>
 </table>
 <hr/><a name="_details"></a><h2>Detailed Description</h2>
-<p>This file defines SBOL utility functions that don't really fit in anywhere else. Nothing in here should need to be exported. </p>
+<p>This file defines SBOL utility functions that don't really fit in anywhere else. </p>
+<p>Nothing in here should need to be exported. </p>
 </div>
 <!--- window showing the filter options -->
 <div id="MSearchSelectWindow"
      onmouseover="return searchBox.OnSearchSelectShow()"
      onmouseout="return searchBox.OnSearchSelectHide()"
      onkeydown="return searchBox.OnSearchSelectKey(event)">
-<a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(0)"><span class="SelectionMark">&nbsp;</span>All</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(1)"><span class="SelectionMark">&nbsp;</span>Data Structures</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(2)"><span class="SelectionMark">&nbsp;</span>Files</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(3)"><span class="SelectionMark">&nbsp;</span>Functions</a></div>
+<a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(0)"><span class="SelectionMark">&nbsp;</span>All</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(1)"><span class="SelectionMark">&nbsp;</span>Data Structures</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(2)"><span class="SelectionMark">&nbsp;</span>Files</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(3)"><span class="SelectionMark">&nbsp;</span>Functions</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(4)"><span class="SelectionMark">&nbsp;</span>Variables</a></div>
 
 <!-- iframe showing the search results (closed by default) -->
 <div id="MSearchResultsWindow">
@@ -88,7 +92,7 @@ int&nbsp;</td><td class="memItemRight" valign="bottom"><b>sameContent</b> (const
 </iframe>
 </div>
 
-<hr class="footer"/><address class="footer"><small>Generated on Mon Mar 26 2012 10:34:29 for libSBOLc by&nbsp;
+<hr class="footer"/><address class="footer"><small>Generated on Mon Mar 26 2012 12:32:47 for libSBOLc by&nbsp;
 <a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.7.1 </small></address>
 </body>

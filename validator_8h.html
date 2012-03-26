@@ -53,6 +53,9 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 <h1>source/validator.h File Reference</h1>  </div>
 </div>
 <div class="contents">
+
+<p>This file defines the isValidSBOL function, which is used to verify SBOL documents before parsing.  
+<a href="#_details">More...</a></p>
 <code>#include &lt;libxml/parser.h&gt;</code><br/>
 <code>#include &quot;<a class="el" href="api_8h.html">api.h</a>&quot;</code><br/>
 <div class="dynheader">
@@ -60,14 +63,14 @@ Include dependency graph for validator.h:</div>
 <div class="dyncontent">
 <div class="center"><img src="validator_8h__incl.png" border="0" usemap="#source_2validator_8h" alt=""/></div>
 <map name="source_2validator_8h" id="source_2validator_8h">
-<area shape="rect" id="node5" href="api_8h.html" title="api.h" alt="" coords="144,83,197,112"/></map>
+<area shape="rect" id="node5" href="api_8h.html" title="This file creates macros for exporting functions." alt="" coords="144,83,197,112"/></map>
 </div>
 <div class="dynheader">
 This graph shows which files directly or indirectly include this file:</div>
 <div class="dyncontent">
 <div class="center"><img src="validator_8h__dep__incl.png" border="0" usemap="#source_2validator_8hdep" alt=""/></div>
 <map name="source_2validator_8hdep" id="source_2validator_8hdep">
-<area shape="rect" id="node3" href="sbol_8h.html" title="source/sbol.h" alt="" coords="19,83,125,112"/><area shape="rect" id="node5" href="writer_8h.html" title="source/writer.h" alt="" coords="15,160,129,189"/></map>
+<area shape="rect" id="node3" href="sbol_8h.html" title="This file gathers together all the SBOL functions so they can be easily included." alt="" coords="19,83,125,112"/><area shape="rect" id="node5" href="writer_8h.html" title="This file contains functions for writing the SBOL core to an XML file." alt="" coords="15,160,129,189"/></map>
 </div>
 <table class="memberdecls">
 <tr><td colspan="2"><h2><a name="define-members"></a>
@@ -80,14 +83,15 @@ Functions</h2></td></tr>
 SBOLAPIEXPORTS int&nbsp;</td><td class="memItemRight" valign="bottom"><b>isValidSBOL</b> (const xmlDocPtr doc)</td></tr>
 </table>
 <hr/><a name="_details"></a><h2>Detailed Description</h2>
-<p>This file defines the isValidSBOL function, which is used to verify SBOL documents before parsing. It only catches errors that are defined in the SBOL schema, and will miss logical inconsistencies like cyclic precedes, bioStart being after bioEnd, etc. Separate functions will probably have to be written for those cases, and this would be a good place to put them. </p>
+<p>This file defines the isValidSBOL function, which is used to verify SBOL documents before parsing. </p>
+<p>It only catches errors that are defined in the SBOL schema, and will miss logical inconsistencies like cyclic precedes, bioStart being after bioEnd, etc. Separate functions will probably have to be written for those cases, and this would be a good place to put them. </p>
 </div>
 <!--- window showing the filter options -->
 <div id="MSearchSelectWindow"
      onmouseover="return searchBox.OnSearchSelectShow()"
      onmouseout="return searchBox.OnSearchSelectHide()"
      onkeydown="return searchBox.OnSearchSelectKey(event)">
-<a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(0)"><span class="SelectionMark">&nbsp;</span>All</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(1)"><span class="SelectionMark">&nbsp;</span>Data Structures</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(2)"><span class="SelectionMark">&nbsp;</span>Files</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(3)"><span class="SelectionMark">&nbsp;</span>Functions</a></div>
+<a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(0)"><span class="SelectionMark">&nbsp;</span>All</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(1)"><span class="SelectionMark">&nbsp;</span>Data Structures</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(2)"><span class="SelectionMark">&nbsp;</span>Files</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(3)"><span class="SelectionMark">&nbsp;</span>Functions</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(4)"><span class="SelectionMark">&nbsp;</span>Variables</a></div>
 
 <!-- iframe showing the search results (closed by default) -->
 <div id="MSearchResultsWindow">
@@ -96,7 +100,7 @@ SBOLAPIEXPORTS int&nbsp;</td><td class="memItemRight" valign="bottom"><b>isValid
 </iframe>
 </div>
 
-<hr class="footer"/><address class="footer"><small>Generated on Mon Mar 26 2012 10:34:29 for libSBOLc by&nbsp;
+<hr class="footer"/><address class="footer"><small>Generated on Mon Mar 26 2012 12:32:47 for libSBOLc by&nbsp;
 <a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.7.1 </small></address>
 </body>

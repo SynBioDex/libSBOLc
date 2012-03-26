@@ -41,6 +41,7 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
   <div class="tabs2">
     <ul class="tablist">
       <li><a href="annotated.html"><span>Data&nbsp;Structures</span></a></li>
+      <li><a href="functions.html"><span>Data&nbsp;Fields</span></a></li>
     </ul>
   </div>
 </div>
@@ -51,23 +52,34 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 <h1>PointerArray Struct Reference</h1>  </div>
 </div>
 <div class="contents">
-<!-- doxytag: class="PointerArray" --><table class="memberdecls">
+<!-- doxytag: class="PointerArray" -->
+<p>A dynamic array of void pointers.  
+<a href="#_details">More...</a></p>
+
+<p><code>#include &lt;array.h&gt;</code></p>
+<table class="memberdecls">
 <tr><td colspan="2"><h2><a name="pub-attribs"></a>
 Data Fields</h2></td></tr>
-<tr><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="abac186fd1c4df8fa2134722724d01b78"></a><!-- doxytag: member="PointerArray::numPointersInUse" ref="abac186fd1c4df8fa2134722724d01b78" args="" -->
+<tr><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a07d0f024cca5fed64f284d8f20d970c8"></a><!-- doxytag: member="PointerArray::numPointersInUse" ref="a07d0f024cca5fed64f284d8f20d970c8" args="" -->
 int&nbsp;</td><td class="memItemRight" valign="bottom"><b>numPointersInUse</b></td></tr>
-<tr><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a8b7bc2d8cdc165c6fbd54c4b7c5db19b"></a><!-- doxytag: member="PointerArray::numPointersTotal" ref="a8b7bc2d8cdc165c6fbd54c4b7c5db19b" args="" -->
+<tr><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a17c1916072c721ce45b642ea72855d16"></a><!-- doxytag: member="PointerArray::numPointersTotal" ref="a17c1916072c721ce45b642ea72855d16" args="" -->
 int&nbsp;</td><td class="memItemRight" valign="bottom"><b>numPointersTotal</b></td></tr>
-<tr><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="ae4dd276c544cacda6b9f61b6ca27d046"></a><!-- doxytag: member="PointerArray::pointers" ref="ae4dd276c544cacda6b9f61b6ca27d046" args="" -->
+<tr><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a0819c23d3f76a49f6a132bc2429102fe"></a><!-- doxytag: member="PointerArray::pointers" ref="a0819c23d3f76a49f6a132bc2429102fe" args="" -->
 void **&nbsp;</td><td class="memItemRight" valign="bottom"><b>pointers</b></td></tr>
 </table>
+<hr/><a name="_details"></a><h2>Detailed Description</h2>
+<p>A dynamic array of void pointers. </p>
+<p>Used anywhere a variable number of SBOLObjects needs to be stored, for example in DNAComponent-&gt;annotations. It could be called "SBOLObjectArray", but you might want to store strings or something instead. </p>
+<hr/>The documentation for this struct was generated from the following file:<ul>
+<li>source/<a class="el" href="array_8h.html">array.h</a></li>
+</ul>
 </div>
 <!--- window showing the filter options -->
 <div id="MSearchSelectWindow"
      onmouseover="return searchBox.OnSearchSelectShow()"
      onmouseout="return searchBox.OnSearchSelectHide()"
      onkeydown="return searchBox.OnSearchSelectKey(event)">
-<a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(0)"><span class="SelectionMark">&nbsp;</span>All</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(1)"><span class="SelectionMark">&nbsp;</span>Data Structures</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(2)"><span class="SelectionMark">&nbsp;</span>Files</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(3)"><span class="SelectionMark">&nbsp;</span>Functions</a></div>
+<a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(0)"><span class="SelectionMark">&nbsp;</span>All</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(1)"><span class="SelectionMark">&nbsp;</span>Data Structures</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(2)"><span class="SelectionMark">&nbsp;</span>Files</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(3)"><span class="SelectionMark">&nbsp;</span>Functions</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(4)"><span class="SelectionMark">&nbsp;</span>Variables</a></div>
 
 <!-- iframe showing the search results (closed by default) -->
 <div id="MSearchResultsWindow">
@@ -76,7 +88,7 @@ void **&nbsp;</td><td class="memItemRight" valign="bottom"><b>pointers</b></td><
 </iframe>
 </div>
 
-<hr class="footer"/><address class="footer"><small>Generated on Mon Mar 26 2012 10:34:29 for libSBOLc by&nbsp;
+<hr class="footer"/><address class="footer"><small>Generated on Mon Mar 26 2012 12:32:47 for libSBOLc by&nbsp;
 <a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.7.1 </small></address>
 </body>
