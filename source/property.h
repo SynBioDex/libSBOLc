@@ -77,7 +77,7 @@ typedef struct _IntProperty {
 
 IntProperty* createIntProperty();
 void deleteIntProperty(IntProperty* pro);
-void setIntProperty(IntProperty* pro, const int value);
+void setIntProperty(IntProperty* pro, int value);
 int getIntProperty(const IntProperty* pro);
 int compareIntProperty(const IntProperty* pro1, const IntProperty* pro2);
 void printIntProperty(const IntProperty* pro);

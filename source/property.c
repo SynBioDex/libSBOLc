@@ -9,42 +9,42 @@
  ************/
 
 Property *createProperty() {
-    Property *pro = malloc(sizeof(Property));
-    pro->data = NULL;
-    return pro;
+	Property *pro = malloc(sizeof(Property));
+	pro->data = NULL;
+	return pro;
 }
 
 void deleteProperty(Property *pro) {
-    if (pro) {
-        if (pro->data) {
-            free(pro->data);
-            pro->data = NULL;
-        }
-        free(pro);
-    }
+	if (pro) {
+		if (pro->data) {
+			free(pro->data);
+			pro->data = NULL;
+		}
+		free(pro);
+	}
 }
 
 void setProperty(Property *pro, void *data) {
-    if (pro) {
-        pro->data = realloc(pro->data, sizeof(data));
-        pro->data = data;
-    }
+	if (pro) {
+		pro->data = realloc(pro->data, sizeof(data));
+		pro->data = data;
+	}
 }
 
 void *getProperty(const Property *pro) {
-    if (!pro)
-        return NULL;
-    else
-        return pro->data;
+	if (!pro)
+		return NULL;
+	else
+		return pro->data;
 }
 
 int compareProperty(const Property *pro1, const Property *pro2) {
-    if ((!pro1 && !pro2) || (!pro1->data && !pro2->data))
-        return 1;
-    else if (!pro1 || !pro2 || !pro1->data || !pro2->data)
-        return 0;
-    else
-        return (int) (pro1->data == pro2->data);
+	if ((!pro1 && !pro2) || (!pro1->data && !pro2->data))
+		return 1;
+	else if (!pro1 || !pro2 || !pro1->data || !pro2->data)
+		return 0;
+	else
+		return (int) (pro1->data == pro2->data);
 }
 
 /****************
@@ -52,68 +52,70 @@ int compareProperty(const Property *pro1, const Property *pro2) {
  ****************/
 
 TextProperty* createTextProperty() {
-    TextProperty* pro = malloc(sizeof(TextProperty));
-    pro->text = createProperty();
-    return pro;
+	TextProperty* pro = malloc(sizeof(TextProperty));
+	pro->text = createProperty();
+	return pro;
 }
 
 void deleteTextProperty(TextProperty* pro) {
-    if (pro) {
+	if (pro) {
 		if (pro->text) {
-        	deleteProperty(pro->text);
-        	pro->text = NULL;
-        }
-        free(pro);
-    }
+			deleteProperty(pro->text);
+			pro->text = NULL;
+		}
+		free(pro);
+	}
 }
 
 int compareTextProperty(const TextProperty* pro1,
-                        const TextProperty* pro2) {
-    if ((!pro1 && !pro2) || (!pro1->text && !pro2->text))
-        return 1;
-    else {
-        char *text1 = (char *) getProperty(pro1->text);
-        char *text2 = (char *) getProperty(pro2->text);
-        if (!text1 && !text2)
-            return 1;
-        else if (!text1 || !text2)
-            return 0;
-        else {
-            int result = strcmp(text1, text2);
-            free(text1);
-            free(text2);
-            return result;
-        }
-    }
+						const TextProperty* pro2) {
+	if ((!pro1 && !pro2) || (!pro1->text && !pro2->text))
+		return 1;
+	else {
+		char *text1 = (char *) getProperty(pro1->text);
+		char *text2 = (char *) getProperty(pro2->text);
+		if (!text1 && !text2)
+			return 1;
+		else if (!text1 || !text2)
+			return 0;
+		else {
+			int result = strcmp(text1, text2);
+			free(text1);
+			free(text2);
+			return result;
+		}
+	}
 }
 
 char* getTextProperty(const TextProperty* pro) {
-    if (!pro || !pro->text)
-        return NULL;
-    char *data = (char *) getProperty(pro->text);
-    char *output = malloc(sizeof(char) * strlen(data)+1);
-    strcpy(output, data);
-    return output;
+	if (!pro || !pro->text)
+		return NULL;
+	char *data = (char *) getProperty(pro->text);
+	if (!data)
+		return NULL;
+	char *output = malloc(sizeof(char) * strlen(data)+1);
+	strcpy(output, data);
+	return output;
 }
 
 /// @todo remove the pro->text != NULL restriction?
 /// @todo warn that you need to free() anything from a Property
 void setTextProperty(TextProperty* pro, const char* text) {
-    if (!pro)
-        return;
-    else if (!text) {
-        deleteProperty(pro->text);
-        pro->text = createProperty();
-    } else {
-        char *data = (char *) getProperty(pro->text);
-        data = realloc(data, sizeof(char) * strlen(text)+1);
-        strcpy(data, text);
-        setProperty(pro->text, data);
-    }
+	if (!pro)
+		return;
+	else if (!text) {
+		deleteProperty(pro->text);
+		pro->text = createProperty();
+	} else {
+		char *data = (char *) getProperty(pro->text);
+		data = realloc(data, sizeof(char) * strlen(text)+1);
+		strcpy(data, text);
+		setProperty(pro->text, data);
+	}
 }
 
 void printTextProperty(const TextProperty* pro) {
-    if (pro)
+	if (pro)
 		printf("%s", pro->text);
 }
 
@@ -148,7 +150,7 @@ char* getURIProperty(const URIProperty* pro) {
 }
 
 int compareURIProperty(const URIProperty* pro1,
-                       const URIProperty* pro2) {
+					   const URIProperty* pro2) {
 	if (!pro1 || !pro2) // TODO check pro1->text and pro2->text too?
 		return -1;
 	return compareTextProperty(pro1->uri, pro2->uri);
@@ -178,29 +180,30 @@ void deleteIntProperty(IntProperty* pro) {
 }
 
 void setIntProperty(IntProperty* pro, int value) {
-	if (pro)
-		setProperty(pro->number, (void *) value);
+	if (pro) {
+		setProperty(pro->number, (void *) &value);
+	}
 }
 
 int getIntProperty(const IntProperty* pro) {
 	if (pro)
-		return (int) getProperty(pro->number);
+		return *(int *)getProperty(pro->number);
 }
 
 int compareIntProperty(const IntProperty* pro1,
-                       const IntProperty* pro2) {
+					   const IntProperty* pro2) {
 	if (!pro1 && !pro2)
-	    return 1;
-    else if (!pro1 || !pro2)
-        return 0;
-    else {
-        int *num1 = (int *) getProperty(pro1->number);
-        int *num2 = (int *) getProperty(pro2->number);
-        int result = *num1 - *num2;
-        free(num1);
-        free(num2);
-        return result;
-    }
+		return 1;
+	else if (!pro1 || !pro2)
+		return 0;
+	else {
+		int *num1 = (int *) getProperty(pro1->number);
+		int *num2 = (int *) getProperty(pro2->number);
+		int result = *num1 - *num2;
+		free(num1);
+		free(num2);
+		return result;
+	}
 }
 
 void printIntProperty(const IntProperty* pro) {
@@ -239,7 +242,7 @@ int getPositionProperty(const PositionProperty* pro) {
 }
 
 int comparePositionProperty(const PositionProperty* pro1,
-                            const PositionProperty* pro2) {
+							const PositionProperty* pro2) {
 	if (!pro1 || !pro2) // TODO check numbers too?
 		return compareIntProperty(pro1->position, pro2->position);
 	else
@@ -286,7 +289,7 @@ int getPolarityProperty(const PolarityProperty* pro) {
 }
 
 int comparePolarityProperty(const PolarityProperty* pro1,
-                            const PolarityProperty* pro2) {
+							const PolarityProperty* pro2) {
 	if (pro1 && pro2)
 		return compareIntProperty(pro1->polarity, pro2->polarity);
 	else
