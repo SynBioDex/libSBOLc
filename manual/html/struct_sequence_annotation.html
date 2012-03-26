@@ -17,7 +17,9 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
   <div class="tabs">
     <ul class="tablist">
       <li><a href="index.html"><span>Main&nbsp;Page</span></a></li>
+      <li><a href="pages.html"><span>Related&nbsp;Pages</span></a></li>
       <li class="current"><a href="annotated.html"><span>Data&nbsp;Structures</span></a></li>
+      <li><a href="files.html"><span>Files</span></a></li>
       <li id="searchli">
         <div id="MSearchBox" class="MSearchBoxInactive">
         <span class="left">
@@ -39,6 +41,7 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
   <div class="tabs2">
     <ul class="tablist">
       <li><a href="annotated.html"><span>Data&nbsp;Structures</span></a></li>
+      <li><a href="functions.html"><span>Data&nbsp;Fields</span></a></li>
     </ul>
   </div>
 </div>
@@ -49,33 +52,41 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 <h1>SequenceAnnotation Struct Reference</h1>  </div>
 </div>
 <div class="contents">
-<!-- doxytag: class="SequenceAnnotation" --><table class="memberdecls">
+<!-- doxytag: class="SequenceAnnotation" -->
+<p>Implements the SBOL Core <a class="el" href="struct_sequence_annotation.html" title="Implements the SBOL Core SequenceAnnotation object.">SequenceAnnotation</a> object.  
+<a href="#_details">More...</a></p>
+
+<p><code>#include &lt;sequenceannotation.h&gt;</code></p>
+<table class="memberdecls">
 <tr><td colspan="2"><h2><a name="pub-attribs"></a>
 Data Fields</h2></td></tr>
-<tr><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a4c06614bd663046e6c7b7db2364d7bbd"></a><!-- doxytag: member="SequenceAnnotation::base" ref="a4c06614bd663046e6c7b7db2364d7bbd" args="" -->
+<tr><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a3eca50e06c60df6041645b2f0d83c0f5"></a><!-- doxytag: member="SequenceAnnotation::base" ref="a3eca50e06c60df6041645b2f0d83c0f5" args="" -->
 struct _SBOLObject *&nbsp;</td><td class="memItemRight" valign="bottom"><b>base</b></td></tr>
-<tr><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="ac8bb1b7171fb7b4325be250e68889d47"></a><!-- doxytag: member="SequenceAnnotation::genbankStart" ref="ac8bb1b7171fb7b4325be250e68889d47" args="" -->
+<tr><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="ae3a249dd005a5cf2247fb479eb389954"></a><!-- doxytag: member="SequenceAnnotation::genbankStart" ref="ae3a249dd005a5cf2247fb479eb389954" args="" -->
 int&nbsp;</td><td class="memItemRight" valign="bottom"><b>genbankStart</b></td></tr>
-<tr><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a564cad1fdbd7ca688d0bcd29656d7d5f"></a><!-- doxytag: member="SequenceAnnotation::genbankEnd" ref="a564cad1fdbd7ca688d0bcd29656d7d5f" args="" -->
+<tr><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="acf05f6f19316c7446fc4811a1e9e6496"></a><!-- doxytag: member="SequenceAnnotation::genbankEnd" ref="acf05f6f19316c7446fc4811a1e9e6496" args="" -->
 int&nbsp;</td><td class="memItemRight" valign="bottom"><b>genbankEnd</b></td></tr>
-<tr><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a47aaf92ba87937348fce5d2fb206ee8e"></a><!-- doxytag: member="SequenceAnnotation::strand" ref="a47aaf92ba87937348fce5d2fb206ee8e" args="" -->
+<tr><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a51a817d7774170c6a1cbd39b3a468a7e"></a><!-- doxytag: member="SequenceAnnotation::strand" ref="a51a817d7774170c6a1cbd39b3a468a7e" args="" -->
 int&nbsp;</td><td class="memItemRight" valign="bottom"><b>strand</b></td></tr>
-<tr><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="ac1544d8f52747fc1a901f8590bbb573e"></a><!-- doxytag: member="SequenceAnnotation::annotates" ref="ac1544d8f52747fc1a901f8590bbb573e" args="" -->
+<tr><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a830bb58dfbd199414e2be2f170d3c751"></a><!-- doxytag: member="SequenceAnnotation::annotates" ref="a830bb58dfbd199414e2be2f170d3c751" args="" -->
 struct _DNAComponent *&nbsp;</td><td class="memItemRight" valign="bottom"><b>annotates</b></td></tr>
-<tr><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="ac5ff4e91cbed09919d8c75a2174db0c3"></a><!-- doxytag: member="SequenceAnnotation::subComponent" ref="ac5ff4e91cbed09919d8c75a2174db0c3" args="" -->
+<tr><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a793e45ebcf793a8b5379e44e956f265f"></a><!-- doxytag: member="SequenceAnnotation::subComponent" ref="a793e45ebcf793a8b5379e44e956f265f" args="" -->
 struct _DNAComponent *&nbsp;</td><td class="memItemRight" valign="bottom"><b>subComponent</b></td></tr>
-<tr><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a1cf25be0e6802b5fa584d223d6ad4210"></a><!-- doxytag: member="SequenceAnnotation::precedes" ref="a1cf25be0e6802b5fa584d223d6ad4210" args="" -->
+<tr><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a95576cfe1de2f10154732ec3448489b4"></a><!-- doxytag: member="SequenceAnnotation::precedes" ref="a95576cfe1de2f10154732ec3448489b4" args="" -->
 struct _PointerArray *&nbsp;</td><td class="memItemRight" valign="bottom"><b>precedes</b></td></tr>
-<tr><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a0831bb0bd16d0d0d4f5c9e8be21ad951"></a><!-- doxytag: member="SequenceAnnotation::processed" ref="a0831bb0bd16d0d0d4f5c9e8be21ad951" args="" -->
-int&nbsp;</td><td class="memItemRight" valign="bottom"><b>processed</b></td></tr>
 </table>
+<hr/><a name="_details"></a><h2>Detailed Description</h2>
+<p>Implements the SBOL Core <a class="el" href="struct_sequence_annotation.html" title="Implements the SBOL Core SequenceAnnotation object.">SequenceAnnotation</a> object. </p>
+<hr/>The documentation for this struct was generated from the following file:<ul>
+<li>source/<a class="el" href="sequenceannotation_8h.html">sequenceannotation.h</a></li>
+</ul>
 </div>
 <!--- window showing the filter options -->
 <div id="MSearchSelectWindow"
      onmouseover="return searchBox.OnSearchSelectShow()"
      onmouseout="return searchBox.OnSearchSelectHide()"
      onkeydown="return searchBox.OnSearchSelectKey(event)">
-<a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(0)"><span class="SelectionMark">&nbsp;</span>All</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(1)"><span class="SelectionMark">&nbsp;</span>Data Structures</a></div>
+<a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(0)"><span class="SelectionMark">&nbsp;</span>All</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(1)"><span class="SelectionMark">&nbsp;</span>Data Structures</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(2)"><span class="SelectionMark">&nbsp;</span>Files</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(3)"><span class="SelectionMark">&nbsp;</span>Functions</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(4)"><span class="SelectionMark">&nbsp;</span>Variables</a></div>
 
 <!-- iframe showing the search results (closed by default) -->
 <div id="MSearchResultsWindow">
@@ -84,7 +95,7 @@ int&nbsp;</td><td class="memItemRight" valign="bottom"><b>processed</b></td></tr
 </iframe>
 </div>
 
-<hr class="footer"/><address class="footer"><small>Generated on Sun Mar 25 2012 19:03:32 for libSBOLc by&nbsp;
+<hr class="footer"/><address class="footer"><small>Generated on Mon Mar 26 2012 12:32:47 for libSBOLc by&nbsp;
 <a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.7.1 </small></address>
 </body>

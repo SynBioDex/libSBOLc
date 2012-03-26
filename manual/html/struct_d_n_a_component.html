@@ -17,7 +17,9 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
   <div class="tabs">
     <ul class="tablist">
       <li><a href="index.html"><span>Main&nbsp;Page</span></a></li>
+      <li><a href="pages.html"><span>Related&nbsp;Pages</span></a></li>
       <li class="current"><a href="annotated.html"><span>Data&nbsp;Structures</span></a></li>
+      <li><a href="files.html"><span>Files</span></a></li>
       <li id="searchli">
         <div id="MSearchBox" class="MSearchBoxInactive">
         <span class="left">
@@ -39,6 +41,7 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
   <div class="tabs2">
     <ul class="tablist">
       <li><a href="annotated.html"><span>Data&nbsp;Structures</span></a></li>
+      <li><a href="functions.html"><span>Data&nbsp;Fields</span></a></li>
     </ul>
   </div>
 </div>
@@ -49,27 +52,38 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 <h1>DNAComponent Struct Reference</h1>  </div>
 </div>
 <div class="contents">
-<!-- doxytag: class="DNAComponent" --><table class="memberdecls">
+<!-- doxytag: class="DNAComponent" -->
+<p>Implements the SBOL Core <a class="el" href="struct_d_n_a_component.html" title="Implements the SBOL Core DNAComponent object.">DNAComponent</a> object.  
+<a href="#_details">More...</a></p>
+
+<p><code>#include &lt;dnacomponent.h&gt;</code></p>
+<table class="memberdecls">
 <tr><td colspan="2"><h2><a name="pub-attribs"></a>
 Data Fields</h2></td></tr>
-<tr><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a644cc89ef38683323f7a1dd4b0fd88d2"></a><!-- doxytag: member="DNAComponent::base" ref="a644cc89ef38683323f7a1dd4b0fd88d2" args="" -->
-struct _SBOLCompoundObject *&nbsp;</td><td class="memItemRight" valign="bottom"><b>base</b></td></tr>
-<tr><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a60ea21770b0f93d7a73f4cc739f9618b"></a><!-- doxytag: member="DNAComponent::dnaSequence" ref="a60ea21770b0f93d7a73f4cc739f9618b" args="" -->
+<tr><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a9119765d54ecbb99c648c888ab3c8b7b"></a><!-- doxytag: member="DNAComponent::base" ref="a9119765d54ecbb99c648c888ab3c8b7b" args="" -->
+struct _SBOLCompoundObject *&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="struct_d_n_a_component.html#a9119765d54ecbb99c648c888ab3c8b7b">base</a></td></tr>
+<tr><td class="mdescLeft">&nbsp;</td><td class="mdescRight">uri, displayID, name, description <br/></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a6ebca067b5cae830dd5e51e4752753b5"></a><!-- doxytag: member="DNAComponent::dnaSequence" ref="a6ebca067b5cae830dd5e51e4752753b5" args="" -->
 struct _DNASequence *&nbsp;</td><td class="memItemRight" valign="bottom"><b>dnaSequence</b></td></tr>
-<tr><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a7efaa14001a88fdca34b31a884070f00"></a><!-- doxytag: member="DNAComponent::annotations" ref="a7efaa14001a88fdca34b31a884070f00" args="" -->
-struct _PointerArray *&nbsp;</td><td class="memItemRight" valign="bottom"><b>annotations</b></td></tr>
-<tr><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a96f203e27403fae604c51c492bd23baa"></a><!-- doxytag: member="DNAComponent::collections" ref="a96f203e27403fae604c51c492bd23baa" args="" -->
-struct _PointerArray *&nbsp;</td><td class="memItemRight" valign="bottom"><b>collections</b></td></tr>
-<tr><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a0831bb0bd16d0d0d4f5c9e8be21ad951"></a><!-- doxytag: member="DNAComponent::processed" ref="a0831bb0bd16d0d0d4f5c9e8be21ad951" args="" -->
-int&nbsp;</td><td class="memItemRight" valign="bottom"><b>processed</b></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a9b59d5a070a585d1d76604ca661340f0"></a><!-- doxytag: member="DNAComponent::annotations" ref="a9b59d5a070a585d1d76604ca661340f0" args="" -->
+struct _PointerArray *&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="struct_d_n_a_component.html#a9b59d5a070a585d1d76604ca661340f0">annotations</a></td></tr>
+<tr><td class="mdescLeft">&nbsp;</td><td class="mdescRight">array of SequenceAnnotations <br/></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a647ede880ebdaee228b9b36999336575"></a><!-- doxytag: member="DNAComponent::collections" ref="a647ede880ebdaee228b9b36999336575" args="" -->
+struct _PointerArray *&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="struct_d_n_a_component.html#a647ede880ebdaee228b9b36999336575">collections</a></td></tr>
+<tr><td class="mdescLeft">&nbsp;</td><td class="mdescRight">array of Collections <br/></td></tr>
 </table>
+<hr/><a name="_details"></a><h2>Detailed Description</h2>
+<p>Implements the SBOL Core <a class="el" href="struct_d_n_a_component.html" title="Implements the SBOL Core DNAComponent object.">DNAComponent</a> object. </p>
+<hr/>The documentation for this struct was generated from the following file:<ul>
+<li>source/<a class="el" href="dnacomponent_8h.html">dnacomponent.h</a></li>
+</ul>
 </div>
 <!--- window showing the filter options -->
 <div id="MSearchSelectWindow"
      onmouseover="return searchBox.OnSearchSelectShow()"
      onmouseout="return searchBox.OnSearchSelectHide()"
      onkeydown="return searchBox.OnSearchSelectKey(event)">
-<a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(0)"><span class="SelectionMark">&nbsp;</span>All</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(1)"><span class="SelectionMark">&nbsp;</span>Data Structures</a></div>
+<a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(0)"><span class="SelectionMark">&nbsp;</span>All</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(1)"><span class="SelectionMark">&nbsp;</span>Data Structures</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(2)"><span class="SelectionMark">&nbsp;</span>Files</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(3)"><span class="SelectionMark">&nbsp;</span>Functions</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(4)"><span class="SelectionMark">&nbsp;</span>Variables</a></div>
 
 <!-- iframe showing the search results (closed by default) -->
 <div id="MSearchResultsWindow">
@@ -78,7 +92,7 @@ int&nbsp;</td><td class="memItemRight" valign="bottom"><b>processed</b></td></tr
 </iframe>
 </div>
 
-<hr class="footer"/><address class="footer"><small>Generated on Sun Mar 25 2012 19:03:32 for libSBOLc by&nbsp;
+<hr class="footer"/><address class="footer"><small>Generated on Mon Mar 26 2012 12:32:47 for libSBOLc by&nbsp;
 <a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.7.1 </small></address>
 </body>

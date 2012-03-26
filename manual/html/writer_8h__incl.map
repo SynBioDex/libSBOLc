@@ -1,0 +1,13 @@
+<map id="G" name="G">
+<area shape="rect" id="node5" href="$sbol_8h.html" title="This file gathers together all the SBOL functions so they can be easily included." alt="" coords="563,83,621,112"/>
+<area shape="rect" id="node9" href="$property_8h.html" title="This file defines a simple hierarchy of Properties, which hold data for SBOLObjects." alt="" coords="104,160,189,189"/>
+<area shape="rect" id="node11" href="$api_8h.html" title="This file creates macros for exporting functions." alt="" coords="737,237,791,267"/>
+<area shape="rect" id="node13" href="$utilities_8h.html" title="This file defines SBOL utility functions that don&#39;t really fit in anywhere else." alt="" coords="264,160,341,189"/>
+<area shape="rect" id="node15" href="$dnasequence_8h.html" title="This file defines the DNASequence struct, as well as functions for operating on it." alt="" coords="365,160,485,189"/>
+<area shape="rect" id="node18" href="$sequenceannotation_8h.html" title="This file contains the SequenceAnnotation struct, as well as functions for operating on it..." alt="" coords="509,160,675,189"/>
+<area shape="rect" id="node21" href="$dnacomponent_8h.html" title="This file contains the DNAComponent struct, as well as functions for operating on it..." alt="" coords="699,160,829,189"/>
+<area shape="rect" id="node24" href="$collection_8h.html" title="This file defines the Collection struct, as well as functions for operating on it." alt="" coords="853,160,947,189"/>
+<area shape="rect" id="node27" href="$types_8h.html" title="This file is meant to be a central location for defining the constants related to SBOL serialization..." alt="" coords="971,160,1040,189"/>
+<area shape="rect" id="node29" href="$validator_8h.html" title="This file defines the isValidSBOL function, which is used to verify SBOL documents before parsing..." alt="" coords="1163,160,1251,189"/>
+<area shape="rect" id="node34" href="$reader_8h.html" title="This file contains functions for importing SBOL objects from an XML file." alt="" coords="1064,160,1139,189"/>
+</map>
