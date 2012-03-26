@@ -43,5 +43,3 @@ Once you've configured and built libSBOLc, you can run some simple tests to make
 or 
 
     ./release/test_all.exe
-
-## Using libSBOLc
