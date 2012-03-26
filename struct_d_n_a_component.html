@@ -2,7 +2,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head>
 <meta http-equiv="Content-Type" content="text/xhtml;charset=UTF-8"/>
-<title>libSBOLc: Main Page</title>
+<title>libSBOLc: DNAComponent Struct Reference</title>
 <link href="tabs.css" rel="stylesheet" type="text/css"/>
 <link href="search/search.css" rel="stylesheet" type="text/css"/>
 <script type="text/javaScript" src="search/search.js"></script>
@@ -16,8 +16,8 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 <div class="navigation" id="top">
   <div class="tabs">
     <ul class="tablist">
-      <li class="current"><a href="index.html"><span>Main&nbsp;Page</span></a></li>
-      <li><a href="annotated.html"><span>Data&nbsp;Structures</span></a></li>
+      <li><a href="index.html"><span>Main&nbsp;Page</span></a></li>
+      <li class="current"><a href="annotated.html"><span>Data&nbsp;Structures</span></a></li>
       <li id="searchli">
         <div id="MSearchBox" class="MSearchBoxInactive">
         <span class="left">
@@ -36,13 +36,34 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
       </li>
     </ul>
   </div>
+  <div class="tabs2">
+    <ul class="tablist">
+      <li><a href="annotated.html"><span>Data&nbsp;Structures</span></a></li>
+    </ul>
+  </div>
 </div>
 <div class="header">
+  <div class="summary">
+<a href="#pub-attribs">Data Fields</a>  </div>
   <div class="headertitle">
-<h1>libSBOLc Documentation</h1>  </div>
+<h1>DNAComponent Struct Reference</h1>  </div>
 </div>
 <div class="contents">
-<h3 class="version">0.1 </h3></div>
+<!-- doxytag: class="DNAComponent" --><table class="memberdecls">
+<tr><td colspan="2"><h2><a name="pub-attribs"></a>
+Data Fields</h2></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a644cc89ef38683323f7a1dd4b0fd88d2"></a><!-- doxytag: member="DNAComponent::base" ref="a644cc89ef38683323f7a1dd4b0fd88d2" args="" -->
+struct _SBOLCompoundObject *&nbsp;</td><td class="memItemRight" valign="bottom"><b>base</b></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a60ea21770b0f93d7a73f4cc739f9618b"></a><!-- doxytag: member="DNAComponent::dnaSequence" ref="a60ea21770b0f93d7a73f4cc739f9618b" args="" -->
+struct _DNASequence *&nbsp;</td><td class="memItemRight" valign="bottom"><b>dnaSequence</b></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a7efaa14001a88fdca34b31a884070f00"></a><!-- doxytag: member="DNAComponent::annotations" ref="a7efaa14001a88fdca34b31a884070f00" args="" -->
+struct _PointerArray *&nbsp;</td><td class="memItemRight" valign="bottom"><b>annotations</b></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a96f203e27403fae604c51c492bd23baa"></a><!-- doxytag: member="DNAComponent::collections" ref="a96f203e27403fae604c51c492bd23baa" args="" -->
+struct _PointerArray *&nbsp;</td><td class="memItemRight" valign="bottom"><b>collections</b></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a0831bb0bd16d0d0d4f5c9e8be21ad951"></a><!-- doxytag: member="DNAComponent::processed" ref="a0831bb0bd16d0d0d4f5c9e8be21ad951" args="" -->
+int&nbsp;</td><td class="memItemRight" valign="bottom"><b>processed</b></td></tr>
+</table>
+</div>
 <!--- window showing the filter options -->
 <div id="MSearchSelectWindow"
      onmouseover="return searchBox.OnSearchSelectShow()"
