@@ -1,3 +1,9 @@
+///////////////////////////////////////////////////////////
+/// @file dnasequence.h
+/// This file defines the DNASequence struct, as well as
+/// functions for operating on it.
+///////////////////////////////////////////////////////////
+
 #ifndef SBOL_DNASEQUENCE_HEADER
 #define SBOL_DNASEQUENCE_HEADER
 #include "api.h"
@@ -5,6 +11,7 @@
 struct _SBOLObject;
 struct _TextProperty;
 
+/// Implements the SBOL Core DNASequence object.
 typedef struct _DNASequence {
 	struct _SBOLObject* base;
 	struct _TextProperty* nucleotides;

@@ -13,15 +13,8 @@
 #include "property.h"
 #include "api.h"
 
-/// @TODO document that you need to free strings gotten from sbol
-/// @TODO make a lot of the functions static to simplify things
-
-/***********************************************
- * The SBOL core is split into files to ease
- * maintenance, but since all the structs are
- * interdependent you should probably stick to
- * #including them as a group from here.
- ***********************************************/
+/// @todo document that you need to free strings gotten from sbol
+/// @todo make a lot of the functions static to simplify things
 
 // from other files
 #include "utilities.h"

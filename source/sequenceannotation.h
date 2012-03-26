@@ -12,6 +12,7 @@ struct _DNAComponent;
 struct _PointerArray;
 struct _URIProperty;
 
+/// Implements the SBOL Core SequenceAnnotation object.
 typedef struct _SequenceAnnotation {
 	struct _SBOLObject* base;
 	int genbankStart;
@@ -22,7 +23,7 @@ typedef struct _SequenceAnnotation {
 	struct _PointerArray* precedes;
 } SequenceAnnotation;
 
-// TODO getAnnotates?
+// @todo getAnnotates function?
 
 // create/destroy
 SBOLAPIEXPORTS SequenceAnnotation* createSequenceAnnotation(const char* uri);

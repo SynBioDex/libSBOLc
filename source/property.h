@@ -11,10 +11,13 @@
 #ifndef SBOL_PROPERTY_HEADER
 #define SBOL_PROPERTY_HEADER
 
+/// @todo Create Property as a basis for TextProperty and IntProperty
+
 /****************
  * TextProperty
  ****************/
 
+/// Base struct for all text-containing Properties.
 /// @todo Make TextProperty derive from Property
 typedef struct _TextProperty {
 	char* text;
@@ -31,6 +34,9 @@ void printTextProperty(const TextProperty* pro);
  * URIProperty
  ***************/
 
+/// A TextProperty that only allows creation
+/// of values that aren't already in use as the
+/// uri of an SBOLObject.
 typedef struct _URIProperty {
 	struct _TextProperty* uri;
 } URIProperty;
@@ -46,6 +52,7 @@ void printURIProperty(const URIProperty* pro);
  * IntProperty
  ***************/
 
+/// Base struct for all integer-valued Properties.
 /// @todo Make IntProperty derive from Property
 typedef struct _IntProperty {
 	int* number;
@@ -62,6 +69,11 @@ void printIntProperty(const IntProperty* pro);
  * PositionProperty
  ********************/
 
+/// IntProperty that only allows non-negative values.
+/// There should also be other restrictions, but they
+/// only make sense for groups, not individual PositionProperties.
+/// For example, SequenceAnnotation->bioEnd should be at least
+/// as large as SequenceAnnotation->bioStart.
 typedef struct _PositionProperty {
 	struct _IntProperty* position;
 } PositionProperty;
@@ -77,6 +89,11 @@ void printPositionProperty(const PositionProperty* pro);
  * PolarityProperty
  ********************/
 
+/// IntProperty that only allows the values 0 or 1.
+/// 1 indicates the positive strand relative to the parent
+/// component, and 0 indicates the reverse complement.
+/// @todo Separate BooleanProperty?
+/// @todo Base this on chars instead of ints? Like '+', '-', '?'
 typedef struct _PolarityProperty {
 	struct _IntProperty* polarity;
 } PolarityProperty;

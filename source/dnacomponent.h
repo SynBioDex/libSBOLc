@@ -6,23 +6,30 @@
 
 #ifndef SBOL_DNACOMPONENT_HEADER
 #define SBOL_DNACOMPONENT_HEADER
+
 #include "api.h"
 
+// forward declarations
 struct _PointerArray;
 struct _SBOLCompoundObject;
 struct _DNASequence;
 struct _SequenceAnnotation;
 struct _Collection;
 
+/// Implements the SBOL Core DNAComponent object.
 typedef struct _DNAComponent {
-	struct _SBOLCompoundObject* base;
+	struct _SBOLCompoundObject* base;  ///< uri, displayID, name, description
 	struct _DNASequence* dnaSequence;
-	struct _PointerArray* annotations;
-	struct _PointerArray* collections;
+	struct _PointerArray* annotations; ///< array of SequenceAnnotations
+	struct _PointerArray* collections; ///< array of Collections
 } DNAComponent;
 
-// create/destroy
+/// Create an empty DNAComponent.
 SBOLAPIEXPORTS DNAComponent* createDNAComponent(const char* uri);
+
+/// Delete a DNAComponent.
+/// This doesn't delete any of the other structs
+/// it references.
 SBOLAPIEXPORTS void deleteDNAComponent(DNAComponent* com);
 
 // work with storage
