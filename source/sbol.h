@@ -1,11 +1,20 @@
+///////////////////////////////////////////////////////////
+/// @file sbol.h
+/// This file gathers together all the SBOL functions so
+/// they can be easily #included. Although the SBOL core
+/// is separated into files for easier maintenance,
+/// those files are fairly interdependent, so it's
+/// probably best to #include them as a group from here.
+///////////////////////////////////////////////////////////
+
 #ifndef SBOL_HEADER
 #define SBOL_HEADER
 #include "debug.h"
 #include "property.h"
 #include "api.h"
 
-// TODO document that you need to free strings gotten from sbol
-// TODO make a lot of the functions static to simplify things
+/// @TODO document that you need to free strings gotten from sbol
+/// @TODO make a lot of the functions static to simplify things
 
 /***********************************************
  * The SBOL core is split into files to ease

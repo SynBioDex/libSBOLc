@@ -1,3 +1,9 @@
+///////////////////////////////////////////////////////////
+/// @file sequenceannotation.h
+/// This file contains the SequenceAnnotation struct,
+/// as well as functions for operating on it.
+///////////////////////////////////////////////////////////
+
 #ifndef SBOL_SEQUENCEANNOTATION_HEADER
 #define SBOL_SEQUENCEANNOTATION_HEADER
 #include "api.h"

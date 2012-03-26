@@ -1,3 +1,13 @@
+///////////////////////////////////////////////////////////
+/// @file property.h
+/// This file defines a simple hierarchy of Properties,
+/// which hold data for SBOLObjects. Although they don't
+/// do much so far, this is where you would add restraints
+/// on the getting and setting of specific values. For
+/// example, you could add a NucleotidesProperty that
+/// only accepts strings of a, c, t, g, and sometimes n.
+///////////////////////////////////////////////////////////
+
 #ifndef SBOL_PROPERTY_HEADER
 #define SBOL_PROPERTY_HEADER
 
@@ -5,6 +15,7 @@
  * TextProperty
  ****************/
 
+/// @todo Make TextProperty derive from Property
 typedef struct _TextProperty {
 	char* text;
 } TextProperty;
@@ -35,6 +46,7 @@ void printURIProperty(const URIProperty* pro);
  * IntProperty
  ***************/
 
+/// @todo Make IntProperty derive from Property
 typedef struct _IntProperty {
 	int* number;
 } IntProperty;

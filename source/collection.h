@@ -1,3 +1,9 @@
+///////////////////////////////////////////////////////////
+/// @file collection.h
+/// This file defines the Collection object, as well as
+/// functions for operating on it.
+///////////////////////////////////////////////////////////
+
 #ifndef SBOL_COLLECTION_HEADER
 #define SBOL_COLLECTION_HEADER
 #include "api.h"

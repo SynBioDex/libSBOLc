@@ -1,3 +1,14 @@
+///////////////////////////////////////////////////////////
+/// @file types.h
+/// This file is meant to be a central location for
+/// #defining the constants related to SBOL serialization.
+/// Right now, however, there are some in reader.c that
+/// haven't been added. Doing so is a good idea, but will
+/// require some renaming because a lot of terms like
+/// "DnaSequence" have multiple meanings if you're being
+/// case-insensitive.
+///////////////////////////////////////////////////////////
+
 #ifndef SBOL_TYPES_HEADER
 #define SBOL_TYPES_HEADER
 

@@ -1,3 +1,10 @@
+///////////////////////////////////////////////////////////
+/// @file writer.h
+/// This file contains functions for writing the SBOL core
+/// to an XML file. Only writeSBOLCore is meant to be
+/// exported; everything else supports it.
+///////////////////////////////////////////////////////////
+
 #ifndef SBOL_WRITER_HEADER
 #define SBOL_WRITER_HEADER
 #include <libxml/xmlwriter.h>

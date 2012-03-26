@@ -1,3 +1,10 @@
+///////////////////////////////////////////////////////////
+/// @file reader.h
+/// This file contains functions for importing SBOL objects
+/// from an XML file. Only the readSBOLCore function is
+/// meant to be exported; everything else supports it.
+///////////////////////////////////////////////////////////
+
 #ifndef SBOL_READER_HEADER
 #define SBOL_READER_HEADER
 #include "api.h"

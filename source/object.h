@@ -1,3 +1,11 @@
+///////////////////////////////////////////////////////////
+/// @file object.h
+/// This file defines the SBOLObject struct, as well as
+/// functions for operating on it. SBOLObject is used
+/// as a makeshift "base class" for DNASequence, 
+/// SequenceAnnotation, DNAComponent, and Collection.
+///////////////////////////////////////////////////////////
+
 #ifndef SBOL_OBJECT_HEADER
 #define SBOL_OBJECT_HEADER
 #include "api.h"

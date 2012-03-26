@@ -1,3 +1,10 @@
+///////////////////////////////////////////////////////////
+/// @file api.h
+/// This file creates macros for exporting functions.
+/// Just add SBOlAPIEXPORTS before a function declaration
+/// and it will be added to libSBOL.
+///////////////////////////////////////////////////////////
+
 #ifndef SBOL_API_HEADER
 #define SBOL_API_HEADER
 

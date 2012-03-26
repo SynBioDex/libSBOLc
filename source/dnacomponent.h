@@ -1,3 +1,9 @@
+///////////////////////////////////////////////////////////
+/// @file dnacomponent.h
+/// This file contains the DNAComponent struct, as well
+/// as functions for operating on it.
+///////////////////////////////////////////////////////////
+
 #ifndef SBOL_DNACOMPONENT_HEADER
 #define SBOL_DNACOMPONENT_HEADER
 #include "api.h"

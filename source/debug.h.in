@@ -1,10 +1,12 @@
+///////////////////////////////////////////////////////////
+/// @file debug.h
+/// This file contains macros and functions used for
+/// debugging libSBOL. It's generated from debug.h.in
+/// during CMake configuration.
+///////////////////////////////////////////////////////////
+
 #ifndef SBOL_DEBUG_HEADER
 #define SBOL_DEBUG_HEADER
-
-/*************************************
- * CMake reads this file and uses it
- * as a template to generate debug.h
- *************************************/
 
 #cmakedefine SBOL_DEBUG_ACTIVE @SBOL_DEBUG_ACTIVE@
 
