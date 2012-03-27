@@ -116,7 +116,7 @@ void setTextProperty(TextProperty* pro, const char* text) {
 
 void printTextProperty(const TextProperty* pro) {
 	if (pro)
-		printf("%s", pro->text);
+		printf("%s", (char *)pro->text);
 }
 
 /***************
@@ -208,7 +208,7 @@ int compareIntProperty(const IntProperty* pro1,
 
 void printIntProperty(const IntProperty* pro) {
 	if (pro)
-		printf("%i", pro->number);
+		printf("%i", *( (int *)getProperty(pro->number) ));
 }
 
 /********************
