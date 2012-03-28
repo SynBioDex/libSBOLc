@@ -20,6 +20,8 @@
  * node properties
  *************************/
 
+/// @todo make doc static rather than passing it around everywhere
+
 xmlChar *getNodeURI(xmlNode *node) {
 	xmlChar *uri = NULL;
 	if (node) {
@@ -70,13 +72,15 @@ int isReferenceNode(xmlNode *node) {
 
 //void readNamespaces(xmlNode *node); // TODO is this needed?
 
+/// @todo either rename or make it so you don't pass the object
 SBOLCompoundObject *readSBOLCompoundObject(SBOLCompoundObject *obj, xmlNode *node) {
 	xmlNode *child;
 	char *content;
 	for (child = node->children; child; child = child->next) {
 		if (child->name) {
 			content = (char *)xmlNodeGetContent(child);
-			if (!content) continue;
+			if (!content)
+				continue;
 			// TODO #define these
 			else if (nodeNameEquals(child, "displayId"))
 				setSBOLCompoundObjectDisplayID(obj, content);
@@ -110,9 +114,9 @@ DNASequence *readDNASequence(xmlNode *node, int pass) {
 	xmlNode *child;
 	xmlChar *content;
 	for (child = node->children; child; child = child->next) {
-		if (!child->name) continue;
 		content = xmlNodeGetContent(child);
-		if (!(char *)content) continue;
+		if (!content)
+			continue;
 		// TODO #define this
 		else if (nodeNameEquals(child, "nucleotides")) {
 			setNucleotides(seq, (char *)content);
@@ -125,7 +129,51 @@ DNASequence *readDNASequence(xmlNode *node, int pass) {
 	return seq;
 }
 
-SequenceAnnotation *readSequenceAnnotation(xmlNode *node, int pass) {
+// adapted from http://student.santarosa.edu/~dturover/?node=libxml2
+/// @param node Optionally, search starting from a specific node
+/// @return an xmlPathObjectPtr that must be freed with xmlXPathFreeObject()
+xmlXPathObjectPtr getNodesMatchingXPath(xmlDoc *doc, xmlNode *node, xmlChar *str) {
+	if (!doc || !str)
+		return NULL;
+	xmlXPathContextPtr context = xmlXPathNewContext(doc);
+	if (!context)
+		return NULL;
+	if (node)
+		context->node = node;
+	xmlXPathObjectPtr result = xmlXPathEvalExpression(str, context);
+	xmlXPathFreeContext(context);
+	return result;
+}
+
+/// @todo put this at the core of the process
+void applyFunctionToNodesMatchingXPath(void (*fn)(xmlNode *), xmlDoc *doc, xmlNode *node, xmlChar *path) {
+	if (!doc || !path)
+		return;
+	xmlXPathObjectPtr results = getNodesMatchingXPath(doc, node, path);
+	if (!xmlXPathNodeSetIsEmpty(results->nodesetval)) {
+		int n;
+		for (n = 0; n < results->nodesetval->nodeNr; n++)
+			fn(results->nodesetval->nodeTab[n]);
+	}
+	xmlXPathFreeObject(results);
+}
+
+// just for trying out function passing
+void printNodeName(xmlNode *node) {
+	if (node)
+		printf("%s\n", node->name);
+}
+
+readSequenceAnnotation_XPath(xmlDoc *doc, xmlNode *node) {
+	if (!doc || !node)
+		return;
+	xmlChar *path = "./*";
+	applyFunctionToNodesMatchingXPath(printNodeName, doc, node, path);
+}
+
+SequenceAnnotation *readSequenceAnnotation(xmlDoc *doc, xmlNode *node, int pass) {
+	readSequenceAnnotation_XPath(doc, node);
+
 	xmlNode *ann_node = NULL;
 	xmlNode *pro_node = NULL;
 	xmlNode *ref_node = NULL;
@@ -370,14 +418,14 @@ Collection *readCollection(xmlNode *node, int pass) {
 // this function should be called twice on every node:
 // the first pass (pass == 0) creates SBOL objects,
 // and the second (pass > 0) links them together with pointers
-void readSBOLObjects(xmlNode *root, int pass) {
+void readSBOLObjects(xmlDoc *doc, xmlNode *root, int pass) {
 	xmlNode *node;
 	for (node = root; node; node = node->next) {
 		if      (nodeNameEquals(node, "Collection"))         readCollection(node, pass);
-		else if (nodeNameEquals(node, "SequenceAnnotation")) readSequenceAnnotation(node, pass);
+		else if (nodeNameEquals(node, "SequenceAnnotation")) readSequenceAnnotation(doc, node, pass);
 		else if (nodeNameEquals(node, "DnaComponent"))       readDNAComponent(node, pass);
 		else if (nodeNameEquals(node, "DnaSequence"))        readDNASequence(node, pass);
-		readSBOLObjects(node->children, pass);
+		readSBOLObjects(doc, node->children, pass);
 	}
 }
 
@@ -414,8 +462,8 @@ void readSBOLCore(char* filename) {
 	
 	// import
 	root = xmlDocGetRootElement(doc);
-	readSBOLObjects(root, 0);
-	readSBOLObjects(root, 1);
+	readSBOLObjects(doc, root, 0);
+	readSBOLObjects(doc, root, 1);
 	
 	// clean up
 	xmlFreeDoc(doc);

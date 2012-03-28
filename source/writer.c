@@ -11,7 +11,7 @@
 static int INDENT;
 static xmlTextWriterPtr WRITER;
 static xmlDocPtr OUTPUT;
-static PointerArray *processed;
+static PointerArray *processed; ///< @todo capitalize
 
 void indentMore() { xmlTextWriterSetIndent(WRITER, ++INDENT); }
 void indentLess() { xmlTextWriterSetIndent(WRITER, --INDENT); }
