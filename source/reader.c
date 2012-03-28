@@ -169,29 +169,38 @@ int isReferenceNode(xmlNode *node) {
 
 //void readNamespaces(xmlNode *node); // TODO is this needed?
 
-/// @todo either rename or make it so you don't pass the object
+/// @todo either rename or make it so you don't pass the object?
 SBOLCompoundObject *readSBOLCompoundObject(SBOLCompoundObject *obj, xmlNode *node) {
-	xmlNode *child;
+	xmlNode *result;
 	char *content;
-	for (child = node->children; child; child = child->next) {
-		if (child->name) {
-			content = (char *)xmlNodeGetContent(child);
-			if (!content)
-				continue;
-			// TODO #define these
-			else if (nodeNameEquals(child, "displayId"))
-				setSBOLCompoundObjectDisplayID(obj, content);
-			else if (nodeNameEquals(child, "name"))
-				setSBOLCompoundObjectName(obj, content);
-			else if (nodeNameEquals(child, "description"))
-				setSBOLCompoundObjectDescription(obj, content);
-			free(content);
-		}
+
+	// displayID
+	if (result = getSingleNodeMatchingXPath(node, BAD_CAST "./s:displayId")) {
+		content = xmlNodeGetContent(result);
+		setSBOLCompoundObjectDisplayID(obj, (char *)content);
+		xmlFree(content);
 	}
+
+	// name
+	if (result = getSingleNodeMatchingXPath(node, BAD_CAST "./s:name")) {
+		content = xmlNodeGetContent(result);
+		setSBOLCompoundObjectName(obj, (char *)content);
+		xmlFree(content);
+	}
+
+	// description
+	if (result = getSingleNodeMatchingXPath(node, BAD_CAST "./s:description")) {
+		content = xmlNodeGetContent(result);
+		setSBOLCompoundObjectDescription(obj, (char *)content);
+		xmlFree(content);
+	}
+
 	return obj;
 }
 
 DNASequence *readDNASequence(xmlNode *node, int pass) {
+	// check that this uri is OK
+	/// @todo remove this
 	xmlChar *uri = getNodeURI(node);
 	if (isSBOLObjectURI((char *)uri)) {
 		if (pass > 0)
@@ -209,9 +218,12 @@ DNASequence *readDNASequence(xmlNode *node, int pass) {
 	
 	// add nucleotides
 	xmlNode *nt_node = getSingleNodeMatchingXPath(node, BAD_CAST "./s:nucleotides");
-	if (nt_node)
-		setNucleotides(seq, (char *)xmlNodeGetContent(nt_node));
-	
+	if (nt_node) {
+		xmlChar *nucleotides = xmlNodeGetContent(nt_node);
+		setNucleotides(seq, (char *)nucleotides);
+		xmlFree(nucleotides);
+	}
+
 	xmlFree(uri);
 	return seq;
 }
@@ -324,7 +336,7 @@ SequenceAnnotation *readSequenceAnnotation(xmlNode *node, int pass) {
 }
 
 DNAComponent *readDNAComponent(xmlNode *node, int pass) {
-	readDNAComponent_XPath(node);
+	//readDNAComponent_XPath(node);
 
 	DNAComponent *com = NULL;
 	
