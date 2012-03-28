@@ -44,7 +44,6 @@ int compareLetters(const union Property *pro1, const union Property *pro2);
  ****************/
 
 /// Base struct for all text-containing Properties.
-/// @todo Make TextProperty derive from Property
 typedef struct _TextProperty {
 	union Property *text;
 } TextProperty;
@@ -73,6 +72,21 @@ void setURIProperty(URIProperty* pro, const char* uri);
 char* getURIProperty(const URIProperty* pro);
 int compareURIProperty(const URIProperty* pro1, const URIProperty* pro2);
 void printURIProperty(const URIProperty* pro);
+
+/***********************
+ * NucleotidesProperty
+ ***********************/
+
+typedef struct _NucleotidesProperty {
+	struct _TextProperty *nucleotides;
+} NucleotidesProperty;
+
+NucleotidesProperty *createNucleotidesProperty();
+void deleteNucleotidesProperty(NucleotidesProperty *pro);
+void  setNucleotidesProperty(NucleotidesProperty *pro, const char *nucleotides);
+char *getNucleotidesProperty(const NucleotidesProperty *pro);
+int compareNucleotidesProperty(const NucleotidesProperty *pro1, const NucleotidesProperty *pro2);
+void printNucleotidesProperty(const NucleotidesProperty *pro);
 
 /********************
  * PositionProperty
@@ -105,10 +119,10 @@ enum StrandPolarity {
 	STRAND_REVERSE
 };
 
-/// IntProperty that only allows the values 0 or 1.
+/// IntProperty that only allows StrandPolarity values.
 /// 1 indicates the positive strand relative to the parent
 /// component, and 0 indicates the reverse complement.
-/// @todo Make an enum for possible values
+/// @todo rename to StrandProperty? or OrientationProperty?
 typedef struct _PolarityProperty {
 	union Property* polarity;
 } PolarityProperty;

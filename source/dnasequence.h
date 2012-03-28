@@ -9,12 +9,12 @@
 #include "api.h"
 
 struct _SBOLObject;
-struct _TextProperty;
+struct _NucleotidesProperty;
 
 /// Implements the SBOL Core DNASequence object.
 typedef struct _DNASequence {
 	struct _SBOLObject* base;
-	struct _TextProperty* nucleotides;
+	struct _NucleotidesProperty *nucleotides;
 } DNASequence;
 
 SBOLAPIEXPORTS DNASequence* createDNASequence(char* uri);

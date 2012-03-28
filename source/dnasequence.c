@@ -25,7 +25,8 @@ DNASequence* createDNASequence(char* uri) {
 	    return NULL;
 	DNASequence* seq = malloc(sizeof(DNASequence));
 	seq->base        = createSBOLObject(uri);
-	seq->nucleotides = createTextProperty();
+	//seq->nucleotides = createTextProperty();
+	seq->nucleotides = createNucleotidesProperty();
 	registerDNASequence(seq);
 	return seq;
 }
@@ -37,7 +38,7 @@ void setDNASequenceURI(DNASequence* seq, const char* uri) {
 
 void setNucleotides(DNASequence* seq, const char* nucleotides) {
 	if (seq)
-		setTextProperty(seq->nucleotides, nucleotides);
+		setNucleotidesProperty(seq->nucleotides, nucleotides);
 }
 
 // TODO generalize this
@@ -56,7 +57,7 @@ void deleteDNASequence(DNASequence* seq) {
 			seq->base = NULL;
 		}
 		if (seq->nucleotides) {
-			deleteTextProperty(seq->nucleotides);
+			deleteNucleotidesProperty(seq->nucleotides);
 			seq->nucleotides = NULL;
 		}
 		removeDNASequence(seq);
@@ -127,7 +128,7 @@ int isDNASequenceURI(const char* uri) {
 
 char* getNucleotides(const DNASequence* seq) {
 	if (seq)
-	    return getTextProperty(seq->nucleotides);
+	    return getNucleotidesProperty(seq->nucleotides);
 }
 
 // TODO generalize this further?

@@ -136,6 +136,7 @@ void deleteURIProperty(URIProperty* pro) {
 		if (pro->uri)
 			deleteTextProperty(pro->uri);
 		free(pro);
+		pro = NULL;
 	}
 }
 
@@ -153,7 +154,9 @@ char* getURIProperty(const URIProperty* pro) {
 
 int compareURIProperty(const URIProperty* pro1,
 					   const URIProperty* pro2) {
-	if (!pro1 || !pro2) // TODO check pro1->text and pro2->text too?
+	if ((!pro1 && !pro2) || (!pro1->uri && !pro2->uri))
+		return 0;
+	else if (!pro1 || !pro2 || !pro1->uri || !pro2->uri)
 		return -1;
 	return compareTextProperty(pro1->uri, pro2->uri);
 }
@@ -161,6 +164,53 @@ int compareURIProperty(const URIProperty* pro1,
 void printURIProperty(const URIProperty* pro) {
 	if (pro)
 		printTextProperty(pro->uri);
+}
+
+/***********************
+ * NucleotidesProperty
+ ***********************/
+
+NucleotidesProperty *createNucleotidesProperty() {
+	NucleotidesProperty *pro = malloc(sizeof(NucleotidesProperty));
+	pro->nucleotides = createTextProperty();
+	return pro;
+}
+
+void deleteNucleotidesProperty(NucleotidesProperty *pro) {
+	if (pro) {
+		if (pro->nucleotides)
+			deleteTextProperty(pro->nucleotides);
+		free(pro);
+		pro = NULL;
+	}
+}
+
+/// @todo restrict to setting valid nucleotides
+void  setNucleotidesProperty(NucleotidesProperty *pro, const char *nucleotides) {
+	if (pro && nucleotides)
+		setTextProperty(pro->nucleotides, nucleotides);
+}
+
+char *getNucleotidesProperty(const NucleotidesProperty *pro) {
+	if (pro)
+		return getTextProperty(pro->nucleotides);
+	else
+		return NULL;
+}
+
+int compareNucleotidesProperty(const NucleotidesProperty *pro1,
+							   const NucleotidesProperty *pro2) {
+	if ((!pro1 && !pro2) || (!pro1->nucleotides && !pro2->nucleotides))
+		return 0;
+	if (!pro1 || !pro2 || !pro1->nucleotides || !pro2->nucleotides)
+		return -1;
+	return compareTextProperty(pro1->nucleotides, pro2->nucleotides);
+}
+
+/// @todo cut off printing of long sequnces at 50 chars or so
+void printNucleotidesProperty(const NucleotidesProperty *pro) {
+	if (pro)
+		printTextProperty(pro->nucleotides);
 }
 
 /********************
