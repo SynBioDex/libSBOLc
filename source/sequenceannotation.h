@@ -11,12 +11,13 @@
 struct _DNAComponent;
 struct _PointerArray;
 struct _URIProperty;
+struct _PositionProperty;
 
 /// Implements the SBOL Core SequenceAnnotation object.
 typedef struct _SequenceAnnotation {
 	struct _SBOLObject* base;
-	int genbankStart;
-	int genbankEnd;
+	struct _PositionProperty *genbankStart;
+	struct _PositionProperty *genbankEnd;
 	int strand;
    	struct _DNAComponent* annotates;
 	struct _DNAComponent* subComponent;

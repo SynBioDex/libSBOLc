@@ -29,8 +29,8 @@ SequenceAnnotation* createSequenceAnnotation(const char* uri) {
 	    return NULL;
 	SequenceAnnotation* ann = malloc(sizeof(SequenceAnnotation));
 	ann->base         = createSBOLObject(uri);
-	ann->genbankStart = -1;
-	ann->genbankEnd   = -1;
+	ann->genbankStart = createPositionProperty();
+	ann->genbankEnd   = createPositionProperty();
 	ann->strand       = 1;
 	ann->annotates    = NULL;
 	ann->subComponent = NULL;
@@ -72,12 +72,14 @@ void setSequenceAnnotationURI(SequenceAnnotation* ann, const char* uri) {
 
 void setBioStart(SequenceAnnotation* ann, int start) {
 	if (ann)
-		ann->genbankStart = start;
+		//ann->genbankStart = start;
+		setPositionProperty(ann->genbankStart, start);
 }
 
 void setBioEnd(SequenceAnnotation* ann, int end) {
 	if (ann)
-		ann->genbankEnd = end;
+		//ann->genbankEnd = end;
+		setPositionProperty(ann->genbankEnd, end);
 }
 
 // TODO use PolarityProperty
@@ -171,14 +173,16 @@ int getBioStart(const SequenceAnnotation* ann) {
 	if (!ann)
 		return -1;
 	else
-		return ann->genbankStart;
+		//return ann->genbankStart;
+		return getPositionProperty(ann->genbankStart);
 }
 
 int getBioEnd(const SequenceAnnotation* ann) {
 	if (!ann)
 		return -1;
 	else
-		return ann->genbankEnd;
+		//return ann->genbankEnd;
+		return getPositionProperty(ann->genbankEnd);
 }
 
 DNAComponent* getSubComponent(const SequenceAnnotation* ann) {
@@ -248,8 +252,10 @@ void printSequenceAnnotation(const SequenceAnnotation* ann, int tabs) {
     if (!ann)
         return;
     indent(tabs); printf("%s\n", getSequenceAnnotationURI(ann));
-    int start = ann->genbankStart;
-    int end = ann->genbankEnd;
+    //int start = ann->genbankStart;
+	int start = getBioStart(ann);
+    //int end = ann->genbankEnd;
+	int end = getBioEnd(ann);
     if (start != 0 || end != 0) {
     	indent(tabs+1); printf("%i --> %i\n", start, end);
     }

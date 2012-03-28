@@ -237,6 +237,7 @@ void printIntProperty(const IntProperty* pro) {
 PositionProperty* createPositionProperty() {
 	PositionProperty* pro = malloc(sizeof(PositionProperty));
 	pro->position = createIntProperty();
+	setIntProperty(pro->position, -1);
 	return pro;
 }
 
