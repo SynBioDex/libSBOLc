@@ -11,8 +11,6 @@
 #ifndef SBOL_PROPERTY_HEADER
 #define SBOL_PROPERTY_HEADER
 
-/// @todo Create Property as a basis for TextProperty and IntProperty
-
 /************
  * Property
  ************/
@@ -74,23 +72,6 @@ char* getURIProperty(const URIProperty* pro);
 int compareURIProperty(const URIProperty* pro1, const URIProperty* pro2);
 void printURIProperty(const URIProperty* pro);
 
-/***************
- * IntProperty
- ***************/
-
-/// Base struct for all integer-valued Properties.
-/// @todo Make IntProperty derive from Property
-typedef struct _IntProperty {
-    union Property *number;
-} IntProperty;
-
-IntProperty* createIntProperty();
-void deleteIntProperty(IntProperty* pro);
-void setIntProperty(IntProperty* pro, int value);
-int getIntProperty(const IntProperty* pro);
-int compareIntProperty(const IntProperty* pro1, const IntProperty* pro2);
-void printIntProperty(const IntProperty* pro);
-
 /********************
  * PositionProperty
  ********************/
@@ -101,7 +82,7 @@ void printIntProperty(const IntProperty* pro);
 /// For example, SequenceAnnotation->bioEnd should be at least
 /// as large as SequenceAnnotation->bioStart.
 typedef struct _PositionProperty {
-	struct _IntProperty* position;
+	union Property* position;
 } PositionProperty;
 
 PositionProperty* createPositionProperty();
@@ -120,7 +101,7 @@ void printPositionProperty(const PositionProperty* pro);
 /// component, and 0 indicates the reverse complement.
 /// @todo Make an enum for possible values
 typedef struct _PolarityProperty {
-	struct _IntProperty* polarity;
+	union Property* polarity;
 } PolarityProperty;
 
 PolarityProperty* createPolarityProperty();

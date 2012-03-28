@@ -49,24 +49,6 @@ char *getLetters(const union Property *pro) {
 		return pro->letters;
 }
 
-/*int compareNumbers(const union Property *pro1, const union Property *pro2) {*/
-/*	if (!pro1 && !pro2)*/
-/*		return 0;*/
-/*	else if (!pro1 || !pro2)*/
-/*		return -1;*/
-/*	else*/
-/*		return (pro1->number - pro2->number);*/
-/*}*/
-
-/*int compareLetters(const union Property *pro1, const union Property *pro2) {*/
-/*	if ((!pro1 && !pro2) || (!pro1->letters && !pro2->letters))*/
-/*		return 0;*/
-/*	else if (!pro1 || !pro2 || !pro1->letters || !pro2->letters)*/
-/*		return -1;*/
-/*	else*/
-/*		return strcmp(pro1->letters, pro2->letters);*/
-/*}*/
-
 /****************
  * TextProperty
  ****************/
@@ -181,82 +163,33 @@ void printURIProperty(const URIProperty* pro) {
 		printTextProperty(pro->uri);
 }
 
-/***************
- * IntProperty
- ***************/
-
-/// @todo remove IntProperty
-
-IntProperty* createIntProperty() {
-	IntProperty* pro = malloc(sizeof(IntProperty));
-	pro->number = createProperty();
-	return pro;
-}
-
-void deleteIntProperty(IntProperty* pro) {
-	if (pro) {
-		if (pro->number)
-			deleteProperty(pro->number);
-		free(pro);
-	}
-}
-
-void setIntProperty(IntProperty* pro, int value) {
-	if (pro) {
-		setNumber(pro->number, value);
-	}
-}
-
-int getIntProperty(const IntProperty* pro) {
-	if (pro)
-		return getNumber(pro->number);
-}
-
-int compareIntProperty(const IntProperty* pro1,
-					   const IntProperty* pro2) {
-	if (!pro1 && !pro2)
-		return 1;
-	else if (!pro1 || !pro2)
-		return 0;
-	else {
-		int num1 = getNumber(pro1->number);
-		int num2 = getNumber(pro2->number);
-		return num1 - num2;
-	}
-}
-
-void printIntProperty(const IntProperty* pro) {
-	if (pro)
-		printf("%i", pro->number);
-}
-
 /********************
  * PositionProperty
  ********************/
 
 PositionProperty* createPositionProperty() {
 	PositionProperty* pro = malloc(sizeof(PositionProperty));
-	pro->position = createIntProperty();
-	setIntProperty(pro->position, -1);
+	pro->position = createProperty();
+	setNumber(pro->position, -1);
 	return pro;
 }
 
 void deletePositionProperty(PositionProperty* pro) {
 	if (pro) {
 		if (pro->position)
-			deleteIntProperty(pro->position);
+			deleteProperty(pro->position);
 		free(pro);
 	}
 }
 
 void setPositionProperty(PositionProperty* pro, int pos) {
 	if (pro && pos >= 0)
-		setIntProperty(pro->position, pos);
+		setNumber(pro->position, pos);
 }
 
 int getPositionProperty(const PositionProperty* pro) {
 	if (pro)
-		return getIntProperty(pro->position);
+		return getNumber(pro->position);
 	else
 		return -1; // TODO good error value?
 }
@@ -264,14 +197,15 @@ int getPositionProperty(const PositionProperty* pro) {
 int comparePositionProperty(const PositionProperty* pro1,
 							const PositionProperty* pro2) {
 	if (!pro1 || !pro2) // TODO check numbers too?
-		return compareIntProperty(pro1->position, pro2->position);
+		return (pro1->position - pro2->position);
 	else
 		return -1;
 }
 
 void printPositionProperty(const PositionProperty* pro) {
 	if (pro)
-		printIntProperty(pro->position);
+		//printIntProperty(pro->position);
+		printf("%i", getNumber(pro->position));
 }
 
 /********************
@@ -280,7 +214,7 @@ void printPositionProperty(const PositionProperty* pro) {
 
 PolarityProperty* createPolarityProperty() {
 	PolarityProperty* pro = malloc(sizeof(PolarityProperty));
-	pro->polarity = createIntProperty();
+	pro->polarity = createProperty();
 	setPolarityProperty(pro, 1);
 	return pro;
 }
@@ -288,7 +222,7 @@ PolarityProperty* createPolarityProperty() {
 void deletePolarityProperty(PolarityProperty* pro) {
 	if (pro) {
 		if (pro->polarity)
-			deleteIntProperty(pro->polarity);
+			deleteProperty(pro->polarity);
 		free(pro);
 	}
 }
@@ -296,15 +230,15 @@ void deletePolarityProperty(PolarityProperty* pro) {
 void setPolarityProperty(PolarityProperty* pro, int pol) {
 	if (pro) {
 		if (pol > 0)
-			setIntProperty(pro->polarity, 1);
+			setNumber(pro->polarity, 1);
 		else
-			setIntProperty(pro->polarity, 0);
+			setNumber(pro->polarity, 0);
 	}
 }
 
 int getPolarityProperty(const PolarityProperty* pro) {
 	if (pro)
-		return getIntProperty(pro->polarity);
+		return getNumber(pro->polarity);
 	else
 		return -1;
 }
@@ -312,14 +246,14 @@ int getPolarityProperty(const PolarityProperty* pro) {
 int comparePolarityProperty(const PolarityProperty* pro1,
 							const PolarityProperty* pro2) {
 	if (pro1 && pro2)
-		return compareIntProperty(pro1->polarity, pro2->polarity);
+		return (pro1->polarity - pro2->polarity);
 	else
 		return -1;
 }
 
 void printPolarityProperty(const PolarityProperty* pro) {
 	if (pro) {
-		if (getIntProperty(pro->polarity) == 1)
+		if (getNumber(pro->polarity) == 1)
 			printf("+");
 		else
 			printf("-");
