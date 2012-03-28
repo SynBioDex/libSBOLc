@@ -177,7 +177,7 @@ void TestLoadedValid04(CuTest *tc) {
 	SequenceAnnotation *sa1 = getSequenceAnnotation("http://example.com/sa1");
 	CuAssertIntEquals(tc, -1, getBioStart(sa1));
 	CuAssertIntEquals(tc, -1, getBioEnd(sa1));
-	CuAssertIntEquals(tc, 1, getStrandPolarity(sa1));
+	CuAssertIntEquals(tc, STRAND_FORWARD, getStrandPolarity(sa1));
 	// check pointers
 	CuAssertPtrEquals(tc, ds1, getDNAComponentSequence(dc1));
 	CuAssertPtrEquals(tc, NULL, getDNAComponentSequence(dc2));
@@ -268,7 +268,7 @@ void TestLoadedValid07(CuTest *tc) {
 	// sa1 should have a dc:creator node that libSBOLc ignores
 	CuAssertIntEquals(tc, -1, getBioStart(sa1));
 	CuAssertIntEquals(tc, -1, getBioEnd(sa1));
-	CuAssertIntEquals(tc, 1, getStrandPolarity(sa1));
+	CuAssertIntEquals(tc, STRAND_FORWARD, getStrandPolarity(sa1));
 	// check pointers
 	CuAssertPtrEquals(tc, ds1, getDNAComponentSequence(dc1));
 	CuAssertPtrEquals(tc, NULL, getDNAComponentSequence(dc2));

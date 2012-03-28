@@ -8,6 +8,8 @@
 /// only accepts strings of a, c, t, g, and sometimes n.
 ///////////////////////////////////////////////////////////
 
+/// @todo enums for all the magic numbers...
+
 #ifndef SBOL_PROPERTY_HEADER
 #define SBOL_PROPERTY_HEADER
 
@@ -95,6 +97,13 @@ void printPositionProperty(const PositionProperty* pro);
 /********************
  * PolarityProperty
  ********************/
+
+/// @todo rename to StrandOrientation?
+enum StrandPolarity {
+	STRAND_FORWARD,
+	STRAND_BIDIRECTIONAL,
+	STRAND_REVERSE
+};
 
 /// IntProperty that only allows the values 0 or 1.
 /// 1 indicates the positive strand relative to the parent

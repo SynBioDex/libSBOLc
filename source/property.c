@@ -215,7 +215,7 @@ void printPositionProperty(const PositionProperty* pro) {
 PolarityProperty* createPolarityProperty() {
 	PolarityProperty* pro = malloc(sizeof(PolarityProperty));
 	pro->polarity = createProperty();
-	setPolarityProperty(pro, 1);
+	setPolarityProperty(pro, STRAND_FORWARD);
 	return pro;
 }
 
@@ -224,15 +224,13 @@ void deletePolarityProperty(PolarityProperty* pro) {
 		if (pro->polarity)
 			deleteProperty(pro->polarity);
 		free(pro);
+		pro = NULL;
 	}
 }
 
 void setPolarityProperty(PolarityProperty* pro, int pol) {
-	if (pro) {
-		if (pol > 0)
-			setNumber(pro->polarity, 1);
-		else
-			setNumber(pro->polarity, 0);
+	if (pro && pol >= STRAND_FORWARD && pol <= STRAND_REVERSE) {
+			setNumber(pro->polarity, pol);
 	}
 }
 
@@ -253,9 +251,15 @@ int comparePolarityProperty(const PolarityProperty* pro1,
 
 void printPolarityProperty(const PolarityProperty* pro) {
 	if (pro) {
-		if (getNumber(pro->polarity) == 1)
-			printf("+");
-		else
-			printf("-");
+		switch( getNumber(pro->polarity) ) {
+			case STRAND_FORWARD:
+				printf("+");
+			case STRAND_BIDIRECTIONAL:
+				printf("+-");
+			case STRAND_REVERSE:
+				printf("-");
+			default:
+				printf("?");
+		}
 	}
 }
