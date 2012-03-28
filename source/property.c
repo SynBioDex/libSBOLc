@@ -8,44 +8,64 @@
  * Property
  ************/
 
-Property *createProperty() {
-	Property *pro = malloc(sizeof(Property));
-	pro->data = NULL;
+union Property *createProperty() {
+	union Property *pro = malloc(sizeof(union Property));
+	pro->letters = NULL;
 	return pro;
 }
 
-void deleteProperty(Property *pro) {
+void deleteProperty(union Property *pro) {
 	if (pro) {
-		if (pro->data) {
-			free(pro->data);
-			pro->data = NULL;
-		}
+		pro->letters = NULL;
 		free(pro);
+		pro = NULL;
 	}
 }
 
-void setProperty(Property *pro, void *data) {
+void setNumber(union Property *pro, int num) {
 	if (pro) {
-		pro->data = realloc(pro->data, sizeof(data));
-		pro->data = data;
+		pro->number = num;
 	}
 }
 
-void *getProperty(const Property *pro) {
+void setLetters(union Property *pro, char *str) {
+	if (pro) {
+		pro->letters = realloc(pro->letters, sizeof(char) * (strlen(str)+1));
+		pro->letters = str;
+	}
+}
+
+int getNumber(const union Property *pro) {
+	if (pro)
+		return pro->number;
+	else
+		return -1; /// @todo decide if -1 is a good default
+}
+
+char *getLetters(const union Property *pro) {
 	if (!pro)
 		return NULL;
 	else
-		return pro->data;
+		return pro->letters;
 }
 
-int compareProperty(const Property *pro1, const Property *pro2) {
-	if ((!pro1 && !pro2) || (!pro1->data && !pro2->data))
-		return 1;
-	else if (!pro1 || !pro2 || !pro1->data || !pro2->data)
-		return 0;
-	else
-		return (int) (pro1->data == pro2->data);
-}
+/*int compareNumbers(const union Property *pro1, const union Property *pro2) {*/
+/*	if (!pro1 && !pro2)*/
+/*		return 0;*/
+/*	else if (!pro1 || !pro2)*/
+/*		return -1;*/
+/*	else*/
+/*		return (pro1->number - pro2->number);*/
+/*}*/
+
+/*int compareLetters(const union Property *pro1, const union Property *pro2) {*/
+/*	if ((!pro1 && !pro2) || (!pro1->letters && !pro2->letters))*/
+/*		return 0;*/
+/*	else if (!pro1 || !pro2 || !pro1->letters || !pro2->letters)*/
+/*		return -1;*/
+/*	else*/
+/*		return strcmp(pro1->letters, pro2->letters);*/
+/*}*/
 
 /****************
  * TextProperty
@@ -72,8 +92,8 @@ int compareTextProperty(const TextProperty* pro1,
 	if ((!pro1 && !pro2) || (!pro1->text && !pro2->text))
 		return 1;
 	else {
-		char *text1 = (char *) getProperty(pro1->text);
-		char *text2 = (char *) getProperty(pro2->text);
+		char *text1 = (char *) getLetters(pro1->text);
+		char *text2 = (char *) getLetters(pro2->text);
 		if (!text1 && !text2)
 			return 1;
 		else if (!text1 || !text2)
@@ -90,7 +110,7 @@ int compareTextProperty(const TextProperty* pro1,
 char* getTextProperty(const TextProperty* pro) {
 	if (!pro || !pro->text)
 		return NULL;
-	char *data = (char *) getProperty(pro->text);
+	char *data = (char *) getLetters(pro->text);
 	if (!data)
 		return NULL;
 	char *output = malloc(sizeof(char) * strlen(data)+1);
@@ -107,10 +127,10 @@ void setTextProperty(TextProperty* pro, const char* text) {
 		deleteProperty(pro->text);
 		pro->text = createProperty();
 	} else {
-		char *data = (char *) getProperty(pro->text);
+		char *data = (char *) getLetters(pro->text);
 		data = realloc(data, sizeof(char) * strlen(text)+1);
 		strcpy(data, text);
-		setProperty(pro->text, data);
+		setLetters(pro->text, data);
 	}
 }
 
@@ -165,6 +185,8 @@ void printURIProperty(const URIProperty* pro) {
  * IntProperty
  ***************/
 
+/// @todo remove IntProperty
+
 IntProperty* createIntProperty() {
 	IntProperty* pro = malloc(sizeof(IntProperty));
 	pro->number = createProperty();
@@ -181,13 +203,13 @@ void deleteIntProperty(IntProperty* pro) {
 
 void setIntProperty(IntProperty* pro, int value) {
 	if (pro) {
-		setProperty(pro->number, (void *) &value);
+		setNumber(pro->number, value);
 	}
 }
 
 int getIntProperty(const IntProperty* pro) {
 	if (pro)
-		return *(int *)getProperty(pro->number);
+		return getNumber(pro->number);
 }
 
 int compareIntProperty(const IntProperty* pro1,
@@ -197,12 +219,9 @@ int compareIntProperty(const IntProperty* pro1,
 	else if (!pro1 || !pro2)
 		return 0;
 	else {
-		int *num1 = (int *) getProperty(pro1->number);
-		int *num2 = (int *) getProperty(pro2->number);
-		int result = *num1 - *num2;
-		free(num1);
-		free(num2);
-		return result;
+		int num1 = getNumber(pro1->number);
+		int num2 = getNumber(pro2->number);
+		return num1 - num2;
 	}
 }
 
