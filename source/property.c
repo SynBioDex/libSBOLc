@@ -281,6 +281,7 @@ void printPositionProperty(const PositionProperty* pro) {
 PolarityProperty* createPolarityProperty() {
 	PolarityProperty* pro = malloc(sizeof(PolarityProperty));
 	pro->polarity = createIntProperty();
+	setPolarityProperty(pro, 1);
 	return pro;
 }
 

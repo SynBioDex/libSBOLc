@@ -10,6 +10,9 @@
 #define POINTERARRAY_INITIAL_LENGTH 10
 #define POINTERARRAY_SCALING_FACTOR  2
 
+/// @todo Rename PointerArray to SBOLObjectArray?
+/// @todo Actually convert it to hold SBOLObjects via casts?
+
 /// A dynamic array of void pointers.
 /// Used anywhere a variable number of
 /// SBOLObjects needs to be stored, for

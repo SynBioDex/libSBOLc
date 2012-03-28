@@ -118,8 +118,7 @@ void printPositionProperty(const PositionProperty* pro);
 /// IntProperty that only allows the values 0 or 1.
 /// 1 indicates the positive strand relative to the parent
 /// component, and 0 indicates the reverse complement.
-/// @todo Separate BooleanProperty?
-/// @todo Base this on chars instead of ints? Like '+', '-', '?'
+/// @todo Make an enum for possible values
 typedef struct _PolarityProperty {
 	struct _IntProperty* polarity;
 } PolarityProperty;
