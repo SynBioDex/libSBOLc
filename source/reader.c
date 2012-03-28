@@ -10,17 +10,114 @@
 #include "debug.h"
 #include "object.h"
 #include "types.h"
+#include "array.h"
 #include "dnasequence.h"
 #include "sequenceannotation.h"
 #include "dnacomponent.h"
 #include "collection.h"
 
+/**************************
+ * utility functions for
+ * the XPath-based parser
+ **************************/
+
+static xmlDoc          *DOCUMENT;
+static xmlXPathContext *CONTEXT;
+
+/// @todo learn when to use BAD_CAST
+
+// adapted from http://student.santarosa.edu/~dturover/?node=libxml2
+/// @param node Optionally, search starting from a specific node
+/// @return an xmlPathObjectPtr that must be freed with xmlXPathFreeObject()
+xmlXPathObjectPtr getNodesMatchingXPath(xmlNode *node, xmlChar *path) {
+	if (!path)
+		return NULL;
+	if (node)
+		CONTEXT->node = node;
+	xmlXPathObjectPtr result = xmlXPathEvalExpression(path, CONTEXT);
+	CONTEXT->node = NULL;
+	return result;
+}
+
+/// @return a PointerArray* that must freed with deletePointerArray()
+PointerArray *getArrayOfNodesMatchingXPath(xmlNode *node, xmlChar *path) {
+	xmlXPathObject *results_set;
+	PointerArray *results_array;
+	xmlNode *result_node;
+	int n;
+	
+	// get results
+	results_set = getNodesMatchingXPath(node, path);
+	if (!results_set)
+		return NULL;
+	
+	// put them in the array
+	results_array = createPointerArray();
+	for (n=0; n < results_set->nodesetval->nodeNr; n++) {
+		result_node = results_set->nodesetval->nodeTab[n];
+		insertPointerIntoArray(results_array, result_node);
+	}
+	
+	// finish up
+	xmlXPathFreeObject(results_set);
+	return results_array;
+}
+
+/// @return an xmlNode* that doesn't need to be separately freed
+xmlNode *getSingleNodeMatchingXPath(xmlNode *node, xmlChar *path) {
+	PointerArray *results_array = getArrayOfNodesMatchingXPath(node, path);
+	if (!results_array)
+		return NULL;
+	else if (getNumPointersInArray(results_array) == 0) {
+		deletePointerArray(results_array);
+		return NULL;
+	} else {
+		if (getNumPointersInArray(results_array) > 1) {
+			#if SBOL_DEBUG_ACTIVE
+			printf("Got too many nodes matching xpath %s\n", (char *)path);
+			#endif
+		}
+		xmlNode *result = getNthPointerInArray(results_array, 0);
+		deletePointerArray(results_array);
+		return result;
+	}
+}
+
+/// @todo put this at the core of the process
+void applyFunctionToNodesMatchingXPath(void (*fn)(xmlNode *), xmlNode *node, xmlChar *path) {
+	if (!path)
+		return;
+	xmlXPathObjectPtr results = getNodesMatchingXPath(node, path);
+	if (!xmlXPathNodeSetIsEmpty(results->nodesetval)) {
+		int n;
+		for (n = 0; n < results->nodesetval->nodeNr; n++)
+			fn(results->nodesetval->nodeTab[n]);
+	}
+	xmlXPathFreeObject(results);
+}
+
+// just for trying out function passing
+void printNodeName(xmlNode *node) {
+	if (node)
+		printf("%s\n", node->name);
+}
+
+/***********************************
+ * XPath-based functions for
+ * reading individual SBOL objects
+ ***********************************/
+
+void readDNAComponent_XPath(xmlNode *node) {
+	if (!node)
+		return;
+	xmlChar *path = BAD_CAST "./s:annotation/s:SequenceAnnotation";
+	applyFunctionToNodesMatchingXPath(printNodeName, node, path);
+}
+
 /*************************
  * functions for reading
  * node properties
  *************************/
-
-/// @todo make doc static rather than passing it around everywhere
 
 xmlChar *getNodeURI(xmlNode *node) {
 	xmlChar *uri = NULL;
@@ -111,69 +208,15 @@ DNASequence *readDNASequence(xmlNode *node, int pass) {
 	DNASequence *seq = createDNASequence((char *)uri);
 	
 	// add nucleotides
-	xmlNode *child;
-	xmlChar *content;
-	for (child = node->children; child; child = child->next) {
-		content = xmlNodeGetContent(child);
-		if (!content)
-			continue;
-		// TODO #define this
-		else if (nodeNameEquals(child, "nucleotides")) {
-			setNucleotides(seq, (char *)content);
-			break;
-		}
-		xmlFree(content);
-	}
+	xmlNode *nt_node = getSingleNodeMatchingXPath(node, BAD_CAST "./s:nucleotides");
+	if (nt_node)
+		setNucleotides(seq, (char *)xmlNodeGetContent(nt_node));
 	
 	xmlFree(uri);
 	return seq;
 }
 
-// adapted from http://student.santarosa.edu/~dturover/?node=libxml2
-/// @param node Optionally, search starting from a specific node
-/// @return an xmlPathObjectPtr that must be freed with xmlXPathFreeObject()
-xmlXPathObjectPtr getNodesMatchingXPath(xmlDoc *doc, xmlNode *node, xmlChar *str) {
-	if (!doc || !str)
-		return NULL;
-	xmlXPathContextPtr context = xmlXPathNewContext(doc);
-	if (!context)
-		return NULL;
-	if (node)
-		context->node = node;
-	xmlXPathObjectPtr result = xmlXPathEvalExpression(str, context);
-	xmlXPathFreeContext(context);
-	return result;
-}
-
-/// @todo put this at the core of the process
-void applyFunctionToNodesMatchingXPath(void (*fn)(xmlNode *), xmlDoc *doc, xmlNode *node, xmlChar *path) {
-	if (!doc || !path)
-		return;
-	xmlXPathObjectPtr results = getNodesMatchingXPath(doc, node, path);
-	if (!xmlXPathNodeSetIsEmpty(results->nodesetval)) {
-		int n;
-		for (n = 0; n < results->nodesetval->nodeNr; n++)
-			fn(results->nodesetval->nodeTab[n]);
-	}
-	xmlXPathFreeObject(results);
-}
-
-// just for trying out function passing
-void printNodeName(xmlNode *node) {
-	if (node)
-		printf("%s\n", node->name);
-}
-
-readSequenceAnnotation_XPath(xmlDoc *doc, xmlNode *node) {
-	if (!doc || !node)
-		return;
-	xmlChar *path = "./*";
-	applyFunctionToNodesMatchingXPath(printNodeName, doc, node, path);
-}
-
-SequenceAnnotation *readSequenceAnnotation(xmlDoc *doc, xmlNode *node, int pass) {
-	readSequenceAnnotation_XPath(doc, node);
-
+SequenceAnnotation *readSequenceAnnotation(xmlNode *node, int pass) {
 	xmlNode *ann_node = NULL;
 	xmlNode *pro_node = NULL;
 	xmlNode *ref_node = NULL;
@@ -281,6 +324,8 @@ SequenceAnnotation *readSequenceAnnotation(xmlDoc *doc, xmlNode *node, int pass)
 }
 
 DNAComponent *readDNAComponent(xmlNode *node, int pass) {
+	readDNAComponent_XPath(node);
+
 	DNAComponent *com = NULL;
 	
 	xmlNode *com_node = NULL;
@@ -418,14 +463,14 @@ Collection *readCollection(xmlNode *node, int pass) {
 // this function should be called twice on every node:
 // the first pass (pass == 0) creates SBOL objects,
 // and the second (pass > 0) links them together with pointers
-void readSBOLObjects(xmlDoc *doc, xmlNode *root, int pass) {
+void readSBOLObjects(xmlNode *root, int pass) {
 	xmlNode *node;
 	for (node = root; node; node = node->next) {
 		if      (nodeNameEquals(node, "Collection"))         readCollection(node, pass);
-		else if (nodeNameEquals(node, "SequenceAnnotation")) readSequenceAnnotation(doc, node, pass);
+		else if (nodeNameEquals(node, "SequenceAnnotation")) readSequenceAnnotation(node, pass);
 		else if (nodeNameEquals(node, "DnaComponent"))       readDNAComponent(node, pass);
 		else if (nodeNameEquals(node, "DnaSequence"))        readDNASequence(node, pass);
-		readSBOLObjects(doc, node->children, pass);
+		readSBOLObjects(node->children, pass);
 	}
 }
 
@@ -433,39 +478,46 @@ void readSBOLObjects(xmlDoc *doc, xmlNode *root, int pass) {
 // this function parses an xml file, validates it,
 // and creates matching SBOL objects in memory
 void readSBOLCore(char* filename) {
-	xmlDocPtr  doc;
-	xmlNodePtr root;
+	//xmlDocPtr  doc;
 
 	// this initializes the library and checks potential ABI mismatches
 	// between the version it was compiled for and the actual shared
 	// library used.
+	xmlInitParser();
 	LIBXML_TEST_VERSION
 	
 	// parse
-	doc = xmlParseFile(filename);
+	DOCUMENT = xmlParseFile(filename);
+
+	// create XPath context
+	CONTEXT = xmlXPathNewContext(DOCUMENT);
+	xmlXPathRegisterNs(CONTEXT, BAD_CAST "rdf", BAD_CAST XMLNS_RDF);
+	xmlXPathRegisterNs(CONTEXT, BAD_CAST "s", BAD_CAST XMLNS_SBOL);
 
 	// workaround for a problem with libxml2 and MinGW
 	// google: "using libxml2 on MinGW - xmlFree crashes"
+	/// @todo put this in a function along with LIBXML_TEST_VERSION
 	if (!xmlFree)
 		xmlMemGet( &xmlFree, &xmlMalloc, &xmlRealloc, NULL );
 
-	if (!doc) {
+	if (!DOCUMENT) {
 		printf("Error reading %s\n", filename);
 		return;
 	}
 	
 	// validate
-	if (!isValidSBOL(doc)) {
+	if (!isValidSBOL(DOCUMENT)) {
 		printf("%s is not a valid SBOL document.\n", filename);
 		return;
 	}
 	
 	// import
-	root = xmlDocGetRootElement(doc);
-	readSBOLObjects(doc, root, 0);
-	readSBOLObjects(doc, root, 1);
+	readSBOLObjects(xmlDocGetRootElement(DOCUMENT), 0);
+	readSBOLObjects(xmlDocGetRootElement(DOCUMENT), 1);
 	
 	// clean up
-	xmlFreeDoc(doc);
+	/// @todo cleanupSBOLParser
+	xmlXPathFreeContext(CONTEXT); CONTEXT  = NULL;
+	xmlFreeDoc(DOCUMENT);         DOCUMENT = NULL;
 	xmlCleanupParser();
 }
