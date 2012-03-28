@@ -118,7 +118,7 @@ void setTextProperty(TextProperty* pro, const char* text) {
 
 void printTextProperty(const TextProperty* pro) {
 	if (pro)
-		printf("%s", pro->text);
+		printf("%s", (char *)pro->text);
 }
 
 /***************
