@@ -2,10 +2,7 @@
 #include <stdlib.h>
 #include <string.h>
 
-/// @todo remove some of these?
-#include <libxml/xmlmemory.h>
 #include <libxml/parser.h>
-#include <libxml/tree.h>
 #include <libxml/xpath.h>
 
 #include "debug.h"
@@ -18,18 +15,15 @@
 #include "dnacomponent.h"
 #include "collection.h"
 
-// these are static mainly to avoid passing them around constantly
+// these are global mainly to avoid passing them around constantly
 static xmlDoc          *DOCUMENT;
 static xmlXPathContext *CONTEXT;
-
-/// @todo learn when to use BAD_CAST
-//void readNamespaces(xmlNode *node); // TODO is this needed?
 
 /*********************
  * utility functions
  *********************/
 
-xmlChar *getNodeURI(xmlNode *node) {
+static xmlChar *getNodeURI(xmlNode *node) {
 	if (!node)
 		return NULL;
 	xmlChar *uri;
@@ -41,28 +35,20 @@ xmlChar *getNodeURI(xmlNode *node) {
 	return uri;
 }
 
-// adapted from http://student.santarosa.edu/~dturover/?node=libxml2
-/// @param node Optionally, search starting from a specific node
-/// @return an xmlPathObjectPtr that must be freed with xmlXPathFreeObject()
-xmlXPathObjectPtr getNodesMatchingXPath(xmlNode *node, xmlChar *path) {
-	if (!path)
-		return NULL;
-	if (node)
-		CONTEXT->node = node;
-	xmlXPathObjectPtr result = xmlXPathEvalExpression(path, CONTEXT);
-	CONTEXT->node = NULL;
-	return result;
-}
-
 /// @return a PointerArray* that must freed with deletePointerArray()
-PointerArray *getArrayOfNodesMatchingXPath(xmlNode *node, xmlChar *path) {
+static PointerArray *getNodesMatchingXPath(xmlNode *node, xmlChar *path) {
+    if (!path)
+        return NULL;
+
 	xmlXPathObject *results_set;
 	PointerArray *results_array;
 	xmlNode *result_node;
 	int n;
 	
 	// get results
-	results_set = getNodesMatchingXPath(node, path);
+    if (node)
+        CONTEXT->node = node;
+	results_set = xmlXPathEvalExpression(path, CONTEXT);
 	if (!results_set)
 		return NULL;
 	
@@ -77,12 +63,13 @@ PointerArray *getArrayOfNodesMatchingXPath(xmlNode *node, xmlChar *path) {
 	
 	// finish up
 	xmlXPathFreeObject(results_set);
+	CONTEXT->node = NULL;
 	return results_array;
 }
 
 /// @return an xmlNode* that doesn't need to be separately freed
-xmlNode *getSingleNodeMatchingXPath(xmlNode *node, xmlChar *path) {
-	PointerArray *results_array = getArrayOfNodesMatchingXPath(node, path);
+static xmlNode *getSingleNodeMatchingXPath(xmlNode *node, xmlChar *path) {
+	PointerArray *results_array = getNodesMatchingXPath(node, path);
 	if (!results_array)
 		return NULL;
 	else if (getNumPointersInArray(results_array) == 0) {
@@ -100,7 +87,7 @@ xmlNode *getSingleNodeMatchingXPath(xmlNode *node, xmlChar *path) {
 	}
 }
 
-xmlChar *getContentsOfNodeMatchingXPath(xmlNode *node, xmlChar *path) {
+static xmlChar *getContentsOfNodeMatchingXPath(xmlNode *node, xmlChar *path) {
 	xmlNode *result = getSingleNodeMatchingXPath(node, path);
 	if (result)
 		return xmlNodeGetContent(result);
@@ -108,7 +95,7 @@ xmlChar *getContentsOfNodeMatchingXPath(xmlNode *node, xmlChar *path) {
 		return NULL;
 }
 
-xmlChar *getURIOfNodeMatchingXPath(xmlNode *node, xmlChar *path) {
+static xmlChar *getURIOfNodeMatchingXPath(xmlNode *node, xmlChar *path) {
 	xmlNode *result = getSingleNodeMatchingXPath(node, path);
 	if (result)
 		return getNodeURI(result);
@@ -117,19 +104,21 @@ xmlChar *getURIOfNodeMatchingXPath(xmlNode *node, xmlChar *path) {
 }
 
 /// @todo put this at the core of the process
-void applyFunctionToNodesMatchingXPath(void (*fn)(xmlNode *), xmlNode *node, xmlChar *path) {
+static void applyFunctionToNodesMatchingXPath(void (*fn)(xmlNode *), xmlNode *node, xmlChar *path) {
 	if (!path)
 		return;
-	xmlXPathObjectPtr results = getNodesMatchingXPath(node, path);
-	if (!xmlXPathNodeSetIsEmpty(results->nodesetval)) {
-		int n;
-		for (n = 0; n < results->nodesetval->nodeNr; n++)
-			fn(results->nodesetval->nodeTab[n]);
-	}
-	xmlXPathFreeObject(results);
+	PointerArray *results = getNodesMatchingXPath(node, path);
+	if (results) {
+        if (getNumPointersInArray(results) > 0) {
+            int n;
+            for (n=0; n<getNumPointersInArray(results); n++)
+                fn(getNthPointerInArray(results, n));
+        }
+	deletePointerArray(results);
+    }
 }
 
-void processNodes(void (*fn)(xmlNode *), xmlChar *path) {
+static void processNodes(void (*fn)(xmlNode *), xmlChar *path) {
 	applyFunctionToNodesMatchingXPath(fn, NULL, path);
 }
 
@@ -139,7 +128,7 @@ void processNodes(void (*fn)(xmlNode *), xmlChar *path) {
  ***************************/
 
 /// @todo either rename or make it so you don't pass the object?
-SBOLCompoundObject *readSBOLCompoundObject(SBOLCompoundObject *obj, xmlNode *node) {
+static SBOLCompoundObject *readSBOLCompoundObject(SBOLCompoundObject *obj, xmlNode *node) {
 	xmlChar *path;
 	xmlChar *content;
 
@@ -167,7 +156,7 @@ SBOLCompoundObject *readSBOLCompoundObject(SBOLCompoundObject *obj, xmlNode *nod
 	return obj;
 }
 
-void readDNASequenceContent(xmlNode *node) {
+static void readDNASequenceContent(xmlNode *node) {
 	xmlChar *uri;
 	xmlChar *path;
 	xmlChar *nt;
@@ -187,7 +176,7 @@ void readDNASequenceContent(xmlNode *node) {
 	xmlFree(uri);
 }
 
-void readSequenceAnnotationContent(xmlNode *node) {
+static void readSequenceAnnotationContent(xmlNode *node) {
 	SequenceAnnotation *ann;
 	xmlChar *ann_uri;
 	xmlChar *path;
@@ -220,7 +209,7 @@ void readSequenceAnnotationContent(xmlNode *node) {
 	}
 }
 
-void readSequenceAnnotationReferences(xmlNode *node) {
+static void readSequenceAnnotationReferences(xmlNode *node) {
 	SequenceAnnotation *ann;
 	xmlChar *path;
 	xmlChar *ann_uri;
@@ -244,7 +233,7 @@ void readSequenceAnnotationReferences(xmlNode *node) {
 
 	// add precedes
 	path = BAD_CAST "./" NSPREFIX_SBOL ":" NODENAME_PRECEDES;
-	if (results = getArrayOfNodesMatchingXPath(node, path)) {
+	if (results = getNodesMatchingXPath(node, path)) {
 		for (n=0; n<getNumPointersInArray(results); n++) {
 			ref_node = (xmlNode *) getNthPointerInArray(results, n);
 			ref_uri  = getNodeURI(ref_node);
@@ -255,7 +244,7 @@ void readSequenceAnnotationReferences(xmlNode *node) {
 	}
 }
 
-void readDNAComponentContent(xmlNode *node) {
+static void readDNAComponentContent(xmlNode *node) {
     DNAComponent *com;
     xmlChar *com_uri;
 
@@ -268,7 +257,7 @@ void readDNAComponentContent(xmlNode *node) {
     readSBOLCompoundObject(com->base, node);
 }
 
-void readDNAComponentReferences(xmlNode *node) {
+static void readDNAComponentReferences(xmlNode *node) {
     DNAComponent *com;
 	xmlChar *path;
     xmlChar *com_uri;
@@ -293,7 +282,7 @@ void readDNAComponentReferences(xmlNode *node) {
     // add annotations
 	path = BAD_CAST "./" NSPREFIX_SBOL ":" NODENAME_ANNOTATION
 					 "/" NSPREFIX_SBOL ":" NODENAME_SEQUENCEANNOTATION;
-    if (ref_nodes = getArrayOfNodesMatchingXPath(node, path)) {
+    if (ref_nodes = getNodesMatchingXPath(node, path)) {
         for (n=0; n<getNumPointersInArray(ref_nodes); n++) {
             ref_node = (xmlNode *) getNthPointerInArray(ref_nodes, n);
             ref_uri = getNodeURI(ref_node);
@@ -304,7 +293,7 @@ void readDNAComponentReferences(xmlNode *node) {
     }
 }
 
-void readCollectionContent(xmlNode *node) {
+static void readCollectionContent(xmlNode *node) {
     Collection *col;
     xmlChar *col_uri;
 
@@ -317,7 +306,7 @@ void readCollectionContent(xmlNode *node) {
     readSBOLCompoundObject(col->base, node);
 }
 
-void readCollectionReferences(xmlNode *node) {
+static void readCollectionReferences(xmlNode *node) {
     Collection *col;
 	xmlChar *path;
     xmlChar *col_uri;
@@ -334,7 +323,7 @@ void readCollectionReferences(xmlNode *node) {
     // add components
     path = BAD_CAST "./" NSPREFIX_SBOL ":" NODENAME_COMPONENT
     				 "/" NSPREFIX_SBOL ":" NODENAME_DNACOMPONENT;
-    if (ref_nodes = getArrayOfNodesMatchingXPath(node, path)) {
+    if (ref_nodes = getNodesMatchingXPath(node, path)) {
         for (n=0; n<getNumPointersInArray(ref_nodes); n++) {
             ref_node = (xmlNode *) getNthPointerInArray(ref_nodes, n);
             ref_uri = getNodeURI(ref_node);
