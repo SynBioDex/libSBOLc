@@ -40,7 +40,6 @@ void TestCreateRandomCollection(CuTest* tc) {
 		CuAssertStrEquals(tc, NULL, getCollectionName(col));
 		CuAssertStrEquals(tc, NULL, getCollectionDescription(col));
 		CuAssertIntEquals(tc, 0,    getNumDNAComponentsIn(col));
-		CuAssertIntEquals(tc, 0,    getNumCollectionsIn(col));
 		deleteCollection(col);
 	}
 	

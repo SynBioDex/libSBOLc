@@ -30,7 +30,6 @@ Collection* createCollection(const char* uri) {
 	Collection* col = malloc(sizeof(Collection));
 	col->base        = createSBOLCompoundObject(uri);
 	col->components  = createPointerArray();
-	col->collections = createPointerArray();
 	registerCollection(col);
 	return col;
 }
@@ -47,10 +46,6 @@ void deleteCollection(Collection* col) {
 		if (col->base) {
 			deleteSBOLCompoundObject(col->base);
 			col->base = NULL;
-		}
-		if (col->collections) {
-			deletePointerArray(col->collections);
-			col->collections = NULL;
 		}
 		if (col->components) {
 			deletePointerArray(col->components);
@@ -153,13 +148,6 @@ int getNumDNAComponentsIn(const Collection* col) {
 		return -1;
 }
 
-int getNumCollectionsIn(const Collection* col) {
-	if (col)
-		return getNumPointersInArray(col->collections);
-	else
-		return -1;
-}
-
 /**************************
  *	getNth... functions
  **************************/
@@ -176,13 +164,6 @@ DNAComponent* getNthDNAComponentIn(const Collection* col, int n) {
         return (DNAComponent *)getNthPointerInArray(col->components, n);
     else
         return NULL;
-}
-
-Collection* getNthCollectionInCollection(const Collection* col, int n) {
-	if (col)
-	    return (Collection *)getNthPointerInArray(col->collections, n);
-	else
-		return NULL;
 }
 
 /**************************
@@ -215,21 +196,21 @@ void setCollectionDescription(Collection* col, const char* descr) {
 
 void addDNAComponentToCollection(DNAComponent* com, Collection* col) {
 	if (com && col) {
-		insertPointerIntoArray(com->collections, col);
 		insertPointerIntoArray(col->components,  com);
 	}
 }
 
 int dnaComponentInCollection(const struct _DNAComponent *com, const Collection *col) {
-	if (!com || !col || !com->collections)
+	if (!com || !col)
 		return 0;
-	return pointerContainedInArray(com->collections, col);
-}
-
-void addCollectionToCollection(Collection *inner, Collection *outer) {
-	if (inner && outer) {
-		insertPointerIntoArray(outer->collections, inner);
+	DNAComponent *candidate;
+	int n;
+	for (n=0; n<getNumDNAComponentsIn(col); n++) {
+		candidate = getNthDNAComponentIn(col, n);
+		if (candidate == com)
+			return 1;
 	}
+	return 0;
 }
 
 void cleanupCollections() {
@@ -262,17 +243,6 @@ void printCollection(const Collection* col, int tabs) {
             for (i=0; i<num; i++) {
                 com = getNthDNAComponentIn(col, i);
                 indent(tabs+2); printf("%s\n", getDNAComponentURI(com));
-            }
-        }
-    }
-    if (col->collections) {
-        Collection* col2;
-        num = getNumCollectionsIn(col);
-        if (num > 0) {
-            indent(tabs+1); printf("%i collections:\n", num);
-            for (i=0; i<num; i++) {
-                col2 = getNthCollectionInCollection(col, i);
-                indent(tabs+2); printf("%s\n", getCollectionURI(col2));
             }
         }
     }

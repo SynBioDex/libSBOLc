@@ -302,19 +302,6 @@ void readDNAComponentReferences(xmlNode *node) {
         }
         deletePointerArray(ref_nodes);
     }
-    
-    // add collections
-	path = BAD_CAST "./" NSPREFIX_SBOL ":" NODENAME_COLLECTION_REF
-					 "/" NSPREFIX_SBOL ":" NODENAME_COLLECTION;
-    if (ref_nodes = getArrayOfNodesMatchingXPath(node, path)) {
-        for (n=0; n<getNumPointersInArray(ref_nodes); n++) {
-            ref_node = (xmlNode *) getNthPointerInArray(ref_nodes, n);
-            ref_uri = getNodeURI(ref_node);
-            addDNAComponentToCollection(com, getCollection((char *)ref_uri));
-            xmlFree(ref_uri);
-        }
-        deletePointerArray(ref_nodes);
-    }
 }
 
 void readCollectionContent(xmlNode *node) {
@@ -352,19 +339,6 @@ void readCollectionReferences(xmlNode *node) {
             ref_node = (xmlNode *) getNthPointerInArray(ref_nodes, n);
             ref_uri = getNodeURI(ref_node);
             addDNAComponentToCollection(getDNAComponent((char *)ref_uri), col);
-            xmlFree(ref_uri);
-        }
-        deletePointerArray(ref_nodes);
-    }
-    
-    // add collections
-    path = BAD_CAST "./" NSPREFIX_SBOL ":" NODENAME_COLLECTION_REF
-    				 "/" NSPREFIX_SBOL ":" NODENAME_COLLECTION;
-    if (ref_nodes = getArrayOfNodesMatchingXPath(node, path)) {
-        for (n=0; n<getNumPointersInArray(ref_nodes); n++) {
-            ref_node = (xmlNode *) getNthPointerInArray(ref_nodes, n);
-            ref_uri = getNodeURI(ref_node);
-            addCollectionToCollection(getCollection((char *)ref_uri), col);
             xmlFree(ref_uri);
         }
         deletePointerArray(ref_nodes);

@@ -103,7 +103,6 @@ void TestLoadedValid01(CuTest *tc) {
 	CuAssertPtrEquals(tc, NULL, getDNAComponentDescription(dc1));
 	CuAssertPtrEquals(tc, NULL, getDNAComponentSequence(dc1));
 	CuAssertIntEquals(tc, 0, getNumSequenceAnnotationsIn(dc1));
-	CuAssertIntEquals(tc, 0, getNumCollectionsFor(dc1));
 }
 
 void TestLoadedValid02(CuTest *tc) {
@@ -122,7 +121,6 @@ void TestLoadedValid02(CuTest *tc) {
 	CuAssertStrEquals(tc, "DnaComponent with only name and description", getDNAComponentDescription(dc1));
 	CuAssertPtrEquals(tc, NULL, getDNAComponentSequence(dc1));
 	CuAssertIntEquals(tc, 0, getNumSequenceAnnotationsIn(dc1));
-	CuAssertIntEquals(tc, 0, getNumCollectionsFor(dc1));
 }
 
 void TestLoadedValid03(CuTest *tc) {
@@ -140,7 +138,6 @@ void TestLoadedValid03(CuTest *tc) {
 	CuAssertStrEquals(tc, "DnaComponent1", getDNAComponentName(dc1));
 	CuAssertStrEquals(tc, "DnaComponent with sequence information", getDNAComponentDescription(dc1));
 	CuAssertIntEquals(tc, 0, getNumSequenceAnnotationsIn(dc1));
-	CuAssertIntEquals(tc, 0, getNumCollectionsFor(dc1));
 	// check ds1
 	DNASequence *ds1 = getNthDNASequence(0);
 	CuAssertStrEquals(tc, "http://example.com/ds1", getDNASequenceURI(ds1));
@@ -171,8 +168,6 @@ void TestLoadedValid04(CuTest *tc) {
 	CuAssertStrEquals(tc, "Another DNA component", getDNAComponentDescription(dc2));
 	CuAssertIntEquals(tc, 1, getNumSequenceAnnotationsIn(dc1));
 	CuAssertIntEquals(tc, 0, getNumSequenceAnnotationsIn(dc2));
-	CuAssertIntEquals(tc, 0, getNumCollectionsFor(dc1));
-	CuAssertIntEquals(tc, 0, getNumCollectionsFor(dc2));
 	// check annotations
 	SequenceAnnotation *sa1 = getSequenceAnnotation("http://example.com/sa1");
 	CuAssertIntEquals(tc, -1, getBioStart(sa1));
@@ -203,7 +198,6 @@ void TestLoadedValid05(CuTest *tc) {
 	CuAssertStrEquals(tc, "A DnaComponent can optionally use multiple types from Sequence Ontology",
 						getDNAComponentDescription(dc1));
 	CuAssertIntEquals(tc, 0, getNumSequenceAnnotationsIn(dc1));
-	CuAssertIntEquals(tc, 0, getNumCollectionsFor(dc1));
 	// check ds1
 	DNASequence *ds1 = getNthDNASequence(0);
 	CuAssertStrEquals(tc, "http://example.com/ds1", getDNASequenceURI(ds1));
@@ -229,7 +223,6 @@ void TestLoadedValid06(CuTest *tc) {
 	CuAssertStrEquals(tc, "A DnaComponent can optionally use a type from Sequence Ontology",
 						getDNAComponentDescription(dc1));
 	CuAssertIntEquals(tc, 0, getNumSequenceAnnotationsIn(dc1));
-	CuAssertIntEquals(tc, 0, getNumCollectionsFor(dc1));
 	// check ds1
 	DNASequence *ds1 = getNthDNASequence(0);
 	CuAssertStrEquals(tc, "http://example.com/ds1", getDNASequenceURI(ds1));
@@ -261,8 +254,6 @@ void TestLoadedValid07(CuTest *tc) {
 	CuAssertStrEquals(tc, "Another DNA component", getDNAComponentDescription(dc2));
 	CuAssertIntEquals(tc, 1, getNumSequenceAnnotationsIn(dc1));
 	CuAssertIntEquals(tc, 0, getNumSequenceAnnotationsIn(dc2));
-	CuAssertIntEquals(tc, 0, getNumCollectionsFor(dc1));
-	CuAssertIntEquals(tc, 0, getNumCollectionsFor(dc2));
 	// check annotations
 	SequenceAnnotation *sa1 = getSequenceAnnotation("http://example.com/sa1");
 	// sa1 should have a dc:creator node that libSBOLc ignores
@@ -360,7 +351,6 @@ void TestLoadedValid10(CuTest *tc) {
 	CuAssertStrEquals(tc, "Collection1", getCollectionName(col));
 	CuAssertStrEquals(tc, "A collection may be empty", getCollectionDescription(col));
 	CuAssertIntEquals(tc, 0, getNumDNAComponentsIn(col));
-	CuAssertIntEquals(tc, 0, getNumCollectionsIn(col));
 }
 
 void TestLoadedValid11(CuTest *tc) {
@@ -377,7 +367,6 @@ void TestLoadedValid11(CuTest *tc) {
 	CuAssertStrEquals(tc, "Collection1", getCollectionName(col));
 	CuAssertStrEquals(tc, "A collection may contain multiple components", getCollectionDescription(col));
 	CuAssertIntEquals(tc, 2, getNumDNAComponentsIn(col));
-	CuAssertIntEquals(tc, 0, getNumCollectionsIn(col));
 	// components
 	DNAComponent *dc1 = getDNAComponent("http://example.com/dc1");
 	DNAComponent *dc2 = getDNAComponent("http://example.com/dc2");
@@ -408,8 +397,6 @@ void TestLoadedValid12(CuTest *tc) {
 	CuAssertStrEquals(tc, "This is the second collection in the document", getCollectionDescription(c2));
 	CuAssertIntEquals(tc, 1, getNumDNAComponentsIn(c1));
 	CuAssertIntEquals(tc, 1, getNumDNAComponentsIn(c2));
-	CuAssertIntEquals(tc, 0, getNumCollectionsIn(c1));
-	CuAssertIntEquals(tc, 0, getNumCollectionsIn(c2));
 	// components
 	DNAComponent *dc1 = getDNAComponent("http://example.com/dc1");
 	DNAComponent *dc2 = getDNAComponent("http://example.com/dc2");

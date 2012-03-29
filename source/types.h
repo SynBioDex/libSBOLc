@@ -4,8 +4,6 @@
 /// related to SBOL serialization.
 ///////////////////////////////////////////////////////////
 
-/// @todo remove "collection"
-/// @todo remove 
 /// @todo bring up "dnaSequence" vs "DnaSequence"
 /// @todo and "component" vs "DnaComponent"
 
@@ -31,7 +29,6 @@
 #define NODENAME_DNACOMPONENT       "DnaComponent"
 #define NODENAME_COMPONENT          "component"
 #define NODENAME_COLLECTION         "Collection"
-#define NODENAME_COLLECTION_REF     "collection" ///< @todo remove
 #define NODENAME_DISPLAYID          "displayId" ///< gotcha: lowercase d
 #define NODENAME_NAME               "name"
 #define NODENAME_DESCRIPTION        "description"

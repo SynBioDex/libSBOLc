@@ -18,7 +18,6 @@ struct _DNAComponent;
 typedef struct _Collection {
 	struct _SBOLCompoundObject* base;  ///< uri, displayID, name, description
 	struct _PointerArray *components;  ///< array of DNAComponents
-	struct _PointerArray *collections; ///< array of Collections
 } Collection;
 
 /// Create an empty Collection.
@@ -46,10 +45,6 @@ SBOLAPIEXPORTS int getNumCollections();
 /// Get the Nth Collection.
 /// Useful for iterating over all of them.
 SBOLAPIEXPORTS Collection* getNthCollection(int n);
-
-/// Get the number of Collections inside another Collection.
-/// @todo better name
-SBOLAPIEXPORTS int getNumCollectionsIn(const Collection* col);
 
 /// Get the Nth Collection inside a given Collection.
 /// @todo better name

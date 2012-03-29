@@ -14,14 +14,12 @@ struct _PointerArray;
 struct _SBOLCompoundObject;
 struct _DNASequence;
 struct _SequenceAnnotation;
-struct _Collection;
 
 /// Implements the SBOL Core DNAComponent object.
 typedef struct _DNAComponent {
 	struct _SBOLCompoundObject* base;  ///< uri, displayID, name, description
 	struct _DNASequence* dnaSequence;  ///< sequence
 	struct _PointerArray* annotations; ///< array of SequenceAnnotations
-	struct _PointerArray* collections; ///< array of Collections
 } DNAComponent;
 
 /// Create an empty DNAComponent.
@@ -40,9 +38,7 @@ SBOLAPIEXPORTS DNAComponent* getNthDNAComponent(int n);
 
 // tools for iteration
 SBOLAPIEXPORTS DNAComponent* getDNAComponent(const char* uri);
-SBOLAPIEXPORTS int getNumCollectionsFor(const DNAComponent* com);
 SBOLAPIEXPORTS int getNumSequenceAnnotationsIn(const DNAComponent* com);
-SBOLAPIEXPORTS struct _Collection* getNthCollectionFor(const DNAComponent* com, int n);
 SBOLAPIEXPORTS struct _SequenceAnnotation* getNthSequenceAnnotationIn(const DNAComponent* com, int n);
 
 // get properties

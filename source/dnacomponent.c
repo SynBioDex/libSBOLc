@@ -6,7 +6,6 @@
 #include "array.h"
 #include "dnacomponent.h"
 #include "sequenceannotation.h"
-#include "collection.h"
 #include "object.h"
 #include "dnasequence.h"
 
@@ -33,7 +32,6 @@ DNAComponent* createDNAComponent(const char* uri) {
 	com->base        = createSBOLCompoundObject(uri);
 	com->dnaSequence = NULL;
 	com->annotations = createPointerArray();
-	com->collections = createPointerArray();
 	registerDNAComponent(com);
 	return com;
 }
@@ -55,10 +53,6 @@ void deleteDNAComponent(DNAComponent* com) {
 		if (com->annotations) {
 			deletePointerArray(com->annotations);
 			com->annotations = NULL;
-		}
-		if (com->collections) {
-			deletePointerArray(com->collections);
-			com->collections = NULL;
 		}
 		removeDNAComponent(com);
 		free(com);
@@ -102,13 +96,6 @@ int getNumDNAComponents() {
 		return 0;
 }
 
-int getNumCollectionsFor(const DNAComponent* com) {
-	if (com)
-		return getNumPointersInArray(com->collections);
-	else
-		return -1;
-}
-
 int getNumSequenceAnnotationsIn(const DNAComponent* com) {
 	if (com)
 		return getNumPointersInArray(com->annotations);
@@ -123,13 +110,6 @@ int getNumSequenceAnnotationsIn(const DNAComponent* com) {
 DNAComponent* getNthDNAComponent(int n) {
 	if (getNumDNAComponents() > n && n >= 0)
 		return (DNAComponent *)getNthPointerInArray(allDNAComponents, n);
-	else
-		return NULL;
-}
-
-Collection* getNthCollectionFor(const DNAComponent* com, int n) {
-	if (com && getNumCollectionsFor(com) > n && n >= 0)
-		return (Collection *)getNthPointerInArray(com->collections, n);
 	else
 		return NULL;
 }
@@ -274,17 +254,6 @@ void printDNAComponent(const DNAComponent* com, int tabs) {
 			for (i=0; i<num; i++) {
 				seq = getNthSequenceAnnotationIn(com, i);
 				indent(tabs+2); printf("%s\n", getSequenceAnnotationURI(seq));
-			}
-		}
-	}
-	if (com->collections) {
-		Collection* col;
-		num = getNumCollectionsFor(com);
-		if (num > 0) {
-			indent(tabs+1); printf("%i collections:\n", num);
-			for (i=0; i<num; i++) {
-				col = getNthCollectionFor(com, i);
-				indent(tabs+2); printf("%s\n", getCollectionURI(col));
 			}
 		}
 	}

@@ -225,24 +225,6 @@ void writeCollection(Collection* col) {
 			}
 			indentLess();
 		}
-		
-		// collections
-		Collection* col2;
-		num = getNumCollectionsIn(col);
-		if (num>0) {
-			for (n=0; n<num; n++) {
-				indentMore();
-				xmlTextWriterStartElement(WRITER, NODENAME_COLLECTION_REF);
-				col2 = getNthCollectionInCollection(col, n);
-				indentMore();
-				// TODO sometimes don't include contents?
-				writeCollection(col2);
-				indentLess();
-				xmlTextWriterEndElement(WRITER);
-				indentLess();
-			}
-		}
-		
 	} else
 		xmlTextWriterWriteAttribute(WRITER, NSPREFIX_RDF ":" NODENAME_RESOURCE, getCollectionURI(col));
 	xmlTextWriterEndElement(WRITER);
