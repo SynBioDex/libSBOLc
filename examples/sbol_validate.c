@@ -16,13 +16,11 @@ int main(int argc, char* argv[]) {
 		int failures = 0;
 		for (arg=1; arg<argc; arg++) {
 
+			// workaround for a problem with libxml2 and MinGW
+			safeXmlInitParser();
+
 			// parse
 			doc = xmlParseFile( argv[arg] );
-
-			// workaround for a problem with libxml2 and MinGW
-			// google: "using libxml2 on MinGW - xmlFree crashes"
-			if (!xmlFree)
-				xmlMemGet( &xmlFree, &xmlMalloc, &xmlRealloc, NULL );
 
 			// check against schema
 			if (isValidSBOL(doc) > 0)

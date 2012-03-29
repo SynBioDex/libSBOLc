@@ -11,14 +11,13 @@ void TestValidateValidExamples(CuTest *tc) {
 	int n;
 	for (n=0; n<NUM_VALID_EXAMPLES; n++) {
 		printf("validating %s\n", VALID_EXAMPLE_FILENAMES[n]);
-		doc = xmlParseFile(VALID_EXAMPLE_FILENAMES[n]);
 
 		// workaround for a problem with libxml2 and MinGW
-		// google: "using libxml2 on MinGW - xmlFree crashes"
-		if (!xmlFree)
-			xmlMemGet( &xmlFree, &xmlMalloc, &xmlRealloc, NULL );
-
+		safeXmlInitParser();
+		
+		doc = xmlParseFile(VALID_EXAMPLE_FILENAMES[n]);
 		CuAssertIntEquals(tc, 1, isValidSBOL(doc));
+		
 		xmlFreeDoc(doc);
 		xmlCleanupParser();
 	}
@@ -39,14 +38,13 @@ void TestRejectInvalidExamples(CuTest *tc) {
 	int n;
 	for (n=0; n<NUM_INVALID_EXAMPLES; n++) {
 		printf("rejecting %s\n", INVALID_EXAMPLE_FILENAMES[n]);
-		doc = xmlParseFile(INVALID_EXAMPLE_FILENAMES[n]);
 
 		// workaround for a problem with libxml2 and MinGW
-		// google: "using libxml2 on MinGW - xmlFree crashes"
-		if (!xmlFree)
-			xmlMemGet( &xmlFree, &xmlMalloc, &xmlRealloc, NULL );
-
+		safeXmlInitParser();
+		
+		doc = xmlParseFile(INVALID_EXAMPLE_FILENAMES[n]);
 		CuAssertIntEquals(tc, 0, isValidSBOL(doc));
+		
 		xmlFreeDoc(doc);
 		xmlCleanupParser();
 	}

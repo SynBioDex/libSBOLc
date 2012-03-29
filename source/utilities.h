@@ -10,10 +10,13 @@
 
 #define BUFFER_CHARS 100
 
-char* getExtension(char* filename);
-int sameString(const char* string1, const char* string2);
-char* intToStr(int input);
-int sameContent(const char* filename1, const char* filename2);
+char *intToStr(int input);
+int   strToInt(const char *input);
+
+/// @todo move to polarityproperty, writer, or types?
+int strToPolarity(const char *input);
+char polarityToChar(int polarity);
+
 void safeXmlInitParser();
 
 #endif
