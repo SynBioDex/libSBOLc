@@ -312,9 +312,6 @@ void TestLoadedValid08(CuTest *tc) {
 	SequenceAnnotation *sa2 = getSequenceAnnotation("http://example.com/sa2");
 	SequenceAnnotation *sa3 = getSequenceAnnotation("http://example.com/sa3");
 	CuAssertIntEquals(tc, 3, getNumSequenceAnnotationsIn(dc1));
-	CuAssertIntEquals(tc, 1, annotates(sa1, dc1));
-	CuAssertIntEquals(tc, 1, annotates(sa2, dc1));
-	CuAssertIntEquals(tc, 1, annotates(sa3, dc1));
 	CuAssertIntEquals(tc, 1, getBioStart(sa1));
 	CuAssertIntEquals(tc, 3, getBioStart(sa2));
 	CuAssertIntEquals(tc, 2, getBioEnd(sa1));

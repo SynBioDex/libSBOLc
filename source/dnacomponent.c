@@ -232,7 +232,6 @@ void setDNAComponentSequence(DNAComponent* com, struct _DNASequence* seq) {
 void addSequenceAnnotation(DNAComponent* com, SequenceAnnotation* ann) {
 	if (com && ann) {
 		insertPointerIntoArray(com->annotations, ann);
-		ann->annotates = com;
 	}
 }
 

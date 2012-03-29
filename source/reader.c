@@ -234,14 +234,6 @@ void readSequenceAnnotationReferences(xmlNode *node) {
 	ann = getSequenceAnnotation((char *)ann_uri);
 	xmlFree(ann_uri);
 
-	// add annotates
-	path = BAD_CAST "./" NSPREFIX_SBOL ":" NODENAME_ANNOTATES
-					 "/" NSPREFIX_SBOL ":" NODENAME_DNACOMPONENT;
-	if (ref_uri = getURIOfNodeMatchingXPath(node, path)) {
-		addSequenceAnnotation(getDNAComponent((char *)ref_uri), ann);
-		xmlFree(ref_uri);
-	}
-
 	// add subComponent
 	path = BAD_CAST "./" NSPREFIX_SBOL ":" NODENAME_SUBCOMPONENT
 					 "/" NSPREFIX_SBOL ":" NODENAME_DNACOMPONENT;

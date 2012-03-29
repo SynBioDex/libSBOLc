@@ -20,12 +20,9 @@ typedef struct _SequenceAnnotation {
 	struct _PositionProperty *genbankStart;
 	struct _PositionProperty *genbankEnd;
 	struct _PolarityProperty *strand;
-   	struct _DNAComponent* annotates;
 	struct _DNAComponent* subComponent;
 	struct _PointerArray* precedes;
 } SequenceAnnotation;
-
-// @todo getAnnotates function?
 
 // create/destroy
 SBOLAPIEXPORTS SequenceAnnotation* createSequenceAnnotation(const char* uri);
@@ -49,8 +46,6 @@ SBOLAPIEXPORTS void setBioEnd(SequenceAnnotation* ann, int end);
 SBOLAPIEXPORTS void setStrandPolarity(SequenceAnnotation* ann, int polarity);
 
 SBOLAPIEXPORTS struct _DNAComponent* getSubComponent(const SequenceAnnotation* ann);
-
-SBOLAPIEXPORTS int annotates(const SequenceAnnotation *ann, const struct _DNAComponent *com);
 
 // constrain order
 SBOLAPIEXPORTS void addPrecedesRelationship(SequenceAnnotation* upstream, SequenceAnnotation* downstream);

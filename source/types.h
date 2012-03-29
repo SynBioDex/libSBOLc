@@ -5,7 +5,6 @@
 ///////////////////////////////////////////////////////////
 
 /// @todo remove "collection"
-/// @todo remove "annotates"
 /// @todo remove 
 /// @todo bring up "dnaSequence" vs "DnaSequence"
 /// @todo and "component" vs "DnaComponent"
@@ -40,7 +39,6 @@
 #define NODENAME_BIOEND             "bioEnd"
 #define NODENAME_NUCLEOTIDES        "nucleotides"
 #define NODENAME_STRAND             "strand"
-#define NODENAME_ANNOTATES          "annotates"
 #define NODENAME_PRECEDES           "precedes"
 #define NODENAME_ANNOTATION         "annotation"
 #define NODENAME_SUBCOMPONENT       "subComponent"

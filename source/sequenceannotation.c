@@ -33,7 +33,6 @@ SequenceAnnotation* createSequenceAnnotation(const char* uri) {
 	ann->genbankEnd   = createPositionProperty();
 	//ann->strand       = 1;
 	ann->strand       = createPolarityProperty();
-	ann->annotates    = NULL;
 	ann->subComponent = NULL;
 	ann->precedes = createPointerArray();
 	registerSequenceAnnotation(ann);
@@ -52,9 +51,6 @@ void deleteSequenceAnnotation(SequenceAnnotation* ann) {
 	if (ann) {
 		if (ann->base)
 			deleteSBOLObject(ann->base);
-		// TODO will these get deleted correctly?
-		if (ann->annotates)
-			ann->annotates = NULL;
 		if (ann->subComponent)
 			ann->subComponent = NULL;
 		if (ann->precedes) {
@@ -231,12 +227,6 @@ int precedes(const SequenceAnnotation* ann1, const SequenceAnnotation* ann2) {
 	return 0;
 }
 
-int annotates(const SequenceAnnotation *ann, const DNAComponent *com) {
-	if (!ann || !com || !ann->annotates)
-		return 0;
-	return (int) (ann->annotates == com);
-}
-
 void cleanupSequenceAnnotations() {
 	if (allSequenceAnnotations) {
 		int n;
@@ -263,9 +253,6 @@ void printSequenceAnnotation(const SequenceAnnotation* ann, int tabs) {
     }
     char strand = polarityToChar( getPolarityProperty(ann->strand) );
     indent(tabs+1); printf("strand: %c\n", strand);
-    if (ann->annotates) {
-        indent(tabs+1); printf("annotates:    %s\n", getDNAComponentURI(ann->annotates));
-    }
     if (ann->subComponent) {
         indent(tabs+1); printf("subComponent: %s\n", getDNAComponentURI(ann->subComponent));
     }
