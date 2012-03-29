@@ -16,6 +16,54 @@
 #include "dnacomponent.h"
 #include "collection.h"
 
+/*************************
+ * functions for reading
+ * node properties
+ *************************/
+
+xmlChar *getNodeURI(xmlNode *node) {
+	xmlChar *uri = NULL;
+	if (node) {
+		if (isReferenceNode(node))
+			uri = xmlGetNsProp(node, (const xmlChar *)"resource", (const xmlChar *)XMLNS_RDF);
+		else
+			uri = xmlGetNsProp(node, (const xmlChar *)"about", (const xmlChar *)XMLNS_RDF);
+	}
+	return uri;
+}
+
+// TODO warn that you need to xmlFree() this
+xmlChar *getNodeNS(xmlNode *node) {
+	xmlChar *ns = NULL;
+	if (node && node->ns && node->ns->href) {
+		ns = calloc(strlen(node->ns->href), sizeof(char));
+		strcpy(ns, node->ns->href);
+	}
+	return ns;
+}
+
+/// @todo remove once XPath parser completed
+int nodeNameEquals(xmlNode *node, char *name) {
+	if (node && node->name)
+		return (int) !xmlStrcmp(node->name, (const xmlChar *)name);
+	else
+		return 0;
+}
+
+int isReferenceNode(xmlNode *node) {
+	xmlChar *resource = NULL;
+	if (node)
+		// #define this
+		resource = xmlGetNsProp(node, (const xmlChar *)"resource", (const xmlChar *)XMLNS_RDF);
+	int result;
+	if (resource)
+		result = 1;
+	else
+		result = 0;
+	xmlFree(resource);
+	return result;
+}
+
 /**************************
  * utility functions for
  * the XPath-based parser
@@ -53,9 +101,11 @@ PointerArray *getArrayOfNodesMatchingXPath(xmlNode *node, xmlChar *path) {
 	
 	// put them in the array
 	results_array = createPointerArray();
-	for (n=0; n < results_set->nodesetval->nodeNr; n++) {
-		result_node = results_set->nodesetval->nodeTab[n];
-		insertPointerIntoArray(results_array, result_node);
+	if (results_set->nodesetval && results_set->nodesetval->nodeNr > 0) {
+		for (n=0; n < results_set->nodesetval->nodeNr; n++) {
+			result_node = results_set->nodesetval->nodeTab[n];
+			insertPointerIntoArray(results_array, result_node);
+		}
 	}
 	
 	// finish up
@@ -81,6 +131,22 @@ xmlNode *getSingleNodeMatchingXPath(xmlNode *node, xmlChar *path) {
 		deletePointerArray(results_array);
 		return result;
 	}
+}
+
+xmlChar *getContentsOfNodeMatchingXPath(xmlNode *node, xmlChar *path) {
+	xmlNode *result = getSingleNodeMatchingXPath(node, path);
+	if (result)
+		return xmlNodeGetContent(result);
+	else
+		return NULL;
+}
+
+xmlChar *getURIOfNodeMatchingXPath(xmlNode *node, xmlChar *path) {
+	xmlNode *result = getSingleNodeMatchingXPath(node, path);
+	if (result)
+		return getNodeURI(result);
+	else
+		return NULL;
 }
 
 /// @todo put this at the core of the process
@@ -114,54 +180,6 @@ void readDNAComponent_XPath(xmlNode *node) {
 	applyFunctionToNodesMatchingXPath(printNodeName, node, path);
 }
 
-/*************************
- * functions for reading
- * node properties
- *************************/
-
-xmlChar *getNodeURI(xmlNode *node) {
-	xmlChar *uri = NULL;
-	if (node) {
-		if (isReferenceNode(node))
-			uri = xmlGetNsProp(node, (const xmlChar *)"resource", (const xmlChar *)XMLNS_RDF);
-		else
-			uri = xmlGetNsProp(node, (const xmlChar *)"about", (const xmlChar *)XMLNS_RDF);
-	}
-	return uri;
-}
-
-// TODO warn that you need to xmlFree() this
-xmlChar *getNodeNS(xmlNode *node) {
-	xmlChar *ns = NULL;
-	if (node && node->ns && node->ns->href) {
-		ns = calloc(strlen(node->ns->href), sizeof(char));
-		strcpy(ns, node->ns->href);
-	}
-	return ns;
-}
-
-// TODO also check namespace
-int nodeNameEquals(xmlNode *node, char *name) {
-	if (node && node->name)
-		return (int) !xmlStrcmp(node->name, (const xmlChar *)name);
-	else
-		return 0;
-}
-
-int isReferenceNode(xmlNode *node) {
-	xmlChar *resource = NULL;
-	if (node)
-		// #define this
-		resource = xmlGetNsProp(node, (const xmlChar *)"resource", (const xmlChar *)XMLNS_RDF);
-	int result;
-	if (resource)
-		result = 1;
-	else
-		result = 0;
-	xmlFree(resource);
-	return result;
-}
-
 /***************************
  * functions for reading
  * individual SBOL objects
@@ -171,26 +189,22 @@ int isReferenceNode(xmlNode *node) {
 
 /// @todo either rename or make it so you don't pass the object?
 SBOLCompoundObject *readSBOLCompoundObject(SBOLCompoundObject *obj, xmlNode *node) {
-	xmlNode *result;
-	char *content;
+	xmlChar *content;
 
 	// displayID
-	if (result = getSingleNodeMatchingXPath(node, BAD_CAST "./s:displayId")) {
-		content = xmlNodeGetContent(result);
+	if (content = getContentsOfNodeMatchingXPath(node, BAD_CAST "./s:displayId")) {
 		setSBOLCompoundObjectDisplayID(obj, (char *)content);
 		xmlFree(content);
 	}
 
 	// name
-	if (result = getSingleNodeMatchingXPath(node, BAD_CAST "./s:name")) {
-		content = xmlNodeGetContent(result);
+	if (content = getContentsOfNodeMatchingXPath(node, BAD_CAST "./s:name")) {
 		setSBOLCompoundObjectName(obj, (char *)content);
 		xmlFree(content);
 	}
 
 	// description
-	if (result = getSingleNodeMatchingXPath(node, BAD_CAST "./s:description")) {
-		content = xmlNodeGetContent(result);
+	if (content = getContentsOfNodeMatchingXPath(node, BAD_CAST "./s:description")) {
 		setSBOLCompoundObjectDescription(obj, (char *)content);
 		xmlFree(content);
 	}
@@ -217,9 +231,8 @@ DNASequence *readDNASequence(xmlNode *node, int pass) {
 	DNASequence *seq = createDNASequence((char *)uri);
 	
 	// add nucleotides
-	xmlNode *nt_node = getSingleNodeMatchingXPath(node, BAD_CAST "./s:nucleotides");
-	if (nt_node) {
-		xmlChar *nucleotides = xmlNodeGetContent(nt_node);
+	xmlChar *nucleotides;
+	if (nucleotides = getContentsOfNodeMatchingXPath(node, BAD_CAST "./s:nucleotides")) {
 		setNucleotides(seq, (char *)nucleotides);
 		xmlFree(nucleotides);
 	}
@@ -276,62 +289,45 @@ SequenceAnnotation *readSequenceAnnotation(xmlNode *node, int pass) {
 		ann = getSequenceAnnotation((char *)ann_uri);
 	}
 	
-	// add things to annotation
-	for (pro_node = ann_node->children; pro_node; pro_node = pro_node->next) {
-		if (!pro_node->name)
-			continue;
-		else if (pass == 0) {
-		
-			// add basic property
-			pro_contents = xmlNodeGetContent(pro_node);
-			if (!pro_contents)
-				continue;
-			else if (nodeNameEquals(pro_node, "bioStart"))
-				setBioStart(ann, strToInt((char *)pro_contents));
-			else if (nodeNameEquals(pro_node, "bioEnd"))
-				setBioEnd(ann, strToInt((char *)pro_contents));
-			else if (nodeNameEquals(pro_node, "strand"))
-				setStrandPolarity(ann, strToPolarity((char *)pro_contents));
+	if (pass == 0) {
+		// bioStart
+		if (pro_contents = getContentsOfNodeMatchingXPath(ann_node, BAD_CAST "./s:bioStart")) {
+			setBioStart(ann, strToInt((char *)pro_contents));
 			xmlFree(pro_contents);
-		} else {
-		
-			// objects have all been created;
-			// time to link them together
-			if (isReferenceNode(pro_node)) {
-			
-				//add single pointer to another SBOL object
-				ref_node = pro_node;
-				ref_uri = getNodeURI(ref_node);
-				if (nodeNameEquals(pro_node, "annotates"))
-					addSequenceAnnotation(getDNAComponent((char *)ref_uri), ann);
-				else if (nodeNameEquals(pro_node, "subComponent")) {
-					printf("subComponent: %s\n", (char *)getNodeURI(pro_node));
-					setSubComponent(ann, getDNAComponent((char *)ref_uri));
-				}
-				else if (nodeNameEquals(pro_node, "precedes"))
-					addPrecedesRelationship(ann, getSequenceAnnotation((char *)ref_uri));
-				#if SBOL_DEBUG_ACTIVE
-				else
-					printf("Unknown reference node %s\n", ref_node->name);
-				#endif
+		}
+		// bioEnd
+		if (pro_contents = getContentsOfNodeMatchingXPath(ann_node, BAD_CAST "./s:bioEnd")) {
+			setBioEnd(ann, strToInt((char *)pro_contents));
+			xmlFree(pro_contents);
+		}
+		// strand
+		if (pro_contents = getContentsOfNodeMatchingXPath(ann_node, BAD_CAST "./s:strand")) {
+			setStrandPolarity(ann, strToPolarity((char *)pro_contents));
+			xmlFree(pro_contents);
+		}
+	} else {
+		// annotates
+		if (ref_uri = getURIOfNodeMatchingXPath(ann_node, BAD_CAST "./s:annotates/s:DnaComponent")) {
+			addSequenceAnnotation(getDNAComponent((char *)ref_uri), ann);
+			free(ref_uri);
+		}
+		// subComponent
+		if (ref_uri = getURIOfNodeMatchingXPath(ann_node, BAD_CAST "./s:subComponent/s:DnaComponent")) {
+			setSubComponent(ann, getDNAComponent((char *)ref_uri));
+			xmlFree(ref_uri);
+		}
+		// precedes
+		PointerArray *results_array;
+		int n;
+		if (results_array = getArrayOfNodesMatchingXPath(ann_node, BAD_CAST "./s:precedes")) {
+			for (n=0; n<getNumPointersInArray(results_array); n++) {
+				ref_node = (xmlNode *) getNthPointerInArray(results_array, n);
+				ref_uri  = getNodeURI(ref_node);
+				addPrecedesRelationship(ann, getSequenceAnnotation((char *)ref_uri));
 				xmlFree(ref_uri);
-			} else {
-				for (ref_node = pro_node->children; ref_node; ref_node = ref_node->next) {
-					if (!ref_node->name || ref_node->type == XML_TEXT_NODE)
-						continue;
-					ref_uri = getNodeURI(ref_node);
-					if (nodeNameEquals(ref_node, "DnaComponent"))
-						setSubComponent(ann, getDNAComponent((char *)ref_uri));
-					#if SBOL_DEBUG_ACTIVE
-					else
-						printf("Unknown reference node %s\n", ref_node->name);
-					#endif
-					xmlFree(ref_uri);
-				}
 			}
 		}
 	}
-	xmlFree(ann_uri);
 	return ann;
 }
 
