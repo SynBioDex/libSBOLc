@@ -20,6 +20,9 @@ static xmlChar *getNodeURI(xmlNode *node);
 static xmlChar *getNodeNS(xmlNode *node);
 static int nodeNameEquals(xmlNode *node, char *name);
 
+// utility functions for the XPath parser
+
+
 /// @todo void readNamespaces(xmlNode *node)?
 
 // functions for reading individual SBOLObjects from xmlNodes

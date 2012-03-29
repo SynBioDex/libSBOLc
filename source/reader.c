@@ -172,56 +172,77 @@ void applyFunctionToNodesMatchingXPath(void (*fn)(xmlNode *), xmlNode *node, xml
 /// @todo either rename or make it so you don't pass the object?
 SBOLCompoundObject *readSBOLCompoundObject(SBOLCompoundObject *obj, xmlNode *node) {
 	xmlChar *content;
-	// displayID
+
+	// add displayID
 	if (content = getContentsOfNodeMatchingXPath(node, BAD_CAST "./s:displayId")) {
 		setSBOLCompoundObjectDisplayID(obj, (char *)content);
 		xmlFree(content);
 	}
-	// name
+
+	// add name
 	if (content = getContentsOfNodeMatchingXPath(node, BAD_CAST "./s:name")) {
 		setSBOLCompoundObjectName(obj, (char *)content);
 		xmlFree(content);
 	}
-	// description
+
+	// add description
 	if (content = getContentsOfNodeMatchingXPath(node, BAD_CAST "./s:description")) {
 		setSBOLCompoundObjectDescription(obj, (char *)content);
 		xmlFree(content);
 	}
+
 	return obj;
 }
 
-DNASequence *readDNASequence(xmlNode *node, int pass) {
+DNASequence *readDNASequenceContent(xmlNode *node) {
 	xmlChar *uri;
 	xmlChar *nt;
 	DNASequence *seq;
+
+	// create DNASequence
 	uri = getNodeURI(node);
 	seq = createDNASequence((char *)uri);
+
+	// add nucleotides
 	if (nt = getContentsOfNodeMatchingXPath(node, BAD_CAST "./s:nucleotides")) {
 		setNucleotides(seq, (char *)nt);
 		xmlFree(nt);
 	}
+
 	xmlFree(uri);
 	return seq;
+}
+
+/// @todo remove this
+DNASequence *readDNASequence(xmlNode *node, int pass) {
+    if (pass == 0)
+        return readDNASequenceContent(node);
+    else
+        return getDNASequence( getNodeURI(node) );
 }
 
 SequenceAnnotation *readSequenceAnnotationContent(xmlNode *node) {
 	SequenceAnnotation *ann;
 	xmlChar *ann_uri;
 	xmlChar *contents;
+
 	// create SequenceAnnotation
 	ann_uri = getNodeURI(node);
 	ann = createSequenceAnnotation((char *)ann_uri);
 	xmlFree(ann_uri);
+
 	// add bioStart
 	if (contents = getContentsOfNodeMatchingXPath(node, BAD_CAST "./s:bioStart")) {
 		setBioStart(ann, strToInt((char *)contents));
 		xmlFree(contents);
 	}
+
 	// add bioEnd
 	if (contents = getContentsOfNodeMatchingXPath(node, BAD_CAST "./s:bioEnd")) {
 		setBioEnd(ann, strToInt((char *)contents));
 		xmlFree(contents);
 	}
+
 	// add strand
 	if (contents = getContentsOfNodeMatchingXPath(node, BAD_CAST "./s:strand")) {
 		setStrandPolarity(ann, strToPolarity((char *)contents));
@@ -229,6 +250,7 @@ SequenceAnnotation *readSequenceAnnotationContent(xmlNode *node) {
 	}
 }
 
+/// @todo don't need to return the annotation
 SequenceAnnotation *readSequenceAnnotationReferences(xmlNode *node) {
 	SequenceAnnotation *ann;
 	xmlChar *ann_uri;
@@ -236,20 +258,24 @@ SequenceAnnotation *readSequenceAnnotationReferences(xmlNode *node) {
 	xmlNode *ref_node;
 	PointerArray *results;
 	int n;
+
  	// get SequenceAnnotation
 	ann_uri = getNodeURI(node);
 	ann = getSequenceAnnotation((char *)ann_uri);
 	xmlFree(ann_uri);
+
 	// add annotates
 	if (ref_uri = getURIOfNodeMatchingXPath(node, BAD_CAST "./s:annotates/s:DnaComponent")) {
 		addSequenceAnnotation(getDNAComponent((char *)ref_uri), ann);
 		xmlFree(ref_uri);
 	}
+
 	// add subComponent
 	if (ref_uri = getURIOfNodeMatchingXPath(node, BAD_CAST "./s:subComponent/s:DnaComponent")) {
 		setSubComponent(ann, getDNAComponent((char *)ref_uri));
 		xmlFree(ref_uri);
 	}
+
 	// add precedes
 	if (results = getArrayOfNodesMatchingXPath(node, BAD_CAST "./s:precedes")) {
 		for (n=0; n<getNumPointersInArray(results); n++) {
@@ -262,6 +288,7 @@ SequenceAnnotation *readSequenceAnnotationReferences(xmlNode *node) {
 	}
 }
 
+/// @todo remove this
 SequenceAnnotation *readSequenceAnnotation(xmlNode *node, int pass) {
 	if (pass == 0)
 		return readSequenceAnnotationContent(node);
@@ -269,67 +296,70 @@ SequenceAnnotation *readSequenceAnnotation(xmlNode *node, int pass) {
 		return readSequenceAnnotationReferences(node);
 }
 
+/// @todo don't need to return the component
+DNAComponent *readDNAComponentContent(xmlNode *node) {
+    DNAComponent *com;
+    xmlChar *com_uri;
+
+    // create DNAComponent
+    com_uri = getNodeURI(node);
+    com = createDNAComponent((char *)com_uri);
+    xmlFree(com_uri);
+
+    // add displayID, name, description
+    readSBOLCompoundObject(com->base, node);
+
+    return com;
+}
+
+DNAComponent *readDNAComponentReferences(xmlNode *node) {
+    DNAComponent *com;
+    xmlChar *com_uri;
+    xmlChar *ref_uri;
+    PointerArray *ref_nodes;
+    xmlNode *ref_node;
+    int n;
+
+    // get DNAComponent
+    com_uri = getNodeURI(node);
+    com = getDNAComponent((char *)com_uri);
+    xmlFree(com_uri);
+
+    // add sequence
+    if (ref_uri = getURIOfNodeMatchingXPath(node, BAD_CAST "./s:dnaSequence/s:DnaSequence")) {
+        setDNAComponentSequence(com, getDNASequence((char *)ref_uri));
+        xmlFree(ref_uri);
+    }
+    
+    // add annotations
+    /// @todo extract this to a funtion
+    if (ref_nodes = getArrayOfNodesMatchingXPath(node, BAD_CAST "./s:annotation/s:SequenceAnnotation")) {
+        for (n=0; n<getNumPointersIn(ref_nodes); n++) {
+            ref_node = (xmlNode *) getNthPointerInArray(ref_nodes, n);
+            ref_uri = getNodeURI(ref_node);
+            addSequenceAnnotation(com, getSequenceAnnotation((char *)ref_uri));
+            xmlFree(ref_uri);
+        }
+        deletePointerArray(ref_nodes);
+    }
+    
+    // add collections
+    if (ref_nodes = getArrayOfNodesMatchingXPath(node, BAD_CAST "./s:collections/s:Collection")) {
+        for (n=0; n<getNumPointersInArray(ref_nodes); n++) {
+            ref_node = (xmlNode *) getNthPointerInArray(ref_nodes, n);
+            ref_uri = getNodeURI(ref_node);
+            addDNAComponentToCollection(com, getCollection((char *)ref_uri));
+            xmlFree(ref_uri);
+        }
+        deletePointerArray(ref_nodes);
+    }
+}
+
 DNAComponent *readDNAComponent(xmlNode *node, int pass) {
-	DNAComponent *com = NULL;
-	
-	xmlNode *com_node = NULL;
-	xmlNode *pro_node = NULL;
-	xmlNode *ref_node = NULL;
-	
-	xmlChar *com_uri = NULL;
-	xmlChar *pro_uri = NULL;
-	xmlChar *ref_uri = NULL;
-	
-	com_node = node;
-	com_uri = getNodeURI(com_node);
-	if (pass == 0) {
-		// create component
-		// and add basic properties
-		if (isSBOLObjectURI(com_uri)) {
-			#if SBOL_DEBUG_ACTIVE
-			printf("Tried to read %s twice\n", com_uri);
-			#endif
-			return NULL;
-		}
-		com = createDNAComponent((char *)com_uri);
-		readSBOLCompoundObject(com->base, com_node);
-	} else {
-	
-		// get component
-		if (!isDNAComponentURI((char *)com_uri)) {
-			#if SBOL_DEBUG_ACTIVE
-			printf("Failed to create DNAComponent %s\n", com_uri);
-			#endif
-			return NULL;
-		}
-		com = getDNAComponent((char *)com_uri);
-		
-		// add links to other SBOL objects
-		for (pro_node = com_node->children; pro_node; pro_node = pro_node->next) {
-			if (!pro_node->name || pro_node->type == XML_TEXT_NODE)
-				continue;
-			for (ref_node = pro_node->children; ref_node; ref_node = ref_node->next) {
-					if (!ref_node->name || ref_node->type == XML_TEXT_NODE)
-						continue;
-					ref_uri = getNodeURI(ref_node);
-					if (nodeNameEquals(ref_node, "DnaSequence"))
-						setDNAComponentSequence(com, getDNASequence((char *)ref_uri));
-					else if (nodeNameEquals(ref_node, "SequenceAnnotation"))
-						addSequenceAnnotation(com, getSequenceAnnotation((char *)ref_uri));
-					else if (nodeNameEquals(ref_node, "Collection"))
-						addDNAComponentToCollection(com, getCollection((char *)ref_uri));
-					#if SBOL_DEBUG_ACTIVE
-					else
-						printf("Unknown reference node %s\n", ref_node->name);
-					#endif
-					xmlFree(ref_uri);
-			}
-		}
-	
-	}
-	
-	xmlFree(com_uri);
-	return com;
+    if (pass == 0)
+        return readDNAComponentContent(node);
+    else
+        return readDNAComponentReferences(node);
 }
 
 Collection *readCollection(xmlNode *node, int pass) {
