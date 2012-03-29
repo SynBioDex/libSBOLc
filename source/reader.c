@@ -8,6 +8,7 @@
 #include <libxml/xpath.h>
 
 #include "debug.h"
+#include "utilities.h"
 #include "object.h"
 #include "types.h"
 #include "array.h"
@@ -16,63 +17,28 @@
 #include "dnacomponent.h"
 #include "collection.h"
 
-/*************************
- * functions for reading
- * node properties
- *************************/
-
-xmlChar *getNodeURI(xmlNode *node) {
-	xmlChar *uri = NULL;
-	if (node) {
-		if (isReferenceNode(node))
-			uri = xmlGetNsProp(node, (const xmlChar *)"resource", (const xmlChar *)XMLNS_RDF);
-		else
-			uri = xmlGetNsProp(node, (const xmlChar *)"about", (const xmlChar *)XMLNS_RDF);
-	}
-	return uri;
-}
-
-// TODO warn that you need to xmlFree() this
-xmlChar *getNodeNS(xmlNode *node) {
-	xmlChar *ns = NULL;
-	if (node && node->ns && node->ns->href) {
-		ns = calloc(strlen(node->ns->href), sizeof(char));
-		strcpy(ns, node->ns->href);
-	}
-	return ns;
-}
-
-/// @todo remove once XPath parser completed
-int nodeNameEquals(xmlNode *node, char *name) {
-	if (node && node->name)
-		return (int) !xmlStrcmp(node->name, (const xmlChar *)name);
-	else
-		return 0;
-}
-
-int isReferenceNode(xmlNode *node) {
-	xmlChar *resource = NULL;
-	if (node)
-		// #define this
-		resource = xmlGetNsProp(node, (const xmlChar *)"resource", (const xmlChar *)XMLNS_RDF);
-	int result;
-	if (resource)
-		result = 1;
-	else
-		result = 0;
-	xmlFree(resource);
-	return result;
-}
-
-/**************************
- * utility functions for
- * the XPath-based parser
- **************************/
-
+// these are static mainly to avoid passing them around constantly
 static xmlDoc          *DOCUMENT;
 static xmlXPathContext *CONTEXT;
 
 /// @todo learn when to use BAD_CAST
+//void readNamespaces(xmlNode *node); // TODO is this needed?
+
+/*********************
+ * utility functions
+ *********************/
+
+xmlChar *getNodeURI(xmlNode *node) {
+	if (!node)
+		return NULL;
+	xmlChar *uri;
+	// assume this is a normal node
+	uri = xmlGetNsProp(node, (const xmlChar *)"about", (const xmlChar *)XMLNS_RDF);
+	if (!uri)
+		// nope, hopefully it's a reference node then
+		uri = xmlGetNsProp(node, (const xmlChar *)"resource", (const xmlChar *)XMLNS_RDF);
+	return uri;
+}
 
 // adapted from http://student.santarosa.edu/~dturover/?node=libxml2
 /// @param node Optionally, search starting from a specific node
@@ -162,12 +128,14 @@ void applyFunctionToNodesMatchingXPath(void (*fn)(xmlNode *), xmlNode *node, xml
 	xmlXPathFreeObject(results);
 }
 
+void processNodes(void (*fn)(xmlNode *), xmlChar *path) {
+	applyFunctionToNodesMatchingXPath(fn, NULL, path);
+}
+
 /***************************
  * functions for reading
  * individual SBOL objects
  ***************************/
-
-//void readNamespaces(xmlNode *node); // TODO is this needed?
 
 /// @todo either rename or make it so you don't pass the object?
 SBOLCompoundObject *readSBOLCompoundObject(SBOLCompoundObject *obj, xmlNode *node) {
@@ -194,7 +162,7 @@ SBOLCompoundObject *readSBOLCompoundObject(SBOLCompoundObject *obj, xmlNode *nod
 	return obj;
 }
 
-DNASequence *readDNASequenceContent(xmlNode *node) {
+void readDNASequenceContent(xmlNode *node) {
 	xmlChar *uri;
 	xmlChar *nt;
 	DNASequence *seq;
@@ -210,10 +178,9 @@ DNASequence *readDNASequenceContent(xmlNode *node) {
 	}
 
 	xmlFree(uri);
-	return seq;
 }
 
-SequenceAnnotation *readSequenceAnnotationContent(xmlNode *node) {
+void readSequenceAnnotationContent(xmlNode *node) {
 	SequenceAnnotation *ann;
 	xmlChar *ann_uri;
 	xmlChar *contents;
@@ -242,8 +209,7 @@ SequenceAnnotation *readSequenceAnnotationContent(xmlNode *node) {
 	}
 }
 
-/// @todo don't need to return the annotation
-SequenceAnnotation *readSequenceAnnotationReferences(xmlNode *node) {
+void readSequenceAnnotationReferences(xmlNode *node) {
 	SequenceAnnotation *ann;
 	xmlChar *ann_uri;
 	xmlChar *ref_uri;
@@ -280,8 +246,7 @@ SequenceAnnotation *readSequenceAnnotationReferences(xmlNode *node) {
 	}
 }
 
-/// @todo don't need to return the component
-DNAComponent *readDNAComponentContent(xmlNode *node) {
+void readDNAComponentContent(xmlNode *node) {
     DNAComponent *com;
     xmlChar *com_uri;
 
@@ -292,11 +257,9 @@ DNAComponent *readDNAComponentContent(xmlNode *node) {
 
     // add displayID, name, description
     readSBOLCompoundObject(com->base, node);
-
-    return com;
 }
 
-DNAComponent *readDNAComponentReferences(xmlNode *node) {
+void readDNAComponentReferences(xmlNode *node) {
     DNAComponent *com;
     xmlChar *com_uri;
     xmlChar *ref_uri;
@@ -338,7 +301,7 @@ DNAComponent *readDNAComponentReferences(xmlNode *node) {
     }
 }
 
-Collection *readCollectionContents(xmlNode *node) {
+void readCollectionContent(xmlNode *node) {
     Collection *col;
     xmlChar *col_uri;
 
@@ -349,11 +312,9 @@ Collection *readCollectionContents(xmlNode *node) {
 
     // add displayID, name, description
     readSBOLCompoundObject(col->base, node);
-
-    return col;
 }
 
-Collection *readCollectionReferences(xmlNode *node) {
+void readCollectionReferences(xmlNode *node) {
     Collection *col;
     xmlChar *col_uri;
     xmlChar *ref_uri;
@@ -389,100 +350,47 @@ Collection *readCollectionReferences(xmlNode *node) {
     }
 }
 
-/// @todo remove this
-DNASequence *readDNASequence(xmlNode *node, int pass) {
-    if (pass == 0)
-        return readDNASequenceContent(node);
-    else
-        return getDNASequence( getNodeURI(node) );
-}
-
-/// @todo remove this
-SequenceAnnotation *readSequenceAnnotation(xmlNode *node, int pass) {
-	if (pass == 0)
-		return readSequenceAnnotationContent(node);
-	else
-		return readSequenceAnnotationReferences(node);
-}
-
-/// @todo remove this
-DNAComponent *readDNAComponent(xmlNode *node, int pass) {
-    if (pass == 0)
-        return readDNAComponentContent(node);
-    else
-        return readDNAComponentReferences(node);
-}
-
-/// @todo remove this
-Collection *readCollection(xmlNode *node, int pass) {
-    if (pass == 0)
-        return readCollectionContents(node);
-    else
-        return readCollectionReferences(node);
-}
-
-/**************************
- * main parsing functions
- **************************/
-
-// this function should be called twice on every node:
-// the first pass (pass == 0) creates SBOL objects,
-// and the second (pass > 0) links them together with pointers
-void readSBOLObjects(xmlNode *root, int pass) {
-	xmlNode *node;
-	for (node = root; node; node = node->next) {
-		if      (nodeNameEquals(node, "Collection"))         readCollection(node, pass);
-		else if (nodeNameEquals(node, "SequenceAnnotation")) readSequenceAnnotation(node, pass);
-		else if (nodeNameEquals(node, "DnaComponent"))       readDNAComponent(node, pass);
-		else if (nodeNameEquals(node, "DnaSequence"))        readDNASequence(node, pass);
-		readSBOLObjects(node->children, pass);
-	}
-}
+/*************************
+ * main parsing function
+ *************************/
 
 // TODO return error codes
 // this function parses an xml file, validates it,
 // and creates matching SBOL objects in memory
 void readSBOLCore(char* filename) {
-	//xmlDocPtr  doc;
 
-	// this initializes the library and checks potential ABI mismatches
-	// between the version it was compiled for and the actual shared
-	// library used.
-	xmlInitParser();
-	LIBXML_TEST_VERSION
-	
 	// parse
+	safeXmlInitParser();
 	DOCUMENT = xmlParseFile(filename);
-
-	// create XPath context
-	CONTEXT = xmlXPathNewContext(DOCUMENT);
-	xmlXPathRegisterNs(CONTEXT, BAD_CAST "rdf", BAD_CAST XMLNS_RDF);
-	xmlXPathRegisterNs(CONTEXT, BAD_CAST "s", BAD_CAST XMLNS_SBOL);
-
-	// workaround for a problem with libxml2 and MinGW
-	// google: "using libxml2 on MinGW - xmlFree crashes"
-	/// @todo put this in a function along with LIBXML_TEST_VERSION
-	if (!xmlFree)
-		xmlMemGet( &xmlFree, &xmlMalloc, &xmlRealloc, NULL );
-
 	if (!DOCUMENT) {
 		printf("Error reading %s\n", filename);
 		return;
 	}
-	
+
 	// validate
 	if (!isValidSBOL(DOCUMENT)) {
 		printf("%s is not a valid SBOL document.\n", filename);
 		return;
 	}
+		
+	// create XPath context
+	CONTEXT = xmlXPathNewContext(DOCUMENT);
+	xmlXPathRegisterNs(CONTEXT, BAD_CAST "rdf", BAD_CAST XMLNS_RDF);
+	xmlXPathRegisterNs(CONTEXT, BAD_CAST "s", BAD_CAST XMLNS_SBOL);
+
+	// create all the SBOLObjects
+	processNodes(readDNASequenceContent,        BAD_CAST "//s:DnaSequence");
+	processNodes(readSequenceAnnotationContent, BAD_CAST "//s:SequenceAnnotation");
+	processNodes(readDNAComponentContent,       BAD_CAST "//s:DnaComponent");
+	processNodes(readCollectionContent,         BAD_CAST "//s:Collection");
 	
-	// import
-	readSBOLObjects(xmlDocGetRootElement(DOCUMENT), 0);
-	readSBOLObjects(xmlDocGetRootElement(DOCUMENT), 1);
+	// link them together with pointers
+	processNodes(readSequenceAnnotationReferences, BAD_CAST "//s:SequenceAnnotation");
+	processNodes(readDNAComponentReferences,       BAD_CAST "//s:DnaComponent");
+	processNodes(readCollectionReferences,         BAD_CAST "//s:Collection");
 	
 	// clean up
-	/// @todo cleanupSBOLParser
-	xmlXPathFreeContext(CONTEXT); CONTEXT  = NULL;
-	xmlFreeDoc(DOCUMENT);         DOCUMENT = NULL;
+	xmlXPathFreeContext(CONTEXT);
+	xmlFreeDoc(DOCUMENT);
 	xmlCleanupParser();
 }

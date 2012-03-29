@@ -1,9 +1,8 @@
 #include <string.h>
 #include <stdio.h>
 #include <stdlib.h>
+#include <libxml/parser.h>
 #include "utilities.h"
-
-#define BUFFER_CHARS 100
 
 char* getExtension(char* filename) {
 	if (!filename)
@@ -109,3 +108,19 @@ int sameContent(const char* filename1, const char* filename2) {
 	fclose(fpread2);
 	return 1;
 }
+
+void safeXmlInitParser() {
+	xmlInitParser();
+	
+	// this initializes the library and checks potential ABI mismatches
+	// between the version it was compiled for and the actual shared
+	// library used.
+	LIBXML_TEST_VERSION
+	
+	// this is a workaround for a problem with libxml2 and MinGW
+	// google: "using libxml2 on MinGW - xmlFree crashes"
+	/// @todo put this in a function along with LIBXML_TEST_VERSION
+	if (!xmlFree)
+		xmlMemGet( &xmlFree, &xmlMalloc, &xmlRealloc, NULL );
+}
+
