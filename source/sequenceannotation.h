@@ -6,7 +6,6 @@
 
 #ifndef SBOL_SEQUENCEANNOTATION_HEADER
 #define SBOL_SEQUENCEANNOTATION_HEADER
-#include "api.h"
 
 struct _DNAComponent;
 struct _PointerArray;
@@ -25,33 +24,33 @@ typedef struct _SequenceAnnotation {
 } SequenceAnnotation;
 
 // create/destroy
-SBOLAPIEXPORTS SequenceAnnotation* createSequenceAnnotation(const char* uri);
-SBOLAPIEXPORTS char* getSequenceAnnotationURI(const SequenceAnnotation* ann);
-SBOLAPIEXPORTS void setSequenceAnnotationURI(SequenceAnnotation* ann, const char* uri);
-SBOLAPIEXPORTS void deleteSequenceAnnotation(SequenceAnnotation* ann);
+SequenceAnnotation* createSequenceAnnotation(const char* uri);
+char* getSequenceAnnotationURI(const SequenceAnnotation* ann);
+void setSequenceAnnotationURI(SequenceAnnotation* ann, const char* uri);
+void deleteSequenceAnnotation(SequenceAnnotation* ann);
 
-SBOLAPIEXPORTS SequenceAnnotation* getSequenceAnnotation(const char* uri);
+SequenceAnnotation* getSequenceAnnotation(const char* uri);
 
 // work with global arrays
 int isSequenceAnnotationPtr(const void* pointer); // TODO rename and export
-SBOLAPIEXPORTS int isSequenceAnnotationURI(const char* uri);
-SBOLAPIEXPORTS int getNumSequenceAnnotations();
-SBOLAPIEXPORTS SequenceAnnotation* getNthSequenceAnnotation(int n);
+int isSequenceAnnotationURI(const char* uri);
+int getNumSequenceAnnotations();
+SequenceAnnotation* getNthSequenceAnnotation(int n);
 
-SBOLAPIEXPORTS int getBioStart(const SequenceAnnotation* ann);
-SBOLAPIEXPORTS int getBioEnd(const SequenceAnnotation* ann);
-SBOLAPIEXPORTS int getStrandPolarity(const SequenceAnnotation* ann);
-SBOLAPIEXPORTS void setBioStart(SequenceAnnotation* ann, int start);
-SBOLAPIEXPORTS void setBioEnd(SequenceAnnotation* ann, int end);
-SBOLAPIEXPORTS void setStrandPolarity(SequenceAnnotation* ann, int polarity);
+int getBioStart(const SequenceAnnotation* ann);
+int getBioEnd(const SequenceAnnotation* ann);
+int getStrandPolarity(const SequenceAnnotation* ann);
+void setBioStart(SequenceAnnotation* ann, int start);
+void setBioEnd(SequenceAnnotation* ann, int end);
+void setStrandPolarity(SequenceAnnotation* ann, int polarity);
 
-SBOLAPIEXPORTS struct _DNAComponent* getSubComponent(const SequenceAnnotation* ann);
+struct _DNAComponent* getSubComponent(const SequenceAnnotation* ann);
 
 // constrain order
-SBOLAPIEXPORTS void addPrecedesRelationship(SequenceAnnotation* upstream, SequenceAnnotation* downstream);
-SBOLAPIEXPORTS int getNumPrecedes(const SequenceAnnotation* ann);
-SBOLAPIEXPORTS SequenceAnnotation* getNthPrecedes(const SequenceAnnotation* ann, int n);
-SBOLAPIEXPORTS int precedes(const SequenceAnnotation* seq1, const SequenceAnnotation* seq2);
+void addPrecedesRelationship(SequenceAnnotation* upstream, SequenceAnnotation* downstream);
+int getNumPrecedes(const SequenceAnnotation* ann);
+SequenceAnnotation* getNthPrecedes(const SequenceAnnotation* ann, int n);
+int precedes(const SequenceAnnotation* seq1, const SequenceAnnotation* seq2);
 // TODO removePrecedesRelationship?
 
 void printSequenceAnnotation(const SequenceAnnotation* seq, int tabs);

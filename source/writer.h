@@ -37,6 +37,6 @@ void writeCollection(Collection* col);
  * main write function
  ***********************/
 
-SBOLAPIEXPORTS int writeSBOLCore(const char* filename);
+int writeSBOLCore(const char* filename);
 
 #endif

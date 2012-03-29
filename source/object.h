@@ -6,7 +6,6 @@
 
 #ifndef SBOL_OBJECT_HEADER
 #define SBOL_OBJECT_HEADER
-#include "api.h"
 
 struct _TextProperty;
 struct _URIProperty;
@@ -28,8 +27,8 @@ SBOLObject* createSBOLObject(const char* uri);
 void        deleteSBOLObject(SBOLObject* obj);
 
 // TODO remove once it's clear these aren't needed
-SBOLAPIEXPORTS int getNumSBOLObjects();
-SBOLAPIEXPORTS int isSBOLObjectURI(const char* uri);
+int getNumSBOLObjects();
+int isSBOLObjectURI(const char* uri);
 SBOLObject* getNthSBOLObject(int n);
 SBOLObject* getSBOLObject(const char* uri);
 void registerSBOLObject(SBOLObject* obj);
@@ -37,7 +36,7 @@ void removeSBOLObject(SBOLObject* obj);
 void cleanupSBOLObjects();
 
 void  setSBOLObjectURI(SBOLObject* obj, const char* uri);
-SBOLAPIEXPORTS char* getSBOLObjectURI(const SBOLObject* obj);
+char* getSBOLObjectURI(const SBOLObject* obj);
 
 /**********************
  * SBOLCompoundObject

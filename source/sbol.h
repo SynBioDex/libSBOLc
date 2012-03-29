@@ -11,7 +11,6 @@
 #define SBOL_HEADER
 #include "debug.h"
 #include "property.h"
-#include "api.h"
 
 /// @todo document that you need to free strings gotten from sbol
 /// @todo make a lot of the functions static to simplify things
@@ -28,7 +27,7 @@
 #include "writer.h"
 
 // from core.c
-SBOLAPIEXPORTS void printSBOLCore();
-SBOLAPIEXPORTS void cleanupSBOLCore();
+void printSBOLCore();
+void cleanupSBOLCore();
 
 #endif

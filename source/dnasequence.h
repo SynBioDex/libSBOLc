@@ -6,7 +6,6 @@
 
 #ifndef SBOL_DNASEQUENCE_HEADER
 #define SBOL_DNASEQUENCE_HEADER
-#include "api.h"
 
 struct _SBOLObject;
 struct _NucleotidesProperty;
@@ -17,17 +16,17 @@ typedef struct _DNASequence {
 	struct _NucleotidesProperty *nucleotides;
 } DNASequence;
 
-SBOLAPIEXPORTS DNASequence* createDNASequence(char* uri);
-SBOLAPIEXPORTS void deleteDNASequence(DNASequence* seq);
+DNASequence* createDNASequence(char* uri);
+void deleteDNASequence(DNASequence* seq);
 
-SBOLAPIEXPORTS int getNumDNASequences();
-SBOLAPIEXPORTS DNASequence* getNthDNASequence(int n);
-SBOLAPIEXPORTS DNASequence* getDNASequence(const char* uri);
-SBOLAPIEXPORTS char* getNucleotides(const DNASequence* seq);
-SBOLAPIEXPORTS void setDNASequenceURI(DNASequence* seq, const char* uri); // TODO remove?
-SBOLAPIEXPORTS void setNucleotides(DNASequence* seq, const char* nucleotides);
-SBOLAPIEXPORTS int isDNASequenceURI(const char* uri);
-SBOLAPIEXPORTS char* getDNASequenceURI(const DNASequence* seq);
+int getNumDNASequences();
+DNASequence* getNthDNASequence(int n);
+DNASequence* getDNASequence(const char* uri);
+char* getNucleotides(const DNASequence* seq);
+void setDNASequenceURI(DNASequence* seq, const char* uri); // TODO remove?
+void setNucleotides(DNASequence* seq, const char* nucleotides);
+int isDNASequenceURI(const char* uri);
+char* getDNASequenceURI(const DNASequence* seq);
 
 void printDNASequence(const DNASequence* seq, int tabs);
 void printAllDNASequences();

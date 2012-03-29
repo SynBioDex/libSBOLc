@@ -7,7 +7,6 @@
 
 #ifndef SBOL_READER_HEADER
 #define SBOL_READER_HEADER
-#include "api.h"
 
 struct _PointerArray;
 struct _SBOLCompoundObject;
@@ -39,6 +38,6 @@ static void readCollectionReferences(xmlNode *node);
 /// before parsing. Prints a message to stdout
 /// if the document is invalid.
 /// @todo Return an error code on invalid documents
-SBOLAPIEXPORTS void readSBOLCore(char* filename);
+void readSBOLCore(char* filename);
 
 #endif
