@@ -175,12 +175,12 @@ void writeDNAComponent(DNAComponent* com) {
 		
 		// annotations
 		int n;
-		int num = getNumSequenceAnnotationsIn(com);
+		int num = getNumSequenceAnnotationsFor(com);
 		SequenceAnnotation* ann;
 		indentMore();
 		if (num>0) {
 			for (n=0; n<num; n++) {
-				ann = getNthSequenceAnnotationIn(com, n);
+				ann = getNthSequenceAnnotationFor(com, n);
 				indentMore();
 				xmlTextWriterStartElement(WRITER, NODENAME_ANNOTATION);
 				writeSequenceAnnotation(ann);

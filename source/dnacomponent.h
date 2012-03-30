@@ -1,6 +1,6 @@
 ///////////////////////////////////////////////////////////
 /// @file dnacomponent.h
-/// This file contains the DNAComponent struct, as well
+/// Contains the DNAComponent struct, as well
 /// as functions for operating on it.
 ///////////////////////////////////////////////////////////
 
@@ -28,38 +28,87 @@ DNAComponent* createDNAComponent(const char* uri);
 /// it references.
 void deleteDNAComponent(DNAComponent* com);
 
-// work with storage
-int isDNAComponentPtr(const void* pointer); // TODO rename and export
-int isDNAComponentID(const char* uri);
+/// Find out whether this pointer points to a DNAComponent.
+int isDNAComponent(const void* pointer);
+
+/// Find out if there's a DNAComponent with this uri.
+int isDNAComponentURI(const char* uri);
+
+/// Get the total number of DNAComponents.
+/// Useful as a loop condition.
 int getNumDNAComponents();
+
+/// Get the Nth DNAComponent.
+/// Useful for iterating over all of them.
 DNAComponent* getNthDNAComponent(int n);
 
-// tools for iteration
+/// Get the DNAComponent associated with this uri.
+/// Returns NULL on failure.
 DNAComponent* getDNAComponent(const char* uri);
-int getNumSequenceAnnotationsIn(const DNAComponent* com);
-struct _SequenceAnnotation* getNthSequenceAnnotationIn(const DNAComponent* com, int n);
 
-// get properties
+/// Get the number of SequenceAnnotations for a DNAComponent.
+int getNumSequenceAnnotationsFor(const DNAComponent* com);
+
+/// Get the Nth SequenceAnnotation for a DNAComponent.
+struct _SequenceAnnotation* getNthSequenceAnnotationFor(const DNAComponent* com, int n);
+
+/// Get the uri of a DNAComponent.
+/// Gotcha: this is different from both name and displayID.
 char* getDNAComponentURI(const DNAComponent* com);
+
+/// Get the displayID of a DNAComponent.
+/// Gotcha: this is different from both uri and name.
 char* getDNAComponentDisplayID(const DNAComponent* com);
+
+/// Get the name of a DNAComponent.
+/// Gotcha: this is different from both uri and displayID.
 char* getDNAComponentName(const DNAComponent* com);
+
+/// Get the description of a DNAComponent.
 char* getDNAComponentDescription(const DNAComponent* com);
+
+/// Get the DNASequence of a DNAComponent.
+/// Gotcha: DNA, not Dna
 struct _DNASequence* getDNAComponentSequence(DNAComponent* com);
 
-// set properties
+/// Set the uri of a DNAComponent.
+/// Gotcha: this is different from both name and displayID.
 void setDNAComponentURI(DNAComponent* com, const char* uri);
+
+/// Set the displayID of a DNAComponent.
+/// Gotcha: this is different from both uri and name.
 void setDNAComponentDisplayID(DNAComponent* com, const char* id);
+
+/// Set the name of a DNAComponent.
+/// Gotcha: this is different from both uri and displayID.
 void setDNAComponentName(DNAComponent* com, const char* name);
+
+/// Set the description of a DNAComponent.
 void setDNAComponentDescription(DNAComponent* com, const char* desc);
+
+/// Set the DNASequence of a DNAComponent.
+/// Gotcha: DNA, not Dna
 void setDNAComponentSequence(DNAComponent* com, struct _DNASequence* seq);
 
-// TODO where should this go?
-// work with annotations
+/// Add a SequenceAnnotation to a DNAComponent.
+/// @todo where should this go? here, sequenceannotation.h, sbol.h?
 void addSequenceAnnotation(DNAComponent* com, struct _SequenceAnnotation* ann);
+
+/// Set a DNAComponent as the subComponent of a SequenceAnnotation.
+/// To remove it later, call this with a NULL annotation.
 void setSubComponent(struct _SequenceAnnotation* ann, DNAComponent* com);
 
+/// Print an outline of a DNAComponent to stdout.
+/// Mainly for debugging.
 void printDNAComponent(const DNAComponent* com, int tabs);
+
+/// Print an outline of all the DNAComponents to stdout.
+/// Mainly for debugging.
 void printAllDNAComponents();
+
+/// Delete all DNAComponents.
+/// To delete everything instead, use cleanupSBOLCore.
+/// @todo remove this? is it ever used?
 void cleanupDNAComponents();
 
 #endif

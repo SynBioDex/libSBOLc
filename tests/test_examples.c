@@ -102,7 +102,7 @@ void TestLoadedValid01(CuTest *tc) {
 	CuAssertPtrEquals(tc, NULL, getDNAComponentName(dc1));
 	CuAssertPtrEquals(tc, NULL, getDNAComponentDescription(dc1));
 	CuAssertPtrEquals(tc, NULL, getDNAComponentSequence(dc1));
-	CuAssertIntEquals(tc, 0, getNumSequenceAnnotationsIn(dc1));
+	CuAssertIntEquals(tc, 0, getNumSequenceAnnotationsFor(dc1));
 }
 
 void TestLoadedValid02(CuTest *tc) {
@@ -120,7 +120,7 @@ void TestLoadedValid02(CuTest *tc) {
 	CuAssertStrEquals(tc, "DnaComponent1", getDNAComponentName(dc1));
 	CuAssertStrEquals(tc, "DnaComponent with only name and description", getDNAComponentDescription(dc1));
 	CuAssertPtrEquals(tc, NULL, getDNAComponentSequence(dc1));
-	CuAssertIntEquals(tc, 0, getNumSequenceAnnotationsIn(dc1));
+	CuAssertIntEquals(tc, 0, getNumSequenceAnnotationsFor(dc1));
 }
 
 void TestLoadedValid03(CuTest *tc) {
@@ -137,7 +137,7 @@ void TestLoadedValid03(CuTest *tc) {
 	CuAssertStrEquals(tc, "DC1", getDNAComponentDisplayID(dc1));
 	CuAssertStrEquals(tc, "DnaComponent1", getDNAComponentName(dc1));
 	CuAssertStrEquals(tc, "DnaComponent with sequence information", getDNAComponentDescription(dc1));
-	CuAssertIntEquals(tc, 0, getNumSequenceAnnotationsIn(dc1));
+	CuAssertIntEquals(tc, 0, getNumSequenceAnnotationsFor(dc1));
 	// check ds1
 	DNASequence *ds1 = getNthDNASequence(0);
 	CuAssertStrEquals(tc, "http://example.com/ds1", getDNASequenceURI(ds1));
@@ -166,8 +166,8 @@ void TestLoadedValid04(CuTest *tc) {
 	CuAssertStrEquals(tc, "DnaComponent2", getDNAComponentName(dc2));
 	CuAssertStrEquals(tc, "DnaComponent with one sequence annotation", getDNAComponentDescription(dc1));
 	CuAssertStrEquals(tc, "Another DNA component", getDNAComponentDescription(dc2));
-	CuAssertIntEquals(tc, 1, getNumSequenceAnnotationsIn(dc1));
-	CuAssertIntEquals(tc, 0, getNumSequenceAnnotationsIn(dc2));
+	CuAssertIntEquals(tc, 1, getNumSequenceAnnotationsFor(dc1));
+	CuAssertIntEquals(tc, 0, getNumSequenceAnnotationsFor(dc2));
 	// check annotations
 	SequenceAnnotation *sa1 = getSequenceAnnotation("http://example.com/sa1");
 	CuAssertIntEquals(tc, -1, getBioStart(sa1));
@@ -177,7 +177,7 @@ void TestLoadedValid04(CuTest *tc) {
 	CuAssertPtrEquals(tc, ds1, getDNAComponentSequence(dc1));
 	CuAssertPtrEquals(tc, NULL, getDNAComponentSequence(dc2));
 	CuAssertPtrEquals(tc, dc2, getSubComponent(sa1));
-	CuAssertPtrEquals(tc, sa1, getNthSequenceAnnotationIn(dc1, 0));
+	CuAssertPtrEquals(tc, sa1, getNthSequenceAnnotationFor(dc1, 0));
 	CuAssertPtrEquals(tc, dc2, getSubComponent(sa1));
 }
 
@@ -197,7 +197,7 @@ void TestLoadedValid05(CuTest *tc) {
 	CuAssertStrEquals(tc, "DnaComponent1", getDNAComponentName(dc1));
 	CuAssertStrEquals(tc, "A DnaComponent can optionally use multiple types from Sequence Ontology",
 						getDNAComponentDescription(dc1));
-	CuAssertIntEquals(tc, 0, getNumSequenceAnnotationsIn(dc1));
+	CuAssertIntEquals(tc, 0, getNumSequenceAnnotationsFor(dc1));
 	// check ds1
 	DNASequence *ds1 = getNthDNASequence(0);
 	CuAssertStrEquals(tc, "http://example.com/ds1", getDNASequenceURI(ds1));
@@ -222,7 +222,7 @@ void TestLoadedValid06(CuTest *tc) {
 	CuAssertStrEquals(tc, "DnaComponent1", getDNAComponentName(dc1));
 	CuAssertStrEquals(tc, "A DnaComponent can optionally use a type from Sequence Ontology",
 						getDNAComponentDescription(dc1));
-	CuAssertIntEquals(tc, 0, getNumSequenceAnnotationsIn(dc1));
+	CuAssertIntEquals(tc, 0, getNumSequenceAnnotationsFor(dc1));
 	// check ds1
 	DNASequence *ds1 = getNthDNASequence(0);
 	CuAssertStrEquals(tc, "http://example.com/ds1", getDNASequenceURI(ds1));
@@ -252,8 +252,8 @@ void TestLoadedValid07(CuTest *tc) {
 	CuAssertStrEquals(tc, "DnaComponent2", getDNAComponentName(dc2));
 	CuAssertStrEquals(tc, "It is valid to have additional elements in any SBOL element as long as they appear after \n\t\tthe elements defined in SBOL core model. This example adds dc:creator annotations to SBOL elements", getDNAComponentDescription(dc1));
 	CuAssertStrEquals(tc, "Another DNA component", getDNAComponentDescription(dc2));
-	CuAssertIntEquals(tc, 1, getNumSequenceAnnotationsIn(dc1));
-	CuAssertIntEquals(tc, 0, getNumSequenceAnnotationsIn(dc2));
+	CuAssertIntEquals(tc, 1, getNumSequenceAnnotationsFor(dc1));
+	CuAssertIntEquals(tc, 0, getNumSequenceAnnotationsFor(dc2));
 	// check annotations
 	SequenceAnnotation *sa1 = getSequenceAnnotation("http://example.com/sa1");
 	// sa1 should have a dc:creator node that libSBOLc ignores
@@ -264,7 +264,7 @@ void TestLoadedValid07(CuTest *tc) {
 	CuAssertPtrEquals(tc, ds1, getDNAComponentSequence(dc1));
 	CuAssertPtrEquals(tc, NULL, getDNAComponentSequence(dc2));
 	CuAssertPtrEquals(tc, dc2, getSubComponent(sa1));
-	CuAssertPtrEquals(tc, sa1, getNthSequenceAnnotationIn(dc1, 0));
+	CuAssertPtrEquals(tc, sa1, getNthSequenceAnnotationFor(dc1, 0));
 	CuAssertPtrEquals(tc, dc2, getSubComponent(sa1));
 }
 
@@ -302,7 +302,7 @@ void TestLoadedValid08(CuTest *tc) {
 	SequenceAnnotation *sa1 = getSequenceAnnotation("http://example.com/sa1");
 	SequenceAnnotation *sa2 = getSequenceAnnotation("http://example.com/sa2");
 	SequenceAnnotation *sa3 = getSequenceAnnotation("http://example.com/sa3");
-	CuAssertIntEquals(tc, 3, getNumSequenceAnnotationsIn(dc1));
+	CuAssertIntEquals(tc, 3, getNumSequenceAnnotationsFor(dc1));
 	CuAssertIntEquals(tc, 1, getBioStart(sa1));
 	CuAssertIntEquals(tc, 3, getBioStart(sa2));
 	CuAssertIntEquals(tc, 2, getBioEnd(sa1));

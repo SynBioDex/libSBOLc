@@ -18,11 +18,11 @@ void TestSingleDNAComponent(CuTest* tc) {
 	CuAssertIntEquals(tc, 1, getNumDNAComponents());
 	CuAssertPtrEquals(tc, com, getNthDNAComponent(0));
 	CuAssertIntEquals(tc, 1, isDNAComponentURI("one"));
-	CuAssertIntEquals(tc, 1, isDNAComponentPtr(com));
+	CuAssertIntEquals(tc, 1, isDNAComponent(com));
 	deleteDNAComponent(com);
 	CuAssertIntEquals(tc, 0, getNumDNAComponents());
 	CuAssertIntEquals(tc, 0, isDNAComponentURI("one"));
-	CuAssertIntEquals(tc, 0, isDNAComponentPtr(com));
+	CuAssertIntEquals(tc, 0, isDNAComponent(com));
 }
 
 void TestNumDNAComponents(CuTest* tc) {
@@ -63,11 +63,11 @@ void TestDNAComponentIndexing(CuTest* tc) {
 		com = getNthDNAComponent(index);
 		// copy uri (because it will be destroyed)
 		uri = getDNAComponentURI(com);
-		CuAssertIntEquals(tc, 1, isDNAComponentPtr(com));
+		CuAssertIntEquals(tc, 1, isDNAComponent(com));
 		CuAssertIntEquals(tc, 1, isDNAComponentURI(uri));
 		deleteDNAComponent(com);
 		CuAssertIntEquals(tc, num-1, getNumDNAComponents());
-		CuAssertIntEquals(tc, 0, isDNAComponentPtr(com));
+		CuAssertIntEquals(tc, 0, isDNAComponent(com));
 		CuAssertIntEquals(tc, 0, isDNAComponentURI(uri));
 	}
 }

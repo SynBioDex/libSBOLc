@@ -64,7 +64,7 @@ void deleteDNAComponent(DNAComponent* com) {
 	is... functions
 ***************************/
 
-int isDNAComponentPtr(const void* ptr) {
+int isDNAComponent(const void* ptr) {
 	if (!allDNAComponents)
 		allDNAComponents = createPointerArray();
 	return (int) indexOfPointerInArray(allDNAComponents, ptr) >= 0;
@@ -96,7 +96,7 @@ int getNumDNAComponents() {
 		return 0;
 }
 
-int getNumSequenceAnnotationsIn(const DNAComponent* com) {
+int getNumSequenceAnnotationsFor(const DNAComponent* com) {
 	if (com)
 		return getNumPointersInArray(com->annotations);
 	else
@@ -114,8 +114,8 @@ DNAComponent* getNthDNAComponent(int n) {
 		return NULL;
 }
 
-SequenceAnnotation* getNthSequenceAnnotationIn(const DNAComponent* com, int n) {
-	if (com && getNumSequenceAnnotationsIn(com) > n && n >= 0)
+SequenceAnnotation* getNthSequenceAnnotationFor(const DNAComponent* com, int n) {
+	if (com && getNumSequenceAnnotationsFor(com) > n && n >= 0)
 		return (SequenceAnnotation *)getNthPointerInArray(com->annotations, n);
 	else
 		return NULL;
@@ -216,9 +216,8 @@ void addSequenceAnnotation(DNAComponent* com, SequenceAnnotation* ann) {
 }
 
 void setSubComponent(SequenceAnnotation* ann, DNAComponent* com) {
-	if (ann && com) {
+	if (ann) {
 		ann->subComponent = com;
-		//insertPointerIntoArray(com->annotations, ann);
 	}
 }
 
@@ -248,11 +247,11 @@ void printDNAComponent(const DNAComponent* com, int tabs) {
 	int num;
 	if (com->annotations) {
 		SequenceAnnotation* seq;
-		num = getNumSequenceAnnotationsIn(com);
+		num = getNumSequenceAnnotationsFor(com);
 		if (num > 0) {
 			indent(tabs+1); printf("%i annotations:\n", num);
 			for (i=0; i<num; i++) {
-				seq = getNthSequenceAnnotationIn(com, i);
+				seq = getNthSequenceAnnotationFor(com, i);
 				indent(tabs+2); printf("%s\n", getSequenceAnnotationURI(seq));
 			}
 		}

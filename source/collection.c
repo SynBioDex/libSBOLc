@@ -15,7 +15,7 @@ void lazyCreateAllCollections() {
 		allCollections = createPointerArray();
 }
 
-void registerCollection(Collection* col) {
+static void registerCollection(Collection* col) {
 	lazyCreateAllCollections();
 	insertPointerIntoArray(allCollections, col);
 }
@@ -30,7 +30,7 @@ Collection* createCollection(const char* uri) {
 	return col;
 }
 
-void removeCollection(Collection* col) {
+static void removeCollection(Collection* col) {
 	lazyCreateAllCollections();
 	int index = indexOfPointerInArray(allCollections, col);
 	if (index >= 0)

@@ -26,7 +26,7 @@ Collection* createCollection(const char* uri);
 /// it references; For that you want cleanupSBOLCore.
 void deleteCollection(Collection* col);
 
-/// Find out whether this pointer is registered as a Collection.
+/// Find out whether this pointer points to a Collection.
 int isCollection(const void* pointer);
 
 /// Find out if there's a Collection with this uri.
@@ -51,10 +51,11 @@ int getNumDNAComponentsIn(const Collection* col);
 struct _DNAComponent* getNthDNAComponentIn(const Collection* col, int n);
 
 /// Get the uri of a Collection.
+/// Gotcha: this is different from both name and displayID.
 char* getCollectionURI(const Collection* col);
 
 /// Get the displayID of a Collection.
-/// Gotcha: this is different from both name and displayID.
+/// Gotcha: this is different from both uri and name.
 /// Gotcha: uppercase D
 char* getCollectionDisplayID(const Collection* col);
 

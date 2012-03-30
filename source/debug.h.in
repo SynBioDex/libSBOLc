@@ -1,14 +1,14 @@
 ///////////////////////////////////////////////////////////
-/// @file debug.h
-/// This file contains macros and functions used for
-/// debugging libSBOL. It's used to generate debug.h
-/// during CMake configuration.
+/// @file debug.h.in
+/// Functions, constants, and macros for debugging libSBOL.
+/// CMake uses this file to generate debug.h. 
+/// Right now there's not a lot here.
 ///////////////////////////////////////////////////////////
 
 #ifndef SBOL_DEBUG_HEADER
 #define SBOL_DEBUG_HEADER
 
-#cmakedefine SBOL_DEBUG_ACTIVE @SBOL_DEBUG_ACTIVE@
+#cmakedefine SBOL_DEBUG_ACTIVE @SBOL_DEBUG_ACTIVE@ ///< Compile with some additional print statements for debugging.
 
 void indent(int tabs);
 

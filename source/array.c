@@ -66,7 +66,7 @@ int pointerContainedInArray(const PointerArray* arr, const void* ptr) {
     return (int) indexOfPointerInArray(arr, ptr) >= 0;
 }
 
-void resizePointerArray(PointerArray* arr, int capacity) {
+static void resizePointerArray(PointerArray* arr, int capacity) {
 	if (arr) {
 		if (capacity < POINTERARRAY_INITIAL_LENGTH)
 			return;
@@ -79,7 +79,7 @@ void resizePointerArray(PointerArray* arr, int capacity) {
 	#endif
 }
 
-void expandPointerArray(PointerArray* arr) {
+static void expandPointerArray(PointerArray* arr) {
 	if (arr) {
 		int capacity;
 		if (arr->numPointersTotal < POINTERARRAY_INITIAL_LENGTH)
@@ -94,7 +94,7 @@ void expandPointerArray(PointerArray* arr) {
 	#endif
 }
 
-void shrinkPointerArray(PointerArray* arr) {
+static void shrinkPointerArray(PointerArray* arr) {
 	if (arr) {
 		if (getNumPointersInArray(arr) > POINTERARRAY_INITIAL_LENGTH * POINTERARRAY_SCALING_FACTOR)
 			resizePointerArray(arr, arr->numPointersTotal / POINTERARRAY_SCALING_FACTOR);

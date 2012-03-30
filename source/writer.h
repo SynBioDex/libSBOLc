@@ -8,7 +8,11 @@
 #ifndef SBOL_WRITER_HEADER
 #define SBOL_WRITER_HEADER
 #include <libxml/xmlwriter.h>
-#include "sbol.h"
+
+// forward declarations
+struct _DNASequence;
+struct _DNAComponent;
+struct _Collection;
 
 /************************
  * set up SBOL document
@@ -29,9 +33,9 @@ int saveSBOLDocument(const char* filename);
  * serialize SBOL core
  ***********************/
 
-void writeDNASequence(DNASequence* seq);
-void writeDNAComponent(DNAComponent* com);
-void writeCollection(Collection* col);
+void writeDNASequence(struct _DNASequence* seq);
+void writeDNAComponent(struct _DNAComponent* com);
+void writeCollection(struct _Collection* col);
 
 /***********************
  * main write function
