@@ -85,14 +85,6 @@ void addDNAComponentToCollection(struct _DNAComponent* com, Collection* col);
 /// Gotcha: lowercase dna
 int dnaComponentInCollection(const struct _DNAComponent* com, const Collection* col);
 
-/// Print an outline of a Collection to stdout.
-/// Mainly for debugging.
-void printCollection(const Collection* col, int tabs);
-
-/// Print an outline of all the Collections to stdout.
-/// Mainly for debugging.
-void printAllCollections();
-
 /// Delete all Collections.
 /// To delete everything instead, use cleanupSBOLCore.
 /// @todo remove this? is it ever used?

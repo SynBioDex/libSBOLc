@@ -199,33 +199,3 @@ void cleanupCollections() {
 	}
 }
 
-void printCollection(const Collection* col, int tabs) {
-    if (!col)
-        return;
-    indent(tabs);   printf("uri: %s\n", getCollectionURI(col));
-    indent(tabs+1); printf("name:        %s\n", getCollectionName(col));
-    indent(tabs+1); printf("description: %s\n", getCollectionDescription(col));
-    int i;
-    int num;
-    if (col->components) {
-        DNAComponent* com;
-        num = getNumDNAComponentsIn(col);
-        if (num > 0) {
-            indent(tabs+1); printf("%i components:\n", num);
-            for (i=0; i<num; i++) {
-                com = getNthDNAComponentIn(col, i);
-                indent(tabs+2); printf("%s\n", getDNAComponentURI(com));
-            }
-        }
-    }
-}
-
-void printAllCollections() {
-    int n;
-    int num = getNumCollections();
-    if (num > 0) {
-        printf("%i collections:\n", num);
-        for (n=0; n<num; n++)
-            printCollection(getNthCollection(n), 1);
-    }
-}

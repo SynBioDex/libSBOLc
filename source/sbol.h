@@ -27,7 +27,6 @@
 #include "writer.h"
 
 // from core.c
-void printSBOLCore();
 void cleanupSBOLCore();
 
 #endif

@@ -139,25 +139,3 @@ DNASequence* getNthDNASequence(int n) {
 		return NULL;
 }
 
-void printDNASequence(const DNASequence* seq, int tabs) {
-	if (!seq)
-	    return;
-	// TODO print just the beginning of the sequence?
-	char* uri = getDNASequenceURI(seq);
-	indent(tabs);
-	if (strlen(uri) > 30)
-		printf("%.30s\n", uri);
-	else
-		printf("%s\n", uri);
-	indent(tabs+1); printf("nucleotides: %s\n", getNucleotides(seq));
-}
-
-void printAllDNASequences() {
-	int n;
-	int num = getNumDNASequences();
-	if (num > 0) {
-	    printf("%i sequences:\n", num);
-	    for (n=0; n<num; n++)
-	        printDNASequence(getNthDNASequence(n), 1);
-	}
-}

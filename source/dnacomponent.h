@@ -98,14 +98,6 @@ void addSequenceAnnotation(DNAComponent* com, struct _SequenceAnnotation* ann);
 /// To remove it later, call this with a NULL annotation.
 void setSubComponent(struct _SequenceAnnotation* ann, DNAComponent* com);
 
-/// Print an outline of a DNAComponent to stdout.
-/// Mainly for debugging.
-void printDNAComponent(const DNAComponent* com, int tabs);
-
-/// Print an outline of all the DNAComponents to stdout.
-/// Mainly for debugging.
-void printAllDNAComponents();
-
 /// Delete all DNAComponents.
 /// To delete everything instead, use cleanupSBOLCore.
 /// @todo remove this? is it ever used?

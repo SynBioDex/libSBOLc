@@ -234,36 +234,3 @@ void cleanupDNAComponents() {
 	}
 }
 
-void printDNAComponent(const DNAComponent* com, int tabs) {
-	if (!com)
-		return;
-	indent(tabs);   printf("%s\n", getDNAComponentURI(com));
-	indent(tabs+1); printf("displayID:   %s\n", getDNAComponentDisplayID(com));
-	indent(tabs+1); printf("name:        %s\n", getDNAComponentName(com));
-	indent(tabs+1); printf("description: %s\n", getDNAComponentDescription(com));
-	indent(tabs+1); printf("sequence:    %s\n", getDNASequenceURI(com->dnaSequence));
-	
-	int i;
-	int num;
-	if (com->annotations) {
-		SequenceAnnotation* seq;
-		num = getNumSequenceAnnotationsFor(com);
-		if (num > 0) {
-			indent(tabs+1); printf("%i annotations:\n", num);
-			for (i=0; i<num; i++) {
-				seq = getNthSequenceAnnotationFor(com, i);
-				indent(tabs+2); printf("%s\n", getSequenceAnnotationURI(seq));
-			}
-		}
-	}
-}
-
-void printAllDNAComponents() {
-	int n;
-	int num = getNumDNAComponents();
-	if (num > 0) {
-		printf("%i components:\n", num);
-		for (n=0; n<num; n++)
-			printDNAComponent(getNthDNAComponent(n), 1);
-	}
-}

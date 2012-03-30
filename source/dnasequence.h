@@ -28,9 +28,6 @@ void setNucleotides(DNASequence* seq, const char* nucleotides);
 int isDNASequenceURI(const char* uri);
 char* getDNASequenceURI(const DNASequence* seq);
 
-void printDNASequence(const DNASequence* seq, int tabs);
-void printAllDNASequences();
-
 void cleanupDNASequences();
 
 #endif
