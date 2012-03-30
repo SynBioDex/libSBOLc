@@ -91,7 +91,7 @@ void setStrandPolarity(SequenceAnnotation* ann, int polarity) {
  * is... functions
  *******************/
 
-int isAnnotationPtr(const void* pointer) {
+int isSequenceAnnotation(const void* pointer) {
 	lazyCreateAllSequenceAnnotations();
 	return (int) indexOfPointerInArray(allSequenceAnnotations, pointer) >= 0;
 }

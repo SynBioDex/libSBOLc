@@ -36,9 +36,6 @@ int  getNumber(const union Property *pro);
 void  setLetters(union Property *pro, char *str);
 char *getLetters(const union Property *pro);
 
-int compareNumbers(const union Property *pro1, const union Property *pro2);
-int compareLetters(const union Property *pro1, const union Property *pro2);
-
 /****************
  * TextProperty
  ****************/

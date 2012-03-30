@@ -8,30 +8,33 @@
 #ifndef SBOL_READER_HEADER
 #define SBOL_READER_HEADER
 
-struct _PointerArray;
-struct _SBOLCompoundObject;
+#include <libxml/parser.h> ///< @todo fix this up
+
+//struct _xmlChar;
+//struct _PointerArray;
+//struct _SBOLCompoundObject;
 
 // utility functions for working with xmlNodes
-static xmlChar *getNodeURI(xmlNode *node);
-struct _PointerArray *getNodesMatchingXPath(xmlNode *node, xmlChar *path);
-static xmlNode *getSingleNodeMatchingXPath(xmlNode *node, xmlChar *path);
-static xmlChar *getContentsOfNodeMatchingXPath(xmlNode *node, xmlChar *path);
-static xmlChar *getURIOfNodeMatchingXPath(xmlNode *node, xmlChar *path);
-static void applyFunctionToNodesMatchingXPath(void (*fn)(xmlNode *), xmlNode *node, xmlChar *path);
-static void processNodes(void (*fn)(xmlNode *), xmlChar *path);
+//static xmlChar *getNodeURI(xmlNode *node);
+//static struct _PointerArray *getNodesMatchingXPath(xmlNode *node, xmlChar *path);
+//static xmlNode *getSingleNodeMatchingXPath(xmlNode *node, xmlChar *path);
+//static xmlChar *getContentsOfNodeMatchingXPath(xmlNode *node, xmlChar *path);
+//static xmlChar *getURIOfNodeMatchingXPath(xmlNode *node, xmlChar *path);
+//static void applyFunctionToNodesMatchingXPath(void (*fn)(xmlNode *), xmlNode *node, xmlChar *path);
+//static void processNodes(void (*fn)(xmlNode *), xmlChar *path);
 
-/// @todo void readNamespaces(xmlNode *node)?
+///// @todo void readNamespaces(xmlNode *node)?
 
-// functions for reading individual SBOLObjects from xmlNodes
-static void *readSBOLCompoundObject(struct _SBOLCompoundObject *obj, xmlNode *node);
+//// functions for reading individual SBOLObjects from xmlNodes
+//static void *readSBOLCompoundObject(struct _SBOLCompoundObject *obj, xmlNode *node);
 
-static void readDNASequenceContent(xmlNode *node);
-static void readSequenceAnnotationContent(xmlNode *node);
-static void readSequenceAnnotationReferences(xmlNode *node);
-static void readDNAComponentContent(xmlNode *node);
-static void readDNAComponentReferences(xmlNode *node);
-static void readCollectionContent(xmlNode *node);
-static void readCollectionReferences(xmlNode *node);
+//static void readDNASequenceContent(xmlNode *node);
+//static void readSequenceAnnotationContent(xmlNode *node);
+//static void readSequenceAnnotationReferences(xmlNode *node);
+//static void readDNAComponentContent(xmlNode *node);
+//static void readDNAComponentReferences(xmlNode *node);
+//static void readCollectionContent(xmlNode *node);
+//static void readCollectionReferences(xmlNode *node);
 
 /// Parse an SBOL document from disk and create
 /// matching structs in memory. Also validates

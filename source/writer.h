@@ -7,7 +7,6 @@
 
 #ifndef SBOL_WRITER_HEADER
 #define SBOL_WRITER_HEADER
-#include <libxml/xmlwriter.h>
 
 // forward declarations
 struct _DNASequence;
