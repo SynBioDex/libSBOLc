@@ -1,7 +1,13 @@
-%module sbolpy
+%module sbol
 %{
 
 #define SWIG_FILE_WITH_INIT
+
+#include <libxml/xmlmemory.h>
+#include <libxml/parser.h>
+#include <libxml/xpath.h>
+#include <libxml/xmlwriter.h>
+
 #include "array.h"
 #include "collection.h"
 #include "debug.h"

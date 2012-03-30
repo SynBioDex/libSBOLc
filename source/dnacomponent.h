@@ -30,7 +30,7 @@ void deleteDNAComponent(DNAComponent* com);
 
 // work with storage
 int isDNAComponentPtr(const void* pointer); // TODO rename and export
-int isDNAComponentID(const char* uri);
+int isDNAComponentURI(const char* uri);
 int getNumDNAComponents();
 DNAComponent* getNthDNAComponent(int n);
 

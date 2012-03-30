@@ -32,7 +32,7 @@ void deleteSequenceAnnotation(SequenceAnnotation* ann);
 SequenceAnnotation* getSequenceAnnotation(const char* uri);
 
 // work with global arrays
-int isSequenceAnnotationPtr(const void* pointer); // TODO rename and export
+int isSequenceAnnotation(const void* pointer);
 int isSequenceAnnotationURI(const char* uri);
 int getNumSequenceAnnotations();
 SequenceAnnotation* getNthSequenceAnnotation(int n);

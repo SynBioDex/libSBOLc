@@ -44,10 +44,6 @@ int getNumCollections();
 /// Useful for iterating over all of them.
 Collection* getNthCollection(int n);
 
-/// Get the Nth Collection inside a given Collection.
-/// @todo better name
-Collection* getNthCollectionInCollection(const Collection* col, int n);
-
 /// Get the number of DNAComponents in a Collection.
 int getNumDNAComponentsIn(const Collection* col);
 

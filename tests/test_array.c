@@ -79,11 +79,11 @@ void TestSingleAnnotation(CuTest* tc) {
 	CuAssertIntEquals(tc, 1, getNumSequenceAnnotations());
 	CuAssertPtrEquals(tc, ann, getNthSequenceAnnotation(0));
 	CuAssertIntEquals(tc, 1, isSequenceAnnotationURI("one"));
-	CuAssertIntEquals(tc, 1, isAnnotationPtr(ann));
+	CuAssertIntEquals(tc, 1, isSequenceAnnotation(ann));
 	deleteSequenceAnnotation(ann);
 	CuAssertIntEquals(tc, 0, getNumSequenceAnnotations());
 	CuAssertIntEquals(tc, 0, isSequenceAnnotationURI("one"));
-	CuAssertIntEquals(tc, 0, isAnnotationPtr(ann));
+	CuAssertIntEquals(tc, 0, isSequenceAnnotation(ann));
 }
 
 void TestNumAnnotations(CuTest* tc) {
@@ -125,11 +125,11 @@ void TestAnnotationIndexing(CuTest* tc) {
 		ann = getNthSequenceAnnotation(index);
 		// copy uri (because it will be destroyed)
 		uri = getSequenceAnnotationURI(ann);
-		CuAssertIntEquals(tc, 1, isAnnotationPtr(ann));
+		CuAssertIntEquals(tc, 1, isSequenceAnnotation(ann));
 		CuAssertIntEquals(tc, 1, isSequenceAnnotationURI(uri));
 		deleteSequenceAnnotation(ann);
 		CuAssertIntEquals(tc, num-1, getNumSequenceAnnotations());
-		CuAssertIntEquals(tc, 0, isAnnotationPtr(ann));
+		CuAssertIntEquals(tc, 0, isSequenceAnnotation(ann));
 		CuAssertIntEquals(tc, 0, isSequenceAnnotationURI(uri));
 	}
 }

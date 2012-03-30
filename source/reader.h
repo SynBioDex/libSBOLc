@@ -8,11 +8,11 @@
 #ifndef SBOL_READER_HEADER
 #define SBOL_READER_HEADER
 
-#include "libxml/parser.h" ///< @todo fix this up
+#include <libxml/parser.h> ///< @todo fix this up
 
-struct _xmlChar;
-struct _PointerArray;
-struct _SBOLCompoundObject;
+//struct _xmlChar;
+//struct _PointerArray;
+//struct _SBOLCompoundObject;
 
 // utility functions for working with xmlNodes
 //static xmlChar *getNodeURI(xmlNode *node);
