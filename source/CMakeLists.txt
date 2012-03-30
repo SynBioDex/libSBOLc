@@ -8,6 +8,7 @@ SET( SBOL_SCHEMA_DIR        ${SBOL_ROOT_DIR}/schemas  )
 SET( SBOL_TEST_DIR          ${SBOL_ROOT_DIR}/tests    )
 SET( SBOL_EXAMPLE_DIR       ${SBOL_ROOT_DIR}/examples )
 SET( SBOL_RELEASE_DIR       ${SBOL_ROOT_DIR}/release  )
+SET( SBOL_MANUAL_DIR        ${SBOL_ROOT_DIR}/manual   )
 SET( EXECUTABLE_OUTPUT_PATH ${SBOL_RELEASE_DIR}       )
 SET( LIBRARY_OUTPUT_PATH    ${SBOL_RELEASE_DIR}       )
 
@@ -77,3 +78,17 @@ FOREACH( TARGET ${SBOL_TEST_TARGETS} )
 	)
 	TARGET_LINK_LIBRARIES( ${BASENAME} sbol )
 ENDFOREACH()
+
+# documentation
+FIND_PACKAGE( Doxygen )
+IF( DOXYGEN_FOUND )
+    CONFIGURE_FILE(
+        ${SBOL_MANUAL_DIR}/Doxyfile.in
+        ${SBOL_MANUAL_DIR}/Doxyfile
+    )
+    ADD_CUSTOM_TARGET( manual
+        ${DOXYGEN_EXECUTABLE}
+        ${SBOL_MANUAL_DIR}/Doxyfile
+        WORKING_DIRECTORY ${SBOL_BUILD_DIR}
+    )
+ENDIF()

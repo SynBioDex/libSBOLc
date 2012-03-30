@@ -1,4 +1,0 @@
-<map id="G" name="G">
-<area shape="rect" id="node3" href="$sbol_8h.html" title="This file gathers together all the SBOL functions so they can be easily included." alt="" coords="23,83,129,112"/>
-<area shape="rect" id="node5" href="$writer_8h.html" title="This file contains functions for writing the SBOL core to an XML file." alt="" coords="19,160,133,189"/>
-</map>
