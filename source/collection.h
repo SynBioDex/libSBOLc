@@ -15,7 +15,7 @@ struct _DNAComponent;
 /// Implements the SBOL Core Collection object.
 typedef struct _Collection {
 	struct _SBOLCompoundObject* base;  ///< uri, displayID, name, description
-	struct _PointerArray *components;  ///< array of DNAComponents
+	struct _PointerArray* components;  ///< array of DNAComponents
 } Collection;
 
 /// Create an empty Collection.
@@ -23,11 +23,11 @@ Collection* createCollection(const char* uri);
 
 /// Delete a Collection.
 /// This doesn't delete any of the other structs
-/// it references. For that you want cleanupSBOLCore.
+/// it references; For that you want cleanupSBOLCore.
 void deleteCollection(Collection* col);
 
-// Find out whether *pointer is registered as a Collection.
-int isCollectionPtr(const void* pointer); // @todo rename and export?
+/// Find out whether this pointer is registered as a Collection.
+int isCollection(const void* pointer);
 
 /// Find out if there's a Collection with this uri.
 int isCollectionURI(const char* uri);
@@ -44,10 +44,6 @@ int getNumCollections();
 /// Useful for iterating over all of them.
 Collection* getNthCollection(int n);
 
-/// Get the Nth Collection inside a given Collection.
-/// @todo better name
-Collection* getNthCollectionInCollection(const Collection* col, int n);
-
 /// Get the number of DNAComponents in a Collection.
 int getNumDNAComponentsIn(const Collection* col);
 
@@ -58,26 +54,23 @@ struct _DNAComponent* getNthDNAComponentIn(const Collection* col, int n);
 char* getCollectionURI(const Collection* col);
 
 /// Get the displayID of a Collection.
-/// Note that this is different from both name and displayID.
+/// Gotcha: this is different from both name and displayID.
+/// Gotcha: uppercase D
 char* getCollectionDisplayID(const Collection* col);
 
 /// Get the name of a Collection.
-/// Note that this is different from both uri and displayID.
+/// Gotcha: this is different from both uri and displayID.
 char* getCollectionName(const Collection* col);
 
 /// Get the description of a Collection.
 char* getCollectionDescription(const Collection* col);
 
-/// Set the uri of a Collection.
-/// @todo remove this? is there any reason to change uris?
-void setCollectionURI(Collection* col, const char* uri);
-
 /// Set the displayID of a Collection.
-/// Note that this is different from both name and displayID.
+/// Gotcha: this is different from both name and displayID.
 void setCollectionDisplayID(Collection* col, const char* id);
 
 /// Set the name of a Collection.
-/// Note that this is different from both uri and displayID.
+/// Gotcha: this is different from both uri and displayID.
 void setCollectionName(Collection* col, const char* name);
 
 /// Set the description of a Collection.
@@ -88,7 +81,8 @@ void addDNAComponentToCollection(struct _DNAComponent* com, Collection* col);
 
 /// Find out whether a DNAComponent is inside a Collection.
 /// @todo better name
-int dnaComponentInCollection(const struct _DNAComponent *com, const Collection *col);
+/// Gotcha: lowercase dna
+int dnaComponentInCollection(const struct _DNAComponent* com, const Collection* col);
 
 /// Print an outline of a Collection to stdout.
 /// Mainly for debugging.

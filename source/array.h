@@ -13,13 +13,12 @@
 /// @todo Rename PointerArray to SBOLObjectArray?
 /// @todo Actually convert it to hold SBOLObjects via casts?
 
-/// A dynamic array of void pointers.
-/// Used anywhere a variable number of
-/// SBOLObjects needs to be stored, for
-/// example in DNAComponent->annotations.
-/// It could be called "SBOLObjectArray",
-/// but you might want to store strings
-/// or something instead.
+/// A dynamic array of void pointers. Used anywhere a variable
+/// number of SBOLObjects needs to be stored It could be called
+/// "SBOLObjectArray", except that descendants of SBOLObject
+/// start with a pointer to their base struct rather than the
+/// struct itself, so you can only cast part of them to
+/// (SBOLObject *). That's probably fixable though.
 typedef struct _PointerArray {
 	int numPointersInUse;
 	int numPointersTotal;
@@ -27,33 +26,35 @@ typedef struct _PointerArray {
 } PointerArray;
 
 /// Create an empty PointerArray.
-PointerArray *createPointerArray();
+PointerArray* createPointerArray();
 
 /// Delete a PointerArray.
 /// This frees the array itself, but not the pointers.
-void deletePointerArray(PointerArray *arr);
+void deletePointerArray(PointerArray* arr);
 
 /// Add a new pointer to a PointerArray.
-/// Anything works as long as you cast it to (void *)
-void insertPointerIntoArray(PointerArray *arr, void *ptr);
+/// Anything works as long as you cast it to (void*)
+void insertPointerIntoArray(PointerArray* arr, void* ptr);
 
-/// Get a pointer from a PointerArray.
-void removePointerFromArray(PointerArray *arr, int index);
+/// Delete a pointer from a PointerArray.
+/// This doesn't actually return the pointer;
+/// for that you want getNthPointerInArray.
+void removePointerFromArray(PointerArray* arr, int index);
 
 /// Get the number of pointers stored in a PointerArray.
 /// Returns -1 on failure.
-int getNumPointersInArray(const PointerArray *arr);
+int getNumPointersInArray(const PointerArray* arr);
 
 /// Get the Nth pointer from a PointerArray.
-/// Returns -1 on failure.
-void* getNthPointerInArray(const PointerArray *arr, int n);
+/// Returns NULL on failure.
+void* getNthPointerInArray(const PointerArray* arr, int n);
 
 /// Get the index of a pointer stored in a PointerArray.
-/// Returns -1 on failure, or if the pointer isn't found.
-int indexOfPointerInArray(const PointerArray *arr, const void *ptr);
+/// Returns -1 if the pointer isn't found.
+int indexOfPointerInArray(const PointerArray* arr, const void* ptr);
 
 /// Find out whether a PointerArray contains a certain pointer.
 /// Returns -1 on failure.
-int pointerContainedInArray(const PointerArray *arr, const void *ptr);
+int pointerContainedInArray(const PointerArray* arr, const void* ptr);
 
 #endif

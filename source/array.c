@@ -3,8 +3,8 @@
 #include "debug.h"
 #include "array.h"
 
-PointerArray *createPointerArray() {
-	PointerArray *arr = malloc(sizeof(PointerArray));
+PointerArray* createPointerArray() {
+	PointerArray* arr = malloc(sizeof(PointerArray));
 	arr->numPointersInUse = 0;
 	arr->numPointersTotal = POINTERARRAY_INITIAL_LENGTH;
 	arr->pointers = calloc(POINTERARRAY_INITIAL_LENGTH, sizeof(void*));
@@ -17,7 +17,7 @@ PointerArray *createPointerArray() {
 	return arr;
 }
 
-void deletePointerArray(PointerArray *arr) {
+void deletePointerArray(PointerArray* arr) {
 	if (arr) {
 		if (arr->numPointersInUse) arr->numPointersInUse = 0;
 		if (arr->numPointersTotal) arr->numPointersTotal = 0;
@@ -36,14 +36,14 @@ void deletePointerArray(PointerArray *arr) {
 	}
 }
 
-int getNumPointersInArray(const PointerArray *arr) {
+int getNumPointersInArray(const PointerArray* arr) {
 	if (arr)
 		return arr->numPointersInUse;
 	else
 		return -1;
 }
 
-int indexOfPointerInArray(const PointerArray *arr, const void *ptr) {
+int indexOfPointerInArray(const PointerArray* arr, const void* ptr) {
 	if (arr && ptr) {
 		int n;
 		for (n=0; n < getNumPointersInArray(arr); n++)
@@ -62,11 +62,11 @@ int indexOfPointerInArray(const PointerArray *arr, const void *ptr) {
 	#endif
 }
 
-int pointerContainedInArray(const PointerArray *arr, const void *ptr) {
+int pointerContainedInArray(const PointerArray* arr, const void* ptr) {
     return (int) indexOfPointerInArray(arr, ptr) >= 0;
 }
 
-void resizePointerArray(PointerArray *arr, int capacity) {
+void resizePointerArray(PointerArray* arr, int capacity) {
 	if (arr) {
 		if (capacity < POINTERARRAY_INITIAL_LENGTH)
 			return;
@@ -79,7 +79,7 @@ void resizePointerArray(PointerArray *arr, int capacity) {
 	#endif
 }
 
-void expandPointerArray(PointerArray *arr) {
+void expandPointerArray(PointerArray* arr) {
 	if (arr) {
 		int capacity;
 		if (arr->numPointersTotal < POINTERARRAY_INITIAL_LENGTH)
@@ -94,7 +94,7 @@ void expandPointerArray(PointerArray *arr) {
 	#endif
 }
 
-void shrinkPointerArray(PointerArray *arr) {
+void shrinkPointerArray(PointerArray* arr) {
 	if (arr) {
 		if (getNumPointersInArray(arr) > POINTERARRAY_INITIAL_LENGTH * POINTERARRAY_SCALING_FACTOR)
 			resizePointerArray(arr, arr->numPointersTotal / POINTERARRAY_SCALING_FACTOR);
@@ -105,7 +105,7 @@ void shrinkPointerArray(PointerArray *arr) {
 	#endif
 }
 
-void removePointerFromArray(PointerArray *arr, int index) {
+void removePointerFromArray(PointerArray* arr, int index) {
 	if (arr && getNumPointersInArray(arr) > index && index >= 0) {
 	
 		// shift everything over, deleting array[index]
@@ -127,7 +127,7 @@ void removePointerFromArray(PointerArray *arr, int index) {
 	#endif
 }
 
-void insertPointerIntoArray(PointerArray *arr, void *ptr) {
+void insertPointerIntoArray(PointerArray* arr, void* ptr) {
 	if (arr && ptr) {
 	
 		// if array is full, expand it
@@ -147,7 +147,7 @@ void insertPointerIntoArray(PointerArray *arr, void *ptr) {
 	#endif
 }
 
-void *getNthPointerInArray(const PointerArray *arr, int n) {
+void* getNthPointerInArray(const PointerArray* arr, int n) {
 	if (arr && getNumPointersInArray(arr) > n && n >= 0)
 		return arr->pointers[n];
 	else {

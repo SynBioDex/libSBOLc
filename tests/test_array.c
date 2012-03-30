@@ -151,11 +151,11 @@ void TestSingleCollection(CuTest* tc) {
 	CuAssertIntEquals(tc, 1, getNumCollections());
 	CuAssertPtrEquals(tc, col, getNthCollection(0));
 	CuAssertIntEquals(tc, 1, isCollectionURI("one"));
-	CuAssertIntEquals(tc, 1, isCollectionPtr(col));
+	CuAssertIntEquals(tc, 1, isCollection(col));
 	deleteCollection(col);
 	CuAssertIntEquals(tc, 0, getNumCollections());
 	CuAssertIntEquals(tc, 0, isCollectionURI("one"));
-	CuAssertIntEquals(tc, 0, isCollectionPtr(col));
+	CuAssertIntEquals(tc, 0, isCollection(col));
 }
 
 void TestNumCollections(CuTest* tc) {
@@ -196,11 +196,11 @@ void TestCollectionIndexing(CuTest* tc) {
 		index = randomNumber(num);
 		col = getNthCollection(index);
 		uri = getCollectionURI(col); // copy uri (because it will be destroyed)
-		CuAssertIntEquals(tc, 1, isCollectionPtr(col));
+		CuAssertIntEquals(tc, 1, isCollection(col));
 		CuAssertIntEquals(tc, 1, isCollectionURI(uri));
 		deleteCollection(col);
 		CuAssertIntEquals(tc, num-1, getNumCollections());
-		CuAssertIntEquals(tc, 0, isCollectionPtr(col));
+		CuAssertIntEquals(tc, 0, isCollection(col));
 		CuAssertIntEquals(tc, 0, isCollectionURI(uri));
 	}	
 }

@@ -56,8 +56,8 @@ int main() {
 	// should only be done once
 	srand( time(NULL) );
 
-	RunUnitTests();
 	RunExampleTests();
+	RunUnitTests();
 
 	return 0;
 }

@@ -15,10 +15,6 @@ void lazyCreateAllCollections() {
 		allCollections = createPointerArray();
 }
 
-/**************************
-	create/destroy
-***************************/
-
 void registerCollection(Collection* col) {
 	lazyCreateAllCollections();
 	insertPointerIntoArray(allCollections, col);
@@ -57,11 +53,7 @@ void deleteCollection(Collection* col) {
 	}
 }
 
-/**************************
- *	is... functions
- **************************/
-
-int isCollectionPtr(const void* pointer) {
+int isCollection(const void* pointer) {
 	lazyCreateAllCollections();
 	return (int) indexOfPointerInArray(allCollections, pointer) >= 0;
 }
@@ -81,10 +73,6 @@ int isCollectionURI(const char* uri) {
 	}
 	return 0;
 }
-
-/**************************
-	get... functions
-***************************/
 
 Collection* getCollection(const char* uri) {
 	lazyCreateAllCollections();
@@ -130,10 +118,6 @@ char* getCollectionDescription(const Collection* col) {
 		return NULL;
 }
 
-/**************************
- *	getNum... functions
- **************************/
-
 int getNumCollections() {
 	if (allCollections)
 		return getNumPointersInArray(allCollections);
@@ -148,10 +132,6 @@ int getNumDNAComponentsIn(const Collection* col) {
 		return -1;
 }
 
-/**************************
- *	getNth... functions
- **************************/
-
 Collection* getNthCollection(int n) {
     if (getNumCollections() > n && n >= 0)
         return (Collection *)getNthPointerInArray(allCollections, n);
@@ -165,10 +145,6 @@ DNAComponent* getNthDNAComponentIn(const Collection* col, int n) {
     else
         return NULL;
 }
-
-/**************************
-	set... functions
-***************************/
 
 void setCollectionURI(Collection* col, const char* uri) {
     if (col)
@@ -189,10 +165,6 @@ void setCollectionDescription(Collection* col, const char* descr) {
 	if (col)
 		setSBOLCompoundObjectDescription(col->base, descr);
 }
-
-/**************************
-	add component
-***************************/
 
 void addDNAComponentToCollection(DNAComponent* com, Collection* col) {
 	if (com && col) {
