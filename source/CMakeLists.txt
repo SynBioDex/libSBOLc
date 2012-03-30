@@ -87,8 +87,9 @@ IF( DOXYGEN_FOUND )
         ${SBOL_MANUAL_DIR}/Doxyfile
     )
     ADD_CUSTOM_TARGET( manual
+		ALL
         ${DOXYGEN_EXECUTABLE}
         ${SBOL_MANUAL_DIR}/Doxyfile
-        WORKING_DIRECTORY ${SBOL_BUILD_DIR}
+        WORKING_DIRECTORY ${SBOL_RELEASE_DIR}
     )
 ENDIF()
