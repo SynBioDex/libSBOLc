@@ -13,7 +13,7 @@ struct _SequenceAnnotation;
 struct _DNAComponent;
 struct _Collection;
 
-#cmakedefine SBOL_DEBUG_ACTIVE @SBOL_DEBUG_ACTIVE@ ///< Compile with some additional print statements for debugging.
+#cmakedefine SBOL_DEBUG_ACTIVE @SBOL_DEBUG_ACTIVE@ ///< Set using CMake. Adds some print statements for debugging.
 
 void indent(int tabs);
 
