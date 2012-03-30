@@ -13,12 +13,13 @@ SET( EXECUTABLE_OUTPUT_PATH ${SBOL_RELEASE_DIR}       )
 SET( LIBRARY_OUTPUT_PATH    ${SBOL_RELEASE_DIR}       )
 
 # build options
-OPTION( SBOL_BUILD_EXAMPLES  "Build the example programs"                FALSE )
-OPTION( SBOL_BUILD_TESTS     "Build the unit tests and example tests"    FALSE )
-OPTION( SBOL_GENERATE_PYTHON "Generate Python wrapper using SWIG"        FALSE )
-OPTION( SBOL_GENERATE_MANUAL "Generate SBOL documentation using Doxygen" FALSE )
+OPTION( SBOL_DEBUG_STATEMENTS "Add some print statements for debugging"   FALSE )
+OPTION( SBOL_BUILD_EXAMPLES   "Build the example programs"                FALSE )
+OPTION( SBOL_BUILD_TESTS      "Build the unit tests and example tests"    FALSE )
+OPTION( SBOL_GENERATE_PYTHON  "Generate Python wrapper using SWIG"        FALSE )
+OPTION( SBOL_GENERATE_MANUAL  "Generate SBOL documentation using Doxygen" FALSE )
 
-# libxml2
+# find/build libxml
 IF( WIN32 )
 	ADD_SUBDIRECTORY( libxml2 )
 	INCLUDE_DIRECTORIES( ${SBOL_SOURCE_DIR}/libxml2/include )
@@ -27,12 +28,7 @@ ELSE()
 	INCLUDE_DIRECTORIES( ${LIBXML2_INCLUDE_DIR} )
 ENDIF()
 
-# sbol
-IF( "${CMAKE_BUILD_TYPE}" STREQUAL "Debug" )
-	SET(SBOL_DEBUG_ACTIVE 1)
-ELSE()
-	SET(SBOL_DEBUG_ACTIVE 0)
-ENDIF()
+# build libSBOLc
 CONFIGURE_FILE(
 	${SBOL_SOURCE_DIR}/debug.h.in
 	${SBOL_SOURCE_DIR}/debug.h
@@ -53,7 +49,7 @@ INCLUDE_DIRECTORIES(
 	${SBOL_TEST_DIR}
 )
 
-# examples
+# build examples
 IF( SBOL_BUILD_EXAMPLES )
 	FILE( GLOB SBOL_EXAMPLE_TARGETS
 		${SBOL_EXAMPLE_DIR}/sbol_parse.c
@@ -69,7 +65,7 @@ IF( SBOL_BUILD_EXAMPLES )
 	ENDFOREACH()
 ENDIF()
 
-# tests
+# build tests
 IF( SBOL_BUILD_TESTS )
 	FILE( GLOB SBOL_TEST_FILES
 		${SBOL_TEST_DIR}/*.h
@@ -89,7 +85,7 @@ IF( SBOL_BUILD_TESTS )
 	ENDFOREACH()
 ENDIF()
 
-# documentation
+# generate documentation
 IF( SBOL_GENERATE_MANUAL )
 	FIND_PACKAGE( Doxygen )
 	IF( DOXYGEN_FOUND )
@@ -108,7 +104,7 @@ IF( SBOL_GENERATE_MANUAL )
 	ENDIF()
 ENDIF()
 
-# python wrapper
+# generate python wrapper
 IF( SBOL_GENERATE_PYTHON )
 	FIND_PACKAGE( SWIG )
 	IF( SWIG_FOUND )

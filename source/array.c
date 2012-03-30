@@ -8,7 +8,7 @@ PointerArray* createPointerArray() {
 	arr->numPointersInUse = 0;
 	arr->numPointersTotal = POINTERARRAY_INITIAL_LENGTH;
 	arr->pointers = calloc(POINTERARRAY_INITIAL_LENGTH, sizeof(void*));
-	#if SBOL_DEBUG_ACTIVE
+	#ifdef SBOL_DEBUG_STATEMENTS
 	int n;
 	for (n=0; n<POINTERARRAY_INITIAL_LENGTH; n++)
 		if (arr->pointers[n])
@@ -25,7 +25,7 @@ void deletePointerArray(PointerArray* arr) {
 			free(arr->pointers);
 			arr->pointers = NULL;
 		}
-		#if SBOL_DEBUG_ACTIVE
+		#ifdef SBOL_DEBUG_STATEMENTS
 		if (arr->numPointersInUse || 
 			arr->numPointersTotal || 
 			arr->pointers)
@@ -51,7 +51,7 @@ int indexOfPointerInArray(const PointerArray* arr, const void* ptr) {
 				return n;
 		return -1;
 	}
-	#if SBOL_DEBUG_ACTIVE
+	#ifdef SBOL_DEBUG_STATEMENTS
 	else {
 		if (!arr)
 			printf("Tried to get index of pointer in NULL array\n");
@@ -73,7 +73,7 @@ static void resizePointerArray(PointerArray* arr, int capacity) {
 		arr->numPointersTotal = capacity;
 		arr->pointers = realloc(arr->pointers, capacity * sizeof(void*));
 	}
-	#if SBOL_DEBUG_ACTIVE
+	#ifdef SBOL_DEBUG_STATEMENTS
 	else
 		printf("Tried to resize NULL array\n");
 	#endif
@@ -88,7 +88,7 @@ static void expandPointerArray(PointerArray* arr) {
 			capacity = arr->numPointersTotal * POINTERARRAY_SCALING_FACTOR;
 		resizePointerArray(arr, capacity);
 	}
-	#if SBOL_DEBUG_ACTIVE
+	#ifdef SBOL_DEBUG_STATEMENTS
 	else
 		printf("Tried to expand NULL array\n");
 	#endif
@@ -99,7 +99,7 @@ static void shrinkPointerArray(PointerArray* arr) {
 		if (getNumPointersInArray(arr) > POINTERARRAY_INITIAL_LENGTH * POINTERARRAY_SCALING_FACTOR)
 			resizePointerArray(arr, arr->numPointersTotal / POINTERARRAY_SCALING_FACTOR);
 	}
-	#if SBOL_DEBUG_ACTIVE
+	#ifdef SBOL_DEBUG_STATEMENTS
 	else
 		printf("Tried to shrink NULL array\n");
 	#endif
@@ -119,7 +119,7 @@ void removePointerFromArray(PointerArray* arr, int index) {
 			shrinkPointerArray(arr);
 	}
 	
-	#if SBOL_DEBUG_ACTIVE
+	#ifdef SBOL_DEBUG_STATEMENTS
 	else if (!arr)
 		printf("Tried to remove pointer from NULL array\n");
 	else
@@ -139,7 +139,7 @@ void insertPointerIntoArray(PointerArray* arr, void* ptr) {
 		arr->numPointersInUse++;
 	}
 	
-	#if SBOL_DEBUG_ACTIVE
+	#ifdef SBOL_DEBUG_STATEMENTS
 	else if (!arr)
 		printf("Tried to insert pointer into NULL array\n");
 	else
@@ -151,7 +151,7 @@ void* getNthPointerInArray(const PointerArray* arr, int n) {
 	if (arr && getNumPointersInArray(arr) > n && n >= 0)
 		return arr->pointers[n];
 	else {
-		#if SBOL_DEBUG_ACTIVE
+		#ifdef SBOL_DEBUG_STATEMENTS
 		if (!arr)
 			printf("Tried to get pointer from NULL array\n");
 		else

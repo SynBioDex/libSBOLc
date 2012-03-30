@@ -2,9 +2,6 @@
 #define SBOL_TEST_EXAMPLES_HEADER
 #include "CuTest.h"
 
-// TODO replace with SBOL_DEBUG_ACTIVE
-#define SBOL_TEST_DEBUG 0
-
 #define NUM_VALID_EXAMPLES   13
 #define NUM_INVALID_EXAMPLES 13 // TODO finish 14-19
 

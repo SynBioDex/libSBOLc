@@ -77,7 +77,7 @@ static xmlNode *getSingleNodeMatchingXPath(xmlNode *node, xmlChar *path) {
 		return NULL;
 	} else {
 		if (getNumPointersInArray(results_array) > 1) {
-			#if SBOL_DEBUG_ACTIVE
+			#ifdef SBOL_DEBUG_STATEMENTS
 			printf("Got too many nodes matching xpath %s\n", (char *)path);
 			#endif
 		}

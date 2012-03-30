@@ -15,7 +15,7 @@ void TestReadValidExamples(CuTest *tc) {
 		TestNothingLoaded(tc);
  		printf("reading %s\n", VALID_EXAMPLE_FILENAMES[n]);
 		readSBOLCore(VALID_EXAMPLE_FILENAMES[n]);
-		#if SBOL_TEST_DEBUG
+		#ifdef SBOL_DEBUG_STATEMENTS
 		printSBOLCore();
 		#endif
 		TEST_LOADED_FUNCTIONS[n](tc);
