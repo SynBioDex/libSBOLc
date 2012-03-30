@@ -1,6 +1,8 @@
 #include <stdio.h>
+
 #include <libxml/parser.h>
 #include <libxml/xmlschemas.h>
+
 #include "sbol.h"
 
 int isValidSBOL(const xmlDocPtr doc) {

@@ -1,7 +1,7 @@
 ///////////////////////////////////////////////////////////
-/// @file types.h
-/// This file is a central location for defining constants
-/// related to SBOL serialization.
+/// @file constants.h.in
+/// A central location for defining constants related to
+/// SBOL. Used by CMake to generate constants.h
 ///////////////////////////////////////////////////////////
 
 /// @todo bring up "dnaSequence" vs "DnaSequence"
@@ -9,6 +9,10 @@
 
 #ifndef SBOL_TYPES_HEADER
 #define SBOL_TYPES_HEADER
+
+#cmakedefine SBOL_DEBUG_STATEMENTS ///< Set using CMake. Adds some print statements for debugging.
+
+#define SBOL_SCHEMA_FILENAME "@SBOL_SCHEMA_DIR@/sbol.xsd"
 
 // xml namespace urls
 #define NSURL_RDF  "http://www.w3.org/1999/02/22-rdf-syntax-ns#"

@@ -1,7 +1,8 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
-#include "debug.h"
+
+/// @todo remove?
 #include "property.h"
 #include "array.h"
 #include "dnacomponent.h"
@@ -199,7 +200,7 @@ void setDNAComponentDescription(DNAComponent* com, const char* descr) {
 		setSBOLCompoundObjectDescription(com->base, descr);
 }
 
-void setDNAComponentSequence(DNAComponent* com, struct _DNASequence* seq) {
+void setDNAComponentSequence(DNAComponent* com, DNASequence* seq) {
 	if (com && seq)
 		com->dnaSequence = seq;
 }
@@ -231,6 +232,37 @@ void cleanupDNAComponents() {
 		}
 		deletePointerArray(allDNAComponents);
 		allDNAComponents = NULL;
+	}
+}
+
+void printDNAComponent(const struct DNAComponent* com, int tabs) {
+	if (!com)
+		return;
+	indent(tabs);   printf("%s\n", getDNAComponentURI(com));
+	indent(tabs+1); printf("displayID:   %s\n", getDNAComponentDisplayID(com));
+	indent(tabs+1); printf("name:        %s\n", getDNAComponentName(com));
+	indent(tabs+1); printf("description: %s\n", getDNAComponentDescription(com));
+	indent(tabs+1); printf("sequence:    %s\n", getDNASequenceURI(com->dnaSequence));
+	
+	SequenceAnnotation* seq;
+	int i;
+	int num = getNumSequenceAnnotationsFor(com);
+	if (num > 0) {
+		indent(tabs+1); printf("%i annotations:\n", num);
+		for (i=0; i<num; i++) {
+			seq = getNthSequenceAnnotationFor(com, i);
+			indent(tabs+2); printf("%s\n", getSequenceAnnotationURI(seq));
+		}
+	}
+}
+
+void printAllDNAComponents() {
+	int n;
+	int num = getNumDNAComponents();
+	if (num > 0) {
+		printf("%i components:\n", num);
+		for (n=0; n<num; n++)
+			printDNAComponent(getNthDNAComponent(n), 1);
 	}
 }
 

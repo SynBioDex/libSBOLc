@@ -7,17 +7,14 @@
 #ifndef SBOL_DNACOMPONENT_HEADER
 #define SBOL_DNACOMPONENT_HEADER
 
-// forward declarations
-struct _PointerArray;
-struct _SBOLCompoundObject;
-struct _DNASequence;
-struct _SequenceAnnotation;
+#include "constants.h"
+#include "prototypes.h"
 
 /// Implements the SBOL Core DNAComponent object.
-typedef struct _DNAComponent {
-	struct _SBOLCompoundObject* base;  ///< uri, displayID, name, description
-	struct _DNASequence* dnaSequence;  ///< sequence
-	struct _PointerArray* annotations; ///< array of SequenceAnnotations
+typedef struct DNAComponent {
+	struct SBOLCompoundObject* base;  ///< uri, displayID, name, description
+	struct DNASequence* dnaSequence;  ///< sequence
+	struct PointerArray* annotations; ///< array of SequenceAnnotations
 } DNAComponent;
 
 /// Create an empty DNAComponent.
@@ -50,7 +47,7 @@ DNAComponent* getDNAComponent(const char* uri);
 int getNumSequenceAnnotationsFor(const DNAComponent* com);
 
 /// Get the Nth SequenceAnnotation for a DNAComponent.
-struct _SequenceAnnotation* getNthSequenceAnnotationFor(const DNAComponent* com, int n);
+struct SequenceAnnotation* getNthSequenceAnnotationFor(const DNAComponent* com, int n);
 
 /// Get the uri of a DNAComponent.
 /// Gotcha: this is different from both name and displayID.
@@ -69,7 +66,7 @@ char* getDNAComponentDescription(const DNAComponent* com);
 
 /// Get the DNASequence of a DNAComponent.
 /// Gotcha: DNA, not Dna
-struct _DNASequence* getDNAComponentSequence(DNAComponent* com);
+struct DNASequence* getDNAComponentSequence(DNAComponent* com);
 
 /// Set the uri of a DNAComponent.
 /// Gotcha: this is different from both name and displayID.
@@ -88,15 +85,21 @@ void setDNAComponentDescription(DNAComponent* com, const char* desc);
 
 /// Set the DNASequence of a DNAComponent.
 /// Gotcha: DNA, not Dna
-void setDNAComponentSequence(DNAComponent* com, struct _DNASequence* seq);
+void setDNAComponentSequence(DNAComponent* com, struct DNASequence* seq);
 
 /// Add a SequenceAnnotation to a DNAComponent.
 /// @todo where should this go? here, sequenceannotation.h, sbol.h?
-void addSequenceAnnotation(DNAComponent* com, struct _SequenceAnnotation* ann);
+void addSequenceAnnotation(DNAComponent* com, struct SequenceAnnotation* ann);
 
 /// Set a DNAComponent as the subComponent of a SequenceAnnotation.
 /// To remove it later, call this with a NULL annotation.
-void setSubComponent(struct _SequenceAnnotation* ann, DNAComponent* com);
+void setSubComponent(struct SequenceAnnotation* ann, DNAComponent* com);
+
+/// Print an outline of a DNAComponent to stdout.
+void printDNAComponent(const DNAComponent* com, int tabs);
+
+/// Print an outline of all the DNAComponents to stdout.
+void printAllDNAComponents();
 
 /// Delete all DNAComponents.
 /// To delete everything instead, use cleanupSBOLCore.

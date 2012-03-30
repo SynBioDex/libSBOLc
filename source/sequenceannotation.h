@@ -7,20 +7,17 @@
 #ifndef SBOL_SEQUENCEANNOTATION_HEADER
 #define SBOL_SEQUENCEANNOTATION_HEADER
 
-struct _DNAComponent;
-struct _PointerArray;
-struct _URIProperty;
-struct _PositionProperty;
-struct _PolarityProperty;
+#include "constants.h"
+#include "prototypes.h"
 
 /// Implements the SBOL Core SequenceAnnotation object.
-typedef struct _SequenceAnnotation {
-	struct _SBOLObject* base;
-	struct _PositionProperty *genbankStart;
-	struct _PositionProperty *genbankEnd;
-	struct _PolarityProperty *strand;
-	struct _DNAComponent* subComponent;
-	struct _PointerArray* precedes;
+typedef struct SequenceAnnotation {
+	struct SBOLObject* base;
+	struct PositionProperty *genbankStart;
+	struct PositionProperty *genbankEnd;
+	struct PolarityProperty *strand;
+	struct DNAComponent* subComponent;
+	struct PointerArray* precedes;
 } SequenceAnnotation;
 
 // create/destroy
@@ -44,7 +41,7 @@ void setBioStart(SequenceAnnotation* ann, int start);
 void setBioEnd(SequenceAnnotation* ann, int end);
 void setStrandPolarity(SequenceAnnotation* ann, int polarity);
 
-struct _DNAComponent* getSubComponent(const SequenceAnnotation* ann);
+struct DNAComponent* getSubComponent(const SequenceAnnotation* ann);
 
 // constrain order
 void addPrecedesRelationship(SequenceAnnotation* upstream, SequenceAnnotation* downstream);
@@ -53,5 +50,9 @@ SequenceAnnotation* getNthPrecedes(const SequenceAnnotation* ann, int n);
 int precedes(const SequenceAnnotation* seq1, const SequenceAnnotation* seq2);
 // TODO removePrecedesRelationship?
 void cleanupSequenceAnnotations();
+
+void printSequenceAnnotation(const SequenceAnnotation* seq, int tabs);
+
+void printAllSequenceAnnotations();
 
 #endif

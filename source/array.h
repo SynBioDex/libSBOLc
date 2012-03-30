@@ -10,6 +10,9 @@
 #define POINTERARRAY_INITIAL_LENGTH 10
 #define POINTERARRAY_SCALING_FACTOR  2
 
+#include "constants.h"
+#include "prototypes.h"
+
 /// @todo Rename PointerArray to SBOLObjectArray?
 /// @todo Actually convert it to hold SBOLObjects via casts?
 
@@ -19,7 +22,7 @@
 /// start with a pointer to their base struct rather than the
 /// struct itself, so you can only cast part of them to
 /// (SBOLObject *). That's probably fixable though.
-typedef struct _PointerArray {
+typedef struct PointerArray {
 	int numPointersInUse;
 	int numPointersTotal;
 	void** pointers;

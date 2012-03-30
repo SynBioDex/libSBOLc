@@ -5,15 +5,16 @@
 #include <libxml/parser.h>
 #include <libxml/xpath.h>
 
-#include "debug.h"
+/// @todo remove?
 #include "utilities.h"
 #include "object.h"
-#include "types.h"
 #include "array.h"
 #include "dnasequence.h"
 #include "sequenceannotation.h"
 #include "dnacomponent.h"
 #include "collection.h"
+
+#include "reader.h"
 
 // these are global mainly to avoid passing them around constantly
 static xmlDoc          *DOCUMENT;
@@ -103,7 +104,6 @@ static xmlChar *getURIOfNodeMatchingXPath(xmlNode *node, xmlChar *path) {
 		return NULL;
 }
 
-/// @todo put this at the core of the process
 static void applyFunctionToNodesMatchingXPath(void (*fn)(xmlNode *), xmlNode *node, xmlChar *path) {
 	if (!path)
 		return;
@@ -127,8 +127,7 @@ static void processNodes(void (*fn)(xmlNode *), xmlChar *path) {
  * individual SBOL objects
  ***************************/
 
-/// @todo either rename or make it so you don't pass the object?
-static SBOLCompoundObject *readSBOLCompoundObject(SBOLCompoundObject *obj, xmlNode *node) {
+static void readSBOLCompoundObject(SBOLCompoundObject *obj, xmlNode *node) {
 	xmlChar *path;
 	xmlChar *content;
 
@@ -152,8 +151,6 @@ static SBOLCompoundObject *readSBOLCompoundObject(SBOLCompoundObject *obj, xmlNo
 		setSBOLCompoundObjectDescription(obj, (char *)content);
 		xmlFree(content);
 	}
-
-	return obj;
 }
 
 static void readDNASequenceContent(xmlNode *node) {

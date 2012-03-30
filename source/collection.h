@@ -7,15 +7,13 @@
 #ifndef SBOL_COLLECTION_HEADER
 #define SBOL_COLLECTION_HEADER
 
-// forward declarations
-struct _SBOLCompoundObject;
-struct _PointerArray;
-struct _DNAComponent;
+#include "constants.h"
+#include "prototypes.h"
 
 /// Implements the SBOL Core Collection object.
-typedef struct _Collection {
-	struct _SBOLCompoundObject* base;  ///< uri, displayID, name, description
-	struct _PointerArray* components;  ///< array of DNAComponents
+typedef struct Collection {
+	struct SBOLCompoundObject* base;  ///< uri, displayID, name, description
+	struct PointerArray* components;  ///< array of DNAComponents
 } Collection;
 
 /// Create an empty Collection.
@@ -48,7 +46,7 @@ Collection* getNthCollection(int n);
 int getNumDNAComponentsIn(const Collection* col);
 
 /// Get the Nth DNAComponent inside a Collection.
-struct _DNAComponent* getNthDNAComponentIn(const Collection* col, int n);
+struct DNAComponent* getNthDNAComponentIn(const Collection* col, int n);
 
 /// Get the uri of a Collection.
 /// Gotcha: this is different from both name and displayID.
@@ -78,12 +76,18 @@ void setCollectionName(Collection* col, const char* name);
 void setCollectionDescription(Collection* col, const char* desc);
 
 /// Add a DNAComponent to a Collection.
-void addDNAComponentToCollection(struct _DNAComponent* com, Collection* col);
+void addDNAComponentToCollection(struct DNAComponent* com, Collection* col);
 
 /// Find out whether a DNAComponent is inside a Collection.
 /// @todo better name
 /// Gotcha: lowercase dna
-int dnaComponentInCollection(const struct _DNAComponent* com, const Collection* col);
+int dnaComponentInCollection(const struct DNAComponent* com, const Collection* col);
+
+/// Print an outline of a Collection to stdout.
+void printCollection(const Collection* col, int tabs);
+
+/// Print an outline of all the Collections to stdout.
+void printAllCollections();
 
 /// Delete all Collections.
 /// To delete everything instead, use cleanupSBOLCore.

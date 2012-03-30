@@ -7,8 +7,8 @@
 #ifndef SBOL_OBJECT_HEADER
 #define SBOL_OBJECT_HEADER
 
-struct _TextProperty;
-struct _URIProperty;
+#include "constants.h"
+#include "prototypes.h"
 
 /**************
  * SBOLObject
@@ -19,8 +19,8 @@ struct _URIProperty;
 /// SequenceAnnotation, DNAComponent, and Collection.
 /// This is where to put anything that needs to be 
 /// accessible from each of the four main structs.
-typedef struct _SBOLObject {
-	struct _URIProperty* uri;
+typedef struct SBOLObject {
+	struct URIProperty* uri;
 } SBOLObject;
 
 SBOLObject* createSBOLObject(const char* uri);
@@ -45,11 +45,11 @@ char* getSBOLObjectURI(const SBOLObject* obj);
 /// SBOLObject that also includes a name,
 /// displayID, and description.
 /// Used a basis for DNAComponent and Collection.
-typedef struct _SBOLCompoundObject {
-	struct _SBOLObject*   base;
-	struct _TextProperty* displayID;
-	struct _TextProperty* name;
-	struct _TextProperty* description;
+typedef struct SBOLCompoundObject {
+	struct SBOLObject*   base;
+	struct TextProperty* displayID;
+	struct TextProperty* name;
+	struct TextProperty* description;
 } SBOLCompoundObject;
 
 // TODO remove once it's clear these aren't needed

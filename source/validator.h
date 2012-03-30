@@ -12,10 +12,12 @@
 
 #ifndef SBOL_VALIDATOR_HEADER
 #define SBOL_VALIDATOR_HEADER
-#include <libxml/parser.h>
 
-// TODO fill this in using CMake
-#define SBOL_SCHEMA_FILENAME "../schema/sbol.xsd"
+#include "constants.h"
+#include "prototypes.h"
+
+/// @todo remove?
+#include <libxml/parser.h>
 
 int isValidSBOL(const xmlDocPtr doc);
 

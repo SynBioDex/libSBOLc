@@ -8,7 +8,12 @@
 #ifndef SBOL_UTILITIES_HEADER
 #define SBOL_UTILITIES_HEADER
 
+#include "constants.h"
+#include "prototypes.h"
+
 #define BUFFER_CHARS 100
+
+void indent(int tabs);
 
 char *intToStr(int input);
 int   strToInt(const char *input);

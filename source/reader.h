@@ -8,15 +8,20 @@
 #ifndef SBOL_READER_HEADER
 #define SBOL_READER_HEADER
 
+#include "constants.h"
+#include "prototypes.h"
+
+/// @todo remove?
 #include <libxml/parser.h> ///< @todo fix this up
 
-//struct _xmlChar;
-//struct _PointerArray;
-//struct _SBOLCompoundObject;
+/// @todo figure out these prototypes
+
+//struct xmlChar;
+// struct xmlNode;
 
 // utility functions for working with xmlNodes
 //static xmlChar *getNodeURI(xmlNode *node);
-//static struct _PointerArray *getNodesMatchingXPath(xmlNode *node, xmlChar *path);
+//static PointerArray *getNodesMatchingXPath(xmlNode *node, xmlChar *path);
 //static xmlNode *getSingleNodeMatchingXPath(xmlNode *node, xmlChar *path);
 //static xmlChar *getContentsOfNodeMatchingXPath(xmlNode *node, xmlChar *path);
 //static xmlChar *getURIOfNodeMatchingXPath(xmlNode *node, xmlChar *path);
@@ -26,7 +31,7 @@
 ///// @todo void readNamespaces(xmlNode *node)?
 
 //// functions for reading individual SBOLObjects from xmlNodes
-//static void *readSBOLCompoundObject(struct _SBOLCompoundObject *obj, xmlNode *node);
+//static void readSBOLCompoundObject(SBOLCompoundObject *obj, xmlNode *node);
 
 //static void readDNASequenceContent(xmlNode *node);
 //static void readSequenceAnnotationContent(xmlNode *node);

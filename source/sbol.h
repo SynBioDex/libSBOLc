@@ -9,24 +9,27 @@
 
 #ifndef SBOL_HEADER
 #define SBOL_HEADER
-#include "debug.h"
-#include "property.h"
+
+#include "constants.h"
+#include "prototypes.h"
 
 /// @todo document that you need to free strings gotten from sbol
 /// @todo make a lot of the functions static to simplify things
 
 // from other files
+/// @todo remove?
 #include "utilities.h"
+#include "property.h"
 #include "dnasequence.h"
 #include "sequenceannotation.h"
 #include "dnacomponent.h"
 #include "collection.h"
-#include "types.h"
 #include "validator.h"
 #include "reader.h"
 #include "writer.h"
 
 // from core.c
+void printSBOLCore();
 void cleanupSBOLCore();
 
 #endif

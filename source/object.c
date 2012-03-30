@@ -1,10 +1,11 @@
 #include <stdlib.h>
-#include "debug.h"
+
+/// @todo remove?
 #include "property.h"
 #include "array.h"
 #include "object.h"
 
-// TODO will "object" conflict with other filenames?
+/// @todo will "object" conflict with other filenames?
 
 /**************
  * SBOLObject

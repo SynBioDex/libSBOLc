@@ -13,6 +13,9 @@
 #ifndef SBOL_PROPERTY_HEADER
 #define SBOL_PROPERTY_HEADER
 
+#include "constants.h"
+#include "prototypes.h"
+
 /************
  * Property
  ************/
@@ -22,26 +25,26 @@
 /// a hook for doing something whenever a Property is read or written.
 /// It shouln't be used directly though because there's no flag for
 /// telling whether it holds an int or a char *.
-union Property {
+typedef union Property {
 	int   number;
-	char *letters;
-};
+	char* letters;
+} Property;
 
-union Property *createProperty();
-void deleteProperty(union Property *pro);
+Property *createProperty();
+void deleteProperty(Property *pro);
 
-void setNumber(union Property *pro, int num);
-int  getNumber(const union Property *pro);
+void setNumber(Property *pro, int num);
+int  getNumber(const Property *pro);
 
-void  setLetters(union Property *pro, char *str);
-char *getLetters(const union Property *pro);
+void  setLetters(Property *pro, char *str);
+char *getLetters(const Property *pro);
 
 /****************
  * TextProperty
  ****************/
 
 /// Base struct for all text-containing Properties.
-typedef struct _TextProperty {
+typedef struct TextProperty {
 	union Property *text;
 } TextProperty;
 
@@ -59,8 +62,8 @@ void printTextProperty(const TextProperty* pro);
 /// A TextProperty that only allows creation
 /// of values that aren't already in use as the
 /// uri of an SBOLObject.
-typedef struct _URIProperty {
-	struct _TextProperty* uri;
+typedef struct URIProperty {
+	struct TextProperty* uri;
 } URIProperty;
 
 URIProperty* createURIProperty();
@@ -74,8 +77,8 @@ void printURIProperty(const URIProperty* pro);
  * NucleotidesProperty
  ***********************/
 
-typedef struct _NucleotidesProperty {
-	struct _TextProperty *nucleotides;
+typedef struct NucleotidesProperty {
+	struct TextProperty *nucleotides;
 } NucleotidesProperty;
 
 NucleotidesProperty *createNucleotidesProperty();
@@ -94,7 +97,7 @@ void printNucleotidesProperty(const NucleotidesProperty *pro);
 /// only make sense for groups, not individual PositionProperties.
 /// For example, SequenceAnnotation->bioEnd should be at least
 /// as large as SequenceAnnotation->bioStart.
-typedef struct _PositionProperty {
+typedef struct PositionProperty {
 	union Property* position;
 } PositionProperty;
 
@@ -110,17 +113,17 @@ void printPositionProperty(const PositionProperty* pro);
  ********************/
 
 /// @todo rename to StrandOrientation?
-enum StrandPolarity {
+typedef enum StrandPolarity {
 	STRAND_FORWARD,
 	STRAND_BIDIRECTIONAL,
 	STRAND_REVERSE
-};
+} StrandPolarity;
 
 /// IntProperty that only allows StrandPolarity values.
 /// 1 indicates the positive strand relative to the parent
 /// component, and 0 indicates the reverse complement.
 /// @todo rename to StrandProperty? or OrientationProperty?
-typedef struct _PolarityProperty {
+typedef struct PolarityProperty {
 	union Property* polarity;
 } PolarityProperty;
 

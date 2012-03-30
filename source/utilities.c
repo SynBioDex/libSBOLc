@@ -1,8 +1,19 @@
 #include <string.h>
 #include <stdio.h>
 #include <stdlib.h>
+
+/// @todo different header here?
 #include <libxml/parser.h>
+
 #include "utilities.h"
+
+void indent(int tabs) {
+    if (tabs<0)
+        tabs = 0;
+    int i;
+    for (i=0; i<tabs; i++)
+        printf("\t");
+}
 
 char* intToStr(int input) {
 	int i;

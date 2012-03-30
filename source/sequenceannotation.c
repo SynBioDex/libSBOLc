@@ -1,7 +1,8 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
-#include "debug.h"
+
+/// @todo remove?
 #include "property.h"
 #include "array.h"
 #include "object.h"
@@ -238,5 +239,41 @@ void cleanupSequenceAnnotations() {
 		deletePointerArray(allSequenceAnnotations);
 		allSequenceAnnotations = NULL;
 	}
+}
+
+void printSequenceAnnotation(const SequenceAnnotation* ann, int tabs) {
+    if (!ann)
+        return;
+    indent(tabs); printf("%s\n", getSequenceAnnotationURI(ann));
+    //int start = ann->genbankStart;
+	int start = getBioStart(ann);
+    //int end = ann->genbankEnd;
+	int end = getBioEnd(ann);
+    if (start != 0 || end != 0) {
+    	indent(tabs+1); printf("%i --> %i\n", start, end);
+    }
+    char strand = polarityToChar( getPolarityProperty(ann->strand) );
+    indent(tabs+1); printf("strand: %c\n", strand);
+    if (ann->subComponent) {
+        indent(tabs+1); printf("subComponent: %s\n", getDNAComponentURI(ann->subComponent));
+    }
+    int num = getNumPrecedes(ann);
+    if (num > 0) {
+        indent(tabs+1); printf("%i precedes:\n", num);
+        int i;
+        for (i=0; i<num; i++) {
+            indent(tabs+2); printf("%s\n", getSequenceAnnotationURI(getNthPrecedes(ann, i)));
+        }
+    }
+}
+
+void printAllSequenceAnnotations() {
+    int n;
+    int num = getNumSequenceAnnotations();
+    if (num > 0) {
+        printf("%i annotations:\n", num);
+        for (n=0; n<num; n++)
+            printSequenceAnnotation(getNthSequenceAnnotation(n), 1);
+    }
 }
 

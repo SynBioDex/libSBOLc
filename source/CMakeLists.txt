@@ -30,8 +30,8 @@ ENDIF()
 
 # build libSBOLc
 CONFIGURE_FILE(
-	${SBOL_SOURCE_DIR}/debug.h.in
-	${SBOL_SOURCE_DIR}/debug.h
+	${SBOL_SOURCE_DIR}/constants.h.in
+	${SBOL_SOURCE_DIR}/constants.h
 )
 FILE( GLOB SBOL_SOURCE_FILES
 	${SBOL_SOURCE_DIR}/*.h

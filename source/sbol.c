@@ -9,3 +9,9 @@ void cleanupSBOLCore() {
 	cleanupSBOLObjects();
 }
 
+void printSBOLCore() {
+    printAllDNASequences();
+    printAllSequenceAnnotations();
+    printAllDNAComponents();
+    printAllCollections();
+}

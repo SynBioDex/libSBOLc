@@ -7,13 +7,13 @@
 #ifndef SBOL_DNASEQUENCE_HEADER
 #define SBOL_DNASEQUENCE_HEADER
 
-struct _SBOLObject;
-struct _NucleotidesProperty;
+#include "constants.h"
+#include "prototypes.h"
 
 /// Implements the SBOL Core DNASequence object.
-typedef struct _DNASequence {
-	struct _SBOLObject* base;
-	struct _NucleotidesProperty *nucleotides;
+typedef struct DNASequence {
+	struct SBOLObject* base;
+	struct NucleotidesProperty *nucleotides;
 } DNASequence;
 
 DNASequence* createDNASequence(char* uri);
@@ -27,6 +27,10 @@ void setDNASequenceURI(DNASequence* seq, const char* uri); // TODO remove?
 void setNucleotides(DNASequence* seq, const char* nucleotides);
 int isDNASequenceURI(const char* uri);
 char* getDNASequenceURI(const DNASequence* seq);
+
+void printDNASequence(const DNASequence* seq, int tabs);
+
+void printAllDNASequences();
 
 void cleanupDNASequences();
 
