@@ -24,6 +24,15 @@
 
 #define SBOL_SCHEMA_FILENAME SBOL_SCHEMA_DIR "/sbol.xsd" ///< Schema to use when validating documents.
 
+/// Lists possible values of a PolarityProperty.
+/// @todo rename to StrandOrientation?
+/// @todo Is bidirectional in the SBOL spec so far?
+enum _StrandPolarity {
+	STRAND_FORWARD,
+	STRAND_BIDIRECTIONAL,
+	STRAND_REVERSE
+};
+
 // xml namespace urls
 #define NSURL_RDF  "http://www.w3.org/1999/02/22-rdf-syntax-ns#"
 #define NSURL_RDFS "http://www.w3.org/2000/01/rdf-schema#"
