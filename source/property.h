@@ -191,15 +191,6 @@ void printPositionProperty(const PositionProperty* pro);
  * PolarityProperty
  ********************/
 
-/// Enumerates possible values of a PolarityProperty.
-/// @todo rename to StrandOrientation?
-/// @todo Is bidirectional in the SBOL spec so far?
-enum _StrandPolarity {
-	STRAND_FORWARD,
-	STRAND_BIDIRECTIONAL,
-	STRAND_REVERSE
-};
-
 /// IntProperty that only allows StrandPolarity values.
 /// 1 indicates the positive strand relative to the parent
 /// component, and 0 indicates the reverse complement.

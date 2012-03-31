@@ -1,53 +1,62 @@
 #include <stdio.h>
 #include <string.h>
+
 #include <libxml/xmlwriter.h>
-#include "sbol.h"
+
+#include "utilities.h"
 #include "array.h"
+#include "dnasequence.h"
+#include "sequenceannotation.h"
+#include "dnacomponent.h"
+#include "collection.h"
+#include "writer.h"
+
+static int            INDENT;
+static xmlTextWriter* WRITER;
+static xmlDoc*        OUTPUT;
+static PointerArray*  PROCESSED;
 
 /************************
- * set up SBOL document
+ * utility functions for
+ * setting up, writing,
+ * and tearing down
  ************************/
-
-static int INDENT;
-static xmlTextWriterPtr WRITER;
-static xmlDocPtr OUTPUT;
-static PointerArray *processed; ///< @todo capitalize
 
 void indentMore() { xmlTextWriterSetIndent(WRITER, ++INDENT); }
 void indentLess() { xmlTextWriterSetIndent(WRITER, --INDENT); }
 
-void createSBOLWriter() {
+static void createSBOLWriter() {
 	INDENT = 0;
 	WRITER = xmlNewTextWriterDoc(&OUTPUT, 0);
 	xmlTextWriterSetIndentString(WRITER, "\t");
 	xmlTextWriterSetIndent(WRITER, INDENT);
 }
 
-void cleanupSBOLWriter() {
+static void cleanupSBOLWriter() {
 	xmlFreeTextWriter(WRITER);
 	xmlFreeDoc(OUTPUT);
 	WRITER = NULL;
 	OUTPUT = NULL;
-	deletePointerArray(processed);
-	processed = NULL;
+	deletePointerArray(PROCESSED);
+	PROCESSED = NULL;
 	xmlCleanupParser();
 }
 
-void markProcessed(void *obj) {
-	insertPointerIntoArray(processed, obj);
+static void markPROCESSED(void *obj) {
+	insertPointerIntoArray(PROCESSED, obj);
 }
 
-int alreadyProcessed(void *obj) {
-	return pointerContainedInArray(processed, obj); 
+static int alreadyPROCESSED(void *obj) {
+	return pointerContainedInArray(PROCESSED, obj); 
 }
 
-void resetProcessed() {
-	deletePointerArray(processed);
-	processed = createPointerArray();
+static void resetPROCESSED() {
+	deletePointerArray(PROCESSED);
+	PROCESSED = createPointerArray();
 }
 
-void startSBOLDocument() {
-	resetProcessed();
+static void startSBOLDocument() {
+	resetPROCESSED();
 	createSBOLWriter();
 	xmlTextWriterStartDocument(WRITER, NULL, NULL, NULL);
 	xmlTextWriterStartElement(WRITER, NSPREFIX_RDF ":" NODENAME_RDF);
@@ -59,13 +68,13 @@ void startSBOLDocument() {
 	indentMore();
 }
 
-void endSBOLDocument() {
+static void endSBOLDocument() {
 	indentLess();
 	xmlTextWriterEndElement(WRITER);
 	xmlTextWriterEndDocument(WRITER);
 }
 
-int saveSBOLDocument(const char* filename) {
+static int saveSBOLDocument(const char* filename) {
 	int invalid = 0;
 	if (!isValidSBOL(OUTPUT)) {
 		invalid = 1;
@@ -75,31 +84,30 @@ int saveSBOLDocument(const char* filename) {
 	return (int) invalid || written == -1;
 }
 
-/***********************
- * serialize SBOL core
- ***********************/
+/************************************
+ * functions for writing individual
+ * SBOLObjects to the WRITER
+ ************************************/
 
-// TODO move node names to types.h
-
-void writeDNASequence(DNASequence* seq) {
+static void writeDNASequence(DNASequence* seq) {
 	if (!seq)
 		return;
 	xmlTextWriterStartElement(WRITER, NODENAME_DNASEQUENCE);
 	xmlTextWriterWriteAttribute(WRITER, NSPREFIX_RDF ":" NODENAME_ABOUT, getDNASequenceURI(seq));
 
 	// nucleotides
-	if (!alreadyProcessed((void *)seq)) {
+	if (!alreadyPROCESSED((void *)seq)) {
 		xmlTextWriterWriteElement(WRITER, NODENAME_NUCLEOTIDES , getNucleotides(seq));
-		markProcessed((void *)seq);
+		markPROCESSED((void *)seq);
 	}
 	
 	xmlTextWriterEndElement(WRITER);
 }
 
-void writeSequenceAnnotation(SequenceAnnotation* ann) {
+static void writeSequenceAnnotation(SequenceAnnotation* ann) {
 	if (!ann)
 		return;
-	markProcessed((void *)ann);
+	markPROCESSED((void *)ann);
 	xmlTextWriterStartElement(WRITER, NODENAME_SEQUENCEANNOTATION);
 	xmlTextWriterWriteAttribute(WRITER, NSPREFIX_RDF ":" NODENAME_ABOUT, getSequenceAnnotationURI(ann));
 	
@@ -129,7 +137,7 @@ void writeSequenceAnnotation(SequenceAnnotation* ann) {
 	if (ann->subComponent) {
 		uri = getDNAComponentURI(ann->subComponent);
 		xmlTextWriterStartElement(WRITER, NODENAME_SUBCOMPONENT);
-		if (alreadyProcessed((void *)(ann->subComponent)))
+		if (alreadyPROCESSED((void *)(ann->subComponent)))
 			xmlTextWriterWriteAttribute(WRITER, NSPREFIX_RDF ":" NODENAME_RESOURCE, uri);
 		else {
 	 		indentMore();
@@ -143,12 +151,12 @@ void writeSequenceAnnotation(SequenceAnnotation* ann) {
 	xmlTextWriterEndElement(WRITER);
 }
 
-void writeDNAComponent(DNAComponent* com) {
+static void writeDNAComponent(DNAComponent* com) {
 	if (!com)
 		return;
 	xmlTextWriterStartElement(WRITER, NODENAME_DNACOMPONENT);
-	if (!alreadyProcessed((void *)com)) {
-		markProcessed((void *)com);
+	if (!alreadyPROCESSED((void *)com)) {
+		markPROCESSED((void *)com);
 		xmlTextWriterWriteAttribute(WRITER, NSPREFIX_RDF ":" NODENAME_ABOUT, getDNAComponentURI(com));
 		
 		// properties
@@ -195,12 +203,12 @@ void writeDNAComponent(DNAComponent* com) {
 	xmlTextWriterEndElement(WRITER);
 }
 
-void writeCollection(Collection* col) {
+static void writeCollection(Collection* col) {
 	if (!col)
 		return;
 	xmlTextWriterStartElement(WRITER, NODENAME_COLLECTION);
-	if (!alreadyProcessed((void *)col)) {
-		markProcessed((void *)col);
+	if (!alreadyPROCESSED((void *)col)) {
+		markPROCESSED((void *)col);
 		int n;
 		int num;
 		
@@ -242,7 +250,7 @@ int writeSBOLCore(const char* filename) {
 	Collection* col;
 	for (n=0; n<getNumCollections(); n++) {
 		col = getNthCollection(n);
-		if (!alreadyProcessed((void *)col))
+		if (!alreadyPROCESSED((void *)col))
 			writeCollection(col);
 	}
 
@@ -250,29 +258,28 @@ int writeSBOLCore(const char* filename) {
 	DNAComponent* com;
 	for (n=0; n<getNumDNAComponents(); n++) {
 		com = getNthDNAComponent(n);
-		if (!alreadyProcessed((void *)com))
+		if (!alreadyPROCESSED((void *)com))
 			writeDNAComponent(com);
 	}
+
+	// At this point there shouldn't be anything left.
+	// But in case there are orphaned DNASequences or
+	// SequenceAnnotations, SBOL will write them out anyway
+	// and fail the schema validation.
 	
-	// write sequences
-	// (there shouldn't be any left at this point,
-	// but better to write them and fail the schema validation
-	// than just lose them silently)
+	// write orphaned sequences
 	DNASequence* seq;
 	for (n=0; n<getNumDNASequences(); n++) {
 		seq = getNthDNASequence(n);
-		if (!alreadyProcessed((void *)seq))
+		if (!alreadyPROCESSED((void *)seq))
 			writeDNASequence(seq);
 	}
 	
-	// write annotations
-	// (there shouldn't be any left at this point,
-	// but better to write them and fail the schema validation
-	// than just lose them silently)
+	// write orphaned sequence annotations
 	SequenceAnnotation* ann;
 	for (n=0; n<getNumSequenceAnnotations(); n++) {
 		ann = getNthSequenceAnnotation(n);
-		if (!alreadyProcessed((void *)ann))
+		if (!alreadyPROCESSED((void *)ann))
 			writeSequenceAnnotation(ann);
 	}
 
