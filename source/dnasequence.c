@@ -2,20 +2,19 @@
 #include <stdlib.h>
 #include <string.h>
 
-/// @todo remove?
 #include "property.h"
 #include "array.h"
-#include "dnasequence.h"
 #include "object.h"
+#include "dnasequence.h"
 
 static PointerArray* allDNASequences;
 
-void lazyCreateAllDNASequences() {
+static void lazyCreateAllDNASequences() {
 	if (!allDNASequences)
 		allDNASequences = createPointerArray();
 }
 
-void registerDNASequence(DNASequence* seq) {
+static void registerDNASequence(DNASequence* seq) {
 	lazyCreateAllDNASequences();
 	insertPointerIntoArray(allDNASequences, seq);
 }
@@ -32,7 +31,7 @@ DNASequence* createDNASequence(char* uri) {
 	return seq;
 }
 
-void setDNASequenceURI(DNASequence* seq, const char* uri) {
+static void setDNASequenceURI(DNASequence* seq, const char* uri) {
 	if (seq)
 		setSBOLObjectURI(seq->base, uri);
 }
@@ -42,8 +41,7 @@ void setNucleotides(DNASequence* seq, const char* nucleotides) {
 		setNucleotidesProperty(seq->nucleotides, nucleotides);
 }
 
-// TODO generalize this
-void removeDNASequence(DNASequence* seq) {
+static void removeDNASequence(DNASequence* seq) {
 	if (seq && allDNASequences) {
 		int index = indexOfPointerInArray(allDNASequences, seq);
 		if (index >= 0)
@@ -132,7 +130,6 @@ char* getNucleotides(const DNASequence* seq) {
 	    return getNucleotidesProperty(seq->nucleotides);
 }
 
-// TODO generalize this further?
 DNASequence* getNthDNASequence(int n) {
 	if (getNumDNASequences() > n && n >= 0)
 		return (DNASequence*) getNthPointerInArray(allDNASequences, n);
@@ -143,14 +140,15 @@ DNASequence* getNthDNASequence(int n) {
 void printDNASequence(const DNASequence* seq, int tabs) {
 	if (!seq)
 	    return;
-	// TODO print just the beginning of the sequence?
-	char* uri = getDNASequenceURI(seq);
+	indent(tabs+1); printf("%s\n", getDNASequenceURI(seq));
 	indent(tabs);
-	if (strlen(uri) > 30)
-		printf("%.30s\n", uri);
+    char* nt = getNucleotides(seq);
+
+	// don't print all of a really long sequence
+	if (nt && strlen(nt) > atoi(NUCLEOTIDES_TO_PRINT))
+		printf("%." NUCLEOTIDES_TO_PRINT "s\n", nt);
 	else
-		printf("%s\n", uri);
-	indent(tabs+1); printf("nucleotides: %s\n", getNucleotides(seq));
+		printf("%s\n", nt);
 }
 
 void printAllDNASequences() {

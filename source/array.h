@@ -2,6 +2,9 @@
 /// @file array.h
 /// Defines the PointerArray struct, as well as
 /// functions for operating on it.
+/// 
+/// @todo Rename PointerArray to SBOLObjectArray?
+/// @todo Actually convert it to hold SBOLObjects via casts?
 ///////////////////////////////////////////////////////////
 
 #ifndef SBOL_ARRAY_HEADER
@@ -12,9 +15,6 @@
 
 #include "constants.h"
 #include "prototypes.h"
-
-/// @todo Rename PointerArray to SBOLObjectArray?
-/// @todo Actually convert it to hold SBOLObjects via casts?
 
 /// A dynamic array of void pointers. Used anywhere a variable
 /// number of SBOLObjects needs to be stored It could be called

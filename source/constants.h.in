@@ -2,10 +2,10 @@
 /// @file constants.h.in
 /// Central location for defining constants related to
 /// SBOL. Used by CMake to generate constants.h
-///////////////////////////////////////////////////////////
-
+/// 
 /// @todo bring up "dnaSequence" vs "DnaSequence"
 /// @todo and "component" vs "DnaComponent"
+///////////////////////////////////////////////////////////
 
 #ifndef SBOL_TYPES_HEADER
 #define SBOL_TYPES_HEADER
@@ -13,6 +13,7 @@
 #cmakedefine SBOL_DEBUG_STATEMENTS ///< Set using CMake. Adds some print statements for debugging.
 
 // folder structure
+// set using CMake
 #define SBOL_SOURCE_DIR  "@SBOL_SOURCE_DIR@"  ///< Holds source code for libSBOLc.
 #define SBOL_ROOT_DIR    "@SBOL_ROOT_DIR@"    ///< Top-level project folder.
 #define SBOL_BUILD_DIR   "@SBOL_BUILD_DIR@"   ///< Folder for temporary build files.
