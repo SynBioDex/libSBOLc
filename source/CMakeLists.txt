@@ -1,10 +1,10 @@
 PROJECT( SBOL )
 CMAKE_MINIMUM_REQUIRED( VERSION 2.8 )
 
-# folder structure
+# set up folder structure
 SET( SBOL_ROOT_DIR          ${SBOL_SOURCE_DIR}/..     )
 SET( SBOL_BUILD_DIR         ${SBOL_ROOT_DIR}/build    )
-SET( SBOL_SCHEMA_DIR        ${SBOL_ROOT_DIR}/schemas  )
+SET( SBOL_SCHEMA_DIR        ${SBOL_ROOT_DIR}/schema   )
 SET( SBOL_TEST_DIR          ${SBOL_ROOT_DIR}/tests    )
 SET( SBOL_EXAMPLE_DIR       ${SBOL_ROOT_DIR}/examples )
 SET( SBOL_RELEASE_DIR       ${SBOL_ROOT_DIR}/release  )
@@ -12,12 +12,30 @@ SET( SBOL_MANUAL_DIR        ${SBOL_ROOT_DIR}/manual   )
 SET( EXECUTABLE_OUTPUT_PATH ${SBOL_RELEASE_DIR}       )
 SET( LIBRARY_OUTPUT_PATH    ${SBOL_RELEASE_DIR}       )
 
-# build options
+# set initial options
 OPTION( SBOL_DEBUG_STATEMENTS "Add some print statements for debugging"   FALSE )
 OPTION( SBOL_BUILD_EXAMPLES   "Build the example programs"                FALSE )
 OPTION( SBOL_BUILD_TESTS      "Build the unit tests and example tests"    FALSE )
 OPTION( SBOL_GENERATE_PYTHON  "Generate Python wrapper using SWIG"        FALSE )
 OPTION( SBOL_GENERATE_MANUAL  "Generate SBOL documentation using Doxygen" FALSE )
+
+# customize files
+CONFIGURE_FILE(
+	${SBOL_SOURCE_DIR}/constants.h.in
+	${SBOL_SOURCE_DIR}/constants.h
+)
+CONFIGURE_FILE(
+	${SBOL_SCHEMA_DIR}/rdf.xsd.in
+	${SBOL_SCHEMA_DIR}/rdf.xsd
+)
+CONFIGURE_FILE(
+	${SBOL_SCHEMA_DIR}/sbol.xsd.in
+	${SBOL_SCHEMA_DIR}/sbol.xsd
+)
+CONFIGURE_FILE(
+	${SBOL_MANUAL_DIR}/Doxyfile.in
+	${SBOL_MANUAL_DIR}/Doxyfile
+)
 
 # find/build libxml
 IF( WIN32 )
@@ -29,10 +47,6 @@ ELSE()
 ENDIF()
 
 # build libSBOLc
-CONFIGURE_FILE(
-	${SBOL_SOURCE_DIR}/constants.h.in
-	${SBOL_SOURCE_DIR}/constants.h
-)
 FILE( GLOB SBOL_SOURCE_FILES
 	${SBOL_SOURCE_DIR}/*.h
 	${SBOL_SOURCE_DIR}/*.c
@@ -89,10 +103,6 @@ ENDIF()
 IF( SBOL_GENERATE_MANUAL )
 	FIND_PACKAGE( Doxygen )
 	IF( DOXYGEN_FOUND )
-	    CONFIGURE_FILE(
-	        ${SBOL_MANUAL_DIR}/Doxyfile.in
-	        ${SBOL_MANUAL_DIR}/Doxyfile
-	    )
 	    ADD_CUSTOM_TARGET( manual
 			ALL
 	        ${DOXYGEN_EXECUTABLE}

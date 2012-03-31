@@ -11,10 +11,10 @@
 #include "prototypes.h"
 
 /// Implements the SBOL Core Collection object.
-typedef struct Collection {
-	struct SBOLCompoundObject* base;  ///< uri, displayID, name, description
-	struct PointerArray* components;  ///< array of DNAComponents
-} Collection;
+struct _Collection {
+	SBOLCompoundObject* base;  ///< uri, displayID, name, description
+	PointerArray* components;  ///< array of DNAComponents
+};
 
 /// Create an empty Collection.
 Collection* createCollection(const char* uri);
@@ -46,7 +46,7 @@ Collection* getNthCollection(int n);
 int getNumDNAComponentsIn(const Collection* col);
 
 /// Get the Nth DNAComponent inside a Collection.
-struct DNAComponent* getNthDNAComponentIn(const Collection* col, int n);
+DNAComponent* getNthDNAComponentIn(const Collection* col, int n);
 
 /// Get the uri of a Collection.
 /// Gotcha: this is different from both name and displayID.
@@ -76,12 +76,12 @@ void setCollectionName(Collection* col, const char* name);
 void setCollectionDescription(Collection* col, const char* desc);
 
 /// Add a DNAComponent to a Collection.
-void addDNAComponentToCollection(struct DNAComponent* com, Collection* col);
+void addDNAComponentToCollection(DNAComponent* com, Collection* col);
 
 /// Find out whether a DNAComponent is inside a Collection.
 /// @todo better name
 /// Gotcha: lowercase dna
-int dnaComponentInCollection(const struct DNAComponent* com, const Collection* col);
+int dnaComponentInCollection(const DNAComponent* com, const Collection* col);
 
 /// Print an outline of a Collection to stdout.
 void printCollection(const Collection* col, int tabs);

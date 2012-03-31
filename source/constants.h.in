@@ -12,7 +12,17 @@
 
 #cmakedefine SBOL_DEBUG_STATEMENTS ///< Set using CMake. Adds some print statements for debugging.
 
-#define SBOL_SCHEMA_FILENAME "@SBOL_SCHEMA_DIR@/sbol.xsd"
+// folder structure
+#define SBOL_SOURCE_DIR  "@SBOL_SOURCE_DIR@"
+#define SBOL_ROOT_DIR    "@SBOL_ROOT_DIR@"
+#define SBOL_BUILD_DIR   "@SBOL_BUILD_DIR@"
+#define SBOL_SCHEMA_DIR  "@SBOL_SCHEMA_DIR@"
+#define SBOL_TEST_DIR    "@SBOL_TEST_DIR@"
+#define SBOL_EXAMPLE_DIR "@SBOL_EXAMPLE_DIR@"
+#define SBOL_RELEASE_DIR "@SBOL_RELEASE_DIR@"
+#define SBOL_MANUAL_DIR  "@SBOL_MANUAL_DIR@"
+
+#define SBOL_SCHEMA_FILENAME SBOL_SCHEMA_DIR "/sbol.xsd"
 
 // xml namespace urls
 #define NSURL_RDF  "http://www.w3.org/1999/02/22-rdf-syntax-ns#"

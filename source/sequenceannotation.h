@@ -11,14 +11,14 @@
 #include "prototypes.h"
 
 /// Implements the SBOL Core SequenceAnnotation object.
-typedef struct SequenceAnnotation {
-	struct SBOLObject* base;
-	struct PositionProperty *genbankStart;
-	struct PositionProperty *genbankEnd;
-	struct PolarityProperty *strand;
-	struct DNAComponent* subComponent;
-	struct PointerArray* precedes;
-} SequenceAnnotation;
+struct _SequenceAnnotation {
+	SBOLObject* base;
+	PositionProperty *genbankStart;
+	PositionProperty *genbankEnd;
+	PolarityProperty *strand;
+	DNAComponent* subComponent;
+	PointerArray* precedes;
+};
 
 // create/destroy
 SequenceAnnotation* createSequenceAnnotation(const char* uri);
@@ -41,7 +41,7 @@ void setBioStart(SequenceAnnotation* ann, int start);
 void setBioEnd(SequenceAnnotation* ann, int end);
 void setStrandPolarity(SequenceAnnotation* ann, int polarity);
 
-struct DNAComponent* getSubComponent(const SequenceAnnotation* ann);
+DNAComponent* getSubComponent(const SequenceAnnotation* ann);
 
 // constrain order
 void addPrecedesRelationship(SequenceAnnotation* upstream, SequenceAnnotation* downstream);

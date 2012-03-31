@@ -11,10 +11,10 @@
 #include "prototypes.h"
 
 /// Implements the SBOL Core DNASequence object.
-typedef struct DNASequence {
-	struct SBOLObject* base;
-	struct NucleotidesProperty *nucleotides;
-} DNASequence;
+struct _DNASequence {
+	SBOLObject* base;
+	NucleotidesProperty *nucleotides;
+};
 
 DNASequence* createDNASequence(char* uri);
 void deleteDNASequence(DNASequence* seq);

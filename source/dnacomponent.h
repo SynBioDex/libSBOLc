@@ -11,11 +11,11 @@
 #include "prototypes.h"
 
 /// Implements the SBOL Core DNAComponent object.
-typedef struct DNAComponent {
-	struct SBOLCompoundObject* base;  ///< uri, displayID, name, description
-	struct DNASequence* dnaSequence;  ///< sequence
-	struct PointerArray* annotations; ///< array of SequenceAnnotations
-} DNAComponent;
+struct _DNAComponent {
+	SBOLCompoundObject* base;  ///< uri, displayID, name, description
+	DNASequence* dnaSequence;  ///< sequence
+	PointerArray* annotations; ///< array of SequenceAnnotations
+};
 
 /// Create an empty DNAComponent.
 DNAComponent* createDNAComponent(const char* uri);
@@ -47,7 +47,7 @@ DNAComponent* getDNAComponent(const char* uri);
 int getNumSequenceAnnotationsFor(const DNAComponent* com);
 
 /// Get the Nth SequenceAnnotation for a DNAComponent.
-struct SequenceAnnotation* getNthSequenceAnnotationFor(const DNAComponent* com, int n);
+SequenceAnnotation* getNthSequenceAnnotationFor(const DNAComponent* com, int n);
 
 /// Get the uri of a DNAComponent.
 /// Gotcha: this is different from both name and displayID.
@@ -66,7 +66,7 @@ char* getDNAComponentDescription(const DNAComponent* com);
 
 /// Get the DNASequence of a DNAComponent.
 /// Gotcha: DNA, not Dna
-struct DNASequence* getDNAComponentSequence(DNAComponent* com);
+DNASequence* getDNAComponentSequence(DNAComponent* com);
 
 /// Set the uri of a DNAComponent.
 /// Gotcha: this is different from both name and displayID.
@@ -85,15 +85,15 @@ void setDNAComponentDescription(DNAComponent* com, const char* desc);
 
 /// Set the DNASequence of a DNAComponent.
 /// Gotcha: DNA, not Dna
-void setDNAComponentSequence(DNAComponent* com, struct DNASequence* seq);
+void setDNAComponentSequence(DNAComponent* com, DNASequence* seq);
 
 /// Add a SequenceAnnotation to a DNAComponent.
 /// @todo where should this go? here, sequenceannotation.h, sbol.h?
-void addSequenceAnnotation(DNAComponent* com, struct SequenceAnnotation* ann);
+void addSequenceAnnotation(DNAComponent* com, SequenceAnnotation* ann);
 
 /// Set a DNAComponent as the subComponent of a SequenceAnnotation.
 /// To remove it later, call this with a NULL annotation.
-void setSubComponent(struct SequenceAnnotation* ann, DNAComponent* com);
+void setSubComponent(SequenceAnnotation* ann, DNAComponent* com);
 
 /// Print an outline of a DNAComponent to stdout.
 void printDNAComponent(const DNAComponent* com, int tabs);

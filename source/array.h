@@ -22,11 +22,11 @@
 /// start with a pointer to their base struct rather than the
 /// struct itself, so you can only cast part of them to
 /// (SBOLObject *). That's probably fixable though.
-typedef struct PointerArray {
+struct _PointerArray {
 	int numPointersInUse;
 	int numPointersTotal;
 	void** pointers;
-} PointerArray;
+};
 
 /// Create an empty PointerArray.
 PointerArray* createPointerArray();

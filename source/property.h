@@ -25,10 +25,10 @@
 /// a hook for doing something whenever a Property is read or written.
 /// It shouln't be used directly though because there's no flag for
 /// telling whether it holds an int or a char *.
-typedef union Property {
+union _Property {
 	int   number;
 	char* letters;
-} Property;
+};
 
 Property *createProperty();
 void deleteProperty(Property *pro);
@@ -44,9 +44,9 @@ char *getLetters(const Property *pro);
  ****************/
 
 /// Base struct for all text-containing Properties.
-typedef struct TextProperty {
-	union Property *text;
-} TextProperty;
+struct _TextProperty {
+	Property *text;
+};
 
 TextProperty* createTextProperty();
 void deleteTextProperty(TextProperty* pro);
@@ -62,9 +62,9 @@ void printTextProperty(const TextProperty* pro);
 /// A TextProperty that only allows creation
 /// of values that aren't already in use as the
 /// uri of an SBOLObject.
-typedef struct URIProperty {
-	struct TextProperty* uri;
-} URIProperty;
+struct _URIProperty {
+	TextProperty* uri;
+};
 
 URIProperty* createURIProperty();
 void deleteURIProperty(URIProperty* pro);
@@ -77,9 +77,9 @@ void printURIProperty(const URIProperty* pro);
  * NucleotidesProperty
  ***********************/
 
-typedef struct NucleotidesProperty {
-	struct TextProperty *nucleotides;
-} NucleotidesProperty;
+struct _NucleotidesProperty {
+	TextProperty *nucleotides;
+};
 
 NucleotidesProperty *createNucleotidesProperty();
 void deleteNucleotidesProperty(NucleotidesProperty *pro);
@@ -97,9 +97,9 @@ void printNucleotidesProperty(const NucleotidesProperty *pro);
 /// only make sense for groups, not individual PositionProperties.
 /// For example, SequenceAnnotation->bioEnd should be at least
 /// as large as SequenceAnnotation->bioStart.
-typedef struct PositionProperty {
-	union Property* position;
-} PositionProperty;
+struct _PositionProperty {
+	Property* position;
+};
 
 PositionProperty* createPositionProperty();
 void deletePositionProperty(PositionProperty* pro);
@@ -113,19 +113,19 @@ void printPositionProperty(const PositionProperty* pro);
  ********************/
 
 /// @todo rename to StrandOrientation?
-typedef enum StrandPolarity {
+enum _StrandPolarity {
 	STRAND_FORWARD,
 	STRAND_BIDIRECTIONAL,
 	STRAND_REVERSE
-} StrandPolarity;
+};
 
 /// IntProperty that only allows StrandPolarity values.
 /// 1 indicates the positive strand relative to the parent
 /// component, and 0 indicates the reverse complement.
 /// @todo rename to StrandProperty? or OrientationProperty?
-typedef struct PolarityProperty {
-	union Property* polarity;
-} PolarityProperty;
+struct _PolarityProperty {
+	Property* polarity;
+};
 
 PolarityProperty* createPolarityProperty();
 void deletePolarityProperty(PolarityProperty* pro);

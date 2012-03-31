@@ -19,9 +19,9 @@
 /// SequenceAnnotation, DNAComponent, and Collection.
 /// This is where to put anything that needs to be 
 /// accessible from each of the four main structs.
-typedef struct SBOLObject {
-	struct URIProperty* uri;
-} SBOLObject;
+struct _SBOLObject {
+	URIProperty* uri;
+};
 
 SBOLObject* createSBOLObject(const char* uri);
 void        deleteSBOLObject(SBOLObject* obj);
@@ -45,12 +45,12 @@ char* getSBOLObjectURI(const SBOLObject* obj);
 /// SBOLObject that also includes a name,
 /// displayID, and description.
 /// Used a basis for DNAComponent and Collection.
-typedef struct SBOLCompoundObject {
-	struct SBOLObject*   base;
-	struct TextProperty* displayID;
-	struct TextProperty* name;
-	struct TextProperty* description;
-} SBOLCompoundObject;
+struct _SBOLCompoundObject {
+	SBOLObject*   base;
+	TextProperty* displayID;
+	TextProperty* name;
+	TextProperty* description;
+};
 
 // TODO remove once it's clear these aren't needed
 int getNumSBOLCompoundObjects();

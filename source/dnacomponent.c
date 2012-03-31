@@ -235,7 +235,7 @@ void cleanupDNAComponents() {
 	}
 }
 
-void printDNAComponent(const struct DNAComponent* com, int tabs) {
+void printDNAComponent(const DNAComponent* com, int tabs) {
 	if (!com)
 		return;
 	indent(tabs);   printf("%s\n", getDNAComponentURI(com));

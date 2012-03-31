@@ -19,7 +19,7 @@
    xmlns:dc="http://purl.org/dc/elements/1.1/"
    version="0.3">
 
-   <xsd:import namespace="http://www.w3.org/1999/02/22-rdf-syntax-ns#" schemaLocation="rdf.xsd"/>
+   <xsd:import namespace="http://www.w3.org/1999/02/22-rdf-syntax-ns#" schemaLocation="@SBOL_SCHEMA_DIR@/rdf.xsd"/>
 
    <xsd:annotation>
       <xsd:documentation>

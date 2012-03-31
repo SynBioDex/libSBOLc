@@ -12,7 +12,7 @@
 #include "prototypes.h"
 
 /// @todo remove?
-#include <libxml/parser.h> ///< @todo fix this up
+//#include <libxml/parser.h> ///< @todo fix this up
 
 /// @todo figure out these prototypes
 

@@ -140,7 +140,7 @@ DNASequence* getNthDNASequence(int n) {
 		return NULL;
 }
 
-void printDNASequence(const struct DNASequence* seq, int tabs) {
+void printDNASequence(const DNASequence* seq, int tabs) {
 	if (!seq)
 	    return;
 	// TODO print just the beginning of the sequence?

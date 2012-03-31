@@ -8,13 +8,13 @@
  * Property
  ************/
 
-union Property *createProperty() {
-	union Property *pro = malloc(sizeof(union Property));
+Property *createProperty() {
+	Property *pro = malloc(sizeof(Property));
 	pro->letters = NULL;
 	return pro;
 }
 
-void deleteProperty(union Property *pro) {
+void deleteProperty(Property *pro) {
 	if (pro) {
 		pro->letters = NULL;
 		free(pro);
@@ -22,27 +22,27 @@ void deleteProperty(union Property *pro) {
 	}
 }
 
-void setNumber(union Property *pro, int num) {
+void setNumber(Property *pro, int num) {
 	if (pro) {
 		pro->number = num;
 	}
 }
 
-void setLetters(union Property *pro, char *str) {
+void setLetters(Property *pro, char *str) {
 	if (pro) {
 		pro->letters = realloc(pro->letters, sizeof(char) * (strlen(str)+1));
 		pro->letters = str;
 	}
 }
 
-int getNumber(const union Property *pro) {
+int getNumber(const Property *pro) {
 	if (pro)
 		return pro->number;
 	else
 		return -1; /// @todo decide if -1 is a good default
 }
 
-char *getLetters(const union Property *pro) {
+char *getLetters(const Property *pro) {
 	if (!pro)
 		return NULL;
 	else
