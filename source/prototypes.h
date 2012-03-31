@@ -1,6 +1,17 @@
 #ifndef SBOL_PROTOTYPES_HEADER
 #define SBOL_PROTOTYPES_HEADER
 
+////////////////////////////////////////////////////////////
+/// @file prototypes.h
+/// 
+/// Declares all the major structs, unions, and enums
+/// so the compiler will recognize them when reading
+/// through the rest of the code. This was necessary
+/// because even though the SBOL core is split up into 
+/// files for easier maintenance, a lot of them are
+/// interdependent.
+////////////////////////////////////////////////////////////
+
 typedef enum   _StrandPolarity      StrandPolarity;
 
 typedef union  _Property            Property;
