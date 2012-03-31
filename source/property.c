@@ -207,7 +207,7 @@ int compareNucleotidesProperty(const NucleotidesProperty *pro1,
 	return compareTextProperty(pro1->nucleotides, pro2->nucleotides);
 }
 
-/// @todo cut off printing of long sequnces at 50 chars or so
+/// @todo cut off printing of long sequnces at 50 chars or so?
 void printNucleotidesProperty(const NucleotidesProperty *pro) {
 	if (pro)
 		printTextProperty(pro->nucleotides);
@@ -241,12 +241,12 @@ int getPositionProperty(const PositionProperty* pro) {
 	if (pro)
 		return getNumber(pro->position);
 	else
-		return -1; // TODO good error value?
+		return -1; /// @todo good error value?
 }
 
 int comparePositionProperty(const PositionProperty* pro1,
 							const PositionProperty* pro2) {
-	if (!pro1 || !pro2) // TODO check numbers too?
+	if (!pro1 || !pro2) /// @todo check numbers too?
 		return (pro1->position - pro2->position);
 	else
 		return -1;
@@ -254,7 +254,6 @@ int comparePositionProperty(const PositionProperty* pro1,
 
 void printPositionProperty(const PositionProperty* pro) {
 	if (pro)
-		//printIntProperty(pro->position);
 		printf("%i", getNumber(pro->position));
 }
 

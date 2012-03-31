@@ -1,0 +1,11 @@
+////////////////////////////////////////////////////////////
+/// @file rdf.xsd.in
+/// @file sbol.xsd.in
+/// 
+/// SBOL schema file copied from libSBOLj.
+/// Used by CMake to create rdf.xsd and sbol.xsd.
+/// The only thing that's customized is that the 
+/// schemaLocation in <xsd:import>.
+/// 
+/// @todo Check that this comment goes with both files.
+////////////////////////////////////////////////////////////
