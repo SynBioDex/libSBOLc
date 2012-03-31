@@ -1,0 +1,26 @@
+var searchData=
+[
+  ['setcollectiondescription',['setCollectionDescription',['../collection_8h.html#a85d8abb9190b35c6ceee5d23158a30a0',1,'collection.c']]],
+  ['setcollectiondisplayid',['setCollectionDisplayID',['../collection_8h.html#a5562e58452c7f9815cd141bacbadfe65',1,'collection.c']]],
+  ['setcollectionname',['setCollectionName',['../collection_8h.html#ab917d8eb8eb4f667f4980ea2b4673994',1,'collection.c']]],
+  ['setdnacomponentdescription',['setDNAComponentDescription',['../dnacomponent_8h.html#a6496ea04a863b654eb763adf06e769d3',1,'dnacomponent.c']]],
+  ['setdnacomponentdisplayid',['setDNAComponentDisplayID',['../dnacomponent_8h.html#a2eceeb95bd17cb3450b25a6982884312',1,'dnacomponent.c']]],
+  ['setdnacomponentname',['setDNAComponentName',['../dnacomponent_8h.html#a9bb826b741e1cbd0492db6e15e9f3d62',1,'dnacomponent.c']]],
+  ['setdnacomponentsequence',['setDNAComponentSequence',['../dnacomponent_8h.html#ac6a5546713e55671a3b3f1bcc54be320',1,'dnacomponent.c']]],
+  ['setdnacomponenturi',['setDNAComponentURI',['../dnacomponent_8h.html#a0c68f36337a290898c085ed7595609c8',1,'dnacomponent.c']]],
+  ['setletters',['setLetters',['../property_8h.html#a2362370c81f5279a242e9d606fb91bde',1,'property.c']]],
+  ['setnucleotides',['setNucleotides',['../dnasequence_8h.html#aeb1f95f5f881c69c0963e692e54862ab',1,'dnasequence.c']]],
+  ['setnucleotidesproperty',['setNucleotidesProperty',['../property_8h.html#a6db30af1b5c42bdac91b3224df20b892',1,'property.c']]],
+  ['setnumber',['setNumber',['../property_8h.html#ac85cce9551f811ebf097fda1e3221732',1,'property.c']]],
+  ['setpolarityproperty',['setPolarityProperty',['../property_8h.html#a09b76749eb1cccb98432d6784263c063',1,'property.c']]],
+  ['setpositionproperty',['setPositionProperty',['../property_8h.html#aadceb6f80aac7fd96dd566eaeebb8318',1,'property.c']]],
+  ['setsbolcompoundobjectdescription',['setSBOLCompoundObjectDescription',['../object_8h.html#a6b734ebc48f8387034da8c98e022c266',1,'object.c']]],
+  ['setsbolcompoundobjectdisplayid',['setSBOLCompoundObjectDisplayID',['../object_8h.html#aeb94d929608a0d10abd3d31891f62276',1,'object.c']]],
+  ['setsbolcompoundobjectname',['setSBOLCompoundObjectName',['../object_8h.html#a409006fe24b56905f59d33bb1867504e',1,'object.c']]],
+  ['setsbolcompoundobjecturi',['setSBOLCompoundObjectURI',['../object_8h.html#a610f42487fe44a2485fe60efa5829fb1',1,'object.c']]],
+  ['setsbolobjecturi',['setSBOLObjectURI',['../object_8h.html#aaa06a93048cf5da20bc9a9837d6bcb95',1,'object.c']]],
+  ['setsubcomponent',['setSubComponent',['../dnacomponent_8h.html#a48b51b7f98df536e045522ce683ace7d',1,'dnacomponent.c']]],
+  ['settextproperty',['setTextProperty',['../property_8h.html#a1b4bf73fab652f3898f835c95971e999',1,'property.c']]],
+  ['seturiproperty',['setURIProperty',['../property_8h.html#ad6dbe2a1112ce9e5963b4eec2662141b',1,'property.c']]],
+  ['strtopolarity',['strToPolarity',['../utilities_8h.html#afae7344e0c6864523b4e002318a26962',1,'utilities.c']]]
+];
