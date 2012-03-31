@@ -1,5 +1,6 @@
 ///////////////////////////////////////////////////////////
-/// @file sbol.h
+/// @file
+/// 
 /// Gathers together all the SBOL functions so
 /// they can be easily #included. Although the SBOL core
 /// is separated into files for easier maintenance,
@@ -12,10 +13,8 @@
 #ifndef SBOL_HEADER
 #define SBOL_HEADER
 
-#include "constants.h"
-#include "prototypes.h"
-
 // from other files
+#include "constants.h"
 #include "dnasequence.h"
 #include "sequenceannotation.h"
 #include "dnacomponent.h"

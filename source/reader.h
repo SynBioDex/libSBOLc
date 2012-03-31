@@ -1,8 +1,8 @@
 ///////////////////////////////////////////////////////////
-/// @file reader.h
-/// This file contains functions for importing SBOL objects
-/// from an XML file. Only the readSBOLCore function is
-/// meant to be exported; everything else supports it.
+/// @file
+/// Contains functions for importing SBOL objects
+/// from an XML file. Only readSBOLCore is meant to be
+/// exported; everything else supports it.
 ///////////////////////////////////////////////////////////
 
 #ifndef SBOL_READER_HEADER

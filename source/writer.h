@@ -1,5 +1,5 @@
 ///////////////////////////////////////////////////////////
-/// @file writer.h
+/// @file
 /// This file contains functions for writing the SBOL core
 /// to an XML file. Only writeSBOLCore is meant to be
 /// exported; everything else supports it.

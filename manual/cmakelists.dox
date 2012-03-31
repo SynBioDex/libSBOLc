@@ -1,0 +1,9 @@
+////////////////////////////////////////////////////////////
+/// @file CMakeLists.txt
+/// 
+/// Directs the build process. New build options can be
+/// added here, and variables set here can be written into
+/// the source code before it's compiled. It depends on the
+/// Find*.cmake files for setting a bunch of different
+/// environment variables.
+////////////////////////////////////////////////////////////

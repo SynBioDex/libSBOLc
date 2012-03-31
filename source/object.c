@@ -1,67 +1,29 @@
 #include <stdlib.h>
 
-/// @todo remove?
 #include "property.h"
 #include "array.h"
 #include "object.h"
 
-/// @todo will "object" conflict with other filenames?
-
-/**************
- * SBOLObject
- **************/
-
-SBOLObject* createSBOLObject(const char* uri) {
-	if (!uri || isSBOLObjectURI(uri))
-		return NULL;
-	SBOLObject* obj = malloc(sizeof(SBOLObject));
-	obj->uri = createURIProperty();
-	setSBOLObjectURI(obj, uri);
-	registerSBOLObject(obj);
-	return obj;
-}
-
-void deleteSBOLObject(SBOLObject* obj) {
-	if (obj) {
-		if (obj->uri) {
-			deleteURIProperty(obj->uri);
-			obj->uri = NULL;
-		}
-		removeSBOLObject(obj);
-		//free(obj); // TODO what's wrong with this?q
-		obj = NULL;
-	}
-}
-
-void setSBOLObjectURI(SBOLObject* obj, const char* uri) {
-	if (obj && uri)
-		setURIProperty(obj->uri, uri);
-}
-
-char* getSBOLObjectURI(const SBOLObject* obj) {
-	if (obj)
-		return getURIProperty(obj->uri);
-	else
-		return NULL;
-}
-
-/****************************
- * SBOLObjects Global Array
- ****************************/
+/***********************************************************
+ * SBOLObjects Static Array
+ * 
+ * This stores pointers to all the SBOLObjects in memory
+ * for searching and cleanup.
+ ***********************************************************/
 
 static PointerArray* allSBOLObjects;
 
-void lazyCreateAllSBOLObjects() {
+static void lazyCreateAllSBOLObjects() {
 	if (!allSBOLObjects)
 		allSBOLObjects = createPointerArray();
 }
 
-void registerSBOLObject(SBOLObject* obj) {
+static void registerSBOLObject(SBOLObject* obj) {
 	lazyCreateAllSBOLObjects();
 	insertPointerIntoArray(allSBOLObjects, obj);
 }
 
-void removeSBOLObject(SBOLObject* obj) {
+static void removeSBOLObject(SBOLObject* obj) {
 	if (obj && allSBOLObjects) {
 		int index = indexOfPointerInArray(allSBOLObjects, obj);
 		if (index >= 0)
@@ -76,7 +38,7 @@ int getNumSBOLObjects() {
 	    return 0;
 }
 
-// TODO generalize this so it's not repeated everywhere
+/// @todo generalize this so it's not repeated everywhere
 int isSBOLObjectURI(const char* uri) {
 	lazyCreateAllSBOLObjects();
 	if (!uri)
@@ -129,12 +91,135 @@ void cleanupSBOLObjects() {
 	}
 }
 
+/**************
+ * SBOLObject
+ **************/
+
+SBOLObject* createSBOLObject(const char* uri) {
+	if (!uri || isSBOLObjectURI(uri))
+		return NULL;
+	SBOLObject* obj = malloc(sizeof(SBOLObject));
+	obj->uri = createURIProperty();
+	setSBOLObjectURI(obj, uri);
+	registerSBOLObject(obj);
+	return obj;
+}
+
+void deleteSBOLObject(SBOLObject* obj) {
+	if (obj) {
+		if (obj->uri) {
+			deleteURIProperty(obj->uri);
+			obj->uri = NULL;
+		}
+		removeSBOLObject(obj);
+		//free(obj); /// @todo what's wrong with this?
+		obj = NULL;
+	}
+}
+
+void setSBOLObjectURI(SBOLObject* obj, const char* uri) {
+	if (obj && uri)
+		setURIProperty(obj->uri, uri);
+}
+
+char* getSBOLObjectURI(const SBOLObject* obj) {
+	if (obj)
+		return getURIProperty(obj->uri);
+	else
+		return NULL;
+}
+
+/***********************************************************
+ * SBOLCompoundObjects Static Array
+ * 
+ * This stores pointers to all the SBOLCompoundObjects
+ * in memory for searching and cleanup.
+ ***********************************************************/
+
+static PointerArray* allSBOLCompoundObjects;
+
+static void lazyCreateAllSBOLCompoundObjects() {
+	if (!allSBOLCompoundObjects)
+		allSBOLCompoundObjects = createPointerArray();
+}
+
+static void registerSBOLCompoundObject(SBOLCompoundObject* obj) {
+	lazyCreateAllSBOLCompoundObjects();
+	insertPointerIntoArray(allSBOLCompoundObjects, obj);
+}
+
+static void removeSBOLCompoundObject(SBOLCompoundObject* obj) {
+	if (obj && allSBOLCompoundObjects) {
+		int index = indexOfPointerInArray(allSBOLCompoundObjects, obj);
+		if (index >= 0)
+			removePointerFromArray(allSBOLCompoundObjects, index);
+	}
+}
+
+int getNumSBOLCompoundObjects() {
+	if (allSBOLCompoundObjects)
+	    return getNumPointersInArray(allSBOLCompoundObjects);
+	else
+	    return 0;
+}
+
+int isSBOLCompoundObjectURI(const char* uri) {
+	lazyCreateAllSBOLCompoundObjects();
+	if (!uri)
+		return 0;
+	int n;
+	char* candidate;
+	SBOLCompoundObject* obj;
+	for (n=0; n < getNumSBOLCompoundObjects(); n++) {
+		obj = getNthSBOLCompoundObject(n);
+		candidate = getSBOLCompoundObjectURI(obj);
+		if (candidate && strcmp(candidate, uri) == 0)
+			return 1;
+	}
+	return 0;
+}
+
+SBOLCompoundObject* getNthSBOLCompoundObject(int n) {
+	if (getNumSBOLCompoundObjects() > n && n >= 0)
+		return (SBOLCompoundObject *)getNthPointerInArray(allSBOLCompoundObjects, n);
+	else
+		return NULL;
+}
+
+SBOLCompoundObject* getSBOLCompoundObject(const char* uri) {
+	lazyCreateAllSBOLCompoundObjects();
+	if (!uri)
+		return NULL;
+	int n;
+	char* candidate;
+	SBOLCompoundObject* obj;
+	for (n=0; n < getNumSBOLCompoundObjects(); n++) {
+		obj = getNthSBOLCompoundObject(n);
+		candidate = getSBOLCompoundObjectURI(obj);
+		if (candidate && strcmp(candidate, uri) == 0)
+			return obj;
+	}
+	return NULL;
+}
+
+void cleanupSBOLCompoundObjects() {
+	if (allSBOLCompoundObjects) {
+		int n;
+		SBOLCompoundObject* obj;
+		for (n=getNumSBOLCompoundObjects()-1; n>=0; n--) {
+			obj = getNthSBOLCompoundObject(n);
+			deleteSBOLCompoundObject(obj);
+		}
+		deletePointerArray(allSBOLCompoundObjects);
+		allSBOLCompoundObjects = NULL;
+	}
+}
+
 /**********************
  * SBOLCompoundObject
  **********************/
 
 SBOLCompoundObject* createSBOLCompoundObject(const char* uri) {
-	// TODO isSBOLObjectURI
 	if (!uri || isSBOLCompoundObjectURI(uri) || isSBOLObjectURI(uri))
 		return NULL;
 	SBOLCompoundObject* obj = malloc(sizeof(SBOLCompoundObject));
@@ -221,85 +306,3 @@ char* getSBOLCompoundObjectDescription(const SBOLCompoundObject* obj) {
 		return NULL;
 }
 
-/************************************
- * SBOLCompoundObjects GLobal Array
- ************************************/
-
-static PointerArray* allSBOLCompoundObjects;
-
-void lazyCreateAllSBOLCompoundObjects() {
-	if (!allSBOLCompoundObjects)
-		allSBOLCompoundObjects = createPointerArray();
-}
-
-void registerSBOLCompoundObject(SBOLCompoundObject* obj) {
-	lazyCreateAllSBOLCompoundObjects();
-	insertPointerIntoArray(allSBOLCompoundObjects, obj);
-}
-
-void removeSBOLCompoundObject(SBOLCompoundObject* obj) {
-	if (obj && allSBOLCompoundObjects) {
-		int index = indexOfPointerInArray(allSBOLCompoundObjects, obj);
-		if (index >= 0)
-			removePointerFromArray(allSBOLCompoundObjects, index);
-	}
-}
-
-int getNumSBOLCompoundObjects() {
-	if (allSBOLCompoundObjects)
-	    return getNumPointersInArray(allSBOLCompoundObjects);
-	else
-	    return 0;
-}
-
-int isSBOLCompoundObjectURI(const char* uri) {
-	lazyCreateAllSBOLCompoundObjects();
-	if (!uri)
-		return 0;
-	int n;
-	char* candidate;
-	SBOLCompoundObject* obj;
-	for (n=0; n < getNumSBOLCompoundObjects(); n++) {
-		obj = getNthSBOLCompoundObject(n);
-		candidate = getSBOLCompoundObjectURI(obj);
-		if (candidate && strcmp(candidate, uri) == 0)
-			return 1;
-	}
-	return 0;
-}
-
-SBOLCompoundObject* getNthSBOLCompoundObject(int n) {
-	if (getNumSBOLCompoundObjects() > n && n >= 0)
-		return (SBOLCompoundObject *)getNthPointerInArray(allSBOLCompoundObjects, n);
-	else
-		return NULL;
-}
-
-SBOLCompoundObject* getSBOLCompoundObject(const char* uri) {
-	lazyCreateAllSBOLCompoundObjects();
-	if (!uri)
-		return NULL;
-	int n;
-	char* candidate;
-	SBOLCompoundObject* obj;
-	for (n=0; n < getNumSBOLCompoundObjects(); n++) {
-		obj = getNthSBOLCompoundObject(n);
-		candidate = getSBOLCompoundObjectURI(obj);
-		if (candidate && strcmp(candidate, uri) == 0)
-			return obj;
-	}
-	return NULL;
-}
-
-void cleanupSBOLCompoundObjects() {
-	if (allSBOLCompoundObjects) {
-		int n;
-		SBOLCompoundObject* obj;
-		for (n=getNumSBOLCompoundObjects()-1; n>=0; n--) {
-			obj = getNthSBOLCompoundObject(n);
-			deleteSBOLCompoundObject(obj);
-		}
-		deletePointerArray(allSBOLCompoundObjects);
-		allSBOLCompoundObjects = NULL;
-	}
-}

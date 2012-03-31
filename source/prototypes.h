@@ -2,7 +2,7 @@
 #define SBOL_PROTOTYPES_HEADER
 
 ////////////////////////////////////////////////////////////
-/// @file prototypes.h
+/// @file
 /// 
 /// Declares all the major structs, unions, and enums
 /// so the compiler will recognize them when reading

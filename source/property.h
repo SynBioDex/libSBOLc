@@ -1,6 +1,6 @@
 ///////////////////////////////////////////////////////////
-/// @file property.h
-/// Defines a simple hierarchy of Properties,
+/// @file
+/// Defines a hierarchy of Properties,
 /// which hold data for SBOLObjects. Although they don't
 /// do much so far, this is where you would add restraints
 /// on the getting and setting of specific values. For

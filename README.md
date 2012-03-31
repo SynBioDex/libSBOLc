@@ -1,8 +1,10 @@
-# libSBOLc: SBOL C library
+libSBOLc: SBOL C library {#mainpage}
+====================================
 
-[libSBOLc](https://github.com/SynBioDex/libSBOLc) is a C implementation of the [Synthetic Biology Open Language (SBOL)](http://sbolstandard.org). It uses the XML schema and example files from [libSBOLj](https://github.com/SynBioDex/libSBOLj), but the rest of the code was developed separately. The two libraries should eventually present similar interfaces, except where language conventions differ.
+[libSBOLc](https://github.com/SynBioDex/libSBOLc) is a C library for working with the [Synthetic Biology Open Language (SBOL)](http://sbolstandard.org). It uses the XML schema and example files from [libSBOLj](https://github.com/SynBioDex/libSBOLj), but the rest of the code was developed separately. The two libraries should eventually present similar interfaces, except where language conventions differ.
 
-## Building from source
+Building from source {#cmake}
+-----------------------------
 
 To compile libSBOLc, you will need:
 
@@ -10,7 +12,7 @@ To compile libSBOLc, you will need:
 * [CMake](http://www.cmake.org/cmake/resources/software.html) for generating platform-specific build instructions
 * a C compiler, such as [gcc](http://gcc.gnu.org/) or [MinGW](http://www.mingw.org/wiki/InstallationHOWTOforMinGW)
 
-First, download them from the links above. Or if you're on Debian/Ubuntu this command should work too:
+First, download them from the links above. Or if you're on Debian/Ubuntu this command should work:
 
     sudo apt-get install git cmake-gui build-essential
 
@@ -34,7 +36,8 @@ or
 
 Binaries will be generated in the <code>libSBOLc/release</code> folder.
 
-## Testing
+Testing {#test}
+---------------
 
 Once you've configured and built libSBOLc, you can <code>cd</code> into the <code>libSBOLc/release</code> folder and run some simple tests to check that everything works:
 
@@ -43,3 +46,9 @@ Once you've configured and built libSBOLc, you can <code>cd</code> into the <cod
 or 
 
     ./test_all.exe
+
+Updating the documentation {#doxygen}
+-------------------------------------
+
+Updating the Python wrapper {#swig}
+-----------------------------------

@@ -1,6 +1,6 @@
 ///////////////////////////////////////////////////////////
-/// @file dnasequence.h
-/// This file defines the DNASequence struct, as well as
+/// @file
+/// Defines the DNASequence struct, as well as
 /// functions for operating on it.
 ///////////////////////////////////////////////////////////
 

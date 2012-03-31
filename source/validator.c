@@ -5,6 +5,7 @@
 
 #include "sbol.h"
 
+/// @todo find the webpage this was adapted from
 int isValidSBOL(const xmlDocPtr doc) {
     xmlDocPtr schema_doc = xmlReadFile(SBOL_SCHEMA_FILENAME, NULL, XML_PARSE_NONET);
     if (!schema_doc) {

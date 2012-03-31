@@ -1,6 +1,6 @@
 ///////////////////////////////////////////////////////////
-/// @file object.h
-/// This file defines the SBOLObject struct, as well as
+/// @file
+/// Defines the SBOLObject struct, as well as
 /// functions for operating on it.
 ///////////////////////////////////////////////////////////
 
@@ -20,22 +20,45 @@
 /// This is where to put anything that needs to be 
 /// accessible from each of the four main structs.
 struct _SBOLObject {
-	URIProperty* uri;
+	URIProperty* uri; ///< Unique string for identification.
 };
 
+/// Create an empty SBOLObject.
+/// @return A pointer to the new SBOLObject.
 SBOLObject* createSBOLObject(const char* uri);
-void        deleteSBOLObject(SBOLObject* obj);
 
-// TODO remove once it's clear these aren't needed
+/// Delete an SBOLObject.
+/// This shouldn't be called directly;
+/// instead, use deleteDNASequence, deleteCollection, etc.
+void deleteSBOLObject(SBOLObject* obj);
+
+/// Get the total number of SBOLObjects in memory.
+/// This includes the ones that are contained in other structs.
 int getNumSBOLObjects();
+
+/// Find out whether there's an SBOLObject with this URI.
+/// This includes the ones that are contained in other structs.
 int isSBOLObjectURI(const char* uri);
+
+/// Get the Nth SBOLObject in memory.
+/// This includes the ones that are contained in other structs.
 SBOLObject* getNthSBOLObject(int n);
+
+/// Get the SBOLObject associated with this URI.
+/// This shouldn't be called directly;
+/// instead, use getDNASequence, getSequenceAnnotation, etc.
 SBOLObject* getSBOLObject(const char* uri);
-void registerSBOLObject(SBOLObject* obj);
-void removeSBOLObject(SBOLObject* obj);
+
+/// Delete all SBOLObjects from memory.
+/// @todo remove this? is it ever used?
 void cleanupSBOLObjects();
 
-void  setSBOLObjectURI(SBOLObject* obj, const char* uri);
+/// Set the URI of an SBOLObject.
+/// This shouldn't be called directly.
+void setSBOLObjectURI(SBOLObject* obj, const char* uri);
+
+/// Get the URI of an SBOLObject.
+/// This shouldn't be called directly.
 char* getSBOLObjectURI(const SBOLObject* obj);
 
 /**********************
@@ -44,36 +67,71 @@ char* getSBOLObjectURI(const SBOLObject* obj);
 
 /// SBOLObject that also includes a name,
 /// displayID, and description.
-/// Used a basis for DNAComponent and Collection.
+/// Used a base struct for DNAComponent and Collection.
 struct _SBOLCompoundObject {
-	SBOLObject*   base;
-	TextProperty* displayID;
-	TextProperty* name;
-	TextProperty* description;
+	SBOLObject*   base;        ///< uri
+	TextProperty* displayID;   ///< Like the uri but for display purposes. Not necessarily unique.
+	TextProperty* name;        ///< Like the uri but human-readable. Not necessarily unique.
+	TextProperty* description; ///< Some text describing the object.
 };
 
-// TODO remove once it's clear these aren't needed
+/// Get the total number of SBOLCompoundObjects in memory.
 int getNumSBOLCompoundObjects();
+
+/// Find out whether there's an SBOLCompoundObject with this URI.
 int isSBOLCompoundObjectURI(const char* uri);
+
+/// Get the Nth SBOLCompoundObject in memory.
 SBOLCompoundObject* getNthSBOLCompoundObject(int n);
+
+/// Get the SBOLCompoundObject associated with this URI.
 SBOLCompoundObject* getSBOLCompoundObject(const char* uri);
-void registerSBOLCompoundObject(SBOLCompoundObject* obj);
-void removeSBOLCompoundObject(SBOLCompoundObject* obj);
+
+/// Create an empty SBOLCompoundObject.
+/// @return A pointer to the new SBOLCompoundObject.
+SBOLCompoundObject* createSBOLCompoundObject(const char* uri);
+
+/// Delete an SBOLObject.
+/// This shouldn't be called directly;
+/// instead, use deleteDNAComponent, deleteCollection, etc.
+void deleteSBOLCompoundObject(SBOLCompoundObject* obj);
+
+/// Delete all SBOLCompoundObjects from memory.
+/// @todo remove this? is it ever used?
 void cleanupSBOLCompoundObjects();
 
-SBOLCompoundObject* createSBOLCompoundObject(const char* uri);
-void                deleteSBOLCompoundObject(SBOLCompoundObject* obj);
+/// Set the URI of an SBOLComoundObject.
+/// This shouldn't be called directly.
+void setSBOLCompoundObjectURI(SBOLCompoundObject* obj, const char* uri);
 
-void  setSBOLCompoundObjectURI(SBOLCompoundObject* obj, const char* uri);
+/// Get the URI of an SBOLCompoundObject.
+/// This shouldn't be called directly.
 char* getSBOLCompoundObjectURI(const SBOLCompoundObject* obj);
 
-void  setSBOLCompoundObjectDisplayID(SBOLCompoundObject* obj, const char* id);
+/// Set the displayID of an SBOLCompoundObject.
+/// This shouldn't be called directly.
+/// Gotcha: uppercase D
+void setSBOLCompoundObjectDisplayID(SBOLCompoundObject* obj, const char* id);
+
+/// Get the URI of an SBOLCompoundObject.
+/// This shouldn't be called directly.
+/// Gotcha: uppercase D
 char* getSBOLCompoundObjectDisplayID(const SBOLCompoundObject* obj);
 
-void  setSBOLCompoundObjectName(SBOLCompoundObject* obj, const char* name);
+/// Set the name of an SBOLCompoundObject.
+/// This shouldn't be called directly.
+void setSBOLCompoundObjectName(SBOLCompoundObject* obj, const char* name);
+
+/// Get the name of an SBOLCompoundObject.
+/// This shouldn't be called directly.
 char* getSBOLCompoundObjectName(const SBOLCompoundObject* obj);
 
-void  setSBOLCompoundObjectDescription(SBOLCompoundObject* obj, const char* descr);
+/// Set the description of an SBOLCompoundObject.
+/// This shouldn't be called directly.
+void setSBOLCompoundObjectDescription(SBOLCompoundObject* obj, const char* descr);
+
+/// Get the description of an SBOLCompoundObject.
+/// This shouldn't be called directly.
 char* getSBOLCompoundObjectDescription(const SBOLCompoundObject* obj);
 
 #endif

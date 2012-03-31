@@ -1,5 +1,5 @@
 ///////////////////////////////////////////////////////////
-/// @file array.h
+/// @file
 /// Defines the PointerArray struct, as well as
 /// functions for operating on it.
 /// 
@@ -10,22 +10,22 @@
 #ifndef SBOL_ARRAY_HEADER
 #define SBOL_ARRAY_HEADER
 
-#define POINTERARRAY_INITIAL_LENGTH 10
-#define POINTERARRAY_SCALING_FACTOR  2
+#define POINTERARRAY_INITIAL_LENGTH 10 ///< Number of pointers to allocate memory for initially.
+#define POINTERARRAY_SCALING_FACTOR  2 ///< What to multiply/divide capacity by when growing/shrinking arrays.
 
 #include "constants.h"
 #include "prototypes.h"
 
 /// A dynamic array of void pointers. Used anywhere a variable
-/// number of SBOLObjects needs to be stored It could be called
+/// number of SBOLObjects needs to be stored. It would be called
 /// "SBOLObjectArray", except that descendants of SBOLObject
 /// start with a pointer to their base struct rather than the
 /// struct itself, so you can only cast part of them to
 /// (SBOLObject *). That's probably fixable though.
 struct _PointerArray {
-	int numPointersInUse;
-	int numPointersTotal;
-	void** pointers;
+	int numPointersInUse; ///< Number of pointers holding useful information.
+	int numPointersTotal; ///< Number of pointers that can be stored before expanding the array.
+	void** pointers;      ///< The actual array.
 };
 
 /// Create an empty PointerArray.

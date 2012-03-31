@@ -1,5 +1,5 @@
 ///////////////////////////////////////////////////////////
-/// @file validator.h
+/// @file
 /// This file defines the isValidSBOL function, which
 /// is used to verify SBOL documents before parsing.
 /// It only catches errors that are defined in the SBOL
@@ -19,6 +19,9 @@
 /// @todo remove?
 #include <libxml/parser.h>
 
+/// Checks an xmlDoc against the SBOL schema.
+/// Prints validation errors to stdout.
+/// @return 1 if valid, or a negative error code otherwise
 int isValidSBOL(const xmlDocPtr doc);
 
 #endif
