@@ -1,10 +1,10 @@
 libSBOLc: SBOL C library {#mainpage}
-====================================
+========================
 
 [libSBOLc](https://github.com/SynBioDex/libSBOLc) is a C library for working with the [Synthetic Biology Open Language (SBOL)](http://sbolstandard.org). It uses the XML schema and example files from [libSBOLj](https://github.com/SynBioDex/libSBOLj), but the rest of the code was developed separately. The two libraries should eventually present similar interfaces, except where language conventions differ.
 
 Building from source {#cmake}
------------------------------
+--------------------
 
 To compile libSBOLc, you will need:
 
@@ -37,7 +37,7 @@ or
 Binaries will be generated in the <code>libSBOLc/release</code> folder.
 
 Testing {#test}
----------------
+-------
 
 Once you've configured and built libSBOLc, you can <code>cd</code> into the <code>libSBOLc/release</code> folder and run some simple tests to check that everything works:
 
@@ -48,7 +48,7 @@ or
     ./test_all.exe
 
 Updating the documentation {#doxygen}
--------------------------------------
+--------------------------
 
 Updating the Python wrapper {#swig}
------------------------------------
+---------------------------
