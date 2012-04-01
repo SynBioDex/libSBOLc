@@ -5,9 +5,6 @@
 #include <libxml/parser.h>
 #include <libxml/xpath.h>
 
-/// @todo remove?
-#include "utilities.h"
-#include "object.h"
 #include "array.h"
 #include "dnasequence.h"
 #include "sequenceannotation.h"
@@ -16,7 +13,7 @@
 
 #include "reader.h"
 
-// these are global mainly to avoid passing them around constantly
+// these are static mainly to avoid passing them around constantly
 static xmlDoc          *DOCUMENT;
 static xmlXPathContext *CONTEXT;
 
@@ -36,7 +33,6 @@ static xmlChar *getNodeURI(xmlNode *node) {
 	return uri;
 }
 
-/// @return a PointerArray* that must freed with deletePointerArray()
 static PointerArray *getNodesMatchingXPath(xmlNode *node, xmlChar *path) {
     if (!path)
         return NULL;
@@ -68,7 +64,6 @@ static PointerArray *getNodesMatchingXPath(xmlNode *node, xmlChar *path) {
 	return results_array;
 }
 
-/// @return an xmlNode* that doesn't need to be separately freed
 static xmlNode *getSingleNodeMatchingXPath(xmlNode *node, xmlChar *path) {
 	PointerArray *results_array = getNodesMatchingXPath(node, path);
 	if (!results_array)
@@ -118,8 +113,8 @@ static void applyFunctionToNodesMatchingXPath(void (*fn)(xmlNode *), xmlNode *no
     }
 }
 
-static void processNodes(void (*fn)(xmlNode *), xmlChar *path) {
-	applyFunctionToNodesMatchingXPath(fn, NULL, path);
+static void processNodes(void (*read)(xmlNode *), xmlChar *path) {
+	applyFunctionToNodesMatchingXPath(read, NULL, path);
 }
 
 /***************************
@@ -335,9 +330,6 @@ static void readCollectionReferences(xmlNode *node) {
  * main parsing function
  *************************/
 
-// TODO return error codes
-// this function parses an xml file, validates it,
-// and creates matching SBOL objects in memory
 void readSBOLCore(char* filename) {
 
 	// parse
