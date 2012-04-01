@@ -1,4 +1,4 @@
-# why are these needed?
+# gather headers
 INCLUDE_DIRECTORIES(
     ${LIBXML2_INCLUDE_DIR}
     ${SBOL_SOURCE_DIR}
@@ -18,7 +18,6 @@ FOREACH( TARGET ${SBOL_EXAMPLE_TARGETS} )
     )
 
     ADD_EXECUTABLE( ${BASENAME}
-        ${SBOL_SOURCE_FILES}
         ${TARGET}
     )
 

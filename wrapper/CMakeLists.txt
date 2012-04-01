@@ -1,11 +1,10 @@
-# why are these needed?
+# gather headers
 INCLUDE_DIRECTORIES(
     ${LIBXML2_INCLUDE_DIR}
     ${SBOL_SOURCE_DIR}
 )
 
 FIND_PACKAGE( SWIG )
-
 IF( SWIG_FOUND )
 
     INCLUDE( ${SWIG_USE_FILE} )

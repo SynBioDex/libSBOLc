@@ -1,4 +1,4 @@
-# why are these needed?
+# gather headers
 INCLUDE_DIRECTORIES(
     ${LIBXML2_INCLUDE_DIR}
     ${SBOL_SOURCE_DIR}

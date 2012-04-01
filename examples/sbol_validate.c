@@ -1,3 +1,4 @@
+#include <stdio.h>
 #include "sbol.h"
 
 int main(int argc, char* argv[]) {

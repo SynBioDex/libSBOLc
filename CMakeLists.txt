@@ -1,4 +1,4 @@
-PROJECT( SBOL )
+PROJECT( SBOL C )
 CMAKE_MINIMUM_REQUIRED( VERSION 2.8 )
 
 # set up folder structure
@@ -24,7 +24,6 @@ OPTION( SBOL_GENERATE_MANUAL  "Generate SBOL documentation using Doxygen" FALSE 
 # build libSBOLc
 ADD_SUBDIRECTORY( schema )
 ADD_SUBDIRECTORY( source )
-#INCLUDE_DIRECTORIES( ${SBOL_SOURCE_DIR} )
 
 # build examples
 IF( SBOL_BUILD_EXAMPLES )

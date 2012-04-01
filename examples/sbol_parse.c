@@ -1,3 +1,4 @@
+#include <stdio.h>
 #include "sbol.h"
 
 void parse(char* filename) {
