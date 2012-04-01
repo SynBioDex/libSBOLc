@@ -3,6 +3,11 @@ libSBOLc: SBOL C library
 
 [libSBOLc](https://github.com/SynBioDex/libSBOLc) is a C library for working with the [Synthetic Biology Open Language (SBOL)](http://sbolstandard.org). It uses the XML schema and example files from [libSBOLj](https://github.com/SynBioDex/libSBOLj), but the rest of the code was developed separately. The two libraries should eventually present similar interfaces, except where language conventions differ.
 
+The rest of this file is a quick guide to getting started with common tasks. For more detailed information, see:
+
+* [the online documentation](http://synbiodex.github.com/libSBOLc)
+* [some example code](https://github.com/SynBioDex/libSBOLc/tree/master/examples)
+
 Building from source
 --------------------
 
