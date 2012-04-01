@@ -1,10 +1,28 @@
-////////////////////////////////////////////////////////////
+//////////////////////////////////////////////////////////////////////
 /// @mainpage
 /// 
-/// @section overview Overview of the code
+/// @section tour A brief tour of the source code
+/// 
+/// There are a few different top-level subdirectories
+/// in the libSBOLc folder, each corresponding to a
+/// different, semi-independent aspect of the project:
+/// 
+/// * schema/ holds the SBOL schema files copied from libSBOLj
+/// * source/ contains source code for the SBOL library
+/// * examples/ contains example code that uses the library,
+///   as well as the xml test files from libSBOLj
+/// * manual/ contains source code for generating the
+///   online documentation
+/// * tests/ contains unit tests, as well as tests that
+///   verify correct handling of the example xml files
+/// * wrapper/ contains code for generating the Python
+///   wrapper using SWIG
+/// * finally, there's the build/ folder for temporary
+///   build files, and the release/ folder for finished
+///   binaries
 /// 
 /// @section doxygen Updating this documentation
 /// 
 /// @section swig Updating the Python wrapper
 /// 
-////////////////////////////////////////////////////////////
+//////////////////////////////////////////////////////////////////////
