@@ -1,56 +1,25 @@
-PROJECT( SBOL )
-CMAKE_MINIMUM_REQUIRED( VERSION 2.8 )
+# find/build libxml
+IF( WIN32 )
+	ADD_SUBDIRECTORY( libxml2 )
+	SET( LIBXML2_INCLUDE_DIR ${SBOL_SOURCE_DIR}/libxml2/include )
+ELSE()
+	FIND_PACKAGE( LibXml2 )
+ENDIF()
+INCLUDE_DIRECTORIES( ${LIBXML2_INCLUDE_DIR} )
 
-# set up folder structure
-SET( SBOL_ROOT_DIR          ${SBOL_SOURCE_DIR}/..     )
-SET( SBOL_BUILD_DIR         ${SBOL_ROOT_DIR}/build    )
-SET( SBOL_SCHEMA_DIR        ${SBOL_ROOT_DIR}/schema   )
-SET( SBOL_TEST_DIR          ${SBOL_ROOT_DIR}/tests    )
-SET( SBOL_EXAMPLE_DIR       ${SBOL_ROOT_DIR}/examples )
-SET( SBOL_RELEASE_DIR       ${SBOL_ROOT_DIR}/release  )
-SET( SBOL_MANUAL_DIR        ${SBOL_ROOT_DIR}/manual   )
-SET( EXECUTABLE_OUTPUT_PATH ${SBOL_RELEASE_DIR}       )
-SET( LIBRARY_OUTPUT_PATH    ${SBOL_RELEASE_DIR}       )
-
-# set initial options
-OPTION( SBOL_DEBUG_STATEMENTS "Add some print statements for debugging"   FALSE )
-OPTION( SBOL_BUILD_EXAMPLES   "Build the example programs"                FALSE )
-OPTION( SBOL_BUILD_TESTS      "Build the unit tests and example tests"    FALSE )
-OPTION( SBOL_GENERATE_PYTHON  "Generate Python wrapper using SWIG"        FALSE )
-OPTION( SBOL_GENERATE_MANUAL  "Generate SBOL documentation using Doxygen" FALSE )
-
-# customize files
+# set variables
 CONFIGURE_FILE(
 	${SBOL_SOURCE_DIR}/constants.h.in
 	${SBOL_SOURCE_DIR}/constants.h
 )
-CONFIGURE_FILE(
-	${SBOL_SCHEMA_DIR}/rdf.xsd.in
-	${SBOL_SCHEMA_DIR}/rdf.xsd
-)
-CONFIGURE_FILE(
-	${SBOL_SCHEMA_DIR}/sbol.xsd.in
-	${SBOL_SCHEMA_DIR}/sbol.xsd
-)
-CONFIGURE_FILE(
-	${SBOL_MANUAL_DIR}/Doxyfile.in
-	${SBOL_MANUAL_DIR}/Doxyfile
-)
 
-# find/build libxml
-IF( WIN32 )
-	ADD_SUBDIRECTORY( libxml2 )
-	INCLUDE_DIRECTORIES( ${SBOL_SOURCE_DIR}/libxml2/include )
-ELSE()
-	FIND_PACKAGE( LibXml2 )
-	INCLUDE_DIRECTORIES( ${LIBXML2_INCLUDE_DIR} )
-ENDIF()
-
-# build libSBOLc
+# gather source files
 FILE( GLOB SBOL_SOURCE_FILES
 	${SBOL_SOURCE_DIR}/*.h
 	${SBOL_SOURCE_DIR}/*.c
 )
+
+# build library
 ADD_LIBRARY( sbol
 	SHARED
 	${SBOL_SOURCE_FILES}
@@ -58,82 +27,3 @@ ADD_LIBRARY( sbol
 TARGET_LINK_LIBRARIES( sbol
 	xml2
 )
-INCLUDE_DIRECTORIES(
-	${SBOL_SOURCE_DIR}
-	${SBOL_TEST_DIR}
-)
-
-# build examples
-IF( SBOL_BUILD_EXAMPLES )
-	FILE( GLOB SBOL_EXAMPLE_TARGETS
-		${SBOL_EXAMPLE_DIR}/sbol_parse.c
-		${SBOL_EXAMPLE_DIR}/sbol_validate.c
-	)
-	FOREACH( TARGET ${SBOL_EXAMPLE_TARGETS} )
-		GET_FILENAME_COMPONENT( BASENAME ${TARGET} NAME_WE )
-		ADD_EXECUTABLE( ${BASENAME}
-			${SBOL_SOURCE_FILES}
-			${TARGET}
-		)
-		TARGET_LINK_LIBRARIES( ${BASENAME} sbol )
-	ENDFOREACH()
-ENDIF()
-
-# build tests
-IF( SBOL_BUILD_TESTS )
-	FILE( GLOB SBOL_TEST_FILES
-		${SBOL_TEST_DIR}/*.h
-		${SBOL_TEST_DIR}/*.c
-	)
-	FILE( GLOB SBOL_TEST_TARGETS
-		${SBOL_TEST_DIR}/test_all.c
-	)
-	FOREACH( TARGET ${SBOL_TEST_TARGETS} )
-		GET_FILENAME_COMPONENT( BASENAME ${TARGET} NAME_WE )
-		ADD_EXECUTABLE( ${BASENAME}
-			${SBOL_SOURCE_FILES}
-			${SBOL_TEST_FILES}
-			${TARGET}
-		)
-		TARGET_LINK_LIBRARIES( ${BASENAME} sbol )
-	ENDFOREACH()
-ENDIF()
-
-# generate documentation
-IF( SBOL_GENERATE_MANUAL )
-	FIND_PACKAGE( Doxygen )
-	IF( DOXYGEN_FOUND )
-	    ADD_CUSTOM_TARGET( manual
-			ALL
-	        ${DOXYGEN_EXECUTABLE}
-	        ${SBOL_MANUAL_DIR}/Doxyfile
-	        WORKING_DIRECTORY ${SBOL_RELEASE_DIR}
-	    )
-	ELSE()
-		MESSAGE( "Doxygen not found; unable to generate documentation" )
-	ENDIF()
-ENDIF()
-
-# generate python wrapper
-IF( SBOL_GENERATE_PYTHON )
-	FIND_PACKAGE( SWIG )
-	IF( SWIG_FOUND )
-		INCLUDE( ${SWIG_USE_FILE} )
-		FIND_PACKAGE( PythonLibs )
-		INCLUDE_DIRECTORIES( ${PYTHON_INCLUDE_PATH} )
-		SET( CMAKE_SWIG_FLAGS "" )
-		SET( CMAKE_SWIG_OUTDIR ${SBOL_RELEASE_DIR} )
-		SWIG_ADD_MODULE( sbol
-			python
-			sbol.i
-			${SBOL_SOURCE_FILES}
-		)
-		SWIG_LINK_LIBRARIES( sbol
-			${PYTHON_LIBRARIES}
-			xml2
-			sbol
-		)
-	ELSE()
-		MESSAGE( "SWIG not found; unable to generate Python bindings" )
-	ENDIF()
-ENDIF()
