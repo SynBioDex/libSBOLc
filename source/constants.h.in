@@ -27,11 +27,16 @@
 
 /// Macro for exporting functions from the shared library.
 /// @todo Move this to another file?
+/// @todo Does the STATIC_LINKED part add anything?
 #ifndef SBOLAPIEXPORTS
-#	if defined(SWIG)
+#	if defined(SWIG) || defined(STATIC_LINKED)
 #		define SBOLAPIEXPORTS
 #	elif defined(_WIN32) || defined(__WIN32__) || defined(__CYGWIN__)
-#		define SBOLAPIEXPORTS __declspec(dllexport)
+#       if defined(USE_STDCALL)
+#           define SBOLAPIEXPORTS __stdcall __declspec(dllexport)
+#       else
+#	    	define SBOLAPIEXPORTS __declspec(dllexport)
+#       endif
 #	elif defined(__GNUC__) && __GNUC__ >= 4
 #		define SBOLAPIEXPORTS __attribute__ ((visibility("default")))
 #	else

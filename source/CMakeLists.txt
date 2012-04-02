@@ -39,9 +39,8 @@ TARGET_LINK_LIBRARIES( sbol
 
 # build another library for internal use
 # (lets SWIG and the test suites access non-SBOLAPIEXPORTS functions)
-# /// @todo Make these visibile on Windows too if possible
 ADD_LIBRARY( sbol_internal
-    SHARED
+    STATIC
 	${SBOL_SOURCE_FILES}
 )
 TARGET_LINK_LIBRARIES( sbol_internal
