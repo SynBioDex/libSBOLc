@@ -67,6 +67,6 @@ static void writeCollection(Collection* col);
 /// Create, validate, and save an XML document based on
 /// the SBOLObjects currently in memory. Those objects
 /// still need to be deleted afterwards.
-int writeSBOLCore(const char* filename);
+SBOLAPIEXPORTS int writeSBOLCore(const char* filename);
 
 #endif

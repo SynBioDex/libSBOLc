@@ -14,12 +14,18 @@ SET( SBOL_RELEASE_DIR       ${SBOL_ROOT_DIR}/release    )
 SET( EXECUTABLE_OUTPUT_PATH ${SBOL_RELEASE_DIR}         )
 SET( LIBRARY_OUTPUT_PATH    ${SBOL_RELEASE_DIR}         )
 
-# create build options
+# set build options
 OPTION( SBOL_DEBUG_STATEMENTS "Add some print statements for debugging"   FALSE )
+OPTION( SBOL_BUILD_SHARED_LIB "Build a shared library rather than static" FALSE )
 OPTION( SBOL_BUILD_EXAMPLES   "Build the example programs"                FALSE )
 OPTION( SBOL_BUILD_TESTS      "Build the unit tests and example tests"    FALSE )
 OPTION( SBOL_GENERATE_PYTHON  "Generate Python wrapper using SWIG"        FALSE )
 OPTION( SBOL_GENERATE_MANUAL  "Generate SBOL documentation using Doxygen" FALSE )
+IF( SBOL_BUILD_SHARED_LIBS )
+    SET( SBOL_LIBRARY_TYPE SHARED )
+ELSE()
+    SET( SBOL_LIBRARY_TYPE STATIC )
+ENDIF()
 
 # build libSBOLc
 ADD_SUBDIRECTORY( schema )

@@ -22,6 +22,6 @@
 /// Checks an xmlDoc against the SBOL schema.
 /// Prints validation errors to stdout.
 /// @return 1 if valid, or a negative error code otherwise
-int isValidSBOL(const xmlDocPtr doc);
+SBOLAPIEXPORTS int isValidSBOL(const xmlDocPtr doc);
 
 #endif

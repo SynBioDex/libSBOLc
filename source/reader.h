@@ -93,6 +93,6 @@ static void readCollectionReferences(xmlNode *node);
 /// before parsing. Prints a message to stdout
 /// if the document is invalid.
 /// @todo Return an error code on invalid documents
-void readSBOLCore(char* filename);
+SBOLAPIEXPORTS void readSBOLCore(char* filename);
 
 #endif

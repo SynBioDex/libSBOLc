@@ -34,11 +34,11 @@ void deleteSBOLObject(SBOLObject* obj);
 
 /// Get the total number of SBOLObjects in memory.
 /// This includes the ones that are contained in other structs.
-int getNumSBOLObjects();
+SBOLAPIEXPORTS int getNumSBOLObjects();
 
 /// Find out whether there's an SBOLObject with this URI.
 /// This includes the ones that are contained in other structs.
-int isSBOLObjectURI(const char* uri);
+SBOLAPIEXPORTS int isSBOLObjectURI(const char* uri);
 
 /// Get the Nth SBOLObject in memory.
 /// This includes the ones that are contained in other structs.
@@ -51,7 +51,7 @@ SBOLObject* getSBOLObject(const char* uri);
 
 /// Delete all SBOLObjects from memory.
 /// @todo remove this? is it ever used?
-void cleanupSBOLObjects();
+SBOLAPIEXPORTS void cleanupSBOLObjects();
 
 /// Set the URI of an SBOLObject.
 /// This shouldn't be called directly.

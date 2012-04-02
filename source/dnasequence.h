@@ -19,49 +19,51 @@ struct _DNASequence {
 };
 
 /// Create an empty DNASequence.
-DNASequence* createDNASequence(char* uri);
+SBOLAPIEXPORTS DNASequence* createDNASequence(char* uri);
 
 /// Delete a DNASequence.
 /// Since DNASequences are self-contained,
 /// no other freeing should be needed
-void deleteDNASequence(DNASequence* seq);
+SBOLAPIEXPORTS void deleteDNASequence(DNASequence* seq);
 
 /// Get the total number of DNASequences in memory.
-int getNumDNASequences();
+SBOLAPIEXPORTS int getNumDNASequences();
 
 /// Get the Nth DNASequnce in memory.
-DNASequence* getNthDNASequence(int n);
+SBOLAPIEXPORTS DNASequence* getNthDNASequence(int n);
 
 /// Get the DNASequence associated with this URI.
 /// Returns NULL on failure.
-DNASequence* getDNASequence(const char* uri);
+SBOLAPIEXPORTS DNASequence* getDNASequence(const char* uri);
 
 /// Get a copy of the nucleotides contained in this DNASequence.
 /// @return A string that needs to be freed.
-char* getNucleotides(const DNASequence* seq);
+/// @todo rename to getDNASequenceNucleotides?
+SBOLAPIEXPORTS char* getNucleotides(const DNASequence* seq);
 
 /// Copy a string of nucleotides into this DNASequence.
 /// So far, no validation is done to ensure that these are valid nucleotides.
-void setNucleotides(DNASequence* seq, const char* nucleotides);
+/// @todo rename to setDNASequenceNucleotides?
+SBOLAPIEXPORTS void setNucleotides(DNASequence* seq, const char* nucleotides);
 
 /// Find out whether there's a DNASequence with this URI.
-int isDNASequenceURI(const char* uri);
+SBOLAPIEXPORTS int isDNASequenceURI(const char* uri);
 
 /// Get the URI of a DNASequence.
 /// Returns NULL on failure.
-char* getDNASequenceURI(const DNASequence* seq);
+SBOLAPIEXPORTS char* getDNASequenceURI(const DNASequence* seq);
 
 /// Print a DNASequence to stdout.
 /// Mainly for debugging.
-void printDNASequence(const DNASequence* seq, int tabs);
+SBOLAPIEXPORTS void printDNASequence(const DNASequence* seq, int tabs);
 
 /// Print all DNASequences to stdout.
 /// Mainly for debugging.
-void printAllDNASequences();
+SBOLAPIEXPORTS void printAllDNASequences();
 
 /// Delete all DNASequences from memory.
 /// There shouldn't be anything left to free
 /// because DNASequences are self-contained.
-void cleanupDNASequences();
+SBOLAPIEXPORTS void cleanupDNASequences();
 
 #endif

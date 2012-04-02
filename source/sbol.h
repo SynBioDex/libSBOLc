@@ -24,7 +24,7 @@
 #include "writer.h"
 
 // from core.c
-void printSBOLCore();
-void cleanupSBOLCore();
+SBOLAPIEXPORTS void printSBOLCore();
+SBOLAPIEXPORTS void cleanupSBOLCore();
 
 #endif
