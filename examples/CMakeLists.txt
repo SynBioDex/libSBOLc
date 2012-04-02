@@ -6,7 +6,8 @@ INCLUDE_DIRECTORIES(
 
 # gather source files
 FILE( GLOB SBOL_EXAMPLE_TARGETS
-    ${SBOL_EXAMPLE_DIR}/code/*.c
+    ${SBOL_EXAMPLE_DIR}/code/sbol_parse.c
+    ${SBOL_EXAMPLE_DIR}/code/sbol_validate.c
 )
 
 # build each source file

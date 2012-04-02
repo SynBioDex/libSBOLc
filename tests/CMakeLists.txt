@@ -23,6 +23,7 @@ TARGET_LINK_LIBRARIES( sbol_test
 
 # gather test source files
 FILE( GLOB SBOL_TEST_FILES
+	${SBOL_EXAMPLE_DIR}/code/sbol_create_valid*.c
     ${SBOL_TEST_DIR}/*.h
     ${SBOL_TEST_DIR}/*.c
 )

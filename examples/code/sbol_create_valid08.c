@@ -1,0 +1,45 @@
+#include "sbol.h"
+
+// To actually run the code you need to #include it
+// and call this function. You can also use sbol_run_tests,
+// which will write xml files for all the CreateValid* examples.
+
+void CreateValid08() {
+	// components
+	DNAComponent *dc1 = createDNAComponent("http://example.com/dc1");
+	DNAComponent *dc2 = createDNAComponent("http://example.com/dc2");
+	DNAComponent *dc3 = createDNAComponent("http://example.com/dc3");
+	DNAComponent *dc4 = createDNAComponent("http://example.com/dc4");
+	setDNAComponentDisplayID(dc1, "DC1");
+	setDNAComponentDisplayID(dc2, "DC2");
+	setDNAComponentDisplayID(dc3, "DC3");
+	setDNAComponentDisplayID(dc4, "DC4");
+	setDNAComponentName(dc1, "DnaComponent1");
+	setDNAComponentName(dc2, "DnaComponent2");
+	setDNAComponentName(dc3, "DnaComponent3");
+	setDNAComponentName(dc4, "DnaComponent4");
+	setDNAComponentDescription(dc1, "Various sequence annotations");
+	setDNAComponentDescription(dc2, "Another DNA component");
+	// sequences
+	DNASequence *ds1 = createDNASequence("http://example.com/ds1");
+	DNASequence *ds2 = createDNASequence("http://example.com/ds2");
+	setNucleotides(ds1, "tccctatcagtgat");
+	setNucleotides(ds2, "tc");
+	setDNAComponentSequence(dc1, ds1);
+	setDNAComponentSequence(dc2, ds2);
+	// annotations
+	SequenceAnnotation *sa1 = createSequenceAnnotation("http://example.com/sa1");
+	SequenceAnnotation *sa2 = createSequenceAnnotation("http://example.com/sa2");
+	SequenceAnnotation *sa3 = createSequenceAnnotation("http://example.com/sa3");
+	addSequenceAnnotation(dc1, sa1);
+	addSequenceAnnotation(dc1, sa2);
+	addSequenceAnnotation(dc1, sa3);
+	setBioStart(sa1, 1); setBioEnd(sa1, 2);
+	setBioStart(sa2, 3); setBioEnd(sa2, 5);
+	setSubComponent(sa1, dc2);
+	setSubComponent(sa2, dc3);
+	setSubComponent(sa3, dc4);
+	addPrecedesRelationship(sa1, sa2);
+	addPrecedesRelationship(sa1, sa3);
+}
+
