@@ -53,19 +53,23 @@ int strToInt(const char *input) {
 // TODO move to polarityproperty
 int strToPolarity(const char *input) {
 	if (!input)
-		return -1;
+		return -1; /// @todo better null value?
 	else if (input[0] == '+')
-		return 1;
+		return STRAND_FORWARD;
 	else
-		return 0;
+		return STRAND_REVERSE;
 }
 
 // TODO move to polarityproperty
 char polarityToChar(int polarity) {
-	if (polarity)
+	if (polarity == STRAND_FORWARD)
 		return '+';
-	else
+    else if (polarity == STRAND_BIDIRECTIONAL)
+        return '*'; /// @todo better char for that?
+	else if (polarity == STRAND_REVERSE)
 		return '-';
+    else
+        return '?';
 }
 
 void safeXmlInitParser() {
