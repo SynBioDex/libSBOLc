@@ -140,15 +140,17 @@ DNASequence* getNthDNASequence(int n) {
 void printDNASequence(const DNASequence* seq, int tabs) {
 	if (!seq)
 	    return;
-	indent(tabs+1); printf("%s\n", getDNASequenceURI(seq));
-	indent(tabs);
+	indent(tabs); printf("%s\n", getDNASequenceURI(seq));
+	
+	// print nucleotides, truncating them if there's a lot
+	indent(tabs+1);
+	printf("nucleotides: ");
     char* nt = getNucleotides(seq);
-
-	// don't print all of a really long sequence
 	if (nt && strlen(nt) > atoi(NUCLEOTIDES_TO_PRINT))
-		printf("%." NUCLEOTIDES_TO_PRINT "s\n", nt);
+		printf("%." NUCLEOTIDES_TO_PRINT "s", nt);
 	else
-		printf("%s\n", nt);
+		printf("%s", nt);
+	printf("\n");
 }
 
 void printAllDNASequences() {

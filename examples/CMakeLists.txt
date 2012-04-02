@@ -21,6 +21,7 @@ FOREACH( TARGET ${SBOL_EXAMPLE_TARGETS} )
         ${TARGET}
     )
 
+	# link against the release version of the library
     TARGET_LINK_LIBRARIES( ${BASENAME}
         sbol
     )
