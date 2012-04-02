@@ -15,15 +15,16 @@
 
 #define BUFFER_CHARS 100
 
-void indent(int tabs);
+SBOLAPIIGNORES void indent(int tabs);
 
-char *intToStr(int input);
-int   strToInt(const char *input);
+SBOLAPIIGNORES char *intToStr(int input);
+SBOLAPIIGNORES int   strToInt(const char *input);
 
 /// @todo move to polarityproperty, writer, or types?
-int strToPolarity(const char *input);
-char polarityToChar(int polarity);
+SBOLAPIIGNORES int strToPolarity(const char *input);
+SBOLAPIIGNORES char polarityToChar(int polarity);
 
-void safeXmlInitParser();
+/// @todo find a way not to export this?
+SBOLAPIEXPORTS void safeXmlInitParser();
 
 #endif

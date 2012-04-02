@@ -30,22 +30,28 @@
 #  if defined(_WIN32) || defined(__WIN32__) || defined(__CYGWIN__)
 #    if defined(STATIC_LINKED)
 #          define SBOLAPIEXPORTS
+#          define SBOLAPIIGNORES
 #    else
 #   if defined(SBOL_EXPORTS)
 #              if defined(USE_STDCALL)
 #                   define SBOLAPIEXPORTS __stdcall __declspec(dllexport)
+#                   define SBOLAPIIGNORES
 #              else
 #                   define SBOLAPIEXPORTS __declspec(dllexport)
+#                   define SBOLAPIIGNORES
 #              endif
 #          else
 #              define SBOLAPIEXPORTS
+#              define SBOLAPIIGNORES
 #          endif
 #     endif
 #  else
 #    if defined(__GNUC__) && defined(GCC_HASCLASSVISIBILITY)
 #      define SBOLAPIEXPORTS __attribute__ ((visibility("default")))
+#      define SBOLAPIIGNORES
 #    else
-#      define SBOLAPIEXPORTS
+#      define SBOLAPIEXPORTS __attribute__ ((visibility("default")))
+#      define SBOLAPIIGNORES
 #    endif
 #  endif
 # endif //SBOLAPIEXPORTS

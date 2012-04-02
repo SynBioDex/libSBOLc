@@ -1,4 +1,4 @@
-PROJECT( SBOL C )
+PROJECT( SBOL )
 CMAKE_MINIMUM_REQUIRED( VERSION 2.8 )
 
 # set up folder structure

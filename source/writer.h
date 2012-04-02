@@ -18,30 +18,30 @@
  ************************/
 
 /// Increase the indent level of the WRITER.
-static void indentMore();
+SBOLAPIIGNORES static void indentMore();
 
 /// Decrease the indent level of the WRITER.
-static void indentLess();
+SBOLAPIIGNORES static void indentLess();
 
 /// Set up everything for writing.
-static void createSBOLWriter();
+SBOLAPIIGNORES static void createSBOLWriter();
 
 /// Clean up after the writer.
 /// This doesn't delete SBOLObjects;
 /// for that you also want to cleanupSBOLCore()
-static void cleanupSBOLWriter();
+SBOLAPIIGNORES static void cleanupSBOLWriter();
 
 /// Write the document header.
-static void startSBOLDocument();
+SBOLAPIIGNORES static void startSBOLDocument();
 
 /// Write closing tags.
-static void endSBOLDocument();
+SBOLAPIIGNORES static void endSBOLDocument();
 
 /// Save the finished document to a file.
 /// Most of the "writing" is actually to a memory
 /// location; this validates the document in
 /// memory and copies it to disk.
-static int saveSBOLDocument(const char* filename);
+SBOLAPIIGNORES static int saveSBOLDocument(const char* filename);
 
 /************************************
  * functions for writing individual
@@ -49,16 +49,16 @@ static int saveSBOLDocument(const char* filename);
  ************************************/
 
 /// Write a DNASequence to the WRITER.
-static void writeDNASequence(DNASequence* seq);
+SBOLAPIIGNORES static void writeDNASequence(DNASequence* seq);
 
 /// Write a SequenceAnnotation to the WRITER.
-static void writeSequenceAnnotation(SequenceAnnotation* ann);
+SBOLAPIIGNORES static void writeSequenceAnnotation(SequenceAnnotation* ann);
 
 /// Write a DNAComponent to the WRITER.
-static void writeDNAComponent(DNAComponent* com);
+SBOLAPIIGNORES static void writeDNAComponent(DNAComponent* com);
 
 /// Write a Collection to the WRITER.
-static void writeCollection(Collection* col);
+SBOLAPIIGNORES static void writeCollection(Collection* col);
 
 /***********************
  * main write function
