@@ -1,25 +1,42 @@
 //////////////////////////////////////////////////////////////////////
 /// @mainpage
 /// 
-/// @section tour A brief tour of the source code
+/// @section overview Overview of the project
 /// 
-/// There are a few different top-level subdirectories
-/// in the libSBOLc folder, each corresponding to a
-/// different, semi-independent aspect of the project:
+/// There are a few different top-level subdirectories in the libSBOLc folder:
 /// 
-/// * schema/ holds the SBOL schema files copied from libSBOLj
-/// * source/ contains source code for the SBOL library
-/// * examples/ contains example code that uses the library,
+/// * [schema](https://github.com/SynBioDex/libSBOLc/tree/master/schema)
+///   holds the SBOL schema files copied from libSBOLj
+/// 
+/// * [source](https://github.com/SynBioDex/libSBOLc/tree/master/source)
+///   contains source code for the library
+/// 
+/// * [examples](https://github.com/SynBioDex/libSBOLc/tree/master/examples)
+///   contains example code that uses the library,
 ///   as well as the xml test files from libSBOLj
-/// * manual/ contains source code for generating the
-///   online documentation
-/// * tests/ contains unit tests, as well as tests that
+/// 
+/// * [manual](https://github.com/SynBioDex/libSBOLc/tree/master/manual)
+///   contains source code for generating the online documentation
+/// 
+/// * [tests](https://github.com/SynBioDex/libSBOLc/tree/master/tests)
+///   contains unit tests, as well as tests that
 ///   verify correct handling of the example xml files
-/// * wrapper/ contains code for generating the Python
-///   wrapper using SWIG
-/// * finally, there's the build/ folder for temporary
-///   build files, and the release/ folder for finished
-///   binaries
+/// 
+/// * [wrapper](https://github.com/SynBioDex/libSBOLc/tree/master/wrapper)
+///   contains code for generating the Python wrapper using SWIG
+/// 
+/// * Finally, there's the build folder for temporary build files, and
+///   the release folder for finished binaries. They're created by CMake.
+/// 
+/// When running CMake and compiling, the main sbol library is always
+/// created first beacuse most of the optional targets depend on it:
+/// @image html build_dependencies.png "Build dependencies"
+/// 
+/// Once built, the executables just depend on finding the correct
+/// xml files:
+/// @image html runtime_dependencies.png "Runtime dependencies"
+/// 
+/// @section tour A breif tour of the source code
 /// 
 /// @section doxygen Updating this documentation
 /// 
