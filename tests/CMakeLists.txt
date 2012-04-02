@@ -4,34 +4,34 @@ INCLUDE_DIRECTORIES(
     ${SBOL_SOURCE_DIR}
 )
 
+# gather source files
+FILE( GLOB SBOL_SOURCE_FILES
+	${SBOL_SOURCE_DIR}/*.h
+	${SBOL_SOURCE_DIR}/*.c
+)
+
+# build a static library because it's supposedly easier
+# to use with a debugger, and because it lets tests access
+# non-SBOLAPIEXPORTS functions
+ADD_LIBRARY( sbol_test
+	STATIC
+	${SBOL_SOURCE_FILES}
+)
+TARGET_LINK_LIBRARIES( sbol_test
+	xml2
+)
+
 # gather test source files
 FILE( GLOB SBOL_TEST_FILES
     ${SBOL_TEST_DIR}/*.h
     ${SBOL_TEST_DIR}/*.c
 )
 
-# gather test targets
-FILE( GLOB SBOL_TEST_TARGETS
-    ${SBOL_TEST_DIR}/test_all.c
+# build test executable
+ADD_EXECUTABLE( sbol_run_tests
+	${SBOL_TEST_FILES}
+)
+TARGET_LINK_LIBRARIES( sbol_run_tests
+	sbol_test
 )
 
-# build each test target
-FOREACH( TARGET ${SBOL_TEST_TARGETS} )
-
-    GET_FILENAME_COMPONENT( BASENAME
-        ${TARGET}
-        NAME_WE
-    )
-
-    ADD_EXECUTABLE( ${BASENAME}
-        ${SBOL_TEST_FILES}
-        ${TARGET}
-    )
-
-	# use sbol_static to give tests access
-	# to non-SBOLAPIEXPORTS functions
-    TARGET_LINK_LIBRARIES( ${BASENAME}
-        sbol_internal
-    )
-
-ENDFOREACH()

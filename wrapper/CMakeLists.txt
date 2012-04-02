@@ -4,6 +4,25 @@ INCLUDE_DIRECTORIES(
     ${SBOL_SOURCE_DIR}
 )
 
+# gather source files
+FILE( GLOB SBOL_SOURCE_FILES
+	${SBOL_SOURCE_DIR}/*.h
+	${SBOL_SOURCE_DIR}/*.c
+)
+
+# build a shared library without visibility limitations
+# because the non-SBOLAPIEXPORTS functions could be useful
+# in writing a higher-level wrapper, and because Python
+# complains about them otherwise
+ADD_LIBRARY( sbol_swig
+	SHARED
+	${SBOL_SOURCE_FILES}
+)
+TARGET_LINK_LIBRARIES( sbol_swig
+	xml2
+)
+
+# generate SWIG wrapper
 FIND_PACKAGE( SWIG )
 IF( SWIG_FOUND )
 
@@ -13,18 +32,15 @@ IF( SWIG_FOUND )
     SET( CMAKE_SWIG_FLAGS "" )
     SET( CMAKE_SWIG_OUTDIR ${SBOL_RELEASE_DIR} )
 
-    SWIG_ADD_MODULE( sbol
+    SWIG_ADD_MODULE( sbol_swig
         python
-        sbol.i
+        sbol_swig.i
         ${SBOL_SOURCE_FILES}
     )
 
-	# use sbol_internal because the non-SBOLAPIEXPORTS
-	# functions could be useful in writing a higher-level wrapper,
-	# and because Python complains about them otherwise
-    SWIG_LINK_LIBRARIES( sbol
+    SWIG_LINK_LIBRARIES( sbol_swig
         ${PYTHON_LIBRARIES}
-        sbol_internal
+        sbol_swig
     )
 
 ELSE()

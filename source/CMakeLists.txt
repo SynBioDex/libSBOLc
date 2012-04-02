@@ -7,16 +7,16 @@ ELSE()
 ENDIF()
 INCLUDE_DIRECTORIES( ${LIBXML2_INCLUDE_DIR} )
 
-# set variables
-CONFIGURE_FILE(
-	${SBOL_SOURCE_DIR}/constants.h.in
-	${SBOL_SOURCE_DIR}/constants.h
-)
-
 # gather source files
 FILE( GLOB SBOL_SOURCE_FILES
 	${SBOL_SOURCE_DIR}/*.h
 	${SBOL_SOURCE_DIR}/*.c
+)
+
+# set variables in source code
+CONFIGURE_FILE(
+	${SBOL_SOURCE_DIR}/constants.h.in
+	${SBOL_SOURCE_DIR}/constants.h
 )
 
 # build shared library for release
@@ -33,16 +33,8 @@ IF(CMAKE_COMPILER_IS_GNUCC)
 	)
 ENDIF()
 
+# link against libxml
 TARGET_LINK_LIBRARIES( sbol
 	xml2
 )
 
-# build another library for internal use
-# (lets SWIG and the test suites access non-SBOLAPIEXPORTS functions)
-ADD_LIBRARY( sbol_internal
-    STATIC
-	${SBOL_SOURCE_FILES}
-)
-TARGET_LINK_LIBRARIES( sbol_internal
-	xml2
-)

@@ -1,4 +1,4 @@
-%module sbol
+%module sbol_swig
 %{
 	#define SWIG_FILE_WITH_INIT
 
