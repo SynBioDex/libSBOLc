@@ -3,10 +3,10 @@
 #include "CuTest.h"
 
 #define NUM_VALID_EXAMPLES   13
-#define NUM_INVALID_EXAMPLES 13 // TODO finish 14-19
+#define NUM_INVALID_EXAMPLES 13 /// @todo finish 14-19
 
-#define VALID_EXAMPLES_DIR   SBOL_EXAMPLE_DIR "/valid"
-#define INVALID_EXAMPLES_DIR SBOL_EXAMPLE_DIR "/invalid"
+#define VALID_EXAMPLES_DIR   SBOL_EXAMPLE_DIR "/xml/valid"
+#define INVALID_EXAMPLES_DIR SBOL_EXAMPLE_DIR "/xml/invalid"
 #define TEST_OUTPUT_DIR      SBOL_BUILD_DIR
 
 struct _CuTest;
