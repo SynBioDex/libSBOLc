@@ -19,11 +19,31 @@ FILE( GLOB SBOL_SOURCE_FILES
 	${SBOL_SOURCE_DIR}/*.c
 )
 
-# build library
+# build shared library for release
 ADD_LIBRARY( sbol
-    ${SBOL_LIBRARY_TYPE}
+	SHARED
 	${SBOL_SOURCE_FILES}
 )
+
+# by default, GCC exports everything;
+# this tells it to stick to SBOLAPIEXPORTS functions
+IF(CMAKE_COMPILER_IS_GNUCC)
+	SET_TARGET_PROPERTIES( sbol
+		PROPERTIES COMPILE_FLAGS -fvisibility=hidden
+	)
+ENDIF()
+
 TARGET_LINK_LIBRARIES( sbol
+	xml2
+)
+
+# build another library for internal use
+# (lets SWIG and the test suites access non-SBOLAPIEXPORTS functions)
+# /// @todo Make these visibile on Windows too if possible
+ADD_LIBRARY( sbol_internal
+    SHARED
+	${SBOL_SOURCE_FILES}
+)
+TARGET_LINK_LIBRARIES( sbol_internal
 	xml2
 )

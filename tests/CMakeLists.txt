@@ -28,8 +28,10 @@ FOREACH( TARGET ${SBOL_TEST_TARGETS} )
         ${TARGET}
     )
 
+	# use sbol_static to give tests access
+	# to non-SBOLAPIEXPORTS functions
     TARGET_LINK_LIBRARIES( ${BASENAME}
-        sbol
+        sbol_internal
     )
 
 ENDFOREACH()

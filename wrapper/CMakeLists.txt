@@ -19,9 +19,12 @@ IF( SWIG_FOUND )
         ${SBOL_SOURCE_FILES}
     )
 
+	# use sbol_internal because the non-SBOLAPIEXPORTS
+	# functions could be useful in writing a higher-level wrapper,
+	# and because Python complains about them otherwise
     SWIG_LINK_LIBRARIES( sbol
         ${PYTHON_LIBRARIES}
-        sbol
+        sbol_internal
     )
 
 ELSE()
