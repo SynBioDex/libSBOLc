@@ -1,8 +1,7 @@
-#include <string.h>
 #include <stdio.h>
 #include <stdlib.h>
+#include <string.h>
 
-/// @todo different header here?
 #include <libxml/parser.h>
 
 #include "utilities.h"
@@ -82,7 +81,8 @@ void safeXmlInitParser() {
 
 	// This initializes the library and checks potential ABI mismatches
 	// between the version it was compiled for and the actual shared
-	// library used. I'm not sure if it really helps anything.
+	// library used.
+	/// @todo Find out if this really helps anything.
 	LIBXML_TEST_VERSION	
 }
 

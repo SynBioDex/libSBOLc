@@ -13,7 +13,7 @@ FILE( GLOB SBOL_SOURCE_FILES
 # build a shared library without visibility limitations
 # because the non-SBOLAPIEXPORTS functions could be useful
 # in writing a higher-level wrapper, and because Python
-# complains about them otherwise
+# will try to import them anyway and fail
 ADD_LIBRARY( sbol_swig
 	SHARED
 	${SBOL_SOURCE_FILES}

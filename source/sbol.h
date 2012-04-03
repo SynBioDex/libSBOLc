@@ -24,7 +24,15 @@
 #include "writer.h"
 
 // from core.c
+
+/// Print an outline of all the DNASequences, SequenceAnnotations,
+/// DNAComponents, and Collections to stdout.
+/// Mainly for debugging.
 SBOLAPIEXPORTS void printSBOLCore();
+
+/// Delete all the DNASequences, SequenceAnnotations,
+/// DNAComponents, and Collections. Strings returned by querying
+/// them need to be freed separately.
 SBOLAPIEXPORTS void cleanupSBOLCore();
 
 #endif
