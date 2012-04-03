@@ -1,4 +1,6 @@
 import sbol_swig
+import sys
+from cStringIO import StringIO
 
 __all__ = (
 'SBOLError',
@@ -12,87 +14,72 @@ class MethodError(SBOLError):   'Incorrect method use'
 class ArgumentError(SBOLError): 'Method called with incorrect pointer'
 class ReturnError(SBOLError):   'Method returned incorrect pointer'
 
-class PointerArray(list):
-    def __getitem__(self, index):
-        item = sbol_swig.getNthPointerInArray(self.ptr, index)
-        if not item:
-            raise ReturnError
-        return item
-
-    def __setitem__(self, index):
-        raise MethodError
-
-    def __getslice__(self, start, end):
-        if sbol_swig.getNumPointersInArray(self.ptr) <= end:
-            raise ArgumentError
-        pointers = []
-        # check that the indexing is right
-        for n in range(end - start):
-            pointer = sbol_swig.getNthPointerInArray(self.ptr, n)
-            pointers.append(pointer)
-        return pointers
-
-    def append(self, pointer):
-        # check type here?
-        sbol_swig.insertPointerIntoArray(self.ptr, pointer)
+def capture(fn):
+	'Capture the output stream while running a function, and return it'
+	backup = sys.stdout
+	sys.stdout = StringIO.StringIO()
+	fn(args, kwargs)
+	output = sys.stdout.getValue()
+	sys.stdout.close()
+	sys.stdout = backup
+	return output
 
 class DNASequence(object):
     def __init__(self, uri):
         object.__init__(self)
         self.ptr = sbol_swig.createDNASequence(uri)
+        print self.ptr
 
     def __del__(self):
-        sbol_swig.deleteDNASequence(self.ptr)
-        object.__del__(self)
+        if sbol_swig.isDNASequence(self.ptr):
+            sbol_swig.deleteDNASequence(self.ptr)
 
     def getURI(self):
         return sbol_swig.getDNASequenceURI(self.ptr)
-
-    def setURI(self, uri):
-        sbol_swig.setDNASequenceURI(self.ptr, uri)
 
 class SequenceAnnotation(object):
     def __init__(self, uri):
         object.__init__(self)
         self.ptr = sbol_swig.createSequenceAnnotation(uri)
+        print self.ptr
 
     def __del__(self):
-        sbol_swig.deleteSequenceAnnotation(self.ptr)
-        object.__del__(self)
+        if sbol_swig.isSequenceAnnotation(self.ptr):
+            sbol_swig.deleteSequenceAnnotation(self.ptr)
 
-    def getURI(self):
         return sbol_swig.getSequenceAnnotationURI(self.ptr)
-
-    def setURI(self, uri):
-        sbol_swig.setSequenceAnnotationURI(self.ptr, uri)
 
 class DNAComponent(object):
     def __init__(self, uri):
         object.__init__(self)
         self.ptr = sbol_swig.createDNAComponent(uri)
+        print self.ptr
 
     def __del__(self):
-        sbol_swig.deleteDNAComponent(self.ptr)
-        object.__del__(self)
+        if sbol_swig.isDNAComponent(self.ptr):
+            sbol_swig.deleteDNAComponent(self.ptr)
 
     def getURI(self):
         return sbol_swig.getDNAComponentURI(self.ptr)
-
-    def setURI(self, uri):
-        sbol_swig.setDNAComponentURI(self.ptr, uri)
 
 class Collection(object):
     def __init__(self, uri):
         object.__init__(self)
         self.ptr = sbol_swig.createCollection(uri)
+        print self.ptr
 
     def __del__(self):
-        sbol_swig.deleteCollection(self.ptr)
-        object.__del__(self)
+        if sbol_swig.isCollection(self.ptr):
+            sbol_swig.deleteCollection(self.ptr)
 
     def getURI(self):
         return sbol_swig.getCollectionURI(self.ptr)
 
-    def setURI(self, uri):
-        sbol_swig.setCollectionURI(self.ptr, uri)
+if __name__ == '__main__':
+    c1 = Collection('collection1')
+    dc1 = DNAComponent('component1')
+    ds1 = DNASequence('sequence 1')
+    print 'c1:', c1.getURI()
+    print 'dc1:', dc1.getURI()
+    print 'ds1:', ds1.getURI()
 
