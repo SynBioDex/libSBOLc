@@ -17,8 +17,8 @@ class ReturnError(SBOLError):   'Method returned incorrect pointer'
 def capture(fn):
 	'Capture the output stream while running a function, and return it'
 	backup = sys.stdout
-	sys.stdout = StringIO.StringIO()
-	fn(args, kwargs)
+	sys.stdout = StringIO()
+	fn()
 	output = sys.stdout.getValue()
 	sys.stdout.close()
 	sys.stdout = backup
@@ -34,6 +34,9 @@ class DNASequence(object):
         if sbol_swig.isDNASequence(self.ptr):
             sbol_swig.deleteDNASequence(self.ptr)
 
+    def __str__(self):
+        return capture( sbol_swig.printDNASequence(self.ptr) )
+
     def getURI(self):
         return sbol_swig.getDNASequenceURI(self.ptr)
 
@@ -47,6 +50,10 @@ class SequenceAnnotation(object):
         if sbol_swig.isSequenceAnnotation(self.ptr):
             sbol_swig.deleteSequenceAnnotation(self.ptr)
 
+    def __str__(self):
+        return capture( sbol_swig.printSequenceAnnotation(self.ptr) )
+
+    def getURI(self):
         return sbol_swig.getSequenceAnnotationURI(self.ptr)
 
 class DNAComponent(object):
@@ -58,6 +65,9 @@ class DNAComponent(object):
     def __del__(self):
         if sbol_swig.isDNAComponent(self.ptr):
             sbol_swig.deleteDNAComponent(self.ptr)
+
+    def __str__(self):
+        return capture( sbol_swig.printDNAComponent(self.ptr) )
 
     def getURI(self):
         return sbol_swig.getDNAComponentURI(self.ptr)
@@ -72,6 +82,9 @@ class Collection(object):
         if sbol_swig.isCollection(self.ptr):
             sbol_swig.deleteCollection(self.ptr)
 
+    def __str__(self):
+        return capture( sbol_swig.printCollection(self.ptr) )
+
     def getURI(self):
         return sbol_swig.getCollectionURI(self.ptr)
 
@@ -79,7 +92,7 @@ if __name__ == '__main__':
     c1 = Collection('collection1')
     dc1 = DNAComponent('component1')
     ds1 = DNASequence('sequence 1')
-    print 'c1:', c1.getURI()
-    print 'dc1:', dc1.getURI()
-    print 'ds1:', ds1.getURI()
+    print c1
+    print dc1
+    print ds1
 
