@@ -81,7 +81,7 @@ void setSequenceAnnotationEnd(SequenceAnnotation* ann, int end) {
 }
 
 // TODO use PolarityProperty
-void setStrandPolarity(SequenceAnnotation* ann, int polarity) {
+void setSequenceAnnotationStrand(SequenceAnnotation* ann, int polarity) {
 	if (!ann || polarity < -1 || polarity > 1)
 		return;
 	//ann->strand = polarity;
@@ -184,7 +184,7 @@ int getSequenceAnnotationEnd(const SequenceAnnotation* ann) {
 		return getPositionProperty(ann->genbankEnd);
 }
 
-DNAComponent* getSubComponent(const SequenceAnnotation* ann) {
+DNAComponent* getSequenceAnnotationSubComponent(const SequenceAnnotation* ann) {
 	if (ann)
 		return ann->subComponent;
 	else
@@ -192,7 +192,7 @@ DNAComponent* getSubComponent(const SequenceAnnotation* ann) {
 }
 
 // TODO use PolarityProperty
-int getStrandPolarity(const SequenceAnnotation* ann) {
+int getSequenceAnnotationStrand(const SequenceAnnotation* ann) {
 	if (ann)
 		return getPolarityProperty(ann->strand);
 	else

@@ -93,7 +93,8 @@ SBOLAPIEXPORTS void addSequenceAnnotation(DNAComponent* com, SequenceAnnotation*
 
 /// Set a DNAComponent as the subComponent of a SequenceAnnotation.
 /// To remove it later, call this with a NULL annotation.
-SBOLAPIEXPORTS void setSubComponent(SequenceAnnotation* ann, DNAComponent* com);
+/// @todo move this to sequenceannotation.h?
+SBOLAPIEXPORTS void setSequenceAnnotationSubComponent(SequenceAnnotation* ann, DNAComponent* com);
 
 /// Print an outline of a DNAComponent to stdout.
 SBOLAPIEXPORTS void printDNAComponent(const DNAComponent* com, int tabs);

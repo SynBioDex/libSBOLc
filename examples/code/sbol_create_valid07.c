@@ -22,7 +22,7 @@ void CreateValid07() {
 	// annotation
 	SequenceAnnotation *sa1 = createSequenceAnnotation("http://example.com/sa1");
 	// sa1 has a dc:creator node that libSBOLc ignores
-	setSubComponent(sa1, dc2);
+	setSequenceAnnotationSubComponent(sa1, dc2);
 	addSequenceAnnotation(dc1, sa1);
 }
 

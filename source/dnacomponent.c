@@ -216,7 +216,7 @@ void addSequenceAnnotation(DNAComponent* com, SequenceAnnotation* ann) {
 	}
 }
 
-void setSubComponent(SequenceAnnotation* ann, DNAComponent* com) {
+void setSequenceAnnotationSubComponent(SequenceAnnotation* ann, DNAComponent* com) {
 	if (ann) {
 		ann->subComponent = com;
 	}

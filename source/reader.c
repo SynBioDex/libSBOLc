@@ -196,7 +196,7 @@ static void readSequenceAnnotationContent(xmlNode *node) {
 	// add strand
 	path = BAD_CAST "./" NSPREFIX_SBOL ":" NODENAME_STRAND;
 	if (contents = getContentsOfNodeMatchingXPath(node, path)) {
-		setStrandPolarity(ann, strToPolarity((char *)contents));
+		setSequenceAnnotationStrand(ann, strToPolarity((char *)contents));
 		xmlFree(contents);
 	}
 }
@@ -219,7 +219,7 @@ static void readSequenceAnnotationReferences(xmlNode *node) {
 	path = BAD_CAST "./" NSPREFIX_SBOL ":" NODENAME_SUBCOMPONENT
 					 "/" NSPREFIX_SBOL ":" NODENAME_DNACOMPONENT;
 	if (ref_uri = getURIOfNodeMatchingXPath(node, path)) {
-		setSubComponent(ann, getDNAComponent((char *)ref_uri));
+		setSequenceAnnotationSubComponent(ann, getDNAComponent((char *)ref_uri));
 		xmlFree(ref_uri);
 	}
 

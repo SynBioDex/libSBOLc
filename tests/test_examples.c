@@ -172,13 +172,13 @@ void TestLoadedValid04(CuTest *tc) {
 	SequenceAnnotation *sa1 = getSequenceAnnotation("http://example.com/sa1");
 	CuAssertIntEquals(tc, -1, getSequenceAnnotationStart(sa1));
 	CuAssertIntEquals(tc, -1, getSequenceAnnotationEnd(sa1));
-	CuAssertIntEquals(tc, STRAND_FORWARD, getStrandPolarity(sa1));
+	CuAssertIntEquals(tc, STRAND_FORWARD, getSequenceAnnotationStrand(sa1));
 	// check pointers
 	CuAssertPtrEquals(tc, ds1, getDNAComponentSequence(dc1));
 	CuAssertPtrEquals(tc, NULL, getDNAComponentSequence(dc2));
-	CuAssertPtrEquals(tc, dc2, getSubComponent(sa1));
+	CuAssertPtrEquals(tc, dc2, getSequenceAnnotationSubComponent(sa1));
 	CuAssertPtrEquals(tc, sa1, getNthSequenceAnnotationFor(dc1, 0));
-	CuAssertPtrEquals(tc, dc2, getSubComponent(sa1));
+	CuAssertPtrEquals(tc, dc2, getSequenceAnnotationSubComponent(sa1));
 }
 
 void TestLoadedValid05(CuTest *tc) {
@@ -259,13 +259,13 @@ void TestLoadedValid07(CuTest *tc) {
 	// sa1 should have a dc:creator node that libSBOLc ignores
 	CuAssertIntEquals(tc, -1, getSequenceAnnotationStart(sa1));
 	CuAssertIntEquals(tc, -1, getSequenceAnnotationEnd(sa1));
-	CuAssertIntEquals(tc, STRAND_FORWARD, getStrandPolarity(sa1));
+	CuAssertIntEquals(tc, STRAND_FORWARD, getSequenceAnnotationStrand(sa1));
 	// check pointers
 	CuAssertPtrEquals(tc, ds1, getDNAComponentSequence(dc1));
 	CuAssertPtrEquals(tc, NULL, getDNAComponentSequence(dc2));
-	CuAssertPtrEquals(tc, dc2, getSubComponent(sa1));
+	CuAssertPtrEquals(tc, dc2, getSequenceAnnotationSubComponent(sa1));
 	CuAssertPtrEquals(tc, sa1, getNthSequenceAnnotationFor(dc1, 0));
-	CuAssertPtrEquals(tc, dc2, getSubComponent(sa1));
+	CuAssertPtrEquals(tc, dc2, getSequenceAnnotationSubComponent(sa1));
 }
 
 void TestLoadedValid08(CuTest *tc) {
@@ -307,9 +307,9 @@ void TestLoadedValid08(CuTest *tc) {
 	CuAssertIntEquals(tc, 3, getSequenceAnnotationStart(sa2));
 	CuAssertIntEquals(tc, 2, getSequenceAnnotationEnd(sa1));
 	CuAssertIntEquals(tc, 5, getSequenceAnnotationEnd(sa2));
-	CuAssertPtrEquals(tc, dc2, getSubComponent(sa1));
-	CuAssertPtrEquals(tc, dc3, getSubComponent(sa2));
-	CuAssertPtrEquals(tc, dc4, getSubComponent(sa3));
+	CuAssertPtrEquals(tc, dc2, getSequenceAnnotationSubComponent(sa1));
+	CuAssertPtrEquals(tc, dc3, getSequenceAnnotationSubComponent(sa2));
+	CuAssertPtrEquals(tc, dc4, getSequenceAnnotationSubComponent(sa3));
 	CuAssertIntEquals(tc, 1, precedes(sa1, sa2));
 	CuAssertIntEquals(tc, 1, precedes(sa1, sa3));
 }

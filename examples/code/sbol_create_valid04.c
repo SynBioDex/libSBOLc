@@ -20,7 +20,7 @@ void CreateValid04() {
 	setDNAComponentSequence(dc1, ds1);
 	// annotation
 	SequenceAnnotation *sa1 = createSequenceAnnotation("http://example.com/sa1");
-	setSubComponent(sa1, dc2);
+	setSequenceAnnotationSubComponent(sa1, dc2);
 	addSequenceAnnotation(dc1, sa1);
 }
 

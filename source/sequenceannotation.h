@@ -55,12 +55,6 @@ SBOLAPIEXPORTS int getSequenceAnnotationStart(const SequenceAnnotation* ann);
 /// Find out where on the annotated DNAComponent this feature ends.
 SBOLAPIEXPORTS int getSequenceAnnotationEnd(const SequenceAnnotation* ann);
 
-/// Find out the orientation of this feature relative to
-/// the annotated DNAComponent.
-/// @return An int corresponding to one of the values in the StrandPolarity enum,
-///         or -1 on failure.
-SBOLAPIEXPORTS int getStrandPolarity(const SequenceAnnotation* ann);
-
 /// Set where on the annotated DNAComponent this feature starts.
 SBOLAPIEXPORTS void setSequenceAnnotationStart(SequenceAnnotation* ann, int start);
 
@@ -68,10 +62,16 @@ SBOLAPIEXPORTS void setSequenceAnnotationStart(SequenceAnnotation* ann, int star
 SBOLAPIEXPORTS void setSequenceAnnotationEnd(SequenceAnnotation* ann, int end);
 
 /// Set the orientation of this feature relative to the annotated DNAComponent.
-SBOLAPIEXPORTS void setStrandPolarity(SequenceAnnotation* ann, int polarity);
+SBOLAPIEXPORTS void setSequenceAnnotationStrand(SequenceAnnotation* ann, int polarity);
+
+/// Find out the orientation of this feature relative to
+/// the annotated DNAComponent.
+/// @return An int corresponding to one of the values in the StrandPolarity enum,
+///         or -1 on failure.
+SBOLAPIEXPORTS int getSequenceAnnotationStrand(const SequenceAnnotation* ann);
 
 /// Get the DNAComponent corresponding to the annotated feature.
-SBOLAPIEXPORTS DNAComponent* getSubComponent(const SequenceAnnotation* ann);
+SBOLAPIEXPORTS DNAComponent* getSequenceAnnotationSubComponent(const SequenceAnnotation* ann);
 
 /// Specify that one SequenceAnnotation must appear before another along a strand of DNA.
 /// @todo Is the strand a DNAComponent? Or not yet part of SBOL?

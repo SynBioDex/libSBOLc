@@ -70,8 +70,9 @@ There are only a few important functions you need to know to get started reading
 
 * There are constructors, destructors, getters, and setters for each type of SBOL object.
   For the most part they follow a pretty obvious formula:
-  setDNAComponentDisplayID and getDNAComponentDisplayID, for example. But there are also a few weird ones.
-  For those the [index of all available functions](http://synbiodex.github.com/libSBOLc/globals.html) is a good place to look.
+  setDNAComponentDisplayID and getDNAComponentDisplayID, for example. But there are also some non-obvious ones, like 
+  addPrecedesRelationship. For those the [index of all available functions](http://synbiodex.github.com/libSBOLc/globals.html)
+  is a good place to look.
   There's also code to create each of the xml example files in <code>libSBOLc/examples/code</code>.
 
 * cleanupSBOLCore frees all the SBOL objects from memory.

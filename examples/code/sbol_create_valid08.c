@@ -36,9 +36,9 @@ void CreateValid08() {
 	addSequenceAnnotation(dc1, sa3);
 	setSequenceAnnotationStart(sa1, 1); setSequenceAnnotationEnd(sa1, 2);
 	setSequenceAnnotationStart(sa2, 3); setSequenceAnnotationEnd(sa2, 5);
-	setSubComponent(sa1, dc2);
-	setSubComponent(sa2, dc3);
-	setSubComponent(sa3, dc4);
+	setSequenceAnnotationSubComponent(sa1, dc2);
+	setSequenceAnnotationSubComponent(sa2, dc3);
+	setSequenceAnnotationSubComponent(sa3, dc4);
 	addPrecedesRelationship(sa1, sa2);
 	addPrecedesRelationship(sa1, sa3);
 }
