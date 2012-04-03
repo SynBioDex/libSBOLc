@@ -9,25 +9,37 @@ __all__ = (
     'Collection' )
 
 ############################################################
-# All the sbol objects have a ptr attribute that lets
+# The sbol objects each have a ptr attribute that lets
 # you get their pointer. But since the pointers are
 # read-only (and unhashable), you need a workaround
 # to go the other way, from pointer --> object.
 #
-_allsbolobjects_ = []
+ALL_SBOL_OBJECTS = []
 #
 def register_sbol_object(obj):
-    _allsbolobjects_.append((obj, obj.ptr))
+    ALL_SBOL_OBJECTS.append((obj, obj.ptr))
 #
 def retrieve_sbol_object(ptr):
-    for obj, candidate_ptr in _allsbolobjects_:
+    for (obj, candidate_ptr) in ALL_SBOL_OBJECTS:
         if candidate_ptr == ptr:
             return obj
     return None
+
+def remove_sbol_object(obj):
+    for candidate in ALL_SBOL_OBJECTS:
+        if candidate[0] == obj:
+            ALL_SBOL_OBJECTS.remove(candidate)
+            return
+
 #
 ############################################################
 
 def return_stdout(fn):
+    '''
+    The SBOL print functions use printf() to print directly
+    # to stdout; this is a workaround that captures that
+    # output so Python can use it in __str__ methods.
+    '''
     def decorated_fn(*args, **kwargs):
         'Redirect stdout to a str and return it'
         backup = sys.stdout
@@ -48,6 +60,7 @@ class DNASequence(object):
         register_sbol_object(self)
 
     def __del__(self):
+        remove_sbol_object(self)
         deleteDNASequence(self.ptr)
 
     @return_stdout
@@ -72,6 +85,7 @@ class SequenceAnnotation(object):
         register_sbol_object(self)
 
     def __del__(self):
+        remove_sbol_object(self)
         deleteSequenceAnnotation(self.ptr)
 
     @return_stdout
@@ -126,6 +140,7 @@ class DNAComponent(object):
         register_sbol_object(self)
 
     def __del__(self):
+        remove_sbol_object(self)
         deleteDNAComponent(self.ptr)
             
     @return_stdout
@@ -183,6 +198,7 @@ class Collection(object):
 
     # why does this throw an exception during shutdown?
     def __del__(self):
+        remove_sbol_object(self)
         try:
             deleteCollection(self.ptr)
         except TypeError: # TypeError("'NoneType' object is not callable",)
