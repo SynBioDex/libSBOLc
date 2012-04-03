@@ -56,7 +56,7 @@ void deleteCollection(Collection* col) {
 
 int isCollection(const void* pointer) {
 	lazyCreateAllCollections();
-	return (int) indexOfPointerInArray(allCollections, pointer) >= 0;
+	return pointerContainedInArray(allCollections, pointer);
 }
 
 int isCollectionURI(const char* uri) {
@@ -189,7 +189,7 @@ int dnaComponentInCollection(const DNAComponent *com, const Collection *col) {
 void printCollection(const Collection* col, int tabs) {
     if (!col)
         return;
-    indent(tabs);   printf("uri: %s\n", getCollectionURI(col));
+    indent(tabs);   printf("%s\n", getCollectionURI(col));
     indent(tabs+1); printf("name:        %s\n", getCollectionName(col));
     indent(tabs+1); printf("description: %s\n", getCollectionDescription(col));
     int i;
