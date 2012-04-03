@@ -10,7 +10,7 @@ void CreateValid03() {
 	setDNAComponentName(com, "DnaComponent1");
 	setDNAComponentDescription(com, "DnaComponent with sequence information");
 	DNASequence *seq = createDNASequence("http://example.com/ds1");
-	setNucleotides(seq, "tccctatcagtgat");
+	setDNASequenceNucleotides(seq, "tccctatcagtgat");
 	setDNAComponentSequence(com, seq);
 }
 

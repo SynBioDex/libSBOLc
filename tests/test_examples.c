@@ -141,7 +141,7 @@ void TestLoadedValid03(CuTest *tc) {
 	// check ds1
 	DNASequence *ds1 = getNthDNASequence(0);
 	CuAssertStrEquals(tc, "http://example.com/ds1", getDNASequenceURI(ds1));
-	CuAssertStrEquals(tc, "tccctatcagtgat", getNucleotides(ds1));
+	CuAssertStrEquals(tc, "tccctatcagtgat", getDNASequenceNucleotides(ds1));
 	// check pointers
 	CuAssertPtrEquals(tc, ds1, getDNAComponentSequence(dc1));
 }
@@ -156,7 +156,7 @@ void TestLoadedValid04(CuTest *tc) {
 	CuAssertIntEquals(tc, 0, getNumCollections());
 	// check sequences
 	DNASequence *ds1 = getDNASequence("http://example.com/ds1");
-	CuAssertStrEquals(tc, "tccctatcagtgat", getNucleotides(ds1));
+	CuAssertStrEquals(tc, "tccctatcagtgat", getDNASequenceNucleotides(ds1));
 	// check components
 	DNAComponent *dc1 = getDNAComponent("http://example.com/dc1");
 	DNAComponent *dc2 = getDNAComponent("http://example.com/dc2");
@@ -170,8 +170,8 @@ void TestLoadedValid04(CuTest *tc) {
 	CuAssertIntEquals(tc, 0, getNumSequenceAnnotationsFor(dc2));
 	// check annotations
 	SequenceAnnotation *sa1 = getSequenceAnnotation("http://example.com/sa1");
-	CuAssertIntEquals(tc, -1, getBioStart(sa1));
-	CuAssertIntEquals(tc, -1, getBioEnd(sa1));
+	CuAssertIntEquals(tc, -1, getSequenceAnnotationStart(sa1));
+	CuAssertIntEquals(tc, -1, getSequenceAnnotationEnd(sa1));
 	CuAssertIntEquals(tc, STRAND_FORWARD, getStrandPolarity(sa1));
 	// check pointers
 	CuAssertPtrEquals(tc, ds1, getDNAComponentSequence(dc1));
@@ -201,7 +201,7 @@ void TestLoadedValid05(CuTest *tc) {
 	// check ds1
 	DNASequence *ds1 = getNthDNASequence(0);
 	CuAssertStrEquals(tc, "http://example.com/ds1", getDNASequenceURI(ds1));
-	CuAssertStrEquals(tc, "tccctatcagtgat", getNucleotides(ds1));
+	CuAssertStrEquals(tc, "tccctatcagtgat", getDNASequenceNucleotides(ds1));
 	// check pointers
 	CuAssertPtrEquals(tc, ds1, getDNAComponentSequence(dc1));
 }
@@ -226,7 +226,7 @@ void TestLoadedValid06(CuTest *tc) {
 	// check ds1
 	DNASequence *ds1 = getNthDNASequence(0);
 	CuAssertStrEquals(tc, "http://example.com/ds1", getDNASequenceURI(ds1));
-	CuAssertStrEquals(tc, "tccctatcagtgat", getNucleotides(ds1));
+	CuAssertStrEquals(tc, "tccctatcagtgat", getDNASequenceNucleotides(ds1));
 	// check pointers
 	CuAssertPtrEquals(tc, ds1, getDNAComponentSequence(dc1));
 }
@@ -241,7 +241,7 @@ void TestLoadedValid07(CuTest *tc) {
 	CuAssertIntEquals(tc, 0, getNumCollections());
 	// check sequences
 	DNASequence *ds1 = getDNASequence("http://example.com/ds1");
-	CuAssertStrEquals(tc, "tccctatcagtgat", getNucleotides(ds1));
+	CuAssertStrEquals(tc, "tccctatcagtgat", getDNASequenceNucleotides(ds1));
 	// check components
 	DNAComponent *dc1 = getDNAComponent("http://example.com/dc1");
 	DNAComponent *dc2 = getDNAComponent("http://example.com/dc2");
@@ -257,8 +257,8 @@ void TestLoadedValid07(CuTest *tc) {
 	// check annotations
 	SequenceAnnotation *sa1 = getSequenceAnnotation("http://example.com/sa1");
 	// sa1 should have a dc:creator node that libSBOLc ignores
-	CuAssertIntEquals(tc, -1, getBioStart(sa1));
-	CuAssertIntEquals(tc, -1, getBioEnd(sa1));
+	CuAssertIntEquals(tc, -1, getSequenceAnnotationStart(sa1));
+	CuAssertIntEquals(tc, -1, getSequenceAnnotationEnd(sa1));
 	CuAssertIntEquals(tc, STRAND_FORWARD, getStrandPolarity(sa1));
 	// check pointers
 	CuAssertPtrEquals(tc, ds1, getDNAComponentSequence(dc1));
@@ -294,8 +294,8 @@ void TestLoadedValid08(CuTest *tc) {
 	// sequences
 	DNASequence *ds1 = getDNASequence("http://example.com/ds1");
 	DNASequence *ds2 = getDNASequence("http://example.com/ds2");
-	CuAssertStrEquals(tc, "tccctatcagtgat", getNucleotides(ds1));
-	CuAssertStrEquals(tc, "tc", getNucleotides(ds2));
+	CuAssertStrEquals(tc, "tccctatcagtgat", getDNASequenceNucleotides(ds1));
+	CuAssertStrEquals(tc, "tc", getDNASequenceNucleotides(ds2));
 	CuAssertPtrEquals(tc, ds1, getDNAComponentSequence(dc1));
 	CuAssertPtrEquals(tc, ds2, getDNAComponentSequence(dc2));
 	// annotations
@@ -303,10 +303,10 @@ void TestLoadedValid08(CuTest *tc) {
 	SequenceAnnotation *sa2 = getSequenceAnnotation("http://example.com/sa2");
 	SequenceAnnotation *sa3 = getSequenceAnnotation("http://example.com/sa3");
 	CuAssertIntEquals(tc, 3, getNumSequenceAnnotationsFor(dc1));
-	CuAssertIntEquals(tc, 1, getBioStart(sa1));
-	CuAssertIntEquals(tc, 3, getBioStart(sa2));
-	CuAssertIntEquals(tc, 2, getBioEnd(sa1));
-	CuAssertIntEquals(tc, 5, getBioEnd(sa2));
+	CuAssertIntEquals(tc, 1, getSequenceAnnotationStart(sa1));
+	CuAssertIntEquals(tc, 3, getSequenceAnnotationStart(sa2));
+	CuAssertIntEquals(tc, 2, getSequenceAnnotationEnd(sa1));
+	CuAssertIntEquals(tc, 5, getSequenceAnnotationEnd(sa2));
 	CuAssertPtrEquals(tc, dc2, getSubComponent(sa1));
 	CuAssertPtrEquals(tc, dc3, getSubComponent(sa2));
 	CuAssertPtrEquals(tc, dc4, getSubComponent(sa3));
@@ -333,7 +333,7 @@ void TestLoadedValid09(CuTest *tc) {
 						getDNAComponentDescription(dc1));
 	// sequence
 	DNASequence *ds1 = getDNASequence("http://example.com/ds1");
-	CuAssertStrEquals(tc, "tccctatcagtgat", getNucleotides(ds1));
+	CuAssertStrEquals(tc, "tccctatcagtgat", getDNASequenceNucleotides(ds1));
 	CuAssertPtrEquals(tc, ds1, getDNAComponentSequence(dc1));
 }
 
@@ -418,7 +418,7 @@ void TestLoadedValid13(CuTest *tc) {
 	CuAssertIntEquals(tc, 0, getNumSBOLCompoundObjects());
 	// sequence
 	DNASequence *seq = getDNASequence("http://example.com/ds1");
-	CuAssertStrEquals(tc, "tccctatcagtgat", getNucleotides(seq));
+	CuAssertStrEquals(tc, "tccctatcagtgat", getDNASequenceNucleotides(seq));
 }
 
 // TODO learn a macro to de-duplicate this

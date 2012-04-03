@@ -39,12 +39,12 @@ SBOLAPIEXPORTS DNASequence* getDNASequence(const char* uri);
 /// Get a copy of the nucleotides contained in this DNASequence.
 /// @return A string that needs to be freed.
 /// @todo rename to getDNASequenceNucleotides?
-SBOLAPIEXPORTS char* getNucleotides(const DNASequence* seq);
+SBOLAPIEXPORTS char* getDNASequenceNucleotides(const DNASequence* seq);
 
 /// Copy a string of nucleotides into this DNASequence.
 /// So far, no validation is done to ensure that these are valid nucleotides.
 /// @todo rename to setDNASequenceNucleotides?
-SBOLAPIEXPORTS void setNucleotides(DNASequence* seq, const char* nucleotides);
+SBOLAPIEXPORTS void setDNASequenceNucleotides(DNASequence* seq, const char* nucleotides);
 
 /// Find out whether there's a DNASequence with this URI.
 SBOLAPIEXPORTS int isDNASequenceURI(const char* uri);

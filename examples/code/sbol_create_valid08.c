@@ -23,8 +23,8 @@ void CreateValid08() {
 	// sequences
 	DNASequence *ds1 = createDNASequence("http://example.com/ds1");
 	DNASequence *ds2 = createDNASequence("http://example.com/ds2");
-	setNucleotides(ds1, "tccctatcagtgat");
-	setNucleotides(ds2, "tc");
+	setDNASequenceNucleotides(ds1, "tccctatcagtgat");
+	setDNASequenceNucleotides(ds2, "tc");
 	setDNAComponentSequence(dc1, ds1);
 	setDNAComponentSequence(dc2, ds2);
 	// annotations
@@ -34,8 +34,8 @@ void CreateValid08() {
 	addSequenceAnnotation(dc1, sa1);
 	addSequenceAnnotation(dc1, sa2);
 	addSequenceAnnotation(dc1, sa3);
-	setBioStart(sa1, 1); setBioEnd(sa1, 2);
-	setBioStart(sa2, 3); setBioEnd(sa2, 5);
+	setSequenceAnnotationStart(sa1, 1); setSequenceAnnotationEnd(sa1, 2);
+	setSequenceAnnotationStart(sa2, 3); setSequenceAnnotationEnd(sa2, 5);
 	setSubComponent(sa1, dc2);
 	setSubComponent(sa2, dc3);
 	setSubComponent(sa3, dc4);

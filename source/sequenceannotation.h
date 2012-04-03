@@ -50,10 +50,10 @@ SBOLAPIEXPORTS int getNumSequenceAnnotations();
 SBOLAPIEXPORTS SequenceAnnotation* getNthSequenceAnnotation(int n);
 
 /// Find out where on the annotated DNAComponent this feature starts.
-SBOLAPIEXPORTS int getBioStart(const SequenceAnnotation* ann);
+SBOLAPIEXPORTS int getSequenceAnnotationStart(const SequenceAnnotation* ann);
 
 /// Find out where on the annotated DNAComponent this feature ends.
-SBOLAPIEXPORTS int getBioEnd(const SequenceAnnotation* ann);
+SBOLAPIEXPORTS int getSequenceAnnotationEnd(const SequenceAnnotation* ann);
 
 /// Find out the orientation of this feature relative to
 /// the annotated DNAComponent.
@@ -62,10 +62,10 @@ SBOLAPIEXPORTS int getBioEnd(const SequenceAnnotation* ann);
 SBOLAPIEXPORTS int getStrandPolarity(const SequenceAnnotation* ann);
 
 /// Set where on the annotated DNAComponent this feature starts.
-SBOLAPIEXPORTS void setBioStart(SequenceAnnotation* ann, int start);
+SBOLAPIEXPORTS void setSequenceAnnotationStart(SequenceAnnotation* ann, int start);
 
 /// Set where on the annotated DNAComponent this feature ends.
-SBOLAPIEXPORTS void setBioEnd(SequenceAnnotation* ann, int end);
+SBOLAPIEXPORTS void setSequenceAnnotationEnd(SequenceAnnotation* ann, int end);
 
 /// Set the orientation of this feature relative to the annotated DNAComponent.
 SBOLAPIEXPORTS void setStrandPolarity(SequenceAnnotation* ann, int polarity);

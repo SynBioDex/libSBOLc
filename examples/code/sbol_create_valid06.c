@@ -11,7 +11,7 @@ void CreateValid06() {
 	setDNAComponentName(com, "DnaComponent1");
 	setDNAComponentDescription(com, "A DnaComponent can optionally use a type from Sequence Ontology");
 	DNASequence *seq = createDNASequence("http://example.com/ds1");
-	setNucleotides(seq, "tccctatcagtgat");
+	setDNASequenceNucleotides(seq, "tccctatcagtgat");
 	setDNAComponentSequence(com, seq);
 }
 

@@ -15,7 +15,7 @@ void CreateValid09() {
 	setDNAComponentDescription(dc1, "Multiple DNA components at the top level are allowed even without a collection");
 	// sequence
 	DNASequence *ds1 = createDNASequence("http://example.com/ds1");
-	setNucleotides(ds1, "tccctatcagtgat");
+	setDNASequenceNucleotides(ds1, "tccctatcagtgat");
 	setDNAComponentSequence(dc1, ds1);
 }
 

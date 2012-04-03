@@ -97,7 +97,7 @@ static void writeDNASequence(DNASequence* seq) {
 
 	// nucleotides
 	if (!alreadyPROCESSED((void *)seq)) {
-		xmlTextWriterWriteElement(WRITER, NODENAME_NUCLEOTIDES , getNucleotides(seq));
+		xmlTextWriterWriteElement(WRITER, NODENAME_NUCLEOTIDES , getDNASequenceNucleotides(seq));
 		markPROCESSED((void *)seq);
 	}
 	
@@ -124,8 +124,8 @@ static void writeSequenceAnnotation(SequenceAnnotation* ann) {
 	indentLess();
 	
 	// start, end
-	int start = getBioStart(ann);
-	int end   = getBioEnd(ann);
+	int start = getSequenceAnnotationStart(ann);
+	int end   = getSequenceAnnotationEnd(ann);
 	if (start>0)
 		xmlTextWriterWriteElement(WRITER, NODENAME_BIOSTART, intToStr(start));
 	if (end>0)

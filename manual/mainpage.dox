@@ -29,7 +29,7 @@
 ///   the release folder for finished binaries. They're created by CMake.
 /// 
 /// When running CMake and compiling, the main sbol library is always
-/// created first beacuse most of the optional targets depend on it:
+/// created first because most of the optional targets depend on it:
 /// @image html build_dependencies.png "Build dependencies"
 /// 
 /// Once built, the executables just depend on finding the correct

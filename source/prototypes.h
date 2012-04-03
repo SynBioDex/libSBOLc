@@ -12,7 +12,7 @@
 /// interdependent.
 ////////////////////////////////////////////////////////////
 
-typedef enum   _StrandPolarity      StrandPolarity;
+typedef enum   StrandPolarity       StrandPolarity;
 
 typedef union  _Property            Property;
 typedef struct _TextProperty        TextProperty;

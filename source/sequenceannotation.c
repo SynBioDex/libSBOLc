@@ -68,13 +68,13 @@ void setSequenceAnnotationURI(SequenceAnnotation* ann, const char* uri) {
         setSBOLObjectURI(ann->base, uri);
 }
 
-void setBioStart(SequenceAnnotation* ann, int start) {
+void setSequenceAnnotationStart(SequenceAnnotation* ann, int start) {
 	if (ann)
 		//ann->genbankStart = start;
 		setPositionProperty(ann->genbankStart, start);
 }
 
-void setBioEnd(SequenceAnnotation* ann, int end) {
+void setSequenceAnnotationEnd(SequenceAnnotation* ann, int end) {
 	if (ann)
 		//ann->genbankEnd = end;
 		setPositionProperty(ann->genbankEnd, end);
@@ -168,7 +168,7 @@ SequenceAnnotation* getSequenceAnnotation(const char* uri) {
 	return NULL;
 }
 
-int getBioStart(const SequenceAnnotation* ann) {
+int getSequenceAnnotationStart(const SequenceAnnotation* ann) {
 	if (!ann)
 		return -1;
 	else
@@ -176,7 +176,7 @@ int getBioStart(const SequenceAnnotation* ann) {
 		return getPositionProperty(ann->genbankStart);
 }
 
-int getBioEnd(const SequenceAnnotation* ann) {
+int getSequenceAnnotationEnd(const SequenceAnnotation* ann) {
 	if (!ann)
 		return -1;
 	else
@@ -246,9 +246,9 @@ void printSequenceAnnotation(const SequenceAnnotation* ann, int tabs) {
         return;
     indent(tabs); printf("%s\n", getSequenceAnnotationURI(ann));
     //int start = ann->genbankStart;
-	int start = getBioStart(ann);
+	int start = getSequenceAnnotationStart(ann);
     //int end = ann->genbankEnd;
-	int end = getBioEnd(ann);
+	int end = getSequenceAnnotationEnd(ann);
     if (start != 0 || end != 0) {
     	indent(tabs+1); printf("%i --> %i\n", start, end);
     }

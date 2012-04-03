@@ -161,7 +161,7 @@ static void readDNASequenceContent(xmlNode *node) {
 	// add nucleotides
 	path = BAD_CAST "./" NSPREFIX_SBOL ":" NODENAME_NUCLEOTIDES;
 	if (nt = getContentsOfNodeMatchingXPath(node, path)) {
-		setNucleotides(seq, (char *)nt);
+		setDNASequenceNucleotides(seq, (char *)nt);
 		xmlFree(nt);
 	}
 
@@ -182,14 +182,14 @@ static void readSequenceAnnotationContent(xmlNode *node) {
 	// add bioStart
 	path = BAD_CAST "./" NSPREFIX_SBOL ":" NODENAME_BIOSTART;
 	if (contents = getContentsOfNodeMatchingXPath(node, path)) {
-		setBioStart(ann, strToInt((char *)contents));
+		setSequenceAnnotationStart(ann, strToInt((char *)contents));
 		xmlFree(contents);
 	}
 
 	// add bioEnd
 	path = BAD_CAST "./" NSPREFIX_SBOL ":" NODENAME_BIOEND;
 	if (contents = getContentsOfNodeMatchingXPath(node, path)) {
-		setBioEnd(ann, strToInt((char *)contents));
+		setSequenceAnnotationEnd(ann, strToInt((char *)contents));
 		xmlFree(contents);
 	}
 

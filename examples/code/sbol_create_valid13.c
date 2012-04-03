@@ -6,6 +6,6 @@
 
 void CreateValid13() {
 	DNASequence *seq = createDNASequence("http://example.com/ds1");
-	setNucleotides(seq, "tccctatcagtgat");
+	setDNASequenceNucleotides(seq, "tccctatcagtgat");
 }
 

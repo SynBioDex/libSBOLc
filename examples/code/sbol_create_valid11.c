@@ -21,7 +21,7 @@ void CreateValid11() {
 	addDNAComponentToCollection(dc2, col);
 	// sequence
 	DNASequence *ds1 = createDNASequence("http://example.com/ds1");
-	setNucleotides(ds1, "tccctatcagtgat");
+	setDNASequenceNucleotides(ds1, "tccctatcagtgat");
 	setDNAComponentSequence(dc1, ds1);
 }
 

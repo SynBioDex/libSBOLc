@@ -36,7 +36,7 @@ static void setDNASequenceURI(DNASequence* seq, const char* uri) {
 		setSBOLObjectURI(seq->base, uri);
 }
 
-void setNucleotides(DNASequence* seq, const char* nucleotides) {
+void setDNASequenceNucleotides(DNASequence* seq, const char* nucleotides) {
 	if (seq)
 		setNucleotidesProperty(seq->nucleotides, nucleotides);
 }
@@ -125,7 +125,7 @@ int isDNASequenceURI(const char* uri) {
 	return 0;
 }
 
-char* getNucleotides(const DNASequence* seq) {
+char* getDNASequenceNucleotides(const DNASequence* seq) {
 	if (seq)
 	    return getNucleotidesProperty(seq->nucleotides);
 }
@@ -145,7 +145,7 @@ void printDNASequence(const DNASequence* seq, int tabs) {
 	// print nucleotides, truncating them if there's a lot
 	indent(tabs+1);
 	printf("nucleotides: ");
-    char* nt = getNucleotides(seq);
+    char* nt = getDNASequenceNucleotides(seq);
 	if (nt && strlen(nt) > atoi(NUCLEOTIDES_TO_PRINT))
 		printf("%." NUCLEOTIDES_TO_PRINT "s", nt);
 	else

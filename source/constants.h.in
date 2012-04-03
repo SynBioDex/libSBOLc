@@ -47,7 +47,8 @@
 /// Lists possible values of a PolarityProperty.
 /// @todo rename to StrandOrientation?
 /// @todo Is bidirectional in the SBOL spec so far?
-enum _StrandPolarity {
+/// @todo why is each entry listed twice in Doxygen?
+enum StrandPolarity {
 	STRAND_FORWARD,
 	STRAND_BIDIRECTIONAL,
 	STRAND_REVERSE

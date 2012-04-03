@@ -8,15 +8,15 @@
 void TestCreateEmptyDNASequence(CuTest* tc) {
 	cleanupDNASequences();
 	DNASequence* seq = createDNASequence("");
-	setNucleotides(seq, "");
+	setDNASequenceNucleotides(seq, "");
 	CuAssertStrEquals(tc, "", getDNASequenceURI(seq));
-	CuAssertStrEquals(tc, "", getNucleotides(seq));
+	CuAssertStrEquals(tc, "", getDNASequenceNucleotides(seq));
 }
 
 void TestCreateNullDNASequence(CuTest* tc) {
 	DNASequence* seq = createDNASequence(NULL);
 	CuAssertStrEquals(tc, NULL, getDNASequenceURI(seq));
-	CuAssertPtrEquals(tc, NULL, getNucleotides(seq));
+	CuAssertPtrEquals(tc, NULL, getDNASequenceNucleotides(seq));
 }
 
 void TestCreateRandomDNASequence(CuTest* tc) {
@@ -30,9 +30,9 @@ void TestCreateRandomDNASequence(CuTest* tc) {
 		nt = randomUniqueURI();
 		// avoid duplicates
 		seq = createDNASequence(uri);
-		setNucleotides(seq, nt);
+		setDNASequenceNucleotides(seq, nt);
 		CuAssertStrEquals(tc, uri, getDNASequenceURI(seq));
-		CuAssertStrEquals(tc, nt, getNucleotides(seq));
+		CuAssertStrEquals(tc, nt, getDNASequenceNucleotides(seq));
 		deleteDNASequence(seq);
 	}
 }

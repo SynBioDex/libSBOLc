@@ -16,7 +16,7 @@ void CreateValid04() {
 	setDNAComponentDescription(dc2, "Another DNA component");
 	// sequence
 	DNASequence *ds1 = createDNASequence("http://example.com/ds1");
-	setNucleotides(ds1, "tccctatcagtgat");
+	setDNASequenceNucleotides(ds1, "tccctatcagtgat");
 	setDNAComponentSequence(dc1, ds1);
 	// annotation
 	SequenceAnnotation *sa1 = createSequenceAnnotation("http://example.com/sa1");
