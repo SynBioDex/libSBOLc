@@ -8,6 +8,25 @@ __all__ = (
     'DNAComponent',
     'Collection' )
 
+############################################################
+# All the sbol objects have a ptr attribute that lets
+# you get their pointer. But since the pointers are
+# read-only (and unhashable), you need a workaround
+# to go the other way, from pointer --> object.
+#
+_allsbolobjects_ = []
+#
+def register_sbol_object(obj):
+    _allsbolobjects_.append((obj, obj.ptr))
+#
+def retrieve_sbol_object(ptr):
+    for obj, candidate_ptr in _allsbolobjects_:
+        if candidate_ptr == ptr:
+            return obj
+    return None
+#
+############################################################
+
 def return_stdout(fn):
     def decorated_fn(*args, **kwargs):
         'Redirect stdout to a str and return it'
@@ -26,7 +45,7 @@ class DNASequence(object):
     def __init__(self, uri):
         object.__init__(self)
         self.ptr = createDNASequence(uri)
-        self.ptr.obj = self
+        register_sbol_object(self)
 
     def __del__(self):
         deleteDNASequence(self.ptr)
@@ -50,7 +69,7 @@ class SequenceAnnotation(object):
     def __init__(self, uri):
         object.__init__(self)
         self.ptr = createSequenceAnnotation(uri)
-        self.ptr.obj = self
+        register_sbol_object(self)
 
     def __del__(self):
         deleteSequenceAnnotation(self.ptr)
@@ -84,7 +103,8 @@ class SequenceAnnotation(object):
         setSequenceAnnotationSubComponent(self.ptr, com)
 
     def get_subcomponent(self):
-        return getSequenceAnnotationSubComponent(self.ptr).obj
+        ptr = getSequenceAnnotationSubComponent(self.ptr)
+        return retrieve_sbol_object(ptr)
 
     def add_precedes(self, downstream):
         addPrecedesRelationship(self.ptr, downstream.ptr)
@@ -94,7 +114,7 @@ class SequenceAnnotation(object):
         num = getNumPrecedes(self.ptr)
         for n in range(num):
             ptr = getNthPrecedes(self.ptr, n)
-            precedes.append(ptr.obj)
+            precedes.append( retrieve_sbol_object(ptr) )
         return precedes
 
 class DNAComponent(object):
@@ -103,7 +123,7 @@ class DNAComponent(object):
     def __init__(self, uri):
         object.__init__(self)
         self.ptr = createDNAComponent(uri)
-        self.ptr.obj = self
+        register_sbol_object(self)
 
     def __del__(self):
         deleteDNAComponent(self.ptr)
@@ -137,7 +157,8 @@ class DNAComponent(object):
         setDNAComponentSequence(self.ptr, seq.ptr)
 
     def get_sequence(self):
-        return getDNAComponentSequence(self.ptr).obj
+        ptr = getDNAComponentSequence(self.ptr)
+        return retrieve_sbol_object(ptr)
 
     def add_annotation(self, ann):
         addSequenceAnnotation(self.ptr, ann.ptr)
@@ -147,7 +168,7 @@ class DNAComponent(object):
         num = getNumSequenceAnnotationsFor(self.ptr)
         for n in range(num):
             ptr = getNthSequenceAnnotationFor(self.ptr, n)
-            annotations.append(ptr.obj)
+            annotations.append( retrieve_sbol_object(ptr) )
         return annotations
 
     # todo remove_annotation?
@@ -158,7 +179,7 @@ class Collection(object):
     def __init__(self, uri):
         object.__init__(self)
         self.ptr = createCollection(uri)
-        self.ptr.obj = self
+        register_sbol_object(self)
 
     # why does this throw an exception during shutdown?
     def __del__(self):
@@ -200,14 +221,6 @@ class Collection(object):
         num = getNumDNAComponentsIn(self.ptr)
         for n in range(num):
             ptr = getNthDNAComponentIn(self.ptr, n)
-            components.append(ptr.obj)
+            components.append( retrieve_sbol_object(ptr) )
         return components
-
-if __name__ == '__main__':
-    c1  = Collection('collection1')
-    dc1 = DNAComponent('component1')
-    ds1 = DNASequence('sequence1')
-    print c1
-    print dc1
-    print ds1
 
