@@ -1,22 +1,16 @@
-import sbol_swig
+from sbol_swig import *
 import sys
 from cStringIO import StringIO
 
 __all__ = (
-'SBOLError',
-'MethodError', 'ArgumentError', 'ReturnError',
-'DNASequence', 'SequenceAnnotation',
-'DNAComponent', 'Collection'
-)
-
-class SBOLError(Exception):     'Error in the SBOL SWIG wrapper'
-class MethodError(SBOLError):   'Incorrect method use'
-class ArgumentError(SBOLError): 'Method called with incorrect pointer'
-class ReturnError(SBOLError):   'Method returned incorrect pointer'
+	'DNASequence',
+	'SequenceAnnotation',
+	'DNAComponent',
+	'Collection' )
 
 def return_stdout(fn):
     def decorated_fn(*args, **kwargs):
-        'Capture and return the output stream during a function call'
+        'Redirect stdout to a str and return it'
         backup = sys.stdout
         sys.stdout = StringIO()
         fn(*args, **kwargs)
@@ -29,68 +23,105 @@ def return_stdout(fn):
 class DNASequence(object):
     def __init__(self, uri):
         object.__init__(self)
-        self.ptr = sbol_swig.createDNASequence(uri)
+        self.ptr = createDNASequence(uri)
 
     def __del__(self):
-        if sbol_swig.isDNASequence(self.ptr):
-            sbol_swig.deleteDNASequence(self.ptr)
+        deleteDNASequence(self.ptr)
 
     @return_stdout
     def __str__(self):
-        sbol_swig.printDNASequence(self.ptr, 0)
+        printDNASequence(self.ptr, 0)
 
     def get_uri(self):
-        return sbol_swig.getDNASequenceURI(self.ptr)
+        return getDNASequenceURI(self.ptr)
 
 class SequenceAnnotation(object):
     def __init__(self, uri):
         object.__init__(self)
-        self.ptr = sbol_swig.createSequenceAnnotation(uri)
+        self.ptr = createSequenceAnnotation(uri)
 
     def __del__(self):
-        if sbol_swig.isSequenceAnnotation(self.ptr):
-            sbol_swig.deleteSequenceAnnotation(self.ptr)
+        deleteSequenceAnnotation(self.ptr)
 
     @return_stdout
     def __str__(self):
-        sbol_swig.printSequenceAnnotation(self.ptr, 0)
+        printSequenceAnnotation(self.ptr, 0)
 
     def get_uri(self):
-        return sbol_swig.getSequenceAnnotationURI(self.ptr)
+        return getSequenceAnnotationURI(self.ptr)
 
 class DNAComponent(object):
     def __init__(self, uri):
         object.__init__(self)
-        self.ptr = sbol_swig.createDNAComponent(uri)
+        self.ptr = createDNAComponent(uri)
 
     def __del__(self):
-        if sbol_swig.isDNAComponent(self.ptr):
-            sbol_swig.deleteDNAComponent(self.ptr)
+        deleteDNAComponent(self.ptr)
             
     @return_stdout
     def __str__(self):
-        sbol_swig.printDNAComponent(self.ptr, 0)
+        printDNAComponent(self.ptr, 0)
 
     def get_uri(self):
-        return sbol_swig.getDNAComponentURI(self.ptr)
+        return getDNAComponentURI(self.ptr)
+
+    def set_display_id(self, id):
+        setDNAComponentDisplayID(self.ptr, id)
+
+    def get_display_id(self):
+        return getDNAComponentDisplayID(self.ptr)
+
+    def set_name(self, name):
+        setDNAComponentName(self.ptr, name)
+
+    def get_name(self):
+        return getDNAComponentName(self.ptr)
+
+    def set_description(self, descr):
+        setDNAComponentDescription(self.ptr, descr)
+
+    def get_name(self):
+        return getDNAComponentName(self.ptr)
 
 class Collection(object):
     def __init__(self, uri):
         object.__init__(self)
-        self.ptr = sbol_swig.createCollection(uri)
+        self.ptr = createCollection(uri)
 
+    # why does this throw an exception during shutdown?
     def __del__(self):
-        sbol_swig.deleteCollection(self.ptr)
+        try:
+            deleteCollection(self.ptr)
+        except TypeError: # TypeError("'NoneType' object is not callable",)
+            pass
 
     @return_stdout
     def __str__(self):
-        sbol_swig.printCollection(self.ptr, 0)
+        printCollection(self.ptr, 0)
 
     def get_uri(self):
-        return sbol_swig.getCollectionURI(self.ptr)
+        return getCollectionURI(self.ptr)
+
+    def set_display_id(self, id):
+        setCollectionDisplayID(self.ptr, id)
+
+    def get_display_id(self):
+        return getCollectionDisplayID(self.ptr)
+
+    def set_name(self, name):
+        setCollectionName(self.ptr, name)
+
+    def get_name(self):
+        return getCollectionName(self.ptr)
+
+    def set_description(self, descr):
+        setCollectionDescription(self.ptr, descr)
+
+    def get_description(self):
+        return getCollectionDescription(self.ptr)
 
 if __name__ == '__main__':
-    c1 = Collection('collection1')
+    c1  = Collection('collection1')
     dc1 = DNAComponent('component1')
     ds1 = DNASequence('sequence1')
     print c1

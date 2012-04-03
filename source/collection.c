@@ -56,7 +56,7 @@ void deleteCollection(Collection* col) {
 
 int isCollection(const void* pointer) {
 	lazyCreateAllCollections();
-	return (int) indexOfPointerInArray(allCollections, pointer) >= 0;
+	return pointerContainedInArray(allCollections, pointer);
 }
 
 int isCollectionURI(const char* uri) {
