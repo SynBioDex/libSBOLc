@@ -30,13 +30,36 @@
 /// 
 /// When running CMake and compiling, the main sbol library is always
 /// created first because most of the optional targets depend on it:
-/// @image html build_dependencies.png "Build dependencies"
+/// @image html build_dependencies.png
 /// 
 /// Once built, the executables just depend on finding the correct
 /// xml files:
-/// @image html runtime_dependencies.png "Runtime dependencies"
+/// @image html runtime_dependencies.png
 /// 
 /// @section tour A brief tour of the source code
+/// 
+/// There are a bunch of C source files, but they fall into four general
+/// categories: 
+/// 
+/// * dnasequence.h, sequenceannotation.h, dnacomponent.h, and collection.h
+///   define the SBOL Core objects.
+/// 
+/// * array.h, object.h, and property.h define building blocks for those objects.
+/// 
+/// * validator.h, reader.h, and writer.h perform global operations.
+///   They each have one main algorithm, and maybe some non-exported
+///   supporting functions.
+/// 
+/// * And then there are a few other miscellaneous files like prototypes.h,
+///   constants.h.in, and utilities.h; they each do something unique but limited.
+/// 
+/// You might be confused and/or annoyed with the profusion of similarly-named structs
+/// and functions relating to SBOL objects. I know I would be seeing it for the
+/// first time. Here are a couple diagrams to clarify what I was going for:
+/// 
+/// @image html property_hierarchy.png
+/// 
+/// @image html struct_hierarchy.png
 /// 
 /// @section doxygen Updating this documentation
 /// 
