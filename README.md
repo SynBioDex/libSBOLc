@@ -57,10 +57,10 @@ or
 
     ./sbol_run_tests.exe
 
-Incorporating libSBOLc into your own code
------------------------------------------
+Incorporating libSBOLc into your code
+-------------------------------------
 
-There are only a few important functions you need to know to get started reading, writing, and manipulating SBOL files:
+To use libsbol in your own code, <code>#include "sbol.h"</code>. Then there are only a few important functions you need to know to get started reading, writing, and manipulating SBOL files:
 
 * readSBOLCore imports SBOL objects from a file, and writeSBOLCore serializes them again.
 
