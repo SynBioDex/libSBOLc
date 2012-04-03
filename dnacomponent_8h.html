@@ -123,73 +123,73 @@ Data Structures</h2></td></tr>
 <tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">Implements the SBOL Core DNAComponent object.  <a href="struct___d_n_a_component.html#details">More...</a><br/></td></tr>
 <tr><td colspan="2"><h2><a name="func-members"></a>
 Functions</h2></td></tr>
-<tr class="memitem:ab2741beecb2f517e31fd0a50d58db33f"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="ab2741beecb2f517e31fd0a50d58db33f"></a>
-DNAComponent *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="dnacomponent_8h.html#ab2741beecb2f517e31fd0a50d58db33f">createDNAComponent</a> (const char *uri)</td></tr>
-<tr class="memdesc:ab2741beecb2f517e31fd0a50d58db33f"><td class="mdescLeft">&#160;</td><td class="mdescRight">Create an empty DNAComponent. <br/></td></tr>
-<tr class="memitem:ab61fd64400f2b169efae5f62d67fb6da"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="dnacomponent_8h.html#ab61fd64400f2b169efae5f62d67fb6da">deleteDNAComponent</a> (DNAComponent *com)</td></tr>
-<tr class="memdesc:ab61fd64400f2b169efae5f62d67fb6da"><td class="mdescLeft">&#160;</td><td class="mdescRight">Delete a DNAComponent.  <a href="#ab61fd64400f2b169efae5f62d67fb6da"></a><br/></td></tr>
-<tr class="memitem:a11b7236a64dd149cc72eacee6212f1bf"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a11b7236a64dd149cc72eacee6212f1bf"></a>
-int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="dnacomponent_8h.html#a11b7236a64dd149cc72eacee6212f1bf">isDNAComponent</a> (const void *pointer)</td></tr>
-<tr class="memdesc:a11b7236a64dd149cc72eacee6212f1bf"><td class="mdescLeft">&#160;</td><td class="mdescRight">Find out whether this pointer points to a DNAComponent. <br/></td></tr>
-<tr class="memitem:aa484c79a4971619acf0d489f29acba7c"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="aa484c79a4971619acf0d489f29acba7c"></a>
-int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="dnacomponent_8h.html#aa484c79a4971619acf0d489f29acba7c">isDNAComponentURI</a> (const char *uri)</td></tr>
-<tr class="memdesc:aa484c79a4971619acf0d489f29acba7c"><td class="mdescLeft">&#160;</td><td class="mdescRight">Find out if there's a DNAComponent with this uri. <br/></td></tr>
-<tr class="memitem:adc273e764a20521a4e41b58acb1c8432"><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="dnacomponent_8h.html#adc273e764a20521a4e41b58acb1c8432">getNumDNAComponents</a> ()</td></tr>
-<tr class="memdesc:adc273e764a20521a4e41b58acb1c8432"><td class="mdescLeft">&#160;</td><td class="mdescRight">Get the total number of DNAComponents.  <a href="#adc273e764a20521a4e41b58acb1c8432"></a><br/></td></tr>
-<tr class="memitem:aaa8362ba2201fea226e1539252453c91"><td class="memItemLeft" align="right" valign="top">DNAComponent *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="dnacomponent_8h.html#aaa8362ba2201fea226e1539252453c91">getNthDNAComponent</a> (int n)</td></tr>
-<tr class="memdesc:aaa8362ba2201fea226e1539252453c91"><td class="mdescLeft">&#160;</td><td class="mdescRight">Get the Nth DNAComponent.  <a href="#aaa8362ba2201fea226e1539252453c91"></a><br/></td></tr>
-<tr class="memitem:abb406916df421db5c02f69d64f543de7"><td class="memItemLeft" align="right" valign="top">DNAComponent *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="dnacomponent_8h.html#abb406916df421db5c02f69d64f543de7">getDNAComponent</a> (const char *uri)</td></tr>
-<tr class="memdesc:abb406916df421db5c02f69d64f543de7"><td class="mdescLeft">&#160;</td><td class="mdescRight">Get the DNAComponent associated with this uri.  <a href="#abb406916df421db5c02f69d64f543de7"></a><br/></td></tr>
-<tr class="memitem:a2f4102896a4c4587de9add865a870a47"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a2f4102896a4c4587de9add865a870a47"></a>
-int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="dnacomponent_8h.html#a2f4102896a4c4587de9add865a870a47">getNumSequenceAnnotationsFor</a> (const DNAComponent *com)</td></tr>
-<tr class="memdesc:a2f4102896a4c4587de9add865a870a47"><td class="mdescLeft">&#160;</td><td class="mdescRight">Get the number of SequenceAnnotations for a DNAComponent. <br/></td></tr>
-<tr class="memitem:ad1c92370a90e1aa3a3d3569172a3c0f4"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="ad1c92370a90e1aa3a3d3569172a3c0f4"></a>
-SequenceAnnotation *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="dnacomponent_8h.html#ad1c92370a90e1aa3a3d3569172a3c0f4">getNthSequenceAnnotationFor</a> (const DNAComponent *com, int n)</td></tr>
-<tr class="memdesc:ad1c92370a90e1aa3a3d3569172a3c0f4"><td class="mdescLeft">&#160;</td><td class="mdescRight">Get the Nth SequenceAnnotation for a DNAComponent. <br/></td></tr>
-<tr class="memitem:afac4de922662dcd97b7a11ddde88397d"><td class="memItemLeft" align="right" valign="top">char *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="dnacomponent_8h.html#afac4de922662dcd97b7a11ddde88397d">getDNAComponentURI</a> (const DNAComponent *com)</td></tr>
-<tr class="memdesc:afac4de922662dcd97b7a11ddde88397d"><td class="mdescLeft">&#160;</td><td class="mdescRight">Get the uri of a DNAComponent.  <a href="#afac4de922662dcd97b7a11ddde88397d"></a><br/></td></tr>
-<tr class="memitem:a3af86a2a897a41efa3639f8b872144ef"><td class="memItemLeft" align="right" valign="top">char *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="dnacomponent_8h.html#a3af86a2a897a41efa3639f8b872144ef">getDNAComponentDisplayID</a> (const DNAComponent *com)</td></tr>
-<tr class="memdesc:a3af86a2a897a41efa3639f8b872144ef"><td class="mdescLeft">&#160;</td><td class="mdescRight">Get the displayID of a DNAComponent.  <a href="#a3af86a2a897a41efa3639f8b872144ef"></a><br/></td></tr>
-<tr class="memitem:a79a015d8719b09a0aa975612a12a6aa5"><td class="memItemLeft" align="right" valign="top">char *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="dnacomponent_8h.html#a79a015d8719b09a0aa975612a12a6aa5">getDNAComponentName</a> (const DNAComponent *com)</td></tr>
-<tr class="memdesc:a79a015d8719b09a0aa975612a12a6aa5"><td class="mdescLeft">&#160;</td><td class="mdescRight">Get the name of a DNAComponent.  <a href="#a79a015d8719b09a0aa975612a12a6aa5"></a><br/></td></tr>
-<tr class="memitem:a009c7e342b01aecd5a2ff59c62506ed7"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a009c7e342b01aecd5a2ff59c62506ed7"></a>
-char *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="dnacomponent_8h.html#a009c7e342b01aecd5a2ff59c62506ed7">getDNAComponentDescription</a> (const DNAComponent *com)</td></tr>
-<tr class="memdesc:a009c7e342b01aecd5a2ff59c62506ed7"><td class="mdescLeft">&#160;</td><td class="mdescRight">Get the description of a DNAComponent. <br/></td></tr>
-<tr class="memitem:abd98ad0ce209365aa63c4bcad27fdc67"><td class="memItemLeft" align="right" valign="top">DNASequence *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="dnacomponent_8h.html#abd98ad0ce209365aa63c4bcad27fdc67">getDNAComponentSequence</a> (DNAComponent *com)</td></tr>
-<tr class="memdesc:abd98ad0ce209365aa63c4bcad27fdc67"><td class="mdescLeft">&#160;</td><td class="mdescRight">Get the DNASequence of a DNAComponent.  <a href="#abd98ad0ce209365aa63c4bcad27fdc67"></a><br/></td></tr>
-<tr class="memitem:a0c68f36337a290898c085ed7595609c8"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="dnacomponent_8h.html#a0c68f36337a290898c085ed7595609c8">setDNAComponentURI</a> (DNAComponent *com, const char *uri)</td></tr>
-<tr class="memdesc:a0c68f36337a290898c085ed7595609c8"><td class="mdescLeft">&#160;</td><td class="mdescRight">Set the uri of a DNAComponent.  <a href="#a0c68f36337a290898c085ed7595609c8"></a><br/></td></tr>
-<tr class="memitem:a2eceeb95bd17cb3450b25a6982884312"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="dnacomponent_8h.html#a2eceeb95bd17cb3450b25a6982884312">setDNAComponentDisplayID</a> (DNAComponent *com, const char *id)</td></tr>
-<tr class="memdesc:a2eceeb95bd17cb3450b25a6982884312"><td class="mdescLeft">&#160;</td><td class="mdescRight">Set the displayID of a DNAComponent.  <a href="#a2eceeb95bd17cb3450b25a6982884312"></a><br/></td></tr>
-<tr class="memitem:a9bb826b741e1cbd0492db6e15e9f3d62"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="dnacomponent_8h.html#a9bb826b741e1cbd0492db6e15e9f3d62">setDNAComponentName</a> (DNAComponent *com, const char *name)</td></tr>
-<tr class="memdesc:a9bb826b741e1cbd0492db6e15e9f3d62"><td class="mdescLeft">&#160;</td><td class="mdescRight">Set the name of a DNAComponent.  <a href="#a9bb826b741e1cbd0492db6e15e9f3d62"></a><br/></td></tr>
-<tr class="memitem:a6496ea04a863b654eb763adf06e769d3"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a6496ea04a863b654eb763adf06e769d3"></a>
-void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="dnacomponent_8h.html#a6496ea04a863b654eb763adf06e769d3">setDNAComponentDescription</a> (DNAComponent *com, const char *desc)</td></tr>
-<tr class="memdesc:a6496ea04a863b654eb763adf06e769d3"><td class="mdescLeft">&#160;</td><td class="mdescRight">Set the description of a DNAComponent. <br/></td></tr>
-<tr class="memitem:ac6a5546713e55671a3b3f1bcc54be320"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="dnacomponent_8h.html#ac6a5546713e55671a3b3f1bcc54be320">setDNAComponentSequence</a> (DNAComponent *com, DNASequence *seq)</td></tr>
-<tr class="memdesc:ac6a5546713e55671a3b3f1bcc54be320"><td class="mdescLeft">&#160;</td><td class="mdescRight">Set the DNASequence of a DNAComponent.  <a href="#ac6a5546713e55671a3b3f1bcc54be320"></a><br/></td></tr>
-<tr class="memitem:a1fa01d61ac48ccfc82d19a1631e4f174"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="dnacomponent_8h.html#a1fa01d61ac48ccfc82d19a1631e4f174">addSequenceAnnotation</a> (DNAComponent *com, SequenceAnnotation *ann)</td></tr>
-<tr class="memdesc:a1fa01d61ac48ccfc82d19a1631e4f174"><td class="mdescLeft">&#160;</td><td class="mdescRight">Add a SequenceAnnotation to a DNAComponent.  <a href="#a1fa01d61ac48ccfc82d19a1631e4f174"></a><br/></td></tr>
-<tr class="memitem:a48b51b7f98df536e045522ce683ace7d"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="dnacomponent_8h.html#a48b51b7f98df536e045522ce683ace7d">setSubComponent</a> (SequenceAnnotation *ann, DNAComponent *com)</td></tr>
-<tr class="memdesc:a48b51b7f98df536e045522ce683ace7d"><td class="mdescLeft">&#160;</td><td class="mdescRight">Set a DNAComponent as the subComponent of a SequenceAnnotation.  <a href="#a48b51b7f98df536e045522ce683ace7d"></a><br/></td></tr>
-<tr class="memitem:a2a8f7d13c50ae882ea087e953a45969e"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a2a8f7d13c50ae882ea087e953a45969e"></a>
-void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="dnacomponent_8h.html#a2a8f7d13c50ae882ea087e953a45969e">printDNAComponent</a> (const DNAComponent *com, int tabs)</td></tr>
-<tr class="memdesc:a2a8f7d13c50ae882ea087e953a45969e"><td class="mdescLeft">&#160;</td><td class="mdescRight">Print an outline of a DNAComponent to stdout. <br/></td></tr>
-<tr class="memitem:a3111c745d036671bef55776b511b4f45"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a3111c745d036671bef55776b511b4f45"></a>
-void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="dnacomponent_8h.html#a3111c745d036671bef55776b511b4f45">printAllDNAComponents</a> ()</td></tr>
-<tr class="memdesc:a3111c745d036671bef55776b511b4f45"><td class="mdescLeft">&#160;</td><td class="mdescRight">Print an outline of all the DNAComponents to stdout. <br/></td></tr>
-<tr class="memitem:a0b5015a4d442a8f0b20a4a10e156a8ce"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="dnacomponent_8h.html#a0b5015a4d442a8f0b20a4a10e156a8ce">cleanupDNAComponents</a> ()</td></tr>
-<tr class="memdesc:a0b5015a4d442a8f0b20a4a10e156a8ce"><td class="mdescLeft">&#160;</td><td class="mdescRight">Delete all DNAComponents.  <a href="#a0b5015a4d442a8f0b20a4a10e156a8ce"></a><br/></td></tr>
+<tr class="memitem:a2c4f5acd6bde6de6d2174be05e9e0101"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a2c4f5acd6bde6de6d2174be05e9e0101"></a>
+<a class="el" href="constants_8h_8in.html#adfe7cb56aa4562836d5167efb98c8d2e">SBOLAPIEXPORTS</a> DNAComponent *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="dnacomponent_8h.html#a2c4f5acd6bde6de6d2174be05e9e0101">createDNAComponent</a> (const char *uri)</td></tr>
+<tr class="memdesc:a2c4f5acd6bde6de6d2174be05e9e0101"><td class="mdescLeft">&#160;</td><td class="mdescRight">Create an empty DNAComponent. <br/></td></tr>
+<tr class="memitem:a892f21b08ec0404bed820b9cbfb1342e"><td class="memItemLeft" align="right" valign="top"><a class="el" href="constants_8h_8in.html#adfe7cb56aa4562836d5167efb98c8d2e">SBOLAPIEXPORTS</a> void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="dnacomponent_8h.html#a892f21b08ec0404bed820b9cbfb1342e">deleteDNAComponent</a> (DNAComponent *com)</td></tr>
+<tr class="memdesc:a892f21b08ec0404bed820b9cbfb1342e"><td class="mdescLeft">&#160;</td><td class="mdescRight">Delete a DNAComponent.  <a href="#a892f21b08ec0404bed820b9cbfb1342e"></a><br/></td></tr>
+<tr class="memitem:a234c4f635f2b50bd1cde83e1d3c0a760"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a234c4f635f2b50bd1cde83e1d3c0a760"></a>
+<a class="el" href="constants_8h_8in.html#adfe7cb56aa4562836d5167efb98c8d2e">SBOLAPIEXPORTS</a> int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="dnacomponent_8h.html#a234c4f635f2b50bd1cde83e1d3c0a760">isDNAComponent</a> (const void *pointer)</td></tr>
+<tr class="memdesc:a234c4f635f2b50bd1cde83e1d3c0a760"><td class="mdescLeft">&#160;</td><td class="mdescRight">Find out whether this pointer points to a DNAComponent. <br/></td></tr>
+<tr class="memitem:ab085cdd750bcddf33bb2fa11adb7119c"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="ab085cdd750bcddf33bb2fa11adb7119c"></a>
+<a class="el" href="constants_8h_8in.html#adfe7cb56aa4562836d5167efb98c8d2e">SBOLAPIEXPORTS</a> int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="dnacomponent_8h.html#ab085cdd750bcddf33bb2fa11adb7119c">isDNAComponentURI</a> (const char *uri)</td></tr>
+<tr class="memdesc:ab085cdd750bcddf33bb2fa11adb7119c"><td class="mdescLeft">&#160;</td><td class="mdescRight">Find out if there's a DNAComponent with this uri. <br/></td></tr>
+<tr class="memitem:a8f28b3d39bce8cc58ac11ae6c3ab9fdf"><td class="memItemLeft" align="right" valign="top"><a class="el" href="constants_8h_8in.html#adfe7cb56aa4562836d5167efb98c8d2e">SBOLAPIEXPORTS</a> int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="dnacomponent_8h.html#a8f28b3d39bce8cc58ac11ae6c3ab9fdf">getNumDNAComponents</a> ()</td></tr>
+<tr class="memdesc:a8f28b3d39bce8cc58ac11ae6c3ab9fdf"><td class="mdescLeft">&#160;</td><td class="mdescRight">Get the total number of DNAComponents.  <a href="#a8f28b3d39bce8cc58ac11ae6c3ab9fdf"></a><br/></td></tr>
+<tr class="memitem:aef7c495080ce12ea80dc37f679f792b7"><td class="memItemLeft" align="right" valign="top"><a class="el" href="constants_8h_8in.html#adfe7cb56aa4562836d5167efb98c8d2e">SBOLAPIEXPORTS</a> DNAComponent *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="dnacomponent_8h.html#aef7c495080ce12ea80dc37f679f792b7">getNthDNAComponent</a> (int n)</td></tr>
+<tr class="memdesc:aef7c495080ce12ea80dc37f679f792b7"><td class="mdescLeft">&#160;</td><td class="mdescRight">Get the Nth DNAComponent.  <a href="#aef7c495080ce12ea80dc37f679f792b7"></a><br/></td></tr>
+<tr class="memitem:aa3b893929d98a5c1f5bf73f6a4e9c739"><td class="memItemLeft" align="right" valign="top"><a class="el" href="constants_8h_8in.html#adfe7cb56aa4562836d5167efb98c8d2e">SBOLAPIEXPORTS</a> DNAComponent *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="dnacomponent_8h.html#aa3b893929d98a5c1f5bf73f6a4e9c739">getDNAComponent</a> (const char *uri)</td></tr>
+<tr class="memdesc:aa3b893929d98a5c1f5bf73f6a4e9c739"><td class="mdescLeft">&#160;</td><td class="mdescRight">Get the DNAComponent associated with this uri.  <a href="#aa3b893929d98a5c1f5bf73f6a4e9c739"></a><br/></td></tr>
+<tr class="memitem:a051f8a8242d0671d4083cb1cc27d782b"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a051f8a8242d0671d4083cb1cc27d782b"></a>
+<a class="el" href="constants_8h_8in.html#adfe7cb56aa4562836d5167efb98c8d2e">SBOLAPIEXPORTS</a> int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="dnacomponent_8h.html#a051f8a8242d0671d4083cb1cc27d782b">getNumSequenceAnnotationsFor</a> (const DNAComponent *com)</td></tr>
+<tr class="memdesc:a051f8a8242d0671d4083cb1cc27d782b"><td class="mdescLeft">&#160;</td><td class="mdescRight">Get the number of SequenceAnnotations for a DNAComponent. <br/></td></tr>
+<tr class="memitem:aceca3665491a09cbbb2a3d23b1da51e2"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="aceca3665491a09cbbb2a3d23b1da51e2"></a>
+<a class="el" href="constants_8h_8in.html#adfe7cb56aa4562836d5167efb98c8d2e">SBOLAPIEXPORTS</a> SequenceAnnotation *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="dnacomponent_8h.html#aceca3665491a09cbbb2a3d23b1da51e2">getNthSequenceAnnotationFor</a> (const DNAComponent *com, int n)</td></tr>
+<tr class="memdesc:aceca3665491a09cbbb2a3d23b1da51e2"><td class="mdescLeft">&#160;</td><td class="mdescRight">Get the Nth SequenceAnnotation for a DNAComponent. <br/></td></tr>
+<tr class="memitem:a8c2b467cc4507605a4dcad126bf2b3c0"><td class="memItemLeft" align="right" valign="top"><a class="el" href="constants_8h_8in.html#adfe7cb56aa4562836d5167efb98c8d2e">SBOLAPIEXPORTS</a> char *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="dnacomponent_8h.html#a8c2b467cc4507605a4dcad126bf2b3c0">getDNAComponentURI</a> (const DNAComponent *com)</td></tr>
+<tr class="memdesc:a8c2b467cc4507605a4dcad126bf2b3c0"><td class="mdescLeft">&#160;</td><td class="mdescRight">Get the uri of a DNAComponent.  <a href="#a8c2b467cc4507605a4dcad126bf2b3c0"></a><br/></td></tr>
+<tr class="memitem:a7bff15249b0eab19769b0cf06447a311"><td class="memItemLeft" align="right" valign="top"><a class="el" href="constants_8h_8in.html#adfe7cb56aa4562836d5167efb98c8d2e">SBOLAPIEXPORTS</a> char *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="dnacomponent_8h.html#a7bff15249b0eab19769b0cf06447a311">getDNAComponentDisplayID</a> (const DNAComponent *com)</td></tr>
+<tr class="memdesc:a7bff15249b0eab19769b0cf06447a311"><td class="mdescLeft">&#160;</td><td class="mdescRight">Get the displayID of a DNAComponent.  <a href="#a7bff15249b0eab19769b0cf06447a311"></a><br/></td></tr>
+<tr class="memitem:a3a59d8660a73a99c1fa451fe6206c17f"><td class="memItemLeft" align="right" valign="top"><a class="el" href="constants_8h_8in.html#adfe7cb56aa4562836d5167efb98c8d2e">SBOLAPIEXPORTS</a> char *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="dnacomponent_8h.html#a3a59d8660a73a99c1fa451fe6206c17f">getDNAComponentName</a> (const DNAComponent *com)</td></tr>
+<tr class="memdesc:a3a59d8660a73a99c1fa451fe6206c17f"><td class="mdescLeft">&#160;</td><td class="mdescRight">Get the name of a DNAComponent.  <a href="#a3a59d8660a73a99c1fa451fe6206c17f"></a><br/></td></tr>
+<tr class="memitem:a61c865e2a7071fab7b430c8be5687fd3"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a61c865e2a7071fab7b430c8be5687fd3"></a>
+<a class="el" href="constants_8h_8in.html#adfe7cb56aa4562836d5167efb98c8d2e">SBOLAPIEXPORTS</a> char *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="dnacomponent_8h.html#a61c865e2a7071fab7b430c8be5687fd3">getDNAComponentDescription</a> (const DNAComponent *com)</td></tr>
+<tr class="memdesc:a61c865e2a7071fab7b430c8be5687fd3"><td class="mdescLeft">&#160;</td><td class="mdescRight">Get the description of a DNAComponent. <br/></td></tr>
+<tr class="memitem:a7bee428f0c552818d60fcdf74771578b"><td class="memItemLeft" align="right" valign="top"><a class="el" href="constants_8h_8in.html#adfe7cb56aa4562836d5167efb98c8d2e">SBOLAPIEXPORTS</a> DNASequence *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="dnacomponent_8h.html#a7bee428f0c552818d60fcdf74771578b">getDNAComponentSequence</a> (DNAComponent *com)</td></tr>
+<tr class="memdesc:a7bee428f0c552818d60fcdf74771578b"><td class="mdescLeft">&#160;</td><td class="mdescRight">Get the DNASequence of a DNAComponent.  <a href="#a7bee428f0c552818d60fcdf74771578b"></a><br/></td></tr>
+<tr class="memitem:a3e8baba4bf73bf73c6bb948283ee1374"><td class="memItemLeft" align="right" valign="top"><a class="el" href="constants_8h_8in.html#adfe7cb56aa4562836d5167efb98c8d2e">SBOLAPIEXPORTS</a> void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="dnacomponent_8h.html#a3e8baba4bf73bf73c6bb948283ee1374">setDNAComponentURI</a> (DNAComponent *com, const char *uri)</td></tr>
+<tr class="memdesc:a3e8baba4bf73bf73c6bb948283ee1374"><td class="mdescLeft">&#160;</td><td class="mdescRight">Set the uri of a DNAComponent.  <a href="#a3e8baba4bf73bf73c6bb948283ee1374"></a><br/></td></tr>
+<tr class="memitem:a2a6aa56023f263481a9e3dc48452f140"><td class="memItemLeft" align="right" valign="top"><a class="el" href="constants_8h_8in.html#adfe7cb56aa4562836d5167efb98c8d2e">SBOLAPIEXPORTS</a> void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="dnacomponent_8h.html#a2a6aa56023f263481a9e3dc48452f140">setDNAComponentDisplayID</a> (DNAComponent *com, const char *id)</td></tr>
+<tr class="memdesc:a2a6aa56023f263481a9e3dc48452f140"><td class="mdescLeft">&#160;</td><td class="mdescRight">Set the displayID of a DNAComponent.  <a href="#a2a6aa56023f263481a9e3dc48452f140"></a><br/></td></tr>
+<tr class="memitem:a6398093d44264b00a9e069ddf40cedb5"><td class="memItemLeft" align="right" valign="top"><a class="el" href="constants_8h_8in.html#adfe7cb56aa4562836d5167efb98c8d2e">SBOLAPIEXPORTS</a> void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="dnacomponent_8h.html#a6398093d44264b00a9e069ddf40cedb5">setDNAComponentName</a> (DNAComponent *com, const char *name)</td></tr>
+<tr class="memdesc:a6398093d44264b00a9e069ddf40cedb5"><td class="mdescLeft">&#160;</td><td class="mdescRight">Set the name of a DNAComponent.  <a href="#a6398093d44264b00a9e069ddf40cedb5"></a><br/></td></tr>
+<tr class="memitem:a883382bc7e91bfe0f41b8f3f171d976a"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a883382bc7e91bfe0f41b8f3f171d976a"></a>
+<a class="el" href="constants_8h_8in.html#adfe7cb56aa4562836d5167efb98c8d2e">SBOLAPIEXPORTS</a> void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="dnacomponent_8h.html#a883382bc7e91bfe0f41b8f3f171d976a">setDNAComponentDescription</a> (DNAComponent *com, const char *desc)</td></tr>
+<tr class="memdesc:a883382bc7e91bfe0f41b8f3f171d976a"><td class="mdescLeft">&#160;</td><td class="mdescRight">Set the description of a DNAComponent. <br/></td></tr>
+<tr class="memitem:a58d6160b010570aad37fedba885ff5cf"><td class="memItemLeft" align="right" valign="top"><a class="el" href="constants_8h_8in.html#adfe7cb56aa4562836d5167efb98c8d2e">SBOLAPIEXPORTS</a> void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="dnacomponent_8h.html#a58d6160b010570aad37fedba885ff5cf">setDNAComponentSequence</a> (DNAComponent *com, DNASequence *seq)</td></tr>
+<tr class="memdesc:a58d6160b010570aad37fedba885ff5cf"><td class="mdescLeft">&#160;</td><td class="mdescRight">Set the DNASequence of a DNAComponent.  <a href="#a58d6160b010570aad37fedba885ff5cf"></a><br/></td></tr>
+<tr class="memitem:a3f0eae8eb04c18bfb5b920134a43cd84"><td class="memItemLeft" align="right" valign="top"><a class="el" href="constants_8h_8in.html#adfe7cb56aa4562836d5167efb98c8d2e">SBOLAPIEXPORTS</a> void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="dnacomponent_8h.html#a3f0eae8eb04c18bfb5b920134a43cd84">addSequenceAnnotation</a> (DNAComponent *com, SequenceAnnotation *ann)</td></tr>
+<tr class="memdesc:a3f0eae8eb04c18bfb5b920134a43cd84"><td class="mdescLeft">&#160;</td><td class="mdescRight">Add a SequenceAnnotation to a DNAComponent.  <a href="#a3f0eae8eb04c18bfb5b920134a43cd84"></a><br/></td></tr>
+<tr class="memitem:a4a7dfd9c33234152cfb641d8274975e4"><td class="memItemLeft" align="right" valign="top"><a class="el" href="constants_8h_8in.html#adfe7cb56aa4562836d5167efb98c8d2e">SBOLAPIEXPORTS</a> void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="dnacomponent_8h.html#a4a7dfd9c33234152cfb641d8274975e4">setSubComponent</a> (SequenceAnnotation *ann, DNAComponent *com)</td></tr>
+<tr class="memdesc:a4a7dfd9c33234152cfb641d8274975e4"><td class="mdescLeft">&#160;</td><td class="mdescRight">Set a DNAComponent as the subComponent of a SequenceAnnotation.  <a href="#a4a7dfd9c33234152cfb641d8274975e4"></a><br/></td></tr>
+<tr class="memitem:ac5b87bbceb04bd529560e0159e0ce404"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="ac5b87bbceb04bd529560e0159e0ce404"></a>
+<a class="el" href="constants_8h_8in.html#adfe7cb56aa4562836d5167efb98c8d2e">SBOLAPIEXPORTS</a> void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="dnacomponent_8h.html#ac5b87bbceb04bd529560e0159e0ce404">printDNAComponent</a> (const DNAComponent *com, int tabs)</td></tr>
+<tr class="memdesc:ac5b87bbceb04bd529560e0159e0ce404"><td class="mdescLeft">&#160;</td><td class="mdescRight">Print an outline of a DNAComponent to stdout. <br/></td></tr>
+<tr class="memitem:a8512f57d5ab56181d11bb03dc9af5d11"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a8512f57d5ab56181d11bb03dc9af5d11"></a>
+<a class="el" href="constants_8h_8in.html#adfe7cb56aa4562836d5167efb98c8d2e">SBOLAPIEXPORTS</a> void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="dnacomponent_8h.html#a8512f57d5ab56181d11bb03dc9af5d11">printAllDNAComponents</a> ()</td></tr>
+<tr class="memdesc:a8512f57d5ab56181d11bb03dc9af5d11"><td class="mdescLeft">&#160;</td><td class="mdescRight">Print an outline of all the DNAComponents to stdout. <br/></td></tr>
+<tr class="memitem:a07a59a11079eff4be648e15eaf93e0dc"><td class="memItemLeft" align="right" valign="top"><a class="el" href="constants_8h_8in.html#adfe7cb56aa4562836d5167efb98c8d2e">SBOLAPIEXPORTS</a> void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="dnacomponent_8h.html#a07a59a11079eff4be648e15eaf93e0dc">cleanupDNAComponents</a> ()</td></tr>
+<tr class="memdesc:a07a59a11079eff4be648e15eaf93e0dc"><td class="mdescLeft">&#160;</td><td class="mdescRight">Delete all DNAComponents.  <a href="#a07a59a11079eff4be648e15eaf93e0dc"></a><br/></td></tr>
 </table>
 <hr/><a name="details" id="details"></a><h2>Detailed Description</h2>
 <div class="textblock"><p>Contains the DNAComponent struct, as well as functions for operating on it. </p>
 </div><hr/><h2>Function Documentation</h2>
-<a class="anchor" id="a1fa01d61ac48ccfc82d19a1631e4f174"></a>
+<a class="anchor" id="a3f0eae8eb04c18bfb5b920134a43cd84"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">void <a class="el" href="dnacomponent_8h.html#a1fa01d61ac48ccfc82d19a1631e4f174">addSequenceAnnotation</a> </td>
+          <td class="memname"><a class="el" href="constants_8h_8in.html#adfe7cb56aa4562836d5167efb98c8d2e">SBOLAPIEXPORTS</a> void <a class="el" href="dnacomponent_8h.html#a3f0eae8eb04c18bfb5b920134a43cd84">addSequenceAnnotation</a> </td>
           <td>(</td>
           <td class="paramtype">DNAComponent *&#160;</td>
           <td class="paramname"><em>com</em>, </td>
@@ -210,16 +210,16 @@ void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="dnac
 <div class="memdoc">
 
 <p>Add a SequenceAnnotation to a DNAComponent. </p>
-<dl class="todo"><dt><b><a class="el" href="todo.html#_todo000010">Todo:</a></b></dt><dd>where should this go? here, <a class="el" href="sequenceannotation_8h.html" title="This file contains the SequenceAnnotation struct, as well as functions for operating on it...">sequenceannotation.h</a>, <a class="el" href="sbol_8h.html" title="Gathers together all the SBOL functions so they can be easily #included.">sbol.h</a>? </dd></dl>
+<dl class="todo"><dt><b><a class="el" href="todo.html#_todo000012">Todo:</a></b></dt><dd>where should this go? here, <a class="el" href="sequenceannotation_8h.html" title="This file contains the SequenceAnnotation struct, as well as functions for operating on it...">sequenceannotation.h</a>, <a class="el" href="sbol_8h.html" title="Gathers together all the SBOL functions so they can be easily #included.">sbol.h</a>? </dd></dl>
 
 </div>
 </div>
-<a class="anchor" id="a0b5015a4d442a8f0b20a4a10e156a8ce"></a>
+<a class="anchor" id="a07a59a11079eff4be648e15eaf93e0dc"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">void <a class="el" href="dnacomponent_8h.html#a0b5015a4d442a8f0b20a4a10e156a8ce">cleanupDNAComponents</a> </td>
+          <td class="memname"><a class="el" href="constants_8h_8in.html#adfe7cb56aa4562836d5167efb98c8d2e">SBOLAPIEXPORTS</a> void <a class="el" href="dnacomponent_8h.html#a07a59a11079eff4be648e15eaf93e0dc">cleanupDNAComponents</a> </td>
           <td>(</td>
           <td class="paramname"></td><td>)</td>
           <td></td>
@@ -230,16 +230,16 @@ void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="dnac
 
 <p>Delete all DNAComponents. </p>
 <p>To delete everything instead, use cleanupSBOLCore. </p>
-<dl class="todo"><dt><b><a class="el" href="todo.html#_todo000011">Todo:</a></b></dt><dd>remove this? is it ever used? </dd></dl>
+<dl class="todo"><dt><b><a class="el" href="todo.html#_todo000013">Todo:</a></b></dt><dd>remove this? is it ever used? </dd></dl>
 
 </div>
 </div>
-<a class="anchor" id="ab61fd64400f2b169efae5f62d67fb6da"></a>
+<a class="anchor" id="a892f21b08ec0404bed820b9cbfb1342e"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">void <a class="el" href="dnacomponent_8h.html#ab61fd64400f2b169efae5f62d67fb6da">deleteDNAComponent</a> </td>
+          <td class="memname"><a class="el" href="constants_8h_8in.html#adfe7cb56aa4562836d5167efb98c8d2e">SBOLAPIEXPORTS</a> void <a class="el" href="dnacomponent_8h.html#a892f21b08ec0404bed820b9cbfb1342e">deleteDNAComponent</a> </td>
           <td>(</td>
           <td class="paramtype">DNAComponent *&#160;</td>
           <td class="paramname"><em>com</em></td><td>)</td>
@@ -254,12 +254,12 @@ void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="dnac
 
 </div>
 </div>
-<a class="anchor" id="abb406916df421db5c02f69d64f543de7"></a>
+<a class="anchor" id="aa3b893929d98a5c1f5bf73f6a4e9c739"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">DNAComponent* <a class="el" href="dnacomponent_8h.html#abb406916df421db5c02f69d64f543de7">getDNAComponent</a> </td>
+          <td class="memname"><a class="el" href="constants_8h_8in.html#adfe7cb56aa4562836d5167efb98c8d2e">SBOLAPIEXPORTS</a> DNAComponent* <a class="el" href="dnacomponent_8h.html#aa3b893929d98a5c1f5bf73f6a4e9c739">getDNAComponent</a> </td>
           <td>(</td>
           <td class="paramtype">const char *&#160;</td>
           <td class="paramname"><em>uri</em></td><td>)</td>
@@ -274,12 +274,12 @@ void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="dnac
 
 </div>
 </div>
-<a class="anchor" id="a3af86a2a897a41efa3639f8b872144ef"></a>
+<a class="anchor" id="a7bff15249b0eab19769b0cf06447a311"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">char* <a class="el" href="dnacomponent_8h.html#a3af86a2a897a41efa3639f8b872144ef">getDNAComponentDisplayID</a> </td>
+          <td class="memname"><a class="el" href="constants_8h_8in.html#adfe7cb56aa4562836d5167efb98c8d2e">SBOLAPIEXPORTS</a> char* <a class="el" href="dnacomponent_8h.html#a7bff15249b0eab19769b0cf06447a311">getDNAComponentDisplayID</a> </td>
           <td>(</td>
           <td class="paramtype">const DNAComponent *&#160;</td>
           <td class="paramname"><em>com</em></td><td>)</td>
@@ -294,12 +294,12 @@ void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="dnac
 
 </div>
 </div>
-<a class="anchor" id="a79a015d8719b09a0aa975612a12a6aa5"></a>
+<a class="anchor" id="a3a59d8660a73a99c1fa451fe6206c17f"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">char* <a class="el" href="dnacomponent_8h.html#a79a015d8719b09a0aa975612a12a6aa5">getDNAComponentName</a> </td>
+          <td class="memname"><a class="el" href="constants_8h_8in.html#adfe7cb56aa4562836d5167efb98c8d2e">SBOLAPIEXPORTS</a> char* <a class="el" href="dnacomponent_8h.html#a3a59d8660a73a99c1fa451fe6206c17f">getDNAComponentName</a> </td>
           <td>(</td>
           <td class="paramtype">const DNAComponent *&#160;</td>
           <td class="paramname"><em>com</em></td><td>)</td>
@@ -314,12 +314,12 @@ void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="dnac
 
 </div>
 </div>
-<a class="anchor" id="abd98ad0ce209365aa63c4bcad27fdc67"></a>
+<a class="anchor" id="a7bee428f0c552818d60fcdf74771578b"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">DNASequence* <a class="el" href="dnacomponent_8h.html#abd98ad0ce209365aa63c4bcad27fdc67">getDNAComponentSequence</a> </td>
+          <td class="memname"><a class="el" href="constants_8h_8in.html#adfe7cb56aa4562836d5167efb98c8d2e">SBOLAPIEXPORTS</a> DNASequence* <a class="el" href="dnacomponent_8h.html#a7bee428f0c552818d60fcdf74771578b">getDNAComponentSequence</a> </td>
           <td>(</td>
           <td class="paramtype">DNAComponent *&#160;</td>
           <td class="paramname"><em>com</em></td><td>)</td>
@@ -334,12 +334,12 @@ void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="dnac
 
 </div>
 </div>
-<a class="anchor" id="afac4de922662dcd97b7a11ddde88397d"></a>
+<a class="anchor" id="a8c2b467cc4507605a4dcad126bf2b3c0"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">char* <a class="el" href="dnacomponent_8h.html#afac4de922662dcd97b7a11ddde88397d">getDNAComponentURI</a> </td>
+          <td class="memname"><a class="el" href="constants_8h_8in.html#adfe7cb56aa4562836d5167efb98c8d2e">SBOLAPIEXPORTS</a> char* <a class="el" href="dnacomponent_8h.html#a8c2b467cc4507605a4dcad126bf2b3c0">getDNAComponentURI</a> </td>
           <td>(</td>
           <td class="paramtype">const DNAComponent *&#160;</td>
           <td class="paramname"><em>com</em></td><td>)</td>
@@ -354,12 +354,12 @@ void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="dnac
 
 </div>
 </div>
-<a class="anchor" id="aaa8362ba2201fea226e1539252453c91"></a>
+<a class="anchor" id="aef7c495080ce12ea80dc37f679f792b7"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">DNAComponent* <a class="el" href="dnacomponent_8h.html#aaa8362ba2201fea226e1539252453c91">getNthDNAComponent</a> </td>
+          <td class="memname"><a class="el" href="constants_8h_8in.html#adfe7cb56aa4562836d5167efb98c8d2e">SBOLAPIEXPORTS</a> DNAComponent* <a class="el" href="dnacomponent_8h.html#aef7c495080ce12ea80dc37f679f792b7">getNthDNAComponent</a> </td>
           <td>(</td>
           <td class="paramtype">int&#160;</td>
           <td class="paramname"><em>n</em></td><td>)</td>
@@ -374,12 +374,12 @@ void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="dnac
 
 </div>
 </div>
-<a class="anchor" id="adc273e764a20521a4e41b58acb1c8432"></a>
+<a class="anchor" id="a8f28b3d39bce8cc58ac11ae6c3ab9fdf"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">int <a class="el" href="dnacomponent_8h.html#adc273e764a20521a4e41b58acb1c8432">getNumDNAComponents</a> </td>
+          <td class="memname"><a class="el" href="constants_8h_8in.html#adfe7cb56aa4562836d5167efb98c8d2e">SBOLAPIEXPORTS</a> int <a class="el" href="dnacomponent_8h.html#a8f28b3d39bce8cc58ac11ae6c3ab9fdf">getNumDNAComponents</a> </td>
           <td>(</td>
           <td class="paramname"></td><td>)</td>
           <td></td>
@@ -393,12 +393,12 @@ void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="dnac
 
 </div>
 </div>
-<a class="anchor" id="a2eceeb95bd17cb3450b25a6982884312"></a>
+<a class="anchor" id="a2a6aa56023f263481a9e3dc48452f140"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">void <a class="el" href="dnacomponent_8h.html#a2eceeb95bd17cb3450b25a6982884312">setDNAComponentDisplayID</a> </td>
+          <td class="memname"><a class="el" href="constants_8h_8in.html#adfe7cb56aa4562836d5167efb98c8d2e">SBOLAPIEXPORTS</a> void <a class="el" href="dnacomponent_8h.html#a2a6aa56023f263481a9e3dc48452f140">setDNAComponentDisplayID</a> </td>
           <td>(</td>
           <td class="paramtype">DNAComponent *&#160;</td>
           <td class="paramname"><em>com</em>, </td>
@@ -423,12 +423,12 @@ void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="dnac
 
 </div>
 </div>
-<a class="anchor" id="a9bb826b741e1cbd0492db6e15e9f3d62"></a>
+<a class="anchor" id="a6398093d44264b00a9e069ddf40cedb5"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">void <a class="el" href="dnacomponent_8h.html#a9bb826b741e1cbd0492db6e15e9f3d62">setDNAComponentName</a> </td>
+          <td class="memname"><a class="el" href="constants_8h_8in.html#adfe7cb56aa4562836d5167efb98c8d2e">SBOLAPIEXPORTS</a> void <a class="el" href="dnacomponent_8h.html#a6398093d44264b00a9e069ddf40cedb5">setDNAComponentName</a> </td>
           <td>(</td>
           <td class="paramtype">DNAComponent *&#160;</td>
           <td class="paramname"><em>com</em>, </td>
@@ -453,12 +453,12 @@ void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="dnac
 
 </div>
 </div>
-<a class="anchor" id="ac6a5546713e55671a3b3f1bcc54be320"></a>
+<a class="anchor" id="a58d6160b010570aad37fedba885ff5cf"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">void <a class="el" href="dnacomponent_8h.html#ac6a5546713e55671a3b3f1bcc54be320">setDNAComponentSequence</a> </td>
+          <td class="memname"><a class="el" href="constants_8h_8in.html#adfe7cb56aa4562836d5167efb98c8d2e">SBOLAPIEXPORTS</a> void <a class="el" href="dnacomponent_8h.html#a58d6160b010570aad37fedba885ff5cf">setDNAComponentSequence</a> </td>
           <td>(</td>
           <td class="paramtype">DNAComponent *&#160;</td>
           <td class="paramname"><em>com</em>, </td>
@@ -483,12 +483,12 @@ void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="dnac
 
 </div>
 </div>
-<a class="anchor" id="a0c68f36337a290898c085ed7595609c8"></a>
+<a class="anchor" id="a3e8baba4bf73bf73c6bb948283ee1374"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">void <a class="el" href="dnacomponent_8h.html#a0c68f36337a290898c085ed7595609c8">setDNAComponentURI</a> </td>
+          <td class="memname"><a class="el" href="constants_8h_8in.html#adfe7cb56aa4562836d5167efb98c8d2e">SBOLAPIEXPORTS</a> void <a class="el" href="dnacomponent_8h.html#a3e8baba4bf73bf73c6bb948283ee1374">setDNAComponentURI</a> </td>
           <td>(</td>
           <td class="paramtype">DNAComponent *&#160;</td>
           <td class="paramname"><em>com</em>, </td>
@@ -513,12 +513,12 @@ void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="dnac
 
 </div>
 </div>
-<a class="anchor" id="a48b51b7f98df536e045522ce683ace7d"></a>
+<a class="anchor" id="a4a7dfd9c33234152cfb641d8274975e4"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">void <a class="el" href="dnacomponent_8h.html#a48b51b7f98df536e045522ce683ace7d">setSubComponent</a> </td>
+          <td class="memname"><a class="el" href="constants_8h_8in.html#adfe7cb56aa4562836d5167efb98c8d2e">SBOLAPIEXPORTS</a> void <a class="el" href="dnacomponent_8h.html#a4a7dfd9c33234152cfb641d8274975e4">setSubComponent</a> </td>
           <td>(</td>
           <td class="paramtype">SequenceAnnotation *&#160;</td>
           <td class="paramname"><em>ann</em>, </td>
@@ -547,7 +547,7 @@ void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="dnac
 
 
 <hr class="footer"/><address class="footer"><small>
-Generated on Sat Mar 31 2012 16:55:32 for libSBOLc by &#160;<a href="http://www.doxygen.org/index.html">
+Generated on Tue Apr 3 2012 12:56:05 for libSBOLc by &#160;<a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/>
 </a> 1.8.0
 </small></address>

@@ -6,9 +6,9 @@
 <area shape="rect" id="node13" href="$dnacomponent_8h.html" title="Contains the DNAComponent struct, as well as functions for operating on it." alt="" coords="1317,83,1672,112"/>
 <area shape="rect" id="node16" href="$sequenceannotation_8h.html" title="This file contains the SequenceAnnotation struct, as well as functions for operating on it..." alt="" coords="1696,83,2085,112"/>
 <area shape="rect" id="node19" href="$dnasequence_8h.html" title="Defines the DNASequence struct, as well as functions for operating on it." alt="" coords="2109,83,2453,112"/>
-<area shape="rect" id="node22" href="$utilities_8h.html" title="This file defines SBOL utility functions that don&#39;t really fit in anywhere else." alt="" coords="2477,83,2781,112"/>
-<area shape="rect" id="node24" href="$reader_8h.html" title="Contains functions for importing SBOL objects from an XML file." alt="" coords="2805,83,3104,112"/>
-<area shape="rect" id="node27" href="$validator_8h.html" title="This file defines the isValidSBOL function, which is used to verify SBOL documents before parsing..." alt="" coords="3128,83,3440,112"/>
-<area shape="rect" id="node30" href="$writer_8h.html" title="This file contains functions for writing the SBOL core to an XML file." alt="" coords="3464,83,3757,112"/>
+<area shape="rect" id="node22" href="$reader_8h.html" title="Contains functions for importing SBOL objects from an XML file." alt="" coords="2477,83,2776,112"/>
+<area shape="rect" id="node25" href="$validator_8h.html" title="This file defines the isValidSBOL function, which is used to verify SBOL documents before parsing..." alt="" coords="2800,83,3112,112"/>
+<area shape="rect" id="node28" href="$writer_8h.html" title="This file contains functions for writing the SBOL core to an XML file." alt="" coords="3136,83,3429,112"/>
+<area shape="rect" id="node31" href="$utilities_8h.html" title="This file defines SBOL utility functions that don&#39;t really fit in anywhere else." alt="" coords="3453,83,3757,112"/>
 <area shape="rect" id="node11" href="$sbol_8h.html" title="Gathers together all the SBOL functions so they can be easily #included." alt="" coords="2139,160,2424,189"/>
 </map>

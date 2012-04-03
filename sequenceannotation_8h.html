@@ -123,52 +123,52 @@ Data Structures</h2></td></tr>
 <tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">Implements the SBOL Core SequenceAnnotation object.  <a href="struct___sequence_annotation.html#details">More...</a><br/></td></tr>
 <tr><td colspan="2"><h2><a name="func-members"></a>
 Functions</h2></td></tr>
-<tr class="memitem:a92c2ae26b990196c3b2f585abf49ff8f"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a92c2ae26b990196c3b2f585abf49ff8f"></a>
-SequenceAnnotation *&#160;</td><td class="memItemRight" valign="bottom"><b>createSequenceAnnotation</b> (const char *uri)</td></tr>
-<tr class="memitem:a59defd8f9f40094afaab224af8fa50a5"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a59defd8f9f40094afaab224af8fa50a5"></a>
-char *&#160;</td><td class="memItemRight" valign="bottom"><b>getSequenceAnnotationURI</b> (const SequenceAnnotation *ann)</td></tr>
-<tr class="memitem:ab3afee4d2a0d47822ae4a7f471f8dee4"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="ab3afee4d2a0d47822ae4a7f471f8dee4"></a>
-void&#160;</td><td class="memItemRight" valign="bottom"><b>setSequenceAnnotationURI</b> (SequenceAnnotation *ann, const char *uri)</td></tr>
-<tr class="memitem:aa5ab466bab8d6139ae6a46c2968536ad"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="aa5ab466bab8d6139ae6a46c2968536ad"></a>
-void&#160;</td><td class="memItemRight" valign="bottom"><b>deleteSequenceAnnotation</b> (SequenceAnnotation *ann)</td></tr>
-<tr class="memitem:a59a18ab3fc249cccd31e804cd6412551"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a59a18ab3fc249cccd31e804cd6412551"></a>
-SequenceAnnotation *&#160;</td><td class="memItemRight" valign="bottom"><b>getSequenceAnnotation</b> (const char *uri)</td></tr>
-<tr class="memitem:aeac34bf7d561a3d4590c3ebfbfd3a1c1"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="aeac34bf7d561a3d4590c3ebfbfd3a1c1"></a>
-int&#160;</td><td class="memItemRight" valign="bottom"><b>isSequenceAnnotation</b> (const void *pointer)</td></tr>
-<tr class="memitem:a03899862d99a42768b2e810f6b41e618"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a03899862d99a42768b2e810f6b41e618"></a>
-int&#160;</td><td class="memItemRight" valign="bottom"><b>isSequenceAnnotationURI</b> (const char *uri)</td></tr>
-<tr class="memitem:a36c23e2a64b1a89dbe20223ca29a0fee"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a36c23e2a64b1a89dbe20223ca29a0fee"></a>
-int&#160;</td><td class="memItemRight" valign="bottom"><b>getNumSequenceAnnotations</b> ()</td></tr>
-<tr class="memitem:aba53bf4d510a38310761e098bde47c22"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="aba53bf4d510a38310761e098bde47c22"></a>
-SequenceAnnotation *&#160;</td><td class="memItemRight" valign="bottom"><b>getNthSequenceAnnotation</b> (int n)</td></tr>
-<tr class="memitem:a032504912baa72618965606b2273dc92"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a032504912baa72618965606b2273dc92"></a>
-int&#160;</td><td class="memItemRight" valign="bottom"><b>getBioStart</b> (const SequenceAnnotation *ann)</td></tr>
-<tr class="memitem:a7f5e22b294f6456852b3e73463ca4b6e"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a7f5e22b294f6456852b3e73463ca4b6e"></a>
-int&#160;</td><td class="memItemRight" valign="bottom"><b>getBioEnd</b> (const SequenceAnnotation *ann)</td></tr>
-<tr class="memitem:ad7371684b506340a40aba9f08e7b091a"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="ad7371684b506340a40aba9f08e7b091a"></a>
-int&#160;</td><td class="memItemRight" valign="bottom"><b>getStrandPolarity</b> (const SequenceAnnotation *ann)</td></tr>
-<tr class="memitem:af44f5af25f09f6d8f7b764748d27aa1d"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="af44f5af25f09f6d8f7b764748d27aa1d"></a>
-void&#160;</td><td class="memItemRight" valign="bottom"><b>setBioStart</b> (SequenceAnnotation *ann, int start)</td></tr>
-<tr class="memitem:a955de765cf61022a867b0b7aa29f495b"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a955de765cf61022a867b0b7aa29f495b"></a>
-void&#160;</td><td class="memItemRight" valign="bottom"><b>setBioEnd</b> (SequenceAnnotation *ann, int end)</td></tr>
-<tr class="memitem:a6364e3bdbce0731036619fe90925d523"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a6364e3bdbce0731036619fe90925d523"></a>
-void&#160;</td><td class="memItemRight" valign="bottom"><b>setStrandPolarity</b> (SequenceAnnotation *ann, int polarity)</td></tr>
-<tr class="memitem:a376c3fdd6ed1bcb7ab24a4d2e5f85db8"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a376c3fdd6ed1bcb7ab24a4d2e5f85db8"></a>
-DNAComponent *&#160;</td><td class="memItemRight" valign="bottom"><b>getSubComponent</b> (const SequenceAnnotation *ann)</td></tr>
-<tr class="memitem:af500d1b23f47337bd9e1a7c3fdba5447"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="af500d1b23f47337bd9e1a7c3fdba5447"></a>
-void&#160;</td><td class="memItemRight" valign="bottom"><b>addPrecedesRelationship</b> (SequenceAnnotation *upstream, SequenceAnnotation *downstream)</td></tr>
-<tr class="memitem:a4df795828af49759090adab07fc936ad"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a4df795828af49759090adab07fc936ad"></a>
-int&#160;</td><td class="memItemRight" valign="bottom"><b>getNumPrecedes</b> (const SequenceAnnotation *ann)</td></tr>
-<tr class="memitem:a4c1bf8acba8b96306435df32e587c073"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a4c1bf8acba8b96306435df32e587c073"></a>
-SequenceAnnotation *&#160;</td><td class="memItemRight" valign="bottom"><b>getNthPrecedes</b> (const SequenceAnnotation *ann, int n)</td></tr>
-<tr class="memitem:a120c249ec774278cf8b4cab9cee2bf92"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a120c249ec774278cf8b4cab9cee2bf92"></a>
-int&#160;</td><td class="memItemRight" valign="bottom"><b>precedes</b> (const SequenceAnnotation *seq1, const SequenceAnnotation *seq2)</td></tr>
-<tr class="memitem:acc9329f31c30a18163813311550b8159"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="acc9329f31c30a18163813311550b8159"></a>
-void&#160;</td><td class="memItemRight" valign="bottom"><b>cleanupSequenceAnnotations</b> ()</td></tr>
-<tr class="memitem:a4c573d836197aaebe6347a0e563c9b76"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a4c573d836197aaebe6347a0e563c9b76"></a>
-void&#160;</td><td class="memItemRight" valign="bottom"><b>printSequenceAnnotation</b> (const SequenceAnnotation *seq, int tabs)</td></tr>
-<tr class="memitem:a873ee23624322bf9afece9063d7ba988"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a873ee23624322bf9afece9063d7ba988"></a>
-void&#160;</td><td class="memItemRight" valign="bottom"><b>printAllSequenceAnnotations</b> ()</td></tr>
+<tr class="memitem:a6af41d783cef33b51b7bc91a8a63a7b0"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a6af41d783cef33b51b7bc91a8a63a7b0"></a>
+<a class="el" href="constants_8h_8in.html#adfe7cb56aa4562836d5167efb98c8d2e">SBOLAPIEXPORTS</a> SequenceAnnotation *&#160;</td><td class="memItemRight" valign="bottom"><b>createSequenceAnnotation</b> (const char *uri)</td></tr>
+<tr class="memitem:af4016b9619db9f0f70c44f12d76355af"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="af4016b9619db9f0f70c44f12d76355af"></a>
+<a class="el" href="constants_8h_8in.html#adfe7cb56aa4562836d5167efb98c8d2e">SBOLAPIEXPORTS</a> char *&#160;</td><td class="memItemRight" valign="bottom"><b>getSequenceAnnotationURI</b> (const SequenceAnnotation *ann)</td></tr>
+<tr class="memitem:a2a429d84f0889a9170228a0bb21e61f4"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a2a429d84f0889a9170228a0bb21e61f4"></a>
+<a class="el" href="constants_8h_8in.html#adfe7cb56aa4562836d5167efb98c8d2e">SBOLAPIEXPORTS</a> void&#160;</td><td class="memItemRight" valign="bottom"><b>setSequenceAnnotationURI</b> (SequenceAnnotation *ann, const char *uri)</td></tr>
+<tr class="memitem:aa0a92e2c214bc32e93c0aaac5b4f2a5d"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="aa0a92e2c214bc32e93c0aaac5b4f2a5d"></a>
+<a class="el" href="constants_8h_8in.html#adfe7cb56aa4562836d5167efb98c8d2e">SBOLAPIEXPORTS</a> void&#160;</td><td class="memItemRight" valign="bottom"><b>deleteSequenceAnnotation</b> (SequenceAnnotation *ann)</td></tr>
+<tr class="memitem:a0bf306bda9a5551b67a5e2184f215b36"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a0bf306bda9a5551b67a5e2184f215b36"></a>
+<a class="el" href="constants_8h_8in.html#adfe7cb56aa4562836d5167efb98c8d2e">SBOLAPIEXPORTS</a> SequenceAnnotation *&#160;</td><td class="memItemRight" valign="bottom"><b>getSequenceAnnotation</b> (const char *uri)</td></tr>
+<tr class="memitem:ae8e6b2e758a59af2a731471fa6a83108"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="ae8e6b2e758a59af2a731471fa6a83108"></a>
+<a class="el" href="constants_8h_8in.html#adfe7cb56aa4562836d5167efb98c8d2e">SBOLAPIEXPORTS</a> int&#160;</td><td class="memItemRight" valign="bottom"><b>isSequenceAnnotation</b> (const void *pointer)</td></tr>
+<tr class="memitem:aaae29f0a20d8120faef3541a32535b0b"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="aaae29f0a20d8120faef3541a32535b0b"></a>
+<a class="el" href="constants_8h_8in.html#adfe7cb56aa4562836d5167efb98c8d2e">SBOLAPIEXPORTS</a> int&#160;</td><td class="memItemRight" valign="bottom"><b>isSequenceAnnotationURI</b> (const char *uri)</td></tr>
+<tr class="memitem:a6c0847787c42d3cc953b616911be319a"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a6c0847787c42d3cc953b616911be319a"></a>
+<a class="el" href="constants_8h_8in.html#adfe7cb56aa4562836d5167efb98c8d2e">SBOLAPIEXPORTS</a> int&#160;</td><td class="memItemRight" valign="bottom"><b>getNumSequenceAnnotations</b> ()</td></tr>
+<tr class="memitem:ae9feb0cd0920d5c1634019a7419fa545"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="ae9feb0cd0920d5c1634019a7419fa545"></a>
+<a class="el" href="constants_8h_8in.html#adfe7cb56aa4562836d5167efb98c8d2e">SBOLAPIEXPORTS</a> SequenceAnnotation *&#160;</td><td class="memItemRight" valign="bottom"><b>getNthSequenceAnnotation</b> (int n)</td></tr>
+<tr class="memitem:aa970003e4bd82adb5e229df9e1cc2de0"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="aa970003e4bd82adb5e229df9e1cc2de0"></a>
+<a class="el" href="constants_8h_8in.html#adfe7cb56aa4562836d5167efb98c8d2e">SBOLAPIEXPORTS</a> int&#160;</td><td class="memItemRight" valign="bottom"><b>getBioStart</b> (const SequenceAnnotation *ann)</td></tr>
+<tr class="memitem:a9a4cba27ab696bea9190d9186f2c1acc"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a9a4cba27ab696bea9190d9186f2c1acc"></a>
+<a class="el" href="constants_8h_8in.html#adfe7cb56aa4562836d5167efb98c8d2e">SBOLAPIEXPORTS</a> int&#160;</td><td class="memItemRight" valign="bottom"><b>getBioEnd</b> (const SequenceAnnotation *ann)</td></tr>
+<tr class="memitem:a69b90b296f5c074d75cc3edad88fe75d"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a69b90b296f5c074d75cc3edad88fe75d"></a>
+<a class="el" href="constants_8h_8in.html#adfe7cb56aa4562836d5167efb98c8d2e">SBOLAPIEXPORTS</a> int&#160;</td><td class="memItemRight" valign="bottom"><b>getStrandPolarity</b> (const SequenceAnnotation *ann)</td></tr>
+<tr class="memitem:a8de14934e9984db5169f488f9eb2f1ec"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a8de14934e9984db5169f488f9eb2f1ec"></a>
+<a class="el" href="constants_8h_8in.html#adfe7cb56aa4562836d5167efb98c8d2e">SBOLAPIEXPORTS</a> void&#160;</td><td class="memItemRight" valign="bottom"><b>setBioStart</b> (SequenceAnnotation *ann, int start)</td></tr>
+<tr class="memitem:a2e923d55d6a7daf0ae335dd4bec0961b"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a2e923d55d6a7daf0ae335dd4bec0961b"></a>
+<a class="el" href="constants_8h_8in.html#adfe7cb56aa4562836d5167efb98c8d2e">SBOLAPIEXPORTS</a> void&#160;</td><td class="memItemRight" valign="bottom"><b>setBioEnd</b> (SequenceAnnotation *ann, int end)</td></tr>
+<tr class="memitem:aa9d2e8889bc11779f0c098e70b122044"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="aa9d2e8889bc11779f0c098e70b122044"></a>
+<a class="el" href="constants_8h_8in.html#adfe7cb56aa4562836d5167efb98c8d2e">SBOLAPIEXPORTS</a> void&#160;</td><td class="memItemRight" valign="bottom"><b>setStrandPolarity</b> (SequenceAnnotation *ann, int polarity)</td></tr>
+<tr class="memitem:a1d4c90398108a44d4bb58bd00e01d9f6"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a1d4c90398108a44d4bb58bd00e01d9f6"></a>
+<a class="el" href="constants_8h_8in.html#adfe7cb56aa4562836d5167efb98c8d2e">SBOLAPIEXPORTS</a> DNAComponent *&#160;</td><td class="memItemRight" valign="bottom"><b>getSubComponent</b> (const SequenceAnnotation *ann)</td></tr>
+<tr class="memitem:a03d1a358bf602632938958eb53cd0201"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a03d1a358bf602632938958eb53cd0201"></a>
+<a class="el" href="constants_8h_8in.html#adfe7cb56aa4562836d5167efb98c8d2e">SBOLAPIEXPORTS</a> void&#160;</td><td class="memItemRight" valign="bottom"><b>addPrecedesRelationship</b> (SequenceAnnotation *upstream, SequenceAnnotation *downstream)</td></tr>
+<tr class="memitem:acfb36a76b612f211609c0b20169f10b4"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="acfb36a76b612f211609c0b20169f10b4"></a>
+<a class="el" href="constants_8h_8in.html#adfe7cb56aa4562836d5167efb98c8d2e">SBOLAPIEXPORTS</a> int&#160;</td><td class="memItemRight" valign="bottom"><b>getNumPrecedes</b> (const SequenceAnnotation *ann)</td></tr>
+<tr class="memitem:a0237cdb59ef4ae24381d870ebf5a2289"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a0237cdb59ef4ae24381d870ebf5a2289"></a>
+<a class="el" href="constants_8h_8in.html#adfe7cb56aa4562836d5167efb98c8d2e">SBOLAPIEXPORTS</a> SequenceAnnotation *&#160;</td><td class="memItemRight" valign="bottom"><b>getNthPrecedes</b> (const SequenceAnnotation *ann, int n)</td></tr>
+<tr class="memitem:a84a9047a2c6c66df719bde6a529808c7"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a84a9047a2c6c66df719bde6a529808c7"></a>
+<a class="el" href="constants_8h_8in.html#adfe7cb56aa4562836d5167efb98c8d2e">SBOLAPIEXPORTS</a> int&#160;</td><td class="memItemRight" valign="bottom"><b>precedes</b> (const SequenceAnnotation *seq1, const SequenceAnnotation *seq2)</td></tr>
+<tr class="memitem:af31d87d6c50f4a50b93992d259626ea8"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="af31d87d6c50f4a50b93992d259626ea8"></a>
+<a class="el" href="constants_8h_8in.html#adfe7cb56aa4562836d5167efb98c8d2e">SBOLAPIEXPORTS</a> void&#160;</td><td class="memItemRight" valign="bottom"><b>cleanupSequenceAnnotations</b> ()</td></tr>
+<tr class="memitem:a3bf0475adea1282b6969d1994845560c"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a3bf0475adea1282b6969d1994845560c"></a>
+<a class="el" href="constants_8h_8in.html#adfe7cb56aa4562836d5167efb98c8d2e">SBOLAPIEXPORTS</a> void&#160;</td><td class="memItemRight" valign="bottom"><b>printSequenceAnnotation</b> (const SequenceAnnotation *seq, int tabs)</td></tr>
+<tr class="memitem:a7c7382fc09107c8fa18691fc2fa47110"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a7c7382fc09107c8fa18691fc2fa47110"></a>
+<a class="el" href="constants_8h_8in.html#adfe7cb56aa4562836d5167efb98c8d2e">SBOLAPIEXPORTS</a> void&#160;</td><td class="memItemRight" valign="bottom"><b>printAllSequenceAnnotations</b> ()</td></tr>
 </table>
 <hr/><a name="details" id="details"></a><h2>Detailed Description</h2>
 <div class="textblock"><p>This file contains the SequenceAnnotation struct, as well as functions for operating on it. </p>
@@ -176,7 +176,7 @@ void&#160;</td><td class="memItemRight" valign="bottom"><b>printAllSequenceAnnot
 
 
 <hr class="footer"/><address class="footer"><small>
-Generated on Sat Mar 31 2012 16:55:32 for libSBOLc by &#160;<a href="http://www.doxygen.org/index.html">
+Generated on Tue Apr 3 2012 12:56:05 for libSBOLc by &#160;<a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/>
 </a> 1.8.0
 </small></address>

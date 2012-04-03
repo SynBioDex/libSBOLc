@@ -9,5 +9,6 @@ var searchData=
   ['sbol_5fschema_5fdir',['SBOL_SCHEMA_DIR',['../constants_8h_8in.html#a3ad840e5213884f48784eef8448230e0',1,'constants.h.in']]],
   ['sbol_5fschema_5ffilename',['SBOL_SCHEMA_FILENAME',['../constants_8h_8in.html#abfb8df7c4914821f595cff74fc05d2eb',1,'constants.h.in']]],
   ['sbol_5fsource_5fdir',['SBOL_SOURCE_DIR',['../constants_8h_8in.html#acf54192b010571db0d88b36acb712671',1,'constants.h.in']]],
-  ['sbol_5ftest_5fdir',['SBOL_TEST_DIR',['../constants_8h_8in.html#adf51d1549fe1ee2919f74c24a5e492de',1,'constants.h.in']]]
+  ['sbol_5ftest_5fdir',['SBOL_TEST_DIR',['../constants_8h_8in.html#adf51d1549fe1ee2919f74c24a5e492de',1,'constants.h.in']]],
+  ['sbolapiexports',['SBOLAPIEXPORTS',['../constants_8h_8in.html#adfe7cb56aa4562836d5167efb98c8d2e',1,'constants.h.in']]]
 ];

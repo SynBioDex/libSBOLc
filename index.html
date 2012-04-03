@@ -3,7 +3,7 @@
 <head>
 <meta http-equiv="Content-Type" content="text/xhtml;charset=UTF-8"/>
 <meta http-equiv="X-UA-Compatible" content="IE=9"/>
-<title>libSBOLc: libSBOLc: SBOL C library</title>
+<title>libSBOLc: Main Page</title>
 
 <link href="tabs.css" rel="stylesheet" type="text/css"/>
 <link href="doxygen.css" rel="stylesheet" type="text/css" />
@@ -85,31 +85,54 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 
 <div class="header">
   <div class="headertitle">
-<div class="title">libSBOLc: SBOL C library </div>  </div>
+<div class="title">libSBOLc Documentation</div>  </div>
 </div><!--header-->
 <div class="contents">
-<div class="textblock"><p><a href="https://github.com/SynBioDex/libSBOLc">libSBOLc</a> is a C library for working with the <a href="http://sbolstandard.org">Synthetic Biology Open Language (SBOL)</a>. It uses the XML schema and example files from <a href="https://github.com/SynBioDex/libSBOLj">libSBOLj</a>, but the rest of the code was developed separately. The two libraries should eventually present similar interfaces, except where language conventions differ.</p>
-<p>To compile libSBOLc, you will need:</p>
+<div class="textblock"><h2><a class="anchor" id="overview"></a>
+Overview of the project</h2>
+<p>There are a few different top-level subdirectories in the libSBOLc folder:</p>
 <ul>
-<li><a href="http://git-scm.com/">git</a> for downloading the source code</li>
-<li><a href="http://www.cmake.org/cmake/resources/software.html">CMake</a> for generating platform-specific build instructions</li>
-<li>a C compiler, such as <a href="http://gcc.gnu.org/">gcc</a> or <a href="http://www.mingw.org/wiki/InstallationHOWTOforMinGW">MinGW</a></li>
+<li><a href="https://github.com/SynBioDex/libSBOLc/tree/master/schema">schema</a> holds the SBOL schema files copied from libSBOLj</li>
 </ul>
-<p>First, download them from the links above. Or if you're on Debian/Ubuntu this command should work: </p>
-<div class="fragment"><pre class="fragment">sudo apt-get install git cmake-gui build-essential</pre></div><p> Then, clone the repository: </p>
-<div class="fragment"><pre class="fragment">git clone git://github.com/SynBioDex/libSBOLc.git</pre></div><p> This will create a <code>libSBOLc</code> directory with the code. Next, run CMake. For "Where is the source code" enter the path to your <code>libSBOLc/source</code> folder. "Where to build the binaries" should be <code>libSBOLc/build</code>.</p>
-<p>Click <code>Configure</code>, and choose what type of compiler you want to generate instructions for. All the development has been done using "default native compilers" and MinGW or Unix makefiles, but CMake should also be able to generate projects for Eclipse, Visual Studio, XCode, etc. However, that will probably involve adjusting some paths.</p>
-<p>The first time you click <code>Configure</code>, CMake will list variables, like <code>CMAKE_BUILD_TYPE</code> and <code>LIBXML2_INCLUDE_DIR</code>, in red. That means they've been updated. You can probably just click <code>Configure</code> again to make sure everything is set. You can also change variables here. The only SBOL-specific option to be aware of is that setting <code>CMAKE_BUILD_TYPE</code> to "Debug" will also cause libSBOLc to be compiled with some extra debugging statements. After changing varibables you should click <code>Configure</code> again. Once everything is set, click <code>Generate</code> to create the compiler instructions.</p>
-<p>The last step is to <code>cd</code> into the <code>libSBOLc/build</code> folder and run the compiler. </p>
-<div class="fragment"><pre class="fragment">make</pre></div><p> or </p>
-<div class="fragment"><pre class="fragment">mingw32-make.exe</pre></div><p> Binaries will be generated in the <code>libSBOLc/release</code> folder.</p>
-<p>Once you've configured and built libSBOLc, you can <code>cd</code> into the <code>libSBOLc/release</code> folder and run some simple tests to check that everything works: </p>
-<div class="fragment"><pre class="fragment">./test_all</pre></div><p> or </p>
-<div class="fragment"><pre class="fragment">./test_all.exe</pre></div> </div></div><!-- contents -->
+<ul>
+<li><a href="https://github.com/SynBioDex/libSBOLc/tree/master/source">source</a> contains source code for the library</li>
+</ul>
+<ul>
+<li><a href="https://github.com/SynBioDex/libSBOLc/tree/master/examples">examples</a> contains example code that uses the library, as well as the xml test files from libSBOLj</li>
+</ul>
+<ul>
+<li><a href="https://github.com/SynBioDex/libSBOLc/tree/master/manual">manual</a> contains source code for generating the online documentation</li>
+</ul>
+<ul>
+<li><a href="https://github.com/SynBioDex/libSBOLc/tree/master/tests">tests</a> contains unit tests, as well as tests that verify correct handling of the example xml files</li>
+</ul>
+<ul>
+<li><a href="https://github.com/SynBioDex/libSBOLc/tree/master/wrapper">wrapper</a> contains code for generating the Python wrapper using SWIG</li>
+</ul>
+<ul>
+<li>Finally, there's the build folder for temporary build files, and the release folder for finished binaries. They're created by CMake.</li>
+</ul>
+<p>When running CMake and compiling, the main sbol library is always created first beacuse most of the optional targets depend on it: </p>
+<div class="image">
+<img src="build_dependencies.png" alt="build_dependencies.png"/>
+<div class="caption">
+Build dependencies</div></div>
+<p> Once built, the executables just depend on finding the correct xml files: </p>
+<div class="image">
+<img src="runtime_dependencies.png" alt="runtime_dependencies.png"/>
+<div class="caption">
+Runtime dependencies</div></div>
+ <h2><a class="anchor" id="tour"></a>
+A brief tour of the source code</h2>
+<h2><a class="anchor" id="doxygen"></a>
+Updating this documentation</h2>
+<h2><a class="anchor" id="swig"></a>
+Updating the Python wrapper</h2>
+</div></div><!-- contents -->
 
 
 <hr class="footer"/><address class="footer"><small>
-Generated on Sat Mar 31 2012 16:55:32 for libSBOLc by &#160;<a href="http://www.doxygen.org/index.html">
+Generated on Tue Apr 3 2012 12:56:05 for libSBOLc by &#160;<a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/>
 </a> 1.8.0
 </small></address>

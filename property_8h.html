@@ -218,7 +218,7 @@ void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="prop
 <hr/><a name="details" id="details"></a><h2>Detailed Description</h2>
 <div class="textblock"><p>Defines a hierarchy of Properties, which hold data for SBOLObjects. </p>
 <p>Although they don't do much so far, this is where you would add restraints on the getting and setting of specific values. For example, you could have the NucleotidesProperty only accept strings of a, c, t, g, and sometimes n.</p>
-<dl class="todo"><dt><b><a class="el" href="todo.html#_todo000018">Todo:</a></b></dt><dd><p class="startdd">Make enums for any magic numbers </p>
+<dl class="todo"><dt><b><a class="el" href="todo.html#_todo000022">Todo:</a></b></dt><dd><p class="startdd">Make enums for any magic numbers </p>
 <p class="enddd">See if separating docs into user, devel works. </p>
 </dd></dl>
 </div><hr/><h2>Function Documentation</h2>
@@ -369,7 +369,7 @@ void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="prop
 
 <p>Compare two URIProperties for string equality. </p>
 <dl class="section return"><dt>Returns:</dt><dd>-1 on failure. Otherwise, the result of strcmp()ing their contents. </dd></dl>
-<dl class="todo"><dt><b><a class="el" href="todo.html#_todo000022">Todo:</a></b></dt><dd>Check that that's true. </dd></dl>
+<dl class="todo"><dt><b><a class="el" href="todo.html#_todo000026">Todo:</a></b></dt><dd>Check that that's true. </dd></dl>
 
 </div>
 </div>
@@ -430,7 +430,7 @@ void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="prop
 
 <p>Delete a TextProperty. </p>
 <p>The stored text needs to be freed separately. </p>
-<dl class="todo"><dt><b><a class="el" href="todo.html#_todo000020">Todo:</a></b></dt><dd>Make sure that's true. </dd></dl>
+<dl class="todo"><dt><b><a class="el" href="todo.html#_todo000024">Todo:</a></b></dt><dd>Make sure that's true. </dd></dl>
 
 </div>
 </div>
@@ -451,7 +451,7 @@ void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="prop
 
 <p>Delete a URIProperty. </p>
 <p>The stored URI needs to be freed separately. </p>
-<dl class="todo"><dt><b><a class="el" href="todo.html#_todo000021">Todo:</a></b></dt><dd>Make sure that's true. </dd></dl>
+<dl class="todo"><dt><b><a class="el" href="todo.html#_todo000025">Todo:</a></b></dt><dd>Make sure that's true. </dd></dl>
 
 </div>
 </div>
@@ -472,7 +472,7 @@ void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="prop
 
 <p>Retrieve the string stored in a Property. </p>
 <dl class="section return"><dt>Returns:</dt><dd>A new copy of the string that needs to be freed. </dd></dl>
-<dl class="todo"><dt><b><a class="el" href="todo.html#_todo000019">Todo:</a></b></dt><dd>Check that this one copies. </dd></dl>
+<dl class="todo"><dt><b><a class="el" href="todo.html#_todo000023">Todo:</a></b></dt><dd>Check that this one copies. </dd></dl>
 
 </div>
 </div>
@@ -572,7 +572,7 @@ void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="prop
 <div class="memdoc">
 
 <p>Print a NucleotidesProperty to stdout. </p>
-<dl class="todo"><dt><b><a class="el" href="todo.html#_todo000017">Todo:</a></b></dt><dd>cut off printing of long sequnces at 50 chars or so? </dd></dl>
+<dl class="todo"><dt><b><a class="el" href="todo.html#_todo000021">Todo:</a></b></dt><dd>cut off printing of long sequnces at 50 chars or so? </dd></dl>
 
 </div>
 </div>
@@ -603,7 +603,7 @@ void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="prop
 
 <p>Store a string in a NucleotidesProperty. </p>
 <p>So far, this doesn't check that the string is a reasonable DNA sequence.</p>
-<dl class="todo"><dt><b><a class="el" href="todo.html#_todo000016">Todo:</a></b></dt><dd>restrict to setting valid nucleotides </dd></dl>
+<dl class="todo"><dt><b><a class="el" href="todo.html#_todo000020">Todo:</a></b></dt><dd>restrict to setting valid nucleotides </dd></dl>
 
 </div>
 </div>
@@ -693,7 +693,7 @@ void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="prop
 <div class="memdoc">
 
 <p>Store a string in a TextProperty. </p>
-<dl class="todo"><dt><b><a class="el" href="todo.html#_todo000015">Todo:</a></b></dt><dd><p class="startdd">remove the pro-&gt;text != NULL restriction? </p>
+<dl class="todo"><dt><b><a class="el" href="todo.html#_todo000019">Todo:</a></b></dt><dd><p class="startdd">remove the pro-&gt;text != NULL restriction? </p>
 <p class="enddd">warn that you need to free() anything from a Property </p>
 </dd></dl>
 
@@ -733,7 +733,7 @@ void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="prop
 
 
 <hr class="footer"/><address class="footer"><small>
-Generated on Sat Mar 31 2012 16:55:32 for libSBOLc by &#160;<a href="http://www.doxygen.org/index.html">
+Generated on Tue Apr 3 2012 12:56:05 for libSBOLc by &#160;<a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/>
 </a> 1.8.0
 </small></address>

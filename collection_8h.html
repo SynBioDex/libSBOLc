@@ -123,68 +123,68 @@ Data Structures</h2></td></tr>
 <tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">Implements the SBOL Core Collection object.  <a href="struct___collection.html#details">More...</a><br/></td></tr>
 <tr><td colspan="2"><h2><a name="func-members"></a>
 Functions</h2></td></tr>
-<tr class="memitem:a1d9af817695b8b72602356b31f0e6b3a"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a1d9af817695b8b72602356b31f0e6b3a"></a>
-Collection *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="collection_8h.html#a1d9af817695b8b72602356b31f0e6b3a">createCollection</a> (const char *uri)</td></tr>
-<tr class="memdesc:a1d9af817695b8b72602356b31f0e6b3a"><td class="mdescLeft">&#160;</td><td class="mdescRight">Create an empty Collection. <br/></td></tr>
-<tr class="memitem:ae560a6702f680d85d487efb1328fd83f"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="collection_8h.html#ae560a6702f680d85d487efb1328fd83f">deleteCollection</a> (Collection *col)</td></tr>
-<tr class="memdesc:ae560a6702f680d85d487efb1328fd83f"><td class="mdescLeft">&#160;</td><td class="mdescRight">Delete a Collection.  <a href="#ae560a6702f680d85d487efb1328fd83f"></a><br/></td></tr>
-<tr class="memitem:a5e871f82693a2ce0986211d62e8039f3"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a5e871f82693a2ce0986211d62e8039f3"></a>
-int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="collection_8h.html#a5e871f82693a2ce0986211d62e8039f3">isCollection</a> (const void *pointer)</td></tr>
-<tr class="memdesc:a5e871f82693a2ce0986211d62e8039f3"><td class="mdescLeft">&#160;</td><td class="mdescRight">Find out whether this pointer points to a Collection. <br/></td></tr>
-<tr class="memitem:a77008b6165262ee862ca659571f42c31"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a77008b6165262ee862ca659571f42c31"></a>
-int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="collection_8h.html#a77008b6165262ee862ca659571f42c31">isCollectionURI</a> (const char *uri)</td></tr>
-<tr class="memdesc:a77008b6165262ee862ca659571f42c31"><td class="mdescLeft">&#160;</td><td class="mdescRight">Find out if there's a Collection with this uri. <br/></td></tr>
-<tr class="memitem:ae9f909778eefe71cd98ca8b0ee051128"><td class="memItemLeft" align="right" valign="top">Collection *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="collection_8h.html#ae9f909778eefe71cd98ca8b0ee051128">getCollection</a> (const char *uri)</td></tr>
-<tr class="memdesc:ae9f909778eefe71cd98ca8b0ee051128"><td class="mdescLeft">&#160;</td><td class="mdescRight">Get the Collection associated with this uri.  <a href="#ae9f909778eefe71cd98ca8b0ee051128"></a><br/></td></tr>
-<tr class="memitem:a2433428b4f8c8e6e2b1504884df313b2"><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="collection_8h.html#a2433428b4f8c8e6e2b1504884df313b2">getNumCollections</a> ()</td></tr>
-<tr class="memdesc:a2433428b4f8c8e6e2b1504884df313b2"><td class="mdescLeft">&#160;</td><td class="mdescRight">Get the total number of Collections.  <a href="#a2433428b4f8c8e6e2b1504884df313b2"></a><br/></td></tr>
-<tr class="memitem:a5e0aaa18462eb41e017e74e97f7bca37"><td class="memItemLeft" align="right" valign="top">Collection *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="collection_8h.html#a5e0aaa18462eb41e017e74e97f7bca37">getNthCollection</a> (int n)</td></tr>
-<tr class="memdesc:a5e0aaa18462eb41e017e74e97f7bca37"><td class="mdescLeft">&#160;</td><td class="mdescRight">Get the Nth Collection.  <a href="#a5e0aaa18462eb41e017e74e97f7bca37"></a><br/></td></tr>
-<tr class="memitem:a1a7d28873d4f5b53f68ec60f568ed46b"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a1a7d28873d4f5b53f68ec60f568ed46b"></a>
-int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="collection_8h.html#a1a7d28873d4f5b53f68ec60f568ed46b">getNumDNAComponentsIn</a> (const Collection *col)</td></tr>
-<tr class="memdesc:a1a7d28873d4f5b53f68ec60f568ed46b"><td class="mdescLeft">&#160;</td><td class="mdescRight">Get the number of DNAComponents in a Collection. <br/></td></tr>
-<tr class="memitem:aceab5a4b48063959fc9c094987ac56e1"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="aceab5a4b48063959fc9c094987ac56e1"></a>
-DNAComponent *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="collection_8h.html#aceab5a4b48063959fc9c094987ac56e1">getNthDNAComponentIn</a> (const Collection *col, int n)</td></tr>
-<tr class="memdesc:aceab5a4b48063959fc9c094987ac56e1"><td class="mdescLeft">&#160;</td><td class="mdescRight">Get the Nth DNAComponent inside a Collection. <br/></td></tr>
-<tr class="memitem:a9911934e3cec29f16a8b71e33799d7ed"><td class="memItemLeft" align="right" valign="top">char *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="collection_8h.html#a9911934e3cec29f16a8b71e33799d7ed">getCollectionURI</a> (const Collection *col)</td></tr>
-<tr class="memdesc:a9911934e3cec29f16a8b71e33799d7ed"><td class="mdescLeft">&#160;</td><td class="mdescRight">Get the uri of a Collection.  <a href="#a9911934e3cec29f16a8b71e33799d7ed"></a><br/></td></tr>
-<tr class="memitem:aafd7a7e0d08445e4c9caba9698cb85d0"><td class="memItemLeft" align="right" valign="top">char *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="collection_8h.html#aafd7a7e0d08445e4c9caba9698cb85d0">getCollectionDisplayID</a> (const Collection *col)</td></tr>
-<tr class="memdesc:aafd7a7e0d08445e4c9caba9698cb85d0"><td class="mdescLeft">&#160;</td><td class="mdescRight">Get the displayID of a Collection.  <a href="#aafd7a7e0d08445e4c9caba9698cb85d0"></a><br/></td></tr>
-<tr class="memitem:a76df8418a07e5a3fd26283614b02e7f3"><td class="memItemLeft" align="right" valign="top">char *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="collection_8h.html#a76df8418a07e5a3fd26283614b02e7f3">getCollectionName</a> (const Collection *col)</td></tr>
-<tr class="memdesc:a76df8418a07e5a3fd26283614b02e7f3"><td class="mdescLeft">&#160;</td><td class="mdescRight">Get the name of a Collection.  <a href="#a76df8418a07e5a3fd26283614b02e7f3"></a><br/></td></tr>
-<tr class="memitem:a68a1d4e674289287fb083231d4b39db8"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a68a1d4e674289287fb083231d4b39db8"></a>
-char *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="collection_8h.html#a68a1d4e674289287fb083231d4b39db8">getCollectionDescription</a> (const Collection *col)</td></tr>
-<tr class="memdesc:a68a1d4e674289287fb083231d4b39db8"><td class="mdescLeft">&#160;</td><td class="mdescRight">Get the description of a Collection. <br/></td></tr>
-<tr class="memitem:a5562e58452c7f9815cd141bacbadfe65"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="collection_8h.html#a5562e58452c7f9815cd141bacbadfe65">setCollectionDisplayID</a> (Collection *col, const char *id)</td></tr>
-<tr class="memdesc:a5562e58452c7f9815cd141bacbadfe65"><td class="mdescLeft">&#160;</td><td class="mdescRight">Set the displayID of a Collection.  <a href="#a5562e58452c7f9815cd141bacbadfe65"></a><br/></td></tr>
-<tr class="memitem:ab917d8eb8eb4f667f4980ea2b4673994"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="collection_8h.html#ab917d8eb8eb4f667f4980ea2b4673994">setCollectionName</a> (Collection *col, const char *name)</td></tr>
-<tr class="memdesc:ab917d8eb8eb4f667f4980ea2b4673994"><td class="mdescLeft">&#160;</td><td class="mdescRight">Set the name of a Collection.  <a href="#ab917d8eb8eb4f667f4980ea2b4673994"></a><br/></td></tr>
-<tr class="memitem:a85d8abb9190b35c6ceee5d23158a30a0"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a85d8abb9190b35c6ceee5d23158a30a0"></a>
-void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="collection_8h.html#a85d8abb9190b35c6ceee5d23158a30a0">setCollectionDescription</a> (Collection *col, const char *desc)</td></tr>
-<tr class="memdesc:a85d8abb9190b35c6ceee5d23158a30a0"><td class="mdescLeft">&#160;</td><td class="mdescRight">Set the description of a Collection. <br/></td></tr>
-<tr class="memitem:a16b895417f334d82c6e7692bcdc85034"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a16b895417f334d82c6e7692bcdc85034"></a>
-void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="collection_8h.html#a16b895417f334d82c6e7692bcdc85034">addDNAComponentToCollection</a> (DNAComponent *com, Collection *col)</td></tr>
-<tr class="memdesc:a16b895417f334d82c6e7692bcdc85034"><td class="mdescLeft">&#160;</td><td class="mdescRight">Add a DNAComponent to a Collection. <br/></td></tr>
-<tr class="memitem:af09491ca9b684e71326f08c913bb7f11"><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="collection_8h.html#af09491ca9b684e71326f08c913bb7f11">dnaComponentInCollection</a> (const DNAComponent *com, const Collection *col)</td></tr>
-<tr class="memdesc:af09491ca9b684e71326f08c913bb7f11"><td class="mdescLeft">&#160;</td><td class="mdescRight">Find out whether a DNAComponent is inside a Collection.  <a href="#af09491ca9b684e71326f08c913bb7f11"></a><br/></td></tr>
-<tr class="memitem:a38c32af00e4abf88470bd2465c8903ce"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a38c32af00e4abf88470bd2465c8903ce"></a>
-void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="collection_8h.html#a38c32af00e4abf88470bd2465c8903ce">printCollection</a> (const Collection *col, int tabs)</td></tr>
-<tr class="memdesc:a38c32af00e4abf88470bd2465c8903ce"><td class="mdescLeft">&#160;</td><td class="mdescRight">Print an outline of a Collection to stdout. <br/></td></tr>
-<tr class="memitem:a3cd5018ead4ea78028b1c6c98ba3977a"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a3cd5018ead4ea78028b1c6c98ba3977a"></a>
-void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="collection_8h.html#a3cd5018ead4ea78028b1c6c98ba3977a">printAllCollections</a> ()</td></tr>
-<tr class="memdesc:a3cd5018ead4ea78028b1c6c98ba3977a"><td class="mdescLeft">&#160;</td><td class="mdescRight">Print an outline of all the Collections to stdout. <br/></td></tr>
-<tr class="memitem:a4d0cd36d8e878c876add221ad47ecfa2"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="collection_8h.html#a4d0cd36d8e878c876add221ad47ecfa2">cleanupCollections</a> ()</td></tr>
-<tr class="memdesc:a4d0cd36d8e878c876add221ad47ecfa2"><td class="mdescLeft">&#160;</td><td class="mdescRight">Delete all Collections.  <a href="#a4d0cd36d8e878c876add221ad47ecfa2"></a><br/></td></tr>
+<tr class="memitem:a6e3731c65b266b3bfd82434c66430adb"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a6e3731c65b266b3bfd82434c66430adb"></a>
+<a class="el" href="constants_8h_8in.html#adfe7cb56aa4562836d5167efb98c8d2e">SBOLAPIEXPORTS</a> Collection *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="collection_8h.html#a6e3731c65b266b3bfd82434c66430adb">createCollection</a> (const char *uri)</td></tr>
+<tr class="memdesc:a6e3731c65b266b3bfd82434c66430adb"><td class="mdescLeft">&#160;</td><td class="mdescRight">Create an empty Collection. <br/></td></tr>
+<tr class="memitem:a620f32d929d285f5d0e11a42fdb244f6"><td class="memItemLeft" align="right" valign="top"><a class="el" href="constants_8h_8in.html#adfe7cb56aa4562836d5167efb98c8d2e">SBOLAPIEXPORTS</a> void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="collection_8h.html#a620f32d929d285f5d0e11a42fdb244f6">deleteCollection</a> (Collection *col)</td></tr>
+<tr class="memdesc:a620f32d929d285f5d0e11a42fdb244f6"><td class="mdescLeft">&#160;</td><td class="mdescRight">Delete a Collection.  <a href="#a620f32d929d285f5d0e11a42fdb244f6"></a><br/></td></tr>
+<tr class="memitem:a64c2ac80bbd5c619ebb0daee068d9259"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a64c2ac80bbd5c619ebb0daee068d9259"></a>
+<a class="el" href="constants_8h_8in.html#adfe7cb56aa4562836d5167efb98c8d2e">SBOLAPIEXPORTS</a> int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="collection_8h.html#a64c2ac80bbd5c619ebb0daee068d9259">isCollection</a> (const void *pointer)</td></tr>
+<tr class="memdesc:a64c2ac80bbd5c619ebb0daee068d9259"><td class="mdescLeft">&#160;</td><td class="mdescRight">Find out whether this pointer points to a Collection. <br/></td></tr>
+<tr class="memitem:acbbb96ad1774fd7ce17a96d867cab022"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="acbbb96ad1774fd7ce17a96d867cab022"></a>
+<a class="el" href="constants_8h_8in.html#adfe7cb56aa4562836d5167efb98c8d2e">SBOLAPIEXPORTS</a> int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="collection_8h.html#acbbb96ad1774fd7ce17a96d867cab022">isCollectionURI</a> (const char *uri)</td></tr>
+<tr class="memdesc:acbbb96ad1774fd7ce17a96d867cab022"><td class="mdescLeft">&#160;</td><td class="mdescRight">Find out if there's a Collection with this uri. <br/></td></tr>
+<tr class="memitem:ac0eeaa99bab0d852673f583d372a139c"><td class="memItemLeft" align="right" valign="top"><a class="el" href="constants_8h_8in.html#adfe7cb56aa4562836d5167efb98c8d2e">SBOLAPIEXPORTS</a> Collection *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="collection_8h.html#ac0eeaa99bab0d852673f583d372a139c">getCollection</a> (const char *uri)</td></tr>
+<tr class="memdesc:ac0eeaa99bab0d852673f583d372a139c"><td class="mdescLeft">&#160;</td><td class="mdescRight">Get the Collection associated with this uri.  <a href="#ac0eeaa99bab0d852673f583d372a139c"></a><br/></td></tr>
+<tr class="memitem:a21bfd99a18cec788d3403b6a5e7a4809"><td class="memItemLeft" align="right" valign="top"><a class="el" href="constants_8h_8in.html#adfe7cb56aa4562836d5167efb98c8d2e">SBOLAPIEXPORTS</a> int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="collection_8h.html#a21bfd99a18cec788d3403b6a5e7a4809">getNumCollections</a> ()</td></tr>
+<tr class="memdesc:a21bfd99a18cec788d3403b6a5e7a4809"><td class="mdescLeft">&#160;</td><td class="mdescRight">Get the total number of Collections.  <a href="#a21bfd99a18cec788d3403b6a5e7a4809"></a><br/></td></tr>
+<tr class="memitem:abde679f4b98f4c485a4f52ec5658c7ab"><td class="memItemLeft" align="right" valign="top"><a class="el" href="constants_8h_8in.html#adfe7cb56aa4562836d5167efb98c8d2e">SBOLAPIEXPORTS</a> Collection *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="collection_8h.html#abde679f4b98f4c485a4f52ec5658c7ab">getNthCollection</a> (int n)</td></tr>
+<tr class="memdesc:abde679f4b98f4c485a4f52ec5658c7ab"><td class="mdescLeft">&#160;</td><td class="mdescRight">Get the Nth Collection.  <a href="#abde679f4b98f4c485a4f52ec5658c7ab"></a><br/></td></tr>
+<tr class="memitem:a98da7c5daf50caaddd9875a9a68a8375"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a98da7c5daf50caaddd9875a9a68a8375"></a>
+<a class="el" href="constants_8h_8in.html#adfe7cb56aa4562836d5167efb98c8d2e">SBOLAPIEXPORTS</a> int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="collection_8h.html#a98da7c5daf50caaddd9875a9a68a8375">getNumDNAComponentsIn</a> (const Collection *col)</td></tr>
+<tr class="memdesc:a98da7c5daf50caaddd9875a9a68a8375"><td class="mdescLeft">&#160;</td><td class="mdescRight">Get the number of DNAComponents in a Collection. <br/></td></tr>
+<tr class="memitem:a3770d1fea716f7886236c9d7e797e0dd"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a3770d1fea716f7886236c9d7e797e0dd"></a>
+<a class="el" href="constants_8h_8in.html#adfe7cb56aa4562836d5167efb98c8d2e">SBOLAPIEXPORTS</a> DNAComponent *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="collection_8h.html#a3770d1fea716f7886236c9d7e797e0dd">getNthDNAComponentIn</a> (const Collection *col, int n)</td></tr>
+<tr class="memdesc:a3770d1fea716f7886236c9d7e797e0dd"><td class="mdescLeft">&#160;</td><td class="mdescRight">Get the Nth DNAComponent inside a Collection. <br/></td></tr>
+<tr class="memitem:afd5da9b3085b4baeb21f9f5c5124ec5b"><td class="memItemLeft" align="right" valign="top"><a class="el" href="constants_8h_8in.html#adfe7cb56aa4562836d5167efb98c8d2e">SBOLAPIEXPORTS</a> char *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="collection_8h.html#afd5da9b3085b4baeb21f9f5c5124ec5b">getCollectionURI</a> (const Collection *col)</td></tr>
+<tr class="memdesc:afd5da9b3085b4baeb21f9f5c5124ec5b"><td class="mdescLeft">&#160;</td><td class="mdescRight">Get the uri of a Collection.  <a href="#afd5da9b3085b4baeb21f9f5c5124ec5b"></a><br/></td></tr>
+<tr class="memitem:acdfda6be1417d89b48498e94c5a55765"><td class="memItemLeft" align="right" valign="top"><a class="el" href="constants_8h_8in.html#adfe7cb56aa4562836d5167efb98c8d2e">SBOLAPIEXPORTS</a> char *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="collection_8h.html#acdfda6be1417d89b48498e94c5a55765">getCollectionDisplayID</a> (const Collection *col)</td></tr>
+<tr class="memdesc:acdfda6be1417d89b48498e94c5a55765"><td class="mdescLeft">&#160;</td><td class="mdescRight">Get the displayID of a Collection.  <a href="#acdfda6be1417d89b48498e94c5a55765"></a><br/></td></tr>
+<tr class="memitem:a7dbcfe03df1da47b8f238508e443df09"><td class="memItemLeft" align="right" valign="top"><a class="el" href="constants_8h_8in.html#adfe7cb56aa4562836d5167efb98c8d2e">SBOLAPIEXPORTS</a> char *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="collection_8h.html#a7dbcfe03df1da47b8f238508e443df09">getCollectionName</a> (const Collection *col)</td></tr>
+<tr class="memdesc:a7dbcfe03df1da47b8f238508e443df09"><td class="mdescLeft">&#160;</td><td class="mdescRight">Get the name of a Collection.  <a href="#a7dbcfe03df1da47b8f238508e443df09"></a><br/></td></tr>
+<tr class="memitem:a66d633c75b677fb39976e6204ad881f3"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a66d633c75b677fb39976e6204ad881f3"></a>
+<a class="el" href="constants_8h_8in.html#adfe7cb56aa4562836d5167efb98c8d2e">SBOLAPIEXPORTS</a> char *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="collection_8h.html#a66d633c75b677fb39976e6204ad881f3">getCollectionDescription</a> (const Collection *col)</td></tr>
+<tr class="memdesc:a66d633c75b677fb39976e6204ad881f3"><td class="mdescLeft">&#160;</td><td class="mdescRight">Get the description of a Collection. <br/></td></tr>
+<tr class="memitem:ab3b13014274b1f135eb2a0b88f6481f0"><td class="memItemLeft" align="right" valign="top"><a class="el" href="constants_8h_8in.html#adfe7cb56aa4562836d5167efb98c8d2e">SBOLAPIEXPORTS</a> void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="collection_8h.html#ab3b13014274b1f135eb2a0b88f6481f0">setCollectionDisplayID</a> (Collection *col, const char *id)</td></tr>
+<tr class="memdesc:ab3b13014274b1f135eb2a0b88f6481f0"><td class="mdescLeft">&#160;</td><td class="mdescRight">Set the displayID of a Collection.  <a href="#ab3b13014274b1f135eb2a0b88f6481f0"></a><br/></td></tr>
+<tr class="memitem:a652b9ace14e8cecb9df9c785650161da"><td class="memItemLeft" align="right" valign="top"><a class="el" href="constants_8h_8in.html#adfe7cb56aa4562836d5167efb98c8d2e">SBOLAPIEXPORTS</a> void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="collection_8h.html#a652b9ace14e8cecb9df9c785650161da">setCollectionName</a> (Collection *col, const char *name)</td></tr>
+<tr class="memdesc:a652b9ace14e8cecb9df9c785650161da"><td class="mdescLeft">&#160;</td><td class="mdescRight">Set the name of a Collection.  <a href="#a652b9ace14e8cecb9df9c785650161da"></a><br/></td></tr>
+<tr class="memitem:a02bd9640c9c821d98f19081e9c49fa96"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a02bd9640c9c821d98f19081e9c49fa96"></a>
+<a class="el" href="constants_8h_8in.html#adfe7cb56aa4562836d5167efb98c8d2e">SBOLAPIEXPORTS</a> void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="collection_8h.html#a02bd9640c9c821d98f19081e9c49fa96">setCollectionDescription</a> (Collection *col, const char *desc)</td></tr>
+<tr class="memdesc:a02bd9640c9c821d98f19081e9c49fa96"><td class="mdescLeft">&#160;</td><td class="mdescRight">Set the description of a Collection. <br/></td></tr>
+<tr class="memitem:a15fa7bbfba1d772de1140241f558a4bb"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a15fa7bbfba1d772de1140241f558a4bb"></a>
+<a class="el" href="constants_8h_8in.html#adfe7cb56aa4562836d5167efb98c8d2e">SBOLAPIEXPORTS</a> void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="collection_8h.html#a15fa7bbfba1d772de1140241f558a4bb">addDNAComponentToCollection</a> (DNAComponent *com, Collection *col)</td></tr>
+<tr class="memdesc:a15fa7bbfba1d772de1140241f558a4bb"><td class="mdescLeft">&#160;</td><td class="mdescRight">Add a DNAComponent to a Collection. <br/></td></tr>
+<tr class="memitem:a4b2260b492dacd93fb459e2abd5e532d"><td class="memItemLeft" align="right" valign="top"><a class="el" href="constants_8h_8in.html#adfe7cb56aa4562836d5167efb98c8d2e">SBOLAPIEXPORTS</a> int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="collection_8h.html#a4b2260b492dacd93fb459e2abd5e532d">dnaComponentInCollection</a> (const DNAComponent *com, const Collection *col)</td></tr>
+<tr class="memdesc:a4b2260b492dacd93fb459e2abd5e532d"><td class="mdescLeft">&#160;</td><td class="mdescRight">Find out whether a DNAComponent is inside a Collection.  <a href="#a4b2260b492dacd93fb459e2abd5e532d"></a><br/></td></tr>
+<tr class="memitem:ab25c6cd5bff85b69556978c68485e68d"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="ab25c6cd5bff85b69556978c68485e68d"></a>
+<a class="el" href="constants_8h_8in.html#adfe7cb56aa4562836d5167efb98c8d2e">SBOLAPIEXPORTS</a> void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="collection_8h.html#ab25c6cd5bff85b69556978c68485e68d">printCollection</a> (const Collection *col, int tabs)</td></tr>
+<tr class="memdesc:ab25c6cd5bff85b69556978c68485e68d"><td class="mdescLeft">&#160;</td><td class="mdescRight">Print an outline of a Collection to stdout. <br/></td></tr>
+<tr class="memitem:a9a9f0735cb3fb14b1c8bb028baafdabf"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a9a9f0735cb3fb14b1c8bb028baafdabf"></a>
+<a class="el" href="constants_8h_8in.html#adfe7cb56aa4562836d5167efb98c8d2e">SBOLAPIEXPORTS</a> void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="collection_8h.html#a9a9f0735cb3fb14b1c8bb028baafdabf">printAllCollections</a> ()</td></tr>
+<tr class="memdesc:a9a9f0735cb3fb14b1c8bb028baafdabf"><td class="mdescLeft">&#160;</td><td class="mdescRight">Print an outline of all the Collections to stdout. <br/></td></tr>
+<tr class="memitem:a75855d2906e1c71d674921f3a8f53c58"><td class="memItemLeft" align="right" valign="top"><a class="el" href="constants_8h_8in.html#adfe7cb56aa4562836d5167efb98c8d2e">SBOLAPIEXPORTS</a> void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="collection_8h.html#a75855d2906e1c71d674921f3a8f53c58">cleanupCollections</a> ()</td></tr>
+<tr class="memdesc:a75855d2906e1c71d674921f3a8f53c58"><td class="mdescLeft">&#160;</td><td class="mdescRight">Delete all Collections.  <a href="#a75855d2906e1c71d674921f3a8f53c58"></a><br/></td></tr>
 </table>
 <hr/><a name="details" id="details"></a><h2>Detailed Description</h2>
 <div class="textblock"><p>Defines the Collection struct, as well as functions for operating on it. </p>
 </div><hr/><h2>Function Documentation</h2>
-<a class="anchor" id="a4d0cd36d8e878c876add221ad47ecfa2"></a>
+<a class="anchor" id="a75855d2906e1c71d674921f3a8f53c58"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">void <a class="el" href="collection_8h.html#a4d0cd36d8e878c876add221ad47ecfa2">cleanupCollections</a> </td>
+          <td class="memname"><a class="el" href="constants_8h_8in.html#adfe7cb56aa4562836d5167efb98c8d2e">SBOLAPIEXPORTS</a> void <a class="el" href="collection_8h.html#a75855d2906e1c71d674921f3a8f53c58">cleanupCollections</a> </td>
           <td>(</td>
           <td class="paramname"></td><td>)</td>
           <td></td>
@@ -199,12 +199,12 @@ void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="coll
 
 </div>
 </div>
-<a class="anchor" id="ae560a6702f680d85d487efb1328fd83f"></a>
+<a class="anchor" id="a620f32d929d285f5d0e11a42fdb244f6"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">void <a class="el" href="collection_8h.html#ae560a6702f680d85d487efb1328fd83f">deleteCollection</a> </td>
+          <td class="memname"><a class="el" href="constants_8h_8in.html#adfe7cb56aa4562836d5167efb98c8d2e">SBOLAPIEXPORTS</a> void <a class="el" href="collection_8h.html#a620f32d929d285f5d0e11a42fdb244f6">deleteCollection</a> </td>
           <td>(</td>
           <td class="paramtype">Collection *&#160;</td>
           <td class="paramname"><em>col</em></td><td>)</td>
@@ -219,12 +219,12 @@ void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="coll
 
 </div>
 </div>
-<a class="anchor" id="af09491ca9b684e71326f08c913bb7f11"></a>
+<a class="anchor" id="a4b2260b492dacd93fb459e2abd5e532d"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">int <a class="el" href="collection_8h.html#af09491ca9b684e71326f08c913bb7f11">dnaComponentInCollection</a> </td>
+          <td class="memname"><a class="el" href="constants_8h_8in.html#adfe7cb56aa4562836d5167efb98c8d2e">SBOLAPIEXPORTS</a> int <a class="el" href="collection_8h.html#a4b2260b492dacd93fb459e2abd5e532d">dnaComponentInCollection</a> </td>
           <td>(</td>
           <td class="paramtype">const DNAComponent *&#160;</td>
           <td class="paramname"><em>com</em>, </td>
@@ -249,12 +249,12 @@ void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="coll
 
 </div>
 </div>
-<a class="anchor" id="ae9f909778eefe71cd98ca8b0ee051128"></a>
+<a class="anchor" id="ac0eeaa99bab0d852673f583d372a139c"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">Collection* <a class="el" href="collection_8h.html#ae9f909778eefe71cd98ca8b0ee051128">getCollection</a> </td>
+          <td class="memname"><a class="el" href="constants_8h_8in.html#adfe7cb56aa4562836d5167efb98c8d2e">SBOLAPIEXPORTS</a> Collection* <a class="el" href="collection_8h.html#ac0eeaa99bab0d852673f583d372a139c">getCollection</a> </td>
           <td>(</td>
           <td class="paramtype">const char *&#160;</td>
           <td class="paramname"><em>uri</em></td><td>)</td>
@@ -269,12 +269,12 @@ void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="coll
 
 </div>
 </div>
-<a class="anchor" id="aafd7a7e0d08445e4c9caba9698cb85d0"></a>
+<a class="anchor" id="acdfda6be1417d89b48498e94c5a55765"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">char* <a class="el" href="collection_8h.html#aafd7a7e0d08445e4c9caba9698cb85d0">getCollectionDisplayID</a> </td>
+          <td class="memname"><a class="el" href="constants_8h_8in.html#adfe7cb56aa4562836d5167efb98c8d2e">SBOLAPIEXPORTS</a> char* <a class="el" href="collection_8h.html#acdfda6be1417d89b48498e94c5a55765">getCollectionDisplayID</a> </td>
           <td>(</td>
           <td class="paramtype">const Collection *&#160;</td>
           <td class="paramname"><em>col</em></td><td>)</td>
@@ -289,12 +289,12 @@ void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="coll
 
 </div>
 </div>
-<a class="anchor" id="a76df8418a07e5a3fd26283614b02e7f3"></a>
+<a class="anchor" id="a7dbcfe03df1da47b8f238508e443df09"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">char* <a class="el" href="collection_8h.html#a76df8418a07e5a3fd26283614b02e7f3">getCollectionName</a> </td>
+          <td class="memname"><a class="el" href="constants_8h_8in.html#adfe7cb56aa4562836d5167efb98c8d2e">SBOLAPIEXPORTS</a> char* <a class="el" href="collection_8h.html#a7dbcfe03df1da47b8f238508e443df09">getCollectionName</a> </td>
           <td>(</td>
           <td class="paramtype">const Collection *&#160;</td>
           <td class="paramname"><em>col</em></td><td>)</td>
@@ -309,12 +309,12 @@ void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="coll
 
 </div>
 </div>
-<a class="anchor" id="a9911934e3cec29f16a8b71e33799d7ed"></a>
+<a class="anchor" id="afd5da9b3085b4baeb21f9f5c5124ec5b"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">char* <a class="el" href="collection_8h.html#a9911934e3cec29f16a8b71e33799d7ed">getCollectionURI</a> </td>
+          <td class="memname"><a class="el" href="constants_8h_8in.html#adfe7cb56aa4562836d5167efb98c8d2e">SBOLAPIEXPORTS</a> char* <a class="el" href="collection_8h.html#afd5da9b3085b4baeb21f9f5c5124ec5b">getCollectionURI</a> </td>
           <td>(</td>
           <td class="paramtype">const Collection *&#160;</td>
           <td class="paramname"><em>col</em></td><td>)</td>
@@ -329,12 +329,12 @@ void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="coll
 
 </div>
 </div>
-<a class="anchor" id="a5e0aaa18462eb41e017e74e97f7bca37"></a>
+<a class="anchor" id="abde679f4b98f4c485a4f52ec5658c7ab"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">Collection* <a class="el" href="collection_8h.html#a5e0aaa18462eb41e017e74e97f7bca37">getNthCollection</a> </td>
+          <td class="memname"><a class="el" href="constants_8h_8in.html#adfe7cb56aa4562836d5167efb98c8d2e">SBOLAPIEXPORTS</a> Collection* <a class="el" href="collection_8h.html#abde679f4b98f4c485a4f52ec5658c7ab">getNthCollection</a> </td>
           <td>(</td>
           <td class="paramtype">int&#160;</td>
           <td class="paramname"><em>n</em></td><td>)</td>
@@ -349,12 +349,12 @@ void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="coll
 
 </div>
 </div>
-<a class="anchor" id="a2433428b4f8c8e6e2b1504884df313b2"></a>
+<a class="anchor" id="a21bfd99a18cec788d3403b6a5e7a4809"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">int <a class="el" href="collection_8h.html#a2433428b4f8c8e6e2b1504884df313b2">getNumCollections</a> </td>
+          <td class="memname"><a class="el" href="constants_8h_8in.html#adfe7cb56aa4562836d5167efb98c8d2e">SBOLAPIEXPORTS</a> int <a class="el" href="collection_8h.html#a21bfd99a18cec788d3403b6a5e7a4809">getNumCollections</a> </td>
           <td>(</td>
           <td class="paramname"></td><td>)</td>
           <td></td>
@@ -368,12 +368,12 @@ void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="coll
 
 </div>
 </div>
-<a class="anchor" id="a5562e58452c7f9815cd141bacbadfe65"></a>
+<a class="anchor" id="ab3b13014274b1f135eb2a0b88f6481f0"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">void <a class="el" href="collection_8h.html#a5562e58452c7f9815cd141bacbadfe65">setCollectionDisplayID</a> </td>
+          <td class="memname"><a class="el" href="constants_8h_8in.html#adfe7cb56aa4562836d5167efb98c8d2e">SBOLAPIEXPORTS</a> void <a class="el" href="collection_8h.html#ab3b13014274b1f135eb2a0b88f6481f0">setCollectionDisplayID</a> </td>
           <td>(</td>
           <td class="paramtype">Collection *&#160;</td>
           <td class="paramname"><em>col</em>, </td>
@@ -398,12 +398,12 @@ void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="coll
 
 </div>
 </div>
-<a class="anchor" id="ab917d8eb8eb4f667f4980ea2b4673994"></a>
+<a class="anchor" id="a652b9ace14e8cecb9df9c785650161da"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">void <a class="el" href="collection_8h.html#ab917d8eb8eb4f667f4980ea2b4673994">setCollectionName</a> </td>
+          <td class="memname"><a class="el" href="constants_8h_8in.html#adfe7cb56aa4562836d5167efb98c8d2e">SBOLAPIEXPORTS</a> void <a class="el" href="collection_8h.html#a652b9ace14e8cecb9df9c785650161da">setCollectionName</a> </td>
           <td>(</td>
           <td class="paramtype">Collection *&#160;</td>
           <td class="paramname"><em>col</em>, </td>
@@ -432,7 +432,7 @@ void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="coll
 
 
 <hr class="footer"/><address class="footer"><small>
-Generated on Sat Mar 31 2012 16:55:32 for libSBOLc by &#160;<a href="http://www.doxygen.org/index.html">
+Generated on Tue Apr 3 2012 12:56:05 for libSBOLc by &#160;<a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/>
 </a> 1.8.0
 </small></address>
