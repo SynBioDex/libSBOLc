@@ -106,4 +106,9 @@
 /// import sbol_swig for the low-level interface, or import sbol
 /// for the high-level one.
 /// 
+/// One other thing to remember is that although the generated files are cross-platform,
+/// they only work with the version of Python they were compiled against. If you try
+/// to import the sbol/sbol_swig module from a different version you'll get a
+/// seeminly unrelated "Fatal Python error: PyThreadState_Get: no current thread"
+/// 
 //////////////////////////////////////////////////////////////////////
