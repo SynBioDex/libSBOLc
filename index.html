@@ -89,7 +89,7 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 </div><!--header-->
 <div class="contents">
 <div class="textblock"><h2><a class="anchor" id="overview"></a>
-Overview of the project</h2>
+Overview</h2>
 <p>There are a few different top-level subdirectories in the libSBOLc folder:</p>
 <ul>
 <li><a href="https://github.com/SynBioDex/libSBOLc/tree/master/schema">schema</a> holds the SBOL schema files copied from libSBOLj</li>
@@ -112,27 +112,62 @@ Overview of the project</h2>
 <ul>
 <li>Finally, there's the build folder for temporary build files, and the release folder for finished binaries. They're created by CMake.</li>
 </ul>
-<p>When running CMake and compiling, the main sbol library is always created first beacuse most of the optional targets depend on it: </p>
+<p>When running CMake and compiling, the main sbol library is always created first because most of the optional targets depend on it: </p>
 <div class="image">
 <img src="build_dependencies.png" alt="build_dependencies.png"/>
-<div class="caption">
-Build dependencies</div></div>
-<p> Once built, the executables just depend on finding the correct xml files: </p>
+</div>
+<p>Once built, the executables just depend on finding the correct xml files: </p>
 <div class="image">
 <img src="runtime_dependencies.png" alt="runtime_dependencies.png"/>
-<div class="caption">
-Runtime dependencies</div></div>
- <h2><a class="anchor" id="tour"></a>
+</div>
+<h2><a class="anchor" id="tour"></a>
 A brief tour of the source code</h2>
+<p>There are a bunch of C source files, but they fall into four general categories:</p>
+<ul>
+<li><a class="el" href="dnasequence_8h.html" title="Defines the DNASequence struct, as well as functions for operating on it.">dnasequence.h</a>, <a class="el" href="sequenceannotation_8h.html" title="This file contains the SequenceAnnotation struct, as well as functions for operating on it...">sequenceannotation.h</a>, <a class="el" href="dnacomponent_8h.html" title="Contains the DNAComponent struct, as well as functions for operating on it.">dnacomponent.h</a>, and <a class="el" href="collection_8h.html" title="Defines the Collection struct, as well as functions for operating on it.">collection.h</a> define the SBOL Core objects.</li>
+</ul>
+<ul>
+<li><a class="el" href="array_8h.html" title="Defines the PointerArray struct, as well as functions for operating on it.">array.h</a>, <a class="el" href="object_8h.html" title="Defines the SBOLObject struct, as well as functions for operating on it.">object.h</a>, and <a class="el" href="property_8h.html" title="Defines a hierarchy of Properties, which hold data for SBOLObjects.">property.h</a> define building blocks for those objects.</li>
+</ul>
+<ul>
+<li><a class="el" href="validator_8h.html" title="This file defines the isValidSBOL function, which is used to verify SBOL documents before parsing...">validator.h</a>, <a class="el" href="reader_8h.html" title="Contains functions for importing SBOL objects from an XML file.">reader.h</a>, and <a class="el" href="writer_8h.html" title="This file contains functions for writing the SBOL core to an XML file.">writer.h</a> perform global operations. They each have one main algorithm, and maybe some non-exported supporting functions.</li>
+</ul>
+<ul>
+<li>And then there are a few other miscellaneous files like <a class="el" href="prototypes_8h.html" title="Declares all the major structs, unions, and enums so the compiler will recognize them when reading th...">prototypes.h</a>, <a class="el" href="constants_8h_8in.html" title="Central location for defining constants related to SBOL.">constants.h.in</a>, and <a class="el" href="utilities_8h.html" title="This file defines SBOL utility functions that don&#39;t really fit in anywhere else.">utilities.h</a>; they each do something unique but limited.</li>
+</ul>
+<p>You might be confused and/or annoyed with the profusion of similarly-named structs and functions relating to SBOL objects. I know I would be seeing it for the first time. Here are a couple diagrams to clarify what they're supposed to represent:</p>
+<div class="image">
+<img src="property_hierarchy.png" alt="property_hierarchy.png"/>
+</div>
+<div class="image">
+<img src="struct_hierarchy.png" alt="struct_hierarchy.png"/>
+</div>
 <h2><a class="anchor" id="doxygen"></a>
 Updating this documentation</h2>
+<p>The code for this page is in mainpage.dox; the rest of the documentation is scattered throughout the source/*.h files. There are also a couple graphs, which can be edited with the yEd graph editor from <a href="http://www.yworks.com/en/products_yed_about.html">http://www.yworks.com/en/products_yed_about.html</a></p>
+<p>After editing the source files, you also need to generate html using Doxygen, and upload it to GitHub.</p>
+<p>First, make sure you have Doxygen installed. Then check <code>SBOL_GENERATE_MANUAL</code> in CMake, <code>cd</code> into <code>libSBOLc/build</code>, and run <code>make</code>. Doxygen will generate a <code>libSBOLc/release/html</code> folder full of html files. To change settings, edit Doxyfile.in first.</p>
+<p>Copy the HTML to somewhere outside the main libSBOLc directory, and delete the build and release folders. Then <code>git checkout gh-pages</code>. It's a special branch with nothing but HTML files. Delete everything in there, and replace it with the newly generated ones. Then <code>git push origin gh-pages</code>. A minute or so later, the new documentation should be available at <a href="http://SynBioDex.github.com/libSBOLc/">http://SynBioDex.github.com/libSBOLc/</a></p>
 <h2><a class="anchor" id="swig"></a>
 Updating the Python wrapper</h2>
+<p>To update the low-level Python wrapper, all you need to do is:</p>
+<ul>
+<li>check SBOL_GENERATE_PYTHON in CMake</li>
+</ul>
+<ul>
+<li>build the project</li>
+</ul>
+<ul>
+<li>keep these files from the release folder: _sbol_swig.so, sbol_swig.py, and sbol.py.</li>
+</ul>
+<p>The first two are generated by SWIG, and represent a direct translation of the C functions into Python. They're cross-platform so you should only need to generate them once.</p>
+<p>The last, sbol.py, is a high-level wrapper that maps the C-like SWIG functions into a more natural Python interface. It's not generated during a build, but only copied from the wrapper folder. The catch is, you'll have to keep it up to date manually by editing the code.</p>
+<p>The low-level wrapper also works by itself though. From the Python interpreter, import sbol_swig for the low-level interface, or import sbol for the high-level one. </p>
 </div></div><!-- contents -->
 
 
 <hr class="footer"/><address class="footer"><small>
-Generated on Tue Apr 3 2012 12:56:05 for libSBOLc by &#160;<a href="http://www.doxygen.org/index.html">
+Generated on Tue Apr 3 2012 23:30:53 for libSBOLc by &#160;<a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/>
 </a> 1.8.0
 </small></address>

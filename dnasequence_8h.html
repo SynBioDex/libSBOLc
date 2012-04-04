@@ -142,10 +142,10 @@ Functions</h2></td></tr>
 <tr class="memdesc:a88b3d218b2c7f1ada110ac75dea63903"><td class="mdescLeft">&#160;</td><td class="mdescRight">Get the Nth DNASequnce in memory. <br/></td></tr>
 <tr class="memitem:ad7c7844b7a0d48fc5aab205c9368a7e0"><td class="memItemLeft" align="right" valign="top"><a class="el" href="constants_8h_8in.html#adfe7cb56aa4562836d5167efb98c8d2e">SBOLAPIEXPORTS</a> DNASequence *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="dnasequence_8h.html#ad7c7844b7a0d48fc5aab205c9368a7e0">getDNASequence</a> (const char *uri)</td></tr>
 <tr class="memdesc:ad7c7844b7a0d48fc5aab205c9368a7e0"><td class="mdescLeft">&#160;</td><td class="mdescRight">Get the DNASequence associated with this URI.  <a href="#ad7c7844b7a0d48fc5aab205c9368a7e0"></a><br/></td></tr>
-<tr class="memitem:a44c3c7bb470e1b009bc05b0341ab809f"><td class="memItemLeft" align="right" valign="top"><a class="el" href="constants_8h_8in.html#adfe7cb56aa4562836d5167efb98c8d2e">SBOLAPIEXPORTS</a> char *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="dnasequence_8h.html#a44c3c7bb470e1b009bc05b0341ab809f">getNucleotides</a> (const DNASequence *seq)</td></tr>
-<tr class="memdesc:a44c3c7bb470e1b009bc05b0341ab809f"><td class="mdescLeft">&#160;</td><td class="mdescRight">Get a copy of the nucleotides contained in this DNASequence.  <a href="#a44c3c7bb470e1b009bc05b0341ab809f"></a><br/></td></tr>
-<tr class="memitem:a1f892319019d12a474b4eb5834460180"><td class="memItemLeft" align="right" valign="top"><a class="el" href="constants_8h_8in.html#adfe7cb56aa4562836d5167efb98c8d2e">SBOLAPIEXPORTS</a> void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="dnasequence_8h.html#a1f892319019d12a474b4eb5834460180">setNucleotides</a> (DNASequence *seq, const char *nucleotides)</td></tr>
-<tr class="memdesc:a1f892319019d12a474b4eb5834460180"><td class="mdescLeft">&#160;</td><td class="mdescRight">Copy a string of nucleotides into this DNASequence.  <a href="#a1f892319019d12a474b4eb5834460180"></a><br/></td></tr>
+<tr class="memitem:ae4855c7cc62a0fe90b09d541569a0127"><td class="memItemLeft" align="right" valign="top"><a class="el" href="constants_8h_8in.html#adfe7cb56aa4562836d5167efb98c8d2e">SBOLAPIEXPORTS</a> char *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="dnasequence_8h.html#ae4855c7cc62a0fe90b09d541569a0127">getDNASequenceNucleotides</a> (const DNASequence *seq)</td></tr>
+<tr class="memdesc:ae4855c7cc62a0fe90b09d541569a0127"><td class="mdescLeft">&#160;</td><td class="mdescRight">Get a copy of the nucleotides contained in this DNASequence.  <a href="#ae4855c7cc62a0fe90b09d541569a0127"></a><br/></td></tr>
+<tr class="memitem:a8aaa4277470919c1fb1aca322c73f304"><td class="memItemLeft" align="right" valign="top"><a class="el" href="constants_8h_8in.html#adfe7cb56aa4562836d5167efb98c8d2e">SBOLAPIEXPORTS</a> void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="dnasequence_8h.html#a8aaa4277470919c1fb1aca322c73f304">setDNASequenceNucleotides</a> (DNASequence *seq, const char *nucleotides)</td></tr>
+<tr class="memdesc:a8aaa4277470919c1fb1aca322c73f304"><td class="mdescLeft">&#160;</td><td class="mdescRight">Copy a string of nucleotides into this DNASequence.  <a href="#a8aaa4277470919c1fb1aca322c73f304"></a><br/></td></tr>
 <tr class="memitem:aa44b2e96b918735335e070713bd0f6ea"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="aa44b2e96b918735335e070713bd0f6ea"></a>
 <a class="el" href="constants_8h_8in.html#adfe7cb56aa4562836d5167efb98c8d2e">SBOLAPIEXPORTS</a> int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="dnasequence_8h.html#aa44b2e96b918735335e070713bd0f6ea">isDNASequenceURI</a> (const char *uri)</td></tr>
 <tr class="memdesc:aa44b2e96b918735335e070713bd0f6ea"><td class="mdescLeft">&#160;</td><td class="mdescRight">Find out whether there's a DNASequence with this URI. <br/></td></tr>
@@ -220,6 +220,27 @@ Functions</h2></td></tr>
 
 </div>
 </div>
+<a class="anchor" id="ae4855c7cc62a0fe90b09d541569a0127"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="constants_8h_8in.html#adfe7cb56aa4562836d5167efb98c8d2e">SBOLAPIEXPORTS</a> char* <a class="el" href="dnasequence_8h.html#ae4855c7cc62a0fe90b09d541569a0127">getDNASequenceNucleotides</a> </td>
+          <td>(</td>
+          <td class="paramtype">const DNASequence *&#160;</td>
+          <td class="paramname"><em>seq</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div>
+<div class="memdoc">
+
+<p>Get a copy of the nucleotides contained in this DNASequence. </p>
+<dl class="section return"><dt>Returns:</dt><dd>A string that needs to be freed. </dd></dl>
+<dl class="todo"><dt><b><a class="el" href="todo.html#_todo000016">Todo:</a></b></dt><dd>rename to getDNASequenceNucleotides? </dd></dl>
+
+</div>
+</div>
 <a class="anchor" id="a3156c4f3407c9bca47f3c51b1f9c763d"></a>
 <div class="memitem">
 <div class="memproto">
@@ -237,27 +258,6 @@ Functions</h2></td></tr>
 
 <p>Get the URI of a DNASequence. </p>
 <p>Returns NULL on failure. </p>
-
-</div>
-</div>
-<a class="anchor" id="a44c3c7bb470e1b009bc05b0341ab809f"></a>
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname"><a class="el" href="constants_8h_8in.html#adfe7cb56aa4562836d5167efb98c8d2e">SBOLAPIEXPORTS</a> char* <a class="el" href="dnasequence_8h.html#a44c3c7bb470e1b009bc05b0341ab809f">getNucleotides</a> </td>
-          <td>(</td>
-          <td class="paramtype">const DNASequence *&#160;</td>
-          <td class="paramname"><em>seq</em></td><td>)</td>
-          <td></td>
-        </tr>
-      </table>
-</div>
-<div class="memdoc">
-
-<p>Get a copy of the nucleotides contained in this DNASequence. </p>
-<dl class="section return"><dt>Returns:</dt><dd>A string that needs to be freed. </dd></dl>
-<dl class="todo"><dt><b><a class="el" href="todo.html#_todo000014">Todo:</a></b></dt><dd>rename to getDNASequenceNucleotides? </dd></dl>
 
 </div>
 </div>
@@ -310,12 +310,12 @@ Functions</h2></td></tr>
 
 </div>
 </div>
-<a class="anchor" id="a1f892319019d12a474b4eb5834460180"></a>
+<a class="anchor" id="a8aaa4277470919c1fb1aca322c73f304"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname"><a class="el" href="constants_8h_8in.html#adfe7cb56aa4562836d5167efb98c8d2e">SBOLAPIEXPORTS</a> void <a class="el" href="dnasequence_8h.html#a1f892319019d12a474b4eb5834460180">setNucleotides</a> </td>
+          <td class="memname"><a class="el" href="constants_8h_8in.html#adfe7cb56aa4562836d5167efb98c8d2e">SBOLAPIEXPORTS</a> void <a class="el" href="dnasequence_8h.html#a8aaa4277470919c1fb1aca322c73f304">setDNASequenceNucleotides</a> </td>
           <td>(</td>
           <td class="paramtype">DNASequence *&#160;</td>
           <td class="paramname"><em>seq</em>, </td>
@@ -337,7 +337,7 @@ Functions</h2></td></tr>
 
 <p>Copy a string of nucleotides into this DNASequence. </p>
 <p>So far, no validation is done to ensure that these are valid nucleotides. </p>
-<dl class="todo"><dt><b><a class="el" href="todo.html#_todo000015">Todo:</a></b></dt><dd>rename to setDNASequenceNucleotides? </dd></dl>
+<dl class="todo"><dt><b><a class="el" href="todo.html#_todo000017">Todo:</a></b></dt><dd>rename to setDNASequenceNucleotides? </dd></dl>
 
 </div>
 </div>
@@ -345,7 +345,7 @@ Functions</h2></td></tr>
 
 
 <hr class="footer"/><address class="footer"><small>
-Generated on Tue Apr 3 2012 12:56:05 for libSBOLc by &#160;<a href="http://www.doxygen.org/index.html">
+Generated on Tue Apr 3 2012 23:30:53 for libSBOLc by &#160;<a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/>
 </a> 1.8.0
 </small></address>

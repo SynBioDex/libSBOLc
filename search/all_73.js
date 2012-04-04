@@ -22,8 +22,8 @@ var searchData=
   ['setdnacomponentname',['setDNAComponentName',['../dnacomponent_8h.html#a6398093d44264b00a9e069ddf40cedb5',1,'dnacomponent.c']]],
   ['setdnacomponentsequence',['setDNAComponentSequence',['../dnacomponent_8h.html#a58d6160b010570aad37fedba885ff5cf',1,'dnacomponent.c']]],
   ['setdnacomponenturi',['setDNAComponentURI',['../dnacomponent_8h.html#a3e8baba4bf73bf73c6bb948283ee1374',1,'dnacomponent.c']]],
+  ['setdnasequencenucleotides',['setDNASequenceNucleotides',['../dnasequence_8h.html#a8aaa4277470919c1fb1aca322c73f304',1,'dnasequence.c']]],
   ['setletters',['setLetters',['../property_8h.html#a2362370c81f5279a242e9d606fb91bde',1,'property.c']]],
-  ['setnucleotides',['setNucleotides',['../dnasequence_8h.html#a1f892319019d12a474b4eb5834460180',1,'dnasequence.c']]],
   ['setnucleotidesproperty',['setNucleotidesProperty',['../property_8h.html#a6db30af1b5c42bdac91b3224df20b892',1,'property.c']]],
   ['setnumber',['setNumber',['../property_8h.html#ac85cce9551f811ebf097fda1e3221732',1,'property.c']]],
   ['setpolarityproperty',['setPolarityProperty',['../property_8h.html#a09b76749eb1cccb98432d6784263c063',1,'property.c']]],
@@ -33,8 +33,15 @@ var searchData=
   ['setsbolcompoundobjectname',['setSBOLCompoundObjectName',['../object_8h.html#a409006fe24b56905f59d33bb1867504e',1,'object.c']]],
   ['setsbolcompoundobjecturi',['setSBOLCompoundObjectURI',['../object_8h.html#a610f42487fe44a2485fe60efa5829fb1',1,'object.c']]],
   ['setsbolobjecturi',['setSBOLObjectURI',['../object_8h.html#aaa06a93048cf5da20bc9a9837d6bcb95',1,'object.c']]],
-  ['setsubcomponent',['setSubComponent',['../dnacomponent_8h.html#a4a7dfd9c33234152cfb641d8274975e4',1,'dnacomponent.c']]],
+  ['setsequenceannotationend',['setSequenceAnnotationEnd',['../sequenceannotation_8h.html#af47d59f13eee0d35865a0d7b9891ac60',1,'sequenceannotation.c']]],
+  ['setsequenceannotationstart',['setSequenceAnnotationStart',['../sequenceannotation_8h.html#a9ab16e2463c9d2fb4e27216d41dda6f6',1,'sequenceannotation.c']]],
+  ['setsequenceannotationstrand',['setSequenceAnnotationStrand',['../sequenceannotation_8h.html#ab29d80a108ff8b4ad1af476520e43c00',1,'sequenceannotation.c']]],
+  ['setsequenceannotationsubcomponent',['setSequenceAnnotationSubComponent',['../dnacomponent_8h.html#a0f88c144140bae273f220ef276c390c6',1,'dnacomponent.c']]],
   ['settextproperty',['setTextProperty',['../property_8h.html#a1b4bf73fab652f3898f835c95971e999',1,'property.c']]],
   ['seturiproperty',['setURIProperty',['../property_8h.html#ad6dbe2a1112ce9e5963b4eec2662141b',1,'property.c']]],
-  ['strtopolarity',['strToPolarity',['../utilities_8h.html#afae7344e0c6864523b4e002318a26962',1,'utilities.c']]]
+  ['strand',['strand',['../struct___sequence_annotation.html#a0a3289d99c48aa7c1aa389cb21621116',1,'_SequenceAnnotation']]],
+  ['strandpolarity',['StrandPolarity',['../constants_8h_8in.html#a70f8c98e8c52f9c05da14bc266de58aa',1,'constants.h.in']]],
+  ['strtoint',['strToInt',['../utilities_8h.html#ac38303dcb990e1c867cca85313df8c91',1,'utilities.c']]],
+  ['strtopolarity',['strToPolarity',['../utilities_8h.html#afae7344e0c6864523b4e002318a26962',1,'utilities.c']]],
+  ['subcomponent',['subComponent',['../struct___sequence_annotation.html#a33859bc517f2fe563d7d7adaf6ce464d',1,'_SequenceAnnotation']]]
 ];

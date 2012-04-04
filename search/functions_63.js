@@ -4,7 +4,9 @@ var searchData=
   ['cleanupdnacomponents',['cleanupDNAComponents',['../dnacomponent_8h.html#a07a59a11079eff4be648e15eaf93e0dc',1,'dnacomponent.c']]],
   ['cleanupdnasequences',['cleanupDNASequences',['../dnasequence_8h.html#afd478dcf4f5b4f7ccb84ac7dd8ddf4ec',1,'dnasequence.c']]],
   ['cleanupsbolcompoundobjects',['cleanupSBOLCompoundObjects',['../object_8h.html#a126f6d252b32a90c578c5a589f19053c',1,'object.c']]],
+  ['cleanupsbolcore',['cleanupSBOLCore',['../sbol_8h.html#a973512d041061a9ef14291de7b13a958',1,'sbol.c']]],
   ['cleanupsbolobjects',['cleanupSBOLObjects',['../object_8h.html#adb181ef046988c40c869b5081f53ff5d',1,'object.c']]],
+  ['cleanupsequenceannotations',['cleanupSequenceAnnotations',['../sequenceannotation_8h.html#af31d87d6c50f4a50b93992d259626ea8',1,'sequenceannotation.c']]],
   ['comparenucleotidesproperty',['compareNucleotidesProperty',['../property_8h.html#a87df999402030e8dcbebd7d37e4ba066',1,'property.c']]],
   ['comparepolarityproperty',['comparePolarityProperty',['../property_8h.html#ae17196fefc62a45997d3031075b7e1cc',1,'property.c']]],
   ['comparepositionproperty',['comparePositionProperty',['../property_8h.html#ab933f9ee6e6bf30d47af67fbcdd250ca',1,'property.c']]],
@@ -20,6 +22,7 @@ var searchData=
   ['createproperty',['createProperty',['../property_8h.html#a1d0d1a341ed27038256b0b80dfe75279',1,'property.c']]],
   ['createsbolcompoundobject',['createSBOLCompoundObject',['../object_8h.html#a4d4cad5d29147f3b0277b78107336d59',1,'object.c']]],
   ['createsbolobject',['createSBOLObject',['../object_8h.html#a871d92aa5bee043ff325974ca5e7fec3',1,'object.c']]],
+  ['createsequenceannotation',['createSequenceAnnotation',['../sequenceannotation_8h.html#a6af41d783cef33b51b7bc91a8a63a7b0',1,'sequenceannotation.c']]],
   ['createtextproperty',['createTextProperty',['../property_8h.html#add2b50f2301ae40892bf2be2a4f2e14f',1,'property.c']]],
   ['createuriproperty',['createURIProperty',['../property_8h.html#a8ebd47bb535253ae7f1592a7e5e939b9',1,'property.c']]]
 ];

@@ -10,6 +10,7 @@ var searchData=
   ['deleteproperty',['deleteProperty',['../property_8h.html#a7dc621607421beb1cc908fc5d72603a7',1,'property.c']]],
   ['deletesbolcompoundobject',['deleteSBOLCompoundObject',['../object_8h.html#a7a66b73ee66ad831fc353e4781269ad5',1,'object.c']]],
   ['deletesbolobject',['deleteSBOLObject',['../object_8h.html#ae787f4b151be1f7230cedaa4459422e5',1,'object.c']]],
+  ['deletesequenceannotation',['deleteSequenceAnnotation',['../sequenceannotation_8h.html#aa0a92e2c214bc32e93c0aaac5b4f2a5d',1,'sequenceannotation.c']]],
   ['deletetextproperty',['deleteTextProperty',['../property_8h.html#a6a5874eb94a42b6174a05b3ce8d3186c',1,'property.c']]],
   ['deleteuriproperty',['deleteURIProperty',['../property_8h.html#aaa6562bc7d78d2d9174b0244cb82d453',1,'property.c']]],
   ['description',['description',['../struct___s_b_o_l_compound_object.html#a7ddbc23541d455a5e6b5deb442e5c896',1,'_SBOLCompoundObject']]],
