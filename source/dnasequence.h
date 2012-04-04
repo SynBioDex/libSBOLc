@@ -14,7 +14,7 @@
 
 /// Implements the SBOL Core DNASequence object.
 struct _DNASequence {
-	SBOLObject* base;                 ///< uri, displayID, name, description
+	SBOLObject* base;                 ///< uri
 	NucleotidesProperty* nucleotides; ///< sequence
 };
 
