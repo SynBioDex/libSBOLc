@@ -8,6 +8,11 @@ The rest of this file is a quick guide to getting started with common tasks. For
 * [the online documentation](http://synbiodex.github.com/libSBOLc)
 * [some example code](https://github.com/SynBioDex/libSBOLc/tree/master/examples)
 
+Downloading the binaries
+------------------------
+
+Binaries coming soon...
+
 Building from source
 --------------------
 
@@ -17,23 +22,27 @@ To compile libSBOLc, you will need:
 * [CMake](http://www.cmake.org/cmake/resources/software.html) for generating platform-specific build instructions
 * a C compiler, such as [gcc](http://gcc.gnu.org/) or [MinGW](http://www.mingw.org/wiki/InstallationHOWTOforMinGW)
 
-First, download them from the links above. Or if you're on Debian/Ubuntu this command should work:
+First, download them from the links above. Or if you're on Debian/Ubuntu this command should install everything:
 
-    sudo apt-get install git cmake-gui build-essential
+    sudo apt-get install git cmake-qt-gui build-essential libxml2-dev
 
 If you want to update the documentation you also need [Doxygen](http://www.stack.nl/~dimitri/doxygen/), and to generate the Python wrapper you need [SWIG](http://www.swig.org/). To install them on Debian/Ubuntu:
 
-    sudo apt-get install doxygen swig
+    sudo apt-get install doxygen-gui swig
 
 Then, clone the repository:
 
     git clone git://github.com/SynBioDex/libSBOLc.git
 
-This will create a <code>libSBOLc</code> directory with the code. Next, run CMake. For "Where is the source code" enter the path to your <code>libSBOLc</code> folder. "Where to build the binaries" can technically be anywhere, but it's only been tested with <code>libSBOLc/build</code>.
+This will create a <code>libSBOLc</code> directory with the code. Next, run CMake (cmake-qt-gui on linux). For "Where is the source code" enter the path to your <code>libSBOLc</code> folder. "Where to build the binaries" can technically be anywhere, but it's only been tested with <code>libSBOLc/build</code>.
 
 Click <code>Configure</code>, and choose what type of compiler you want to generate instructions for. All the development has been done using "default native compilers" and MinGW on Windows or Unix makefiles on Mac/Linux. CMake should also be able to generate projects for Eclipse, Visual Studio, XCode, etc. However, that will probably involve adjusting some paths.
 
-The first time you click <code>Configure</code>, CMake will list variables, like <code>CMAKE_BUILD_TYPE</code> and <code>LIBXML2_INCLUDE_DIR</code>, in red. That means they've been updated. To build the main SBOL library, just click <code>Configure</code> again until the red goes away to make sure everything is set. This is also where you set up the optional targets: examples, tests, manual, and wrapper. To add them check the appropriate boxes (SBOL_BUILD_EXAMPLES, for example) and then <code>Configure</code> again to adjust the settings. The other SBOL-specific option to be aware of is that setting <code>CMAKE_BUILD_TYPE</code> to "Debug" will cause libSBOLc to be compiled with some extra debugging statements. Once everything is set, click <code>Generate</code> to create the compiler instructions.
+The first time you click <code>Configure</code>, CMake will list variables, like <code>CMAKE_BUILD_TYPE</code> and <code>LIBXML2_INCLUDE_DIR</code>, in red. That means
+they've been updated. To build the main SBOL library, just click <code>Configure</code> again until the red goes away. This is also where you set up the optional
+targets: examples, tests, manual, and wrapper. To add them check the appropriate boxes (SBOL_BUILD_EXAMPLES, for example) and then <code>Configure</code> again to
+adjust the settings. There's one other SBOL-specific option: <code>SBOL_DEBUG_STATEMENTS</code> will cause libSBOLc to be compiled with some extra debugging statements.
+A lot of other options might be visibile too; checking <code>Grouped</code> at the top makes things more managable. Once it's all set, click <code>Generate</code> to create the compiler instructions.
 
 The last step is to <code>cd</code> into the <code>libSBOLc/build</code> folder and run the compiler.
 
@@ -55,30 +64,32 @@ Once you've configured and built libSBOLc, you can <code>cd</code> into the <cod
 
 or 
 
-    ./sbol_run_tests.exe
+    sbol_run_tests.exe
 
-Incorporating libSBOLc into your code
+Incorporating SBOL into your code
 -------------------------------------
 
-To use libsbol in your own code, <code>#include "sbol.h"</code>. Then there are only a few important functions you need to know to get started reading, writing, and manipulating SBOL files:
+To use libSBOLc in your own code, <code>#include "sbol.h"</code>. Then there are only a few important functions you need to know to get started reading, writing, and manipulating SBOL files:
 
 * readSBOLCore imports SBOL objects from a file, and writeSBOLCore serializes them again.
 
 * isValidSBOL checks that an xmlDoc conforms to the SBOL schema. Using it involves parsing with libxml. There's an example of that in
-  <code>libSBOLc/examples/code/sbol_validate.c</code>, but it shouldn't be necessary in most cases since readSBOLCore and writeSBOLCore
+  [sbol_validate.c](https://github.com/SynBioDex/libSBOLc/blob/master/examples/code/sbol_validate.c),
+  but it shouldn't be necessary in most cases since readSBOLCore and writeSBOLCore
   both call it internally.
 
 * There are constructors, destructors, getters, and setters for each type of SBOL object.
   For the most part they follow a pretty obvious formula:
   setDNAComponentDisplayID and getDNAComponentDisplayID, for example. But there are also some non-obvious ones, like 
-  addPrecedesRelationship. For those the [index of all available functions](http://synbiodex.github.com/libSBOLc/globals.html)
-  is a good place to look.
-  There's also code to create each of the xml example files in <code>libSBOLc/examples/code</code>.
+  addPrecedesRelationship. For those the [index of all available functions](http://synbiodex.github.com/libSBOLc/globals_func.html)
+  is a good place to look. There's also code to create each of the xml example files in
+  [libSBOLc/examples/code](https://github.com/SynBioDex/libSBOLc/tree/master/examples/code).
 
-* cleanupSBOLCore frees all the SBOL objects from memory.
+* cleanupSBOLCore frees all the SBOL objects from memory. Strings you get back from SBOL functions have too be free()d separately though.
 
 Updating the documentation
---------------------------
-
-Updating the Python wrapper
 ---------------------------
+
+To update this file, just edit README.md.
+[This description of markdown syntax](http://daringfireball.net/projects/markdown/) is helpful.
+To update the full Doxygen documentation, see [here](http://synbiodex.github.com/libSBOLc#doxygen).

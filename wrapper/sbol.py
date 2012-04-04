@@ -3,6 +3,9 @@ import sys
 from cStringIO import StringIO
 
 __all__ = (
+    'STRAND_FORWARD',
+    'STRAND_BIDIRECTIONAL',
+    'STRAND_REVERSE',
     'DNASequence',
     'SequenceAnnotation',
     'DNAComponent',
@@ -60,7 +63,10 @@ class DNASequence(object):
 
     def __del__(self):
         remove_sbol_object(self)
-        deleteDNASequence(self.ptr)
+        try:
+            deleteDNASequence(self.ptr)
+        except TypeError:
+            pass
 
     @return_stdout
     def __str__(self):
@@ -85,7 +91,10 @@ class SequenceAnnotation(object):
 
     def __del__(self):
         remove_sbol_object(self)
-        deleteSequenceAnnotation(self.ptr)
+        try:
+            deleteSequenceAnnotation(self.ptr)
+        except TypeError:
+            pass
 
     @return_stdout
     def __str__(self):
@@ -106,6 +115,7 @@ class SequenceAnnotation(object):
     def get_end(self):
         return getSequenceAnnotationEnd(self.ptr)
 
+    # doesn't appear to work
     def set_strand(self, polarity):
         setSequenceAnnotationStrand(self.ptr, polarity)
 
@@ -140,7 +150,10 @@ class DNAComponent(object):
 
     def __del__(self):
         remove_sbol_object(self)
-        deleteDNAComponent(self.ptr)
+        try:
+            deleteDNAComponent(self.ptr)
+        except TypeError:
+            pass
             
     @return_stdout
     def __str__(self):
