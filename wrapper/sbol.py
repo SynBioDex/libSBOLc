@@ -53,6 +53,8 @@ def return_stdout(fn):
         return output
     return decorated_fn
 
+# todo PointerArray class so you can do slicing, append, etc.
+
 class DNASequence(object):
     'Implements the SBOL Core DNASequence object'
     
@@ -72,14 +74,17 @@ class DNASequence(object):
     def __str__(self):
         printDNASequence(self.ptr, 0)
 
-    def get_uri(self):
+    @property
+    def uri(self):
         return getDNASequenceURI(self.ptr)
 
-    def set_nucleotides(self, nt):
-        setDNASequenceNucleotides(self.ptr, nt)
-
-    def get_nucleotides(self):
+    @property
+    def nucleotides(self):
         return getDNASequenceNucleotides(self.ptr)
+
+    @nucleotides.setter
+    def nucleotides(self, value):
+        setDNASequenceNucleotides(self.ptr, value)
 
 class SequenceAnnotation(object):
     'Implements the SBOL Core SequenceAnnotation object'
@@ -100,39 +105,50 @@ class SequenceAnnotation(object):
     def __str__(self):
         printSequenceAnnotation(self.ptr, 0)
 
-    def get_uri(self):
+    @property
+    def uri(self):
         return getSequenceAnnotationURI(self.ptr)
 
-    def set_start(self, index):
-        setSequenceAnnotationStart(self.ptr, index)
-        
-    def get_start(self):
+    @property
+    def start(self):
         return getSequenceAnnotationNucleotides(self.ptr)
 
-    def set_end(self, index):
-        setSequenceAnnotationEnd(self.ptr, index)
-
-    def get_end(self):
+    @start.setter
+    def start(self, index):
+        setSequenceAnnotationStart(self.ptr, index)
+        
+    @property
+    def end(self):
         return getSequenceAnnotationEnd(self.ptr)
 
-    # doesn't appear to work
-    def set_strand(self, polarity):
-        setSequenceAnnotationStrand(self.ptr, polarity)
+    @end.setter
+    def end(self, index):
+        setSequenceAnnotationEnd(self.ptr, index)
 
-    def get_strand(self):
+    @property
+    def strand(self):
         return getSequenceAnnotationStrand(self.ptr)
 
-    def set_subcomponent(self, com):
-        setSequenceAnnotationSubComponent(self.ptr, com)
+    # doesn't appear to work
+    @strand.setter
+    def strand(self, polarity):
+        setSequenceAnnotationStrand(self.ptr, polarity)
 
-    def get_subcomponent(self):
+    @property
+    def subcomponent(self):
         ptr = getSequenceAnnotationSubComponent(self.ptr)
         return retrieve_sbol_object(ptr)
 
+    @subcomponent.setter
+    def subcomponent(self, com):
+        setSequenceAnnotationSubComponent(self.ptr, com)
+
+    # can this be done with a decorator?
     def add_precedes(self, downstream):
         addPrecedesRelationship(self.ptr, downstream.ptr)
 
-    def get_precedes(self):
+    @property
+    def precedes(self):
         precedes = []
         num = getNumPrecedes(self.ptr)
         for n in range(num):
@@ -159,44 +175,55 @@ class DNAComponent(object):
     def __str__(self):
         printDNAComponent(self.ptr, 0)
 
-    def get_uri(self):
+    @property
+    def uri(self):
         return getDNAComponentURI(self.ptr)
 
-    def set_display_id(self, id):
-        setDNAComponentDisplayID(self.ptr, id)
-
-    def get_display_id(self):
+    @property
+    def display_id(self):
         return getDNAComponentDisplayID(self.ptr)
 
-    def set_name(self, name):
-        setDNAComponentName(self.ptr, name)
-
-    def get_name(self):
+    @property
+    def name(self):
         return getDNAComponentName(self.ptr)
 
-    def set_description(self, descr):
-        setDNAComponentDescription(self.ptr, descr)
+    @property
+    def description(self):
+        return getDNAComponentDescription(self.ptr)
 
-    def get_name(self):
-        return getDNAComponentName(self.ptr)
-
-    def set_sequence(self, seq):
-        setDNAComponentSequence(self.ptr, seq.ptr)
-
-    def get_sequence(self):
+    @property
+    def sequence(self):
         ptr = getDNAComponentSequence(self.ptr)
         return retrieve_sbol_object(ptr)
 
-    def add_annotation(self, ann):
-        addSequenceAnnotation(self.ptr, ann.ptr)
-
-    def get_annotations(self):
+    @property
+    def annotations(self):
         annotations = []
         num = getNumSequenceAnnotationsFor(self.ptr)
         for n in range(num):
             ptr = getNthSequenceAnnotationFor(self.ptr, n)
             annotations.append( retrieve_sbol_object(ptr) )
         return annotations
+
+    @display_id.setter
+    def display_id(self, id):
+        setDNAComponentDisplayID(self.ptr, id)
+
+    @name.setter
+    def name(self, name):
+        setDNAComponentName(self.ptr, name)
+
+    @description.setter
+    def description(self, descr):
+        setDNAComponentDescription(self.ptr, descr)
+
+    @sequence.setter
+    def sequence(self, seq):
+        setDNAComponentSequence(self.ptr, seq.ptr)
+
+    # can this be done with a property?
+    def add_annotation(self, ann):
+        addSequenceAnnotation(self.ptr, ann.ptr)
 
     # todo remove_annotation?
 
@@ -220,35 +247,44 @@ class Collection(object):
     def __str__(self):
         printCollection(self.ptr, 0)
 
-    def get_uri(self):
+    @property
+    def uri(self):
         return getCollectionURI(self.ptr)
 
-    def set_display_id(self, id):
-        setCollectionDisplayID(self.ptr, id)
-
-    def get_display_id(self):
+    @property
+    def display_id(self):
         return getCollectionDisplayID(self.ptr)
 
-    def set_name(self, name):
-        setCollectionName(self.ptr, name)
-
-    def get_name(self):
+    @property
+    def name(self):
         return getCollectionName(self.ptr)
 
-    def set_description(self, descr):
-        setCollectionDescription(self.ptr, descr)
-
-    def get_description(self):
+    @property
+    def description(self):
         return getCollectionDescription(self.ptr)
 
-    def add_component(self, com):
-        addDNAComponentToCollection(com.ptr, self.ptr)
-
-    def get_components(self):
+    @property
+    def components(self):
         components = []
         num = getNumDNAComponentsIn(self.ptr)
         for n in range(num):
             ptr = getNthDNAComponentIn(self.ptr, n)
             components.append( retrieve_sbol_object(ptr) )
         return components
+
+    @display_id.setter
+    def display_id(self, id):
+        setCollectionDisplayID(self.ptr, id)
+
+    @name.setter
+    def name(self, name):
+        setCollectionName(self.ptr, name)
+
+    @description.setter
+    def description(self, descr):
+        setCollectionDescription(self.ptr, descr)
+
+    # can this be done with a decorator?
+    def add_component(self, com):
+        addDNAComponentToCollection(com.ptr, self.ptr)
 
