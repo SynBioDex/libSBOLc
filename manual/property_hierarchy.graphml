@@ -19,7 +19,7 @@
       <data key="d6">
         <y:UMLClassNode>
           <y:Geometry height="51.0" width="95.0" x="411.0" y="304.0"/>
-          <y:Fill color="#CCFF99" transparent="false"/>
+          <y:Fill color="#66CCFF" transparent="false"/>
           <y:BorderStyle color="#000000" type="line" width="1.0"/>
           <y:NodeLabel alignment="center" autoSizePolicy="content" fontFamily="Dialog" fontSize="13" fontStyle="bold" hasBackgroundColor="false" hasLineColor="false" height="19.92626953125" modelName="custom" textColor="#000000" visible="true" width="84.18994140625" x="5.405029296875" y="3.0">TextProperty<y:LabelModel>
               <y:SmartNodeLabelModel distance="4.0"/>
@@ -40,7 +40,7 @@
       <data key="d6">
         <y:UMLClassNode>
           <y:Geometry height="51.0" width="107.0" x="470.0" y="385.0"/>
-          <y:Fill color="#CCFF99" transparent="false"/>
+          <y:Fill color="#66CCFF" transparent="false"/>
           <y:BorderStyle color="#000000" type="line" width="1.0"/>
           <y:NodeLabel alignment="center" autoSizePolicy="content" fontFamily="Dialog" fontSize="13" fontStyle="bold" hasBackgroundColor="false" hasLineColor="false" height="19.92626953125" modelName="custom" textColor="#000000" visible="true" width="79.84814453125" x="13.575927734375" y="3.0">URIProperty<y:LabelModel>
               <y:SmartNodeLabelModel distance="4.0"/>
@@ -61,7 +61,7 @@
       <data key="d6">
         <y:UMLClassNode>
           <y:Geometry height="66.0" width="95.0" x="536.5" y="208.0"/>
-          <y:Fill color="#CCFF99" transparent="false"/>
+          <y:Fill color="#66CCFF" transparent="false"/>
           <y:BorderStyle color="#000000" type="line" width="1.0"/>
           <y:NodeLabel alignment="center" autoSizePolicy="content" fontFamily="Dialog" fontSize="13" fontStyle="bold" hasBackgroundColor="false" hasLineColor="false" height="19.92626953125" modelName="custom" textColor="#000000" visible="true" width="57.4599609375" x="18.77001953125" y="3.0">Property<y:LabelModel>
               <y:SmartNodeLabelModel distance="4.0"/>
@@ -83,7 +83,7 @@ char* letters</y:AttributeLabel>
       <data key="d6">
         <y:UMLClassNode>
           <y:Geometry height="51.0" width="158.0" x="289.0" y="385.0"/>
-          <y:Fill color="#CCFF99" transparent="false"/>
+          <y:Fill color="#66CCFF" transparent="false"/>
           <y:BorderStyle color="#000000" type="line" width="1.0"/>
           <y:NodeLabel alignment="center" autoSizePolicy="content" fontFamily="Dialog" fontSize="13" fontStyle="bold" hasBackgroundColor="false" hasLineColor="false" height="19.92626953125" modelName="custom" textColor="#000000" visible="true" width="131.1435546875" x="13.42822265625" y="3.0">NucleotidesProperty<y:LabelModel>
               <y:SmartNodeLabelModel distance="4.0"/>
@@ -104,7 +104,7 @@ char* letters</y:AttributeLabel>
       <data key="d6">
         <y:UMLClassNode>
           <y:Geometry height="51.0" width="123.0" x="728.0" y="385.0"/>
-          <y:Fill color="#CCFF99" transparent="false"/>
+          <y:Fill color="#66CCFF" transparent="false"/>
           <y:BorderStyle color="#000000" type="line" width="1.0"/>
           <y:NodeLabel alignment="center" autoSizePolicy="content" fontFamily="Dialog" fontSize="13" fontStyle="bold" hasBackgroundColor="false" hasLineColor="false" height="19.92626953125" modelName="custom" textColor="#000000" visible="true" width="105.1435546875" x="8.92822265625" y="3.0">PolarityProperty<y:LabelModel>
               <y:SmartNodeLabelModel distance="4.0"/>
@@ -125,7 +125,7 @@ char* letters</y:AttributeLabel>
       <data key="d6">
         <y:UMLClassNode>
           <y:Geometry height="51.0" width="123.0" x="591.0" y="385.0"/>
-          <y:Fill color="#CCFF99" transparent="false"/>
+          <y:Fill color="#66CCFF" transparent="false"/>
           <y:BorderStyle color="#000000" type="line" width="1.0"/>
           <y:NodeLabel alignment="center" autoSizePolicy="content" fontFamily="Dialog" fontSize="13" fontStyle="bold" hasBackgroundColor="false" hasLineColor="false" height="19.92626953125" modelName="custom" textColor="#000000" visible="true" width="108.736328125" x="7.1318359375" y="3.0">PositionProperty<y:LabelModel>
               <y:SmartNodeLabelModel distance="4.0"/>
@@ -160,7 +160,6 @@ char* letters</y:AttributeLabel>
       </data>
     </edge>
     <edge id="e1" source="n0" target="n2">
-      <data key="d9"/>
       <data key="d10">
         <y:PolyLineEdge>
           <y:Path sx="0.0" sy="0.0" tx="0.0" ty="0.0"/>
@@ -179,7 +178,6 @@ char* letters</y:AttributeLabel>
       </data>
     </edge>
     <edge id="e2" source="n3" target="n0">
-      <data key="d9"/>
       <data key="d10">
         <y:PolyLineEdge>
           <y:Path sx="0.0" sy="0.0" tx="0.0" ty="0.0"/>
@@ -198,7 +196,6 @@ char* letters</y:AttributeLabel>
       </data>
     </edge>
     <edge id="e3" source="n4" target="n2">
-      <data key="d9"/>
       <data key="d10">
         <y:PolyLineEdge>
           <y:Path sx="0.0" sy="0.0" tx="0.0" ty="0.0"/>
@@ -217,7 +214,6 @@ char* letters</y:AttributeLabel>
       </data>
     </edge>
     <edge id="e4" source="n5" target="n2">
-      <data key="d9"/>
       <data key="d10">
         <y:PolyLineEdge>
           <y:Path sx="0.0" sy="0.0" tx="0.0" ty="0.0"/>

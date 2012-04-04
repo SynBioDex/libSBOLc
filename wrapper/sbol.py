@@ -13,12 +13,12 @@ __all__ = (
 # you get their pointer. But since the pointers are
 # read-only (and unhashable), you need a workaround
 # to go the other way, from pointer --> object.
-#
+
 ALL_SBOL_OBJECTS = []
-#
+
 def register_sbol_object(obj):
     ALL_SBOL_OBJECTS.append((obj, obj.ptr))
-#
+
 def retrieve_sbol_object(ptr):
     for (obj, candidate_ptr) in ALL_SBOL_OBJECTS:
         if candidate_ptr == ptr:
@@ -31,14 +31,13 @@ def remove_sbol_object(obj):
             ALL_SBOL_OBJECTS.remove(candidate)
             return
 
-#
 ############################################################
 
 def return_stdout(fn):
     '''
     The SBOL print functions use printf() to print directly
-    # to stdout; this is a workaround that captures that
-    # output so Python can use it in __str__ methods.
+    to stdout; this is a workaround that captures that
+    output so Python can use it in __str__ methods.
     '''
     def decorated_fn(*args, **kwargs):
         'Redirect stdout to a str and return it'
