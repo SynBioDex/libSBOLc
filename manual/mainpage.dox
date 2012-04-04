@@ -77,9 +77,10 @@
 /// folder full of html files. To change settings, edit Doxyfile.in first.
 /// 
 /// Copy the HTML to somewhere outside the main libSBOLc directory,
-/// and delete the build and release folders. Then <code>git checkout gh-pages</code>.
-/// It's a special branch with nothing but HTML files. Delete everything in there,
-/// and replace it with the newly generated ones. Then <code>git push origin gh-pages</code>.
+/// then <code>git checkout gh-pages</code>.
+/// It's a special branch with nothing but HTML files.
+/// There may also be some leftover untracked files from the master branch. Delete everything in there,
+/// and replace it with the newly generated html files. Then <code>git push origin gh-pages</code>.
 /// A minute or so later, the new documentation should be available at
 /// http://SynBioDex.github.com/libSBOLc/
 /// 
