@@ -43,6 +43,11 @@ IF( SWIG_FOUND )
         sbol_swig
     )
 
+	FILE(
+		COPY ${SBOL_WRAPPER_DIR}/sbol.py
+		DESTINATION ${SBOL_RELEASE_DIR}
+	)
+
 ELSE()
 
     MESSAGE( "SWIG not found; unable to generate Python bindings" )
