@@ -1,4 +1,4 @@
-import sbol_swig
+import libsbol
 import sys
 from cStringIO import StringIO
 import atexit

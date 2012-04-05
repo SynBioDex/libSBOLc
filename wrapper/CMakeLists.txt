@@ -32,20 +32,23 @@ IF( SWIG_FOUND )
     SET( CMAKE_SWIG_FLAGS "" )
     SET( CMAKE_SWIG_OUTDIR ${SBOL_RELEASE_DIR} )
 
-    SWIG_ADD_MODULE( sbol_swig
+    SWIG_ADD_MODULE( libsbol
         python
-        sbol_swig.i
+        libsbol.i
         ${SBOL_SOURCE_FILES}
     )
 
-    SWIG_LINK_LIBRARIES( sbol_swig
+    SWIG_LINK_LIBRARIES( libsbol
         ${PYTHON_LIBRARIES}
         sbol_swig
     )
 
 	FILE(
-		COPY ${SBOL_WRAPPER_DIR}/sbol.py
-		DESTINATION ${SBOL_RELEASE_DIR}
+		COPY
+		    ${SBOL_WRAPPER_DIR}/sbol.py
+		    ${SBOL_WRAPPER_DIR}/test_sbol.py
+		DESTINATION
+		    ${SBOL_RELEASE_DIR}
 	)
 
 ELSE()
