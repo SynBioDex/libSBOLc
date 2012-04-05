@@ -1,6 +1,7 @@
-from sbol_swig import *
+import sbol_swig
 import sys
 from cStringIO import StringIO
+import atexit
 
 __all__ = (
     'STRAND_FORWARD',
@@ -11,6 +12,13 @@ __all__ = (
     'DNAComponent',
     'Collection' )
 
+@atexit.register
+def check_cleanup():
+    print 'sbol objects orphaned in python:', len(ALL_SBOL_OBJECTS)
+    print 'sbol objects orphaned in c:', sbol_swig.getNumSBOLObjects()
+
+class WrapperError(Exception): 'Problem with the SBOL wrapper'
+
 ############################################################
 # The sbol objects each have a ptr attribute that lets
 # you get their pointer. But since the pointers are
@@ -20,19 +28,17 @@ __all__ = (
 ALL_SBOL_OBJECTS = []
 
 def register_sbol_object(obj):
-    ALL_SBOL_OBJECTS.append((obj, obj.ptr))
+    ALL_SBOL_OBJECTS.append(obj)
 
 def retrieve_sbol_object(ptr):
-    for (obj, candidate_ptr) in ALL_SBOL_OBJECTS:
-        if candidate_ptr == ptr:
+    for obj in ALL_SBOL_OBJECTS:
+        if obj.ptr == ptr:
             return obj
     return None
 
 def remove_sbol_object(obj):
-    for candidate in ALL_SBOL_OBJECTS:
-        if candidate[0] == obj:
-            ALL_SBOL_OBJECTS.remove(candidate)
-            return
+    if ALL_SBOL_OBJECTS:
+        ALL_SBOL_OBJECTS.remove(obj)
 
 ############################################################
 
@@ -60,99 +66,99 @@ class DNASequence(object):
     
     def __init__(self, uri):
         object.__init__(self)
-        self.ptr = createDNASequence(uri)
+        self.ptr = sbol_swig.createDNASequence(uri)
         register_sbol_object(self)
 
     def __del__(self):
-        remove_sbol_object(self)
+        #remove_sbol_object(self)
         try:
-            deleteDNASequence(self.ptr)
+            sbol_swig.deleteDNASequence(self.ptr)
         except TypeError:
             pass
 
     @return_stdout
     def __str__(self):
-        printDNASequence(self.ptr, 0)
+        sbol_swig.printDNASequence(self.ptr, 0)
 
     @property
     def uri(self):
-        return getDNASequenceURI(self.ptr)
+        return sbol_swig.getDNASequenceURI(self.ptr)
 
     @property
     def nucleotides(self):
-        return getDNASequenceNucleotides(self.ptr)
+        return sbol_swig.getDNASequenceNucleotides(self.ptr)
 
     @nucleotides.setter
     def nucleotides(self, value):
-        setDNASequenceNucleotides(self.ptr, value)
+        sbol_swig.setDNASequenceNucleotides(self.ptr, value)
 
 class SequenceAnnotation(object):
     'Implements the SBOL Core SequenceAnnotation object'
     
     def __init__(self, uri):
         object.__init__(self)
-        self.ptr = createSequenceAnnotation(uri)
+        self.ptr = sbol_swig.createSequenceAnnotation(uri)
         register_sbol_object(self)
 
     def __del__(self):
-        remove_sbol_object(self)
+        #remove_sbol_object(self)
         try:
-            deleteSequenceAnnotation(self.ptr)
+            sbol_swig.deleteSequenceAnnotation(self.ptr)
         except TypeError:
             pass
 
     @return_stdout
     def __str__(self):
-        printSequenceAnnotation(self.ptr, 0)
+        sbol_swig.printSequenceAnnotation(self.ptr, 0)
 
     @property
     def uri(self):
-        return getSequenceAnnotationURI(self.ptr)
+        return sbol_swig.getSequenceAnnotationURI(self.ptr)
 
     @property
     def start(self):
-        return getSequenceAnnotationNucleotides(self.ptr)
+        return sbol_swig.getSequenceAnnotationNucleotides(self.ptr)
 
     @start.setter
     def start(self, index):
-        setSequenceAnnotationStart(self.ptr, index)
+        sbol_swig.setSequenceAnnotationStart(self.ptr, index)
         
     @property
     def end(self):
-        return getSequenceAnnotationEnd(self.ptr)
+        return sbol_swig.getSequenceAnnotationEnd(self.ptr)
 
     @end.setter
     def end(self, index):
-        setSequenceAnnotationEnd(self.ptr, index)
+        sbol_swig.setSequenceAnnotationEnd(self.ptr, index)
 
     @property
     def strand(self):
-        return getSequenceAnnotationStrand(self.ptr)
+        return sbol_swig.getSequenceAnnotationStrand(self.ptr)
 
     # doesn't appear to work
     @strand.setter
     def strand(self, polarity):
-        setSequenceAnnotationStrand(self.ptr, polarity)
+        sbol_swig.setSequenceAnnotationStrand(self.ptr, polarity)
 
     @property
     def subcomponent(self):
-        ptr = getSequenceAnnotationSubComponent(self.ptr)
+        ptr = sbol_swig.getSequenceAnnotationSubComponent(self.ptr)
         return retrieve_sbol_object(ptr)
 
     @subcomponent.setter
     def subcomponent(self, com):
-        setSequenceAnnotationSubComponent(self.ptr, com)
+        sbol_swig.setSequenceAnnotationSubComponent(self.ptr, com)
 
     # can this be done with a decorator?
     def add_precedes(self, downstream):
-        addPrecedesRelationship(self.ptr, downstream.ptr)
+        sbol_swig.addPrecedesRelationship(self.ptr, downstream.ptr)
 
     @property
     def precedes(self):
         precedes = []
-        num = getNumPrecedes(self.ptr)
+        num = sbol_swig.getNumPrecedes(self.ptr)
         for n in range(num):
-            ptr = getNthPrecedes(self.ptr, n)
+            ptr = sbol_swig.getNthPrecedes(self.ptr, n)
             precedes.append( retrieve_sbol_object(ptr) )
         return precedes
 
@@ -161,69 +167,69 @@ class DNAComponent(object):
     
     def __init__(self, uri):
         object.__init__(self)
-        self.ptr = createDNAComponent(uri)
+        self.ptr = sbol_swig.createDNAComponent(uri)
         register_sbol_object(self)
 
     def __del__(self):
-        remove_sbol_object(self)
+        #remove_sbol_object(self)
         try:
-            deleteDNAComponent(self.ptr)
+            sbol_swig.deleteDNAComponent(self.ptr)
         except TypeError:
             pass
             
     @return_stdout
     def __str__(self):
-        printDNAComponent(self.ptr, 0)
+        sbol_swig.printDNAComponent(self.ptr, 0)
 
     @property
     def uri(self):
-        return getDNAComponentURI(self.ptr)
+        return sbol_swig.getDNAComponentURI(self.ptr)
 
     @property
     def display_id(self):
-        return getDNAComponentDisplayID(self.ptr)
+        return sbol_swig.getDNAComponentDisplayID(self.ptr)
 
     @property
     def name(self):
-        return getDNAComponentName(self.ptr)
+        return sbol_swig.getDNAComponentName(self.ptr)
 
     @property
     def description(self):
-        return getDNAComponentDescription(self.ptr)
+        return sbol_swig.getDNAComponentDescription(self.ptr)
 
     @property
     def sequence(self):
-        ptr = getDNAComponentSequence(self.ptr)
+        ptr = sbol_swig.getDNAComponentSequence(self.ptr)
         return retrieve_sbol_object(ptr)
 
     @property
     def annotations(self):
         annotations = []
-        num = getNumSequenceAnnotationsFor(self.ptr)
+        num = sbol_swig.getNumSequenceAnnotationsFor(self.ptr)
         for n in range(num):
-            ptr = getNthSequenceAnnotationFor(self.ptr, n)
+            ptr = sbol_swig.getNthSequenceAnnotationFor(self.ptr, n)
             annotations.append( retrieve_sbol_object(ptr) )
         return annotations
 
     @display_id.setter
     def display_id(self, id):
-        setDNAComponentDisplayID(self.ptr, id)
+        sbol_swig.setDNAComponentDisplayID(self.ptr, id)
 
     @name.setter
     def name(self, name):
-        setDNAComponentName(self.ptr, name)
+        sbol_swig.setDNAComponentName(self.ptr, name)
 
     @description.setter
     def description(self, descr):
-        setDNAComponentDescription(self.ptr, descr)
+        sbol_swig.setDNAComponentDescription(self.ptr, descr)
 
     @sequence.setter
     def sequence(self, seq):
-        setDNAComponentSequence(self.ptr, seq.ptr)
+        sbol_swig.setDNAComponentSequence(self.ptr, seq.ptr)
 
     # can this be done with a property?
     def add_annotation(self, ann):
-        addSequenceAnnotation(self.ptr, ann.ptr)
+        sbol_swig.addSequenceAnnotation(self.ptr, ann.ptr)
 
     # todo remove_annotation?
 
@@ -232,59 +238,59 @@ class Collection(object):
 
     def __init__(self, uri):
         object.__init__(self)
-        self.ptr = createCollection(uri)
+        self.ptr = sbol_swig.createCollection(uri)
         register_sbol_object(self)
 
     # why does this throw an exception during shutdown?
     def __del__(self):
-        remove_sbol_object(self)
+        #remove_sbol_object(self)
         try:
-            deleteCollection(self.ptr)
+            sbol_swig.deleteCollection(self.ptr)
         except TypeError: # TypeError("'NoneType' object is not callable",)
             pass
 
     @return_stdout
     def __str__(self):
-        printCollection(self.ptr, 0)
+        sbol_swig.printCollection(self.ptr, 0)
 
     @property
     def uri(self):
-        return getCollectionURI(self.ptr)
+        return sbol_swig.getCollectionURI(self.ptr)
 
     @property
     def display_id(self):
-        return getCollectionDisplayID(self.ptr)
+        return sbol_swig.getCollectionDisplayID(self.ptr)
 
     @property
     def name(self):
-        return getCollectionName(self.ptr)
+        return sbol_swig.getCollectionName(self.ptr)
 
     @property
     def description(self):
-        return getCollectionDescription(self.ptr)
+        return sbol_swig.getCollectionDescription(self.ptr)
 
     @property
     def components(self):
         components = []
-        num = getNumDNAComponentsIn(self.ptr)
+        num = sbol_swig.getNumDNAComponentsIn(self.ptr)
         for n in range(num):
-            ptr = getNthDNAComponentIn(self.ptr, n)
+            ptr = sbol_swig.getNthDNAComponentIn(self.ptr, n)
             components.append( retrieve_sbol_object(ptr) )
         return components
 
     @display_id.setter
     def display_id(self, id):
-        setCollectionDisplayID(self.ptr, id)
+        sbol_swig.setCollectionDisplayID(self.ptr, id)
 
     @name.setter
     def name(self, name):
-        setCollectionName(self.ptr, name)
+        sbol_swig.setCollectionName(self.ptr, name)
 
     @description.setter
     def description(self, descr):
-        setCollectionDescription(self.ptr, descr)
+        sbol_swig.setCollectionDescription(self.ptr, descr)
 
     # can this be done with a decorator?
     def add_component(self, com):
-        addDNAComponentToCollection(com.ptr, self.ptr)
+        sbol_swig.addDNAComponentToCollection(com.ptr, self.ptr)
 
