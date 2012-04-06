@@ -233,7 +233,7 @@ void deletePositionProperty(PositionProperty* pro) {
 }
 
 void setPositionProperty(PositionProperty* pro, int pos) {
-	if (pro && pos >= 0)
+	if (pro && pos >= -1)
 		setNumber(pro->position, pos);
 }
 

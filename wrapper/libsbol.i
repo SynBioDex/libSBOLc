@@ -23,6 +23,12 @@
     #include "sbol.h"
 %}
 
+enum StrandPolarity {
+	STRAND_FORWARD,
+	STRAND_BIDIRECTIONAL,
+	STRAND_REVERSE
+};
+
 // tell SWIG how to free strings
 %typemap(newfree) char* "free($1);";
 

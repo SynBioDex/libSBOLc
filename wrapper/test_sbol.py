@@ -7,6 +7,7 @@ URIS_USED = set()
 RANDOM_CHARS = string.ascii_letters \
              + string.whitespace \
              + string.punctuation
+NUM_FAST_TESTS = 10000
 
 def random_string(limit=30):
     length = random.randint(0, limit)
@@ -21,6 +22,15 @@ def random_uri(limit=30):
             URIS_USED.add(uri)
             return uri
 
+def random_valid_position(limit=1000):
+    return random.randint(0, limit)
+
+def random_invalid_position(limit=1000):
+    position = 0
+    while position == 0:
+        position = -1 * random_valid_position(limit)
+    return position
+
 class TestSBOLObject(unittest.TestCase):
     def assertReadOnly(self, obj, attr):
         try:
@@ -30,8 +40,9 @@ class TestSBOLObject(unittest.TestCase):
         except AttributeError:
             pass
 
-    def assertReadWrite(self, obj, attr):
-        content = random_string()
+    def assertReadWrite(self, obj, attr, content=None):
+        if not content:
+            content = random_string()
         self.assertEqual(obj.__getattribute__(attr), None)
         obj.__setattr__(attr, content)
         self.assertEqual(obj.__getattribute__(attr), content)
@@ -98,14 +109,48 @@ class TestDNASequence(TestSBOLObject):
         self.assertReadWrite(self.testees[0], 'nucleotides')
 
 class TestSequenceAnnotation(TestSBOLObject):
+    def assertPositionWorking(self, obj, attr):
+        self.assertEqual(obj.__getattribute__(attr), None)
+        # check that setting valid positions works
+        for n in range(NUM_FAST_TESTS):
+            position = random_valid_position()
+            obj.__setattr__(attr, position)
+            self.assertEqual(obj.__getattribute__(attr), position)
+        # check that setting invalid positions raises error
+        for n in range(NUM_FAST_TESTS):
+            obj.__setattr__(attr, None)
+            position = random_invalid_position()
+            self.assertRaises(sbol.PositionError, obj.__setattr__, attr, position)
+        # check that resetting to None works
+        obj.__setattr__(attr, 1)
+        self.assertEqual(obj.__getattribute__(attr), 1)
+        obj.__setattr__(attr, None)
+        self.assertEqual(obj.__getattribute__(attr), None)
+
     def createTestees(self):
         uri = random_uri()
         self.uris.append(uri)
         self.testees.append( sbol.SequenceAnnotation(uri) )
 
-    def testStart(self):        pass
-    def testEnd(self):          pass
-    def testStrand(self):       pass
+    def testPositions(self):
+        self.assertPositionWorking(self.testees[0], 'start')
+        self.assertPositionWorking(self.testees[0], 'end')
+
+    def testStrand(self):
+        # check that strand is initially forward
+        self.assertEquals(self.testees[0].strand, '+')
+        # check that it can only be set to valid symbols
+        valid_polarities = ('+', '*', '-')
+        for symbol in random_string():
+            if symbol in valid_polarities:
+                self.testees[0].strand = symbol
+                self.assertEquals(self.testees[0].strand, symbol)
+            else:
+                self.assertRaises(sbol.StrandError,
+                                  self.testees[0].__setattr__,
+                                  'strand',
+                                  symbol)
+
     def testSubcomponent(self): pass
     def testPrecedes(self):     pass
 

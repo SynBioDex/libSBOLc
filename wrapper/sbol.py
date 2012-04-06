@@ -3,12 +3,18 @@ import sys
 from cStringIO import StringIO
 import weakref
 
-class SBOLError(Exception): 'Problem with SBOL'
-class URIError(SBOLError):  'Invalid URI'
+class SBOLError(Exception):     'Problem with SBOL'
+class InternalError(SBOLError): 'Encountered a bug'
+class URIError(SBOLError):      'Invalid URI'
+class PositionError(SBOLError): 'Invalid position'
+class StrandError(SBOLError):   'Invalid strand polarity'
 
 __all__ = (
     'SBOLError'
+    'InternalError',
     'URIError',
+    'PositionError',
+    'StrandError',
     'DNASequence',
     'SequenceAnnotation',
     'DNAComponent',
@@ -104,7 +110,7 @@ class SBOLObjectArray(object):
         return obj
 
     def __getslice__(self, *indices):
-        'implements array[start:end:step]'
+        "'implements 'array[start:end:step]'"
         return [self._getsingle_(n) for n in range(*indices)]
 
     def __iter__(self):
@@ -217,15 +223,31 @@ class SequenceAnnotation(object):
 
     @property
     def start(self):
-        return libsbol.getSequenceAnnotationNucleotides(self.ptr)
+        start = libsbol.getSequenceAnnotationStart(self.ptr)
+        if start == -1:
+            return None
+        else:
+            return start
 
     @property
     def end(self):
-        return libsbol.getSequenceAnnotationEnd(self.ptr)
+        end = libsbol.getSequenceAnnotationEnd(self.ptr)
+        if end == -1:
+            return None
+        else:
+            return end
 
     @property
     def strand(self):
-        return libsbol.getSequenceAnnotationStrand(self.ptr)
+        polarity = libsbol.getSequenceAnnotationStrand(self.ptr)
+        if polarity == libsbol.STRAND_FORWARD:
+            return '+'
+        elif polarity == libsbol.STRAND_BIDIRECTIONAL:
+            return '*'
+        elif polarity == libsbol.STRAND_REVERSE:
+            return '-'
+        else:
+            raise InternalError('Got invalid strand polarity %i' % polarity )
 
     @property
     def subcomponent(self):
@@ -234,16 +256,30 @@ class SequenceAnnotation(object):
 
     @start.setter
     def start(self, index):
+        if index == None:
+            index = -1
+        elif index < 0:
+            raise PositionError('Negative position %i' % index)
         libsbol.setSequenceAnnotationStart(self.ptr, index)
 
     @end.setter
     def end(self, index):
+        if index == None:
+            index = -1
+        elif index < 0:
+            raise PositionError('Negative position %i' % index)
         libsbol.setSequenceAnnotationEnd(self.ptr, index)
 
-    # doesn't appear to work
-    # todo convert to use chars?
     @strand.setter
     def strand(self, polarity):
+        if polarity == '+':
+            polarity = libsbol.STRAND_FORWARD
+        elif polarity == '*':
+            polarity = libsbol.STRAND_BIDIRECTIONAL
+        elif polarity == '-':
+            polarity = libsbol.STRAND_REVERSE
+        else:
+            raise StrandError('Invalid polarity %s' % polarity)
         libsbol.setSequenceAnnotationStrand(self.ptr, polarity)
 
     @subcomponent.setter
