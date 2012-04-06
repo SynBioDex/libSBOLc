@@ -30,8 +30,7 @@ void setNumber(Property *pro, int num) {
 
 void setLetters(Property *pro, char *str) {
 	if (pro) {
-		if (str)
-		    pro->letters = realloc(pro->letters, sizeof(char) * (strlen(str)+1));
+		pro->letters = realloc(pro->letters, sizeof(char) * (strlen(str)+1));
 		pro->letters = str;
 	}
 }
