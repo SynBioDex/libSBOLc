@@ -65,7 +65,7 @@ class SBOLObjectArray(object):
     Wrapper around a libSBOLc PointerArray.
     It behaves like a standard Python list,
     but only for those operations a PointerArray
-    supports--so no remove(), pop() etc.
+    supports.
     '''
 
     def __init__(self, ptr, add, num, nth):
@@ -79,9 +79,11 @@ class SBOLObjectArray(object):
         self.get_nth_fn = nth
 
     def __len__(self):
+        "implements 'len(array)'"
         return self.get_num_fn(self.ptr)
 
     def __getitem__(self, key):
+        "handles both 'array[index]' and 'array[start:end:step]'"
         if isinstance(key, slice):
             indices = key.indices( len(self) )
             return self.__getslice__(indices)
@@ -91,6 +93,7 @@ class SBOLObjectArray(object):
             return self._getsingle_(key)
 
     def _getsingle_(self, index):
+        "implements 'array[index]'"
         num = self.get_num_fn(self.ptr)
         if index >= num:
             raise IndexError
@@ -99,9 +102,11 @@ class SBOLObjectArray(object):
         return obj
 
     def __getslice__(self, *indices):
+        'implements array[start:end:step]'
         return [self._getsingle_(n) for n in range(*indices)]
 
     def __iter__(self):
+        "implements 'for obj in array:'"
         num = self.get_num_fn(self.ptr)
         for n in range(num):
             ptr = self.get_nth_fn(self.ptr, n)
@@ -109,25 +114,30 @@ class SBOLObjectArray(object):
             yield obj
 
     def __contains__(self, obj):
+        "implements 'obj in array'"
         for candidate_obj in self:
             if candidate_obj == obj:
                 return True
         return False
 
     def __iadd__(self, obj):
-        # todo check for duplicates?
-        # todo check that obj.ptr exists?
+        "implements 'array += obj'"
+        if obj in self:
+            raise SBOLError('Duplicate obj %s' % obj)
         self.add_fn(self.ptr, obj.ptr)
         return self
 
     def append(self, obj):
+        "implements 'array.append(obj)'"
         self.__iadd__(obj)
 
     def __extend__(self, obj_list):
+        "implements 'array += obj_list'"
         for obj in obj_list:
             self += obj
 
     def __str__(self):
+        "implements 'print array'"
         if len(self) == 0:
             return '[]'
         output = []
@@ -140,6 +150,7 @@ class SBOLObjectArray(object):
         return ''.join(output)
 
     def __repr__(self):
+        "implements 'array' (prints it in the interpreter)"
         return self.__str__()
 
 class DNASequence(object):
@@ -228,6 +239,7 @@ class SequenceAnnotation(object):
         libsbol.setSequenceAnnotationEnd(self.ptr, index)
 
     # doesn't appear to work
+    # todo convert to use chars?
     @strand.setter
     def strand(self, polarity):
         libsbol.setSequenceAnnotationStrand(self.ptr, polarity)
@@ -253,7 +265,6 @@ class DNAComponent(object):
     def __del__(self):
         if self.ptr:
             libsbol.deleteDNAComponent(self.ptr)
-            
     def __str__(self):
         return capture_stdout(libsbol.printDNAComponent, self.ptr, 0)
 
@@ -282,8 +293,8 @@ class DNAComponent(object):
         return ALL_SBOL_OBJECTS.find(ptr)
 
     @display_id.setter
-    def display_id(self, id):
-        libsbol.setDNAComponentDisplayID(self.ptr, id)
+    def display_id(self, displayid):
+        libsbol.setDNAComponentDisplayID(self.ptr, displayid)
 
     @name.setter
     def name(self, name):
@@ -338,8 +349,8 @@ class Collection(object):
         return libsbol.getCollectionDescription(self.ptr)
 
     @display_id.setter
-    def display_id(self, id):
-        libsbol.setCollectionDisplayID(self.ptr, id)
+    def display_id(self, displayid):
+        libsbol.setCollectionDisplayID(self.ptr, displayid)
 
     @name.setter
     def name(self, name):
