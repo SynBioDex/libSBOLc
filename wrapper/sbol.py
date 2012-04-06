@@ -22,13 +22,12 @@ class SBOLObjectRegistry(object):
 
     def add(self, obj):
         '''
-        Create and store a weak reference to obj.
-        It works like a regular referemce, except
-        it doesn't prevent obj from being garbage
-        collected. That's important because otherwise
-        obj.__del__ would never be called.
-        Plus, when obj is garbage collected the 
-        callback will remove the ref.
+        Create and store a weak reference to obj. It works
+        like a regular reference, except it doesn't prevent
+        obj from being garbage collected. That's important
+        because otherwise obj.__del__ would never be called.
+        Plus, when obj is garbage collected the callback
+        will remove the ref.
         '''
         callback = self.sbol_objects.remove
         ref = weakref.ref(obj, callback)
@@ -43,23 +42,19 @@ class SBOLObjectRegistry(object):
 
 ALL_SBOL_OBJECTS = SBOLObjectRegistry()
 
-# todo attach to print*, not __str__
-def return_stdout(fn):
+def capture_stdout(fn, *args, **kwargs):
     '''
     The SBOL print functions use printf() to print directly
-    to stdout; this is a workaround that captures that
-    output and returns it for use in Python's __str__ methods.
+    to stdout; this captures that output and returns it for
+    use in Python's __str__ methods.
     '''
-    def decorated_fn(*args, **kwargs):
-        'Redirect stdout to a str and return it'
-        backup = sys.stdout
-        sys.stdout = StringIO()
-        fn(*args, **kwargs)
-        output = sys.stdout.getvalue()
-        sys.stdout.close()
-        sys.stdout = backup
-        return output
-    return decorated_fn
+    backup = sys.stdout
+    sys.stdout = StringIO()
+    fn(*args, **kwargs)
+    output = sys.stdout.getvalue()
+    sys.stdout.close()
+    sys.stdout = backup
+    return output
 
 # todo PointerArray class so you can do slicing, append, etc.
 
@@ -75,9 +70,8 @@ class DNASequence(object):
         print '%s.__del__' % self.uri
         libsbol.deleteDNASequence(self.ptr)
 
-    @return_stdout
     def __str__(self):
-        libsbol.printDNASequence(self.ptr, 0)
+        return capture_stdout(libsbol.printDNASequence, self.ptr, 0)
 
     @property
     def uri(self):
@@ -103,9 +97,8 @@ class SequenceAnnotation(object):
         print '%s.__del__' % self.uri
         libsbol.deleteSequenceAnnotation(self.ptr)
 
-    @return_stdout
     def __str__(self):
-        libsbol.printSequenceAnnotation(self.ptr, 0)
+        return capture_stdout(libsbol.printSequenceAnnotation, self.ptr, 0)
 
     @property
     def uri(self):
@@ -139,7 +132,7 @@ class SequenceAnnotation(object):
     @property
     def subcomponent(self):
         ptr = libsbol.getSequenceAnnotationSubComponent(self.ptr)
-        return retrieve_sbol_object(ptr)
+        return ALL_SBOL_OBJECTS.find(ptr)
 
     @subcomponent.setter
     def subcomponent(self, com):
@@ -155,7 +148,7 @@ class SequenceAnnotation(object):
         num = libsbol.getNumPrecedes(self.ptr)
         for n in range(num):
             ptr = libsbol.getNthPrecedes(self.ptr, n)
-            precedes.append( retrieve_sbol_object(ptr) )
+            precedes.append( ALL_SBOL_OBJECTS.find(ptr) )
         return precedes
 
 class DNAComponent(object):
@@ -170,9 +163,8 @@ class DNAComponent(object):
         print '%s.__del__' % self.uri
         libsbol.deleteDNAComponent(self.ptr)
             
-    @return_stdout
     def __str__(self):
-        libsbol.printDNAComponent(self.ptr, 0)
+        return capture_stdout(libsbol.printDNAComponent, self.ptr, 0)
 
     @property
     def uri(self):
@@ -193,7 +185,7 @@ class DNAComponent(object):
     @property
     def sequence(self):
         ptr = libsbol.getDNAComponentSequence(self.ptr)
-        return retrieve_sbol_object(ptr)
+        return ALL_SBOL_OBJECTS.find(ptr)
 
     @property
     def annotations(self):
@@ -201,7 +193,7 @@ class DNAComponent(object):
         num = libsbol.getNumSequenceAnnotationsFor(self.ptr)
         for n in range(num):
             ptr = libsbol.getNthSequenceAnnotationFor(self.ptr, n)
-            annotations.append( retrieve_sbol_object(ptr) )
+            annotations.append( ALL_SBOL_OBJECTS.find(ptr) )
         return annotations
 
     @display_id.setter
@@ -238,9 +230,8 @@ class Collection(object):
         print '%s.__del__' % self.uri
         libsbol.deleteCollection(self.ptr)
 
-    @return_stdout
     def __str__(self):
-        libsbol.printCollection(self.ptr, 0)
+        return captiure_stdout(libsbol.printCollection, self.ptr, 0)
 
     @property
     def uri(self):
@@ -264,7 +255,7 @@ class Collection(object):
         num = libsbol.getNumDNAComponentsIn(self.ptr)
         for n in range(num):
             ptr = libsbol.getNthDNAComponentIn(self.ptr, n)
-            components.append( retrieve_sbol_object(ptr) )
+            components.append( ALL_SBOL_OBJECTS.find(ptr) )
         return components
 
     @display_id.setter
