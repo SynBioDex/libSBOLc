@@ -3,6 +3,9 @@ import sys
 from cStringIO import StringIO
 import weakref
 
+class SBOLError(Exception): 'Problem with SBOL'
+class URIError(SBOLError):  'Invalid URI'
+
 __all__ = (
     'DNASequence',
     'SequenceAnnotation',
@@ -58,7 +61,12 @@ def capture_stdout(fn, *args, **kwargs):
     return output
 
 class SBOLObjectArray(object):
-    'Wrapper around a libSBOLc PointerArray'
+    '''
+    Wrapper around a libSBOLc PointerArray.
+    It behaves like a standard Python list,
+    but only for those operations a PointerArray
+    supports--so no remove(), pop() etc.
+    '''
 
     def __init__(self, ptr, add, num, nth):
         '''
@@ -80,9 +88,9 @@ class SBOLObjectArray(object):
         else: # assume int-like object
             if key < 0: # indexed from end
                 key += len(self)
-            return self.__getsingle__(key)
+            return self._getsingle_(key)
 
-    def __getsingle__(self, index):
+    def _getsingle_(self, index):
         num = self.get_num_fn(self.ptr)
         if index >= num:
             raise IndexError
@@ -91,7 +99,7 @@ class SBOLObjectArray(object):
         return obj
 
     def __getslice__(self, *indices):
-        return [self.__getsingle__(n) for n in range(*indices)]
+        return [self._getsingle_(n) for n in range(*indices)]
 
     def __iter__(self):
         num = self.get_num_fn(self.ptr)
@@ -131,19 +139,28 @@ class SBOLObjectArray(object):
         output.append(']')
         return ''.join(output)
 
+    def __repr__(self):
+        return self.__str__()
+
 class DNASequence(object):
     'Wrapper around a libSBOLc DNASequence'
     
     def __init__(self, uri):
         object.__init__(self)
         self.ptr = libsbol.createDNASequence(uri)
+        if not self.ptr:
+            raise URIError("Duplicate URI '%s'" % uri)
         ALL_SBOL_OBJECTS.add(self)
 
     def __del__(self):
-        libsbol.deleteDNASequence(self.ptr)
+        if self.ptr:
+            libsbol.deleteDNASequence(self.ptr)
 
     def __str__(self):
         return capture_stdout(libsbol.printDNASequence, self.ptr, 0)
+
+    def __repr__(self):
+        return "<%s uri='%s'>" % (self.__class__.__name__, self.uri)
 
     @property
     def uri(self):
@@ -158,18 +175,28 @@ class DNASequence(object):
         libsbol.setDNASequenceNucleotides(self.ptr, value)
 
 class SequenceAnnotation(object):
-    'Implements the SBOL Core SequenceAnnotation object'
+    'Wrapper around a libSBOLc SequenceAnnotation'
     
     def __init__(self, uri):
         object.__init__(self)
         self.ptr = libsbol.createSequenceAnnotation(uri)
+        if not self.ptr:
+            raise URIError("Duplicate URI '%s'" % uri)
         ALL_SBOL_OBJECTS.add(self)
+        fns = (libsbol.addPrecedesRelationship,
+               libsbol.getNumPrecedes,
+               libsbol.getNthPrecedes)
+        self.precedes = SBOLObjectArray(self.ptr, *fns)
 
     def __del__(self):
-        libsbol.deleteSequenceAnnotation(self.ptr)
+        if self.ptr:
+            libsbol.deleteSequenceAnnotation(self.ptr)
 
     def __str__(self):
         return capture_stdout(libsbol.printSequenceAnnotation, self.ptr, 0)
+
+    def __repr__(self):
+        return "<%s uri='%s'>" % (self.__class__.__name__, self.uri)
 
     @property
     def uri(self):
@@ -179,62 +206,59 @@ class SequenceAnnotation(object):
     def start(self):
         return libsbol.getSequenceAnnotationNucleotides(self.ptr)
 
-    @start.setter
-    def start(self, index):
-        libsbol.setSequenceAnnotationStart(self.ptr, index)
-        
     @property
     def end(self):
         return libsbol.getSequenceAnnotationEnd(self.ptr)
 
-    @end.setter
-    def end(self, index):
-        libsbol.setSequenceAnnotationEnd(self.ptr, index)
-
     @property
     def strand(self):
         return libsbol.getSequenceAnnotationStrand(self.ptr)
-
-    # doesn't appear to work
-    @strand.setter
-    def strand(self, polarity):
-        libsbol.setSequenceAnnotationStrand(self.ptr, polarity)
 
     @property
     def subcomponent(self):
         ptr = libsbol.getSequenceAnnotationSubComponent(self.ptr)
         return ALL_SBOL_OBJECTS.find(ptr)
 
+    @start.setter
+    def start(self, index):
+        libsbol.setSequenceAnnotationStart(self.ptr, index)
+
+    @end.setter
+    def end(self, index):
+        libsbol.setSequenceAnnotationEnd(self.ptr, index)
+
+    # doesn't appear to work
+    @strand.setter
+    def strand(self, polarity):
+        libsbol.setSequenceAnnotationStrand(self.ptr, polarity)
+
     @subcomponent.setter
     def subcomponent(self, com):
         libsbol.setSequenceAnnotationSubComponent(self.ptr, com)
 
-    # can this be done with a decorator?
-    def add_precedes(self, downstream):
-        libsbol.addPrecedesRelationship(self.ptr, downstream.ptr)
-
-    @property
-    def precedes(self):
-        precedes = []
-        num = libsbol.getNumPrecedes(self.ptr)
-        for n in range(num):
-            ptr = libsbol.getNthPrecedes(self.ptr, n)
-            precedes.append( ALL_SBOL_OBJECTS.find(ptr) )
-        return precedes
-
 class DNAComponent(object):
-    'Implements the SBOL Core DNAComponent object'
+    'Wrapper around a libSBOLc DNAComponent'
     
     def __init__(self, uri):
         object.__init__(self)
         self.ptr = libsbol.createDNAComponent(uri)
+        if not self.ptr:
+            raise URIError("Duplicate URI '%s'" % uri)
         ALL_SBOL_OBJECTS.add(self)
+        fns = (libsbol.addSequenceAnnotation,
+               libsbol.getNumSequenceAnnotationsFor,
+               libsbol.getNthSequenceAnnotationFor)
+        self.annotations = SBOLObjectArray(self.ptr, *fns)
 
     def __del__(self):
-        libsbol.deleteDNAComponent(self.ptr)
+        if self.ptr:
+            libsbol.deleteDNAComponent(self.ptr)
             
     def __str__(self):
         return capture_stdout(libsbol.printDNAComponent, self.ptr, 0)
+
+    def __repr__(self):
+        return "<%s uri='%s'>" % (self.__class__.__name__, self.uri)
 
     @property
     def uri(self):
@@ -257,15 +281,6 @@ class DNAComponent(object):
         ptr = libsbol.getDNAComponentSequence(self.ptr)
         return ALL_SBOL_OBJECTS.find(ptr)
 
-    @property
-    def annotations(self):
-        annotations = []
-        num = libsbol.getNumSequenceAnnotationsFor(self.ptr)
-        for n in range(num):
-            ptr = libsbol.getNthSequenceAnnotationFor(self.ptr, n)
-            annotations.append( ALL_SBOL_OBJECTS.find(ptr) )
-        return annotations
-
     @display_id.setter
     def display_id(self, id):
         libsbol.setDNAComponentDisplayID(self.ptr, id)
@@ -282,25 +297,29 @@ class DNAComponent(object):
     def sequence(self, seq):
         libsbol.setDNAComponentSequence(self.ptr, seq.ptr)
 
-    # can this be done with a property?
-    def add_annotation(self, ann):
-        libsbol.addSequenceAnnotation(self.ptr, ann.ptr)
-
-    # todo remove_annotation?
-
 class Collection(object):
-    'Implements the SBOL Core Collection object'
+    'Wrapper around a libSBOLc Collection'
 
     def __init__(self, uri):
         object.__init__(self)
         self.ptr = libsbol.createCollection(uri)
+        if not self.ptr:
+            raise URIError("Duplicate URI '%s'" % uri)
         ALL_SBOL_OBJECTS.add(self)
+        fns = (libsbol.addDNAComponentToCollection,
+               libsbol.getNumDNAComponentsIn,
+               libsbol.getNthDNAComponentIn)
+        self.components = SBOLObjectArray(self.ptr, *fns)
 
     def __del__(self):
-        libsbol.deleteCollection(self.ptr)
+        if self.ptr:
+            libsbol.deleteCollection(self.ptr)
 
     def __str__(self):
-        return captiure_stdout(libsbol.printCollection, self.ptr, 0)
+        return capture_stdout(libsbol.printCollection, self.ptr, 0)
+
+    def __repr__(self):
+        return "<%s uri='%s'>" % (self.__class__.__name__, self.uri)
 
     @property
     def uri(self):
@@ -318,15 +337,6 @@ class Collection(object):
     def description(self):
         return libsbol.getCollectionDescription(self.ptr)
 
-    @property
-    def components(self):
-        components = []
-        num = libsbol.getNumDNAComponentsIn(self.ptr)
-        for n in range(num):
-            ptr = libsbol.getNthDNAComponentIn(self.ptr, n)
-            components.append( ALL_SBOL_OBJECTS.find(ptr) )
-        return components
-
     @display_id.setter
     def display_id(self, id):
         libsbol.setCollectionDisplayID(self.ptr, id)
@@ -338,8 +348,4 @@ class Collection(object):
     @description.setter
     def description(self, descr):
         libsbol.setCollectionDescription(self.ptr, descr)
-
-    # can this be done with a decorator?
-    def add_component(self, com):
-        libsbol.addDNAComponentToCollection(com.ptr, self.ptr)
 
