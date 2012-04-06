@@ -35,7 +35,8 @@ class SBOLObjectRegistry(object):
 
     def find(self, ptr):
         'Get the SBOL object pointed to by ptr.'
-        for obj in self.sbol_objects:
+        for ref in self.sbol_objects:
+            obj = ref()
             if obj.ptr == ptr:
                 return obj
         return None
@@ -56,10 +57,73 @@ def capture_stdout(fn, *args, **kwargs):
     sys.stdout = backup
     return output
 
-# todo PointerArray class so you can do slicing, append, etc.
+class SBOLObjectArray(object):
+    'Wrapper around a libSBOLc PointerArray'
+
+    def __init__(self, obj, add, num, nth):
+        '''
+        Each type of SBOL object has its own array functions,
+        which need to be set in order for the wrapper to work.
+        '''
+        self.obj_ptr    = obj.ptr
+        self.add_fn     = add
+        self.get_num_fn = num
+        self.get_nth_fn = nth
+
+    def __len__(self):
+        return self.get_num_fn(self.obj_ptr)
+
+    def __getitem__(self, key):
+        if isinstance(key, slice):
+            indices = key.indices( len(self) )
+            return self.__getslice__(indices)
+        else: # assume int-like object
+            if key < 0: # indexed from end
+                key += len(self)
+            return self.__getsingle__(key)
+
+    def __getsingle__(self, index):
+        num = self.get_num_fn(self.obj_ptr)
+        if index >= num:
+            raise IndexError
+        ptr = self.get_nth_fn(self.obj_ptr, index)
+        obj = ALL_SBOL_OBJECTS.find(ptr)
+        return obj
+
+    def __getslice__(self, *indices):
+        return [self.__getsingle__(n) for n in range(*indices)]
+
+    def __iter__(self):
+        num = self.get_num_fn(self.obj_ptr)
+        for n in range(num):
+            ptr = self.get_nth_fn(self.obj_ptr, n)
+            obj = ALL_SBOL_OBJECTS.find(ptr)
+            yield obj
+
+    def __contains__(self, obj):
+        for candidate_obj in self:
+            if candidate_obj == obj:
+                return True
+        return False
+
+    def __iadd__(self, obj):
+        # todo check for duplicates?
+        # todo check that obj.ptr exists?
+        self.add_fn(self.obj_ptr, obj.ptr)
+        return self
+
+    def append(self, obj):
+        self.__iadd__(obj)
+
+    def __extend__(self, obj_list):
+        for obj in other_list:
+            self += obj
+
+    def __str__(self):
+        pass #todo implement this
 
 class DNASequence(object):
-    'Implements the SBOL Core DNASequence object'
+    'Wrapper around a libSBOLc DNASequence'
     
     def __init__(self, uri):
         object.__init__(self)
@@ -67,7 +131,6 @@ class DNASequence(object):
         ALL_SBOL_OBJECTS.add(self)
 
     def __del__(self):
-        print '%s.__del__' % self.uri
         libsbol.deleteDNASequence(self.ptr)
 
     def __str__(self):
@@ -94,7 +157,6 @@ class SequenceAnnotation(object):
         ALL_SBOL_OBJECTS.add(self)
 
     def __del__(self):
-        print '%s.__del__' % self.uri
         libsbol.deleteSequenceAnnotation(self.ptr)
 
     def __str__(self):
@@ -160,7 +222,6 @@ class DNAComponent(object):
         ALL_SBOL_OBJECTS.add(self)
 
     def __del__(self):
-        print '%s.__del__' % self.uri
         libsbol.deleteDNAComponent(self.ptr)
             
     def __str__(self):
@@ -227,7 +288,6 @@ class Collection(object):
         ALL_SBOL_OBJECTS.add(self)
 
     def __del__(self):
-        print '%s.__del__' % self.uri
         libsbol.deleteCollection(self.ptr)
 
     def __str__(self):
