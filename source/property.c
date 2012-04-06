@@ -30,7 +30,8 @@ void setNumber(Property *pro, int num) {
 
 void setLetters(Property *pro, char *str) {
 	if (pro) {
-		pro->letters = realloc(pro->letters, sizeof(char) * (strlen(str)+1));
+		if (str)
+		    pro->letters = realloc(pro->letters, sizeof(char) * (strlen(str)+1));
 		pro->letters = str;
 	}
 }
@@ -187,7 +188,7 @@ void deleteNucleotidesProperty(NucleotidesProperty *pro) {
 
 /// @todo restrict to setting valid nucleotides
 void  setNucleotidesProperty(NucleotidesProperty *pro, const char *nucleotides) {
-	if (pro && nucleotides)
+	if (pro)
 		setTextProperty(pro->nucleotides, nucleotides);
 }
 

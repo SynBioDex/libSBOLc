@@ -268,7 +268,7 @@ char* getSBOLCompoundObjectURI(const SBOLCompoundObject* obj) {
 }
 
 void setSBOLCompoundObjectDisplayID(SBOLCompoundObject* obj, const char* id) {
-	if (obj && id) {
+	if (obj) {
 		setTextProperty(obj->displayID, id);
 	}
 }

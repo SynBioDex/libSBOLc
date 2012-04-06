@@ -7,6 +7,8 @@ class SBOLError(Exception): 'Problem with SBOL'
 class URIError(SBOLError):  'Invalid URI'
 
 __all__ = (
+    'SBOLError'
+    'URIError',
     'DNASequence',
     'SequenceAnnotation',
     'DNAComponent',
@@ -150,7 +152,7 @@ class SBOLObjectArray(object):
         return ''.join(output)
 
     def __repr__(self):
-        "implements 'array' (prints it in the interpreter)"
+        "implements 'array' (print in the interpreter)"
         return self.__str__()
 
 class DNASequence(object):
