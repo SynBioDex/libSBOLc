@@ -60,18 +60,18 @@ def capture_stdout(fn, *args, **kwargs):
 class SBOLObjectArray(object):
     'Wrapper around a libSBOLc PointerArray'
 
-    def __init__(self, obj, add, num, nth):
+    def __init__(self, ptr, add, num, nth):
         '''
         Each type of SBOL object has its own array functions,
         which need to be set in order for the wrapper to work.
         '''
-        self.obj_ptr    = obj.ptr
+        self.ptr        = ptr
         self.add_fn     = add
         self.get_num_fn = num
         self.get_nth_fn = nth
 
     def __len__(self):
-        return self.get_num_fn(self.obj_ptr)
+        return self.get_num_fn(self.ptr)
 
     def __getitem__(self, key):
         if isinstance(key, slice):
@@ -83,10 +83,10 @@ class SBOLObjectArray(object):
             return self.__getsingle__(key)
 
     def __getsingle__(self, index):
-        num = self.get_num_fn(self.obj_ptr)
+        num = self.get_num_fn(self.ptr)
         if index >= num:
             raise IndexError
-        ptr = self.get_nth_fn(self.obj_ptr, index)
+        ptr = self.get_nth_fn(self.ptr, index)
         obj = ALL_SBOL_OBJECTS.find(ptr)
         return obj
 
@@ -94,9 +94,9 @@ class SBOLObjectArray(object):
         return [self.__getsingle__(n) for n in range(*indices)]
 
     def __iter__(self):
-        num = self.get_num_fn(self.obj_ptr)
+        num = self.get_num_fn(self.ptr)
         for n in range(num):
-            ptr = self.get_nth_fn(self.obj_ptr, n)
+            ptr = self.get_nth_fn(self.ptr, n)
             obj = ALL_SBOL_OBJECTS.find(ptr)
             yield obj
 
@@ -109,18 +109,27 @@ class SBOLObjectArray(object):
     def __iadd__(self, obj):
         # todo check for duplicates?
         # todo check that obj.ptr exists?
-        self.add_fn(self.obj_ptr, obj.ptr)
+        self.add_fn(self.ptr, obj.ptr)
         return self
 
     def append(self, obj):
         self.__iadd__(obj)
 
     def __extend__(self, obj_list):
-        for obj in other_list:
+        for obj in obj_list:
             self += obj
 
     def __str__(self):
-        pass #todo implement this
+        if len(self) == 0:
+            return '[]'
+        output = []
+        output.append('[')
+        for obj in self[:-1]:
+            output.append(obj.__repr__())
+            output.append(', ')
+        output.append(self[-1].__repr__())
+        output.append(']')
+        return ''.join(output)
 
 class DNASequence(object):
     'Wrapper around a libSBOLc DNASequence'
