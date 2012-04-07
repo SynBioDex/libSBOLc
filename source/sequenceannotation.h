@@ -12,6 +12,7 @@
 
 /// Implements the SBOL Core SequenceAnnotation object.
 struct _SequenceAnnotation {
+	Document* doc;                  ///< parent Document
 	SBOLObject* base;               ///< uri, displayID, name, description
 	PositionProperty *genbankStart; ///< beginning of the annotated feature
 	PositionProperty *genbankEnd;   ///< end of the annotated feature
@@ -29,8 +30,7 @@ SBOLAPIEXPORTS char* getSequenceAnnotationURI(const SequenceAnnotation* ann);
 
 /// Delete a SequenceAnnotation.
 /// This doesn't delete any of the other structs it references.
-/// @todo how should this handle docs?
-SBOLAPIEXPORTS void deleteSequenceAnnotation(Document* doc, SequenceAnnotation* ann);
+SBOLAPIEXPORTS void deleteSequenceAnnotation(SequenceAnnotation* ann);
 
 /// Get the SequenceAnnotation associated with this URI.
 /// Returns NULL on failure.

@@ -12,6 +12,7 @@
 
 /// Implements the SBOL Core Collection object.
 struct _Collection {
+	Document* doc;             ///< parent Document
 	SBOLCompoundObject* base;  ///< uri, displayID, name, description
 	PointerArray* components;  ///< array of DNAComponents
 };
@@ -22,7 +23,7 @@ SBOLAPIEXPORTS Collection* createCollection(Document* doc, const char* uri);
 /// Delete a Collection.
 /// This doesn't delete any of the other structs
 /// it references; For that you want cleanupSBOLCore.
-SBOLAPIEXPORTS void deleteCollection(Document* doc, Collection* col);
+SBOLAPIEXPORTS void deleteCollection(Collection* col);
 
 /// Find out whether this pointer points to a Collection.
 SBOLAPIEXPORTS int isCollection(Document* doc, const void* pointer);

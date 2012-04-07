@@ -14,6 +14,7 @@
 
 /// Implements the SBOL Core DNASequence object.
 struct _DNASequence {
+	Document* doc;                    ///< parent Document
 	SBOLObject* base;                 ///< uri
 	NucleotidesProperty* nucleotides; ///< sequence
 };
@@ -24,7 +25,7 @@ SBOLAPIEXPORTS DNASequence* createDNASequence(Document* doc, char* uri);
 /// Delete a DNASequence.
 /// Since DNASequences are self-contained,
 /// no other freeing should be needed
-SBOLAPIEXPORTS void deleteDNASequence(Document* doc, DNASequence* seq);
+SBOLAPIEXPORTS void deleteDNASequence(DNASequence* seq);
 
 /// Get the total number of DNASequences in emory.
 /// @todo rename to reflect doc

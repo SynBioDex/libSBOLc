@@ -9,7 +9,7 @@
 
 static void registerDNASequence(Document* doc, DNASequence* seq) {
 	if (doc && doc->allDNASequences) {
-		insertPointerIntoArray(doc->allDNASequences, seq);
+
 	}
 }
 
@@ -18,9 +18,10 @@ DNASequence* createDNASequence(Document* doc, char* uri) {
 	if (!doc || !uri || isSBOLObjectURI(doc, uri))
 	    return NULL;
 	DNASequence* seq = malloc(sizeof(DNASequence));
+	seq->doc         = doc;
 	seq->base        = createSBOLObject(doc, uri);
 	seq->nucleotides = createNucleotidesProperty();
-	registerDNASequence(doc, seq);
+	insertPointerIntoArray(doc->allDNASequences, seq);
 	return seq;
 }
 
@@ -42,7 +43,7 @@ static void removeDNASequence(Document* doc, DNASequence* seq) {
 	}
 }
 
-void deleteDNASequence(Document* doc, DNASequence* seq) {
+void deleteDNASequence(DNASequence* seq) {
 	if (seq) {
 		if (seq->base) {
 			deleteSBOLObject(seq->base);
@@ -52,7 +53,10 @@ void deleteDNASequence(Document* doc, DNASequence* seq) {
 			deleteNucleotidesProperty(seq->nucleotides);
 			seq->nucleotides = NULL;
 		}
-		removeDNASequence(doc, seq);
+		if (seq->doc) {
+			removeDNASequence(doc, seq);
+			seq->doc = NULL;
+		}
 		free(seq);
 		seq = NULL;
 	}

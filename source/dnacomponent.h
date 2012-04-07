@@ -12,6 +12,7 @@
 
 /// Implements the SBOL Core DNAComponent object.
 struct _DNAComponent {
+	Document* doc;             ///< parent Document
 	SBOLCompoundObject* base;  ///< uri, displayID, name, description
 	DNASequence* dnaSequence;  ///< sequence
 	PointerArray* annotations; ///< array of SequenceAnnotations
@@ -23,7 +24,7 @@ SBOLAPIEXPORTS DNAComponent* createDNAComponent(Document* doc, const char* uri);
 /// Delete a DNAComponent.
 /// This doesn't delete any of the other structs
 /// it references.
-SBOLAPIEXPORTS void deleteDNAComponent(Document* doc, DNAComponent* com);
+SBOLAPIEXPORTS void deleteDNAComponent(DNAComponent* com);
 
 /// Find out whether this pointer points to a DNAComponent.
 SBOLAPIEXPORTS int isDNAComponent(const Document* doc, const void* pointer);

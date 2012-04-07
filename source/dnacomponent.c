@@ -10,31 +10,19 @@
 #include "object.h"
 #include "dnasequence.h"
 
-/*static PointerArray* allDNAComponents;*/
-
-/*void lazyCreateAllDNAComponents() {*/
-/*	if (!allDNAComponents)*/
-/*		allDNAComponents = createPointerArray();*/
-/*}*/
-
 /**************************
 	create/destroy
 ***************************/
-
-void registerDNAComponent(Document* doc, DNAComponent* com) {
-	if (doc && doc->allDNAComponents) {
-		insertPointerIntoArray(doc->allDNAComponents, com);
-	}
-}
 
 DNAComponent* createDNAComponent(Document* doc, const char* uri) {
 	if (!doc || !uri || isSBOLObjectURI(doc, uri))
 	    return NULL;
 	DNAComponent* com = malloc(sizeof(DNAComponent));
+	com->doc         = doc;
 	com->base        = createSBOLCompoundObject(doc, uri);
 	com->dnaSequence = NULL;
 	com->annotations = createPointerArray();
-	registerDNAComponent(doc, com);
+	insertPointerIntoArray(doc->allDNAComponents, com);
 	return com;
 }
 
@@ -46,8 +34,8 @@ void removeDNAComponent(Document* doc, DNAComponent* com) {
 	}
 }
 
-void deleteDNAComponent(Document* doc, DNAComponent* com) {
-	if (doc && com) {
+void deleteDNAComponent(DNAComponent* com) {
+	if (com) {
 		if (com->base) {
 			deleteSBOLCompoundObject(com->base);
 			com->base = NULL;
@@ -56,7 +44,10 @@ void deleteDNAComponent(Document* doc, DNAComponent* com) {
 			deletePointerArray(com->annotations);
 			com->annotations = NULL;
 		}
-		removeDNAComponent(doc, com);
+		if (com->doc) {
+			removeDNAComponent(doc, com);
+			com->doc = NULL;
+		}
 		free(com);
 		com = NULL;
 	}

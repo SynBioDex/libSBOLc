@@ -11,27 +11,15 @@
 
 /// @todo group functions by doc-level and object-level
 
-/*static PointerArray* allSequenceAnnotations;*/
-
-/*void lazyCreateAllSequenceAnnotations() {*/
-/*	if (!allSequenceAnnotations)*/
-/*		allSequenceAnnotations = createPointerArray();*/
-/*}*/
-
 /*******************
  * create/destroy
  *******************/
-
-void registerSequenceAnnotation(Document* doc, SequenceAnnotation* ann) {
-	if (doc) {
-		insertPointerIntoArray(allSequenceAnnotations, ann);	
-	}
-}
 
 SequenceAnnotation* createSequenceAnnotation(Document* doc, const char* uri) {
 	if (!doc || !uri || isSBOLObjectURI(doc, uri))
 	    return NULL;
 	SequenceAnnotation* ann = malloc(sizeof(SequenceAnnotation));
+	ann->doc          = doc;
 	ann->base         = createSBOLObject(doc, uri);
 	ann->genbankStart = createPositionProperty();
 	ann->genbankEnd   = createPositionProperty();
@@ -39,11 +27,11 @@ SequenceAnnotation* createSequenceAnnotation(Document* doc, const char* uri) {
 	ann->strand       = createPolarityProperty();
 	ann->subComponent = NULL;
 	ann->precedes = createPointerArray();
-	registerSequenceAnnotation(doc, ann);
+	insertPointerIntoArray(doc->allSequenceAnnotations, ann);	
 	return ann;
 }
 
-void removeSequenceAnnotation(Document* SequenceAnnotation* ann) {
+void removeSequenceAnnotation(Document* doc, SequenceAnnotation* ann) {
 	if (doc && doc->allSequenceAnnotations && ann) {
 		int index = indexOfPointerInArray(doc->allSequenceAnnotations, ann);
 		if (index >= 0)
@@ -51,8 +39,8 @@ void removeSequenceAnnotation(Document* SequenceAnnotation* ann) {
 	}
 }
 
-void deleteSequenceAnnotation(Document* doc, SequenceAnnotation* ann) {
-	if (doc && ann) {
+void deleteSequenceAnnotation(SequenceAnnotation* ann) {
+	if (ann) {
 		if (ann->base)
 			deleteSBOLObject(ann->base);
 			ann->base = NULL;
@@ -62,7 +50,10 @@ void deleteSequenceAnnotation(Document* doc, SequenceAnnotation* ann) {
 			deletePointerArray(ann->precedes);
 			ann->precedes = NULL; // TODO needed?
 		}
-		removeSequenceAnnotation(doc, ann);
+		if (ann->doc) {
+			removeSequenceAnnotation(ann->doc, ann);
+			ann->doc = NULL;
+		}
 		free(ann);
 		ann = NULL;
 	}

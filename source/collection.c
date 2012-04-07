@@ -9,26 +9,14 @@
 #include "collection.h"
 #include "dnacomponent.h"
 
-/*static PointerArray* allCollections;*/
-
-/*void lazyCreateAllCollections() {*/
-/*	if (!allCollections)*/
-/*		allCollections = createPointerArray();*/
-/*}*/
-
-static void registerCollection(Document* doc, Collection* col) {
-	if (doc && doc->allCollections) {
-		insertPointerIntoArray(doc->allCollections, col);
-	}
-}
-
 Collection* createCollection(Document* doc, const char* uri) {
 	if (!doc || !uri || isSBOLObjectURI(doc, uri))
 	    return NULL;
-	Collection* col = malloc(sizeof(Collection));
+	Collection* col  = malloc(sizeof(Collection));
+	col->doc         = doc
 	col->base        = createSBOLCompoundObject(doc, uri);
 	col->components  = createPointerArray();
-	registerCollection(doc, col);
+	insertPointerIntoArray(doc->allCollections, col);
 	return col;
 }
 
@@ -40,8 +28,8 @@ static void removeCollection(Document* doc, Collection* col) {
 	}
 }
 
-void deleteCollection(Document* doc, Collection* col) {
-	if (doc && col) {
+void deleteCollection(Collection* col) {
+	if (col) {
 		if (col->base) {
 			deleteSBOLCompoundObject(col->base);
 			col->base = NULL;
@@ -50,7 +38,10 @@ void deleteCollection(Document* doc, Collection* col) {
 			deletePointerArray(col->components);
 			col->components = NULL;
 		}
-		removeCollection(doc, col);
+		if (col->doc) {
+			removeCollection(col->doc, col);
+			col->doc = NULL;
+		}
 		free(col);
 		col = NULL;
 	}
