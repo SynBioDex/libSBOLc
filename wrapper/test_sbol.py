@@ -192,7 +192,15 @@ class TestDNAComponent(TestSBOLCompoundObject):
         self.testees[0].sequence = seq
         self.assertEquals(self.testees[0].sequence, seq)
 
-    def testAnnotations(self): pass
+    def testAnnotations(self):
+        for n in range(NUM_SLOW_TESTS):
+            self.assertEqual(len(self.testees[0].annotations), n)
+            uri = random_uri()
+            self.uris.append(uri)
+            ann = sbol.SequenceAnnotation(uri)
+            self.assertFalse(ann in self.testees[0].annotations)
+            self.testees[0].annotations += ann
+            self.assertTrue(ann in self.testees[0].annotations)
 
 class TestCollection(TestSBOLCompoundObject):
     def createTestees(self):
