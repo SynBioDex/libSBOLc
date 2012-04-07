@@ -21,7 +21,7 @@ struct _SequenceAnnotation {
 };
 
 /// Create an empty SequenceAnnotation.
-SBOLAPIEXPORTS SequenceAnnotation* createSequenceAnnotation(const char* uri);
+SBOLAPIEXPORTS SequenceAnnotation* createSequenceAnnotation(Document* doc, const char* uri);
 
 /// Get the URI associated with a SequenceAnnotation.
 /// @return A string that must be free()d separately.
@@ -29,25 +29,30 @@ SBOLAPIEXPORTS char* getSequenceAnnotationURI(const SequenceAnnotation* ann);
 
 /// Delete a SequenceAnnotation.
 /// This doesn't delete any of the other structs it references.
-SBOLAPIEXPORTS void deleteSequenceAnnotation(SequenceAnnotation* ann);
+/// @todo how should this handle docs?
+SBOLAPIEXPORTS void deleteSequenceAnnotation(Document* doc, SequenceAnnotation* ann);
 
 /// Get the SequenceAnnotation associated with this URI.
 /// Returns NULL on failure.
-SBOLAPIEXPORTS SequenceAnnotation* getSequenceAnnotation(const char* uri);
+/// @todo rename to reflect doc?
+SBOLAPIEXPORTS SequenceAnnotation* getSequenceAnnotation(Document* doc, const char* uri);
 
-/// Find out whether a pointer points to a SequenceAnnotation.
-SBOLAPIEXPORTS int isSequenceAnnotation(const void* pointer);
+/// Find out whether a pointer points to a SequenceAnnotation in this Document.
+/// @todo rename to reflect doc?
+SBOLAPIEXPORTS int isSequenceAnnotation(Document* doc, const void* pointer);
 
-/// Find out whether this URI is associated with a SequenceAnnotation.
-SBOLAPIEXPORTS int isSequenceAnnotationURI(const char* uri);
+/// Find out whether this URI is associated with a SequenceAnnotation in this Document.
+SBOLAPIEXPORTS int isSequenceAnnotationURI(Document* doc, const char* uri);
 
-/// Get the total number of SequenceAnnotations in memory.
+/// Get the total number of SequenceAnnotations in a Document.
 /// Useful as a loop condition.
-SBOLAPIEXPORTS int getNumSequenceAnnotations();
+/// @todo rename to reflect doc
+SBOLAPIEXPORTS int getNumSequenceAnnotations(Document* doc);
 
-/// Get the Nth SequenceAnnotation in memory.
+/// Get the Nth SequenceAnnotation in a Document.
 /// Useful for iterating through them.
-SBOLAPIEXPORTS SequenceAnnotation* getNthSequenceAnnotation(int n);
+/// @todo rename to reflect doc
+SBOLAPIEXPORTS SequenceAnnotation* getNthSequenceAnnotation(Document* doc, int n);
 
 /// Find out where on the annotated DNAComponent this feature starts.
 SBOLAPIEXPORTS int getSequenceAnnotationStart(const SequenceAnnotation* ann);
@@ -75,6 +80,7 @@ SBOLAPIEXPORTS DNAComponent* getSequenceAnnotationSubComponent(const SequenceAnn
 
 /// Specify that one SequenceAnnotation must appear before another along a strand of DNA.
 /// @todo Is the strand a DNAComponent? Or not yet part of SBOL?
+/// @todo how should this handle docs?
 SBOLAPIEXPORTS void addPrecedesRelationship(SequenceAnnotation* upstream, SequenceAnnotation* downstream);
 
 /// Find out how many other SequenceAnnotations are restricted to coming after this one.
@@ -88,15 +94,17 @@ SBOLAPIEXPORTS SequenceAnnotation* getNthPrecedes(const SequenceAnnotation* ann,
 /// @param upstream The SequenceAnnotation that presumed to come first.
 /// @param downstream The SequenceAnnotation that presumed to come second.
 /// @return Whether upstream actually precedes downstream.
+/// @todo how should this handle docs?
 SBOLAPIEXPORTS int precedes(const SequenceAnnotation* upstream, const SequenceAnnotation* downstream);
 
-/// @todo removePrecedesRelationship?
+/// @todo removePrecedesRelationship
 
 /// Delete all SequenceAnnotations from memory.
 /// This doesn't delete any of the other structs they reference;
 /// for that you want cleanupSBOLCore.
 /// @todo remove this? is it ever used?
-SBOLAPIEXPORTS void cleanupSequenceAnnotations();
+/// @todo rename to reflect doc
+SBOLAPIEXPORTS void cleanupSequenceAnnotations(Document* doc);
 
 /// Print an outline of a SequenceAnnotation to stdout.
 /// Mainly for debugging.
@@ -104,6 +112,7 @@ SBOLAPIEXPORTS void printSequenceAnnotation(const SequenceAnnotation* seq, int t
 
 /// Print outlines of all SequenceAnnotations in memory to stdout.
 /// Mainly for debugging.
-SBOLAPIEXPORTS void printAllSequenceAnnotations();
+/// @todo rename to reflect doc
+SBOLAPIEXPORTS void printAllSequenceAnnotations(Document* doc);
 
 #endif

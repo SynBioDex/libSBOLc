@@ -42,7 +42,7 @@ static void removeDNASequence(Document* doc, DNASequence* seq) {
 	}
 }
 
-void deleteDNASequence(DNASequence* seq) {
+void deleteDNASequence(Document* doc, DNASequence* seq) {
 	if (seq) {
 		if (seq->base) {
 			deleteSBOLObject(seq->base);
@@ -52,7 +52,7 @@ void deleteDNASequence(DNASequence* seq) {
 			deleteNucleotidesProperty(seq->nucleotides);
 			seq->nucleotides = NULL;
 		}
-		removeDNASequence(seq);
+		removeDNASequence(doc, seq);
 		free(seq);
 		seq = NULL;
 	}
@@ -64,7 +64,7 @@ void cleanupDNASequences(Document* doc) {
 		DNASequence* seq;
 		for (n=getNumDNASequences(doc)-1; n>=0; n--) {
 			seq = getNthDNASequence(doc, n);
-			deleteDNASequence(seq);
+			deleteDNASequence(doc, seq);
 			seq = NULL;
 		}
 		deletePointerArray(doc->allDNASequences);

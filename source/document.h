@@ -22,8 +22,12 @@ SBOLAPIEXPORTS Document* createDocument();
 /// SBOL objects contained in the Document.
 SBOLAPIEXPORTS void deleteDocument(Document* doc);
 
+/// Find out whether there's an SBOL object with this URI in this Document.
+/// Useful for avoiding duplicates.
 SBOLAPIEXPORTS int isSBOLObjectURI(const Document* doc, const char* uri);
 
+/// Find out the total number of SBOL objects in a Document.
+/// @todo should this be exported? is it ever used?
 int getNumSBOLObjects(const Document* doc);
 
 /// Print a Document to stdout.

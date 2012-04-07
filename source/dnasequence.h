@@ -24,7 +24,7 @@ SBOLAPIEXPORTS DNASequence* createDNASequence(Document* doc, char* uri);
 /// Delete a DNASequence.
 /// Since DNASequences are self-contained,
 /// no other freeing should be needed
-SBOLAPIEXPORTS void deleteDNASequence(DNASequence* seq);
+SBOLAPIEXPORTS void deleteDNASequence(Document* doc, DNASequence* seq);
 
 /// Get the total number of DNASequences in emory.
 /// @todo rename to reflect doc

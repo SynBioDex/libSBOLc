@@ -9,47 +9,50 @@
 #include "dnacomponent.h"
 #include "sequenceannotation.h"
 
-static PointerArray* allSequenceAnnotations;
+/// @todo group functions by doc-level and object-level
 
-void lazyCreateAllSequenceAnnotations() {
-	if (!allSequenceAnnotations)
-		allSequenceAnnotations = createPointerArray();
-}
+/*static PointerArray* allSequenceAnnotations;*/
+
+/*void lazyCreateAllSequenceAnnotations() {*/
+/*	if (!allSequenceAnnotations)*/
+/*		allSequenceAnnotations = createPointerArray();*/
+/*}*/
 
 /*******************
  * create/destroy
  *******************/
 
-void registerSequenceAnnotation(SequenceAnnotation* ann) {
-	lazyCreateAllSequenceAnnotations();
-	insertPointerIntoArray(allSequenceAnnotations, ann);
+void registerSequenceAnnotation(Document* doc, SequenceAnnotation* ann) {
+	if (doc) {
+		insertPointerIntoArray(allSequenceAnnotations, ann);	
+	}
 }
 
-SequenceAnnotation* createSequenceAnnotation(const char* uri) {
-	if (!uri || isSBOLObjectURI(uri))
+SequenceAnnotation* createSequenceAnnotation(Document* doc, const char* uri) {
+	if (!doc || !uri || isSBOLObjectURI(doc, uri))
 	    return NULL;
 	SequenceAnnotation* ann = malloc(sizeof(SequenceAnnotation));
-	ann->base         = createSBOLObject(uri);
+	ann->base         = createSBOLObject(doc, uri);
 	ann->genbankStart = createPositionProperty();
 	ann->genbankEnd   = createPositionProperty();
 	//ann->strand       = 1;
 	ann->strand       = createPolarityProperty();
 	ann->subComponent = NULL;
 	ann->precedes = createPointerArray();
-	registerSequenceAnnotation(ann);
+	registerSequenceAnnotation(doc, ann);
 	return ann;
 }
 
-void removeSequenceAnnotation(SequenceAnnotation* ann) {
-	if (ann && allSequenceAnnotations) {
-		int index = indexOfPointerInArray(allSequenceAnnotations, ann);
+void removeSequenceAnnotation(Document* SequenceAnnotation* ann) {
+	if (doc && doc->allSequenceAnnotations && ann) {
+		int index = indexOfPointerInArray(doc->allSequenceAnnotations, ann);
 		if (index >= 0)
-			removePointerFromArray(allSequenceAnnotations, index);
+			removePointerFromArray(doc->allSequenceAnnotations, index);
 	}
 }
 
-void deleteSequenceAnnotation(SequenceAnnotation* ann) {
-	if (ann) {
+void deleteSequenceAnnotation(Document* doc, SequenceAnnotation* ann) {
+	if (doc && ann) {
 		if (ann->base)
 			deleteSBOLObject(ann->base);
 			ann->base = NULL;
@@ -59,7 +62,7 @@ void deleteSequenceAnnotation(SequenceAnnotation* ann) {
 			deletePointerArray(ann->precedes);
 			ann->precedes = NULL; // TODO needed?
 		}
-		removeSequenceAnnotation(ann);
+		removeSequenceAnnotation(doc, ann);
 		free(ann);
 		ann = NULL;
 	}
@@ -91,20 +94,21 @@ void setSequenceAnnotationStrand(SequenceAnnotation* ann, int polarity) {
  * is... functions
  *******************/
 
-int isSequenceAnnotation(const void* pointer) {
-	lazyCreateAllSequenceAnnotations();
-	return (int) indexOfPointerInArray(allSequenceAnnotations, pointer) >= 0;
+int isSequenceAnnotation(const Document* doc, const void* pointer) {
+	if (doc) {
+		return (int) indexOfPointerInArray(doc->allSequenceAnnotations, pointer) >= 0;
+	} else
+		return 0; /// @ todo return -1 instead?
 }
 
-int isSequenceAnnotationURI(const char* uri) {
-	lazyCreateAllSequenceAnnotations();
-	if (!uri)
+int isSequenceAnnotationURI(Document* doc, const char* uri) {
+	if (!doc || !uri)
 		return 0;
 	int index;
 	char* candidate;
 	SequenceAnnotation* ann;
-	for (index=0; index < getNumSequenceAnnotations(); index++) {
-		ann = getNthSequenceAnnotation(index);
+	for (index=0; index < getNumSequenceAnnotations(doc); index++) {
+		ann = getNthSequenceAnnotation(doc, index);
 		if (ann) {
 			candidate = getSequenceAnnotationURI(ann);
 			if (candidate && strcmp(candidate, uri) == 0)
@@ -118,9 +122,9 @@ int isSequenceAnnotationURI(const char* uri) {
  * getNum... functions
  ***********************/
 
-int getNumSequenceAnnotations() {
-	if (allSequenceAnnotations)
-		return getNumPointersInArray(allSequenceAnnotations);
+int getNumSequenceAnnotations(Document* doc) {
+	if (doc && doc->allSequenceAnnotations)
+		return getNumPointersInArray(doc->allSequenceAnnotations);
 	else
 		return 0;
 }
@@ -132,10 +136,9 @@ int getNumPrecedes(const SequenceAnnotation* ann) {
 		return 0;
 }
 
-SequenceAnnotation* getNthSequenceAnnotation(int n) {
-	lazyCreateAllSequenceAnnotations();
-	if (getNumSequenceAnnotations() > n)
-		return getNthPointerInArray(allSequenceAnnotations, n);
+SequenceAnnotation* getNthSequenceAnnotation(Document* doc, int n) {
+	if (doc && getNumSequenceAnnotations(doc) > n)
+		return getNthPointerInArray(doc->allSequenceAnnotations, n);
 	else
 		return NULL;
 }
@@ -151,15 +154,14 @@ char* getSequenceAnnotationURI(const SequenceAnnotation* ann) {
 		return NULL;
 }
 
-SequenceAnnotation* getSequenceAnnotation(const char* uri) {
-	lazyCreateAllSequenceAnnotations();
-	if (!uri)
+SequenceAnnotation* getSequenceAnnotation(Document* doc, const char* uri) {
+	if (!doc || !uri)
 		return NULL;
 	int n;
 	char* candidate;
 	SequenceAnnotation* ann;
-	for (n=0; n < getNumSequenceAnnotations(); n++) {
-		ann = getNthSequenceAnnotation(n);
+	for (n=0; n < getNumSequenceAnnotations(doc); n++) {
+		ann = getNthSequenceAnnotation(doc, n);
 		candidate = getSequenceAnnotationURI(ann);
 		if (candidate && strcmp(candidate, uri) == 0)
 			return ann;
@@ -224,16 +226,16 @@ int precedes(const SequenceAnnotation* ann1, const SequenceAnnotation* ann2) {
 	return 0;
 }
 
-void cleanupSequenceAnnotations() {
-	if (allSequenceAnnotations) {
+void cleanupSequenceAnnotations(Document* doc) {
+	if (doc && doc->allSequenceAnnotations) {
 		int n;
 		SequenceAnnotation* seq;
-		for (n=getNumSequenceAnnotations()-1; n>=0; n--) {
-			seq = getNthSequenceAnnotation(n);
-			deleteSequenceAnnotation(seq);
+		for (n=getNumSequenceAnnotations(doc)-1; n>=0; n--) {
+			seq = getNthSequenceAnnotation(doc, n);
+			deleteSequenceAnnotation(doc, seq);
 		}
-		deletePointerArray(allSequenceAnnotations);
-		allSequenceAnnotations = NULL;
+		deletePointerArray(doc->allSequenceAnnotations);
+		doc->allSequenceAnnotations = NULL;
 	}
 }
 
@@ -263,13 +265,15 @@ void printSequenceAnnotation(const SequenceAnnotation* ann, int tabs) {
     }
 }
 
-void printAllSequenceAnnotations() {
+void printAllSequenceAnnotations(Document* doc) {
+	if (!doc)
+		return;
     int n;
-    int num = getNumSequenceAnnotations();
+    int num = getNumSequenceAnnotations(doc);
     if (num > 0) {
         printf("%i annotations:\n", num);
         for (n=0; n<num; n++)
-            printSequenceAnnotation(getNthSequenceAnnotation(n), 1);
+            printSequenceAnnotation(getNthSequenceAnnotation(doc, n), 1);
     }
 }
 
