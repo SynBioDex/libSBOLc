@@ -10,43 +10,44 @@
 #include "object.h"
 #include "dnasequence.h"
 
-static PointerArray* allDNAComponents;
+/*static PointerArray* allDNAComponents;*/
 
-void lazyCreateAllDNAComponents() {
-	if (!allDNAComponents)
-		allDNAComponents = createPointerArray();
-}
+/*void lazyCreateAllDNAComponents() {*/
+/*	if (!allDNAComponents)*/
+/*		allDNAComponents = createPointerArray();*/
+/*}*/
 
 /**************************
 	create/destroy
 ***************************/
 
-void registerDNAComponent(DNAComponent* com) {
-	lazyCreateAllDNAComponents();
-	insertPointerIntoArray(allDNAComponents, com);
-}
-
-DNAComponent* createDNAComponent(const char* uri) {
-	if (!uri || isSBOLObjectURI(uri))
-	    return NULL;
-	DNAComponent* com = malloc(sizeof(DNAComponent));
-	com->base        = createSBOLCompoundObject(uri);
-	com->dnaSequence = NULL;
-	com->annotations = createPointerArray();
-	registerDNAComponent(com);
-	return com;
-}
-
-void removeDNAComponent(DNAComponent* com) {
-	if (com && allDNAComponents) {
-		int index = indexOfPointerInArray(allDNAComponents, com);
-		if (index >= 0)
-			removePointerFromArray(allDNAComponents, index);
+void registerDNAComponent(Document* doc, DNAComponent* com) {
+	if (doc && doc->allDNAComponents) {
+		insertPointerIntoArray(doc->allDNAComponents, com);
 	}
 }
 
-void deleteDNAComponent(DNAComponent* com) {
-	if (com) {
+DNAComponent* createDNAComponent(Document* doc, const char* uri) {
+	if (!doc || !uri || isSBOLObjectURI(doc, uri))
+	    return NULL;
+	DNAComponent* com = malloc(sizeof(DNAComponent));
+	com->base        = createSBOLCompoundObject(doc, uri);
+	com->dnaSequence = NULL;
+	com->annotations = createPointerArray();
+	registerDNAComponent(doc, com);
+	return com;
+}
+
+void removeDNAComponent(Document* doc, DNAComponent* com) {
+	if (doc && doc->allDNAComponents && com) {
+		int index = indexOfPointerInArray(doc->allDNAComponents, com);
+		if (index >= 0)
+			removePointerFromArray(doc->allDNAComponents, index);
+	}
+}
+
+void deleteDNAComponent(Document* doc, DNAComponent* com) {
+	if (doc && com) {
 		if (com->base) {
 			deleteSBOLCompoundObject(com->base);
 			com->base = NULL;
@@ -55,7 +56,7 @@ void deleteDNAComponent(DNAComponent* com) {
 			deletePointerArray(com->annotations);
 			com->annotations = NULL;
 		}
-		removeDNAComponent(com);
+		removeDNAComponent(doc, com);
 		free(com);
 		com = NULL;
 	}
@@ -65,20 +66,21 @@ void deleteDNAComponent(DNAComponent* com) {
 	is... functions
 ***************************/
 
-int isDNAComponent(const void* ptr) {
-	if (!allDNAComponents)
-		allDNAComponents = createPointerArray();
-	return (int) indexOfPointerInArray(allDNAComponents, ptr) >= 0;
+int isDNAComponent(Document* doc, const void* ptr) {
+	if (doc) {
+		return (int) indexOfPointerInArray(doc->allDNAComponents, ptr) >= 0;
+	} else
+		return 0; /// @todo return -1 instead?
 }
 
-int isDNAComponentURI(const char* uri) {
-	if (!allDNAComponents || !uri)
+int isDNAComponentURI(Document* doc, const char* uri) {
+	if (!doc || !doc->allDNAComponents || !uri)
 		return 0;
 	int n;
 	char* candidate;
 	DNAComponent* com;
-	for (n=0; n < getNumDNAComponents(); n++) {
-		com = getNthDNAComponent(n);
+	for (n=0; n < getNumDNAComponents(doc); n++) {
+		com = getNthDNAComponent(doc, n);
 		candidate = getDNAComponentURI(com);
 		if (candidate && strcmp(candidate, uri) == 0)
 			return 1;
@@ -90,11 +92,11 @@ int isDNAComponentURI(const char* uri) {
 	getNum... functions
 ***************************/
 
-int getNumDNAComponents() {
-	if (allDNAComponents)
-		return getNumPointersInArray(allDNAComponents);
+int getNumDNAComponents(Document* doc) {
+	if (doc && doc->allDNAComponents)
+		return getNumPointersInArray(doc->allDNAComponents);
 	else
-		return 0;
+		return 0; /// @todo return -1 instead?
 }
 
 int getNumSequenceAnnotationsFor(const DNAComponent* com) {
@@ -108,9 +110,9 @@ int getNumSequenceAnnotationsFor(const DNAComponent* com) {
 	getNth... functions
 ***************************/
 
-DNAComponent* getNthDNAComponent(int n) {
-	if (getNumDNAComponents() > n && n >= 0)
-		return (DNAComponent *)getNthPointerInArray(allDNAComponents, n);
+DNAComponent* getNthDNAComponent(Document* doc, int n) {
+	if (doc && getNumDNAComponents(doc) > n && n >= 0)
+		return (DNAComponent *)getNthPointerInArray(doc->allDNAComponents, n);
 	else
 		return NULL;
 }
@@ -126,14 +128,14 @@ SequenceAnnotation* getNthSequenceAnnotationFor(const DNAComponent* com, int n) 
 	get... functions
 ***************************/
 
-DNAComponent* getDNAComponent(const char* uri) {
-	if (!allDNAComponents || !uri)
+DNAComponent* getDNAComponent(Document* doc, const char* uri) {
+	if (!doc || !doc->allDNAComponents || !uri)
 		return NULL;
 	int n;
 	char* candidate;
 	DNAComponent* com;
-	for (n=0; n < getNumDNAComponents(); n++) {
-		com = getNthDNAComponent(n);
+	for (n=0; n < getNumDNAComponents(doc); n++) {
+		com = getNthDNAComponent(doc, n);
 		candidate = getDNAComponentURI(com);
 		if (candidate && strcmp(candidate, uri) == 0)
 			return com;
@@ -222,16 +224,16 @@ void setSequenceAnnotationSubComponent(SequenceAnnotation* ann, DNAComponent* co
 	}
 }
 
-void cleanupDNAComponents() {
-	if (allDNAComponents) {
+void cleanupDNAComponents(Document* doc) {
+	if (doc && doc->allDNAComponents) {
 		int n;
 		DNAComponent* com;
-		for (n=getNumDNAComponents()-1; n>=0; n--) {
-			com = getNthDNAComponent(n);
-			deleteDNAComponent(com);
+		for (n=getNumDNAComponents(doc)-1; n>=0; n--) {
+			com = getNthDNAComponent(doc, n);
+			deleteDNAComponent(doc, com);
 		}
-		deletePointerArray(allDNAComponents);
-		allDNAComponents = NULL;
+		deletePointerArray(doc->allDNAComponents);
+		doc->allDNAComponents = NULL;
 	}
 }
 
@@ -256,13 +258,13 @@ void printDNAComponent(const DNAComponent* com, int tabs) {
 	}
 }
 
-void printAllDNAComponents() {
+void printAllDNAComponents(Document* doc) {
 	int n;
-	int num = getNumDNAComponents();
+	int num = getNumDNAComponents(doc);
 	if (num > 0) {
 		printf("%i components:\n", num);
 		for (n=0; n<num; n++)
-			printDNAComponent(getNthDNAComponent(n), 1);
+			printDNAComponent(getNthDNAComponent(doc, n), 1);
 	}
 }
 

@@ -18,30 +18,30 @@ struct _DNAComponent {
 };
 
 /// Create an empty DNAComponent.
-SBOLAPIEXPORTS DNAComponent* createDNAComponent(const char* uri);
+SBOLAPIEXPORTS DNAComponent* createDNAComponent(Document* doc, const char* uri);
 
 /// Delete a DNAComponent.
 /// This doesn't delete any of the other structs
 /// it references.
-SBOLAPIEXPORTS void deleteDNAComponent(DNAComponent* com);
+SBOLAPIEXPORTS void deleteDNAComponent(Document* doc, DNAComponent* com);
 
 /// Find out whether this pointer points to a DNAComponent.
-SBOLAPIEXPORTS int isDNAComponent(const void* pointer);
+SBOLAPIEXPORTS int isDNAComponent(const Document* doc, const void* pointer);
 
 /// Find out if there's a DNAComponent with this uri.
-SBOLAPIEXPORTS int isDNAComponentURI(const char* uri);
+SBOLAPIEXPORTS int isDNAComponentURI(const Document* doc, const char* uri);
 
 /// Get the total number of DNAComponents.
 /// Useful as a loop condition.
-SBOLAPIEXPORTS int getNumDNAComponents();
+SBOLAPIEXPORTS int getNumDNAComponents(const Document* doc);
 
 /// Get the Nth DNAComponent.
 /// Useful for iterating over all of them.
-SBOLAPIEXPORTS DNAComponent* getNthDNAComponent(int n);
+SBOLAPIEXPORTS DNAComponent* getNthDNAComponent(Document* doc, int n);
 
 /// Get the DNAComponent associated with this uri.
 /// Returns NULL on failure.
-SBOLAPIEXPORTS DNAComponent* getDNAComponent(const char* uri);
+SBOLAPIEXPORTS DNAComponent* getDNAComponent(Document* doc, const char* uri);
 
 /// Get the number of SequenceAnnotations for a DNAComponent.
 SBOLAPIEXPORTS int getNumSequenceAnnotationsFor(const DNAComponent* com);
@@ -85,15 +85,18 @@ SBOLAPIEXPORTS void setDNAComponentDescription(DNAComponent* com, const char* de
 
 /// Set the DNASequence of a DNAComponent.
 /// Gotcha: DNA, not Dna
+/// @todo how should this handle docs?
 SBOLAPIEXPORTS void setDNAComponentSequence(DNAComponent* com, DNASequence* seq);
 
 /// Add a SequenceAnnotation to a DNAComponent.
 /// @todo where should this go? here, sequenceannotation.h, sbol.h?
+/// @todo how should this handle docs?
 SBOLAPIEXPORTS void addSequenceAnnotation(DNAComponent* com, SequenceAnnotation* ann);
 
 /// Set a DNAComponent as the subComponent of a SequenceAnnotation.
 /// To remove it later, call this with a NULL annotation.
 /// @todo move this to sequenceannotation.h?
+/// @todo how should this handle docs?
 SBOLAPIEXPORTS void setSequenceAnnotationSubComponent(SequenceAnnotation* ann, DNAComponent* com);
 
 /// @todo removeSequenceAnnotationSubComponent
@@ -102,11 +105,11 @@ SBOLAPIEXPORTS void setSequenceAnnotationSubComponent(SequenceAnnotation* ann, D
 SBOLAPIEXPORTS void printDNAComponent(const DNAComponent* com, int tabs);
 
 /// Print an outline of all the DNAComponents to stdout.
-SBOLAPIEXPORTS void printAllDNAComponents();
+SBOLAPIEXPORTS void printAllDNAComponents(Document* doc);
 
 /// Delete all DNAComponents.
 /// To delete everything instead, use cleanupSBOLCore.
 /// @todo remove this? is it ever used?
-SBOLAPIEXPORTS void cleanupDNAComponents();
+SBOLAPIEXPORTS void cleanupDNAComponents(Document* doc);
 
 #endif

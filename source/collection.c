@@ -9,37 +9,39 @@
 #include "collection.h"
 #include "dnacomponent.h"
 
-static PointerArray* allCollections;
+/*static PointerArray* allCollections;*/
 
-void lazyCreateAllCollections() {
-	if (!allCollections)
-		allCollections = createPointerArray();
+/*void lazyCreateAllCollections() {*/
+/*	if (!allCollections)*/
+/*		allCollections = createPointerArray();*/
+/*}*/
+
+static void registerCollection(Document* doc, Collection* col) {
+	if (doc && doc->allCollections) {
+		insertPointerIntoArray(doc->allCollections, col);
+	}
 }
 
-static void registerCollection(Collection* col) {
-	lazyCreateAllCollections();
-	insertPointerIntoArray(allCollections, col);
-}
-
-Collection* createCollection(const char* uri) {
-	if (!uri || isSBOLObjectURI(uri))
+Collection* createCollection(Document* doc, const char* uri) {
+	if (!doc || !uri || isSBOLObjectURI(doc, uri))
 	    return NULL;
 	Collection* col = malloc(sizeof(Collection));
-	col->base        = createSBOLCompoundObject(uri);
+	col->base        = createSBOLCompoundObject(doc, uri);
 	col->components  = createPointerArray();
-	registerCollection(col);
+	registerCollection(doc, col);
 	return col;
 }
 
-static void removeCollection(Collection* col) {
-	lazyCreateAllCollections();
-	int index = indexOfPointerInArray(allCollections, col);
-	if (index >= 0)
-		removePointerFromArray(allCollections, index);
+static void removeCollection(Document* doc, Collection* col) {
+	if (doc && doc->allCollections && col) {
+		int index = indexOfPointerInArray(doc->allCollections, col);
+		if (index >= 0)
+			removePointerFromArray(doc->allCollections, index);
+	}
 }
 
-void deleteCollection(Collection* col) {
-	if (col) {
+void deleteCollection(Document* doc, Collection* col) {
+	if (doc && col) {
 		if (col->base) {
 			deleteSBOLCompoundObject(col->base);
 			col->base = NULL;
@@ -48,26 +50,26 @@ void deleteCollection(Collection* col) {
 			deletePointerArray(col->components);
 			col->components = NULL;
 		}
-		removeCollection(col);
+		removeCollection(doc, col);
 		free(col);
 		col = NULL;
 	}
 }
 
-int isCollection(const void* pointer) {
-	lazyCreateAllCollections();
-	return pointerContainedInArray(allCollections, pointer);
+int isCollection(Document* doc, const void* pointer) {
+	if (doc && doc->allCollections && pointer) {
+		return pointerContainedInArray(doc->allCollections, pointer);
+	}
 }
 
-int isCollectionURI(const char* uri) {
-	lazyCreateAllCollections();
-	if (!uri)
+int isCollectionURI(const Document* doc, const char* uri) {
+	if (!doc || !uri)
 		return 0;
 	int n;
 	char* candidate;
 	Collection* col;
-	for (n=0; n < getNumCollections(); n++) {
-		col = getNthCollection(n);
+	for (n=0; n < getNumCollections(doc); n++) {
+		col = getNthCollection(doc, n);
 		candidate = getCollectionURI(col);
 		if (candidate && strcmp(candidate, uri) == 0)
 			return 1;
@@ -75,15 +77,14 @@ int isCollectionURI(const char* uri) {
 	return 0;
 }
 
-Collection* getCollection(const char* uri) {
-	lazyCreateAllCollections();
-	if (!uri)
+Collection* getCollection(const Document* doc, const char* uri) {
+	if (!doc || !uri)
 		return NULL;
 	int n;
 	char* candidate;
 	Collection* col;
-	for (n=0; n < getNumCollections(); n++) {
-		col = getNthCollection(n);
+	for (n=0; n < getNumCollections(doc); n++) {
+		col = getNthCollection(doc, n);
 		candidate = getCollectionURI(col);
 		if (candidate && strcmp(candidate, uri) == 0)
 			return col;
@@ -119,11 +120,11 @@ char* getCollectionDescription(const Collection* col) {
 		return NULL;
 }
 
-int getNumCollections() {
-	if (allCollections)
-		return getNumPointersInArray(allCollections);
+int getNumCollections(Document* doc) {
+	if (doc && doc->allCollections)
+		return getNumPointersInArray(doc->allCollections);
 	else
-		return 0;
+		return 0; /// @todo return -1 instead?
 }
 
 int getNumDNAComponentsIn(const Collection* col) {
@@ -133,9 +134,9 @@ int getNumDNAComponentsIn(const Collection* col) {
 		return -1;
 }
 
-Collection* getNthCollection(int n) {
-    if (getNumCollections() > n && n >= 0)
-        return (Collection *)getNthPointerInArray(allCollections, n);
+Collection* getNthCollection(Document* doc, int n) {
+    if (doc && getNumCollections(doc) > n && n >= 0)
+        return (Collection *)getNthPointerInArray(doc->allCollections, n);
     else
         return NULL;
 }
@@ -207,27 +208,29 @@ void printCollection(const Collection* col, int tabs) {
     }
 }
 
-void printAllCollections() {
+void printAllCollections(Document* doc) {
+	if (!doc)
+		return;
     int n;
-    int num = getNumCollections();
+    int num = getNumCollections(doc);
     if (num > 0) {
         printf("%i collections:\n", num);
         for (n=0; n<num; n++)
-            printCollection(getNthCollection(n), 1);
+            printCollection(getNthCollection(doc, n), 1);
     }
 }
 
-void cleanupCollections() {
-	if (allCollections) {
+void cleanupCollections(Document* doc) {
+	if (doc && doc->allCollections) {
 		int n;
 		Collection* col;
-		for (n=getNumCollections()-1; n>=0; n--) {
-            col = getNthCollection(n);
-			deleteCollection(col);
+		for (n=getNumCollections(doc)-1; n>=0; n--) {
+            col = getNthCollection(doc, n);
+			deleteCollection(doc, col);
 			col = NULL;
 		}
-		deletePointerArray(allCollections);
-		allCollections = NULL;
+		deletePointerArray(doc->allCollections);
+		doc->allCollections = NULL;
 	}
 }
 
