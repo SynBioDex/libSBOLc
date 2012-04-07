@@ -21,8 +21,8 @@ void CreateValid12() {
 	setDNAComponentDisplayID(dc2, "DC2");
 	setDNAComponentName(dc1, "DnaComponent1");
 	setDNAComponentName(dc2, "DnaComponent2");
-	addDNAComponentToCollection(dc1, c1);
-	addDNAComponentToCollection(dc2, c2);
+	addDNAComponentToCollection(c1, dc1);
+	addDNAComponentToCollection(c2, dc2);
 	// sequence
 	DNASequence *ds1 = createDNASequence("http://example.com/ds1");
 	setDNASequenceNucleotides(ds1, "tccctatcagtgat");

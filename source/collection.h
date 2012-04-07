@@ -77,7 +77,7 @@ SBOLAPIEXPORTS void setCollectionDescription(Collection* col, const char* desc);
 
 /// Add a DNAComponent to a Collection.
 /// @todo move to dnacomponent.h?
-SBOLAPIEXPORTS void addDNAComponentToCollection(DNAComponent* com, Collection* col);
+SBOLAPIEXPORTS void addDNAComponentToCollection(Collection* col, DNAComponent* com);
 
 /// Find out whether a DNAComponent is inside a Collection.
 /// @todo better name

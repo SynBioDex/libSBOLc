@@ -29,7 +29,19 @@ class SBOLObjectRegistry(object):
     '''
 
     def __init__(self):
+        # todo rename to something with ref in it
         self.sbol_objects = []
+
+    def __str__(self):
+        output = []
+        output.append('[')
+        for ref in self.sbol_objects[:-1]:
+            if ref != None:
+                output.append( ref().__repr__() )
+                output.append(', ')
+        output.append(self.sbol_objects[-1]().__repr__())
+        output.append(']')
+        return ''.join(output)
 
     def add(self, obj):
         '''
@@ -73,25 +85,29 @@ class SBOLObjectArray(object):
     Wrapper around a libSBOLc PointerArray.
     It behaves like a standard Python list,
     but only for those operations a PointerArray
-    supports.
+    supports. Notably, remove() hasn't been
+    implemented yet.
     '''
 
     def __init__(self, ptr, add, num, nth):
-        '''
-        Each type of SBOL object has its own array functions,
-        which need to be set in order for the wrapper to work.
-        '''
+        # Each type of SBOL object has its own array functions,
+        # which need to be set for the wrapper to work.
         self.ptr        = ptr
         self.add_fn     = add
         self.get_num_fn = num
         self.get_nth_fn = nth
+
+        # These references aren't used for anything so far,
+        # but they keep Python from garbage collecting the
+        # objects corresponding to pointers in the array.
+        #self.refs = set()
 
     def __len__(self):
         "implements 'len(array)'"
         return self.get_num_fn(self.ptr)
 
     def __getitem__(self, key):
-        "handles both 'array[index]' and 'array[start:end:step]'"
+        "distinguishes 'array[index]' from 'array[start:end:step]'"
         if isinstance(key, slice):
             indices = key.indices( len(self) )
             return self.__getslice__(indices)
@@ -132,6 +148,7 @@ class SBOLObjectArray(object):
         "implements 'array += obj'"
         if obj in self:
             raise SBOLError('Duplicate obj %s' % obj)
+        #self.refs.add(obj)
         self.add_fn(self.ptr, obj.ptr)
         return self
 
@@ -206,6 +223,10 @@ class SequenceAnnotation(object):
                libsbol.getNumPrecedes,
                libsbol.getNthPrecedes)
         self.precedes = SBOLObjectArray(self.ptr, *fns)
+
+        # This prevents the Python proxies of C structs pointed to
+        # by this SequenceAnnotation from being garbage collected.
+        self.refs = set()
 
     def __del__(self):
         if self.ptr:
@@ -284,11 +305,12 @@ class SequenceAnnotation(object):
 
     @subcomponent.setter
     def subcomponent(self, com):
-        libsbol.setSequenceAnnotationSubComponent(self.ptr, com)
+        libsbol.setSequenceAnnotationSubComponent(self.ptr, com.ptr)
+        self.refs.add(com)
 
 class DNAComponent(object):
     'Wrapper around a libSBOLc DNAComponent'
-    
+
     def __init__(self, uri):
         object.__init__(self)
         self.ptr = libsbol.createDNAComponent(uri)
@@ -300,9 +322,14 @@ class DNAComponent(object):
                libsbol.getNthSequenceAnnotationFor)
         self.annotations = SBOLObjectArray(self.ptr, *fns)
 
+        # This prevents the Python proxies of C structs pointed to
+        # by this DNAComponent from being garbage collected.
+        self.refs = set()
+
     def __del__(self):
         if self.ptr:
             libsbol.deleteDNAComponent(self.ptr)
+
     def __str__(self):
         return capture_stdout(libsbol.printDNAComponent, self.ptr, 0)
 
@@ -345,6 +372,7 @@ class DNAComponent(object):
     @sequence.setter
     def sequence(self, seq):
         libsbol.setDNAComponentSequence(self.ptr, seq.ptr)
+        self.refs.add(seq)
 
 class Collection(object):
     'Wrapper around a libSBOLc Collection'

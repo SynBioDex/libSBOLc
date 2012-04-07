@@ -2,19 +2,19 @@ import unittest
 import sbol
 import random
 import string
+import pdb
 
 URIS_USED = set()
-RANDOM_CHARS = string.ascii_letters \
-             + string.whitespace \
-             + string.punctuation
+RANDOM_CHARS = string.ascii_letters
 NUM_FAST_TESTS = 10000
+NUM_SLOW_TESTS =   100
 
-def random_string(limit=30):
+def random_string(limit=10):
     length = random.randint(0, limit)
     string = ''.join(random.choice(RANDOM_CHARS) for n in range(length))
     return string
 
-def random_uri(limit=30):
+def random_uri(limit=10):
     while True:
         uri = random_string()
         global URIS_USED
@@ -50,12 +50,16 @@ class TestSBOLObject(unittest.TestCase):
         self.assertEqual(obj.__getattribute__(attr), None)
 
     def setUp(self):
-        self.assertEqual(sbol.libsbol.getNumSBOLObjects(), 0)
+        try:
+            self.assertEqual(sbol.libsbol.getNumSBOLObjects(), 0)
+        except AssertionError:
+            sbol.libsbol.cleanupSBOLCore()
         self.uris    = []
         self.testees = []
         self.createTestees()
         self.assertEqual(len(self.uris), len(self.testees))
         self.assertEqual(len(self.uris), sbol.libsbol.getNumSBOLObjects())
+        self.assertEqual(len(self.uris), len(sbol.ALL_SBOL_OBJECTS.sbol_objects))
 
     def createTestees(self):
         for obj in (sbol.DNASequence,
@@ -74,10 +78,15 @@ class TestSBOLObject(unittest.TestCase):
             self.assertReadOnly(testee, 'uri')
 
     def tearDown(self):
-        self.assertEqual(len(self.uris), len(self.testees))
+        self.assertEqual(len(self.uris), len(sbol.ALL_SBOL_OBJECTS.sbol_objects))
         self.assertEqual(len(self.uris), sbol.libsbol.getNumSBOLObjects())
         del self.testees
-        self.assertEqual(sbol.libsbol.getNumSBOLObjects(), 0)
+        try:
+            self.assertEqual(sbol.libsbol.getNumSBOLObjects(), 0)
+        except AssertionError:
+            # this test failed, but still want to protect the others
+            sbol.libsbol.cleanupSBOLCore()
+            raise
 
 class TestSBOLCompoundObject(TestSBOLObject):
     def createTestees(self):
@@ -151,7 +160,14 @@ class TestSequenceAnnotation(TestSBOLObject):
                                   'strand',
                                   symbol)
 
-    def testSubcomponent(self): pass
+    def testSubcomponent(self):
+        self.assertEquals(self.testees[0].subcomponent, None)
+        uri = random_uri()
+        self.uris.append(uri)
+        com = sbol.DNAComponent(uri)
+        self.testees[0].subcomponent = com
+        self.assertEquals(self.testees[0].subcomponent, com)
+
     def testPrecedes(self):     pass
 
 class TestDNAComponent(TestSBOLCompoundObject):
@@ -169,7 +185,18 @@ class TestCollection(TestSBOLCompoundObject):
         self.uris.append(uri)
         self.testees.append( sbol.Collection(uri) )
 
-    def testComponents(self): pass
+#    def testComponents(self):
+#        pdb.set_trace()
+#        col = self.testees[0]
+#        for n in range(1):
+#            self.assertEqual(len(col.components), n)
+#            uri = random_uri()
+#            self.uris.append(uri)
+#            com = sbol.DNAComponent(uri)
+#            self.assertFalse(com in col.components)
+#            col.components += com
+#            self.assertTrue(com in col.components)
+#            self.assertEqual(len(col.components), n+1)
 
 if __name__ == '__main__':
     unittest.main()

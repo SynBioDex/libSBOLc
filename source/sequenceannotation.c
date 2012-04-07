@@ -52,6 +52,7 @@ void deleteSequenceAnnotation(SequenceAnnotation* ann) {
 	if (ann) {
 		if (ann->base)
 			deleteSBOLObject(ann->base);
+			ann->base = NULL;
 		if (ann->subComponent)
 			ann->subComponent = NULL;
 		if (ann->precedes) {
@@ -60,6 +61,7 @@ void deleteSequenceAnnotation(SequenceAnnotation* ann) {
 		}
 		removeSequenceAnnotation(ann);
 		free(ann);
+		ann = NULL;
 	}
 }
 

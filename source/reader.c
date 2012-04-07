@@ -319,7 +319,7 @@ static void readCollectionReferences(xmlNode *node) {
         for (n=0; n<getNumPointersInArray(ref_nodes); n++) {
             ref_node = (xmlNode *) getNthPointerInArray(ref_nodes, n);
             ref_uri = getNodeURI(ref_node);
-            addDNAComponentToCollection(getDNAComponent((char *)ref_uri), col);
+            addDNAComponentToCollection(col, getDNAComponent((char *)ref_uri));
             xmlFree(ref_uri);
         }
         deletePointerArray(ref_nodes);

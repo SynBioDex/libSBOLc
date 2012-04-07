@@ -141,7 +141,7 @@ void printDNAComponent(const DNAComponent* com, int tabs);
 void setCollectionDisplayID(Collection* col, const char* id);
 void setCollectionName(Collection* col, const char* name);
 void setCollectionDescription(Collection* col, const char* desc);
-void addDNAComponentToCollection(DNAComponent* com, Collection* col);
+void addDNAComponentToCollection(Collection* col, DNAComponent* com);
 void printCollection(const Collection* col, int tabs);
 void readSBOLCore(char* filename);
 void printSBOLCore();

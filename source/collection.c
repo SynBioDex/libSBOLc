@@ -167,8 +167,8 @@ void setCollectionDescription(Collection* col, const char* descr) {
 		setSBOLCompoundObjectDescription(col->base, descr);
 }
 
-void addDNAComponentToCollection(DNAComponent* com, Collection* col) {
-	if (com && col) {
+void addDNAComponentToCollection(Collection* col, DNAComponent* com) {
+	if (col && com) {
 		insertPointerIntoArray(col->components,  com);
 	}
 }
