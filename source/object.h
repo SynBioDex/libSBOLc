@@ -42,17 +42,6 @@ void deleteSBOLObject(SBOLObject* obj);
 /// @todo rename to reflect doc
 SBOLAPIEXPORTS int isSBOLObjectURI(Document* doc, const char* uri);
 
-/// Get the Nth SBOLObject in memory.
-/// This includes the ones that are contained in other structs.
-/// @todo rename to reflect doc
-//SBOLObject* getNthSBOLObject(Document* doc, int n);
-
-/// Get the SBOLObject associated with this URI.
-/// This shouldn't be called directly;
-/// instead, use getDNASequence, getSequenceAnnotation, etc.
-/// @todo rename to reflect doc
-//SBOLObject* getSBOLObject(Document* doc, const char* uri);
-
 /// Delete all SBOLObjects from memory.
 /// @todo remove this? is it ever used?
 /// @todo rename to reflect doc
@@ -80,22 +69,6 @@ struct _SBOLCompoundObject {
 	TextProperty* description; ///< Some text describing the object.
 };
 
-/// Get the total number of SBOLCompoundObjects in memory.
-/// @todo rename to reflect doc
-//int getNumSBOLCompoundObjects(Document* doc);
-
-/// Find out whether there's an SBOLCompoundObject with this URI.
-/// @todo rename to reflect doc
-//int isSBOLCompoundObjectURI(Document* doc, const char* uri);
-
-/// Get the Nth SBOLCompoundObject in memory.
-/// @todo rename to reflect doc
-//SBOLCompoundObject* getNthSBOLCompoundObject(Document* doc, int n);
-
-/// Get the SBOLCompoundObject associated with this URI.
-/// @todo rename to reflect doc
-//SBOLCompoundObject* getSBOLCompoundObject(Document* doc, const char* uri);
-
 /// Create an empty SBOLCompoundObject.
 /// @return A pointer to the new SBOLCompoundObject.
 /// @todo rename to reflect doc
@@ -105,11 +78,6 @@ SBOLCompoundObject* createSBOLCompoundObject(Document* doc, const char* uri);
 /// This shouldn't be called directly;
 /// instead, use deleteDNAComponent, deleteCollection, etc.
 void deleteSBOLCompoundObject(SBOLCompoundObject* obj);
-
-/// Delete all SBOLCompoundObjects from memory.
-/// @todo remove this? is it ever used?
-/// @todo rename to reflect doc
-//void cleanupSBOLCompoundObjects(Document* doc);
 
 /// Set the URI of an SBOLComoundObject.
 /// This shouldn't be called directly.

@@ -6,35 +6,38 @@
 #define NUM_FAST_TESTS 10000
 
 void TestCreateEmptyDNASequence(CuTest* tc) {
-	cleanupDNASequences();
-	DNASequence* seq = createDNASequence("");
+	Document* doc = createDocument();
+	DNASequence* seq = createDNASequence(doc, "");
 	setDNASequenceNucleotides(seq, "");
 	CuAssertStrEquals(tc, "", getDNASequenceURI(seq));
 	CuAssertStrEquals(tc, "", getDNASequenceNucleotides(seq));
+	deleteDocument(doc);
 }
 
 void TestCreateNullDNASequence(CuTest* tc) {
-	DNASequence* seq = createDNASequence(NULL);
+	Document* doc = createDocument();
+	DNASequence* seq = createDNASequence(doc, NULL);
 	CuAssertStrEquals(tc, NULL, getDNASequenceURI(seq));
 	CuAssertPtrEquals(tc, NULL, getDNASequenceNucleotides(seq));
+	deleteDocument(doc);
 }
 
 void TestCreateRandomDNASequence(CuTest* tc) {
-	cleanupDNASequences();
+	Document* doc = createDocument();
 	int repeat;
 	char* uri;
 	char* nt;
 	DNASequence* seq;
 	for (repeat=0; repeat<NUM_FAST_TESTS; repeat++) {
-		uri = randomUniqueURI();
-		nt = randomUniqueURI();
-		// avoid duplicates
-		seq = createDNASequence(uri);
+		uri = randomUniqueURI(doc);
+		nt = randomUniqueURI(doc);
+		seq = createDNASequence(doc, uri);
 		setDNASequenceNucleotides(seq, nt);
 		CuAssertStrEquals(tc, uri, getDNASequenceURI(seq));
 		CuAssertStrEquals(tc, nt, getDNASequenceNucleotides(seq));
 		deleteDNASequence(seq);
 	}
+	deleteDocument(doc);
 }
 
 void PrintDNASequenceTestInfo() {

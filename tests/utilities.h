@@ -3,7 +3,7 @@
 
 char  randomChar();
 char* randomString();
-char* randomUniqueURI();
+char* randomUniqueURI(const Document* doc);
 int randomNumber(int max);
 char** getFilenames(char* dirname);
 

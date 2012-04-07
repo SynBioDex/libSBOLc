@@ -24,9 +24,9 @@ char* randomString() {
 	return string;
 }
 
-char* randomUniqueURI() {
+char* randomUniqueURI(const Document* doc) {
     char* uri = randomString();
-    while (isSBOLObjectURI(uri))
+    while (isSBOLObjectURI(doc, uri))
         uri = randomString();
     return uri;
 }

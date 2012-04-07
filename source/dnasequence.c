@@ -7,27 +7,20 @@
 #include "object.h"
 #include "dnasequence.h"
 
-static PointerArray* allDNASequences;
-
-static void lazyCreateAllDNASequences() {
-	if (!allDNASequences)
-		allDNASequences = createPointerArray();
-}
-
-static void registerDNASequence(DNASequence* seq) {
-	lazyCreateAllDNASequences();
-	insertPointerIntoArray(allDNASequences, seq);
+static void registerDNASequence(Document* doc, DNASequence* seq) {
+	if (doc && doc->allDNASequences) {
+		insertPointerIntoArray(doc->allDNASequences, seq);
+	}
 }
 
 // TODO constrain to actg and sometimes n?
-DNASequence* createDNASequence(char* uri) {
-	if (!uri || isSBOLObjectURI(uri))
+DNASequence* createDNASequence(Document* doc, char* uri) {
+	if (!doc || !uri || isSBOLObjectURI(doc, uri))
 	    return NULL;
 	DNASequence* seq = malloc(sizeof(DNASequence));
-	seq->base        = createSBOLObject(uri);
-	//seq->nucleotides = createTextProperty();
+	seq->base        = createSBOLObject(doc, uri);
 	seq->nucleotides = createNucleotidesProperty();
-	registerDNASequence(seq);
+	registerDNASequence(doc, seq);
 	return seq;
 }
 
@@ -41,11 +34,11 @@ void setDNASequenceNucleotides(DNASequence* seq, const char* nucleotides) {
 		setNucleotidesProperty(seq->nucleotides, nucleotides);
 }
 
-static void removeDNASequence(DNASequence* seq) {
-	if (seq && allDNASequences) {
-		int index = indexOfPointerInArray(allDNASequences, seq);
+static void removeDNASequence(Document* doc, DNASequence* seq) {
+	if (doc && doc->allDNASequences && seq) {
+		int index = indexOfPointerInArray(doc->allDNASequences, seq);
 		if (index >= 0)
-			removePointerFromArray(allDNASequences, index);
+			removePointerFromArray(doc->allDNASequences, index);
 	}
 }
 
@@ -65,36 +58,36 @@ void deleteDNASequence(DNASequence* seq) {
 	}
 }
 
-void cleanupDNASequences() {
-	if (allDNASequences) {
+void cleanupDNASequences(Document* doc) {
+	if (doc && doc->allDNASequences) {
 		int n;
 		DNASequence* seq;
-		for (n=getNumDNASequences()-1; n>=0; n--) {
-			seq = getNthDNASequence(n);
+		for (n=getNumDNASequences(doc)-1; n>=0; n--) {
+			seq = getNthDNASequence(doc, n);
 			deleteDNASequence(seq);
 			seq = NULL;
 		}
-		deletePointerArray(allDNASequences);
-		allDNASequences = NULL;
+		deletePointerArray(doc->allDNASequences);
+		doc->allDNASequences = NULL;
 	}
 }
 
-int getNumDNASequences() {
-	if (allDNASequences)
-	    return getNumPointersInArray(allDNASequences);
+int getNumDNASequences(Document* doc) {
+	if (doc && doc->allDNASequences)
+	    return getNumPointersInArray(doc->allDNASequences);
 	else
 	    return 0;
 }
 
-DNASequence* getDNASequence(const char* uri) {
-	lazyCreateAllDNASequences();
-	if (!uri)
+DNASequence* getDNASequence(Document* doc, const char* uri) {
+/*	lazyCreateAllDNASequences();*/
+	if (!doc || !uri)
 		return NULL;
 	int n;
 	char* candidate;
 	DNASequence* seq;
-	for (n=0; n < getNumDNASequences(); n++) {
-		seq = getNthDNASequence(n);
+	for (n=0; n < getNumDNASequences(doc); n++) {
+		seq = getNthDNASequence(doc, n);
 		candidate = getSBOLObjectURI(seq->base);
 		if (candidate && strcmp(candidate, uri) == 0)
 			return seq;
@@ -109,15 +102,15 @@ char* getDNASequenceURI(const DNASequence* seq) {
 		return NULL;
 }
 
-int isDNASequenceURI(const char* uri) {
-	lazyCreateAllDNASequences();
-	if (!uri)
+int isDNASequenceURI(Document* doc, const char* uri) {
+/*	lazyCreateAllDNASequences();*/
+	if (!doc || !uri)
 		return 0;
 	int n;
 	char* candidate;
 	DNASequence* seq;
-	for (n=0; n < getNumDNASequences(); n++) {
-		seq = getNthDNASequence(n);
+	for (n=0; n < getNumDNASequences(doc); n++) {
+		seq = getNthDNASequence(doc, n);
 		candidate = getSBOLObjectURI(seq->base);
 		if (candidate && strcmp(candidate, uri) == 0)
 			return 1;
@@ -130,9 +123,9 @@ char* getDNASequenceNucleotides(const DNASequence* seq) {
 	    return getNucleotidesProperty(seq->nucleotides);
 }
 
-DNASequence* getNthDNASequence(int n) {
-	if (getNumDNASequences() > n && n >= 0)
-		return (DNASequence*) getNthPointerInArray(allDNASequences, n);
+DNASequence* getNthDNASequence(Document* doc, int n) {
+	if (doc && getNumDNASequences(doc) > n && n >= 0)
+		return (DNASequence*) getNthPointerInArray(doc->allDNASequences, n);
 	else
 		return NULL;
 }
@@ -153,13 +146,15 @@ void printDNASequence(const DNASequence* seq, int tabs) {
 	printf("\n");
 }
 
-void printAllDNASequences() {
+void printAllDNASequences(Document* doc) {
+	if (!doc)
+		return;
 	int n;
-	int num = getNumDNASequences();
+	int num = getNumDNASequences(doc);
 	if (num > 0) {
 	    printf("%i sequences:\n", num);
 	    for (n=0; n<num; n++)
-	        printDNASequence(getNthDNASequence(n), 1);
+	        printDNASequence(getNthDNASequence(doc, n), 1);
 	}
 }
 
