@@ -61,6 +61,17 @@ class TestSBOLObject(unittest.TestCase):
         self.assertEqual(len(self.uris), sbol.libsbol.getNumSBOLObjects())
         self.assertEqual(len(self.uris), len(sbol.ALL_SBOL_OBJECTS.sbol_objects))
 
+    def tearDown(self):
+        self.assertEqual(len(self.uris), len(sbol.ALL_SBOL_OBJECTS.sbol_objects))
+        self.assertEqual(len(self.uris), sbol.libsbol.getNumSBOLObjects())
+        del self.testees
+        try:
+            self.assertEqual(sbol.libsbol.getNumSBOLObjects(), 0)
+        except AssertionError:
+            # this test failed, but still want to protect the others
+            sbol.libsbol.cleanupSBOLCore()
+            raise
+
     def createTestees(self):
         for obj in (sbol.DNASequence,
                     sbol.SequenceAnnotation,
@@ -76,17 +87,6 @@ class TestSBOLObject(unittest.TestCase):
             uri = self.uris[n]
             self.assertEqual(testee.uri, uri)
             self.assertReadOnly(testee, 'uri')
-
-    def tearDown(self):
-        self.assertEqual(len(self.uris), len(sbol.ALL_SBOL_OBJECTS.sbol_objects))
-        self.assertEqual(len(self.uris), sbol.libsbol.getNumSBOLObjects())
-        del self.testees
-        try:
-            self.assertEqual(sbol.libsbol.getNumSBOLObjects(), 0)
-        except AssertionError:
-            # this test failed, but still want to protect the others
-            sbol.libsbol.cleanupSBOLCore()
-            raise
 
 class TestSBOLCompoundObject(TestSBOLObject):
     def createTestees(self):
@@ -168,7 +168,15 @@ class TestSequenceAnnotation(TestSBOLObject):
         self.testees[0].subcomponent = com
         self.assertEquals(self.testees[0].subcomponent, com)
 
-    def testPrecedes(self):     pass
+    def testPrecedes(self):
+        for n in range(NUM_SLOW_TESTS):
+            self.assertEqual(len(self.testees[0].precedes), n)
+            uri = random_uri()
+            self.uris.append(uri)
+            ann = sbol.SequenceAnnotation(uri)
+            self.assertFalse(ann in self.testees[0].precedes)
+            self.testees[0].precedes += ann
+            self.assertTrue(ann in self.testees[0].precedes)
 
 class TestDNAComponent(TestSBOLCompoundObject):
     def createTestees(self):
@@ -176,7 +184,14 @@ class TestDNAComponent(TestSBOLCompoundObject):
         self.uris.append(uri)
         self.testees.append( sbol.DNAComponent(uri) )
 
-    def testSequence(self):    pass
+    def testSequence(self):
+        self.assertEquals(self.testees[0].sequence, None)
+        uri = random_uri()
+        self.uris.append(uri)
+        seq = sbol.DNASequence(uri)
+        self.testees[0].sequence = seq
+        self.assertEquals(self.testees[0].sequence, seq)
+
     def testAnnotations(self): pass
 
 class TestCollection(TestSBOLCompoundObject):
