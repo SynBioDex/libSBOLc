@@ -30,4 +30,6 @@ typedef struct _SequenceAnnotation  SequenceAnnotation;
 typedef struct _DNAComponent        DNAComponent;
 typedef struct _Collection          Collection;
 
+typedef struct _Document            Document;
+
 #endif

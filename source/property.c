@@ -125,8 +125,11 @@ void printTextProperty(const TextProperty* pro) {
  * URIProperty
  ***************/
 
-URIProperty* createURIProperty() {
+URIProperty* createURIProperty(Document* doc) {
+	if (!doc)
+		return NULL;
 	URIProperty* pro = malloc(sizeof(URIProperty));
+	pro->doc = doc;
 	pro->uri = createTextProperty();
 	return pro;
 }
@@ -135,13 +138,15 @@ void deleteURIProperty(URIProperty* pro) {
 	if (pro) {
 		if (pro->uri)
 			deleteTextProperty(pro->uri);
+		if (pro->doc)
+			pro->doc = NULL;
 		free(pro);
 		pro = NULL;
 	}
 }
 
 void setURIProperty(URIProperty* pro, const char* uri) {
-	if (pro && uri && !isSBOLObjectURI(uri))
+	if (pro && pro->doc && uri && !isSBOLObjectURI(pro->doc, uri))
 		setTextProperty(pro->uri, uri);
 }
 

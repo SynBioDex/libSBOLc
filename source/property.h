@@ -93,11 +93,12 @@ void printTextProperty(const TextProperty* pro);
 /// of values that aren't already in use as the
 /// uri of an SBOLObject.
 struct _URIProperty {
+	Document* doc;     ///< For verifying uniqueness
 	TextProperty* uri;
 };
 
 /// Create an empty URIProperty.
-URIProperty* createURIProperty();
+URIProperty* createURIProperty(Document* doc);
 
 /// Delete a URIProperty.
 /// The stored URI needs to be freed separately.
