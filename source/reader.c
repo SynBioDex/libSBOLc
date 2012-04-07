@@ -16,6 +16,7 @@
 // these are static mainly to avoid passing them around constantly
 static xmlDoc          *DOCUMENT;
 static xmlXPathContext *CONTEXT;
+static Document        *DESTINATION;
 
 /*********************
  * utility functions
@@ -156,7 +157,7 @@ static void readDNASequenceContent(xmlNode *node) {
 
 	// create DNASequence
 	uri = getNodeURI(node);
-	seq = createDNASequence((char *)uri);
+	seq = createDNASequence(DESTINATION, (char *)uri);
 
 	// add nucleotides
 	path = BAD_CAST "./" NSPREFIX_SBOL ":" NODENAME_NUCLEOTIDES;
@@ -176,7 +177,7 @@ static void readSequenceAnnotationContent(xmlNode *node) {
 
 	// create SequenceAnnotation
 	ann_uri = getNodeURI(node);
-	ann = createSequenceAnnotation((char *)ann_uri);
+	ann = createSequenceAnnotation(DESTINATION, (char *)ann_uri);
 	xmlFree(ann_uri);
 
 	// add bioStart
@@ -242,7 +243,7 @@ static void readDNAComponentContent(xmlNode *node) {
 
     // create DNAComponent
     com_uri = getNodeURI(node);
-    com = createDNAComponent((char *)com_uri);
+    com = createDNAComponent(DESTINATION, (char *)com_uri);
     xmlFree(com_uri);
 
     // add displayID, name, description
@@ -291,7 +292,7 @@ static void readCollectionContent(xmlNode *node) {
 
     // create Collection
     col_uri = getNodeURI(node);
-    col = createCollection((char *)col_uri);
+    col = createCollection(DESTINATION, (char *)col_uri);
     xmlFree(col_uri);
 
     // add displayID, name, description
@@ -330,7 +331,8 @@ static void readCollectionReferences(xmlNode *node) {
  * main parsing function
  *************************/
 
-void readSBOLCore(char* filename) {
+void readSBOLCore(Document* destination, char* filename) {
+	DESTINATION = destination
 
 	// parse
 	safeXmlInitParser();
@@ -368,5 +370,6 @@ void readSBOLCore(char* filename) {
 	// clean up
 	xmlXPathFreeContext(CONTEXT);
 	xmlFreeDoc(DOCUMENT);
+	DESTINATION = NULL;
 	xmlCleanupParser();
 }

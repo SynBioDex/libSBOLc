@@ -67,6 +67,7 @@ static void writeCollection(Collection* col);
 /// Create, validate, and save an XML document based on
 /// the SBOLObjects currently in memory. Those objects
 /// still need to be deleted afterwards.
-SBOLAPIEXPORTS int writeSBOLCore(const char* filename);
+/// @todo can doc be const?
+SBOLAPIEXPORTS int writeSBOLCore(Document* doc, const char* filename);
 
 #endif

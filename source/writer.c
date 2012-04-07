@@ -242,22 +242,22 @@ static void writeCollection(Collection* col) {
  * main write function
  ***********************/
 
-int writeSBOLCore(const char* filename) {
+int writeSBOLCore(Document* doc, const char* filename) {
 	int n;
 	startSBOLDocument();
 
 	// write collections
 	Collection* col;
-	for (n=0; n<getNumCollections(); n++) {
-		col = getNthCollection(n);
+	for (n=0; n<getNumCollections(doc); n++) {
+		col = getNthCollection(doc, n);
 		if (!alreadyPROCESSED((void *)col))
 			writeCollection(col);
 	}
 
 	// write components
 	DNAComponent* com;
-	for (n=0; n<getNumDNAComponents(); n++) {
-		com = getNthDNAComponent(n);
+	for (n=0; n<getNumDNAComponents(doc); n++) {
+		com = getNthDNAComponent(doc, n);
 		if (!alreadyPROCESSED((void *)com))
 			writeDNAComponent(com);
 	}
@@ -269,16 +269,16 @@ int writeSBOLCore(const char* filename) {
 	
 	// write orphaned sequences
 	DNASequence* seq;
-	for (n=0; n<getNumDNASequences(); n++) {
-		seq = getNthDNASequence(n);
+	for (n=0; n<getNumDNASequences(doc); n++) {
+		seq = getNthDNASequence(doc, n);
 		if (!alreadyPROCESSED((void *)seq))
 			writeDNASequence(seq);
 	}
 	
 	// write orphaned sequence annotations
 	SequenceAnnotation* ann;
-	for (n=0; n<getNumSequenceAnnotations(); n++) {
-		ann = getNthSequenceAnnotation(n);
+	for (n=0; n<getNumSequenceAnnotations(doc); n++) {
+		ann = getNthSequenceAnnotation(doc, n);
 		if (!alreadyPROCESSED((void *)ann))
 			writeSequenceAnnotation(ann);
 	}
