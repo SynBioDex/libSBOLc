@@ -10,7 +10,7 @@ class PositionError(SBOLError): 'Invalid position'
 class StrandError(SBOLError):   'Invalid strand polarity'
 
 __all__ = (
-    'SBOLError'
+    'SBOLError',
     'InternalError',
     'URIError',
     'PositionError',
