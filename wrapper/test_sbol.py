@@ -2,7 +2,6 @@ import unittest
 import sbol
 import random
 import string
-import pdb
 
 URIS_USED = set()
 RANDOM_CHARS = string.ascii_letters
@@ -53,6 +52,7 @@ class TestSBOLObject(unittest.TestCase):
         try:
             self.assertEqual(sbol.libsbol.getNumSBOLObjects(), 0)
         except AssertionError:
+            # this test fails, but don't want to mess up the rest
             sbol.libsbol.cleanupSBOLCore()
         self.uris    = []
         self.testees = []
@@ -185,18 +185,17 @@ class TestCollection(TestSBOLCompoundObject):
         self.uris.append(uri)
         self.testees.append( sbol.Collection(uri) )
 
-#    def testComponents(self):
-#        pdb.set_trace()
-#        col = self.testees[0]
-#        for n in range(1):
-#            self.assertEqual(len(col.components), n)
-#            uri = random_uri()
-#            self.uris.append(uri)
-#            com = sbol.DNAComponent(uri)
-#            self.assertFalse(com in col.components)
-#            col.components += com
-#            self.assertTrue(com in col.components)
-#            self.assertEqual(len(col.components), n+1)
+    def testComponents(self):
+        col = self.testees[0]
+        for n in range(NUM_SLOW_TESTS):
+            self.assertEqual(len(col.components), n)
+            uri = random_uri()
+            self.uris.append(uri)
+            com = sbol.DNAComponent(uri)
+            self.assertFalse(com in col.components)
+            col.components += com
+            self.assertTrue(com in col.components)
+            self.assertEqual(len(col.components), n+1)
 
 if __name__ == '__main__':
     unittest.main()

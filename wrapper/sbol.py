@@ -100,7 +100,7 @@ class SBOLObjectArray(object):
         # These references aren't used for anything so far,
         # but they keep Python from garbage collecting the
         # objects corresponding to pointers in the array.
-        #self.refs = set()
+        self.refs = set()
 
     def __len__(self):
         "implements 'len(array)'"
@@ -148,7 +148,7 @@ class SBOLObjectArray(object):
         "implements 'array += obj'"
         if obj in self:
             raise SBOLError('Duplicate obj %s' % obj)
-        #self.refs.add(obj)
+        self.refs.add(obj)
         self.add_fn(self.ptr, obj.ptr)
         return self
 
