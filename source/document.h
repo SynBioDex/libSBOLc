@@ -11,10 +11,14 @@
 #include "constants.h"
 #include "prototypes.h"
 
-/// Represents an SBOL document.
-/// Holds pointers to all the SBOL objects in the document,
-/// and can be read from and written to a file.
-/// Deleting this frees them all from memory.
+/// Represents an SBOL document that can be read from or written to a file.
+/// It also holds pointers to all the SBOL objects in the document,
+/// so it can be used for iterating through all the objects of a certain kind,
+/// retrieving the object with a certain URI, checking the type of a pointer, etc.
+/// Deleting a Document also deletes the SBOL objects it contains.
+/// Each SBOL object must be associated with a document, for two main reasons:
+/// to ensure that its URI is unique, and to make memory management simpler.
+/// @todo Objects should be able to belong to multiple documents
 struct _Document{
     PointerArray* sequences;   ///< All the DNASequences in the Document.
     PointerArray* annotations; ///< All the SequenceAnnotations in the Document.
@@ -29,25 +33,21 @@ SBOLAPIEXPORTS Document* createDocument();
 /// SBOL objects contained in the Document.
 SBOLAPIEXPORTS void deleteDocument(Document* doc);
 
-/// Find out whether there's an SBOL object with this URI in this Document.
-/// Useful for avoiding duplicates.
-SBOLAPIEXPORTS int isSBOLObjectURI(Document* doc, const char* uri);
-
 /// Find out the total number of SBOL objects in a Document.
 SBOLAPIEXPORTS int getNumSBOLObjects(Document* doc);
 
-/// Get the total number of DNASequences in emory.
+/// Get the total number of DNASequences in a Document.
 SBOLAPIEXPORTS int getNumDNASequences(const Document* doc);
 
 /// Get the total number of SequenceAnnotations in a Document.
 /// Useful as a loop condition.
 SBOLAPIEXPORTS int getNumSequenceAnnotations(Document* doc);
 
-/// Get the total number of DNAComponents.
+/// Get the total number of DNAComponents in a Document.
 /// Useful as a loop condition.
 SBOLAPIEXPORTS int getNumDNAComponents(const Document* doc);
 
-/// Get the total number of Collections.
+/// Get the total number of Collections in a Document.
 /// Useful as a loop condition.
 SBOLAPIEXPORTS int getNumCollections(Document* doc);
 
@@ -57,37 +57,41 @@ SBOLAPIEXPORTS int isDNASequence(const Document* doc, const void* pointer);
 /// Find out whether a pointer points to a SequenceAnnotation in this Document.
 SBOLAPIEXPORTS int isSequenceAnnotation(const Document* doc, const void* pointer);
 
-/// Find out whether this pointer points to a DNAComponent.
+/// Find out whether this pointer points to a DNAComponent in this Document.
 SBOLAPIEXPORTS int isDNAComponent(const Document* doc, const void* pointer);
 
-/// Find out whether this pointer points to a Collection.
+/// Find out whether this pointer points to a Collection in this Document.
 SBOLAPIEXPORTS int isCollection(Document* doc, const void* pointer);
 
-/// Find out whether there's a DNASequence with this URI.
+/// Find out whether there's a DNASequence with this URI in this Document.
 SBOLAPIEXPORTS int isDNASequenceURI(Document* doc, const char* uri);
 
 /// Find out whether this URI is associated with a SequenceAnnotation in this Document.
 SBOLAPIEXPORTS int isSequenceAnnotationURI(Document* doc, const char* uri);
 
-/// Find out if there's a DNAComponent with this uri.
+/// Find out if there's a DNAComponent with this uri in this Document.
 SBOLAPIEXPORTS int isDNAComponentURI(Document* doc, const char* uri);
 
-/// Find out if there's a Collection with this uri.
+/// Find out if there's a Collection with this uri in this Document.
 SBOLAPIEXPORTS int isCollectionURI(Document* doc, const char* uri);
 
-/// Get the DNASequence associated with this URI.
+/// Find out whether there's an SBOL object with this URI in this Document.
+/// Useful for avoiding duplicates.
+SBOLAPIEXPORTS int isSBOLObjectURI(Document* doc, const char* uri);
+
+/// Get the DNASequence associated with this URI in this Document.
 /// Returns NULL on failure.
 SBOLAPIEXPORTS DNASequence* getDNASequence(Document* doc, const char* uri);
 
-/// Get the SequenceAnnotation associated with this URI.
+/// Get the SequenceAnnotation associated with this URI in this Document.
 /// Returns NULL on failure.
 SBOLAPIEXPORTS SequenceAnnotation* getSequenceAnnotation(Document* doc, const char* uri);
 
-/// Get the DNAComponent associated with this uri.
+/// Get the DNAComponent associated with this uri in this Document.
 /// Returns NULL on failure.
 SBOLAPIEXPORTS DNAComponent* getDNAComponent(Document* doc, const char* uri);
 
-/// Get the Collection associated with this uri.
+/// Get the Collection associated with this uri in this Document.
 /// Returns NULL on failure.
 SBOLAPIEXPORTS Collection* getCollection(Document* doc, const char* uri);
 
@@ -99,15 +103,15 @@ SBOLAPIEXPORTS DNASequence* getNthDNASequence(Document* doc, int n);
 /// Useful for iterating through them.
 SBOLAPIEXPORTS SequenceAnnotation* getNthSequenceAnnotation(Document* doc, int n);
 
-/// Get the Nth DNAComponent.
+/// Get the Nth DNAComponent in a Document.
 /// Useful for iterating over all of them.
 SBOLAPIEXPORTS DNAComponent* getNthDNAComponent(Document* doc, int n);
 
-/// Get the Nth Collection.
+/// Get the Nth Collection in a Document.
 /// Useful for iterating over all of them.
 SBOLAPIEXPORTS Collection* getNthCollection(Document* doc, int n);
 
-/// Print a Document to stdout.
+/// Print all the SBOL objects in a Document to stdout.
 /// Mainly for debugging.
 SBOLAPIEXPORTS void printDocument(Document* doc);
 

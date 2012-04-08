@@ -38,7 +38,7 @@
 /// 
 /// @section tour A brief tour of the source code
 /// 
-/// There are a bunch of C source files, but they fall into four general
+/// There are a bunch of C source files, but they fall into a few general
 /// categories: 
 /// 
 /// * dnasequence.h, sequenceannotation.h, dnacomponent.h, and collection.h
@@ -46,7 +46,9 @@
 /// 
 /// * array.h, object.h, and property.h define building blocks for those objects.
 /// 
-/// * validator.h, reader.h, and writer.h perform global operations.
+/// * document.h defines an SBOL Document.
+/// 
+/// * validator.h, reader.h, and writer.h perform operations on Documents.
 ///   They each have one main algorithm, and maybe some non-exported
 ///   supporting functions.
 /// 
