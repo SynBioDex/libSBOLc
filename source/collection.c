@@ -17,16 +17,8 @@ Collection* createCollection(Document* doc, const char* uri) {
 	col->doc         = doc;
 	col->base        = createSBOLCompoundObject(doc, uri);
 	col->components  = createPointerArray();
-	insertPointerIntoArray(doc->allCollections, col);
+	registerCollection(col);
 	return col;
-}
-
-static void removeCollection(Document* doc, Collection* col) {
-	if (doc && doc->allCollections && col) {
-		int index = indexOfPointerInArray(doc->allCollections, col);
-		if (index >= 0)
-			removePointerFromArray(doc->allCollections, index);
-	}
 }
 
 void deleteCollection(Collection* col) {
@@ -46,42 +38,6 @@ void deleteCollection(Collection* col) {
 		free(col);
 		col = NULL;
 	}
-}
-
-int isCollection(Document* doc, const void* pointer) {
-	if (doc && doc->allCollections && pointer) {
-		return pointerContainedInArray(doc->allCollections, pointer);
-	}
-}
-
-int isCollectionURI(Document* doc, const char* uri) {
-	if (!doc || !uri)
-		return 0;
-	int n;
-	char* candidate;
-	Collection* col;
-	for (n=0; n < getNumCollections(doc); n++) {
-		col = getNthCollection(doc, n);
-		candidate = getCollectionURI(col);
-		if (candidate && strcmp(candidate, uri) == 0)
-			return 1;
-	}
-	return 0;
-}
-
-Collection* getCollection(Document* doc, const char* uri) {
-	if (!doc || !uri)
-		return NULL;
-	int n;
-	char* candidate;
-	Collection* col;
-	for (n=0; n < getNumCollections(doc); n++) {
-		col = getNthCollection(doc, n);
-		candidate = getCollectionURI(col);
-		if (candidate && strcmp(candidate, uri) == 0)
-			return col;
-	}
-	return NULL;
 }
 
 char* getCollectionURI(const Collection* col) {
@@ -112,25 +68,11 @@ char* getCollectionDescription(const Collection* col) {
 		return NULL;
 }
 
-int getNumCollections(Document* doc) {
-	if (doc && doc->allCollections)
-		return getNumPointersInArray(doc->allCollections);
-	else
-		return 0; /// @todo return -1 instead?
-}
-
 int getNumDNAComponentsIn(const Collection* col) {
 	if (col)
 		return getNumPointersInArray(col->components);
 	else
 		return -1;
-}
-
-Collection* getNthCollection(Document* doc, int n) {
-    if (doc && getNumCollections(doc) > n && n >= 0)
-        return (Collection *)getNthPointerInArray(doc->allCollections, n);
-    else
-        return NULL;
 }
 
 DNAComponent* getNthDNAComponentIn(const Collection* col, int n) {
@@ -198,31 +140,5 @@ void printCollection(const Collection* col, int tabs) {
             }
         }
     }
-}
-
-void printAllCollections(Document* doc) {
-	if (!doc)
-		return;
-    int n;
-    int num = getNumCollections(doc);
-    if (num > 0) {
-        printf("%i collections:\n", num);
-        for (n=0; n<num; n++)
-            printCollection(getNthCollection(doc, n), 1);
-    }
-}
-
-void cleanupCollections(Document* doc) {
-	if (doc && doc->allCollections) {
-		int n;
-		Collection* col;
-		for (n=getNumCollections(doc)-1; n>=0; n--) {
-            col = getNthCollection(doc, n);
-			deleteCollection(col);
-			col = NULL;
-		}
-		deletePointerArray(doc->allCollections);
-		doc->allCollections = NULL;
-	}
 }
 

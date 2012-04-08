@@ -11,10 +11,6 @@
 #include "object.h"
 #include "dnasequence.h"
 
-/**************************
-	create/destroy
-***************************/
-
 DNAComponent* createDNAComponent(Document* doc, const char* uri) {
 	if (!doc || !uri || isSBOLObjectURI(doc, uri))
 	    return NULL;
@@ -23,16 +19,8 @@ DNAComponent* createDNAComponent(Document* doc, const char* uri) {
 	com->base        = createSBOLCompoundObject(doc, uri);
 	com->dnaSequence = NULL;
 	com->annotations = createPointerArray();
-	insertPointerIntoArray(doc->allDNAComponents, com);
+	registerDNAComponent(com);
 	return com;
-}
-
-void removeDNAComponent(Document* doc, DNAComponent* com) {
-	if (doc && doc->allDNAComponents && com) {
-		int index = indexOfPointerInArray(doc->allDNAComponents, com);
-		if (index >= 0)
-			removePointerFromArray(doc->allDNAComponents, index);
-	}
 }
 
 void deleteDNAComponent(DNAComponent* com) {
@@ -54,86 +42,30 @@ void deleteDNAComponent(DNAComponent* com) {
 	}
 }
 
-/**************************
-	is... functions
-***************************/
-
-int isDNAComponent(const Document* doc, const void* ptr) {
-	if (doc) {
-		return (int) indexOfPointerInArray(doc->allDNAComponents, ptr) >= 0;
-	} else
-		return 0; /// @todo return -1 instead?
-}
-
-int isDNAComponentURI(Document* doc, const char* uri) {
-	if (!doc || !doc->allDNAComponents || !uri)
-		return 0;
-	int n;
-	char* candidate;
-	DNAComponent* com;
-	for (n=0; n < getNumDNAComponents(doc); n++) {
-		com = getNthDNAComponent(doc, n);
-		candidate = getDNAComponentURI(com);
-		if (candidate && strcmp(candidate, uri) == 0)
-			return 1;
+void printDNAComponent(const DNAComponent* com, int tabs) {
+	if (!com)
+		return;
+	indent(tabs);   printf("%s\n", getDNAComponentURI(com));
+	indent(tabs+1); printf("displayID:   %s\n", getDNAComponentDisplayID(com));
+	indent(tabs+1); printf("name:        %s\n", getDNAComponentName(com));
+	indent(tabs+1); printf("description: %s\n", getDNAComponentDescription(com));
+	indent(tabs+1); printf("sequence:    %s\n", getDNASequenceURI(com->dnaSequence));
+	
+	SequenceAnnotation* seq;
+	int i;
+	int num = getNumSequenceAnnotationsFor(com);
+	if (num > 0) {
+		indent(tabs+1); printf("%i annotations:\n", num);
+		for (i=0; i<num; i++) {
+			seq = getNthSequenceAnnotationFor(com, i);
+			indent(tabs+2); printf("%s\n", getSequenceAnnotationURI(seq));
+		}
 	}
-	return 0;
 }
 
-/**************************
-	getNum... functions
-***************************/
-
-int getNumDNAComponents(const Document* doc) {
-	if (doc && doc->allDNAComponents)
-		return getNumPointersInArray(doc->allDNAComponents);
-	else
-		return 0; /// @todo return -1 instead?
-}
-
-int getNumSequenceAnnotationsFor(const DNAComponent* com) {
-	if (com)
-		return getNumPointersInArray(com->annotations);
-	else
-		return -1;
-}
-
-/**************************
-	getNth... functions
-***************************/
-
-DNAComponent* getNthDNAComponent(Document* doc, int n) {
-	if (doc && getNumDNAComponents(doc) > n && n >= 0)
-		return (DNAComponent *)getNthPointerInArray(doc->allDNAComponents, n);
-	else
-		return NULL;
-}
-
-SequenceAnnotation* getNthSequenceAnnotationFor(const DNAComponent* com, int n) {
-	if (com && getNumSequenceAnnotationsFor(com) > n && n >= 0)
-		return (SequenceAnnotation *)getNthPointerInArray(com->annotations, n);
-	else
-		return NULL;
-}
-
-/**************************
-	get... functions
-***************************/
-
-DNAComponent* getDNAComponent(Document* doc, const char* uri) {
-	if (!doc || !doc->allDNAComponents || !uri)
-		return NULL;
-	int n;
-	char* candidate;
-	DNAComponent* com;
-	for (n=0; n < getNumDNAComponents(doc); n++) {
-		com = getNthDNAComponent(doc, n);
-		candidate = getDNAComponentURI(com);
-		if (candidate && strcmp(candidate, uri) == 0)
-			return com;
-	}
-	return NULL;
-}
+/********************
+ * get... functions
+ ********************/
 
 char* getDNAComponentURI(const DNAComponent* com) {
 	if (com)
@@ -170,9 +102,9 @@ DNASequence* getDNAComponentSequence(DNAComponent* com) {
 		return NULL;
 }
 
-/**************************
-	set... functions
-***************************/
+/********************
+ * set... functions
+ ********************/
 
 void setDNAComponentURI(DNAComponent* com, const char* uri) {
 	if (com)
@@ -199,9 +131,9 @@ void setDNAComponentSequence(DNAComponent* com, DNASequence* seq) {
 		com->dnaSequence = seq;
 }
 
-/**************************
-	add annotation
-***************************/
+/************************
+ * annotation functions
+ ************************/
 
 // TODO make it clear this goes with SequenceAnnotation too
 void addSequenceAnnotation(DNAComponent* com, SequenceAnnotation* ann) {
@@ -210,53 +142,24 @@ void addSequenceAnnotation(DNAComponent* com, SequenceAnnotation* ann) {
 	}
 }
 
+int getNumSequenceAnnotationsFor(const DNAComponent* com) {
+	if (com)
+		return getNumPointersInArray(com->annotations);
+	else
+		return -1;
+}
+
+SequenceAnnotation* getNthSequenceAnnotationFor(const DNAComponent* com, int n) {
+	if (com && getNumSequenceAnnotationsFor(com) > n && n >= 0)
+		return (SequenceAnnotation *)getNthPointerInArray(com->annotations, n);
+	else
+		return NULL;
+}
+
+/// @todo where should this go?
 void setSequenceAnnotationSubComponent(SequenceAnnotation* ann, DNAComponent* com) {
 	if (ann) {
 		ann->subComponent = com;
-	}
-}
-
-void cleanupDNAComponents(Document* doc) {
-	if (doc && doc->allDNAComponents) {
-		int n;
-		DNAComponent* com;
-		for (n=getNumDNAComponents(doc)-1; n>=0; n--) {
-			com = getNthDNAComponent(doc, n);
-			deleteDNAComponent(com);
-		}
-		deletePointerArray(doc->allDNAComponents);
-		doc->allDNAComponents = NULL;
-	}
-}
-
-void printDNAComponent(const DNAComponent* com, int tabs) {
-	if (!com)
-		return;
-	indent(tabs);   printf("%s\n", getDNAComponentURI(com));
-	indent(tabs+1); printf("displayID:   %s\n", getDNAComponentDisplayID(com));
-	indent(tabs+1); printf("name:        %s\n", getDNAComponentName(com));
-	indent(tabs+1); printf("description: %s\n", getDNAComponentDescription(com));
-	indent(tabs+1); printf("sequence:    %s\n", getDNASequenceURI(com->dnaSequence));
-	
-	SequenceAnnotation* seq;
-	int i;
-	int num = getNumSequenceAnnotationsFor(com);
-	if (num > 0) {
-		indent(tabs+1); printf("%i annotations:\n", num);
-		for (i=0; i<num; i++) {
-			seq = getNthSequenceAnnotationFor(com, i);
-			indent(tabs+2); printf("%s\n", getSequenceAnnotationURI(seq));
-		}
-	}
-}
-
-void printAllDNAComponents(Document* doc) {
-	int n;
-	int num = getNumDNAComponents(doc);
-	if (num > 0) {
-		printf("%i components:\n", num);
-		for (n=0; n<num; n++)
-			printDNAComponent(getNthDNAComponent(doc, n), 1);
 	}
 }
 

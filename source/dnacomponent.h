@@ -26,24 +26,6 @@ SBOLAPIEXPORTS DNAComponent* createDNAComponent(Document* doc, const char* uri);
 /// it references.
 SBOLAPIEXPORTS void deleteDNAComponent(DNAComponent* com);
 
-/// Find out whether this pointer points to a DNAComponent.
-SBOLAPIEXPORTS int isDNAComponent(const Document* doc, const void* pointer);
-
-/// Find out if there's a DNAComponent with this uri.
-SBOLAPIEXPORTS int isDNAComponentURI(Document* doc, const char* uri);
-
-/// Get the total number of DNAComponents.
-/// Useful as a loop condition.
-SBOLAPIEXPORTS int getNumDNAComponents(const Document* doc);
-
-/// Get the Nth DNAComponent.
-/// Useful for iterating over all of them.
-SBOLAPIEXPORTS DNAComponent* getNthDNAComponent(Document* doc, int n);
-
-/// Get the DNAComponent associated with this uri.
-/// Returns NULL on failure.
-SBOLAPIEXPORTS DNAComponent* getDNAComponent(Document* doc, const char* uri);
-
 /// Get the number of SequenceAnnotations for a DNAComponent.
 SBOLAPIEXPORTS int getNumSequenceAnnotationsFor(const DNAComponent* com);
 
@@ -104,13 +86,5 @@ SBOLAPIEXPORTS void setSequenceAnnotationSubComponent(SequenceAnnotation* ann, D
 
 /// Print an outline of a DNAComponent to stdout.
 SBOLAPIEXPORTS void printDNAComponent(const DNAComponent* com, int tabs);
-
-/// Print an outline of all the DNAComponents to stdout.
-SBOLAPIEXPORTS void printAllDNAComponents(Document* doc);
-
-/// Delete all DNAComponents.
-/// To delete everything instead, use cleanupSBOLCore.
-/// @todo remove this? is it ever used?
-SBOLAPIEXPORTS void cleanupDNAComponents(Document* doc);
 
 #endif

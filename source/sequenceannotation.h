@@ -32,28 +32,6 @@ SBOLAPIEXPORTS char* getSequenceAnnotationURI(const SequenceAnnotation* ann);
 /// This doesn't delete any of the other structs it references.
 SBOLAPIEXPORTS void deleteSequenceAnnotation(SequenceAnnotation* ann);
 
-/// Get the SequenceAnnotation associated with this URI.
-/// Returns NULL on failure.
-/// @todo rename to reflect doc?
-SBOLAPIEXPORTS SequenceAnnotation* getSequenceAnnotation(Document* doc, const char* uri);
-
-/// Find out whether a pointer points to a SequenceAnnotation in this Document.
-/// @todo rename to reflect doc?
-SBOLAPIEXPORTS int isSequenceAnnotation(const Document* doc, const void* pointer);
-
-/// Find out whether this URI is associated with a SequenceAnnotation in this Document.
-SBOLAPIEXPORTS int isSequenceAnnotationURI(Document* doc, const char* uri);
-
-/// Get the total number of SequenceAnnotations in a Document.
-/// Useful as a loop condition.
-/// @todo rename to reflect doc
-SBOLAPIEXPORTS int getNumSequenceAnnotations(Document* doc);
-
-/// Get the Nth SequenceAnnotation in a Document.
-/// Useful for iterating through them.
-/// @todo rename to reflect doc
-SBOLAPIEXPORTS SequenceAnnotation* getNthSequenceAnnotation(Document* doc, int n);
-
 /// Find out where on the annotated DNAComponent this feature starts.
 SBOLAPIEXPORTS int getSequenceAnnotationStart(const SequenceAnnotation* ann);
 
@@ -99,20 +77,8 @@ SBOLAPIEXPORTS int precedes(const SequenceAnnotation* upstream, const SequenceAn
 
 /// @todo removePrecedesRelationship
 
-/// Delete all SequenceAnnotations from memory.
-/// This doesn't delete any of the other structs they reference;
-/// for that you want cleanupSBOLCore.
-/// @todo remove this? is it ever used?
-/// @todo rename to reflect doc
-SBOLAPIEXPORTS void cleanupSequenceAnnotations(Document* doc);
-
 /// Print an outline of a SequenceAnnotation to stdout.
 /// Mainly for debugging.
 SBOLAPIEXPORTS void printSequenceAnnotation(const SequenceAnnotation* seq, int tabs);
-
-/// Print outlines of all SequenceAnnotations in memory to stdout.
-/// Mainly for debugging.
-/// @todo rename to reflect doc
-SBOLAPIEXPORTS void printAllSequenceAnnotations(Document* doc);
 
 #endif

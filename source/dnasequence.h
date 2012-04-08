@@ -27,19 +27,6 @@ SBOLAPIEXPORTS DNASequence* createDNASequence(Document* doc, char* uri);
 /// no other freeing should be needed
 SBOLAPIEXPORTS void deleteDNASequence(DNASequence* seq);
 
-/// Get the total number of DNASequences in emory.
-/// @todo rename to reflect doc
-SBOLAPIEXPORTS int getNumDNASequences(const Document* doc);
-
-/// Get the Nth DNASequnce in memory.
-/// @todo rename to reflect doc
-SBOLAPIEXPORTS DNASequence* getNthDNASequence(Document* doc, int n);
-
-/// Get the DNASequence associated with this URI.
-/// Returns NULL on failure.
-/// @todo rename to reflect doc
-SBOLAPIEXPORTS DNASequence* getDNASequence(Document* doc, const char* uri);
-
 /// Get a copy of the nucleotides contained in this DNASequence.
 /// @return A string that needs to be freed.
 /// @todo rename to getDNASequenceNucleotides?
@@ -50,10 +37,6 @@ SBOLAPIEXPORTS char* getDNASequenceNucleotides(const DNASequence* seq);
 /// @todo rename to setDNASequenceNucleotides?
 SBOLAPIEXPORTS void setDNASequenceNucleotides(DNASequence* seq, const char* nucleotides);
 
-/// Find out whether there's a DNASequence with this URI.
-/// @todo rename to reflect doc
-SBOLAPIEXPORTS int isDNASequenceURI(Document* doc, const char* uri);
-
 /// Get the URI of a DNASequence.
 /// Returns NULL on failure.
 SBOLAPIEXPORTS char* getDNASequenceURI(const DNASequence* seq);
@@ -61,16 +44,5 @@ SBOLAPIEXPORTS char* getDNASequenceURI(const DNASequence* seq);
 /// Print a DNASequence to stdout.
 /// Mainly for debugging.
 SBOLAPIEXPORTS void printDNASequence(const DNASequence* seq, int tabs);
-
-/// Print all DNASequences to stdout.
-/// Mainly for debugging.
-/// @todo rename to reflect doc
-SBOLAPIEXPORTS void printAllDNASequences(Document* doc);
-
-/// Delete all DNASequences from memory.
-/// There shouldn't be anything left to free
-/// because DNASequences are self-contained.
-/// @todo rename to reflect doc
-SBOLAPIEXPORTS void cleanupDNASequences(Document* doc);
 
 #endif

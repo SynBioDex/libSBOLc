@@ -5,6 +5,7 @@
 
 #include "utilities.h"
 #include "array.h"
+#include "document.h"
 #include "dnasequence.h"
 #include "sequenceannotation.h"
 #include "dnacomponent.h"

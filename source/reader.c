@@ -6,11 +6,11 @@
 #include <libxml/xpath.h>
 
 #include "array.h"
+#include "document.h"
 #include "dnasequence.h"
 #include "sequenceannotation.h"
 #include "dnacomponent.h"
 #include "collection.h"
-
 #include "reader.h"
 
 // these are static mainly to avoid passing them around constantly

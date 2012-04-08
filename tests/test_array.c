@@ -141,17 +141,6 @@ void TestAnnotationIndexing(CuTest* tc) {
 	deleteDocument(doc);
 }
 
-void TestCleanupSequenceAnnotations(CuTest* tc) {
-	Document* doc = createDocument();
-	int num;
-	for (num=0; num<NUM_FAST_TESTS; num++)
-		createSequenceAnnotation(doc, randomUniqueURI(doc));
-	CuAssertIntEquals(tc, NUM_FAST_TESTS, getNumSequenceAnnotations(doc));
-	cleanupSequenceAnnotations(doc);
-	CuAssertIntEquals(tc, 0, getNumSequenceAnnotations(doc));
-	deleteDocument(doc);
-}
-
 void TestSingleCollection(CuTest* tc) {
 	Document* doc = createDocument();
 	CuAssertIntEquals(tc, 0, getNumCollections(doc));
@@ -229,7 +218,6 @@ CuSuite* ArrayGetSuite() {
 	SUITE_ADD_TEST(arrayTests, TestSingleAnnotation);
 	SUITE_ADD_TEST(arrayTests, TestNumAnnotations);
 	SUITE_ADD_TEST(arrayTests, TestAnnotationIndexing);
-	SUITE_ADD_TEST(arrayTests, TestCleanupSequenceAnnotations);
 	SUITE_ADD_TEST(arrayTests, TestSingleCollection);
 	SUITE_ADD_TEST(arrayTests, TestNumCollections);
 	SUITE_ADD_TEST(arrayTests, TestCollectionIndexing);

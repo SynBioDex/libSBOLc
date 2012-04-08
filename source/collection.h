@@ -25,24 +25,6 @@ SBOLAPIEXPORTS Collection* createCollection(Document* doc, const char* uri);
 /// it references; For that you want cleanupSBOLCore.
 SBOLAPIEXPORTS void deleteCollection(Collection* col);
 
-/// Find out whether this pointer points to a Collection.
-SBOLAPIEXPORTS int isCollection(Document* doc, const void* pointer);
-
-/// Find out if there's a Collection with this uri.
-SBOLAPIEXPORTS int isCollectionURI(Document* doc, const char* uri);
-
-/// Get the Collection associated with this uri.
-/// Returns NULL on failure.
-SBOLAPIEXPORTS Collection* getCollection(Document* doc, const char* uri);
-
-/// Get the total number of Collections.
-/// Useful as a loop condition.
-SBOLAPIEXPORTS int getNumCollections(Document* doc);
-
-/// Get the Nth Collection.
-/// Useful for iterating over all of them.
-SBOLAPIEXPORTS Collection* getNthCollection(Document* doc, int n);
-
 /// Get the number of DNAComponents in a Collection.
 /// @todo rename to NOT reflect doc
 SBOLAPIEXPORTS int getNumDNAComponentsIn(const Collection* col);
@@ -89,13 +71,5 @@ SBOLAPIEXPORTS int dnaComponentInCollection(const DNAComponent* com, const Colle
 
 /// Print an outline of a Collection to stdout.
 SBOLAPIEXPORTS void printCollection(const Collection* col, int tabs);
-
-/// Print an outline of all the Collections to stdout.
-SBOLAPIEXPORTS void printAllCollections(Document* doc);
-
-/// Delete all Collections.
-/// To delete everything instead, use cleanupSBOLCore.
-/// @todo remove this? is it ever used?
-SBOLAPIEXPORTS void cleanupCollections(Document* doc);
 
 #endif
