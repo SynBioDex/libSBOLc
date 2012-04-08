@@ -9,7 +9,7 @@
 
 #define VALID_EXAMPLES_DIR   SBOL_EXAMPLE_DIR "/xml/valid"
 #define INVALID_EXAMPLES_DIR SBOL_EXAMPLE_DIR "/xml/invalid"
-#define TEST_OUTPUT_DIR      SBOL_BUILD_DIR
+#define TEST_OUTPUT_DIR      SBOL_RELEASE_DIR "/tests"
 
 struct _CuTest;
 

@@ -1,3 +1,9 @@
+# set variables in source code
+CONFIGURE_FILE(
+	${SBOL_SOURCE_DIR}/constants.h.in
+	${SBOL_SOURCE_DIR}/constants.h
+)
+
 #adjust paths
 SET( SBOL_RELEASE_DIR       ${SBOL_RELEASE_DIR}/library )
 SET( EXECUTABLE_OUTPUT_PATH ${SBOL_RELEASE_DIR}         )
@@ -16,12 +22,6 @@ INCLUDE_DIRECTORIES( ${LIBXML2_INCLUDE_DIR} )
 FILE( GLOB SBOL_SOURCE_FILES
 	${SBOL_SOURCE_DIR}/*.h
 	${SBOL_SOURCE_DIR}/*.c
-)
-
-# set variables in source code
-CONFIGURE_FILE(
-	${SBOL_SOURCE_DIR}/constants.h.in
-	${SBOL_SOURCE_DIR}/constants.h
 )
 
 # build shared library for release
