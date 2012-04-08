@@ -5,14 +5,15 @@
 // which will write xml files for all the CreateValid* examples.
 
 void CreateValid11() {
+	Document* doc = createDocument();
 	// collection
-	Collection *col = createCollection("http://example.com/collection1");
+	Collection *col = createCollection(doc, "http://example.com/collection1");
 	setCollectionDisplayID(col, "Coll1");
 	setCollectionName(col, "Collection1");
 	setCollectionDescription(col, "A collection may contain multiple components");
 	// components
-	DNAComponent *dc1 = createDNAComponent("http://example.com/dc1");
-	DNAComponent *dc2 = createDNAComponent("http://example.com/dc2");
+	DNAComponent *dc1 = createDNAComponent(doc, "http://example.com/dc1");
+	DNAComponent *dc2 = createDNAComponent(doc, "http://example.com/dc2");
 	setDNAComponentDisplayID(dc1, "DC1");
 	setDNAComponentDisplayID(dc2, "DC2");
 	setDNAComponentName(dc1, "DnaComponent1");
@@ -20,8 +21,9 @@ void CreateValid11() {
 	addDNAComponentToCollection(col, dc1);
 	addDNAComponentToCollection(col, dc2);
 	// sequence
-	DNASequence *ds1 = createDNASequence("http://example.com/ds1");
+	DNASequence *ds1 = createDNASequence(doc, "http://example.com/ds1");
 	setDNASequenceNucleotides(ds1, "tccctatcagtgat");
 	setDNAComponentSequence(dc1, ds1);
+	deleteDocument(doc);
 }
 

@@ -2,39 +2,40 @@
 #include <stdlib.h>
 #include "CuTest.h"
 #include "utilities.h"
+#include "document.h"
 #include "collection.h"
 
 #define NUM_FAST_TESTS 10000
 
 void TestCreateEmptyCollection(CuTest* tc) {
-	cleanupCollections();
+	Document* doc = createDocument();
 	
-	Collection* col = createCollection("");
+	Collection* col = createCollection(doc, "");
 	CuAssertStrEquals(tc, "", getCollectionURI(col));
 	deleteCollection(col);
 
-	cleanupCollections();
+	deleteDocument(doc);
 }
 
 void TestCreateNullCollection(CuTest* tc) {
-	cleanupCollections();
+	Document* doc = createDocument();
 	
-	Collection* col = createCollection(NULL);
+	Collection* col = createCollection(doc, NULL);
 	CuAssertStrEquals(tc, NULL, getCollectionURI(col));
 	deleteCollection(col);
 	
-	cleanupCollections();
+	deleteDocument(doc);
 }
 
 void TestCreateRandomCollection(CuTest* tc) {
-	cleanupCollections();
+	Document* doc = createDocument();
 	
 	char* uri;
 	Collection* col;
 	int repeat;
 	for (repeat=0; repeat<NUM_FAST_TESTS; repeat++) {
-		uri = randomUniqueURI();
-		col = createCollection(uri);
+		uri = randomUniqueURI(doc);
+		col = createCollection(doc, uri);
 		CuAssertStrEquals(tc, uri,  getCollectionURI(col));
 		CuAssertStrEquals(tc, NULL, getCollectionDisplayID(col));
 		CuAssertStrEquals(tc, NULL, getCollectionName(col));
@@ -43,27 +44,27 @@ void TestCreateRandomCollection(CuTest* tc) {
 		deleteCollection(col);
 	}
 	
-	cleanupCollections();
+	deleteDocument(doc);
 }
 
 void TestEmptyCollectionProperties(CuTest* tc) {
-	cleanupCollections();
-	
-	Collection* col = createCollection("");
+	Document* doc = createDocument();
+
+	Collection* col = createCollection(doc, "");
 	setCollectionName(col, "");
 	setCollectionDescription(col, "");
 	CuAssertStrEquals(tc, "", getCollectionURI(col));
 	CuAssertStrEquals(tc, "", getCollectionName(col));
 	CuAssertStrEquals(tc, "", getCollectionDescription(col));
 	deleteCollection(col);
-	
-	cleanupCollections();
+
+	deleteDocument(doc);
 }
 
 void TestNullCollectionProperties(CuTest* tc) {
-	cleanupCollections();
+	Document* doc = createDocument();
 	
-	Collection* col = createCollection(NULL);
+	Collection* col = createCollection(doc, NULL);
 	setCollectionName(col, NULL);
 	setCollectionDescription(col, NULL);
 	CuAssertStrEquals(tc, NULL, getCollectionURI(col));
@@ -71,11 +72,11 @@ void TestNullCollectionProperties(CuTest* tc) {
 	CuAssertStrEquals(tc, NULL, getCollectionDescription(col));
 	deleteCollection(col);
 	
-	cleanupCollections();
+	deleteDocument(doc);
 }
 
 void TestRandomCollectionProperties(CuTest* tc) {
-	cleanupCollections();
+	Document* doc = createDocument();
 	
 	char* uri;
 	char* name;
@@ -83,10 +84,10 @@ void TestRandomCollectionProperties(CuTest* tc) {
 	Collection* col;
 	int repeat;
 	for (repeat=0; repeat<NUM_FAST_TESTS; repeat++) {
-		uri   = randomUniqueURI();
+		uri   = randomUniqueURI(doc);
 		name  = randomString();
 		descr = randomString();
-		col = createCollection(uri);
+		col = createCollection(doc, uri);
 		setCollectionName(col, name);
 		setCollectionDescription(col, descr);
 		CuAssertStrEquals(tc, uri,   getCollectionURI(col));
@@ -95,7 +96,7 @@ void TestRandomCollectionProperties(CuTest* tc) {
 		deleteCollection(col);
 	}
 	
-	cleanupCollections();
+	deleteDocument(doc);
 }
 
 void PrintCollectionTestInfo() {

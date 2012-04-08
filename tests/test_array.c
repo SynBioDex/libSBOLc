@@ -3,6 +3,7 @@
 #include <string.h>
 #include "CuTest.h"
 #include "utilities.h"
+#include "document.h"
 #include "array.h"
 #include "dnacomponent.h"
 #include "sequenceannotation.h"
@@ -12,197 +13,206 @@
 #define NUM_SLOW_TESTS  10
 
 void TestSingleDNAComponent(CuTest* tc) {
-	cleanupDNAComponents();
-	CuAssertIntEquals(tc, 0, getNumDNAComponents());
-	DNAComponent* com = createDNAComponent("one");
-	CuAssertIntEquals(tc, 1, getNumDNAComponents());
-	CuAssertPtrEquals(tc, com, getNthDNAComponent(0));
-	CuAssertIntEquals(tc, 1, isDNAComponentURI("one"));
-	CuAssertIntEquals(tc, 1, isDNAComponent(com));
+	Document* doc = createDocument();
+	CuAssertIntEquals(tc, 0, getNumDNAComponents(doc));
+	DNAComponent* com = createDNAComponent(doc, "one");
+	CuAssertIntEquals(tc, 1, getNumDNAComponents(doc));
+	CuAssertPtrEquals(tc, com, getNthDNAComponent(doc, 0));
+	CuAssertIntEquals(tc, 1, isDNAComponentURI(doc, "one"));
+	CuAssertIntEquals(tc, 1, isDNAComponent(doc, com));
 	deleteDNAComponent(com);
-	CuAssertIntEquals(tc, 0, getNumDNAComponents());
-	CuAssertIntEquals(tc, 0, isDNAComponentURI("one"));
-	CuAssertIntEquals(tc, 0, isDNAComponent(com));
+	CuAssertIntEquals(tc, 0, getNumDNAComponents(doc));
+	CuAssertIntEquals(tc, 0, isDNAComponentURI(doc, "one"));
+	CuAssertIntEquals(tc, 0, isDNAComponent(doc, com));
+	deleteDocument(doc);
 }
 
 void TestNumDNAComponents(CuTest* tc) {
-	cleanupDNAComponents();
+	Document* doc = createDocument();
 	char* uri;
 	DNAComponent* com;
 	int num;
 	for (num=0; num<NUM_FAST_TESTS; num++) {
-		CuAssertIntEquals(tc, num, getNumDNAComponents());
-		uri = randomUniqueURI();
-		com = createDNAComponent(uri);
-		CuAssertIntEquals(tc, num+1, getNumDNAComponents());
+		CuAssertIntEquals(tc, num, getNumDNAComponents(doc));
+		uri = randomUniqueURI(doc);
+		com = createDNAComponent(doc, uri);
+		CuAssertIntEquals(tc, num+1, getNumDNAComponents(doc));
 	}
 	for (; num>0; num--) {
-		CuAssertIntEquals(tc, num, getNumDNAComponents());
-		com = getNthDNAComponent(0);
+		CuAssertIntEquals(tc, num, getNumDNAComponents(doc));
+		com = getNthDNAComponent(doc, 0);
 		deleteDNAComponent(com);
-		CuAssertIntEquals(tc, num-1, getNumDNAComponents());
+		CuAssertIntEquals(tc, num-1, getNumDNAComponents(doc));
 	}
-	CuAssertIntEquals(tc, 0, getNumDNAComponents());
+	CuAssertIntEquals(tc, 0, getNumDNAComponents(doc));
+	deleteDocument(doc);
 }
 
 void TestDNAComponentIndexing(CuTest* tc) {
-	cleanupDNAComponents();
+	Document* doc = createDocument();
 	char* uri;
 	DNAComponent* com;
 	int num;
 	for (num=0; num<NUM_SLOW_TESTS; num++) {
-		uri = randomUniqueURI();
-		while (isDNAComponentURI(uri))
-			uri = randomUniqueURI();
-		com = createDNAComponent(uri);
+		uri = randomUniqueURI(doc);
+		while (isDNAComponentURI(doc, uri))
+			uri = randomUniqueURI(doc);
+		com = createDNAComponent(doc, uri);
 	}
 	int index;
 	for (num=NUM_SLOW_TESTS; num>0; num--) {
-		CuAssertIntEquals(tc, num, getNumDNAComponents());
+		CuAssertIntEquals(tc, num, getNumDNAComponents(doc));
 		index = randomNumber(num);
-		com = getNthDNAComponent(index);
+		com = getNthDNAComponent(doc, index);
 		// copy uri (because it will be destroyed)
 		uri = getDNAComponentURI(com);
-		CuAssertIntEquals(tc, 1, isDNAComponent(com));
-		CuAssertIntEquals(tc, 1, isDNAComponentURI(uri));
+		CuAssertIntEquals(tc, 1, isDNAComponent(doc, com));
+		CuAssertIntEquals(tc, 1, isDNAComponentURI(doc, uri));
 		deleteDNAComponent(com);
-		CuAssertIntEquals(tc, num-1, getNumDNAComponents());
-		CuAssertIntEquals(tc, 0, isDNAComponent(com));
-		CuAssertIntEquals(tc, 0, isDNAComponentURI(uri));
+		CuAssertIntEquals(tc, num-1, getNumDNAComponents(doc));
+		CuAssertIntEquals(tc, 0, isDNAComponent(doc, com));
+		CuAssertIntEquals(tc, 0, isDNAComponentURI(doc, uri));
 	}
+	deleteDocument(doc);
 }
 
 void TestSingleAnnotation(CuTest* tc) {
-	cleanupSequenceAnnotations();
-	CuAssertIntEquals(tc, 0, getNumSequenceAnnotations());
-	SequenceAnnotation* ann = createSequenceAnnotation("one");
-	CuAssertIntEquals(tc, 1, getNumSequenceAnnotations());
-	CuAssertPtrEquals(tc, ann, getNthSequenceAnnotation(0));
-	CuAssertIntEquals(tc, 1, isSequenceAnnotationURI("one"));
-	CuAssertIntEquals(tc, 1, isSequenceAnnotation(ann));
+	Document* doc = createDocument();
+	CuAssertIntEquals(tc, 0, getNumSequenceAnnotations(doc));
+	SequenceAnnotation* ann = createSequenceAnnotation(doc, "one");
+	CuAssertIntEquals(tc, 1, getNumSequenceAnnotations(doc));
+	CuAssertPtrEquals(tc, ann, getNthSequenceAnnotation(doc, 0));
+	CuAssertIntEquals(tc, 1, isSequenceAnnotationURI(doc, "one"));
+	CuAssertIntEquals(tc, 1, isSequenceAnnotation(doc, ann));
 	deleteSequenceAnnotation(ann);
-	CuAssertIntEquals(tc, 0, getNumSequenceAnnotations());
-	CuAssertIntEquals(tc, 0, isSequenceAnnotationURI("one"));
-	CuAssertIntEquals(tc, 0, isSequenceAnnotation(ann));
+	CuAssertIntEquals(tc, 0, getNumSequenceAnnotations(doc));
+	CuAssertIntEquals(tc, 0, isSequenceAnnotationURI(doc, "one"));
+	CuAssertIntEquals(tc, 0, isSequenceAnnotation(doc, ann));
+	deleteDocument(doc);
 }
 
 void TestNumAnnotations(CuTest* tc) {
-	cleanupSequenceAnnotations();
+	Document* doc = createDocument();
 	char* uri;
 	SequenceAnnotation* ann;
 	int num;
 	for (num=0; num<NUM_FAST_TESTS; num++) {
-		CuAssertIntEquals(tc, num, getNumSequenceAnnotations());
-		uri = randomUniqueURI();
-		ann = createSequenceAnnotation(uri);
-		CuAssertIntEquals(tc, num+1, getNumSequenceAnnotations());
+		CuAssertIntEquals(tc, num, getNumSequenceAnnotations(doc));
+		uri = randomUniqueURI(doc);
+		ann = createSequenceAnnotation(doc, uri);
+		CuAssertIntEquals(tc, num+1, getNumSequenceAnnotations(doc));
 	}
 	for (; num>0; num--) {
-		CuAssertIntEquals(tc, num, getNumSequenceAnnotations());
-		ann = getNthSequenceAnnotation(0);
+		CuAssertIntEquals(tc, num, getNumSequenceAnnotations(doc));
+		ann = getNthSequenceAnnotation(doc, 0);
 		deleteSequenceAnnotation(ann);
-		CuAssertIntEquals(tc, num-1, getNumSequenceAnnotations());
+		CuAssertIntEquals(tc, num-1, getNumSequenceAnnotations(doc));
 	}
-	CuAssertIntEquals(tc, 0, getNumSequenceAnnotations());
+	CuAssertIntEquals(tc, 0, getNumSequenceAnnotations(doc));
+	deleteDocument(doc);
 }
 
 void TestAnnotationIndexing(CuTest* tc) {
-	cleanupSequenceAnnotations();
+	Document* doc = createDocument();
 	char* uri;
 	SequenceAnnotation* ann;
 	int num;
 	for (num=0; num<NUM_SLOW_TESTS; num++) {
-		uri = randomUniqueURI();
+		uri = randomUniqueURI(doc);
 		// avoid duplicates
-		while (isSequenceAnnotationURI(uri))
-			uri = randomUniqueURI();
-		ann = createSequenceAnnotation(uri);
+		while (isSequenceAnnotationURI(doc, uri))
+			uri = randomUniqueURI(doc);
+		ann = createSequenceAnnotation(doc, uri);
 	}
 	int index;
 	for (num=NUM_SLOW_TESTS; num>0; num--) {
-		CuAssertIntEquals(tc, num, getNumSequenceAnnotations());
+		CuAssertIntEquals(tc, num, getNumSequenceAnnotations(doc));
 		index = randomNumber(num);
-		ann = getNthSequenceAnnotation(index);
+		ann = getNthSequenceAnnotation(doc, index);
 		// copy uri (because it will be destroyed)
 		uri = getSequenceAnnotationURI(ann);
-		CuAssertIntEquals(tc, 1, isSequenceAnnotation(ann));
-		CuAssertIntEquals(tc, 1, isSequenceAnnotationURI(uri));
+		CuAssertIntEquals(tc, 1, isSequenceAnnotation(doc, ann));
+		CuAssertIntEquals(tc, 1, isSequenceAnnotationURI(doc, uri));
 		deleteSequenceAnnotation(ann);
-		CuAssertIntEquals(tc, num-1, getNumSequenceAnnotations());
-		CuAssertIntEquals(tc, 0, isSequenceAnnotation(ann));
-		CuAssertIntEquals(tc, 0, isSequenceAnnotationURI(uri));
+		CuAssertIntEquals(tc, num-1, getNumSequenceAnnotations(doc));
+		CuAssertIntEquals(tc, 0, isSequenceAnnotation(doc, ann));
+		CuAssertIntEquals(tc, 0, isSequenceAnnotationURI(doc, uri));
 	}
+	deleteDocument(doc);
 }
 
 void TestCleanupSequenceAnnotations(CuTest* tc) {
-	cleanupSequenceAnnotations();
+	Document* doc = createDocument();
 	int num;
 	for (num=0; num<NUM_FAST_TESTS; num++)
-		createSequenceAnnotation( randomUniqueURI() );
-	CuAssertIntEquals(tc, NUM_FAST_TESTS, getNumSequenceAnnotations());
-	cleanupSequenceAnnotations();
-	CuAssertIntEquals(tc, 0, getNumSequenceAnnotations());
+		createSequenceAnnotation(doc, randomUniqueURI(doc));
+	CuAssertIntEquals(tc, NUM_FAST_TESTS, getNumSequenceAnnotations(doc));
+	CuAssertIntEquals(tc, 0, getNumSequenceAnnotations(doc));
+	deleteDocument(doc);
 }
 
 void TestSingleCollection(CuTest* tc) {
-	cleanupCollections();
-	CuAssertIntEquals(tc, 0, getNumCollections());
-	Collection* col = createCollection("one");
-	CuAssertIntEquals(tc, 1, getNumCollections());
-	CuAssertPtrEquals(tc, col, getNthCollection(0));
-	CuAssertIntEquals(tc, 1, isCollectionURI("one"));
-	CuAssertIntEquals(tc, 1, isCollection(col));
+	Document* doc = createDocument();
+	CuAssertIntEquals(tc, 0, getNumCollections(doc));
+	Collection* col = createCollection(doc, "one");
+	CuAssertIntEquals(tc, 1, getNumCollections(doc));
+	CuAssertPtrEquals(tc, col, getNthCollection(doc, 0));
+	CuAssertIntEquals(tc, 1, isCollectionURI(doc, "one"));
+	CuAssertIntEquals(tc, 1, isCollection(doc, col));
 	deleteCollection(col);
-	CuAssertIntEquals(tc, 0, getNumCollections());
-	CuAssertIntEquals(tc, 0, isCollectionURI("one"));
-	CuAssertIntEquals(tc, 0, isCollection(col));
+	CuAssertIntEquals(tc, 0, getNumCollections(doc));
+	CuAssertIntEquals(tc, 0, isCollectionURI(doc, "one"));
+	CuAssertIntEquals(tc, 0, isCollection(doc, col));
+	deleteDocument(doc);
 }
 
 void TestNumCollections(CuTest* tc) {
-	cleanupCollections();
+	Document* doc = createDocument();
 	char* uri;
 	Collection* col;
 	int num;
 	for (num=0; num<NUM_FAST_TESTS; num++) {
-		CuAssertIntEquals(tc, num, getNumCollections());
-		uri = randomUniqueURI();
-		col = createCollection(uri);
-		CuAssertIntEquals(tc, num+1, getNumCollections());
+		CuAssertIntEquals(tc, num, getNumCollections(doc));
+		uri = randomUniqueURI(doc);
+		col = createCollection(doc, uri);
+		CuAssertIntEquals(tc, num+1, getNumCollections(doc));
 	}
 	for (; num>0; num--) {
-		CuAssertIntEquals(tc, num, getNumCollections());
-		col = getNthCollection(0);
+		CuAssertIntEquals(tc, num, getNumCollections(doc));
+		col = getNthCollection(doc, 0);
 		deleteCollection(col);
-		CuAssertIntEquals(tc, num-1, getNumCollections());
+		CuAssertIntEquals(tc, num-1, getNumCollections(doc));
 	}
-	CuAssertIntEquals(tc, 0, getNumCollections());
+	CuAssertIntEquals(tc, 0, getNumCollections(doc));
+	deleteDocument(doc);
 }
 
 void TestCollectionIndexing(CuTest* tc) {
-	cleanupCollections();
+	Document* doc = createDocument();
 	char* uri;
 	Collection* col;
 	int num;
 	for (num=0; num<NUM_SLOW_TESTS; num++) {
-		uri = randomUniqueURI();
+		uri = randomUniqueURI(doc);
 		// avoid duplicates
-		while (isCollectionURI(uri))
-			uri = randomUniqueURI();
-		col = createCollection(uri);
+		while (isCollectionURI(doc, uri))
+			uri = randomUniqueURI(doc);
+		col = createCollection(doc, uri);
 	}
 	int index;
 	for (num=NUM_SLOW_TESTS; num>0; num--) {
-		CuAssertIntEquals(tc, num, getNumCollections());
+		CuAssertIntEquals(tc, num, getNumCollections(doc));
 		index = randomNumber(num);
-		col = getNthCollection(index);
+		col = getNthCollection(doc, index);
 		uri = getCollectionURI(col); // copy uri (because it will be destroyed)
-		CuAssertIntEquals(tc, 1, isCollection(col));
-		CuAssertIntEquals(tc, 1, isCollectionURI(uri));
+		CuAssertIntEquals(tc, 1, isCollection(doc, col));
+		CuAssertIntEquals(tc, 1, isCollectionURI(doc, uri));
 		deleteCollection(col);
-		CuAssertIntEquals(tc, num-1, getNumCollections());
-		CuAssertIntEquals(tc, 0, isCollection(col));
-		CuAssertIntEquals(tc, 0, isCollectionURI(uri));
-	}	
+		CuAssertIntEquals(tc, num-1, getNumCollections(doc));
+		CuAssertIntEquals(tc, 0, isCollection(doc, col));
+		CuAssertIntEquals(tc, 0, isCollectionURI(doc, uri));
+	}
+	deleteDocument(doc);
 }
 
 void PrintArrayTestInfo() {

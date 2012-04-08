@@ -5,9 +5,11 @@
 // which will write xml files for all the CreateValid* examples.
 
 void CreateValid02() {
-	DNAComponent *com = createDNAComponent("http://example.com/dc1");
+	Document* doc = createDocument();
+	DNAComponent *com = createDNAComponent(doc, "http://example.com/dc1");
 	setDNAComponentDisplayID(com, "DC1");
 	setDNAComponentName(com, "DnaComponent1");
 	setDNAComponentDescription(com, "DnaComponent with only name and description");
+	deleteDocument(doc);
 }
 

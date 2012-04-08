@@ -8,18 +8,19 @@
 // Loads the example files and checks
 // that each was interpreted correctly.
 void TestReadValidExamples(CuTest *tc) {
+	Document* doc;
 	printf("\n");
 	int n;
 	for (n=0; n<NUM_VALID_EXAMPLES; n++) {
-		cleanupSBOLCore();
-		TestNothingLoaded(tc);
+		doc = createDocument();
+		TestNothingLoaded(tc, doc);
  		printf("reading %s\n", VALID_EXAMPLE_FILENAMES[n]);
-		readSBOLCore(VALID_EXAMPLE_FILENAMES[n]);
+		readSBOLCore(doc, VALID_EXAMPLE_FILENAMES[n]);
 		#ifdef SBOL_DEBUG_STATEMENTS
-		printSBOLCore();
+		printDocument(doc);
 		#endif
-		TEST_LOADED_FUNCTIONS[n](tc);
-		cleanupSBOLCore();
+		TEST_LOADED_FUNCTIONS[n](tc, doc);
+		deleteDocument(doc);
 	}
 }
 

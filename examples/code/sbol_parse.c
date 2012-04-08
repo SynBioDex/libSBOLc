@@ -2,10 +2,11 @@
 #include "sbol.h"
 
 void parse(char* filename) {
+	Document* doc;
 	printf("parsing %s\n", filename);
-	readSBOLCore(filename);
-	printSBOLCore();
-	cleanupSBOLCore();
+	readSBOLCore(doc, filename);
+	printDocument(doc);
+	deleteDocument(doc);
 }
 
 int main(int argc, char** argv) {

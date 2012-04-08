@@ -12,20 +12,18 @@ CuSuite* CleanupGetSuite();
 /*CuSuite* RoundTripGetSuite();*/
 /*CuSuite* ReaderGetSuite();*/
 /*CuSuite* WriterGetSuite();*/
-/*CuSuite* SBOLObjectGetSuite();*/
 /*CuSuite* ValidatorGetSuite();*/
 
 void RunUnitTests() {
 	CuString* output = CuStringNew();
 	CuSuite*  suite  = CuSuiteNew();
 
-/*	CuSuiteAddSuite(suite, ArrayGetSuite());*/
-/*	CuSuiteAddSuite(suite, SBOLObjectGetSuite());*/
-	CuSuiteAddSuite(suite, DNASequenceGetSuite());
+	CuSuiteAddSuite(suite, ArrayGetSuite());
+/*	CuSuiteAddSuite(suite, DNASequenceGetSuite());*/
 /*	CuSuiteAddSuite(suite, SequenceAnnotationGetSuite());*/
 /*	CuSuiteAddSuite(suite, DNAComponentGetSuite());*/
 /*	CuSuiteAddSuite(suite, CollectionGetSuite());*/
-	CuSuiteAddSuite(suite, PropertyGetSuite());
+/*	CuSuiteAddSuite(suite, PropertyGetSuite());*/
 /*	CuSuiteAddSuite(suite, CleanupGetSuite());*/
 
 	printf("\nRunning unit tests...\n");

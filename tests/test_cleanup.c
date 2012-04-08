@@ -2,40 +2,35 @@
 #include "CuTest.h"
 #include "utilities.h"
 #include "property.h"
+#include "document.h"
+#include "test_examples.h"
 
 #define NUM_SLOW_TESTS 10
 #define INFILE "../examples/valid/ntriples.nt"
 
-void TestCleanupFirst(CuTest* tc) {
-	cleanupSBOLCore();
-}
-
-void TestMultipleCleanupFirst(CuTest* tc) {
-	int i;
-	for (i=0; i<NUM_SLOW_TESTS; i++)
-		cleanupSBOLCore();
-}
-
-// TODO change this to use an rdfxml file
 void TestReadThenCleanup(CuTest* tc) {
+	Document* doc = createDocument();
 	int num;
 	// check that some of each type is read
 	num = 0;
-	readSBOLCore(INFILE);
-	num += (int) (getNumDNASequences()        > 0);
-	num += (int) (getNumSequenceAnnotations() > 0);
-	num += (int) (getNumDNAComponents()       > 0);
-	num += (int) (getNumCollections()         > 0);
+	readSBOLCore(doc, VALID_EXAMPLE_FILENAMES[0]);
+	num += (int) (getNumDNASequences(doc)        > 0);
+	num += (int) (getNumSequenceAnnotations(doc) > 0);
+	num += (int) (getNumDNAComponents(doc)       > 0);
+	num += (int) (getNumCollections(doc)         > 0);
 	CuAssertIntEquals(tc, 4, num);
-	cleanupSBOLCore();
+	cleanupDNASequences(doc);
+	cleanupSequenceAnnotations(doc);
+	cleanupDNAComponents(doc);
+	cleanupCollections(doc);
 	// check that none are left after cleanup
 	num = 0;
-	num += (int) (getNumDNASequences()        == 0);
-	num += (int) (getNumSequenceAnnotations() == 0);
-	num += (int) (getNumDNAComponents()       == 0);
-	num += (int) (getNumCollections()         == 0);
+	num += (int) (getNumDNASequences(doc)        == 0);
+	num += (int) (getNumSequenceAnnotations(doc) == 0);
+	num += (int) (getNumDNAComponents(doc)       == 0);
+	num += (int) (getNumCollections(doc)         == 0);
 	CuAssertIntEquals(tc, 4, num);
-	cleanupSBOLCore();
+	deleteDocument(doc);
 }
 
 void TestMultipleDeleteTextProperty(CuTest* tc) {
@@ -57,9 +52,7 @@ void PrintCleanupTestInfo() {
 CuSuite* CleanupGetSuite() {
 	CuSuite* cleanupTests = CuSuiteNew();
 	SUITE_ADD_TEST(cleanupTests, PrintCleanupTestInfo);
-	SUITE_ADD_TEST(cleanupTests, TestCleanupFirst);
-	SUITE_ADD_TEST(cleanupTests, TestMultipleCleanupFirst);
-	//SUITE_ADD_TEST(cleanupTests, TestReadThenCleanup);
+	SUITE_ADD_TEST(cleanupTests, TestReadThenCleanup);
 	SUITE_ADD_TEST(cleanupTests, TestMultipleDeleteTextProperty);
 	return cleanupTests;
 }

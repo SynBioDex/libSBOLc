@@ -1,6 +1,7 @@
 #include <stdio.h>
 #include "CuTest.h"
 #include "utilities.h"
+#include "document.h"
 #include "dnasequence.h"
 
 #define NUM_FAST_TESTS 10000

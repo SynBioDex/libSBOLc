@@ -5,7 +5,9 @@
 // which will write xml files for all the CreateValid* examples.
 
 void CreateValid13() {
-	DNASequence *seq = createDNASequence("http://example.com/ds1");
+	Document* doc = createDocument();
+	DNASequence *seq = createDNASequence(doc, "http://example.com/ds1");
 	setDNASequenceNucleotides(seq, "tccctatcagtgat");
+	deleteDocument(doc);
 }
 

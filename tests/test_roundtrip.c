@@ -14,23 +14,23 @@ void TestRoundTripValidExamples(CuTest* tc) {
 		printf("roundtripping %s\n", VALID_EXAMPLE_FILENAMES[n]);
 		
 		// read an example
-		cleanupSBOLCore();
-		TestNothingLoaded(tc);
-		readSBOLCore(VALID_EXAMPLE_FILENAMES[n]);
+		Document* doc = createDocument();
+		TestNothingLoaded(tc, doc);
+		readSBOLCore(doc, VALID_EXAMPLE_FILENAMES[n]);
 		
 		// check that it worked
-		TEST_LOADED_FUNCTIONS[n](tc);
+		TEST_LOADED_FUNCTIONS[n](tc, doc);
 		
 		// write to a file
-		writeSBOLCore(TEST_OUTPUT_FILENAMES[n]);
+		writeSBOLCore(doc, TEST_OUTPUT_FILENAMES[n]);
 		
 		// read that in again
-		cleanupSBOLCore();
-		TestNothingLoaded(tc);
-		readSBOLCore(TEST_OUTPUT_FILENAMES[n]);
+		deleteDocument(doc);
+		doc = createDocument();
+		readSBOLCore(doc, TEST_OUTPUT_FILENAMES[n]);
 		
 		// check that it worked again
-		TEST_LOADED_FUNCTIONS[n](tc);
+		TEST_LOADED_FUNCTIONS[n](tc, doc);
 	}
 }
 

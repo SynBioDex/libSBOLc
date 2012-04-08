@@ -2,43 +2,47 @@
 #include <stdlib.h>
 #include "CuTest.h"
 #include "utilities.h"
+#include "document.h"
 #include "sequenceannotation.h"
 
 #define NUM_FAST_TESTS 10000
 #define NUM_SLOW_TESTS  1000
 
 void TestCreateSequenceAnnotation(CuTest* tc) {
+	Document* doc = createDocument();
 	char* uri;
 	SequenceAnnotation* ann;
 	int repeat;
 	for (repeat=0; repeat<NUM_FAST_TESTS; repeat++) {
-		uri = randomUniqueURI();
-		ann = createSequenceAnnotation(uri);
-		CuAssertIntEquals(tc, 1, getNumSequenceAnnotations());
+		uri = randomUniqueURI(doc);
+		ann = createSequenceAnnotation(doc, uri);
+		CuAssertIntEquals(tc, 1, getNumSequenceAnnotations(doc));
 		CuAssertStrEquals(tc, uri, getSequenceAnnotationURI(ann));
 		CuAssertIntEquals(tc, -1, getSequenceAnnotationStart(ann));
 		CuAssertIntEquals(tc, -1, getSequenceAnnotationEnd(ann));
 		CuAssertIntEquals(tc, 0, getNumPrecedes(ann));
 		deleteSequenceAnnotation(ann);
-		CuAssertIntEquals(tc, 0, getNumSequenceAnnotations());
+		CuAssertIntEquals(tc, 0, getNumSequenceAnnotations(doc));
 	}
+	deleteDocument(doc);
 }
 
 // TODO this leaks 1000 annotations for some reason
 void TestPrecedes(CuTest* tc) {
+	Document* doc = createDocument();
 	int index;
 	char* uri;
 	SequenceAnnotation* upstream;
 	SequenceAnnotation** downstream;
 	
 	// create the main annotation to test
-	upstream = createSequenceAnnotation( randomUniqueURI() );
+	upstream = createSequenceAnnotation(doc, randomUniqueURI(doc));
 	
 	// and also some others
 	downstream = malloc(NUM_SLOW_TESTS * sizeof(SequenceAnnotation*));
 	for (index=0; index<NUM_SLOW_TESTS; index++) {
-		uri = randomUniqueURI();
-		downstream[index] = createSequenceAnnotation(uri);
+		uri = randomUniqueURI(doc);
+		downstream[index] = createSequenceAnnotation(doc, uri);
 	}
 	
 	// restrict the main one to coming before each of the others
@@ -53,7 +57,7 @@ void TestPrecedes(CuTest* tc) {
 		SequenceAnnotation* actual = getNthPrecedes(upstream, index);
 		CuAssertPtrEquals(tc, expected, actual);
 	}
-	cleanupSBOLCore();
+	deleteDocument(doc);
 }
 
 void PrintSequenceAnnotationTestInfo() {

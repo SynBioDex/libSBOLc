@@ -5,12 +5,14 @@
 // which will write xml files for all the CreateValid* examples.
 
 void CreateValid03() {
-	DNAComponent *com = createDNAComponent("http://example.com/dc1");
+	Document* doc = createDocument();
+	DNAComponent *com = createDNAComponent(doc, "http://example.com/dc1");
 	setDNAComponentDisplayID(com, "DC1");
 	setDNAComponentName(com, "DnaComponent1");
 	setDNAComponentDescription(com, "DnaComponent with sequence information");
-	DNASequence *seq = createDNASequence("http://example.com/ds1");
+	DNASequence *seq = createDNASequence(doc, "http://example.com/ds1");
 	setDNASequenceNucleotides(seq, "tccctatcagtgat");
 	setDNAComponentSequence(com, seq);
+	deleteDocument(doc);
 }
 

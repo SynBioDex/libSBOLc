@@ -52,7 +52,6 @@ SBOLCompoundObject* createSBOLCompoundObject(Document* doc, const char* uri) {
 	obj->displayID   = createTextProperty();
 	obj->name        = createTextProperty();
 	obj->description = createTextProperty();
-	registerSBOLCompoundObject(obj);
 	return obj;
 }
 
@@ -74,7 +73,6 @@ void deleteSBOLCompoundObject(SBOLCompoundObject* obj) {
 			deleteTextProperty(obj->description);
 			obj->description = NULL;
 		}
-		removeSBOLCompoundObject(obj);
 		free(obj);
 		obj = NULL;
 	}

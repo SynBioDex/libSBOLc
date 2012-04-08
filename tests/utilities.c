@@ -1,8 +1,8 @@
 #include <stdlib.h>
 #include <time.h>
 #include <string.h>
-#include "utilities.h"
 #include <dirent.h>
+#include "utilities.h"
 #include "sbol.h"
 
 #define MAX_STRING_LENGTH 1000
@@ -24,7 +24,7 @@ char* randomString() {
 	return string;
 }
 
-char* randomUniqueURI(const Document* doc) {
+char* randomUniqueURI(Document* doc) {
     char* uri = randomString();
     while (isSBOLObjectURI(doc, uri))
         uri = randomString();
