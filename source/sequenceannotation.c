@@ -155,7 +155,7 @@ void printSequenceAnnotation(const SequenceAnnotation* ann, int tabs) {
 	int start = getSequenceAnnotationStart(ann);
     //int end = ann->genbankEnd;
 	int end = getSequenceAnnotationEnd(ann);
-    if (start != 0 || end != 0) {
+    if (start != -1 || end != -1) { /// @todo is 0 valid?
     	indent(tabs+1); printf("%i --> %i\n", start, end);
     }
     char strand = polarityToChar( getPolarityProperty(ann->strand) );

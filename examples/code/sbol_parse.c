@@ -2,7 +2,7 @@
 #include "sbol.h"
 
 void parse(char* filename) {
-	Document* doc;
+	Document* doc = createDocument();
 	printf("parsing %s\n", filename);
 	readSBOLCore(doc, filename);
 	printDocument(doc);
