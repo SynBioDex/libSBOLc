@@ -31,7 +31,7 @@ SBOLAPIEXPORTS int isSBOLObjectURI(Document* doc, const char* uri);
 
 /// Find out the total number of SBOL objects in a Document.
 /// @todo should this be exported? is it ever used?
-int getNumSBOLObjects(Document* doc);
+SBOLAPIEXPORTS int getNumSBOLObjects(Document* doc);
 
 /// Get the total number of DNASequences in emory.
 /// @todo rename to reflect doc

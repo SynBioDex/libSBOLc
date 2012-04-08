@@ -1,10 +1,12 @@
 #include "sbol.h"
 
-// To actually run the code you need to #include it
-// and call this function. You can also use sbol_run_tests,
-// which will write xml files for all the CreateValid* examples.
+// This only creates a Document in memory;
+// you would then want to write it out with writeSBOLCore(doc, filename)
+// and free it with deleteDocument(doc).
+// You can see the output with sbol_run_tests, which writes
+// xml files for all the CreateValid* examples.
 
-void CreateValid04() {
+Document* CreateValid04() {
 	Document* doc = createDocument();
 	// components
 	DNAComponent *dc1 = createDNAComponent(doc, "http://example.com/dc1");
@@ -23,6 +25,6 @@ void CreateValid04() {
 	SequenceAnnotation *sa1 = createSequenceAnnotation(doc, "http://example.com/sa1");
 	setSequenceAnnotationSubComponent(sa1, dc2);
 	addSequenceAnnotation(dc1, sa1);
-	deleteDocument(doc);
+	return doc;
 }
 

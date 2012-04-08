@@ -6,22 +6,22 @@
 #include "test_examples.h"
 
 // declare functions from the sbol_create_valid* examples
-void CreateValid01(Document* doc);
-void CreateValid02(Document* doc);
-void CreateValid03(Document* doc);
-void CreateValid04(Document* doc);
-void CreateValid05(Document* doc);
-void CreateValid06(Document* doc);
-void CreateValid07(Document* doc);
-void CreateValid08(Document* doc);
-void CreateValid09(Document* doc);
-void CreateValid10(Document* doc);
-void CreateValid11(Document* doc);
-void CreateValid12(Document* doc);
-void CreateValid13(Document* doc);
+Document* CreateValid01();
+Document* CreateValid02();
+Document* CreateValid03();
+Document* CreateValid04();
+Document* CreateValid05();
+Document* CreateValid06();
+Document* CreateValid07();
+Document* CreateValid08();
+Document* CreateValid09();
+Document* CreateValid10();
+Document* CreateValid11();
+Document* CreateValid12();
+Document* CreateValid13();
 
 // put them in an array so they can be called by index
-void (*CREATE_FUNCTIONS[NUM_VALID_EXAMPLES])(Document* doc) = {
+Document* (*CREATE_FUNCTIONS[NUM_VALID_EXAMPLES])() = {
 	CreateValid01,
 	CreateValid02,
 	CreateValid03,
@@ -43,10 +43,8 @@ void CreateValidExamples(CuTest *tc) {
 	printf("\n");
 	int n;
 	for (n=0; n<NUM_VALID_EXAMPLES; n++) {
-		doc = createDocument();
-		TestNothingLoaded(tc, doc);
 		printf("creating %s\n", TEST_OUTPUT_FILENAMES[n]);
-		CREATE_FUNCTIONS[n](doc);
+		Document* doc = CREATE_FUNCTIONS[n]();
 		TEST_LOADED_FUNCTIONS[n](tc, doc);
 		writeSBOLCore(doc, TEST_OUTPUT_FILENAMES[n]);
 		deleteDocument(doc);
