@@ -85,25 +85,25 @@ int isSBOLObjectURI(Document* doc, const char* uri) {
 
 void registerDNASequence(DNASequence* seq) {
 	if (seq && seq->doc) {
-		insertPointerIntoArray(seq->doc->allDNASequences, seq);
+		insertPointerIntoArray(seq->doc->sequences, seq);
 	}
 }
 
 void registerSequenceAnnotation(SequenceAnnotation* ann) {
 	if (ann && ann->doc) {
-		insertPointerIntoArray(ann->doc->allSequenceAnnotations, ann);
+		insertPointerIntoArray(ann->doc->annotations, ann);
 	}
 }
 
 void registerDNAComponent(DNAComponent* com) {
 	if (com && com->doc) {
-		insertPointerIntoArray(com->doc->allDNAComponents, com);
+		insertPointerIntoArray(com->doc->components, com);
 	}
 }
 
 void registerCollection(Collection* col) {
 	if (col && col->doc) {
-		insertPointerIntoArray(col->doc->allCollections, col);
+		insertPointerIntoArray(col->doc->collections, col);
 	}
 }
 
@@ -112,34 +112,34 @@ void registerCollection(Collection* col) {
  *********************/
 
 void removeDNASequence(Document* doc, DNASequence* seq) {
-	if (doc && doc->allDNASequences && seq) {
-		int index = indexOfPointerInArray(doc->allDNASequences, seq);
+	if (doc && doc->sequences && seq) {
+		int index = indexOfPointerInArray(doc->sequences, seq);
 		if (index >= 0)
-			removePointerFromArray(doc->allDNASequences, index);
+			removePointerFromArray(doc->sequences, index);
 	}
 }
 
 void removeSequenceAnnotation(Document* doc, SequenceAnnotation* ann) {
-	if (doc && doc->allSequenceAnnotations && ann) {
-		int index = indexOfPointerInArray(doc->allSequenceAnnotations, ann);
+	if (doc && doc->annotations && ann) {
+		int index = indexOfPointerInArray(doc->annotations, ann);
 		if (index >= 0)
-			removePointerFromArray(doc->allSequenceAnnotations, index);
+			removePointerFromArray(doc->annotations, index);
 	}
 }
 
 void removeDNAComponent(Document* doc, DNAComponent* com) {
-	if (doc && doc->allDNAComponents && com) {
-		int index = indexOfPointerInArray(doc->allDNAComponents, com);
+	if (doc && doc->components && com) {
+		int index = indexOfPointerInArray(doc->components, com);
 		if (index >= 0)
-			removePointerFromArray(doc->allDNAComponents, index);
+			removePointerFromArray(doc->components, index);
 	}
 }
 
 void removeCollection(Document* doc, Collection* col) {
-	if (doc && doc->allCollections && col) {
-		int index = indexOfPointerInArray(doc->allCollections, col);
+	if (doc && doc->collections && col) {
+		int index = indexOfPointerInArray(doc->collections, col);
 		if (index >= 0)
-			removePointerFromArray(doc->allCollections, index);
+			removePointerFromArray(doc->collections, index);
 	}
 }
 
@@ -148,29 +148,29 @@ void removeCollection(Document* doc, Collection* col) {
  *********************/
 
 int getNumDNASequences(const Document* doc) {
-	if (doc && doc->allDNASequences)
-	    return getNumPointersInArray(doc->allDNASequences);
+	if (doc && doc->sequences)
+	    return getNumPointersInArray(doc->sequences);
 	else
 	    return 0;
 }
 
 int getNumSequenceAnnotations(Document* doc) {
-	if (doc && doc->allSequenceAnnotations)
-		return getNumPointersInArray(doc->allSequenceAnnotations);
+	if (doc && doc->annotations)
+		return getNumPointersInArray(doc->annotations);
 	else
 		return 0;
 }
 
 int getNumDNAComponents(const Document* doc) {
-	if (doc && doc->allDNAComponents)
-		return getNumPointersInArray(doc->allDNAComponents);
+	if (doc && doc->components)
+		return getNumPointersInArray(doc->components);
 	else
 		return 0; /// @todo return -1 instead?
 }
 
 int getNumCollections(Document* doc) {
-	if (doc && doc->allCollections)
-		return getNumPointersInArray(doc->allCollections);
+	if (doc && doc->collections)
+		return getNumPointersInArray(doc->collections);
 	else
 		return 0; /// @todo return -1 instead?
 }
@@ -191,28 +191,28 @@ int getNumSBOLObjects(Document* doc) {
 
 int isDNASequence(const Document* doc, const void* pointer) {
 	if (doc) {
-		return (int) indexOfPointerInArray(doc->allDNASequences, pointer) >= 0;
+		return (int) indexOfPointerInArray(doc->sequences, pointer) >= 0;
 	} else
 		return 0; /// @todo return -1 instead?
 }
 
 int isSequenceAnnotation(const Document* doc, const void* pointer) {
 	if (doc) {
-		return (int) indexOfPointerInArray(doc->allSequenceAnnotations, pointer) >= 0;
+		return (int) indexOfPointerInArray(doc->annotations, pointer) >= 0;
 	} else
 		return 0; /// @ todo return -1 instead?
 }
 
 int isDNAComponent(const Document* doc, const void* ptr) {
 	if (doc) {
-		return (int) indexOfPointerInArray(doc->allDNAComponents, ptr) >= 0;
+		return (int) indexOfPointerInArray(doc->components, ptr) >= 0;
 	} else
 		return 0; /// @todo return -1 instead?
 }
 
 int isCollection(Document* doc, const void* pointer) {
-	if (doc && doc->allCollections && pointer) {
-		return pointerContainedInArray(doc->allCollections, pointer);
+	if (doc && doc->collections && pointer) {
+		return pointerContainedInArray(doc->collections, pointer);
 	}
 }
 
@@ -286,28 +286,28 @@ Collection* getCollection(Document* doc, const char* uri) {
 
 DNASequence* getNthDNASequence(Document* doc, int n) {
 	if (doc && getNumDNASequences(doc) > n && n >= 0)
-		return (DNASequence*) getNthPointerInArray(doc->allDNASequences, n);
+		return (DNASequence*) getNthPointerInArray(doc->sequences, n);
 	else
 		return NULL;
 }
 
 SequenceAnnotation* getNthSequenceAnnotation(Document* doc, int n) {
 	if (doc && getNumSequenceAnnotations(doc) > n)
-		return getNthPointerInArray(doc->allSequenceAnnotations, n);
+		return getNthPointerInArray(doc->annotations, n);
 	else
 		return NULL;
 }
 
 DNAComponent* getNthDNAComponent(Document* doc, int n) {
 	if (doc && getNumDNAComponents(doc) > n && n >= 0)
-		return (DNAComponent *)getNthPointerInArray(doc->allDNAComponents, n);
+		return (DNAComponent *)getNthPointerInArray(doc->components, n);
 	else
 		return NULL;
 }
 
 Collection* getNthCollection(Document* doc, int n) {
     if (doc && getNumCollections(doc) > n && n >= 0)
-        return (Collection *)getNthPointerInArray(doc->allCollections, n);
+        return (Collection *)getNthPointerInArray(doc->collections, n);
     else
         return NULL;
 }
@@ -318,10 +318,10 @@ Collection* getNthCollection(Document* doc, int n) {
 
 Document* createDocument() {
 	Document* doc = malloc(sizeof(Document));
-	doc->allDNASequences        = createPointerArray();
-	doc->allSequenceAnnotations = createPointerArray();
-	doc->allDNAComponents       = createPointerArray();
-	doc->allCollections         = createPointerArray();
+	doc->sequences        = createPointerArray();
+	doc->annotations = createPointerArray();
+	doc->components       = createPointerArray();
+	doc->collections         = createPointerArray();
 	return doc;
 }
 
@@ -331,49 +331,49 @@ void deleteDocument(Document* doc) {
 	int n;
 
 	// sequences
-	if (doc->allDNASequences) {
+	if (doc->sequences) {
 		DNASequence* seq;
 		for (n=0; n<getNumDNASequences(doc); n++) {
 			seq = getNthDNASequence(doc, n);
 			deleteDNASequence(seq);
 			seq = NULL;
 		}
-		deletePointerArray(doc->allDNASequences);
-		doc->allDNASequences = NULL;
+		deletePointerArray(doc->sequences);
+		doc->sequences = NULL;
 	}
 
 	// annotations
-	if (doc->allSequenceAnnotations) {
+	if (doc->annotations) {
 		SequenceAnnotation* seq;
 		for (n=0; n<getNumSequenceAnnotations(doc); n++) {
 			seq = getNthSequenceAnnotation(doc, n);
 			deleteSequenceAnnotation(seq);
 		}
-		deletePointerArray(doc->allSequenceAnnotations);
-		doc->allSequenceAnnotations = NULL;
+		deletePointerArray(doc->annotations);
+		doc->annotations = NULL;
 	}
 
 	// components
-	if (doc->allDNAComponents) {
+	if (doc->components) {
 		DNAComponent* com;
 		for (n=0; n<getNumDNAComponents(doc); n++) {
 			com = getNthDNAComponent(doc, n);
 			deleteDNAComponent(com);
 		}
-		deletePointerArray(doc->allDNAComponents);
-		doc->allDNAComponents = NULL;
+		deletePointerArray(doc->components);
+		doc->components = NULL;
 	}
 
 	// collections
-	if (doc->allCollections) {
+	if (doc->collections) {
 		Collection* col;
 		for (n=0; n<getNumCollections(doc); n++) {
        		col = getNthCollection(doc, n);
 			removeCollection(doc, col);
 			deleteCollection(col);
 		}
-		deletePointerArray(doc->allCollections);
-		doc->allCollections = NULL;
+		deletePointerArray(doc->collections);
+		doc->collections = NULL;
 	}
 
 	free(doc);

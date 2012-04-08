@@ -1,7 +1,7 @@
 #include "sbol.h"
 
 // This only creates a Document in memory;
-// you would then want to write it out with writeSBOLCore(doc, filename)
+// you would then want to write it out with writeSBOLDocument(doc, filename)
 // and free it with deleteDocument(doc).
 // You can see the output with sbol_run_tests, which writes
 // xml files for all the CreateValid* examples.

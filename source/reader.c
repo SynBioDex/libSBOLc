@@ -331,7 +331,7 @@ static void readCollectionReferences(xmlNode *node) {
  * main parsing function
  *************************/
 
-void readSBOLCore(Document* destination, char* filename) {
+void readSBOLDocument(Document* destination, char* filename) {
 	DESTINATION = destination;
 
 	// parse
