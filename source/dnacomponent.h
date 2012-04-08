@@ -30,7 +30,7 @@ SBOLAPIEXPORTS void deleteDNAComponent(DNAComponent* com);
 SBOLAPIEXPORTS int isDNAComponent(const Document* doc, const void* pointer);
 
 /// Find out if there's a DNAComponent with this uri.
-SBOLAPIEXPORTS int isDNAComponentURI(const Document* doc, const char* uri);
+SBOLAPIEXPORTS int isDNAComponentURI(Document* doc, const char* uri);
 
 /// Get the total number of DNAComponents.
 /// Useful as a loop condition.

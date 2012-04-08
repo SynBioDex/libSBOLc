@@ -6,6 +6,7 @@
 #include "property.h"
 #include "object.h"
 #include "array.h"
+#include "document.h"
 #include "collection.h"
 #include "dnacomponent.h"
 
@@ -13,7 +14,7 @@ Collection* createCollection(Document* doc, const char* uri) {
 	if (!doc || !uri || isSBOLObjectURI(doc, uri))
 	    return NULL;
 	Collection* col  = malloc(sizeof(Collection));
-	col->doc         = doc
+	col->doc         = doc;
 	col->base        = createSBOLCompoundObject(doc, uri);
 	col->components  = createPointerArray();
 	insertPointerIntoArray(doc->allCollections, col);
@@ -53,7 +54,7 @@ int isCollection(Document* doc, const void* pointer) {
 	}
 }
 
-int isCollectionURI(const Document* doc, const char* uri) {
+int isCollectionURI(Document* doc, const char* uri) {
 	if (!doc || !uri)
 		return 0;
 	int n;
@@ -68,7 +69,7 @@ int isCollectionURI(const Document* doc, const char* uri) {
 	return 0;
 }
 
-Collection* getCollection(const Document* doc, const char* uri) {
+Collection* getCollection(Document* doc, const char* uri) {
 	if (!doc || !uri)
 		return NULL;
 	int n;
@@ -217,7 +218,7 @@ void cleanupCollections(Document* doc) {
 		Collection* col;
 		for (n=getNumCollections(doc)-1; n>=0; n--) {
             col = getNthCollection(doc, n);
-			deleteCollection(doc, col);
+			deleteCollection(col);
 			col = NULL;
 		}
 		deletePointerArray(doc->allCollections);

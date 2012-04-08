@@ -39,7 +39,7 @@ SBOLAPIEXPORTS SequenceAnnotation* getSequenceAnnotation(Document* doc, const ch
 
 /// Find out whether a pointer points to a SequenceAnnotation in this Document.
 /// @todo rename to reflect doc?
-SBOLAPIEXPORTS int isSequenceAnnotation(Document* doc, const void* pointer);
+SBOLAPIEXPORTS int isSequenceAnnotation(const Document* doc, const void* pointer);
 
 /// Find out whether this URI is associated with a SequenceAnnotation in this Document.
 SBOLAPIEXPORTS int isSequenceAnnotationURI(Document* doc, const char* uri);

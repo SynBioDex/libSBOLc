@@ -33,12 +33,12 @@ SBOLAPIEXPORTS int getNumDNASequences(const Document* doc);
 
 /// Get the Nth DNASequnce in memory.
 /// @todo rename to reflect doc
-SBOLAPIEXPORTS DNASequence* getNthDNASequence(const Document* doc, int n);
+SBOLAPIEXPORTS DNASequence* getNthDNASequence(Document* doc, int n);
 
 /// Get the DNASequence associated with this URI.
 /// Returns NULL on failure.
 /// @todo rename to reflect doc
-SBOLAPIEXPORTS DNASequence* getDNASequence(const Document* doc, const char* uri);
+SBOLAPIEXPORTS DNASequence* getDNASequence(Document* doc, const char* uri);
 
 /// Get a copy of the nucleotides contained in this DNASequence.
 /// @return A string that needs to be freed.
@@ -65,7 +65,7 @@ SBOLAPIEXPORTS void printDNASequence(const DNASequence* seq, int tabs);
 /// Print all DNASequences to stdout.
 /// Mainly for debugging.
 /// @todo rename to reflect doc
-SBOLAPIEXPORTS void printAllDNASequences(const Document* doc);
+SBOLAPIEXPORTS void printAllDNASequences(Document* doc);
 
 /// Delete all DNASequences from memory.
 /// There shouldn't be anything left to free

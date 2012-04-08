@@ -1,3 +1,11 @@
+#include <stdlib.h>
+#include "document.h"
+#include "array.h"
+#include "dnasequence.h"
+#include "sequenceannotation.h"
+#include "dnacomponent.h"
+#include "collection.h"
+
 Document* createDocument() {
 	Document* doc = malloc(sizeof(Document));
 	doc->allDNASequences        = createPointerArray();
@@ -23,26 +31,26 @@ void deleteDocument(Document* doc) {
 		}
 		if (doc->allCollections) {
 			cleanupCollections(doc);
-			doc->collections = NULL;
+			doc->allCollections = NULL;
 		}
 		free(doc);
 		doc = NULL;
 	}
 }
 
-int getNumSBOLObjects(const Document* doc) {
+int getNumSBOLObjects(Document* doc) {
 	if (!doc)
 		return -1;
 
 	int total = 0;
-	total += getNumDNASequences(doc)
-	total += getNumSequenceAnnotations(doc)
-	total += getNumDNAComponents(doc)
-	total += getNumCollections(doc)
+	total += getNumDNASequences(doc);
+	total += getNumSequenceAnnotations(doc);
+	total += getNumDNAComponents(doc);
+	total += getNumCollections(doc);
 	return total;
 }
 
-int isSBOLObjectURI(const Document* doc, const char* uri) {
+int isSBOLObjectURI(Document* doc, const char* uri) {
 	if (!doc || !uri)
 		return 0;
 	int n;
@@ -55,12 +63,13 @@ int isSBOLObjectURI(const Document* doc, const char* uri) {
 		candidate = getDNASequenceURI(seq);
 		if (candidate && strcmp(candidate, uri) == 0)
 			return 1;
+	}
 
 	// search annotations
-	SequenceaAnnotation* ann;
+	SequenceAnnotation* ann;
 	for (n=0; n < getNumSequenceAnnotations(doc); n++) {
 		ann = getNthSequenceAnnotation(doc, n);
-		candidate = getSequenceAnnotationURI(seq);
+		candidate = getSequenceAnnotationURI(ann);
 		if (candidate && strcmp(candidate, uri) == 0)
 			return 1;
 	}
@@ -69,17 +78,19 @@ int isSBOLObjectURI(const Document* doc, const char* uri) {
 	DNAComponent* com;
 	for (n=0; n < getNumDNAComponents(doc); n++) {
 		com = getNthDNAComponent(doc, n);
-		candidate = getDNAComponentURI(seq);
+		candidate = getDNAComponentURI(com);
 		if (candidate && strcmp(candidate, uri) == 0)
 			return 1;
+	}
 
 	// search collections
 	Collection* col;
 	for (n=0; n < getNumCollections(doc); n++) {
-		seq = getNthCollection(doc, n);
-		candidate = getCollectionURI(seq);
+		col = getNthCollection(doc, n);
+		candidate = getCollectionURI(col);
 		if (candidate && strcmp(candidate, uri) == 0)
 			return 1;
+	}
 
 	return 0;
 }

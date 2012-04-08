@@ -6,6 +6,7 @@
 #include "property.h"
 #include "array.h"
 #include "object.h"
+#include "document.h"
 #include "dnacomponent.h"
 #include "sequenceannotation.h"
 
@@ -223,7 +224,7 @@ void cleanupSequenceAnnotations(Document* doc) {
 		SequenceAnnotation* seq;
 		for (n=getNumSequenceAnnotations(doc)-1; n>=0; n--) {
 			seq = getNthSequenceAnnotation(doc, n);
-			deleteSequenceAnnotation(doc, seq);
+			deleteSequenceAnnotation(seq);
 		}
 		deletePointerArray(doc->allSequenceAnnotations);
 		doc->allSequenceAnnotations = NULL;

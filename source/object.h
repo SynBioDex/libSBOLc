@@ -37,11 +37,6 @@ void deleteSBOLObject(SBOLObject* obj);
 /// @todo rename to reflect doc
 //SBOLAPIEXPORTS int getNumSBOLObjects(Document* doc);
 
-/// Find out whether there's an SBOLObject with this URI.
-/// This includes the ones that are contained in other structs.
-/// @todo rename to reflect doc
-SBOLAPIEXPORTS int isSBOLObjectURI(Document* doc, const char* uri);
-
 /// Delete all SBOLObjects from memory.
 /// @todo remove this? is it ever used?
 /// @todo rename to reflect doc

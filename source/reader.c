@@ -213,14 +213,14 @@ static void readSequenceAnnotationReferences(xmlNode *node) {
 
  	// get SequenceAnnotation
 	ann_uri = getNodeURI(node);
-	ann = getSequenceAnnotation((char *)ann_uri);
+	ann = getSequenceAnnotation(DESTINATION, (char *)ann_uri);
 	xmlFree(ann_uri);
 
 	// add subComponent
 	path = BAD_CAST "./" NSPREFIX_SBOL ":" NODENAME_SUBCOMPONENT
 					 "/" NSPREFIX_SBOL ":" NODENAME_DNACOMPONENT;
 	if (ref_uri = getURIOfNodeMatchingXPath(node, path)) {
-		setSequenceAnnotationSubComponent(ann, getDNAComponent((char *)ref_uri));
+		setSequenceAnnotationSubComponent(ann, getDNAComponent(DESTINATION, (char *)ref_uri));
 		xmlFree(ref_uri);
 	}
 
@@ -230,7 +230,7 @@ static void readSequenceAnnotationReferences(xmlNode *node) {
 		for (n=0; n<getNumPointersInArray(results); n++) {
 			ref_node = (xmlNode *) getNthPointerInArray(results, n);
 			ref_uri  = getNodeURI(ref_node);
-			addPrecedesRelationship(ann, getSequenceAnnotation((char *)ref_uri));
+			addPrecedesRelationship(ann, getSequenceAnnotation(DESTINATION, (char *)ref_uri));
 			xmlFree(ref_uri);
 		}
 		deletePointerArray(results);
@@ -261,14 +261,14 @@ static void readDNAComponentReferences(xmlNode *node) {
 
     // get DNAComponent
     com_uri = getNodeURI(node);
-    com = getDNAComponent((char *)com_uri);
+    com = getDNAComponent(DESTINATION, (char *)com_uri);
     xmlFree(com_uri);
 
     // add sequence
     path = BAD_CAST "./" NSPREFIX_SBOL ":" NODENAME_DNASEQUENCE_REF
     				 "/" NSPREFIX_SBOL ":" NODENAME_DNASEQUENCE;
     if (ref_uri = getURIOfNodeMatchingXPath(node, path)) {
-        setDNAComponentSequence(com, getDNASequence((char *)ref_uri));
+        setDNAComponentSequence(com, getDNASequence(DESTINATION, (char *)ref_uri));
         xmlFree(ref_uri);
     }
     
@@ -279,7 +279,7 @@ static void readDNAComponentReferences(xmlNode *node) {
         for (n=0; n<getNumPointersInArray(ref_nodes); n++) {
             ref_node = (xmlNode *) getNthPointerInArray(ref_nodes, n);
             ref_uri = getNodeURI(ref_node);
-            addSequenceAnnotation(com, getSequenceAnnotation((char *)ref_uri));
+            addSequenceAnnotation(com, getSequenceAnnotation(DESTINATION, (char *)ref_uri));
             xmlFree(ref_uri);
         }
         deletePointerArray(ref_nodes);
@@ -310,7 +310,7 @@ static void readCollectionReferences(xmlNode *node) {
 
     // get Collection
     col_uri = getNodeURI(node);
-    col = getCollection((char *)col_uri);
+    col = getCollection(DESTINATION, (char *)col_uri);
     xmlFree(col_uri);
 
     // add components
@@ -320,7 +320,7 @@ static void readCollectionReferences(xmlNode *node) {
         for (n=0; n<getNumPointersInArray(ref_nodes); n++) {
             ref_node = (xmlNode *) getNthPointerInArray(ref_nodes, n);
             ref_uri = getNodeURI(ref_node);
-            addDNAComponentToCollection(col, getDNAComponent((char *)ref_uri));
+            addDNAComponentToCollection(col, getDNAComponent(DESTINATION, (char *)ref_uri));
             xmlFree(ref_uri);
         }
         deletePointerArray(ref_nodes);
@@ -332,7 +332,7 @@ static void readCollectionReferences(xmlNode *node) {
  *************************/
 
 void readSBOLCore(Document* destination, char* filename) {
-	DESTINATION = destination
+	DESTINATION = destination;
 
 	// parse
 	safeXmlInitParser();

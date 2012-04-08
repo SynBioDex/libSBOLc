@@ -5,6 +5,7 @@
 /// @todo remove?
 #include "property.h"
 #include "array.h"
+#include "document.h"
 #include "dnacomponent.h"
 #include "sequenceannotation.h"
 #include "object.h"
@@ -45,7 +46,7 @@ void deleteDNAComponent(DNAComponent* com) {
 			com->annotations = NULL;
 		}
 		if (com->doc) {
-			removeDNAComponent(doc, com);
+			removeDNAComponent(com->doc, com);
 			com->doc = NULL;
 		}
 		free(com);
@@ -57,7 +58,7 @@ void deleteDNAComponent(DNAComponent* com) {
 	is... functions
 ***************************/
 
-int isDNAComponent(Document* doc, const void* ptr) {
+int isDNAComponent(const Document* doc, const void* ptr) {
 	if (doc) {
 		return (int) indexOfPointerInArray(doc->allDNAComponents, ptr) >= 0;
 	} else
@@ -83,7 +84,7 @@ int isDNAComponentURI(Document* doc, const char* uri) {
 	getNum... functions
 ***************************/
 
-int getNumDNAComponents(Document* doc) {
+int getNumDNAComponents(const Document* doc) {
 	if (doc && doc->allDNAComponents)
 		return getNumPointersInArray(doc->allDNAComponents);
 	else
@@ -221,7 +222,7 @@ void cleanupDNAComponents(Document* doc) {
 		DNAComponent* com;
 		for (n=getNumDNAComponents(doc)-1; n>=0; n--) {
 			com = getNthDNAComponent(doc, n);
-			deleteDNAComponent(doc, com);
+			deleteDNAComponent(com);
 		}
 		deletePointerArray(doc->allDNAComponents);
 		doc->allDNAComponents = NULL;

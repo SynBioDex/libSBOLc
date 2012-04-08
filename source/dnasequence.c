@@ -5,6 +5,7 @@
 #include "property.h"
 #include "array.h"
 #include "object.h"
+#include "document.h"
 #include "dnasequence.h"
 
 static void registerDNASequence(Document* doc, DNASequence* seq) {
@@ -35,6 +36,7 @@ void setDNASequenceNucleotides(DNASequence* seq, const char* nucleotides) {
 		setNucleotidesProperty(seq->nucleotides, nucleotides);
 }
 
+/// @todo don't pass doc?
 static void removeDNASequence(Document* doc, DNASequence* seq) {
 	if (doc && doc->allDNASequences && seq) {
 		int index = indexOfPointerInArray(doc->allDNASequences, seq);
@@ -54,7 +56,7 @@ void deleteDNASequence(DNASequence* seq) {
 			seq->nucleotides = NULL;
 		}
 		if (seq->doc) {
-			removeDNASequence(doc, seq);
+			removeDNASequence(seq->doc, seq);
 			seq->doc = NULL;
 		}
 		free(seq);
@@ -68,7 +70,7 @@ void cleanupDNASequences(Document* doc) {
 		DNASequence* seq;
 		for (n=getNumDNASequences(doc)-1; n>=0; n--) {
 			seq = getNthDNASequence(doc, n);
-			deleteDNASequence(doc, seq);
+			deleteDNASequence(seq);
 			seq = NULL;
 		}
 		deletePointerArray(doc->allDNASequences);
@@ -76,7 +78,7 @@ void cleanupDNASequences(Document* doc) {
 	}
 }
 
-int getNumDNASequences(Document* doc) {
+int getNumDNASequences(const Document* doc) {
 	if (doc && doc->allDNASequences)
 	    return getNumPointersInArray(doc->allDNASequences);
 	else
@@ -84,7 +86,6 @@ int getNumDNASequences(Document* doc) {
 }
 
 DNASequence* getDNASequence(Document* doc, const char* uri) {
-/*	lazyCreateAllDNASequences();*/
 	if (!doc || !uri)
 		return NULL;
 	int n;
