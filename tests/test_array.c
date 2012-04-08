@@ -147,6 +147,7 @@ void TestCleanupSequenceAnnotations(CuTest* tc) {
 	for (num=0; num<NUM_FAST_TESTS; num++)
 		createSequenceAnnotation(doc, randomUniqueURI(doc));
 	CuAssertIntEquals(tc, NUM_FAST_TESTS, getNumSequenceAnnotations(doc));
+	cleanupSequenceAnnotations(doc);
 	CuAssertIntEquals(tc, 0, getNumSequenceAnnotations(doc));
 	deleteDocument(doc);
 }

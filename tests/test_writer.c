@@ -21,7 +21,7 @@ void CreateValid12(Document* doc);
 void CreateValid13(Document* doc);
 
 // put them in an array so they can be called by index
-void (*CREATE_FUNCTIONS[NUM_VALID_EXAMPLES])() = {
+void (*CREATE_FUNCTIONS[NUM_VALID_EXAMPLES])(Document* doc) = {
 	CreateValid01,
 	CreateValid02,
 	CreateValid03,
@@ -45,10 +45,12 @@ void CreateValidExamples(CuTest *tc) {
 	for (n=0; n<NUM_VALID_EXAMPLES; n++) {
 		doc = createDocument();
 		TestNothingLoaded(tc, doc);
-		printf("recreating %s\n", TEST_OUTPUT_FILENAMES[n]);
+		printf("creating %s\n", TEST_OUTPUT_FILENAMES[n]);
 		CREATE_FUNCTIONS[n](doc);
+		TEST_LOADED_FUNCTIONS[n](tc, doc);
 		writeSBOLCore(doc, TEST_OUTPUT_FILENAMES[n]);
 		deleteDocument(doc);
+
 		doc = createDocument();
 		TestNothingLoaded(tc, doc);
 		readSBOLCore(doc, TEST_OUTPUT_FILENAMES[n]);

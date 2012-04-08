@@ -4,27 +4,27 @@
 
 CuSuite* DNASequenceGetSuite();
 CuSuite* SequenceAnnotationGetSuite();
-/*CuSuite* CollectionGetSuite();*/
-/*CuSuite* DNAComponentGetSuite();*/
-/*CuSuite* ArrayGetSuite();*/
+CuSuite* CollectionGetSuite();
+CuSuite* DNAComponentGetSuite();
+CuSuite* ArrayGetSuite();
 CuSuite* PropertyGetSuite();
 CuSuite* CleanupGetSuite();
-/*CuSuite* RoundTripGetSuite();*/
-/*CuSuite* ReaderGetSuite();*/
-/*CuSuite* WriterGetSuite();*/
-/*CuSuite* ValidatorGetSuite();*/
+CuSuite* RoundTripGetSuite();
+CuSuite* ReaderGetSuite();
+CuSuite* WriterGetSuite();
+CuSuite* ValidatorGetSuite();
 
 void RunUnitTests() {
 	CuString* output = CuStringNew();
 	CuSuite*  suite  = CuSuiteNew();
 
 	CuSuiteAddSuite(suite, ArrayGetSuite());
-/*	CuSuiteAddSuite(suite, DNASequenceGetSuite());*/
-/*	CuSuiteAddSuite(suite, SequenceAnnotationGetSuite());*/
-/*	CuSuiteAddSuite(suite, DNAComponentGetSuite());*/
-/*	CuSuiteAddSuite(suite, CollectionGetSuite());*/
-/*	CuSuiteAddSuite(suite, PropertyGetSuite());*/
-/*	CuSuiteAddSuite(suite, CleanupGetSuite());*/
+	CuSuiteAddSuite(suite, DNASequenceGetSuite());
+	CuSuiteAddSuite(suite, SequenceAnnotationGetSuite());
+	CuSuiteAddSuite(suite, DNAComponentGetSuite());
+	CuSuiteAddSuite(suite, CollectionGetSuite());
+	CuSuiteAddSuite(suite, PropertyGetSuite());
+	CuSuiteAddSuite(suite, CleanupGetSuite());
 
 	printf("\nRunning unit tests...\n");
 	CuSuiteRun(suite);
@@ -54,7 +54,7 @@ int main() {
 	// should only be done once
 	srand( time(NULL) );
 
-/*	RunExampleTests();*/
+	RunExampleTests();
 	RunUnitTests();
 
 	return 0;

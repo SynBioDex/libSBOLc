@@ -411,7 +411,7 @@ void TestLoadedValid13(CuTest *tc, Document* doc) {
 
 // a list of all the TestLoadedValid* functions
 // so they can be retrieved by index in a loop
-void (*TEST_LOADED_FUNCTIONS[NUM_VALID_EXAMPLES])() = {
+void (*TEST_LOADED_FUNCTIONS[NUM_VALID_EXAMPLES])(CuTest* tc, Document* doc) = {
 	TestLoadedValid01,
 	TestLoadedValid02,
 	TestLoadedValid03,

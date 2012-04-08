@@ -1,6 +1,8 @@
 #ifndef SBOL_TEST_EXAMPLES_HEADER
 #define SBOL_TEST_EXAMPLES_HEADER
+
 #include "CuTest.h"
+#include "prototypes.h"
 
 #define NUM_VALID_EXAMPLES   13
 #define NUM_INVALID_EXAMPLES 13 /// @todo finish 14-19
@@ -19,6 +21,6 @@ char     *TEST_OUTPUT_FILENAMES[NUM_VALID_EXAMPLES];
 
 // array of functions for checking that
 // the example content was loaded correctly
-void (*TEST_LOADED_FUNCTIONS[NUM_VALID_EXAMPLES])();
+void (*TEST_LOADED_FUNCTIONS[NUM_VALID_EXAMPLES])(CuTest* tc, Document* doc);
 
 #endif
