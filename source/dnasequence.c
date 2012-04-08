@@ -9,7 +9,7 @@
 #include "dnasequence.h"
 
 // TODO constrain to actg and sometimes n?
-DNASequence* createDNASequence(Document* doc, char* uri) {
+DNASequence* createDNASequence(Document* doc, const char* uri) {
 	if (!doc || !uri || isSBOLObjectURI(doc, uri))
 	    return NULL;
 	DNASequence* seq = malloc(sizeof(DNASequence));

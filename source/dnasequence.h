@@ -20,7 +20,7 @@ struct _DNASequence {
 };
 
 /// Create an empty DNASequence.
-SBOLAPIEXPORTS DNASequence* createDNASequence(Document* doc, char* uri);
+SBOLAPIEXPORTS DNASequence* createDNASequence(Document* doc, const char* uri);
 
 /// Delete a DNASequence.
 /// Since DNASequences are self-contained,

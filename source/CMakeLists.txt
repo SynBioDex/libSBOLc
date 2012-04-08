@@ -1,3 +1,8 @@
+#adjust paths
+SET( SBOL_RELEASE_DIR       ${SBOL_RELEASE_DIR}/library )
+SET( EXECUTABLE_OUTPUT_PATH ${SBOL_RELEASE_DIR}         )
+SET( LIBRARY_OUTPUT_PATH    ${SBOL_RELEASE_DIR}         )
+
 # find/build libxml
 IF( WIN32 )
 	ADD_SUBDIRECTORY( libxml2 )

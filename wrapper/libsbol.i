@@ -11,6 +11,7 @@
     #include "prototypes.h"
     #include "array.h"
     #include "utilities.h"
+	#include "document.h"
     #include "collection.h"
     #include "dnacomponent.h"
     #include "dnasequence.h"
@@ -59,12 +60,14 @@ enum StrandPolarity {
 %delobject deleteCollection;
 
 // functions returing pointers to new objects
-DNASequence* createDNASequence(char* uri);
-DNAComponent* createDNAComponent(const char* uri);
-Collection* createCollection(const char* uri);
-SequenceAnnotation* createSequenceAnnotation(const char* uri);
+Document* createDocument();
+DNASequence* createDNASequence(Document* doc, const char* uri);
+DNAComponent* createDNAComponent(Document* doc, const char* uri);
+Collection* createCollection(Document* doc, const char* uri);
+SequenceAnnotation* createSequenceAnnotation(Document* doc, const char* uri);
 
 // functions that delete objects
+void deleteDocument(Document* doc);
 void deleteDNASequence(DNASequence* seq);
 void deleteSequenceAnnotation(SequenceAnnotation* ann);
 void deleteDNAComponent(DNAComponent* com);
@@ -84,43 +87,43 @@ char* getCollectionName(const Collection* col);
 char* getCollectionDescription(const Collection* col);
 
 // functions returning pointers to existing objects
-DNASequence* getNthDNASequence(int n);
-DNASequence* getDNASequence(const char* uri);
+DNASequence* getDNASequence(Document* doc, const char* uri);
+DNASequence* getNthDNASequence(Document* doc, int n);
 DNASequence* getDNAComponentSequence(DNAComponent* com);
-SequenceAnnotation* getSequenceAnnotation(const char* uri);
-SequenceAnnotation* getNthSequenceAnnotation(int n);
+SequenceAnnotation* getSequenceAnnotation(Document* doc, const char* uri);
+SequenceAnnotation* getNthSequenceAnnotation(Document* doc, int n);
 SequenceAnnotation* getNthPrecedes(const SequenceAnnotation* ann, int n);
 SequenceAnnotation* getNthSequenceAnnotationFor(const DNAComponent* com, int n);
-DNAComponent* getNthDNAComponent(int n);
-DNAComponent* getDNAComponent(const char* uri);
+DNAComponent* getNthDNAComponent(Document* doc, int n);
+DNAComponent* getDNAComponent(Document* doc, const char* uri);
 DNAComponent* getSequenceAnnotationSubComponent(const SequenceAnnotation* ann);
 DNAComponent* getNthDNAComponentIn(const Collection* col, int n);
-Collection* getCollection(const char* uri);
-Collection* getNthCollection(int n);
+Collection* getCollection(Document* doc, const char* uri);
+Collection* getNthCollection(Document* doc, int n);
 
 // functions returning ints
-int getNumSBOLObjects();
-int isSBOLObjectURI(const char* uri);
-int getNumDNASequences();
-int isDNASequenceURI(const char* uri);
-int isSequenceAnnotation(const void* pointer);
-int isSequenceAnnotationURI(const char* uri);
-int getNumSequenceAnnotations();
+int getNumSBOLObjects(Document* doc);
+int isSBOLObjectURI(Document* doc, const char* uri);
+int getNumDNASequences(Document* doc);
+int isDNASequenceURI(Document* doc, const char* uri);
+int isSequenceAnnotation(Document* doc, const void* pointer);
+int isSequenceAnnotationURI(Document* doc, const char* uri);
+int getNumSequenceAnnotations(Document* doc);
 int getSequenceAnnotationStart(const SequenceAnnotation* ann);
 int getSequenceAnnotationEnd(const SequenceAnnotation* ann);
 int getSequenceAnnotationStrand(const SequenceAnnotation* ann);
 int getNumPrecedes(const SequenceAnnotation* ann);
 int precedes(const SequenceAnnotation* upstream, const SequenceAnnotation* downstream);
-int isDNAComponent(const void* pointer);
-int isDNAComponentURI(const char* uri);
-int getNumDNAComponents();
+int isDNAComponent(Document* doc, const void* pointer);
+int isDNAComponentURI(Document* doc, const char* uri);
+int getNumDNAComponents(Document* doc);
 int getNumSequenceAnnotationsFor(const DNAComponent* com);
-int isCollection(const void* pointer);
-int isCollectionURI(const char* uri);
-int getNumCollections();
+int isCollection(Document* doc, const void* pointer);
+int isCollectionURI(Document* doc, const char* uri);
+int getNumCollections(Document* doc);
 int getNumDNAComponentsIn(const Collection* col);
 int dnaComponentInCollection(const DNAComponent* com, const Collection* col);
-int writeSBOLCore(const char* filename);
+int writeSBOLDocument(Document* doc, const char* filename);
 
 // functions returning void
 void setDNASequenceNucleotides(DNASequence* seq, const char* nucleotides);
@@ -143,7 +146,7 @@ void setCollectionName(Collection* col, const char* name);
 void setCollectionDescription(Collection* col, const char* desc);
 void addDNAComponentToCollection(Collection* col, DNAComponent* com);
 void printCollection(const Collection* col, int tabs);
-void readSBOLCore(char* filename);
-void printSBOLCore();
-void cleanupSBOLCore();
+void readSBOLDocument(Document* doc, char* filename);
+void printDocument(Document* doc);
+void deleteDocument(Document* doc);
 
