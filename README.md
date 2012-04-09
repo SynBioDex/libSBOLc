@@ -95,7 +95,7 @@ Binaries will be generated in the <code>libSBOLc/release</code> folder.
 Testing
 -------
 
-Once you've configured and built libSBOLc, you can run some simple tests to check that everything works. First, copy the shared library file from <code>libSBOLc/release/library</code> to <code>libSBOLc/release/examples</code>. Then <code>cd</code> into the <code>libSBOLc/release/examples</code> folder and run:
+Once you've configured and built libSBOLc, you can run some simple tests to check that everything works. <code>cd</code> into the <code>libSBOLc/release/examples</code> folder and run:
 
     ./sbol_run_tests
 
@@ -130,7 +130,7 @@ To use libSBOLc in your own code, <code>#include "sbol.h"</code>. Then there are
 Linking to the SBOL library
 ---------------------------
 
-There are different ways to do this, but here's a simple one. To compile the sbol_validate example using MinGW on Windows:
+There are different ways to do this, but this is probably the simplest. To compile the sbol_validate example using MinGW on Windows:
 
     mingw32-gcc.exe -I headers sbol_validate.c -o validate libsbol.dll
 
