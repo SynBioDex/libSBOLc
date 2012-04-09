@@ -44,12 +44,12 @@ To make a complete program, you could add:
 
 The other examples follow the same format, and can be found [here](https://github.com/SynBioDex/libSBOLc/tree/master/examples/code).
 
-The rest of this file is a quick guide to getting started with common tasks. For more detailed information, see [the online documentation](http://synbiodex.github.com/libSBOLc).
+The rest of this file is a quick guide to getting started with common tasks. For more detailed information about the code itself, see [the online documentation](http://synbiodex.github.com/libSBOLc).
 
 Downloading the binaries
 ------------------------
 
-Binaries coming soon...
+Shared library files are available for Windows, Mac OSX, and Linux/Unix.
 
 Building from source
 --------------------
@@ -95,7 +95,7 @@ Binaries will be generated in the <code>libSBOLc/release</code> folder.
 Testing
 -------
 
-Once you've configured and built libSBOLc, you can <code>cd</code> into the <code>libSBOLc/release</code> folder and run some simple tests to check that everything works:
+Once you've configured and built libSBOLc, you can run some simple tests to check that everything works. First, copy the shared library file from <code>libSBOLc/release/library</code> to <code>libSBOLc/release/examples</code>. Then <code>cd</code> into the <code>libSBOLc/release/examples</code> folder and run:
 
     ./sbol_run_tests
 
@@ -126,6 +126,21 @@ To use libSBOLc in your own code, <code>#include "sbol.h"</code>. Then there are
   [index of all available functions](http://synbiodex.github.com/libSBOLc/globals_func.html)
   is a good place to look. There's also code to create each of the xml example files in
   [libSBOLc/examples/code](https://github.com/SynBioDex/libSBOLc/tree/master/examples/code).
+
+Linking to the SBOL library
+---------------------------
+
+There are different ways to do this, but here's a simple one. To compile the sbol_validate example using MinGW on Windows:
+
+    mingw32-gcc.exe -I. sbol_validate.c -o validate libsbol.dll
+
+and the equivalent command on Unix:
+
+    gcc -I. sbol_validate.c -o validate libsbol.so
+
+The <code>-I.</code> tells <code>gcc</code> to look in the current directory for headers, and <code>-o</code> is the name of the generated executable.
+
+For more complex programs CMake is a good choice. It lets you write detailed build scripts that configure files, create directories, find system libraries, etc.
 
 Updating the documentation
 ---------------------------
