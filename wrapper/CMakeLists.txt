@@ -48,16 +48,6 @@ IF( SWIG_FOUND )
         sbol_swig
     )
 
-	# copy Python files to release dir
-	# todo remove this
-	FILE(
-		COPY
-		    ${SBOL_WRAPPER_DIR}/sbol.py
-		    ${SBOL_WRAPPER_DIR}/sbol_test.py
-		DESTINATION
-		    ${SBOL_RELEASE_DIR}
-	)
-
 ELSE()
 
     MESSAGE( "SWIG not found; unable to generate Python bindings" )
