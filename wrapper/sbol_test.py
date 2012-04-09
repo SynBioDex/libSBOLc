@@ -57,8 +57,8 @@ class TestSBOLObject(unittest.TestCase):
         self.assertEqual(obj.__getattribute__(attr), None)
 
     def setUp(self):
-        self.doc = Document()
-        self.assertEqual(doc.num_sbol_objects, 0)
+        self.doc = sbol.Document()
+        self.assertEqual(self.doc.num_sbol_objects, 0)
         self.uris    = []
         self.testees = []
         self.createTestees()
@@ -68,7 +68,7 @@ class TestSBOLObject(unittest.TestCase):
 
     def tearDown(self):
         self.assertEqual(len(self.uris), self.doc.num_sbol_objects)
-        self.assertEqual(len(self.uris), sbol.libsbol.getNumSBOLObjects(doc.ptr))
+        self.assertEqual(len(self.uris), sbol.libsbol.getNumSBOLObjects(self.doc.ptr))
         del self.doc
         # todo check that everything was deleted?
 

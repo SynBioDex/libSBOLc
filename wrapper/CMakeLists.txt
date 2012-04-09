@@ -53,7 +53,7 @@ IF( SWIG_FOUND )
 	FILE(
 		COPY
 		    ${SBOL_WRAPPER_DIR}/sbol.py
-		    ${SBOL_WRAPPER_DIR}/test_sbol.py
+		    ${SBOL_WRAPPER_DIR}/sbol_test.py
 		DESTINATION
 		    ${SBOL_RELEASE_DIR}
 	)

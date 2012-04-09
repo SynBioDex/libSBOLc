@@ -44,7 +44,10 @@ class SBOLObjectArray(object):
 
     def __init__(self, obj, num, nth):
         self.ptr = obj.ptr
-        self.doc = obj.doc
+        if isinstance(obj, Document):
+            self.doc = obj
+        else:
+            self.doc = obj.doc
 
         # Each type of SBOL object has its own array functions,
         # which need to be set for the wrapper to work.
@@ -149,22 +152,22 @@ class Document(object):
         # create sequences array
         fns = (libsbol.getNumDNASequences,
                libsbol.getNthDNASequence)
-        self.sequences = SBOLObjectArray(self, fns)
+        self.sequences = SBOLObjectArray(self, *fns)
 
         # create annotations array
         fns = (libsbol.getNumSequenceAnnotations,
                libsbol.getNthSequenceAnnotation)
-        self.annotations = SBOLObjectArray(self, fns)
+        self.annotations = SBOLObjectArray(self, *fns)
 
         # create components array
         fns = (libsbol.getNumDNAComponents,
                libsbol.getNthDNAComponent)
-        self.components = SBOLObjectArray(self, fns)
+        self.components = SBOLObjectArray(self, *fns)
 
         # create collections array
         fns = (libsbol.getNumCollections,
                libsbol.getNthCollection)
-        self.collections = SBOLObjectArray(self, fns)
+        self.collections = SBOLObjectArray(self, *fns)
 
         # create lists of Python proxy objects to keep them
         # from being garbage collected, and for looking up
@@ -176,29 +179,33 @@ class Document(object):
 
     @property
     def num_sbol_objects(self):
-        return len(self.sequences)   +
-               len(self.annotations) +
-               len(self.components)  +
-               len(self.collections)
+        return len(self.sequences)   \
+             + len(self.annotations) \
+             + len(self.components)  \
+             + len(self.collections)
 
     @property
     def uris(self):
         output = []
-        for obj in (self.sequences
-                  + self.annotations
-                  + self.components
-                  + self.collections):
-            output.append(obj.uri)
+        arrays = (self._sequences,
+                  self._annotations,
+                  self._components,
+                  self._collections)
+        for array in arrays:
+            for obj in array:
+                output.append(obj.uri)
         return output
 
     def _proxy(self, ptr):
         'Find the Python proxy for an unknown pointer'
-        for obj in (self.sequences
-                  + self.annotations
-                  + self.components
-                  + self.collections):
-            if obj.ptr == ptr:
-                return obj
+        arrays = (self._sequences,
+                  self._annotations,
+                  self._components,
+                  self._collections)
+        for array in arrays:
+            for obj in array:
+                if obj.ptr == ptr:
+                    return obj
         return None
 
 class DNASequence(object):
@@ -206,7 +213,7 @@ class DNASequence(object):
     
     def __init__(self, doc, uri):
         # create the C object
-        self.ptr = libsbol.createDNASequence(uri)
+        self.ptr = libsbol.createDNASequence(doc.ptr, uri)
         if self.ptr == None:
             raise URIError("Duplicate URI '%s'" % uri)
 
@@ -241,20 +248,20 @@ class SequenceAnnotation(object):
     
     def __init__(self, doc, uri):
         # create the C object
-        self.ptr = libsbol.createSequenceAnnotation(uri)
+        self.ptr = libsbol.createSequenceAnnotation(doc.ptr, uri)
         if self.ptr == None:
             raise URIError("Duplicate URI '%s'" % uri)
 
-        # create the Python proxy
+        # register the Python proxy
+        self.doc = doc
+        self.doc._annotations.append(self)
+
+        # finish the Python proxy
         self.doc._annotations.append(self)
         fns = (libsbol.addPrecedesRelationship,
                libsbol.getNumPrecedes,
                libsbol.getNthPrecedes)
         self.precedes = ExtendableSBOLObjectArray(self, *fns)
-
-        # register the Python proxy
-        self.doc = doc
-        self.doc._annotations.append(self)
 
     def __del__(self):
         if self.ptr:
@@ -340,19 +347,19 @@ class DNAComponent(object):
 
     def __init__(self, doc, uri):
         # create the C object
-        self.ptr = libsbol.createDNAComponent(uri)
+        self.ptr = libsbol.createDNAComponent(doc.ptr, uri)
         if self.ptr == None:
             raise URIError("Duplicate URI '%s'" % uri)
-
-        # create the Python proxy
-        fns = (libsbol.addSequenceAnnotation,
-               libsbol.getNumSequenceAnnotationsFor,
-               libsbol.getNthSequenceAnnotationFor)
-        self.annotations = ExtendableSBOLObjectArray(self, *fns)
 
         # register the Python proxy
         self.doc = doc
         self.doc._components.append(self)
+
+        # finish the Python proxy
+        fns = (libsbol.addSequenceAnnotation,
+               libsbol.getNumSequenceAnnotationsFor,
+               libsbol.getNthSequenceAnnotationFor)
+        self.annotations = ExtendableSBOLObjectArray(self, *fns)
 
     def __del__(self):
         if self.ptr:
@@ -404,21 +411,21 @@ class DNAComponent(object):
 class Collection(object):
     'Wrapper around a libSBOLc Collection'
 
-    def __init__(self, uri):
+    def __init__(self, doc, uri):
         # create the C object
-        self.ptr = libsbol.createCollection(uri)
+        self.ptr = libsbol.createCollection(doc.ptr, uri)
         if self.ptr == None:
             raise URIError("Duplicate URI '%s'" % uri)
-
-        # create the Python proxy
-        fns = (libsbol.addDNAComponentToCollection,
-               libsbol.getNumDNAComponentsIn,
-               libsbol.getNthDNAComponentIn)
-        self.components = ExtendableSBOLObjectArray(self, *fns)
 
         # register the Python proxy
         self.doc = doc
         self.doc._collections.append(self)
+
+        # finish the Python proxy
+        fns = (libsbol.addDNAComponentToCollection,
+               libsbol.getNumDNAComponentsIn,
+               libsbol.getNthDNAComponentIn)
+        self.components = ExtendableSBOLObjectArray(self, *fns)
 
     def __del__(self):
         if self.ptr:
