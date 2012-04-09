@@ -3,10 +3,48 @@ libSBOLc: SBOL C library
 
 [libSBOLc](https://github.com/SynBioDex/libSBOLc) is a C library for working with the [Synthetic Biology Open Language (SBOL)](http://sbolstandard.org). It uses the XML schema and example files from [libSBOLj](https://github.com/SynBioDex/libSBOLj), but the rest of the code was developed separately. The two libraries should eventually present similar interfaces, except where language conventions differ.
 
-The rest of this file is a quick guide to getting started with common tasks. For more detailed information, see:
+Here is some example client code that will recreate valid04_dna_component_annotation.xml, which is one of the test cases from libSBOLj.
 
-* [the online documentation](http://synbiodex.github.com/libSBOLc)
-* [some example code](https://github.com/SynBioDex/libSBOLc/tree/master/examples)
+    #include "sbol.h"
+
+	Document* CreateValid04() {
+		Document* doc = createDocument();
+
+		// components
+		DNAComponent *dc1 = createDNAComponent(doc, "http://example.com/dc1");
+		DNAComponent *dc2 = createDNAComponent(doc, "http://example.com/dc2");
+		setDNAComponentDisplayID(dc1, "DC1");
+		setDNAComponentDisplayID(dc2, "DC2");
+		setDNAComponentName(dc1, "DnaComponent1");
+		setDNAComponentName(dc2, "DnaComponent2");
+		setDNAComponentDescription(dc1, "DnaComponent with one sequence annotation");
+		setDNAComponentDescription(dc2, "Another DNA component");
+
+		// sequence
+		DNASequence *ds1 = createDNASequence(doc, "http://example.com/ds1");
+		setDNASequenceNucleotides(ds1, "tccctatcagtgat");
+		setDNAComponentSequence(dc1, ds1);
+
+		// annotation
+		SequenceAnnotation *sa1 = createSequenceAnnotation(doc, "http://example.com/sa1");
+		setSequenceAnnotationSubComponent(sa1, dc2);
+		addSequenceAnnotation(dc1, sa1);
+
+		return doc;
+	}
+
+To make a complete program, you could add:
+
+    void main() {
+    	Document *doc = CreateValid04();
+    	writeDocument(doc, "valid04_dna_component_annotation.xml");
+    	deleteDocument(doc);
+    }
+
+
+The other examples follow the same format, and can be found [here](https://github.com/SynBioDex/libSBOLc/tree/master/examples/code).
+
+The rest of this file is a quick guide to getting started with common tasks. For more detailed information, see [the online documentation](http://synbiodex.github.com/libSBOLc).
 
 Downloading the binaries
 ------------------------
@@ -38,9 +76,9 @@ This will create a <code>libSBOLc</code> directory with the code. Next, run CMak
 
 Click <code>Configure</code>, and choose what type of compiler you want to generate instructions for. All the development has been done using "default native compilers" and MinGW on Windows or Unix makefiles on Mac/Linux. CMake should also be able to generate projects for Eclipse, Visual Studio, XCode, etc. However, that will probably involve adjusting some paths.
 
-The first time you click <code>Configure</code>, CMake will list variables, like <code>CMAKE_BUILD_TYPE</code> and <code>LIBXML2_INCLUDE_DIR</code>, in red. That means
+The first time you click <code>Configure</code> CMake will list variables, like <code>CMAKE_BUILD_TYPE</code> and <code>LIBXML2_INCLUDE_DIR</code>, in red. That means
 they've been updated. To build the main SBOL library, just click <code>Configure</code> again until the red goes away. This is also where you set up the optional
-targets: examples, tests, manual, and wrapper. To add them check the appropriate boxes (SBOL_BUILD_EXAMPLES, for example) and then <code>Configure</code> again to
+targets: examples, tests, manual, and Python wrapper. To add them check the appropriate boxes (SBOL_BUILD_EXAMPLES, for example) and then <code>Configure</code> again to
 adjust the settings. There's one other SBOL-specific option: <code>SBOL_DEBUG_STATEMENTS</code> will cause libSBOLc to be compiled with some extra debugging statements.
 A lot of other options might be visibile too; checking <code>Grouped</code> at the top makes things more managable. Once it's all set, click <code>Generate</code> to create the compiler instructions.
 
@@ -52,8 +90,7 @@ or
 
     mingw32-make.exe
 
-Binaries will be generated in the <code>libSBOLc/release</code> folder. If you added optional targets there may be several versions of libsbol in there; you
-want the one named just <code>libsbol.so</code>, <code>libsbol.dll</code>, or <code>libsbol.dylib</code>.
+Binaries will be generated in the <code>libSBOLc/release</code> folder.
 
 Testing
 -------
@@ -71,21 +108,24 @@ Incorporating SBOL into your code
 
 To use libSBOLc in your own code, <code>#include "sbol.h"</code>. Then there are only a few important functions you need to know to get started reading, writing, and manipulating SBOL files:
 
-* readSBOLCore imports SBOL objects from a file, and writeSBOLCore serializes them again.
+* createDocument makes a new Document, and deleteDocument frees it from memory.
+  The other SBOL objects are created with an existing Document as their first argument.
 
-* isValidSBOL checks that an xmlDoc conforms to the SBOL schema. Using it involves parsing with libxml. There's an example of that in
+* readDocument imports SBOL objects from a file, and writeDocument serializes them again.
+
+* isValidSBOL checks that an xmlDoc conforms to the SBOL schema. Using it involves parsing with libxml.
+  There's an example of that in
   [sbol_validate.c](https://github.com/SynBioDex/libSBOLc/blob/master/examples/code/sbol_validate.c),
-  but it shouldn't be necessary in most cases since readSBOLCore and writeSBOLCore
+  but it shouldn't be necessary in most cases since readDocument and writeDocument
   both call it internally.
 
 * There are constructors, destructors, getters, and setters for each type of SBOL object.
   For the most part they follow a pretty obvious formula:
   setDNAComponentDisplayID and getDNAComponentDisplayID, for example. But there are also some non-obvious ones, like 
-  addPrecedesRelationship. For those the [index of all available functions](http://synbiodex.github.com/libSBOLc/globals_func.html)
+  addPrecedesRelationship. For those the
+  [index of all available functions](http://synbiodex.github.com/libSBOLc/globals_func.html)
   is a good place to look. There's also code to create each of the xml example files in
   [libSBOLc/examples/code](https://github.com/SynBioDex/libSBOLc/tree/master/examples/code).
-
-* cleanupSBOLCore frees all the SBOL objects from memory. Strings you get back from SBOL functions have too be free()d separately though.
 
 Updating the documentation
 ---------------------------
