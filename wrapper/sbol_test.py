@@ -49,16 +49,13 @@ class TestSBOLObject(unittest.TestCase):
         self.assertEqual(obj.__getattribute__(attr), None)
 
     def setUp(self):
-        try:
-            self.assertEqual(sbol.libsbol.getNumSBOLObjects(), 0)
-        except AssertionError:
-            # this test fails, but don't want to mess up the rest
-            sbol.libsbol.cleanupSBOLCore()
+        self.doc = Document()
+        self.assertEqual(doc.num_sbol_objects, 0)
         self.uris    = []
         self.testees = []
         self.createTestees()
         self.assertEqual(len(self.uris), len(self.testees))
-        self.assertEqual(len(self.uris), sbol.libsbol.getNumSBOLObjects())
+        self.assertEqual(len(self.uris), doc.num_sbol_objects)
         self.assertEqual(len(self.uris), len(sbol.ALL_SBOL_OBJECTS.sbol_objects))
 
     def tearDown(self):
