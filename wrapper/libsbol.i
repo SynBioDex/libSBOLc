@@ -24,6 +24,10 @@
     #include "sbol.h"
 %}
 
+#ifdef SWIGWIN
+    %include <windows.i>
+#endif
+
 enum StrandPolarity {
 	STRAND_FORWARD,
 	STRAND_BIDIRECTIONAL,

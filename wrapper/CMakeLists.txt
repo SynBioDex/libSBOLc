@@ -45,6 +45,7 @@ IF( SWIG_FOUND )
     )
     SWIG_LINK_LIBRARIES( libsbol
         ${PYTHON_LIBRARIES}
+        xml2
         sbol_swig
     )
 
