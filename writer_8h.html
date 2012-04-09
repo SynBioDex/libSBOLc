@@ -3,7 +3,7 @@
 <head>
 <meta http-equiv="Content-Type" content="text/xhtml;charset=UTF-8"/>
 <meta http-equiv="X-UA-Compatible" content="IE=9"/>
-<title>libSBOLc: H:/code/libSBOLc/source/writer.h File Reference</title>
+<title>libSBOLc: /home/jefdaj/code/libSBOLc/source/writer.h File Reference</title>
 
 <link href="tabs.css" rel="stylesheet" type="text/css"/>
 <link href="doxygen.css" rel="stylesheet" type="text/css" />
@@ -93,7 +93,7 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
   <div class="summary">
 <a href="#func-members">Functions</a>  </div>
   <div class="headertitle">
-<div class="title">H:/code/libSBOLc/source/writer.h File Reference</div>  </div>
+<div class="title">/home/jefdaj/code/libSBOLc/source/writer.h File Reference</div>  </div>
 </div><!--header-->
 <div class="contents">
 
@@ -104,37 +104,47 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 </div><div class="textblock"><div class="dynheader">
 Include dependency graph for writer.h:</div>
 <div class="dyncontent">
-<div class="center"><img src="writer_8h__incl.png" border="0" usemap="#_h_1_2code_2lib_s_b_o_lc_2source_2writer_8h" alt=""/></div>
-<map name="_h_1_2code_2lib_s_b_o_lc_2source_2writer_8h" id="_h_1_2code_2lib_s_b_o_lc_2source_2writer_8h">
-<area shape="rect" id="node3" href="prototypes_8h.html" title="Declares all the major structs, unions, and enums so the compiler will recognize them when reading th..." alt="" coords="65,80,159,107"/></map>
+<div class="center"><img src="writer_8h__incl.png" border="0" usemap="#_2home_2jefdaj_2code_2lib_s_b_o_lc_2source_2writer_8h" alt=""/></div>
+<map name="_2home_2jefdaj_2code_2lib_s_b_o_lc_2source_2writer_8h" id="_2home_2jefdaj_2code_2lib_s_b_o_lc_2source_2writer_8h">
+<area shape="rect" id="node3" href="prototypes_8h.html" title="Declares all the major structs, unions, and enums so the compiler will recognize them when reading th..." alt="" coords="101,83,203,112"/></map>
 </div>
 </div><div class="textblock"><div class="dynheader">
 This graph shows which files directly or indirectly include this file:</div>
 <div class="dyncontent">
-<div class="center"><img src="writer_8h__dep__incl.png" border="0" usemap="#_h_1_2code_2lib_s_b_o_lc_2source_2writer_8hdep" alt=""/></div>
-<map name="_h_1_2code_2lib_s_b_o_lc_2source_2writer_8hdep" id="_h_1_2code_2lib_s_b_o_lc_2source_2writer_8hdep">
-<area shape="rect" id="node3" href="sbol_8h.html" title="Gathers together all the SBOL functions so they can be easily #included." alt="" coords="11,80,213,107"/></map>
+<div class="center"><img src="writer_8h__dep__incl.png" border="0" usemap="#_2home_2jefdaj_2code_2lib_s_b_o_lc_2source_2writer_8hdep" alt=""/></div>
+<map name="_2home_2jefdaj_2code_2lib_s_b_o_lc_2source_2writer_8hdep" id="_2home_2jefdaj_2code_2lib_s_b_o_lc_2source_2writer_8hdep">
+<area shape="rect" id="node3" href="sbol_8h.html" title="Gathers together all the SBOL functions so they can be easily #included." alt="" coords="9,83,295,112"/></map>
 </div>
 </div><table class="memberdecls">
 <tr><td colspan="2"><h2><a name="func-members"></a>
 Functions</h2></td></tr>
-<tr class="memitem:a4f88067998c930707eca0d440975d80f"><td class="memItemLeft" align="right" valign="top"><a class="el" href="constants_8h_8in.html#adfe7cb56aa4562836d5167efb98c8d2e">SBOLAPIEXPORTS</a> int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="writer_8h.html#a4f88067998c930707eca0d440975d80f">writeSBOLCore</a> (const char *filename)</td></tr>
-<tr class="memdesc:a4f88067998c930707eca0d440975d80f"><td class="mdescLeft">&#160;</td><td class="mdescRight">Create, validate, and save an XML document based on the SBOLObjects currently in memory.  <a href="#a4f88067998c930707eca0d440975d80f"></a><br/></td></tr>
+<tr class="memitem:a5b650396917c7979d3398ae8c761333d"><td class="memItemLeft" align="right" valign="top"><a class="el" href="constants_8h_8in.html#adfe7cb56aa4562836d5167efb98c8d2e">SBOLAPIEXPORTS</a> int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="writer_8h.html#a5b650396917c7979d3398ae8c761333d">writeDocument</a> (Document *doc, const char *filename)</td></tr>
+<tr class="memdesc:a5b650396917c7979d3398ae8c761333d"><td class="mdescLeft">&#160;</td><td class="mdescRight">Create, validate, and save an XML document based on the SBOLObjects currently in memory.  <a href="#a5b650396917c7979d3398ae8c761333d"></a><br/></td></tr>
 </table>
 <hr/><a name="details" id="details"></a><h2>Detailed Description</h2>
 <div class="textblock"><p>This file contains functions for writing the SBOL core to an XML file. </p>
-<p>Only writeSBOLCore is meant to be exported; everything else supports it. </p>
+<p>Only writeDocument is meant to be exported; everything else supports it. </p>
 </div><hr/><h2>Function Documentation</h2>
-<a class="anchor" id="a4f88067998c930707eca0d440975d80f"></a>
+<a class="anchor" id="a5b650396917c7979d3398ae8c761333d"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname"><a class="el" href="constants_8h_8in.html#adfe7cb56aa4562836d5167efb98c8d2e">SBOLAPIEXPORTS</a> int <a class="el" href="writer_8h.html#a4f88067998c930707eca0d440975d80f">writeSBOLCore</a> </td>
+          <td class="memname"><a class="el" href="constants_8h_8in.html#adfe7cb56aa4562836d5167efb98c8d2e">SBOLAPIEXPORTS</a> int <a class="el" href="writer_8h.html#a5b650396917c7979d3398ae8c761333d">writeDocument</a> </td>
           <td>(</td>
-          <td class="paramtype">const char *&#160;</td>
-          <td class="paramname"><em>filename</em></td><td>)</td>
+          <td class="paramtype">Document *&#160;</td>
+          <td class="paramname"><em>doc</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
           <td></td>
+          <td class="paramtype">const char *&#160;</td>
+          <td class="paramname"><em>filename</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
         </tr>
       </table>
 </div>
@@ -149,7 +159,7 @@ Functions</h2></td></tr>
 
 
 <hr class="footer"/><address class="footer"><small>
-Generated on Wed Apr 4 2012 13:32:39 for libSBOLc by &#160;<a href="http://www.doxygen.org/index.html">
+Generated on Mon Apr 9 2012 12:32:31 for libSBOLc by &#160;<a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/>
 </a> 1.8.0
 </small></address>

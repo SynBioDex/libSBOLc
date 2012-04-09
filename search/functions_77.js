@@ -1,4 +1,4 @@
 var searchData=
 [
-  ['writesbolcore',['writeSBOLCore',['../writer_8h.html#a4f88067998c930707eca0d440975d80f',1,'writer.c']]]
+  ['writedocument',['writeDocument',['../writer_8h.html#a5b650396917c7979d3398ae8c761333d',1,'writer.c']]]
 ];

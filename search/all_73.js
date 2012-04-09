@@ -14,6 +14,7 @@ var searchData=
   ['sbol_5ftest_5fdir',['SBOL_TEST_DIR',['../constants_8h_8in.html#adf51d1549fe1ee2919f74c24a5e492de',1,'constants.h.in']]],
   ['sbolapiexports',['SBOLAPIEXPORTS',['../constants_8h_8in.html#adfe7cb56aa4562836d5167efb98c8d2e',1,'constants.h.in']]],
   ['sequenceannotation_2eh',['sequenceannotation.h',['../sequenceannotation_8h.html',1,'']]],
+  ['sequences',['sequences',['../struct___document.html#a145a6894be6e85da515febd6b0baba66',1,'_Document']]],
   ['setcollectiondescription',['setCollectionDescription',['../collection_8h.html#a02bd9640c9c821d98f19081e9c49fa96',1,'collection.c']]],
   ['setcollectiondisplayid',['setCollectionDisplayID',['../collection_8h.html#ab3b13014274b1f135eb2a0b88f6481f0',1,'collection.c']]],
   ['setcollectionname',['setCollectionName',['../collection_8h.html#a652b9ace14e8cecb9df9c785650161da',1,'collection.c']]],

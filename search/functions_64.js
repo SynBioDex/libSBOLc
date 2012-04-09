@@ -3,6 +3,7 @@ var searchData=
   ['deletecollection',['deleteCollection',['../collection_8h.html#a620f32d929d285f5d0e11a42fdb244f6',1,'collection.c']]],
   ['deletednacomponent',['deleteDNAComponent',['../dnacomponent_8h.html#a892f21b08ec0404bed820b9cbfb1342e',1,'dnacomponent.c']]],
   ['deletednasequence',['deleteDNASequence',['../dnasequence_8h.html#a5527ada2b682004b24590af9ab2a64ac',1,'dnasequence.c']]],
+  ['deletedocument',['deleteDocument',['../document_8h.html#a59ebe18448a4ec176b913c0f41f4429e',1,'document.c']]],
   ['deletenucleotidesproperty',['deleteNucleotidesProperty',['../property_8h.html#a255ceffbe9cc66e7cc48f07037acc9f0',1,'property.c']]],
   ['deletepointerarray',['deletePointerArray',['../array_8h.html#ae1ffea3be221821f9047c33b7c55792d',1,'array.c']]],
   ['deletepolarityproperty',['deletePolarityProperty',['../property_8h.html#a547cb88690dfcbbdd88cbc3dc45db616',1,'property.c']]],

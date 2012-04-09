@@ -3,6 +3,7 @@ var searchData=
   ['deletecollection',['deleteCollection',['../collection_8h.html#a620f32d929d285f5d0e11a42fdb244f6',1,'collection.c']]],
   ['deletednacomponent',['deleteDNAComponent',['../dnacomponent_8h.html#a892f21b08ec0404bed820b9cbfb1342e',1,'dnacomponent.c']]],
   ['deletednasequence',['deleteDNASequence',['../dnasequence_8h.html#a5527ada2b682004b24590af9ab2a64ac',1,'dnasequence.c']]],
+  ['deletedocument',['deleteDocument',['../document_8h.html#a59ebe18448a4ec176b913c0f41f4429e',1,'document.c']]],
   ['deletenucleotidesproperty',['deleteNucleotidesProperty',['../property_8h.html#a255ceffbe9cc66e7cc48f07037acc9f0',1,'property.c']]],
   ['deletepointerarray',['deletePointerArray',['../array_8h.html#ae1ffea3be221821f9047c33b7c55792d',1,'array.c']]],
   ['deletepolarityproperty',['deletePolarityProperty',['../property_8h.html#a547cb88690dfcbbdd88cbc3dc45db616',1,'property.c']]],
@@ -18,5 +19,7 @@ var searchData=
   ['dnacomponent_2eh',['dnacomponent.h',['../dnacomponent_8h.html',1,'']]],
   ['dnacomponentincollection',['dnaComponentInCollection',['../collection_8h.html#a4b2260b492dacd93fb459e2abd5e532d',1,'collection.c']]],
   ['dnasequence',['dnaSequence',['../struct___d_n_a_component.html#a07b8b109796aadb16df9a7b4301f4ee0',1,'_DNAComponent']]],
-  ['dnasequence_2eh',['dnasequence.h',['../dnasequence_8h.html',1,'']]]
+  ['dnasequence_2eh',['dnasequence.h',['../dnasequence_8h.html',1,'']]],
+  ['doc',['doc',['../struct___collection.html#a3492dcd8760fd6f507bd23defb6c6b77',1,'_Collection::doc()'],['../struct___d_n_a_component.html#a7ea939a8a621d6a7760739ea76d672b9',1,'_DNAComponent::doc()'],['../struct___d_n_a_sequence.html#aaa2c77b60bc7d48cf38952010d44b3ea',1,'_DNASequence::doc()'],['../struct___u_r_i_property.html#a5030db60516faae9615cb3a82765decb',1,'_URIProperty::doc()'],['../struct___sequence_annotation.html#aeb5e0807b4b826ac72f2edded0c926a7',1,'_SequenceAnnotation::doc()']]],
+  ['document_2eh',['document.h',['../document_8h.html',1,'']]]
 ];

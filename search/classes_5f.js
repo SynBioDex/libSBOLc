@@ -3,6 +3,7 @@ var searchData=
   ['_5fcollection',['_Collection',['../struct___collection.html',1,'']]],
   ['_5fdnacomponent',['_DNAComponent',['../struct___d_n_a_component.html',1,'']]],
   ['_5fdnasequence',['_DNASequence',['../struct___d_n_a_sequence.html',1,'']]],
+  ['_5fdocument',['_Document',['../struct___document.html',1,'']]],
   ['_5fnucleotidesproperty',['_NucleotidesProperty',['../struct___nucleotides_property.html',1,'']]],
   ['_5fpointerarray',['_PointerArray',['../struct___pointer_array.html',1,'']]],
   ['_5fpolarityproperty',['_PolarityProperty',['../struct___polarity_property.html',1,'']]],

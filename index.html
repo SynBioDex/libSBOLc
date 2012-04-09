@@ -122,7 +122,7 @@ Overview</h2>
 </div>
 <h2><a class="anchor" id="tour"></a>
 A brief tour of the source code</h2>
-<p>There are a bunch of C source files, but they fall into four general categories:</p>
+<p>There are a bunch of C source files, but they fall into a few general categories:</p>
 <ul>
 <li><a class="el" href="dnasequence_8h.html" title="Defines the DNASequence struct, as well as functions for operating on it.">dnasequence.h</a>, <a class="el" href="sequenceannotation_8h.html" title="This file contains the SequenceAnnotation struct, as well as functions for operating on it...">sequenceannotation.h</a>, <a class="el" href="dnacomponent_8h.html" title="Contains the DNAComponent struct, as well as functions for operating on it.">dnacomponent.h</a>, and <a class="el" href="collection_8h.html" title="Defines the Collection struct, as well as functions for operating on it.">collection.h</a> define the SBOL Core objects.</li>
 </ul>
@@ -130,10 +130,13 @@ A brief tour of the source code</h2>
 <li><a class="el" href="array_8h.html" title="Defines the PointerArray struct, as well as functions for operating on it.">array.h</a>, <a class="el" href="object_8h.html" title="Defines the SBOLObject struct, as well as functions for operating on it.">object.h</a>, and <a class="el" href="property_8h.html" title="Defines a hierarchy of Properties, which hold data for SBOLObjects.">property.h</a> define building blocks for those objects.</li>
 </ul>
 <ul>
-<li><a class="el" href="validator_8h.html" title="This file defines the isValidSBOL function, which is used to verify SBOL documents before parsing...">validator.h</a>, <a class="el" href="reader_8h.html" title="Contains functions for importing SBOL objects from an XML file.">reader.h</a>, and <a class="el" href="writer_8h.html" title="This file contains functions for writing the SBOL core to an XML file.">writer.h</a> perform global operations. They each have one main algorithm, and maybe some non-exported supporting functions.</li>
+<li><a class="el" href="document_8h.html" title="Defines the Document struct, as well as functions for operating on it.">document.h</a> defines an SBOL Document.</li>
 </ul>
 <ul>
-<li>And then there are a few other miscellaneous files like <a class="el" href="prototypes_8h.html" title="Declares all the major structs, unions, and enums so the compiler will recognize them when reading th...">prototypes.h</a>, <a class="el" href="constants_8h_8in.html" title="Central location for defining constants related to SBOL.">constants.h.in</a>, and <a class="el" href="utilities_8h.html" title="This file defines SBOL utility functions that don&#39;t really fit in anywhere else.">utilities.h</a>; they each do something unique but limited.</li>
+<li><a class="el" href="validator_8h.html" title="This file defines the isValidSBOL function, which is used to verify SBOL documents before parsing...">validator.h</a>, <a class="el" href="reader_8h.html" title="Contains functions for importing SBOL objects from an XML file.">reader.h</a>, and <a class="el" href="writer_8h.html" title="This file contains functions for writing the SBOL core to an XML file.">writer.h</a> perform operations on documents. They each have one main algorithm, plus maybe some non-exported supporting functions.</li>
+</ul>
+<ul>
+<li>Then there are a few other miscellaneous files like <a class="el" href="prototypes_8h.html" title="Declares all the major structs, unions, and enums so the compiler will recognize them when reading th...">prototypes.h</a>, <a class="el" href="constants_8h_8in.html" title="Central location for defining constants related to SBOL.">constants.h.in</a>, and <a class="el" href="utilities_8h.html" title="This file defines SBOL utility functions that don&#39;t really fit in anywhere else.">utilities.h</a>; they each do something unique but limited.</li>
 </ul>
 <p>You might be confused and/or annoyed with the profusion of similarly-named structs and functions relating to SBOL objects. I know I would be seeing it for the first time. Here are a couple diagrams to clarify what they're supposed to represent:</p>
 <div class="image">
@@ -146,7 +149,7 @@ A brief tour of the source code</h2>
 Updating this documentation</h2>
 <p>The code for this page is in mainpage.dox; the rest of the documentation is scattered throughout the source/*.h files. There are also a couple graphs, which can be edited with the yEd graph editor from <a href="http://www.yworks.com/en/products_yed_about.html">http://www.yworks.com/en/products_yed_about.html</a></p>
 <p>After editing the source files, you also need to generate html using Doxygen, and upload it to GitHub.</p>
-<p>First, make sure you have Doxygen installed. Then check <code>SBOL_GENERATE_MANUAL</code> in CMake, <code>cd</code> into <code>libSBOLc/build</code>, and run <code>make</code>. Doxygen will generate a <code>libSBOLc/release/html</code> folder full of html files. To change settings, edit Doxyfile.in first.</p>
+<p>First, make sure you have Doxygen installed. Then check <code>SBOL_GENERATE_MANUAL</code> in CMake, <code>cd</code> into <code>libSBOLc/build</code>, and run <code>make</code>. Doxygen will generate a <code>libSBOLc/release/manual/html</code> folder full of html files. To change settings, edit Doxyfile.in first.</p>
 <p>Copy the HTML to somewhere outside the main libSBOLc directory, then <code>git checkout gh-pages</code>. It's a special branch with nothing but HTML files. There may also be some leftover untracked files from the master branch. Delete everything in there, and replace it with the newly generated html files. Then <code>git push origin gh-pages</code>. A minute or so later, the new documentation should be available at <a href="http://SynBioDex.github.com/libSBOLc/">http://SynBioDex.github.com/libSBOLc/</a></p>
 <h2><a class="anchor" id="swig"></a>
 Updating the Python wrapper</h2>
@@ -158,17 +161,17 @@ Updating the Python wrapper</h2>
 <li>build the project</li>
 </ul>
 <ul>
-<li>keep these files from the release folder: _sbol_swig.so, sbol_swig.py, and sbol.py.</li>
+<li>keep _libsbol.so and libsbol.py from the libSBOLc/release/wrapper folder</li>
 </ul>
-<p>The first two are generated by SWIG, and represent a direct translation of the C functions into Python. They're cross-platform so you should only need to generate them once.</p>
-<p>The last, sbol.py, is a high-level wrapper that maps the C-like SWIG functions into a more natural Python interface. It's not generated during a build, but only copied from the wrapper folder. The catch is, you'll have to keep it up to date manually by editing the code.</p>
-<p>The low-level wrapper also works by itself though. From the Python interpreter, import sbol_swig for the low-level interface, or import sbol for the high-level one.</p>
-<p>One other thing to remember is that although the generated files are cross-platform, they only work with the version of Python they were compiled against. If you try to import the sbol/sbol_swig module from a different version you'll get a seeminly unrelated "Fatal Python error: PyThreadState_Get: no current thread" </p>
+<p>These are generated by SWIG, and represent a direct translation of the C functions into Python. They're cross-platform so you should only need to generate them once.</p>
+<p>There is also a high-level wrapper that maps the C-like SWIG functions into a more natural Python interface. It's kept in a separate repository at <a href="https://github.com/SynBioDex/libSBOLpy,">https://github.com/SynBioDex/libSBOLpy,</a> and will need to be manually adjusted when new functions are added to the SWIG wrapper.</p>
+<p>The low-level wrapper also works by itself though. From the Python interpreter, import libsbol to use it. While the high-level interface is more pythonic, the low-level one is more useful for prototyping algorithms that will be re-written in C.</p>
+<p>One other thing to remember is that although the generated files are cross-platform, they only work with the version of Python they were compiled against. If you try to import the libsbol module from a different version you may get a seeminly unrelated error like "Fatal Python error: PyThreadState_Get: no current thread". </p>
 </div></div><!-- contents -->
 
 
 <hr class="footer"/><address class="footer"><small>
-Generated on Wed Apr 4 2012 13:32:39 for libSBOLc by &#160;<a href="http://www.doxygen.org/index.html">
+Generated on Mon Apr 9 2012 12:32:31 for libSBOLc by &#160;<a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/>
 </a> 1.8.0
 </small></address>

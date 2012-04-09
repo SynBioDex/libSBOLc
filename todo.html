@@ -89,101 +89,115 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 </div><!--header-->
 <div class="contents">
 <div class="textblock"><dl class="reflist">
-<dt><a class="anchor" id="_todo000003"></a>Global <a class="el" href="collection_8h.html#a15fa7bbfba1d772de1140241f558a4bb">addDNAComponentToCollection</a>  (DNAComponent *com, Collection *col)</dt>
+<dt><a class="anchor" id="_todo000005"></a>Global <a class="el" href="collection_8h.html#abd9a001483d878de14a1a7270f3129a6">addDNAComponentToCollection</a>  (Collection *col, DNAComponent *com)</dt>
 <dd>move to <a class="el" href="dnacomponent_8h.html" title="Contains the DNAComponent struct, as well as functions for operating on it.">dnacomponent.h</a>?  </dd>
-<dt><a class="anchor" id="_todo000036"></a>Global <a class="el" href="sequenceannotation_8h.html#a03d1a358bf602632938958eb53cd0201">addPrecedesRelationship</a>  (SequenceAnnotation *upstream, SequenceAnnotation *downstream)</dt>
-<dd>Is the strand a DNAComponent? Or not yet part of SBOL?  </dd>
-<dt><a class="anchor" id="_todo000013"></a>Global <a class="el" href="dnacomponent_8h.html#a3f0eae8eb04c18bfb5b920134a43cd84">addSequenceAnnotation</a>  (DNAComponent *com, SequenceAnnotation *ann)</dt>
-<dd>where should this go? here, <a class="el" href="sequenceannotation_8h.html" title="This file contains the SequenceAnnotation struct, as well as functions for operating on it...">sequenceannotation.h</a>, <a class="el" href="sbol_8h.html" title="Gathers together all the SBOL functions so they can be easily #included.">sbol.h</a>?  </dd>
+<dt><a class="anchor" id="_todo000038"></a>Global <a class="el" href="sequenceannotation_8h.html#a03d1a358bf602632938958eb53cd0201">addPrecedesRelationship</a>  (SequenceAnnotation *upstream, SequenceAnnotation *downstream)</dt>
+<dd><p class="startdd">Is the strand a DNAComponent? Or not yet part of SBOL? </p>
+<p class="enddd">how should this handle docs?  </p>
+</dd>
+<dt><a class="anchor" id="_todo000016"></a>Global <a class="el" href="dnacomponent_8h.html#a3f0eae8eb04c18bfb5b920134a43cd84">addSequenceAnnotation</a>  (DNAComponent *com, SequenceAnnotation *ann)</dt>
+<dd><p class="startdd">where should this go? here, <a class="el" href="sequenceannotation_8h.html" title="This file contains the SequenceAnnotation struct, as well as functions for operating on it...">sequenceannotation.h</a>, <a class="el" href="sbol_8h.html" title="Gathers together all the SBOL functions so they can be easily #included.">sbol.h</a>? </p>
+<p class="enddd">how should this handle docs?  </p>
+</dd>
 <dt><a class="anchor" id="_todo000001"></a>File <a class="el" href="array_8h.html">array.h</a>  </dt>
 <dd><p class="startdd">Rename PointerArray to SBOLObjectArray? </p>
 <p class="enddd">Actually convert it to hold SBOLObjects via casts?  </p>
 </dd>
-<dt><a class="anchor" id="_todo000005"></a>Global <a class="el" href="collection_8h.html#a75855d2906e1c71d674921f3a8f53c58">cleanupCollections</a>  ()</dt>
+<dt><a class="anchor" id="_todo000022"></a>Global <a class="el" href="object_8h.html#a720a9be97fff4cede1ad63cfa7190258">cleanupSBOLObjects</a>  (Document *doc)</dt>
 <dd>remove this? is it ever used?  </dd>
-<dt><a class="anchor" id="_todo000015"></a>Global <a class="el" href="dnacomponent_8h.html#a07a59a11079eff4be648e15eaf93e0dc">cleanupDNAComponents</a>  ()</dt>
-<dd>remove this? is it ever used?  </dd>
-<dt><a class="anchor" id="_todo000020"></a>Global <a class="el" href="object_8h.html#a126f6d252b32a90c578c5a589f19053c">cleanupSBOLCompoundObjects</a>  ()</dt>
-<dd>remove this? is it ever used?  </dd>
-<dt><a class="anchor" id="_todo000019"></a>Global <a class="el" href="object_8h.html#adb181ef046988c40c869b5081f53ff5d">cleanupSBOLObjects</a>  ()</dt>
-<dd>remove this? is it ever used?  </dd>
-<dt><a class="anchor" id="_todo000037"></a>Global <a class="el" href="sequenceannotation_8h.html#af31d87d6c50f4a50b93992d259626ea8">cleanupSequenceAnnotations</a>  ()</dt>
-<dd><p class="startdd">removePrecedesRelationship? </p>
-<p class="enddd">remove this? is it ever used?  </p>
-</dd>
-<dt><a class="anchor" id="_todo000028"></a>Global <a class="el" href="property_8h.html#a6fc8c24edc0bc01f1b1109024e10b0c2">compareURIProperty</a>  (const URIProperty *pro1, const URIProperty *pro2)</dt>
+<dt><a class="anchor" id="_todo000030"></a>Global <a class="el" href="property_8h.html#a6fc8c24edc0bc01f1b1109024e10b0c2">compareURIProperty</a>  (const URIProperty *pro1, const URIProperty *pro2)</dt>
 <dd>Check that that's true.  </dd>
-<dt><a class="anchor" id="_todo000006"></a>File <a class="el" href="constants_8h_8in.html">constants.h.in</a>  </dt>
+<dt><a class="anchor" id="_todo000007"></a>File <a class="el" href="constants_8h_8in.html">constants.h.in</a>  </dt>
 <dd><p class="startdd">bring up "dnaSequence" vs "DnaSequence" </p>
 <p>and "component" vs "DnaComponent" </p>
 <p>bring up "dnaSequence" vs "DnaSequence" </p>
 <p class="enddd">and "component" vs "DnaComponent"  </p>
 </dd>
-<dt><a class="anchor" id="_todo000026"></a>Global <a class="el" href="property_8h.html#a6a5874eb94a42b6174a05b3ce8d3186c">deleteTextProperty</a>  (TextProperty *pro)</dt>
-<dd>Make sure that's true.  </dd>
-<dt><a class="anchor" id="_todo000027"></a>Global <a class="el" href="property_8h.html#aaa6562bc7d78d2d9174b0244cb82d453">deleteURIProperty</a>  (URIProperty *pro)</dt>
-<dd>Make sure that's true.  </dd>
-<dt><a class="anchor" id="_todo000004"></a>Global <a class="el" href="collection_8h.html#a4b2260b492dacd93fb459e2abd5e532d">dnaComponentInCollection</a>  (const DNAComponent *com, const Collection *col)</dt>
-<dd>better name Gotcha: lowercase dna  </dd>
-<dt><a class="anchor" id="_todo000016"></a>Global <a class="el" href="dnasequence_8h.html#ae4855c7cc62a0fe90b09d541569a0127">getDNASequenceNucleotides</a>  (const DNASequence *seq)</dt>
-<dd>rename to getDNASequenceNucleotides?  </dd>
-<dt><a class="anchor" id="_todo000025"></a>Global <a class="el" href="property_8h.html#aa7a95a21606fd7337810531c2d31f680">getLetters</a>  (const Property *pro)</dt>
-<dd>Check that this one copies.  </dd>
-<dt><a class="anchor" id="_todo000018"></a>Global <a class="el" href="object_8h.html#a7c51a9309e9b593a0c62380dc1f83b9f">isSBOLObjectURI</a>  (const char *uri)</dt>
-<dd>generalize this so it's not repeated everywhere  </dd>
-<dt><a class="anchor" id="_todo000044"></a>Global <a class="el" href="validator_8h.html#a9e333afef1de0cd1d216f1eb74fc0e2f">isValidSBOL</a>  (const xmlDocPtr doc)</dt>
+<dt><a class="anchor" id="_todo000002"></a>Global <a class="el" href="collection_8h.html#a7fe2662a0adfa42f0e26b950f8340e5c">createCollection</a>  (Document *doc, const char *uri)</dt>
 <dd>remove?  </dd>
-<dt><a class="anchor" id="_todo000030"></a>Class <a class="el" href="struct___polarity_property.html">PolarityProperty</a>  </dt>
+<dt><a class="anchor" id="_todo000013"></a>Global <a class="el" href="dnacomponent_8h.html#a9cf6255fdc0cf5dabda22d972d06638d">createDNAComponent</a>  (Document *doc, const char *uri)</dt>
+<dd>remove?  </dd>
+<dt><a class="anchor" id="_todo000037"></a>Global <a class="el" href="sequenceannotation_8h.html#aa972285326409e2a091b653c8081c5fc">createSequenceAnnotation</a>  (Document *doc, const char *uri)</dt>
+<dd>remove?  </dd>
+<dt><a class="anchor" id="_todo000028"></a>Global <a class="el" href="property_8h.html#a6a5874eb94a42b6174a05b3ce8d3186c">deleteTextProperty</a>  (TextProperty *pro)</dt>
+<dd>Make sure that's true.  </dd>
+<dt><a class="anchor" id="_todo000029"></a>Global <a class="el" href="property_8h.html#aaa6562bc7d78d2d9174b0244cb82d453">deleteURIProperty</a>  (URIProperty *pro)</dt>
+<dd>Make sure that's true.  </dd>
+<dt><a class="anchor" id="_todo000006"></a>Global <a class="el" href="collection_8h.html#a4b2260b492dacd93fb459e2abd5e532d">dnaComponentInCollection</a>  (const DNAComponent *com, const Collection *col)</dt>
+<dd>better name Gotcha: lowercase dna  </dd>
+<dt><a class="anchor" id="_todo000021"></a>Class <a class="el" href="struct___document.html">Document</a>  </dt>
+<dd>Objects should be able to belong to multiple documents  </dd>
+<dt><a class="anchor" id="_todo000019"></a>Global <a class="el" href="dnasequence_8h.html#ae4855c7cc62a0fe90b09d541569a0127">getDNASequenceNucleotides</a>  (const DNASequence *seq)</dt>
+<dd>rename to getDNASequenceNucleotides?  </dd>
+<dt><a class="anchor" id="_todo000027"></a>Global <a class="el" href="property_8h.html#aa7a95a21606fd7337810531c2d31f680">getLetters</a>  (const Property *pro)</dt>
+<dd>Check that this one copies.  </dd>
+<dt><a class="anchor" id="_todo000004"></a>Global <a class="el" href="collection_8h.html#a3770d1fea716f7886236c9d7e797e0dd">getNthDNAComponentIn</a>  (const Collection *col, int n)</dt>
+<dd>rename to NOT reflect doc  </dd>
+<dt><a class="anchor" id="_todo000003"></a>Global <a class="el" href="collection_8h.html#a98da7c5daf50caaddd9875a9a68a8375">getNumDNAComponentsIn</a>  (const Collection *col)</dt>
+<dd>rename to NOT reflect doc  </dd>
+<dt><a class="anchor" id="_todo000046"></a>Global <a class="el" href="validator_8h.html#a9e333afef1de0cd1d216f1eb74fc0e2f">isValidSBOL</a>  (const xmlDocPtr doc)</dt>
+<dd>remove?  </dd>
+<dt><a class="anchor" id="_todo000032"></a>Class <a class="el" href="struct___polarity_property.html">PolarityProperty</a>  </dt>
 <dd>rename to StrandProperty? or OrientationProperty?  </dd>
-<dt><a class="anchor" id="_todo000041"></a>Global <a class="el" href="utilities_8h.html#a7d9556671426e0ddae773934d7514504">polarityToChar</a>  (int polarity)</dt>
+<dt><a class="anchor" id="_todo000043"></a>Global <a class="el" href="utilities_8h.html#a7d9556671426e0ddae773934d7514504">polarityToChar</a>  (int polarity)</dt>
 <dd>better char for bidirectional?  </dd>
-<dt><a class="anchor" id="_todo000029"></a>Class <a class="el" href="struct___position_property.html">PositionProperty</a>  </dt>
+<dt><a class="anchor" id="_todo000031"></a>Class <a class="el" href="struct___position_property.html">PositionProperty</a>  </dt>
 <dd>Is 0 a valid position?  </dd>
-<dt><a class="anchor" id="_todo000023"></a>Global <a class="el" href="property_8h.html#ac695f446dcffbf36c1182a4a1ea5c61a">printNucleotidesProperty</a>  (const NucleotidesProperty *pro)</dt>
+<dt><a class="anchor" id="_todo000039"></a>Global <a class="el" href="sequenceannotation_8h.html#a645cd14071ed28e92a8053776384c7e6">precedes</a>  (const SequenceAnnotation *upstream, const SequenceAnnotation *downstream)</dt>
+<dd>how should this handle docs?  </dd>
+<dt><a class="anchor" id="_todo000018"></a>Global <a class="el" href="dnacomponent_8h.html#ac5b87bbceb04bd529560e0159e0ce404">printDNAComponent</a>  (const DNAComponent *com, int tabs)</dt>
+<dd>removeSequenceAnnotationSubComponent  </dd>
+<dt><a class="anchor" id="_todo000025"></a>Global <a class="el" href="property_8h.html#ac695f446dcffbf36c1182a4a1ea5c61a">printNucleotidesProperty</a>  (const NucleotidesProperty *pro)</dt>
 <dd>cut off printing of long sequnces at 50 chars or so?  </dd>
-<dt><a class="anchor" id="_todo000024"></a>File <a class="el" href="property_8h.html">property.h</a>  </dt>
+<dt><a class="anchor" id="_todo000040"></a>Global <a class="el" href="sequenceannotation_8h.html#a3bf0475adea1282b6969d1994845560c">printSequenceAnnotation</a>  (const SequenceAnnotation *seq, int tabs)</dt>
+<dd>removePrecedesRelationship  </dd>
+<dt><a class="anchor" id="_todo000026"></a>File <a class="el" href="property_8h.html">property.h</a>  </dt>
 <dd><p class="startdd">Make enums for any magic numbers </p>
 <p class="enddd">See if separating docs into user, devel works.  </p>
 </dd>
-<dt><a class="anchor" id="_todo000031"></a>File <a class="el" href="reader_8h.html">reader.h</a>  </dt>
-<dd>Figure out how to generate documentation for static functions.  </dd>
-<dt><a class="anchor" id="_todo000033"></a>Global <a class="el" href="reader_8h.html#a0d82bff8870fc632e37de2b7a2993373">readSBOLCore</a>  (char *filename)</dt>
+<dt><a class="anchor" id="_todo000035"></a>Global <a class="el" href="reader_8h.html#a2ae946b9723f9d4ab6259804ea9ef550">readDocument</a>  (Document *doc, char *filename)</dt>
 <dd>Return an error code on invalid documents  </dd>
-<dt><a class="anchor" id="_todo000042"></a>Global <a class="el" href="utilities_8h.html#abb3871d4aea961b9d0cb6ae724bc0f29">safeXmlInitParser</a>  ()</dt>
+<dt><a class="anchor" id="_todo000033"></a>File <a class="el" href="reader_8h.html">reader.h</a>  </dt>
+<dd>Figure out how to generate documentation for static functions.  </dd>
+<dt><a class="anchor" id="_todo000044"></a>Global <a class="el" href="utilities_8h.html#abb3871d4aea961b9d0cb6ae724bc0f29">safeXmlInitParser</a>  ()</dt>
 <dd>find a way not to export this?  </dd>
-<dt><a class="anchor" id="_todo000034"></a>File <a class="el" href="sbol_8h.html">sbol.h</a>  </dt>
+<dt><a class="anchor" id="_todo000036"></a>File <a class="el" href="sbol_8h.html">sbol.h</a>  </dt>
 <dd>make a lot of the functions static  </dd>
-<dt><a class="anchor" id="_todo000010"></a>Global <a class="el" href="constants_8h_8in.html#adfe7cb56aa4562836d5167efb98c8d2e">SBOLAPIEXPORTS</a>  </dt>
+<dt><a class="anchor" id="_todo000011"></a>Global <a class="el" href="constants_8h_8in.html#adfe7cb56aa4562836d5167efb98c8d2e">SBOLAPIEXPORTS</a>  </dt>
 <dd><p class="startdd">Move this to another file? </p>
 <p class="enddd">Does the STATIC_LINKED part add anything?  </p>
 </dd>
-<dt><a class="anchor" id="_todo000017"></a>Global <a class="el" href="dnasequence_8h.html#a8aaa4277470919c1fb1aca322c73f304">setDNASequenceNucleotides</a>  (DNASequence *seq, const char *nucleotides)</dt>
+<dt><a class="anchor" id="_todo000015"></a>Global <a class="el" href="dnacomponent_8h.html#a58d6160b010570aad37fedba885ff5cf">setDNAComponentSequence</a>  (DNAComponent *com, DNASequence *seq)</dt>
+<dd>how should this handle docs?  </dd>
+<dt><a class="anchor" id="_todo000020"></a>Global <a class="el" href="dnasequence_8h.html#a8aaa4277470919c1fb1aca322c73f304">setDNASequenceNucleotides</a>  (DNASequence *seq, const char *nucleotides)</dt>
 <dd>rename to setDNASequenceNucleotides?  </dd>
-<dt><a class="anchor" id="_todo000022"></a>Global <a class="el" href="property_8h.html#a6db30af1b5c42bdac91b3224df20b892">setNucleotidesProperty</a>  (NucleotidesProperty *pro, const char *nucleotides)</dt>
+<dt><a class="anchor" id="_todo000024"></a>Global <a class="el" href="property_8h.html#a6db30af1b5c42bdac91b3224df20b892">setNucleotidesProperty</a>  (NucleotidesProperty *pro, const char *nucleotides)</dt>
 <dd>restrict to setting valid nucleotides  </dd>
-<dt><a class="anchor" id="_todo000014"></a>Global <a class="el" href="dnacomponent_8h.html#a0f88c144140bae273f220ef276c390c6">setSequenceAnnotationSubComponent</a>  (SequenceAnnotation *ann, DNAComponent *com)</dt>
-<dd>move this to <a class="el" href="sequenceannotation_8h.html" title="This file contains the SequenceAnnotation struct, as well as functions for operating on it...">sequenceannotation.h</a>?  </dd>
-<dt><a class="anchor" id="_todo000021"></a>Global <a class="el" href="property_8h.html#a1b4bf73fab652f3898f835c95971e999">setTextProperty</a>  (TextProperty *pro, const char *text)</dt>
+<dt><a class="anchor" id="_todo000017"></a>Global <a class="el" href="dnacomponent_8h.html#a0f88c144140bae273f220ef276c390c6">setSequenceAnnotationSubComponent</a>  (SequenceAnnotation *ann, DNAComponent *com)</dt>
+<dd><p class="startdd">move this to <a class="el" href="sequenceannotation_8h.html" title="This file contains the SequenceAnnotation struct, as well as functions for operating on it...">sequenceannotation.h</a>? </p>
+<p class="enddd">how should this handle docs?  </p>
+</dd>
+<dt><a class="anchor" id="_todo000023"></a>Global <a class="el" href="property_8h.html#a1b4bf73fab652f3898f835c95971e999">setTextProperty</a>  (TextProperty *pro, const char *text)</dt>
 <dd><p class="startdd">remove the pro-&gt;text != NULL restriction? </p>
 <p class="enddd">warn that you need to free() anything from a Property  </p>
 </dd>
-<dt><a class="anchor" id="_todo000011"></a>Global <a class="el" href="constants_8h_8in.html#a70f8c98e8c52f9c05da14bc266de58aa">StrandPolarity</a>  </dt>
+<dt><a class="anchor" id="_todo000012"></a>Global <a class="el" href="constants_8h_8in.html#a70f8c98e8c52f9c05da14bc266de58aa">StrandPolarity</a>  </dt>
 <dd><p class="startdd">rename to StrandOrientation? </p>
 <p>Is bidirectional in the SBOL spec so far? </p>
 <p class="enddd">why is each entry listed twice in Doxygen?  </p>
 </dd>
-<dt><a class="anchor" id="_todo000040"></a>Global <a class="el" href="utilities_8h.html#afae7344e0c6864523b4e002318a26962">strToPolarity</a>  (const char *input)</dt>
+<dt><a class="anchor" id="_todo000042"></a>Global <a class="el" href="utilities_8h.html#afae7344e0c6864523b4e002318a26962">strToPolarity</a>  (const char *input)</dt>
 <dd><p class="startdd">move to polarityproperty, writer, or types? </p>
 <p class="enddd">better char for bidirectional?  </p>
 </dd>
-<dt><a class="anchor" id="_todo000039"></a>File <a class="el" href="utilities_8h.html">utilities.h</a>  </dt>
+<dt><a class="anchor" id="_todo000041"></a>File <a class="el" href="utilities_8h.html">utilities.h</a>  </dt>
 <dd>Don't export this stuff with the library. </dd>
 </dl>
 </div></div><!-- contents -->
 
 
 <hr class="footer"/><address class="footer"><small>
-Generated on Wed Apr 4 2012 13:32:39 for libSBOLc by &#160;<a href="http://www.doxygen.org/index.html">
+Generated on Mon Apr 9 2012 12:32:31 for libSBOLc by &#160;<a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/>
 </a> 1.8.0
 </small></address>
