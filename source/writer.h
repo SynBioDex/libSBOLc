@@ -1,7 +1,7 @@
 ///////////////////////////////////////////////////////////
 /// @file
 /// This file contains functions for writing the SBOL core
-/// to an XML file. Only writeSBOLDocument is meant to be
+/// to an XML file. Only writeDocument is meant to be
 /// exported; everything else supports it.
 ///////////////////////////////////////////////////////////
 
@@ -67,6 +67,6 @@ static void writeCollection(Collection* col);
 /// Create, validate, and save an XML document based on
 /// the SBOLObjects currently in memory. Those objects
 /// still need to be deleted afterwards.
-SBOLAPIEXPORTS int writeSBOLDocument(Document* doc, const char* filename);
+SBOLAPIEXPORTS int writeDocument(Document* doc, const char* filename);
 
 #endif

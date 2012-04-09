@@ -46,12 +46,12 @@ void CreateValidExamples(CuTest *tc) {
 		printf("creating %s\n", TEST_OUTPUT_FILENAMES[n]);
 		Document* doc = CREATE_FUNCTIONS[n]();
 		TEST_LOADED_FUNCTIONS[n](tc, doc);
-		writeSBOLDocument(doc, TEST_OUTPUT_FILENAMES[n]);
+		writeDocument(doc, TEST_OUTPUT_FILENAMES[n]);
 		deleteDocument(doc);
 
 		doc = createDocument();
 		TestNothingLoaded(tc, doc);
-		readSBOLDocument(doc, TEST_OUTPUT_FILENAMES[n]);
+		readDocument(doc, TEST_OUTPUT_FILENAMES[n]);
 		TEST_LOADED_FUNCTIONS[n](tc, doc);
 		deleteDocument(doc);
 	}

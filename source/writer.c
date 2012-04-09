@@ -248,7 +248,7 @@ static void writeCollection(Collection* col) {
  * main write function
  ***********************/
 
-int writeSBOLDocument(Document* doc, const char* filename) {
+int writeDocument(Document* doc, const char* filename) {
 	int n;
 	startSBOLDocument();
 

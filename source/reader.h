@@ -2,7 +2,7 @@
 /// @file
 /// 
 /// Contains functions for importing SBOL objects
-/// from an XML file. Only readSBOLDocument is meant to be
+/// from an XML file. Only readDocument is meant to be
 /// exported; everything else supports it.
 /// 
 /// @todo Figure out how to generate documentation for
@@ -94,6 +94,6 @@ static void readCollectionReferences(xmlNode *node);
 /// if the document is invalid.
 /// @todo Return an error code on invalid documents
 /// @todo rename to reflect doc
-SBOLAPIEXPORTS void readSBOLDocument(Document* doc, char* filename);
+SBOLAPIEXPORTS void readDocument(Document* doc, char* filename);
 
 #endif

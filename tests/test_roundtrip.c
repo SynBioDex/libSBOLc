@@ -16,18 +16,18 @@ void TestRoundTripValidExamples(CuTest* tc) {
 		// read an example
 		Document* doc = createDocument();
 		TestNothingLoaded(tc, doc);
-		readSBOLDocument(doc, VALID_EXAMPLE_FILENAMES[n]);
+		readDocument(doc, VALID_EXAMPLE_FILENAMES[n]);
 		
 		// check that it worked
 		TEST_LOADED_FUNCTIONS[n](tc, doc);
 		
 		// write to a file
-		writeSBOLDocument(doc, TEST_OUTPUT_FILENAMES[n]);
+		writeDocument(doc, TEST_OUTPUT_FILENAMES[n]);
 		
 		// read that in again
 		deleteDocument(doc);
 		doc = createDocument();
-		readSBOLDocument(doc, TEST_OUTPUT_FILENAMES[n]);
+		readDocument(doc, TEST_OUTPUT_FILENAMES[n]);
 		
 		// check that it worked again
 		TEST_LOADED_FUNCTIONS[n](tc, doc);

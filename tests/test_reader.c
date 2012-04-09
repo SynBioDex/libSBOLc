@@ -15,7 +15,7 @@ void TestReadValidExamples(CuTest *tc) {
 		doc = createDocument();
 		TestNothingLoaded(tc, doc);
  		printf("reading %s\n", VALID_EXAMPLE_FILENAMES[n]);
-		readSBOLDocument(doc, VALID_EXAMPLE_FILENAMES[n]);
+		readDocument(doc, VALID_EXAMPLE_FILENAMES[n]);
 		#ifdef SBOL_DEBUG_STATEMENTS
 		printDocument(doc);
 		#endif

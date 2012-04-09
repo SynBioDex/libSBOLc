@@ -123,7 +123,7 @@ int isCollectionURI(Document* doc, const char* uri);
 int getNumCollections(Document* doc);
 int getNumDNAComponentsIn(const Collection* col);
 int dnaComponentInCollection(const DNAComponent* com, const Collection* col);
-int writeSBOLDocument(Document* doc, const char* filename);
+int writeDocument(Document* doc, const char* filename);
 
 // functions returning void
 void setDNASequenceNucleotides(DNASequence* seq, const char* nucleotides);
@@ -146,7 +146,7 @@ void setCollectionName(Collection* col, const char* name);
 void setCollectionDescription(Collection* col, const char* desc);
 void addDNAComponentToCollection(Collection* col, DNAComponent* com);
 void printCollection(const Collection* col, int tabs);
-void readSBOLDocument(Document* doc, char* filename);
+void readDocument(Document* doc, char* filename);
 void printDocument(Document* doc);
 void deleteDocument(Document* doc);
 

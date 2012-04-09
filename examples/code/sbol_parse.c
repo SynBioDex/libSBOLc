@@ -4,7 +4,7 @@
 void parse(char* filename) {
 	Document* doc = createDocument();
 	printf("parsing %s\n", filename);
-	readSBOLDocument(doc, filename);
+	readDocument(doc, filename);
 	printDocument(doc);
 	deleteDocument(doc);
 }

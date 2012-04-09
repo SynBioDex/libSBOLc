@@ -181,10 +181,10 @@ class Document(object):
         return capture_stdout(libsbol.printDocument, self.ptr)
 
     def read(self, filename):
-        libsbol.readSBOLDocument(self.ptr, filename)
+        libsbol.readDocument(self.ptr, filename)
 
     def write(self, filename):
-        libsbol.writeSBOLDocument(self.ptr, filename)
+        libsbol.writeDocument(self.ptr, filename)
 
     @property
     def num_sbol_objects(self):
