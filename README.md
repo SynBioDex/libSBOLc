@@ -132,13 +132,13 @@ Linking to the SBOL library
 
 There are different ways to do this, but here's a simple one. To compile the sbol_validate example using MinGW on Windows:
 
-    mingw32-gcc.exe -I. sbol_validate.c -o validate libsbol.dll
+    mingw32-gcc.exe -I headers sbol_validate.c -o validate libsbol.dll
 
 and the equivalent command on Unix:
 
-    gcc -I. sbol_validate.c -o validate libsbol.so
+    gcc -I headers sbol_validate.c -o validate libsbol.so
 
-The <code>-I.</code> tells <code>gcc</code> to look in the current directory for headers, and <code>-o</code> is the name of the generated executable.
+The <code>-I</code> tells <code>gcc</code> where to look for headers, and <code>-o</code> gives the name of the generated executable.
 
 For more complex programs CMake is a good choice. It lets you write detailed build scripts that configure files, create directories, find system libraries, etc.
 
