@@ -49,7 +49,7 @@ The rest of this file is a quick guide to getting started with common tasks. For
 Downloading the binaries
 ------------------------
 
-Shared library files are available for Windows, Mac OSX, and Linux/Unix.
+Shared library files are available [here](https://github.com/SynBioDex/libSBOLc/downloads) for Windows, Mac OSX, and Linux/Unix.
 
 Building from source
 --------------------
