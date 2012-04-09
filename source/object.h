@@ -32,14 +32,8 @@ SBOLObject* createSBOLObject(Document* doc, const char* uri);
 /// instead, use deleteDNASequence, deleteCollection, etc.
 void deleteSBOLObject(SBOLObject* obj);
 
-/// Get the total number of SBOLObjects in memory.
-/// This includes the ones that are contained in other structs.
-/// @todo rename to reflect doc
-//SBOLAPIEXPORTS int getNumSBOLObjects(Document* doc);
-
 /// Delete all SBOLObjects from memory.
 /// @todo remove this? is it ever used?
-/// @todo rename to reflect doc
 SBOLAPIEXPORTS void cleanupSBOLObjects(Document* doc);
 
 /// Set the URI of an SBOLObject.
@@ -66,7 +60,6 @@ struct _SBOLCompoundObject {
 
 /// Create an empty SBOLCompoundObject.
 /// @return A pointer to the new SBOLCompoundObject.
-/// @todo rename to reflect doc
 SBOLCompoundObject* createSBOLCompoundObject(Document* doc, const char* uri);
 
 /// Delete an SBOLObject.

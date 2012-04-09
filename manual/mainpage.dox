@@ -48,11 +48,11 @@
 /// 
 /// * document.h defines an SBOL Document.
 /// 
-/// * validator.h, reader.h, and writer.h perform operations on Documents.
-///   They each have one main algorithm, and maybe some non-exported
+/// * validator.h, reader.h, and writer.h perform operations on documents.
+///   They each have one main algorithm, plus maybe some non-exported
 ///   supporting functions.
 /// 
-/// * And then there are a few other miscellaneous files like prototypes.h,
+/// * Then there are a few other miscellaneous files like prototypes.h,
 ///   constants.h.in, and utilities.h; they each do something unique but limited.
 /// 
 /// You might be confused and/or annoyed with the profusion of similarly-named structs
