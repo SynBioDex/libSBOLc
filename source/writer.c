@@ -43,21 +43,21 @@ static void cleanupSBOLWriter() {
 	xmlCleanupParser();
 }
 
-static void markPROCESSED(void *obj) {
+static void markProcessed(void *obj) {
 	insertPointerIntoArray(PROCESSED, obj);
 }
 
-static int alreadyPROCESSED(void *obj) {
+static int alreadyProcessed(void *obj) {
 	return pointerContainedInArray(PROCESSED, obj); 
 }
 
-static void resetPROCESSED() {
+static void resetProcessed() {
 	deletePointerArray(PROCESSED);
 	PROCESSED = createPointerArray();
 }
 
 static void startSBOLDocument() {
-	resetPROCESSED();
+	resetProcessed();
 	createSBOLWriter();
 	xmlTextWriterStartDocument(WRITER, NULL, NULL, NULL);
 	xmlTextWriterStartElement(WRITER, NSPREFIX_RDF ":" NODENAME_RDF);
@@ -97,9 +97,13 @@ static void writeDNASequence(DNASequence* seq) {
 	xmlTextWriterWriteAttribute(WRITER, NSPREFIX_RDF ":" NODENAME_ABOUT, getDNASequenceURI(seq));
 
 	// nucleotides
-	if (!alreadyPROCESSED((void *)seq)) {
-		xmlTextWriterWriteElement(WRITER, NODENAME_NUCLEOTIDES , getDNASequenceNucleotides(seq));
-		markPROCESSED((void *)seq);
+	if (!alreadyProcessed((void *)seq)) {
+		char* nt = getDNASequenceNucleotides(seq);
+		if (nt) {
+		 	xmlTextWriterWriteElement(WRITER, NODENAME_NUCLEOTIDES , nt);
+			markProcessed((void *)seq);
+		}
+		free(nt);
 	}
 	
 	xmlTextWriterEndElement(WRITER);
@@ -108,7 +112,7 @@ static void writeDNASequence(DNASequence* seq) {
 static void writeSequenceAnnotation(SequenceAnnotation* ann) {
 	if (!ann)
 		return;
-	markPROCESSED((void *)ann);
+	markProcessed((void *)ann);
 	xmlTextWriterStartElement(WRITER, NODENAME_SEQUENCEANNOTATION);
 	xmlTextWriterWriteAttribute(WRITER, NSPREFIX_RDF ":" NODENAME_ABOUT, getSequenceAnnotationURI(ann));
 	
@@ -138,7 +142,7 @@ static void writeSequenceAnnotation(SequenceAnnotation* ann) {
 	if (ann->subComponent) {
 		uri = getDNAComponentURI(ann->subComponent);
 		xmlTextWriterStartElement(WRITER, NODENAME_SUBCOMPONENT);
-		if (alreadyPROCESSED((void *)(ann->subComponent)))
+		if (alreadyProcessed((void *)(ann->subComponent)))
 			xmlTextWriterWriteAttribute(WRITER, NSPREFIX_RDF ":" NODENAME_RESOURCE, uri);
 		else {
 	 		indentMore();
@@ -156,8 +160,8 @@ static void writeDNAComponent(DNAComponent* com) {
 	if (!com)
 		return;
 	xmlTextWriterStartElement(WRITER, NODENAME_DNACOMPONENT);
-	if (!alreadyPROCESSED((void *)com)) {
-		markPROCESSED((void *)com);
+	if (!alreadyProcessed((void *)com)) {
+		markProcessed((void *)com);
 		xmlTextWriterWriteAttribute(WRITER, NSPREFIX_RDF ":" NODENAME_ABOUT, getDNAComponentURI(com));
 		
 		// properties
@@ -176,8 +180,9 @@ static void writeDNAComponent(DNAComponent* com) {
 		if (com->dnaSequence) {
 			xmlTextWriterStartElement(WRITER, NODENAME_DNASEQUENCE_REF);
 			indentMore();
-			// TODO sometimes no contents?
+			/// @todo sometimes no contents?
 			writeDNASequence(com->dnaSequence);
+			markProcessed(com->dnaSequence);
 			indentLess();
 			xmlTextWriterEndElement(WRITER);
 		}
@@ -208,8 +213,8 @@ static void writeCollection(Collection* col) {
 	if (!col)
 		return;
 	xmlTextWriterStartElement(WRITER, NODENAME_COLLECTION);
-	if (!alreadyPROCESSED((void *)col)) {
-		markPROCESSED((void *)col);
+	if (!alreadyProcessed((void *)col)) {
+		markProcessed((void *)col);
 		int n;
 		int num;
 		
@@ -251,7 +256,7 @@ int writeSBOLDocument(Document* doc, const char* filename) {
 	Collection* col;
 	for (n=0; n<getNumCollections(doc); n++) {
 		col = getNthCollection(doc, n);
-		if (!alreadyPROCESSED((void *)col))
+		if (!alreadyProcessed((void *)col))
 			writeCollection(col);
 	}
 
@@ -259,7 +264,7 @@ int writeSBOLDocument(Document* doc, const char* filename) {
 	DNAComponent* com;
 	for (n=0; n<getNumDNAComponents(doc); n++) {
 		com = getNthDNAComponent(doc, n);
-		if (!alreadyPROCESSED((void *)com))
+		if (!alreadyProcessed((void *)com))
 			writeDNAComponent(com);
 	}
 
@@ -272,7 +277,7 @@ int writeSBOLDocument(Document* doc, const char* filename) {
 	DNASequence* seq;
 	for (n=0; n<getNumDNASequences(doc); n++) {
 		seq = getNthDNASequence(doc, n);
-		if (!alreadyPROCESSED((void *)seq))
+		if (!alreadyProcessed((void *)seq))
 			writeDNASequence(seq);
 	}
 	
@@ -280,7 +285,7 @@ int writeSBOLDocument(Document* doc, const char* filename) {
 	SequenceAnnotation* ann;
 	for (n=0; n<getNumSequenceAnnotations(doc); n++) {
 		ann = getNthSequenceAnnotation(doc, n);
-		if (!alreadyPROCESSED((void *)ann))
+		if (!alreadyProcessed((void *)ann))
 			writeSequenceAnnotation(ann);
 	}
 

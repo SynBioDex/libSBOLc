@@ -177,6 +177,15 @@ class Document(object):
         self._components  = []
         self._collections = []
 
+    def __str__(self):
+        return capture_stdout(libsbol.printDocument, self.ptr)
+
+    def read(self, filename):
+        libsbol.readSBOLDocument(self.ptr, filename)
+
+    def write(self, filename):
+        libsbol.writeSBOLDocument(self.ptr, filename)
+
     @property
     def num_sbol_objects(self):
         return len(self.sequences)   \
@@ -187,22 +196,20 @@ class Document(object):
     @property
     def uris(self):
         output = []
-        arrays = (self._sequences,
-                  self._annotations,
-                  self._components,
-                  self._collections)
-        for array in arrays:
+        for array in (self._sequences,
+                      self._annotations,
+                      self._components,
+                      self._collections):
             for obj in array:
                 output.append(obj.uri)
         return output
 
     def _proxy(self, ptr):
         'Find the Python proxy for an unknown pointer'
-        arrays = (self._sequences,
-                  self._annotations,
-                  self._components,
-                  self._collections)
-        for array in arrays:
+        for array in (self._sequences,
+                      self._annotations,
+                      self._components,
+                      self._collections):
             for obj in array:
                 if obj.ptr == ptr:
                     return obj
@@ -224,6 +231,7 @@ class DNASequence(object):
     def __del__(self):
         if self.ptr:
             libsbol.deleteDNASequence(self.ptr)
+        self.doc._sequences.remove(self)
 
     def __str__(self):
         return capture_stdout(libsbol.printDNASequence, self.ptr, 0)
@@ -266,6 +274,7 @@ class SequenceAnnotation(object):
     def __del__(self):
         if self.ptr:
             libsbol.deleteSequenceAnnotation(self.ptr)
+        self.doc._annotations.remove(self)
 
     def __str__(self):
         return capture_stdout(libsbol.printSequenceAnnotation, self.ptr, 0)
@@ -364,6 +373,7 @@ class DNAComponent(object):
     def __del__(self):
         if self.ptr:
             libsbol.deleteDNAComponent(self.ptr)
+        self.doc._components.remove(self)
 
     def __str__(self):
         return capture_stdout(libsbol.printDNAComponent, self.ptr, 0)
@@ -430,6 +440,7 @@ class Collection(object):
     def __del__(self):
         if self.ptr:
             libsbol.deleteCollection(self.ptr)
+        self.doc._collections.remove(self)
 
     def __str__(self):
         return capture_stdout(libsbol.printCollection, self.ptr, 0)
