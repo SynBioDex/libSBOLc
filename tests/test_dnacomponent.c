@@ -105,21 +105,23 @@ void TestAddRemoveAnnotations(CuTest *tc) {
         uri = randomUniqueURI(doc);
         ann = createSequenceAnnotation(doc, uri);
         CuAssertIntEquals(tc, n, getNumSequenceAnnotationsFor(com));
-        printf("numAnnotations: %i\n", n);
         addSequenceAnnotation(com, ann);
         CuAssertIntEquals(tc, n+1, getNumSequenceAnnotationsFor(com));
         CuAssertPtrEquals(tc, ann, getNthSequenceAnnotationFor(com, n));
     }
 
     // remove annotations
-    for (n=0; n<NUM_SLOW_TESTS; n++) {
-        CuAssertIntEquals(tc, NUM_SLOW_TESTS-n, getNumSequenceAnnotationsFor(com));
-        printf("numAnnotations: %i\n", NUM_SLOW_TESTS-n);
+    for (n=NUM_SLOW_TESTS-1; n>=0; n--) {
+        CuAssertIntEquals(tc, n+1, getNumSequenceAnnotationsFor(com));
         ann = getNthSequenceAnnotationFor(com, n);
         removeSequenceAnnotation(com, ann);
-        CuAssertIntEquals(tc, NUM_SLOW_TESTS-n-1, getNumSequenceAnnotationsFor(com));
+        CuAssertIntEquals(tc, n, getNumSequenceAnnotationsFor(com));
         deleteSequenceAnnotation(ann);
     }
+
+    CuAssertIntEquals(tc, 0, getNumSequenceAnnotationsFor(com));
+    deleteDNAComponent(com);
+    CuAssertIntEquals(tc, 0, getNumSBOLObjects(doc));
     deleteDocument(doc);
 }
 
