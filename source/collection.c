@@ -32,7 +32,7 @@ void deleteCollection(Collection* col) {
 			col->components = NULL;
 		}
 		if (col->doc) {
-			removeCollection(col->doc, col);
+			unregisterCollection(col->doc, col);
 			col->doc = NULL;
 		}
 		free(col);

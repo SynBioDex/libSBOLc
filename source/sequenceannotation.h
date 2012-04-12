@@ -53,6 +53,12 @@ SBOLAPIEXPORTS void setSequenceAnnotationStrand(SequenceAnnotation* ann, int pol
 ///         or -1 on failure.
 SBOLAPIEXPORTS int getSequenceAnnotationStrand(const SequenceAnnotation* ann);
 
+/// Set a DNAComponent as the subComponent of a SequenceAnnotation.
+/// To remove it later, call this with a NULL annotation.
+/// @todo move this to sequenceannotation.h?
+/// @todo how should this handle docs?
+SBOLAPIEXPORTS void setSequenceAnnotationSubComponent(SequenceAnnotation* ann, DNAComponent* com);
+
 /// Get the DNAComponent corresponding to the annotated feature.
 SBOLAPIEXPORTS DNAComponent* getSequenceAnnotationSubComponent(const SequenceAnnotation* ann);
 

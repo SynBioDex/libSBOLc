@@ -108,10 +108,10 @@ void registerCollection(Collection* col) {
 }
 
 /*********************
- * removeX functions
+ * unregisterX functions
  *********************/
 
-void removeDNASequence(Document* doc, DNASequence* seq) {
+void unregisterDNASequence(Document* doc, DNASequence* seq) {
 	if (doc && doc->sequences && seq) {
 		int index = indexOfPointerInArray(doc->sequences, seq);
 		if (index >= 0)
@@ -119,7 +119,7 @@ void removeDNASequence(Document* doc, DNASequence* seq) {
 	}
 }
 
-void removeSequenceAnnotation(Document* doc, SequenceAnnotation* ann) {
+void unregisterSequenceAnnotation(Document* doc, SequenceAnnotation* ann) {
 	if (doc && doc->annotations && ann) {
 		int index = indexOfPointerInArray(doc->annotations, ann);
 		if (index >= 0)
@@ -127,7 +127,7 @@ void removeSequenceAnnotation(Document* doc, SequenceAnnotation* ann) {
 	}
 }
 
-void removeDNAComponent(Document* doc, DNAComponent* com) {
+void unregisterDNAComponent(Document* doc, DNAComponent* com) {
 	if (doc && doc->components && com) {
 		int index = indexOfPointerInArray(doc->components, com);
 		if (index >= 0)
@@ -135,7 +135,7 @@ void removeDNAComponent(Document* doc, DNAComponent* com) {
 	}
 }
 
-void removeCollection(Document* doc, Collection* col) {
+void unregisterCollection(Document* doc, Collection* col) {
 	if (doc && doc->collections && col) {
 		int index = indexOfPointerInArray(doc->collections, col);
 		if (index >= 0)
@@ -369,7 +369,6 @@ void deleteDocument(Document* doc) {
 		Collection* col;
 		for (n=0; n<getNumCollections(doc); n++) {
        		col = getNthCollection(doc, n);
-			removeCollection(doc, col);
 			deleteCollection(col);
 		}
 		deletePointerArray(doc->collections);

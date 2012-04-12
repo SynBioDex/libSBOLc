@@ -41,7 +41,7 @@ void deleteDNASequence(DNASequence* seq) {
 			seq->nucleotides = NULL;
 		}
 		if (seq->doc) {
-			removeDNASequence(seq->doc, seq);
+			unregisterDNASequence(seq->doc, seq);
 			seq->doc = NULL;
 		}
 		free(seq);

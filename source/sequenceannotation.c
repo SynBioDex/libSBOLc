@@ -38,7 +38,7 @@ void deleteSequenceAnnotation(SequenceAnnotation* ann) {
 			ann->precedes = NULL; // TODO needed?
 		}
 		if (ann->doc) {
-			removeSequenceAnnotation(ann->doc, ann);
+			unregisterSequenceAnnotation(ann->doc, ann);
 			ann->doc = NULL;
 		}
 		free(ann);
@@ -180,5 +180,11 @@ void printSequenceAnnotation(const SequenceAnnotation* ann, int tabs) {
             indent(tabs+2); printf("%s\n", getSequenceAnnotationURI(getNthPrecedes(ann, i)));
         }
     }
+}
+
+void setSequenceAnnotationSubComponent(SequenceAnnotation* ann, DNAComponent* com) {
+	if (ann) {
+		ann->subComponent = com;
+	}
 }
 

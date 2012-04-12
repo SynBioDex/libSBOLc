@@ -34,7 +34,7 @@ void deleteDNAComponent(DNAComponent* com) {
 			com->annotations = NULL;
 		}
 		if (com->doc) {
-			removeDNAComponent(com->doc, com);
+			unregisterDNAComponent(com->doc, com);
 			com->doc = NULL;
 		}
 		free(com);
@@ -135,11 +135,18 @@ void setDNAComponentSequence(DNAComponent* com, DNASequence* seq) {
  * annotation functions
  ************************/
 
-// TODO make it clear this goes with SequenceAnnotation too
 void addSequenceAnnotation(DNAComponent* com, SequenceAnnotation* ann) {
-	if (com && ann) {
+	if (com && ann && com->doc == ann->doc) {
 		insertPointerIntoArray(com->annotations, ann);
 	}
+}
+
+void removeSequenceAnnotation(DNAComponent* com, SequenceAnnotation* ann) {
+    if (!com || !ann || com->doc != ann->doc)
+        return;
+    int index = indexOfPointerInArray(com->annotations, (void*) ann);
+    if (index >= 0)
+        removePointerFromArray(com->annotations, index);
 }
 
 int getNumSequenceAnnotationsFor(const DNAComponent* com) {
@@ -154,12 +161,5 @@ SequenceAnnotation* getNthSequenceAnnotationFor(const DNAComponent* com, int n) 
 		return (SequenceAnnotation *)getNthPointerInArray(com->annotations, n);
 	else
 		return NULL;
-}
-
-/// @todo where should this go?
-void setSequenceAnnotationSubComponent(SequenceAnnotation* ann, DNAComponent* com) {
-	if (ann) {
-		ann->subComponent = com;
-	}
 }
 
