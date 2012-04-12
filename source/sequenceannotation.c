@@ -46,7 +46,7 @@ void deleteSequenceAnnotation(SequenceAnnotation* ann) {
 	}
 }
 
-void setSequenceAnnotationURI(SequenceAnnotation* ann, const char* uri) {
+static void setSequenceAnnotationURI(SequenceAnnotation* ann, const char* uri) {
     if (ann)
         setSBOLObjectURI(ann->base, uri);
 }
@@ -61,7 +61,6 @@ void setSequenceAnnotationEnd(SequenceAnnotation* ann, int end) {
 		setPositionProperty(ann->genbankEnd, end);
 }
 
-// TODO use PolarityProperty
 void setSequenceAnnotationStrand(SequenceAnnotation* ann, int polarity) {
 	if (!ann || polarity < -1 || polarity > 1)
 		return;
@@ -123,12 +122,12 @@ int getSequenceAnnotationStrand(const SequenceAnnotation* ann) {
  *******************/
 
 void addPrecedesRelationship(SequenceAnnotation * upstream, SequenceAnnotation * downstream) {
-	if (upstream && downstream)
+	if (upstream && downstream && upstream->doc == downstream->doc)
 		insertPointerIntoArray(upstream->precedes, downstream);
 }
 
 void removePrecedesRelationship(SequenceAnnotation* upstream, const SequenceAnnotation* downstream) {
-    if (!upstream || !downstream)
+    if (!upstream || !downstream || upstream->doc != downstream->doc)
         return;
     else {
         int index = indexOfPointerInArray(upstream->precedes, (void*) downstream);
@@ -145,7 +144,7 @@ SequenceAnnotation* getNthPrecedes(const SequenceAnnotation* ann, int n) {
 }
 
 int precedes(const SequenceAnnotation* ann1, const SequenceAnnotation* ann2) {
-	if (!ann1 || !ann2 || getNumPrecedes(ann1) < 1)
+	if (!ann1 || !ann2 || getNumPrecedes(ann1) < 1 || ann1->doc != ann2->doc)
 		return 0;
 	int n;
 	SequenceAnnotation* candidate;

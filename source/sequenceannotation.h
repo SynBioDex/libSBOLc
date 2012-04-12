@@ -58,7 +58,6 @@ SBOLAPIEXPORTS DNAComponent* getSequenceAnnotationSubComponent(const SequenceAnn
 
 /// Specify that one SequenceAnnotation must appear before another along a strand of DNA.
 /// @todo Is the strand a DNAComponent? Or not yet part of SBOL?
-/// @todo how should this handle docs?
 SBOLAPIEXPORTS void addPrecedesRelationship(SequenceAnnotation* upstream, SequenceAnnotation* downstream);
 
 /// Find out how many other SequenceAnnotations are restricted to coming after this one.
@@ -72,7 +71,6 @@ SBOLAPIEXPORTS SequenceAnnotation* getNthPrecedes(const SequenceAnnotation* ann,
 /// @param upstream The SequenceAnnotation that presumed to come first.
 /// @param downstream The SequenceAnnotation that presumed to come second.
 /// @return Whether upstream actually precedes downstream.
-/// @todo how should this handle docs?
 SBOLAPIEXPORTS int precedes(const SequenceAnnotation* upstream, const SequenceAnnotation* downstream);
 
 /// Remove the restriction that the 'upstream' SequenceAnnotation comes before the 'downstream' one.
