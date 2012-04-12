@@ -57,6 +57,19 @@ void TestPrecedes(CuTest* tc) {
 		SequenceAnnotation* actual = getNthPrecedes(upstream, index);
 		CuAssertPtrEquals(tc, expected, actual);
 	}
+
+    // remove each of them and check that it's really gone
+    for (index=0; index<NUM_SLOW_TESTS; index++) {
+        CuAssertIntEquals(tc, NUM_SLOW_TESTS-index, getNumPrecedes(upstream));
+        CuAssertIntEquals(tc, 1, precedes(upstream, downstream[index]));
+        removePrecedesRelationship(upstream, downstream[index]);
+        CuAssertIntEquals(tc, NUM_SLOW_TESTS-index-1, getNumPrecedes(upstream));
+        CuAssertIntEquals(tc, 0, precedes(upstream, downstream[index]));
+        deleteSequenceAnnotation(downstream[index]);
+    }
+
+    CuAssertIntEquals(tc, 0, getNumPrecedes(upstream));
+	free(downstream);
 	deleteDocument(doc);
 }
 

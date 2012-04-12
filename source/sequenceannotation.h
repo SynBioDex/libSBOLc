@@ -75,7 +75,8 @@ SBOLAPIEXPORTS SequenceAnnotation* getNthPrecedes(const SequenceAnnotation* ann,
 /// @todo how should this handle docs?
 SBOLAPIEXPORTS int precedes(const SequenceAnnotation* upstream, const SequenceAnnotation* downstream);
 
-/// @todo removePrecedesRelationship
+/// Remove the restriction that the 'upstream' SequenceAnnotation comes before the 'downstream' one.
+SBOLAPIEXPORTS void removePrecedesRelationship(SequenceAnnotation* upstream, const SequenceAnnotation* downstream);
 
 /// Print an outline of a SequenceAnnotation to stdout.
 /// Mainly for debugging.

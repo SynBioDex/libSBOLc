@@ -153,4 +153,5 @@ void printCollection(const Collection* col, int tabs);
 void readDocument(Document* doc, char* filename);
 void printDocument(Document* doc);
 void deleteDocument(Document* doc);
+void removePrecedesRelationship(SequenceAnnotation* upstream, const SequenceAnnotation* downstream);
 
