@@ -95,7 +95,7 @@ Binaries will be generated in the <code>libSBOLc/release</code> folder.
 Testing
 -------
 
-Once you've configured and built libSBOLc, you can run some simple tests to check that everything works. <code>cd</code> into the <code>libSBOLc/release/examples</code> folder and run:
+Once you've configured and built libSBOLc, you can run some simple tests to check that everything works. <code>cd</code> into the <code>libSBOLc/release/tests</code> folder and run:
 
     ./sbol_run_tests
 
@@ -134,11 +134,15 @@ There are different ways to do this, but this is probably the simplest. To compi
 
     mingw32-gcc.exe -I headers sbol_validate.c -o validate libsbol.dll
 
-and the equivalent command on Unix:
+and the equivalent command on Mac/Linux:
 
     gcc -I headers sbol_validate.c -o validate libsbol.so
 
-The <code>-I</code> tells <code>gcc</code> where to look for headers, and <code>-o</code> gives the name of the generated executable.
+The <code>-I</code> tells <code>gcc</code> where to look for headers, and <code>-o</code> gives the name of the generated executable. If you get an error like "library not loaded... image not found" on Mac OSX, you probably need to tell the system to look in the current folder for libsbol:
+
+    export DYLD_LIBRARY_PATH=.:$DYLD_LIBRARY_PATH
+
+The same thing should work in Linux, except it's <code>LD_LIBRARY_PATH</code>. Another possible problem is that gcc doesn't know to use libxml, which will result in "undefined symbols... \_xmlFree \_xmlFreeDoc" etc. Try adding <code>-lxml</code> or <code>-lxml2</code> to the compile command.
 
 For more complex programs CMake is a good choice. It lets you write detailed build scripts that configure files, create directories, find system libraries, etc.
 
