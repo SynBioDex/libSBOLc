@@ -78,6 +78,7 @@ SBOLAPIEXPORTS void addSequenceAnnotation(DNAComponent* com, SequenceAnnotation*
 
 /// Remove a SequenceAnnotation from a DNAComponent.
 /// This doesn't delete the annotation.
+/// @todo need to make sure it's not in any other arrays?
 SBOLAPIEXPORTS void removeSequenceAnnotation(DNAComponent* com, SequenceAnnotation* ann);
 
 /// Print an outline of a DNAComponent to stdout.

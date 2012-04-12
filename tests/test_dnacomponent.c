@@ -4,8 +4,10 @@
 #include "utilities.h"
 #include "document.h"
 #include "dnacomponent.h"
+#include "sequenceannotation.h"
 
 #define NUM_FAST_TESTS 10000
+#define NUM_SLOW_TESTS   100
 
 void TestCreateEmptyDNAComponent(CuTest* tc) {
 	Document* doc = createDocument();
@@ -91,6 +93,36 @@ void TestRandomDNAComponentProperties(CuTest* tc) {
 	deleteDocument(doc);
 }
 
+void TestAddRemoveAnnotations(CuTest *tc) {
+    Document* doc = createDocument();
+    int n;
+    DNAComponent* com = createDNAComponent(doc, randomUniqueURI(doc));
+    char* uri;
+    SequenceAnnotation* ann;
+
+    // add annotations
+    for (n=0; n<NUM_SLOW_TESTS; n++) {
+        uri = randomUniqueURI(doc);
+        ann = createSequenceAnnotation(doc, uri);
+        CuAssertIntEquals(tc, n, getNumSequenceAnnotationsFor(com));
+        printf("numAnnotations: %i\n", n);
+        addSequenceAnnotation(com, ann);
+        CuAssertIntEquals(tc, n+1, getNumSequenceAnnotationsFor(com));
+        CuAssertPtrEquals(tc, ann, getNthSequenceAnnotationFor(com, n));
+    }
+
+    // remove annotations
+    for (n=0; n<NUM_SLOW_TESTS; n++) {
+        CuAssertIntEquals(tc, NUM_SLOW_TESTS-n, getNumSequenceAnnotationsFor(com));
+        printf("numAnnotations: %i\n", NUM_SLOW_TESTS-n);
+        ann = getNthSequenceAnnotationFor(com, n);
+        removeSequenceAnnotation(com, ann);
+        CuAssertIntEquals(tc, NUM_SLOW_TESTS-n-1, getNumSequenceAnnotationsFor(com));
+        deleteSequenceAnnotation(ann);
+    }
+    deleteDocument(doc);
+}
+
 void PrintDNAComponentTestInfo() {
 	printf("testing dnacomponents\n");
 }
@@ -104,5 +136,6 @@ CuSuite* DNAComponentGetSuite() {
 	SUITE_ADD_TEST(dnaComponentTests, TestEmptyDNAComponentProperties);
 	SUITE_ADD_TEST(dnaComponentTests, TestNullDNAComponentProperties);
 	SUITE_ADD_TEST(dnaComponentTests, TestRandomDNAComponentProperties);
+	SUITE_ADD_TEST(dnaComponentTests, TestAddRemoveAnnotations);
 	return dnaComponentTests;
 }
