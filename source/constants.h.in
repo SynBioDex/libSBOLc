@@ -80,6 +80,7 @@ enum StrandPolarity {
 #define NODENAME_BIOEND             "bioEnd"
 #define NODENAME_NUCLEOTIDES        "nucleotides"
 #define NODENAME_STRAND             "strand"
+#define NODENAME_TYPE               "type"
 #define NODENAME_PRECEDES           "precedes"
 #define NODENAME_ANNOTATION         "annotation"
 #define NODENAME_SUBCOMPONENT       "subComponent"

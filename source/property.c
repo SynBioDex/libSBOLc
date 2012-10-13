@@ -317,3 +317,51 @@ void printPolarityProperty(const PolarityProperty* pro) {
 		}
 	}
 }
+
+/********************
+ * TypeProperty
+ ********************/
+
+TypeProperty* createTypeProperty(Document* doc) {
+    if (!doc)
+        return NULL;
+    TypeProperty* pro = malloc(sizeof(TypeProperty));
+    pro->doc = doc;
+    pro->uri = createURIProperty();
+    return pro;
+}
+
+void deleteTypeProperty(TypeProperty* pro) {
+    if (pro) {
+        if (pro->uri)
+            deleteURIProperty(pro->uri);
+        if (pro->doc)
+            pro->doc = NULL;
+    }
+}
+
+void setTypeProperty(TypeProperty* pro, const char* uri) {
+    if (pro && uri)
+        setURIProperty(pro->uri, uri);
+}
+
+char* getTypeProperty(const TypeProperty* pro) {
+    if (pro)
+        return getURIProperty(pro->uri);
+    else
+        return NULL;
+}
+
+int compareTypeProperty(const TypeProperty* pro1, const TypeProperty* pro2) {
+    if ((!pro1 && !pro2) || (!pro1->uri && !pro2->uri))
+        return 0;
+    else if (!pro1 || !pro2 || !pro1->uri || !pro2->uri)
+        return -1;
+    return compareURIProperty(pro1->uri, pro2->uri);
+}
+
+void printTypeProperty(const TypeProperty* pro) {
+    if (pro)
+        printURIProperty(pro->uri);
+}
+

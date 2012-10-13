@@ -16,6 +16,7 @@ struct _DNAComponent {
 	SBOLCompoundObject* base;  ///< uri, displayID, name, description
 	DNASequence* dnaSequence;  ///< sequence
 	PointerArray* annotations; ///< array of SequenceAnnotations
+    TypeProperty* type;        ///< type
 };
 
 /// Create an empty DNAComponent.
@@ -51,6 +52,9 @@ SBOLAPIEXPORTS char* getDNAComponentDescription(const DNAComponent* com);
 /// Gotcha: DNA, not Dna
 SBOLAPIEXPORTS DNASequence* getDNAComponentSequence(DNAComponent* com);
 
+/// Get the type of a DNAComponent
+SBOLAPIEXPORTS char* getDNAComponentType(const DNAComponent* com);
+
 /// Set the uri of a DNAComponent.
 /// Gotcha: this is different from both name and displayID.
 SBOLAPIEXPORTS void setDNAComponentURI(DNAComponent* com, const char* uri);
@@ -70,6 +74,9 @@ SBOLAPIEXPORTS void setDNAComponentDescription(DNAComponent* com, const char* de
 /// Gotcha: DNA, not Dna
 /// @todo how should this handle docs?
 SBOLAPIEXPORTS void setDNAComponentSequence(DNAComponent* com, DNASequence* seq);
+
+/// Set the type of a DNAComponent
+SBOLAPIEXPORTS void setDNAComponentType(DNAComponent* com, const char* uri);
 
 /// Add a SequenceAnnotation to a DNAComponent.
 /// @todo where should this go? here, sequenceannotation.h, sbol.h?

@@ -19,6 +19,7 @@ DNAComponent* createDNAComponent(Document* doc, const char* uri) {
 	com->base        = createSBOLCompoundObject(doc, uri);
 	com->dnaSequence = NULL;
 	com->annotations = createPointerArray();
+    com->type        = createTypeProperty();
 	registerDNAComponent(com);
 	return com;
 }
@@ -37,6 +38,10 @@ void deleteDNAComponent(DNAComponent* com) {
 			removeDNAComponent(com->doc, com);
 			com->doc = NULL;
 		}
+        if (com->type) {
+            deleteTypeProperty(com->type);
+            com->type = NULL;
+        }
 		free(com);
 		com = NULL;
 	}
@@ -50,7 +55,8 @@ void printDNAComponent(const DNAComponent* com, int tabs) {
 	indent(tabs+1); printf("name:        %s\n", getDNAComponentName(com));
 	indent(tabs+1); printf("description: %s\n", getDNAComponentDescription(com));
 	indent(tabs+1); printf("sequence:    %s\n", getDNASequenceURI(com->dnaSequence));
-	
+    indent(tabs+1); printf("type:        %s\n", getDNAComponentType(com));
+
 	SequenceAnnotation* seq;
 	int i;
 	int num = getNumSequenceAnnotationsFor(com);
@@ -102,6 +108,13 @@ DNASequence* getDNAComponentSequence(DNAComponent* com) {
 		return NULL;
 }
 
+char* getDNAComponentType(const DNAComponent* com) {
+    if (com && com->type)
+        return com->type;
+    else
+        return NULL;
+}
+
 /********************
  * set... functions
  ********************/
@@ -129,6 +142,12 @@ void setDNAComponentDescription(DNAComponent* com, const char* descr) {
 void setDNAComponentSequence(DNAComponent* com, DNASequence* seq) {
 	if (com && seq)
 		com->dnaSequence = seq;
+}
+
+void setDNAComponentType(DNAComponent* com, const char* uri) {
+    // should check that !isSBOLObjectURI here?
+    if (com && uri)
+        com->type = uri;
 }
 
 /************************

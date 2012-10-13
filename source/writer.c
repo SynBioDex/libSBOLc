@@ -175,7 +175,10 @@ static void writeDNAComponent(DNAComponent* com) {
 		data = getDNAComponentDescription(com);
 		if (data)
 			xmlTextWriterWriteElement(WRITER, NSPREFIX_SBOL ":" NODENAME_DESCRIPTION, data);
-		
+        data = getDNAComponentType(com);
+        if (data)
+            xmlTextWriterWriteElement(WRITER, NSPREFIX_RDF ":" NODENAME_TYPE, data);
+        
 		// sequence
 		if (com->dnaSequence) {
 			xmlTextWriterStartElement(WRITER, NSPREFIX_SBOL ":" NODENAME_DNASEQUENCE_REF);

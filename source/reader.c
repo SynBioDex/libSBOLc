@@ -248,6 +248,12 @@ static void readDNAComponentContent(xmlNode *node) {
 
     // add displayID, name, description
     readSBOLCompoundObject(com->base, node);
+    
+    // add type
+    path = BAD_CAST "./" NODENAME_SBOL ":" NODENAME_TYPE;
+    if (content = getContentsOfNodeMatchingXPath(node, path)) {
+        setDNAComponentType(com, (char *)content);
+        xmlFree(content);
 }
 
 static void readDNAComponentReferences(xmlNode *node) {

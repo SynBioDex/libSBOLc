@@ -221,4 +221,34 @@ int comparePolarityProperty(const PolarityProperty* pro1, const PolarityProperty
 /// Print a PolarityProperty to stdout.
 void printPolarityProperty(const PolarityProperty* pro);
 
+/********************
+ * TypeProperty
+ ********************/
+
+/// Type property that ... 
+struct _TypeProperty {
+    Document* doc;
+    URIProperty* uri;
+};
+
+/// Create an empty TypeProperty
+TypeProperty* createTypeProperty(Document* doc);
+
+/// Delete a TypeProperty
+void deleteTypeProperty(TypeProperty* pro);
+
+/// Store a uri in a TypeProperty
+void setTypeProperty(TypeProperty* pro, const char* uri);
+
+/// Retrieve the uri stored in a TypeProperty
+/// @return The uri corresponding to value in TypeProperty
+char* getTypeProperty(const TypeProperty* pro);
+
+/// Compare two TypeProperties for uri equality
+/// @return 0 if uri's don't exsit, -1 on failure. 
+int compareTypeProperty(const TypeProperty* pro1, const TypeProperty* pro2);
+
+/// Print a TypeProperty to stdout
+void printTypeProperty(const TypeProperty* pro);
+
 #endif
