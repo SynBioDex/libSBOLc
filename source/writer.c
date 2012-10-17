@@ -293,6 +293,6 @@ int writeDocument(Document* doc, const char* filename) {
 	}
 
 	endSBOLDocument();
-	cleanupSBOLWriter;
+	cleanupSBOLWriter();
 	return saveSBOLDocument(filename);
 }

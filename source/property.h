@@ -225,7 +225,7 @@ void printPolarityProperty(const PolarityProperty* pro);
  * TypeProperty
  ********************/
 
-/// Type property that ... 
+/// Type property that stores document and uri for part type
 struct _TypeProperty {
     Document* doc;
     URIProperty* uri;

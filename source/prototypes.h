@@ -20,6 +20,7 @@ typedef struct _URIProperty         URIProperty;
 typedef struct _NucleotidesProperty NucleotidesProperty;
 typedef struct _PositionProperty    PositionProperty;
 typedef struct _PolarityProperty    PolarityProperty;
+typedef struct _TypeProperty        TypeProperty;
 
 typedef struct _PointerArray        PointerArray;
 

@@ -19,7 +19,7 @@ DNAComponent* createDNAComponent(Document* doc, const char* uri) {
 	com->base        = createSBOLCompoundObject(doc, uri);
 	com->dnaSequence = NULL;
 	com->annotations = createPointerArray();
-    com->type        = createTypeProperty();
+    com->type        = createTypeProperty(doc);
 	registerDNAComponent(com);
 	return com;
 }
@@ -110,7 +110,11 @@ DNASequence* getDNAComponentSequence(DNAComponent* com) {
 
 char* getDNAComponentType(const DNAComponent* com) {
     if (com && com->type)
-        return com->type;
+    {
+        TypeProperty* t  = com->type;
+        if (t->uri)
+            return getURIProperty(t->uri);
+    }
     else
         return NULL;
 }
@@ -145,9 +149,12 @@ void setDNAComponentSequence(DNAComponent* com, DNASequence* seq) {
 }
 
 void setDNAComponentType(DNAComponent* com, const char* uri) {
-    // should check that !isSBOLObjectURI here?
     if (com && uri)
-        com->type = uri;
+    {
+        TypeProperty *t = createTypeProperty(com->doc);
+        setTypeProperty(t,uri);
+        com->type = t;
+    }
 }
 
 /************************

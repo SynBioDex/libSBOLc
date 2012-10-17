@@ -327,7 +327,7 @@ TypeProperty* createTypeProperty(Document* doc) {
         return NULL;
     TypeProperty* pro = malloc(sizeof(TypeProperty));
     pro->doc = doc;
-    pro->uri = createURIProperty();
+    pro->uri = createURIProperty(doc);
     return pro;
 }
 
