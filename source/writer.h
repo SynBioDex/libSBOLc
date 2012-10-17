@@ -64,13 +64,16 @@ static void writeCollection(Collection* col);
  * main write function
  ***********************/
 
+/// Write document to static xmlDoc
+void writeDocument(Document* doc);
+
 /// Create, validate, and save an XML document based on
 /// the SBOLObjects currently in memory. Those objects
 /// still need to be deleted afterwards.
-SBOLAPIEXPORTS int writeDocument(Document* doc, const char* filename);
+SBOLAPIEXPORTS int writeDocumentToFile(Document* doc, const char* filename);
 
 /// Create and return contents of XML written for SBOLObjects
-/// currently in memory.
+/// currently in memory. Does not validate xml
 SBOLAPIEXPORTS char* writeDocumentToString(Document* doc);
 
 #endif

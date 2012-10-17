@@ -247,7 +247,7 @@ static void writeCollection(Collection* col) {
  * main write function
  ***********************/
 
-int writeDocument(Document* doc, const char* filename) {
+void writeDocument(Document* doc) {
 	int n;
 	startSBOLDocument();
 
@@ -289,6 +289,11 @@ int writeDocument(Document* doc, const char* filename) {
 	}
 
 	endSBOLDocument();
+}
+
+int writeDocumentToFile(Document *doc, const char* filename)
+{
+    writeDocument(doc);
     int returnVal = saveSBOLDocument(filename);
 	cleanupSBOLWriter();
 	return returnVal;
@@ -296,51 +301,13 @@ int writeDocument(Document* doc, const char* filename) {
 
 char* writeDocumentToString(Document *doc)
 {
-    int n;
-	startSBOLDocument();
-    
-	// write collections
-	Collection* col;
-	for (n=0; n<getNumCollections(doc); n++) {
-		col = getNthCollection(doc, n);
-		if (!alreadyProcessed((void *)col))
-			writeCollection(col);
-	}
-    
-	// write components
-	DNAComponent* com;
-	for (n=0; n<getNumDNAComponents(doc); n++) {
-		com = getNthDNAComponent(doc, n);
-		if (!alreadyProcessed((void *)com))
-			writeDNAComponent(com);
-	}
-    
-	// At this point there shouldn't be anything left.
-	// But in case there are orphaned DNASequences or
-	// SequenceAnnotations, SBOL will write them out anyway
-	// and fail the schema validation.
-	
-	// write orphaned sequences
-	DNASequence* seq;
-	for (n=0; n<getNumDNASequences(doc); n++) {
-		seq = getNthDNASequence(doc, n);
-		if (!alreadyProcessed((void *)seq))
-			writeDNASequence(seq);
-	}
-	
-	// write orphaned sequence annotations
-	SequenceAnnotation* ann;
-	for (n=0; n<getNumSequenceAnnotations(doc); n++) {
-		ann = getNthSequenceAnnotation(doc, n);
-		if (!alreadyProcessed((void *)ann))
-			writeSequenceAnnotation(ann);
-	}
-    
-	endSBOLDocument();
-    
-    // WARNING: Does not check for proper allocation
+    writeDocument(doc);
+    // WARNING: Does not check for proper xmlChar* allocation
     xmlChar* out;
     int s;
     xmlDocDumpMemory(OUTPUT, &out, &s);
+    cleanupSBOLWriter();
     return (char *)out;
 }
+
+
