@@ -2,15 +2,12 @@
 #include <string.h>
 
 #include <libxml/xmlwriter.h>
+#include <libxml/tree.h>
 
+#include "writer.h"
 #include "utilities.h"
 #include "array.h"
-#include "document.h"
-#include "dnasequence.h"
-#include "sequenceannotation.h"
-#include "dnacomponent.h"
-#include "collection.h"
-#include "writer.h"
+#include "sbol.h"
 
 static int            INDENT;
 static xmlTextWriter* WRITER;
@@ -29,7 +26,7 @@ void indentLess() { xmlTextWriterSetIndent(WRITER, --INDENT); }
 static void createSBOLWriter() {
 	INDENT = 0;
 	WRITER = xmlNewTextWriterDoc(&OUTPUT, 0);
-	xmlTextWriterSetIndentString(WRITER, "\t");
+	xmlTextWriterSetIndentString(WRITER,xmlCharStrdup("\t"));
 	xmlTextWriterSetIndent(WRITER, INDENT);
 }
 
@@ -60,12 +57,11 @@ static void startSBOLDocument() {
 	resetProcessed();
 	createSBOLWriter();
 	xmlTextWriterStartDocument(WRITER, NULL, NULL, NULL);
-	xmlTextWriterStartElement(WRITER, NSPREFIX_RDF ":" NODENAME_RDF);
-	// TODO add newlines, indents for easier reading
-	xmlTextWriterWriteAttribute(WRITER, "xmlns:" NSPREFIX_RDF,  NSURL_RDF);
-	xmlTextWriterWriteAttribute(WRITER, "xmlns:" NSPREFIX_RDFS, NSURL_RDFS);
-	xmlTextWriterWriteAttribute(WRITER, "xmlns:" NSPREFIX_SO,   NSURL_SO);
-	xmlTextWriterWriteAttribute(WRITER, "xmlns:" NSPREFIX_SBOL, NSURL_SBOL);
+	xmlTextWriterStartElement(WRITER, xmlCharStrdup(NSPREFIX_RDF ":" NODENAME_RDF));
+	xmlTextWriterWriteAttribute(WRITER, xmlCharStrdup("xmlns:" NSPREFIX_RDF), xmlCharStrdup(NSURL_RDF));
+	xmlTextWriterWriteAttribute(WRITER, xmlCharStrdup("xmlns:" NSPREFIX_RDFS), xmlCharStrdup(NSURL_RDFS));
+	xmlTextWriterWriteAttribute(WRITER, xmlCharStrdup("xmlns:" NSPREFIX_SO),   xmlCharStrdup(NSURL_SO));
+	xmlTextWriterWriteAttribute(WRITER, xmlCharStrdup("xmlns:" NSPREFIX_SBOL), xmlCharStrdup(NSURL_SBOL));
 	indentMore();
 }
 
@@ -93,14 +89,14 @@ static int saveSBOLDocument(const char* filename) {
 static void writeDNASequence(DNASequence* seq) {
 	if (!seq)
 		return;
-	xmlTextWriterStartElement(WRITER, NSPREFIX_SBOL ":" NODENAME_DNASEQUENCE);
-	xmlTextWriterWriteAttribute(WRITER, NSPREFIX_RDF ":" NODENAME_ABOUT, getDNASequenceURI(seq));
+	xmlTextWriterStartElement(WRITER, xmlCharStrdup(NSPREFIX_SBOL ":" NODENAME_DNASEQUENCE));
+	xmlTextWriterWriteAttribute(WRITER, xmlCharStrdup(NSPREFIX_RDF ":" NODENAME_ABOUT), xmlCharStrdup(getDNASequenceURI(seq)));
 
 	// nucleotides
 	if (!alreadyProcessed((void *)seq)) {
 		char* nt = getDNASequenceNucleotides(seq);
 		if (nt) {
-		 	xmlTextWriterWriteElement(WRITER, NSPREFIX_SBOL ":" NODENAME_NUCLEOTIDES , nt);
+		 	xmlTextWriterWriteElement(WRITER, xmlCharStrdup(NSPREFIX_SBOL ":" NODENAME_NUCLEOTIDES), xmlCharStrdup(nt));
 			markProcessed((void *)seq);
 		}
 		free(nt);
@@ -113,8 +109,8 @@ static void writeSequenceAnnotation(SequenceAnnotation* ann) {
 	if (!ann)
 		return;
 	markProcessed((void *)ann);
-	xmlTextWriterStartElement(WRITER, NSPREFIX_SBOL ":" NODENAME_SEQUENCEANNOTATION);
-	xmlTextWriterWriteAttribute(WRITER, NSPREFIX_RDF ":" NODENAME_ABOUT, getSequenceAnnotationURI(ann));
+	xmlTextWriterStartElement(WRITER, xmlCharStrdup(NSPREFIX_SBOL ":" NODENAME_SEQUENCEANNOTATION));
+	xmlTextWriterWriteAttribute(WRITER, xmlCharStrdup(NSPREFIX_RDF ":" NODENAME_ABOUT), xmlCharStrdup(getSequenceAnnotationURI(ann)));
 	
 	// precedes
 	int n;
@@ -122,8 +118,8 @@ static void writeSequenceAnnotation(SequenceAnnotation* ann) {
 	indentMore();
 	for (n=0; n<getNumPrecedes(ann); n++) {
 		ann2 = getNthPrecedes(ann, n);
-		xmlTextWriterStartElement(WRITER, NSPREFIX_SBOL ":" NODENAME_PRECEDES);
-		xmlTextWriterWriteAttribute(WRITER, NSPREFIX_RDF ":" NODENAME_RESOURCE, getSequenceAnnotationURI(ann2));
+		xmlTextWriterStartElement(WRITER, xmlCharStrdup(NSPREFIX_SBOL ":" NODENAME_PRECEDES));
+		xmlTextWriterWriteAttribute(WRITER, xmlCharStrdup(NSPREFIX_RDF ":" NODENAME_RESOURCE), xmlCharStrdup(getSequenceAnnotationURI(ann2)));
 		xmlTextWriterEndElement(WRITER);
 	}
 	indentLess();
@@ -132,18 +128,18 @@ static void writeSequenceAnnotation(SequenceAnnotation* ann) {
 	int start = getSequenceAnnotationStart(ann);
 	int end   = getSequenceAnnotationEnd(ann);
 	if (start>0)
-		xmlTextWriterWriteElement(WRITER, NSPREFIX_SBOL ":" NODENAME_BIOSTART, intToStr(start));
+		xmlTextWriterWriteElement(WRITER, xmlCharStrdup(NSPREFIX_SBOL ":" NODENAME_BIOSTART), xmlCharStrdup(intToStr(start)));
 	if (end>0)
-		xmlTextWriterWriteElement(WRITER, NSPREFIX_SBOL ":" NODENAME_BIOEND,   intToStr(end));
+		xmlTextWriterWriteElement(WRITER, xmlCharStrdup(NSPREFIX_SBOL ":" NODENAME_BIOEND),  xmlCharStrdup(intToStr(end)));
 	
 	// subComponent
 	char* uri;
 	indentMore();
 	if (ann->subComponent) {
 		uri = getDNAComponentURI(ann->subComponent);
-		xmlTextWriterStartElement(WRITER, NSPREFIX_SBOL ":" NODENAME_SUBCOMPONENT);
+		xmlTextWriterStartElement(WRITER, xmlCharStrdup(NSPREFIX_SBOL ":" NODENAME_SUBCOMPONENT));
 		if (alreadyProcessed((void *)(ann->subComponent)))
-			xmlTextWriterWriteAttribute(WRITER, NSPREFIX_RDF ":" NODENAME_RESOURCE, uri);
+			xmlTextWriterWriteAttribute(WRITER, xmlCharStrdup(NSPREFIX_RDF ":" NODENAME_RESOURCE), xmlCharStrdup(uri));
 		else {
 	 		indentMore();
 	 		writeDNAComponent(ann->subComponent);
@@ -159,29 +155,29 @@ static void writeSequenceAnnotation(SequenceAnnotation* ann) {
 static void writeDNAComponent(DNAComponent* com) {
 	if (!com)
 		return;
-	xmlTextWriterStartElement(WRITER, NSPREFIX_SBOL ":" NODENAME_DNACOMPONENT);
+	xmlTextWriterStartElement(WRITER, xmlCharStrdup(NSPREFIX_SBOL ":" NODENAME_DNACOMPONENT));
 	if (!alreadyProcessed((void *)com)) {
 		markProcessed((void *)com);
-		xmlTextWriterWriteAttribute(WRITER, NSPREFIX_RDF ":" NODENAME_ABOUT, getDNAComponentURI(com));
+		xmlTextWriterWriteAttribute(WRITER, xmlCharStrdup(NSPREFIX_RDF ":" NODENAME_ABOUT), xmlCharStrdup(getDNAComponentURI(com)));
 		
 		// properties
 		char* data;
 		data = getDNAComponentDisplayID(com);
 		if (data)
-			xmlTextWriterWriteElement(WRITER, NSPREFIX_SBOL ":" NODENAME_DISPLAYID, data);
+			xmlTextWriterWriteElement(WRITER, xmlCharStrdup(NSPREFIX_SBOL ":" NODENAME_DISPLAYID), xmlCharStrdup(data));
 		data = getDNAComponentName(com);
 		if (data)
-			xmlTextWriterWriteElement(WRITER, NSPREFIX_SBOL ":" NODENAME_NAME, data);
+			xmlTextWriterWriteElement(WRITER, xmlCharStrdup(NSPREFIX_SBOL ":" NODENAME_NAME), xmlCharStrdup(data));
 		data = getDNAComponentDescription(com);
 		if (data)
-			xmlTextWriterWriteElement(WRITER, NSPREFIX_SBOL ":" NODENAME_DESCRIPTION, data);
+			xmlTextWriterWriteElement(WRITER, xmlCharStrdup(NSPREFIX_SBOL ":" NODENAME_DESCRIPTION), xmlCharStrdup(data));
         data = getDNAComponentType(com);
         if (data)
-            xmlTextWriterWriteElement(WRITER, NSPREFIX_RDF ":" NODENAME_TYPE, data);
+            xmlTextWriterWriteElement(WRITER, xmlCharStrdup(NSPREFIX_RDF ":" NODENAME_TYPE), xmlCharStrdup(data));
         
 		// sequence
 		if (com->dnaSequence) {
-			xmlTextWriterStartElement(WRITER, NSPREFIX_SBOL ":" NODENAME_DNASEQUENCE_REF);
+			xmlTextWriterStartElement(WRITER, xmlCharStrdup(NSPREFIX_SBOL ":" NODENAME_DNASEQUENCE_REF));
 			indentMore();
 			/// @todo sometimes no contents?
 			writeDNASequence(com->dnaSequence);
@@ -199,7 +195,7 @@ static void writeDNAComponent(DNAComponent* com) {
 			for (n=0; n<num; n++) {
 				ann = getNthSequenceAnnotationFor(com, n);
 				indentMore();
-				xmlTextWriterStartElement(WRITER, NSPREFIX_SBOL ":" NODENAME_ANNOTATION);
+				xmlTextWriterStartElement(WRITER, xmlCharStrdup(NSPREFIX_SBOL ":" NODENAME_ANNOTATION));
 				writeSequenceAnnotation(ann);
 				xmlTextWriterEndElement(WRITER);
 				indentLess();
@@ -208,24 +204,24 @@ static void writeDNAComponent(DNAComponent* com) {
 		indentLess();
 		
 	} else
-		xmlTextWriterWriteAttribute(WRITER, NSPREFIX_RDF ":" NODENAME_RESOURCE, getDNAComponentURI(com));
+		xmlTextWriterWriteAttribute(WRITER, xmlCharStrdup(NSPREFIX_RDF ":" NODENAME_RESOURCE), xmlCharStrdup(getDNAComponentURI(com)));
 	xmlTextWriterEndElement(WRITER);
 }
 
 static void writeCollection(Collection* col) {
 	if (!col)
 		return;
-	xmlTextWriterStartElement(WRITER, NSPREFIX_SBOL ":" NODENAME_COLLECTION);
+	xmlTextWriterStartElement(WRITER, xmlCharStrdup(NSPREFIX_SBOL ":" NODENAME_COLLECTION));
 	if (!alreadyProcessed((void *)col)) {
 		markProcessed((void *)col);
 		int n;
 		int num;
 		
 		// properties
-		xmlTextWriterWriteAttribute(WRITER, NSPREFIX_RDF ":" NODENAME_ABOUT,        getCollectionURI(col));
-		xmlTextWriterWriteElement(WRITER,   NSPREFIX_SBOL ":" NODENAME_DISPLAYID,   getCollectionDisplayID(col));
-		xmlTextWriterWriteElement(WRITER,   NSPREFIX_SBOL ":" NODENAME_NAME,        getCollectionName(col));
-		xmlTextWriterWriteElement(WRITER,   NSPREFIX_SBOL ":" NODENAME_DESCRIPTION, getCollectionDescription(col));
+		xmlTextWriterWriteAttribute(WRITER, xmlCharStrdup(NSPREFIX_RDF ":" NODENAME_ABOUT),        xmlCharStrdup(getCollectionURI(col)));
+		xmlTextWriterWriteElement(WRITER,   xmlCharStrdup(NSPREFIX_SBOL ":" NODENAME_DISPLAYID),   xmlCharStrdup(getCollectionDisplayID(col)));
+		xmlTextWriterWriteElement(WRITER,   xmlCharStrdup(NSPREFIX_SBOL ":" NODENAME_NAME), xmlCharStrdup(getCollectionName(col)));
+		xmlTextWriterWriteElement(WRITER,   xmlCharStrdup(NSPREFIX_SBOL ":" NODENAME_DESCRIPTION), xmlCharStrdup(getCollectionDescription(col)));
 		
 		// components
 		DNAComponent* com;
@@ -233,7 +229,7 @@ static void writeCollection(Collection* col) {
 		if (num>0) {
 			indentMore();
 			for (n=0; n<num; n++) {
-				xmlTextWriterStartElement(WRITER, NSPREFIX_SBOL ":" NODENAME_COMPONENT);
+				xmlTextWriterStartElement(WRITER, xmlCharStrdup(NSPREFIX_SBOL ":" NODENAME_COMPONENT));
 				com = getNthDNAComponentIn(col, n);
 				indentMore();
 				writeDNAComponent(com);
@@ -243,7 +239,7 @@ static void writeCollection(Collection* col) {
 			indentLess();
 		}
 	} else
-		xmlTextWriterWriteAttribute(WRITER, NSPREFIX_RDF ":" NODENAME_RESOURCE, getCollectionURI(col));
+		xmlTextWriterWriteAttribute(WRITER, xmlCharStrdup(NSPREFIX_RDF ":" NODENAME_RESOURCE), xmlCharStrdup(getCollectionURI(col)));
 	xmlTextWriterEndElement(WRITER);
 }
 
@@ -293,6 +289,58 @@ int writeDocument(Document* doc, const char* filename) {
 	}
 
 	endSBOLDocument();
+    int returnVal = saveSBOLDocument(filename);
 	cleanupSBOLWriter();
-	return saveSBOLDocument(filename);
+	return returnVal;
+}
+
+char* writeDocumentToString(Document *doc)
+{
+    int n;
+	startSBOLDocument();
+    
+	// write collections
+	Collection* col;
+	for (n=0; n<getNumCollections(doc); n++) {
+		col = getNthCollection(doc, n);
+		if (!alreadyProcessed((void *)col))
+			writeCollection(col);
+	}
+    
+	// write components
+	DNAComponent* com;
+	for (n=0; n<getNumDNAComponents(doc); n++) {
+		com = getNthDNAComponent(doc, n);
+		if (!alreadyProcessed((void *)com))
+			writeDNAComponent(com);
+	}
+    
+	// At this point there shouldn't be anything left.
+	// But in case there are orphaned DNASequences or
+	// SequenceAnnotations, SBOL will write them out anyway
+	// and fail the schema validation.
+	
+	// write orphaned sequences
+	DNASequence* seq;
+	for (n=0; n<getNumDNASequences(doc); n++) {
+		seq = getNthDNASequence(doc, n);
+		if (!alreadyProcessed((void *)seq))
+			writeDNASequence(seq);
+	}
+	
+	// write orphaned sequence annotations
+	SequenceAnnotation* ann;
+	for (n=0; n<getNumSequenceAnnotations(doc); n++) {
+		ann = getNthSequenceAnnotation(doc, n);
+		if (!alreadyProcessed((void *)ann))
+			writeSequenceAnnotation(ann);
+	}
+    
+	endSBOLDocument();
+    
+    // WARNING: Does not check for proper allocation
+    xmlChar* out;
+    int s;
+    xmlDocDumpMemory(OUTPUT, &out, &s);
+    return (char *)out;
 }

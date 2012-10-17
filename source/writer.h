@@ -69,4 +69,8 @@ static void writeCollection(Collection* col);
 /// still need to be deleted afterwards.
 SBOLAPIEXPORTS int writeDocument(Document* doc, const char* filename);
 
+/// Create and return contents of XML written for SBOLObjects
+/// currently in memory.
+SBOLAPIEXPORTS char* writeDocumentToString(Document* doc);
+
 #endif
