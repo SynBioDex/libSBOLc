@@ -220,12 +220,16 @@ static void writeCollection(Collection* col) {
 		markProcessed((void *)col);
 		int n;
 		int num;
-		
-		// properties
-		xmlTextWriterWriteAttribute(WRITER, xmlCharStrdup(NSPREFIX_RDF ":" NODENAME_ABOUT),        xmlCharStrdup(getCollectionURI(col)));
-		xmlTextWriterWriteElement(WRITER,   xmlCharStrdup(NSPREFIX_SBOL ":" NODENAME_DISPLAYID),   xmlCharStrdup(getCollectionDisplayID(col)));
-		xmlTextWriterWriteElement(WRITER,   xmlCharStrdup(NSPREFIX_SBOL ":" NODENAME_NAME), xmlCharStrdup(getCollectionName(col)));
-		xmlTextWriterWriteElement(WRITER,   xmlCharStrdup(NSPREFIX_SBOL ":" NODENAME_DESCRIPTION), xmlCharStrdup(getCollectionDescription(col)));
+        
+        // properties
+        if (getCollectionURI(col))
+            xmlTextWriterWriteAttribute(WRITER, xmlCharStrdup(NSPREFIX_RDF ":" NODENAME_ABOUT),        xmlCharStrdup(getCollectionURI(col)));
+        if(getCollectionDisplayID(col))
+            xmlTextWriterWriteElement(WRITER,   xmlCharStrdup(NSPREFIX_SBOL ":" NODENAME_DISPLAYID),   xmlCharStrdup(getCollectionDisplayID(col)));
+        if (getCollectionName(col))
+            xmlTextWriterWriteElement(WRITER,   xmlCharStrdup(NSPREFIX_SBOL ":" NODENAME_NAME), xmlCharStrdup(getCollectionName(col)));
+        if (getCollectionDescription(col))
+            xmlTextWriterWriteElement(WRITER,   xmlCharStrdup(NSPREFIX_SBOL ":" NODENAME_DESCRIPTION), xmlCharStrdup(getCollectionDescription(col)));
 		
 		// components
 		DNAComponent* com;

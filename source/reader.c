@@ -12,6 +12,7 @@
 #include "dnacomponent.h"
 #include "collection.h"
 #include "reader.h"
+#include "sbol.h"
 
 // these are static mainly to avoid passing them around constantly
 static xmlDoc          *DOCUMENT;

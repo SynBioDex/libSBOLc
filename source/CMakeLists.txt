@@ -24,11 +24,17 @@ FILE( GLOB SBOL_SOURCE_FILES
 	${SBOL_SOURCE_DIR}/*.c
 )
 
-# build shared library for release
+# build static library for release
 ADD_LIBRARY( sbol
-	SHARED
+	STATIC 
 	${SBOL_SOURCE_FILES}
 )
+
+# build shared library for release
+#ADD_LIBRARY( sbol
+#	SHARED
+#	${SBOL_SOURCE_FILES}
+#)
 
 # by default, GCC exports everything;
 # this tells it to stick to SBOLAPIEXPORTS functions
@@ -42,4 +48,6 @@ ENDIF()
 TARGET_LINK_LIBRARIES( sbol
 	xml2
 )
+
+
 

@@ -3,6 +3,7 @@
 #include <string.h>
 
 #include "property.h"
+#include "document.h"
 
 /************
  * Property
