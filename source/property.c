@@ -29,10 +29,10 @@ void setNumber(Property *pro, int num) {
 	}
 }
 
-void setLetters(Property *pro, char *str) {
+void setLetters(Property *pro, const char *str) {
 	if (pro) {
 		pro->letters = realloc(pro->letters, sizeof(char) * (strlen(str)+1));
-		pro->letters = str;
+		strcpy(pro->letters, str);
 	}
 }
 
@@ -110,10 +110,7 @@ void setTextProperty(TextProperty* pro, const char* text) {
 		deleteProperty(pro->text);
 		pro->text = createProperty();
 	} else {
-		char *data = (char *) getLetters(pro->text);
-		data = realloc(data, sizeof(char) * strlen(text)+1);
-		strcpy(data, text);
-		setLetters(pro->text, data);
+		setLetters(pro->text, text);
 	}
 }
 

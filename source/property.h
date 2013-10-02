@@ -6,7 +6,7 @@
 /// on the getting and setting of specific values. For
 /// example, you could have the NucleotidesProperty only
 /// accept strings of a, c, t, g, and sometimes n.
-/// 
+///
 /// @todo Make enums for any magic numbers
 /// @todo See if separating docs into user, devel works.
 ///////////////////////////////////////////////////////////
@@ -45,7 +45,7 @@ void setNumber(Property *pro, int num);
 int  getNumber(const Property *pro);
 
 /// Store a string in a Property.
-void  setLetters(Property *pro, char *str);
+void  setLetters(Property *pro, const char *str);
 
 /// Retrieve the string stored in a Property.
 /// @return A new copy of the string that needs to be freed.
@@ -245,7 +245,7 @@ void setTypeProperty(TypeProperty* pro, const char* uri);
 char* getTypeProperty(const TypeProperty* pro);
 
 /// Compare two TypeProperties for uri equality
-/// @return 0 if uri's don't exsit, -1 on failure. 
+/// @return 0 if uri's don't exsit, -1 on failure.
 int compareTypeProperty(const TypeProperty* pro1, const TypeProperty* pro2);
 
 /// Print a TypeProperty to stdout
