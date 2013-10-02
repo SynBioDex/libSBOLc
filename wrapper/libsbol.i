@@ -89,6 +89,7 @@ char* getCollectionURI(const Collection* col);
 char* getCollectionDisplayID(const Collection* col);
 char* getCollectionName(const Collection* col);
 char* getCollectionDescription(const Collection* col);
+char* writeDocumentToString(Document* doc);
 
 // functions returning pointers to existing objects
 DNASequence* getDNASequence(Document* doc, const char* uri);
@@ -127,7 +128,7 @@ int isCollectionURI(Document* doc, const char* uri);
 int getNumCollections(Document* doc);
 int getNumDNAComponentsIn(const Collection* col);
 int dnaComponentInCollection(const DNAComponent* com, const Collection* col);
-int writeDocument(Document* doc, const char* filename);
+int writeDocumentToFile(Document* doc, const char* filename);
 
 // functions returning void
 void setDNASequenceNucleotides(DNASequence* seq, const char* nucleotides);

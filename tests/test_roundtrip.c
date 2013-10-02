@@ -22,7 +22,7 @@ void TestRoundTripValidExamples(CuTest* tc) {
 		TEST_LOADED_FUNCTIONS[n](tc, doc);
 		
 		// write to a file
-		writeDocument(doc, TEST_OUTPUT_FILENAMES[n]);
+		writeDocumentToFile(doc, TEST_OUTPUT_FILENAMES[n]);
 		
 		// read that in again
 		deleteDocument(doc);

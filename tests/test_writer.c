@@ -46,7 +46,7 @@ void CreateValidExamples(CuTest *tc) {
 		printf("creating %s\n", TEST_OUTPUT_FILENAMES[n]);
 		Document* doc = CREATE_FUNCTIONS[n]();
 		TEST_LOADED_FUNCTIONS[n](tc, doc);
-		writeDocument(doc, TEST_OUTPUT_FILENAMES[n]);
+		writeDocumentToFile(doc, TEST_OUTPUT_FILENAMES[n]);
 		deleteDocument(doc);
 
 		doc = createDocument();
