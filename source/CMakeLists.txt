@@ -7,6 +7,8 @@ CONFIGURE_FILE(
 #adjust paths
 SET( SBOL_RELEASE_DIR       ${SBOL_RELEASE_DIR}/library )
 SET( LIBRARY_OUTPUT_PATH    ${SBOL_RELEASE_DIR} )
+SET( LIBXML2_STATICLIB_OUTPUT_PATH	${LIBRARY_OUTPUT_PATH} )
+SET( HEADER_OUTPUT_PATH		${SBOL_RELEASE_DIR}/include )
 
 # find/build libxml
 IF( WIN32 )
@@ -16,18 +18,24 @@ ELSE()
 	FIND_PACKAGE( LibXml2 )
 ENDIF()
 INCLUDE_DIRECTORIES( ${LIBXML2_INCLUDE_DIR} )
+FILE(GLOB LIBXML2_HEADER_FILES ${LIBXML2_INCLUDE_DIR}/*)
 
 # gather source files
-FILE( GLOB SBOL_SOURCE_FILES
-	${SBOL_SOURCE_DIR}/*.h
-	${SBOL_SOURCE_DIR}/*.c
-)
+FILE(GLOB SBOL_HEADER_FILES	${SBOL_SOURCE_DIR}/*.h)
+FILE(GLOB SBOL_SOURCE_FILES	${SBOL_SOURCE_DIR}/*.c)
+
+# copy header files to release/library/include for out-of-source build
+# TODO: remove a couple of Makefiles contaminating the HEADER_OUTPUT_PATH
+FILE(COPY ${LIBXML2_HEADER_FILES} DESTINATION  ${HEADER_OUTPUT_PATH} )
+FILE(COPY ${SBOL_HEADER_FILES} DESTINATION  ${HEADER_OUTPUT_PATH} )
 
 # build static library for release
 ADD_LIBRARY( sbol_static
 	STATIC 
+	${SBOL_HEADER_FILES}
 	${SBOL_SOURCE_FILES}
 )
+set_target_properties(sbol_static PROPERTIES OUTPUT_NAME sbol)
 
 # by default, GCC exports everything;
 # this tells it to stick to SBOLAPIEXPORTS functions
@@ -45,6 +53,7 @@ TARGET_LINK_LIBRARIES( sbol_static
 # build shared library for release
 ADD_LIBRARY( sbol_shared
 	SHARED
+	${SBOL_HEADER_FILES}
 	${SBOL_SOURCE_FILES}
 )
 set_target_properties(sbol_shared PROPERTIES OUTPUT_NAME sbol)
