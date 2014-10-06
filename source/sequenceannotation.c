@@ -127,6 +127,13 @@ void addPrecedesRelationship(SequenceAnnotation * upstream, SequenceAnnotation *
 		insertPointerIntoArray(upstream->precedes, downstream);
 }
 
+void removePrecedesRelationship(SequenceAnnotation* upstream, SequenceAnnotation* downstream) {
+	if (upstream && downstream) {
+		int index = indexOfPointerInArray(upstream->precedes, downstream);
+		removePointerFromArray(upstream->precedes, index);
+	}
+}
+
 SequenceAnnotation* getNthPrecedes(const SequenceAnnotation* ann, int n) {
 	if (ann && getNumPrecedes(ann) >= n)
 		return (SequenceAnnotation*) getNthPointerInArray(ann->precedes, n);

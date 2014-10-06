@@ -61,6 +61,9 @@ SBOLAPIEXPORTS DNAComponent* getSequenceAnnotationSubComponent(const SequenceAnn
 /// @todo how should this handle docs?
 SBOLAPIEXPORTS void addPrecedesRelationship(SequenceAnnotation* upstream, SequenceAnnotation* downstream);
 
+/// Remove the precedes relationship when specifying a new order of SequenceAnnotations
+SBOLAPIEXPORTS void removePrecedesRelationship(SequenceAnnotation* upstream, SequenceAnnotation* downstream);
+
 /// Find out how many other SequenceAnnotations are restricted to coming after this one.
 /// Useful as a loop condition.
 SBOLAPIEXPORTS int getNumPrecedes(const SequenceAnnotation* ann);
