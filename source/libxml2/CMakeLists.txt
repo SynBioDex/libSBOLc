@@ -88,7 +88,11 @@ if (LIBXML2_CONFIG_COMPILER)
 endif (LIBXML2_CONFIG_COMPILER)
 include_directories(${LIBXML2_INCLUDE_DIR})
 # Creates the project
-add_library(${LIBXML2_LIBRARIES} STATIC ${libxml_src})
+if(SBOL_BUILD_STATIC)
+	add_library(${LIBXML2_LIBRARIES} STATIC ${libxml_src})
+else()
+	add_library(${LIBXML2_LIBRARIES} SHARED ${libxml_src})
+endif(SBOL_BUILD_STATIC)
 if (NOT LIBXML2_STATICLIB_OUTPUT_PATH)
         set(LIBXML2_STATICLIB_OUTPUT_PATH "." CACHE STRING
                 "LibXml2 static lib output directory")

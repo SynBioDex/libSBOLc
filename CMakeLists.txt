@@ -15,6 +15,7 @@ SET( EXECUTABLE_OUTPUT_PATH ${SBOL_RELEASE_DIR}         )
 SET( LIBRARY_OUTPUT_PATH    ${SBOL_RELEASE_DIR}         )
 
 # set build options
+OPTION( SBOL_BUILD_STATIC     "Build statically linked library"           FALSE )
 OPTION( SBOL_DEBUG_STATEMENTS "Add some print statements for debugging"   FALSE )
 OPTION( SBOL_BUILD_EXAMPLES   "Build the example programs"                FALSE )
 OPTION( SBOL_BUILD_TESTS      "Build the unit tests and example tests"    FALSE )

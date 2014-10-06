@@ -30,43 +30,43 @@ FILE(COPY ${LIBXML2_HEADER_FILES} DESTINATION  ${HEADER_OUTPUT_PATH} )
 FILE(COPY ${SBOL_HEADER_FILES} DESTINATION  ${HEADER_OUTPUT_PATH} )
 
 # build static library for release
-ADD_LIBRARY( sbol_static
-	STATIC 
-	${SBOL_HEADER_FILES}
-	${SBOL_SOURCE_FILES}
-)
-set_target_properties(sbol_static PROPERTIES OUTPUT_NAME sbol)
+IF( SBOL_BUILD_STATIC )
+	ADD_LIBRARY( sbol
+		STATIC 
+		${SBOL_HEADER_FILES}
+		${SBOL_SOURCE_FILES}
+		)
+	
+	# by default, GCC exports everything;
+	# this tells it to stick to SBOLAPIEXPORTS functions
+	IF(CMAKE_COMPILER_IS_GNUCC)
+		SET_TARGET_PROPERTIES( sbol
+			PROPERTIES COMPILE_FLAGS -fvisibility=hidden
+		)
+	ENDIF()
 
-# by default, GCC exports everything;
-# this tells it to stick to SBOLAPIEXPORTS functions
-IF(CMAKE_COMPILER_IS_GNUCC)
-	SET_TARGET_PROPERTIES( sbol_static
-		PROPERTIES COMPILE_FLAGS -fvisibility=hidden
+	# link against libxml
+	TARGET_LINK_LIBRARIES( sbol
+		xml2
 	)
-ENDIF()
-
-# link against libxml
-TARGET_LINK_LIBRARIES( sbol_static
-	xml2
-)
-
-# build shared library for release
-ADD_LIBRARY( sbol_shared
-	SHARED
-	${SBOL_HEADER_FILES}
-	${SBOL_SOURCE_FILES}
-)
-set_target_properties(sbol_shared PROPERTIES OUTPUT_NAME sbol)
-
-# by default, GCC exports everything;
-# this tells it to stick to SBOLAPIEXPORTS functions
-IF(CMAKE_COMPILER_IS_GNUCC)
-	SET_TARGET_PROPERTIES( sbol_shared
-		PROPERTIES COMPILE_FLAGS -fvisibility=hidden
+ELSE()  	# build shared library for release
+	ADD_LIBRARY( sbol
+		SHARED
+		${SBOL_HEADER_FILES}
+		${SBOL_SOURCE_FILES}
 	)
-ENDIF()
 
-# link against libxml
-TARGET_LINK_LIBRARIES( sbol_shared
-	xml2
-)
+	# by default, GCC exports everything;
+	# this tells it to stick to SBOLAPIEXPORTS functions
+	IF(CMAKE_COMPILER_IS_GNUCC)
+		SET_TARGET_PROPERTIES( sbol
+			PROPERTIES COMPILE_FLAGS -fvisibility=hidden
+		)
+	ENDIF()
+
+	# link against libxml
+	TARGET_LINK_LIBRARIES( sbol
+		xml2 )
+	#target_link_libraries(sbol -Wl,-whole-archive -l${xml2} -l${ws2_32} -Wl,-no-whole-archive  )
+
+ENDIF()
