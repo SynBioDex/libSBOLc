@@ -137,6 +137,7 @@ void setSequenceAnnotationStart(SequenceAnnotation* ann, int start);
 void setSequenceAnnotationEnd(SequenceAnnotation* ann, int end);
 void setSequenceAnnotationStrand(SequenceAnnotation* ann, int polarity);
 void addPrecedesRelationship(SequenceAnnotation* upstream, SequenceAnnotation* downstream);
+void removePrecedesRelationship(SequenceAnnotation* upstream, SequenceAnnotation* downstream);
 void printSequenceAnnotation(const SequenceAnnotation* seq, int tabs);
 void setDNAComponentURI(DNAComponent* com, const char* uri);
 void setDNAComponentDisplayID(DNAComponent* com, const char* id);
