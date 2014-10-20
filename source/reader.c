@@ -241,6 +241,11 @@ static void readSequenceAnnotationReferences(xmlNode *node) {
 static void readDNAComponentContent(xmlNode *node) {
     DNAComponent *com;
     xmlChar *com_uri;
+	xmlChar *path;
+	xmlChar *type_property;
+	xmlNode *type_node;
+	PointerArray *results;
+	int n;
 
     // create DNAComponent
     com_uri = getNodeURI(node);
@@ -251,10 +256,13 @@ static void readDNAComponentContent(xmlNode *node) {
     readSBOLCompoundObject(com->base, node);
     
     // add type
-//    path = BAD_CAST "./" NODENAME_SBOL ":" NODENAME_TYPE;
-//    if (content = getContentsOfNodeMatchingXPath(node, path)) {
-//        setDNAComponentType(com, (char *)content);
-//        xmlFree(content);
+	path = NSPREFIX_RDF ":" NODENAME_TYPE;
+	if (results = getNodesMatchingXPath(node, path)) {
+		type_node = (xmlNode *)getNthPointerInArray(results, 0);
+		type_property = xmlGetNsProp(type_node, BAD_CAST NODENAME_RESOURCE, BAD_CAST NSURL_RDF);
+		setDNAComponentType(com, (char *)type_property);
+		xmlFree(results);
+	}
 }
 
 static void readDNAComponentReferences(xmlNode *node) {
@@ -357,7 +365,8 @@ void readDocument(Document* destination, char* filename) {
 		
 	// create XPath context
 	CONTEXT = xmlXPathNewContext(DOCUMENT);
-	xmlXPathRegisterNs(CONTEXT, "s", NSURL_SBOL);
+	xmlXPathRegisterNs(CONTEXT, NSPREFIX_SBOL, NSURL_SBOL);
+	xmlXPathRegisterNs(CONTEXT, NSPREFIX_RDF, NSURL_RDF);
 
 	#define GLOBAL_XPATH BAD_CAST "//" NSPREFIX_SBOL ":"
 
