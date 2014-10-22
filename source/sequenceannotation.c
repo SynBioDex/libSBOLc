@@ -111,6 +111,14 @@ DNAComponent* getSequenceAnnotationSubComponent(const SequenceAnnotation* ann) {
 		return NULL;
 }
 
+/// @todo where should this go?
+void setSequenceAnnotationSubComponent(SequenceAnnotation* ann, DNAComponent* com) {
+	if (ann) {
+		ann->subComponent = com;
+	}
+}
+
+
 int getSequenceAnnotationStrand(const SequenceAnnotation* ann) {
 	if (ann)
 		return getPolarityProperty(ann->strand);

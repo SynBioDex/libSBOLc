@@ -33,6 +33,18 @@ SBOLAPIEXPORTS Document* createDocument();
 /// SBOL objects contained in the Document.
 SBOLAPIEXPORTS void deleteDocument(Document* doc);
 
+// Delete a Sequence from a Document's array of sequences
+void removeDNASequence(Document* doc, DNASequence* seq);
+
+// Delete an Annotation from a Document's array of annotations
+void removeSequenceAnnotation(Document* doc, SequenceAnnotation* ann);
+
+// Delete a Component from a Document's array of components
+void removeDNAComponent(Document* doc, DNAComponent* com);
+
+// Delete a Collection from a Document's array of collections
+void removeCollection(Document* doc, Collection* col);
+
 /// Find out the total number of SBOL objects in a Document.
 SBOLAPIEXPORTS int getNumSBOLObjects(Document* doc);
 

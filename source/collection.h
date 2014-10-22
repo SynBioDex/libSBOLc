@@ -64,6 +64,9 @@ SBOLAPIEXPORTS void setCollectionDescription(Collection* col, const char* desc);
 /// @todo move to dnacomponent.h?
 SBOLAPIEXPORTS void addDNAComponentToCollection(Collection* col, DNAComponent* com);
 
+/// Delete a Component from a Collection's list of components
+SBOLAPIEXPORTS void removeDNAComponentFromCollection(Collection* col, DNAComponent* com);
+
 /// Find out whether a DNAComponent is inside a Collection.
 /// @todo better name
 /// Gotcha: lowercase dna

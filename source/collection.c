@@ -108,6 +108,13 @@ void addDNAComponentToCollection(Collection* col, DNAComponent* com) {
 	}
 }
 
+void removeDNAComponentFromCollection(Collection* col, DNAComponent* com) {
+	if (col && com) {
+		int index = indexOfPointerInArray(col->components, com);
+		removePointerFromArray(col->components, index);
+	}
+}
+
 int dnaComponentInCollection(const DNAComponent *com, const Collection *col) {
 	if (!com || !col)
 		return 0;
