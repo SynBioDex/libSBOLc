@@ -162,6 +162,13 @@ static void writeDNAComponent(DNAComponent* com) {
 		
 		// properties
 		char* data;
+		
+		data = getDNAComponentType(com);		
+		if (data) {
+			xmlTextWriterStartElement(WRITER, xmlCharStrdup(NSPREFIX_RDF ":" NODENAME_TYPE));
+			xmlTextWriterWriteAttribute(WRITER, xmlCharStrdup(NSPREFIX_RDF ":" NODENAME_RESOURCE), xmlCharStrdup(data));
+			xmlTextWriterEndElement(WRITER);
+		}
 		data = getDNAComponentDisplayID(com);
 		if (data)
 			xmlTextWriterWriteElement(WRITER, xmlCharStrdup(NSPREFIX_SBOL ":" NODENAME_DISPLAYID), xmlCharStrdup(data));
@@ -171,13 +178,6 @@ static void writeDNAComponent(DNAComponent* com) {
 		data = getDNAComponentDescription(com);
 		if (data)
 			xmlTextWriterWriteElement(WRITER, xmlCharStrdup(NSPREFIX_SBOL ":" NODENAME_DESCRIPTION), xmlCharStrdup(data));
-        data = getDNAComponentType(com);
-        if (data) {
-            xmlTextWriterStartElement(WRITER, xmlCharStrdup(NSPREFIX_RDF ":" NODENAME_TYPE));
-            xmlTextWriterWriteAttribute(WRITER, xmlCharStrdup(NSPREFIX_RDF ":" NODENAME_RESOURCE), xmlCharStrdup(data));
-            xmlTextWriterEndElement(WRITER);
-        }
-        
         
 		// sequence
 		if (com->dnaSequence) {
