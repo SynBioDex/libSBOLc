@@ -27,6 +27,9 @@ SBOLAPIEXPORTS DNAComponent* createDNAComponent(Document* doc, const char* uri);
 /// it references.
 SBOLAPIEXPORTS void deleteDNAComponent(DNAComponent* com);
 
+/// Clone a DNAComponent object
+SBOLAPIEXPORTS DNAComponent* copyDNAComponent(const DNAComponent* com, const char* id_modifier);
+
 /// Get the number of SequenceAnnotations for a DNAComponent.
 SBOLAPIEXPORTS int getNumSequenceAnnotationsFor(const DNAComponent* com);
 

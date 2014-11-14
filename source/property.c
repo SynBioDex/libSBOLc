@@ -155,6 +155,13 @@ char* getURIProperty(const URIProperty* pro) {
 		return NULL;
 }
 
+char* augmentURI(char* uri, char* identifier) {
+	char* augmented_uri;
+	augmented_uri = malloc(strlen(uri) + strlen(identifier) + 2);
+	sprintf(augmented_uri, "%s%s\0", uri, identifier); // append identifier to URI
+	return augmented_uri;
+}
+
 int compareURIProperty(const URIProperty* pro1,
 					   const URIProperty* pro2) {
 	if ((!pro1 && !pro2) || (!pro1->uri && !pro2->uri))

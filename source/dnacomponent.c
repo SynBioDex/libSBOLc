@@ -47,6 +47,32 @@ void deleteDNAComponent(DNAComponent* com) {
 	}
 }
 
+/// Clone a DNAComponent object
+/// TODO:  What rule for the URI of the copy?
+DNAComponent* copyDNAComponent(const DNAComponent* com, const char* id_modifier) {
+	int i;
+	if (com) {
+		//DNAComponent* copy = createDNAComponent(com->doc, uri);
+		char* copy_uri = augmentURI(getDNAComponentURI(com), id_modifier);
+		DNAComponent* copy = createDNAComponent(com->doc, copy_uri);
+		//setSBOLCompoundObjectDisplayID(copy->base, getSBOLCompoundObjectDisplayID(com->base));
+		//setSBOLCompoundObjectName(copy->base, getSBOLCompoundObjectName(com->base));
+		//setSBOLCompoundObjectDescription(copy->base, getSBOLCompoundObjectDescription(com->base));
+		setDNAComponentDisplayID(copy, getDNAComponentDisplayID(com));
+		setDNAComponentName(copy, getDNAComponentName(com));
+		setDNAComponentDescription(copy, getDNAComponentDescription(com));
+		setDNAComponentType(copy, getDNAComponentType(com));
+		//if (com->sequence) {
+		setDNAComponentSequence(copy, getDNAComponentSequence(com));
+		//}
+		//for (i = 0; i < getNumSequenceAnnotationsFor(com); i++) {	
+			//addSequenceAnnotation(copy,)
+		//}
+		
+		return copy;
+	}
+}
+
 void printDNAComponent(const DNAComponent* com, int tabs) {
 	if (!com)
 		return;
