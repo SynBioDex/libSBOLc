@@ -69,6 +69,10 @@ DNASequence* createDNASequence(Document* doc, const char* uri);
 DNAComponent* createDNAComponent(Document* doc, const char* uri);
 Collection* createCollection(Document* doc, const char* uri);
 SequenceAnnotation* createSequenceAnnotation(Document* doc, const char* uri);
+DNAComponent* copyDNAComponent(DNAComponent* com, char* id_modifier);
+DNASequence* copyDNASequence(DNASequence* seq, char* id_modifier);
+SequenceAnnotation* copySequenceAnnotation(SequenceAnnotation* ann, char* id_modifier);
+
 
 // functions that delete objects
 void deleteDocument(Document* doc);

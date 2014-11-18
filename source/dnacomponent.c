@@ -49,7 +49,7 @@ void deleteDNAComponent(DNAComponent* com) {
 
 /// Clone a DNAComponent object
 /// TODO:  What rule for the URI of the copy?
-DNAComponent* copyDNAComponent(const DNAComponent* com, const char* id_modifier) {
+DNAComponent* copyDNAComponent(const DNAComponent* com, char* id_modifier) {
 	int i;
 	if (com) {
 		//DNAComponent* copy = createDNAComponent(com->doc, uri);
@@ -62,14 +62,12 @@ DNAComponent* copyDNAComponent(const DNAComponent* com, const char* id_modifier)
 		setDNAComponentName(copy, getDNAComponentName(com));
 		setDNAComponentDescription(copy, getDNAComponentDescription(com));
 		setDNAComponentType(copy, getDNAComponentType(com));
-		//if (com->sequence) {
-		setDNAComponentSequence(copy, getDNAComponentSequence(com));
-		//}
-		//for (i = 0; i < getNumSequenceAnnotationsFor(com); i++) {	
-			//addSequenceAnnotation(copy,)
-		//}
+		setDNAComponentSequence(copy, copyDNASequence(com->dnaSequence, id_modifier));
+		for (i = 0; i < getNumSequenceAnnotationsFor(com); i++) {	
+			addSequenceAnnotation(copy, copySequenceAnnotation(getNthSequenceAnnotationFor(com, i), id_modifier));
+		}
 		
-		return copy;
+		return (DNAComponent *)copy;
 	}
 }
 
@@ -101,7 +99,7 @@ void printDNAComponent(const DNAComponent* com, int tabs) {
 
 char* getDNAComponentURI(const DNAComponent* com) {
 	if (com)
-		return getSBOLCompoundObjectURI(com->base);
+		return (char *)getSBOLCompoundObjectURI(com->base);
 	else
 		return NULL;
 }

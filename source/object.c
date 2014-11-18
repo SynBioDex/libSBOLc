@@ -35,7 +35,7 @@ void setSBOLObjectURI(SBOLObject* obj, const char* uri) {
 
 char* getSBOLObjectURI(const SBOLObject* obj) {
 	if (obj)
-		return getURIProperty(obj->uri);
+		return (char *)getURIProperty(obj->uri);
 	else
 		return NULL;
 }
@@ -85,7 +85,7 @@ void setSBOLCompoundObjectURI(SBOLCompoundObject* obj, const char* uri) {
 
 char* getSBOLCompoundObjectURI(const SBOLCompoundObject* obj) {
 	if (obj)
-		return getSBOLObjectURI(obj->base);
+		return (char *)getSBOLObjectURI(obj->base);
 	else
 		return NULL;
 }

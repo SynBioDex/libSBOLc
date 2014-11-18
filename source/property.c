@@ -150,7 +150,7 @@ void setURIProperty(URIProperty* pro, const char* uri) {
 
 char* getURIProperty(const URIProperty* pro) {
 	if (pro)
-		return getTextProperty(pro->uri);
+		return (char *)getTextProperty(pro->uri);
 	else
 		return NULL;
 }
@@ -159,7 +159,7 @@ char* augmentURI(char* uri, char* identifier) {
 	char* augmented_uri;
 	augmented_uri = malloc(strlen(uri) + strlen(identifier) + 2);
 	sprintf(augmented_uri, "%s%s\0", uri, identifier); // append identifier to URI
-	return augmented_uri;
+	return (char *)augmented_uri;
 }
 
 int compareURIProperty(const URIProperty* pro1,

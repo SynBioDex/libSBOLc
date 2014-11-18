@@ -32,6 +32,9 @@ SBOLAPIEXPORTS char* getSequenceAnnotationURI(const SequenceAnnotation* ann);
 /// This doesn't delete any of the other structs it references.
 SBOLAPIEXPORTS void deleteSequenceAnnotation(SequenceAnnotation* ann);
 
+/// Clone a SequenceAnnotation object
+SBOLAPIEXPORTS SequenceAnnotation* copySequenceAnnotation(SequenceAnnotation* ann, char* id_modifier);
+
 /// Find out where on the annotated DNAComponent this feature starts.
 SBOLAPIEXPORTS int getSequenceAnnotationStart(const SequenceAnnotation* ann);
 

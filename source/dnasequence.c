@@ -20,6 +20,16 @@ DNASequence* createDNASequence(Document* doc, const char* uri) {
 	return seq;
 }
 
+/// Clone a DNASequence object
+DNASequence* copyDNASequence(const DNASequence* seq, char* id_modifier) {
+	if (seq) {
+		char* copy_uri = augmentURI(getDNASequenceURI(seq), id_modifier);
+		DNASequence* copy = createDNASequence(seq->doc, copy_uri);
+		setDNASequenceNucleotides(copy, getDNASequenceNucleotides(seq));
+		return (DNASequence *)copy;
+	}
+}
+
 static void setDNASequenceURI(DNASequence* seq, const char* uri) {
 	if (seq)
 		setSBOLObjectURI(seq->base, uri);

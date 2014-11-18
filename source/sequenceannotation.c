@@ -46,6 +46,30 @@ void deleteSequenceAnnotation(SequenceAnnotation* ann) {
 	}
 }
 
+SequenceAnnotation* copySequenceAnnotation(SequenceAnnotation* ann, char* id_modifier) {
+	int i;
+	char* copy_uri = augmentURI(getSequenceAnnotationURI(ann), id_modifier);
+	SequenceAnnotation* copy = createSequenceAnnotation(ann->doc, copy_uri);
+	setSequenceAnnotationStart(copy, getSequenceAnnotationStart(ann));
+	setSequenceAnnotationEnd(copy, getSequenceAnnotationEnd(ann));
+	setSequenceAnnotationStrand(copy, getSequenceAnnotationStrand(ann));
+	//ann->precedes = createPointerArray();
+
+	// Copy precedes property
+	copy->precedes = createPointerArray();
+	for (i = 0; i < getNumPointersInArray(ann->precedes); i++) {
+		insertPointerIntoArray(copy->precedes, getNthPointerInArray(ann->precedes, i));
+	}
+
+	// Copy SubComponent tree recursively
+	if (ann->subComponent) {
+		char* sub_com_uri = augmentURI(getDNAComponentURI(ann->subComponent), id_modifier);
+		DNAComponent* sub_com_copy = createDNAComponent(ann->doc, sub_com_uri);
+		setSequenceAnnotationSubComponent(copy, sub_com_copy);
+	}
+	return (SequenceAnnotation *)copy;
+}
+
 void setSequenceAnnotationURI(SequenceAnnotation* ann, const char* uri) {
     if (ann)
         setSBOLObjectURI(ann->base, uri);
@@ -85,7 +109,7 @@ int getNumPrecedes(const SequenceAnnotation* ann) {
 
 char* getSequenceAnnotationURI(const SequenceAnnotation* ann) {
     if (ann)
-        return getSBOLObjectURI(ann->base);
+        return (char *)getSBOLObjectURI(ann->base);
 	else
 		return NULL;
 }

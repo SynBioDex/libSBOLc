@@ -27,6 +27,9 @@ SBOLAPIEXPORTS DNASequence* createDNASequence(Document* doc, const char* uri);
 /// no other freeing should be needed
 SBOLAPIEXPORTS void deleteDNASequence(DNASequence* seq);
 
+/// Clone a DNASequence object
+SBOLAPIEXPORTS DNASequence* copyDNASequence(const DNASequence* seq, char* id_modifier);
+
 /// Get a copy of the nucleotides contained in this DNASequence.
 /// @return A string that needs to be freed.
 /// @todo rename to getDNASequenceNucleotides?
