@@ -11,6 +11,16 @@
 #include "prototypes.h"
 
 /// Implements the SBOL Core SequenceAnnotation object.
+/// @defgroup SA Sequence Annotation
+/// @{
+/// @struct _SequenceAnnotation
+/// @var _SequenceAnnotation::doc
+/// @var _SequenceAnnotation::base
+/// @var _SequenceAnnotation::genbankStart
+/// @var _SequenceAnnotation::genbankEnd
+/// @var _SequenceAnnotation::strand
+/// @var _SequenceAnnotation::subComponent
+/// @var _SequenceAnnotation::precedes
 struct _SequenceAnnotation {
 	Document* doc;                  ///< parent Document
 	SBOLObject* base;               ///< uri, displayID, name, description
@@ -20,6 +30,9 @@ struct _SequenceAnnotation {
 	DNAComponent* subComponent;     ///< DNAComponent corresponding to the annotated feature
 	PointerArray* precedes;         ///< array of other SequenceAnnotations that must come after this one
 };
+
+/// @name API
+/// @{
 
 /// Create an empty SequenceAnnotation.
 SBOLAPIEXPORTS SequenceAnnotation* createSequenceAnnotation(Document* doc, const char* uri);
@@ -95,5 +108,8 @@ SBOLAPIEXPORTS int precedes(const SequenceAnnotation* upstream, const SequenceAn
 /// Print an outline of a SequenceAnnotation to stdout.
 /// Mainly for debugging.
 SBOLAPIEXPORTS void printSequenceAnnotation(const SequenceAnnotation* seq, int tabs);
+
+/// @}
+/// @}
 
 #endif

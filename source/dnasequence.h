@@ -13,11 +13,19 @@
 #define NUCLEOTIDES_TO_PRINT "50" ///< Cutoff for how much of a long sequence to print.
 
 /// Implements the SBOL Core DNASequence object.
+/// @defgroup Seq DNA Sequence
+/// @{
+/// @struct _DNASequence
+/// @var _DNASequence::doc
+/// @var _DNASequence::base
+/// @var _DNASequence::nucleotides
 struct _DNASequence {
 	Document* doc;                    ///< parent Document
 	SBOLObject* base;                 ///< uri
 	NucleotidesProperty* nucleotides; ///< sequence
 };
+/// @name API
+/// @{
 
 /// Create an empty DNASequence.
 SBOLAPIEXPORTS DNASequence* createDNASequence(Document* doc, const char* uri);
@@ -47,5 +55,8 @@ SBOLAPIEXPORTS char* getDNASequenceURI(const DNASequence* seq);
 /// Print a DNASequence to stdout.
 /// Mainly for debugging.
 SBOLAPIEXPORTS void printDNASequence(const DNASequence* seq, int tabs);
+
+/// @}
+/// @}
 
 #endif

@@ -4,13 +4,24 @@
 /// as functions for operating on it.
 ///////////////////////////////////////////////////////////
 
+
+
 #ifndef SBOL_DNACOMPONENT_HEADER
 #define SBOL_DNACOMPONENT_HEADER
 
 #include "constants.h"
 #include "prototypes.h"
 
+
 /// Implements the SBOL Core DNAComponent object.
+/// @defgroup DC DNA Component
+/// @{
+/// @struct _DNAComponent
+/// @var _DNAComponent::doc
+/// @var _DNAComponent::base
+/// @var _DNAComponent::dnaSequence
+/// @var _DNAComponent::annotations
+/// @var _DNAComponent::type
 struct _DNAComponent {
 	Document* doc;             ///< parent Document
 	SBOLCompoundObject* base;  ///< uri, displayID, name, description
@@ -18,6 +29,8 @@ struct _DNAComponent {
 	PointerArray* annotations; ///< array of SequenceAnnotations
     TypeProperty* type;        ///< type
 };
+/// @name API
+/// @{
 
 /// Create an empty DNAComponent.
 SBOLAPIEXPORTS DNAComponent* createDNAComponent(Document* doc, const char* uri);
@@ -94,5 +107,8 @@ SBOLAPIEXPORTS void addSequenceAnnotation(DNAComponent* com, SequenceAnnotation*
 
 /// Print an outline of a DNAComponent to stdout.
 SBOLAPIEXPORTS void printDNAComponent(const DNAComponent* com, int tabs);
+
+/// @}
+/// @}
 
 #endif

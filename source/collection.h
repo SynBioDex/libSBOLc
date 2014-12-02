@@ -11,11 +11,20 @@
 #include "prototypes.h"
 
 /// Implements the SBOL Core Collection object.
+/// @defgroup Col Collection
+/// @{
+/// @struct _Collection
+/// @var _Collection::doc
+/// @var _Collection::base
+/// @var _Collection::components
+///
 struct _Collection {
 	Document* doc;             ///< parent Document
 	SBOLCompoundObject* base;  ///< uri, displayID, name, description
 	PointerArray* components;  ///< array of DNAComponents
 };
+/// @name API
+/// @{
 
 /// Create an empty Collection.
 SBOLAPIEXPORTS Collection* createCollection(Document* doc, const char* uri);
@@ -75,4 +84,6 @@ SBOLAPIEXPORTS int dnaComponentInCollection(const DNAComponent* com, const Colle
 /// Print an outline of a Collection to stdout.
 SBOLAPIEXPORTS void printCollection(const Collection* col, int tabs);
 
+/// @}
+/// @}
 #endif
