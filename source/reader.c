@@ -12,6 +12,8 @@
 #include "dnacomponent.h"
 #include "collection.h"
 #include "reader.h"
+#include "object.h"
+
 #include "sbol.h"
 
 // these are static mainly to avoid passing them around constantly
@@ -244,6 +246,9 @@ static void readDNAComponentContent(xmlNode *node) {
 	xmlChar *path;
 	xmlChar *type_property;
 	xmlNode *type_node;
+	xmlNode *child_node;
+	xmlNode *test_node;
+	//xmlOutputBufferPtr buffer;
 	PointerArray *results;
 	int n;
 
@@ -263,6 +268,41 @@ static void readDNAComponentContent(xmlNode *node) {
 		setDNAComponentType(com, (char *)type_property);
 		xmlFree(results);
 	}
+
+	//printf("%s\n", (char *)node->name);
+	child_node = node->children;
+	while (child_node) {
+		//if ((char *)result->name == "text") {
+		//	printf("Node content:%s\n", (char *)xmlNodeGetContent(result));
+		//if (result->type == XML_TEXT_NODE) {
+		//printf("Node content:%s\n", (char *)xmlNodeGetContent(result));
+		//printf("Node content:%s\n", (char *)result->content);
+		//}
+		//printf("Node content:%s\n", (char *)xmlNodeGetContent(result));
+		//printf("%s\n", (char *)child_node->name);
+		if (child_node->ns &&
+			strcmp((char*)child_node->ns->href, NSURL_RDF) != 0 &&
+			strcmp((char*)child_node->ns->href, NSURL_RDFS) != 0 &&
+			strcmp((char*)child_node->ns->href, NSURL_SO) != 0 &&
+			strcmp((char*)child_node->ns->href, NSURL_SBOL) != 0) {
+			printf("%s:\t%s\n", child_node->ns->prefix, child_node->ns->href);
+			xmlBufferPtr buffer = xmlBufferCreate();
+			xmlKeepBlanksDefault(0);
+			int size = xmlNodeDump(buffer, DOCUMENT, child_node, 0, 0);
+			printf("%s\n", buffer->content);
+			//xmlNodeDumpOutput(buffer, DOCUMENT, child_node, 0, 1, "UTF-8");
+			//xmlChar *s;
+			//int size;
+
+			//xmlDocDumpMemory((xmlDocPtr)child_node, &s, &size);
+
+			//printf("%s\n", (char *)s);
+			//xmlFree(s);
+		}
+	child_node = child_node->next;
+	}
+	xmlFree(test_node);
+	//xmlFree(child_node);
 }
 
 static void readDNAComponentReferences(xmlNode *node) {
@@ -369,6 +409,36 @@ void readDocument(Document* destination, char* filename) {
 	xmlXPathRegisterNs(CONTEXT, NSPREFIX_RDF, NSURL_RDF);
 
 	#define GLOBAL_XPATH BAD_CAST "//" NSPREFIX_SBOL ":"
+
+	//xmlNode *result;
+	//xmlAttr *attr;
+	//xmlNs *ns;
+	//namespaces = getContentsOfNodeMatchingXPath(NULL, BAD_CAST "//" NSPREFIX_RDF ":" NODENAME_RDF);
+	//result = getSingleNodeMatchingXPath(NULL, BAD_CAST "//" NSPREFIX_RDF ":" NODENAME_RDF);
+	//ns = result->nsDef;
+	//while (ns)
+	//{
+	//	printf("%s:\t%s\n", ns->prefix, ns->href);
+	//	ns = ns->next;
+	//}
+
+	//result = getSingleNodeMatchingXPath(NULL, GLOBAL_XPATH NODENAME_DNACOMPONENT);
+	//printf("%s\n", (char *)result->name);
+	//result = result->children;
+	//while (result){
+		//printf("%s\n", (char *)result->name);
+		//if ((char *)result->name == "text") {
+		//	printf("Node content:%s\n", (char *)xmlNodeGetContent(result));
+		//if (result->type == XML_TEXT_NODE) {
+			//printf("Node content:%s\n", (char *)xmlNodeGetContent(result));
+			//printf("Node content:%s\n", (char *)result->content);
+		//}
+		//printf("Node content:%s\n", (char *)xmlNodeGetContent(result));
+		//if (result->ns) {
+			//printf("%s:\t%s\n", result->ns->prefix, result->ns->href);
+		//}
+		//result = result->next;
+	//}
 
 	// create all the SBOLObjects
 	processNodes(readDNASequenceContent,        GLOBAL_XPATH NODENAME_DNASEQUENCE);

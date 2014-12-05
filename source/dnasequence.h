@@ -24,7 +24,7 @@ struct _DNASequence {
 	SBOLObject* base;                 ///< uri
 	NucleotidesProperty* nucleotides; ///< sequence
 };
-/// @name API
+/// @name Methods
 /// @{
 
 /// Create an empty DNASequence.

@@ -4,8 +4,8 @@
   <navindex>
     <tab type="mainpage" visible="yes" title="Introduction"/>
     <tab type="pages" visible="no" title="" intro=""/>
-	<tab type="user" url="@ref developers_page" title="Development"/>
-	<tab type="user" url="@ref custom_class_page" title="Core Data Model"/>
+	<tab type="user" url="@ref developers_page" title="Code Overview"/>
+	<tab type="user" url="@ref custom_class_page" title="Classes and API"/>
     <tab type="modules" visible="no" title="" intro=""/>
     <tab type="namespaces" visible="yes" title="">
       <tab type="namespacelist" visible="yes" title="" intro=""/>

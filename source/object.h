@@ -19,9 +19,19 @@
 /// SequenceAnnotation, DNAComponent, and Collection.
 /// This is where to put anything that needs to be 
 /// accessible from each of the four main structs.
+/// @defgroup SBOLObject SBOLObject
+/// @{
+/// @struct _SBOLObject
+/// @var _SBOLObject::uri
+/// @var _SBOLObject::xml_annotations
+
 struct _SBOLObject {
 	URIProperty* uri; ///< Unique string for identification.
+	PointerArray* xml_annotations; ///< Array of optional non-SBOL annotations
 };
+
+/// @name Methods
+/// @{
 
 /// Create an empty SBOLObject.
 /// @return A pointer to the new SBOLObject.
@@ -44,6 +54,9 @@ void setSBOLObjectURI(SBOLObject* obj, const char* uri);
 /// This shouldn't be called directly.
 char* getSBOLObjectURI(const SBOLObject* obj);
 
+/// @}
+/// @}
+
 /**********************
  * SBOLCompoundObject
  **********************/
@@ -51,12 +64,23 @@ char* getSBOLObjectURI(const SBOLObject* obj);
 /// SBOLObject that also includes a name,
 /// displayID, and description.
 /// Used a base struct for DNAComponent and Collection.
+/// @defgroup SBOLCompoundObject SBOLCompoundObject
+/// @{
+/// @struct _SBOLCompoundObject
+/// @var _SBOLCompoundObject::base
+/// @var _SBOLCompoundObject::displayID
+/// @var _SBOLCompoundObject::name
+/// @var _SBOLCompoundObject::description
+
 struct _SBOLCompoundObject {
 	SBOLObject*   base;        ///< uri
 	TextProperty* displayID;   ///< Like the uri but for display purposes. Not necessarily unique.
 	TextProperty* name;        ///< Like the uri but human-readable. Not necessarily unique.
 	TextProperty* description; ///< Some text describing the object.
 };
+
+/// @name Methods
+/// @{
 
 /// Create an empty SBOLCompoundObject.
 /// @return A pointer to the new SBOLCompoundObject.
@@ -100,5 +124,8 @@ void setSBOLCompoundObjectDescription(SBOLCompoundObject* obj, const char* descr
 /// Get the description of an SBOLCompoundObject.
 /// This shouldn't be called directly.
 char* getSBOLCompoundObjectDescription(const SBOLCompoundObject* obj);
+
+/// @}
+/// @}
 
 #endif

@@ -31,7 +31,7 @@ struct _SequenceAnnotation {
 	PointerArray* precedes;         ///< array of other SequenceAnnotations that must come after this one
 };
 
-/// @name API
+/// @name Methods
 /// @{
 
 /// Create an empty SequenceAnnotation.

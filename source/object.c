@@ -13,6 +13,7 @@ SBOLObject* createSBOLObject(Document* doc, const char* uri) {
 		return NULL;
 	SBOLObject* obj = malloc(sizeof(SBOLObject));
 	obj->uri = createURIProperty(doc);
+	obj->xml_annotations = createPointerArray();
 	setSBOLObjectURI(obj, uri);
 	return obj;
 }
@@ -22,6 +23,10 @@ void deleteSBOLObject(SBOLObject* obj) {
 		if (obj->uri) {
 			deleteURIProperty(obj->uri);
 			obj->uri = NULL;
+		}
+		if (obj->xml_annotations) {
+			/// @todo free xmlNodes contained in PointerArray
+			deletePointerArray(obj->xml_annotations);
 		}
 		//free(obj); /// @todo what's wrong with this?
 		obj = NULL;

@@ -23,7 +23,7 @@ struct _Collection {
 	SBOLCompoundObject* base;  ///< uri, displayID, name, description
 	PointerArray* components;  ///< array of DNAComponents
 };
-/// @name API
+/// @name Methods
 /// @{
 
 /// Create an empty Collection.

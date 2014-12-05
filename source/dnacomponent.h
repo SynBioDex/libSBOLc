@@ -29,7 +29,7 @@ struct _DNAComponent {
 	PointerArray* annotations; ///< array of SequenceAnnotations
     TypeProperty* type;        ///< type
 };
-/// @name API
+/// @name Methods
 /// @{
 
 /// Create an empty DNAComponent.

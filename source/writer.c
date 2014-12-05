@@ -7,6 +7,8 @@
 #include "writer.h"
 #include "utilities.h"
 #include "array.h"
+#include "object.h"
+
 #include "sbol.h"
 
 static int            INDENT;
@@ -205,6 +207,19 @@ static void writeDNAComponent(DNAComponent* com) {
 				indentLess();
 			}
 		}
+		
+		//xmlNode *node;
+		//printf("%s\n", getDNAComponentURI(com));
+		////printf("%d\n", getNumPointersInArray(com->base->base->xml_annotations));
+		//for (n = 0; n < getNumPointersInArray(com->base->base->xml_annotations); n++) {
+		//	node = (xmlNode *)getNthPointerInArray(com->base->base->xml_annotations, n);
+		//	printf("Node %d name:%s\n", n, (char *)node->name);
+		//	//xmlTextWriterWriteElementNS(WRITER, (char *)node->ns->prefix, 
+		//	//	                                (char *)node->name, 
+		//	//									(char *)node->ns->href, 
+		//	//									(char *)node->content);
+		//}
+		//xmlFree(node);
 		indentLess();
 		
 	} else

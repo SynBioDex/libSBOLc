@@ -19,13 +19,22 @@
 /// Each SBOL object must be associated with a document, for two main reasons:
 /// to ensure that its URI is unique, and to make memory management simpler.
 /// @todo Objects should be able to belong to multiple documents
+/// @defgroup Doc Document
+/// @{
+/// @struct _Document
+/// @var _Document::sequences
+/// @var _Document::annotations
+/// @var _Document::components
+/// @var _Document::collections
+
 struct _Document{
     PointerArray* sequences;   ///< All the DNASequences in the Document.
     PointerArray* annotations; ///< All the SequenceAnnotations in the Document.
     PointerArray* components;  ///< All the DNAComponents in the Document.
     PointerArray* collections; ///< All the Collections in the Document.
 };
-
+/// @name Methods
+/// @{
 /// Create an empty Document.
 SBOLAPIEXPORTS Document* createDocument();
 
@@ -127,4 +136,6 @@ SBOLAPIEXPORTS Collection* getNthCollection(Document* doc, int n);
 /// Mainly for debugging.
 SBOLAPIEXPORTS void printDocument(Document* doc);
 
+/// @}
+/// @}
 #endif

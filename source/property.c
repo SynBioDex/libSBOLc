@@ -123,6 +123,9 @@ void printTextProperty(const TextProperty* pro) {
  * URIProperty
  ***************/
 
+int ENFORCE_URI_RULES = 0;
+
+
 URIProperty* createURIProperty(Document* doc) {
 	if (!doc)
 		return NULL;
@@ -162,6 +165,21 @@ char* augmentURI(char* uri, char* identifier) {
 	return (char *)augmented_uri;
 }
 
+char* trimURI(char* uri, char delimiter) {
+	char* trimmed_uri;
+	char current_char;
+	int i;
+	for (i = strlen(uri); i > -1; i--) {
+		current_char = uri[i];
+		if (current_char == delimiter) {
+			trimmed_uri = malloc(i + 1);
+			strncpy(trimmed_uri, uri, i);
+			trimmed_uri[i + 1] = '\0';
+		}
+	}
+	return trimmed_uri;
+}
+
 int compareURIProperty(const URIProperty* pro1,
 					   const URIProperty* pro2) {
 	if ((!pro1 && !pro2) || (!pro1->uri && !pro2->uri))
@@ -169,6 +187,14 @@ int compareURIProperty(const URIProperty* pro1,
 	else if (!pro1 || !pro2 || !pro1->uri || !pro2->uri)
 		return -1;
 	return compareTextProperty(pro1->uri, pro2->uri);
+}
+
+void activateURIRules() {
+	ENFORCE_URI_RULES = 1;
+}
+
+void disableURIRules() {
+	ENFORCE_URI_RULES = 0;
 }
 
 void printURIProperty(const URIProperty* pro) {

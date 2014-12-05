@@ -89,6 +89,9 @@ void printTextProperty(const TextProperty* pro);
  * URIProperty
  ***************/
 
+/// global flag used to determine if new URIs should be minted according to an automatic naming convention
+extern int ENFORCE_URI_RULES;
+
 /// A TextProperty that only allows creation
 /// of values that aren't already in use as the
 /// uri of an SBOLObject.
@@ -113,13 +116,25 @@ void setURIProperty(URIProperty* pro, const char* uri);
 /// @return A new copy of the string that needs to be freed.
 char* getURIProperty(const URIProperty* pro);
 
+/// Append a string to the given uri.
+/// @return A new string with the modified uri.
+char* augmentURI(char* uri, char* identifier);
+
+char* trimURI(char* uri, char delimiter);
+
 /// Compare two URIProperties for string equality.
 /// @return -1 on failure. Otherwise, the result of strcmp()ing their contents.
 /// @todo Check that that's true.
 int compareURIProperty(const URIProperty* pro1, const URIProperty* pro2);
 
+void activateURIRules();
+
+void disableURIRules();
+
 /// Print a URIProperty to stdout.
 void printURIProperty(const URIProperty* pro);
+
+
 
 /***********************
  * NucleotidesProperty
