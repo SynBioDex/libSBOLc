@@ -30,7 +30,7 @@ DNASequence* copyDNASequence(const DNASequence* seq, char* id_modifier) {
 	}
 }
 
-static void setDNASequenceURI(DNASequence* seq, const char* uri) {
+void setDNASequenceURI(DNASequence* seq, const char* uri) {
 	if (seq)
 		setSBOLObjectURI(seq->base, uri);
 }

@@ -52,6 +52,9 @@ SBOLAPIEXPORTS void setDNASequenceNucleotides(DNASequence* seq, const char* nucl
 /// Returns NULL on failure.
 SBOLAPIEXPORTS char* getDNASequenceURI(const DNASequence* seq);
 
+/// Set the URI of a DNASequence.
+SBOLAPIEXPORTS void setDNASequenceURI(DNASequence* seq, const char* uri);
+
 /// Print a DNASequence to stdout.
 /// Mainly for debugging.
 SBOLAPIEXPORTS void printDNASequence(const DNASequence* seq, int tabs);

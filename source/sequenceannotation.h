@@ -54,6 +54,9 @@ SBOLAPIEXPORTS int getSequenceAnnotationStart(const SequenceAnnotation* ann);
 /// Find out where on the annotated DNAComponent this feature ends.
 SBOLAPIEXPORTS int getSequenceAnnotationEnd(const SequenceAnnotation* ann);
 
+/// Set the uri of a SequenceAnnotation.
+SBOLAPIEXPORTS void setSequenceAnnotationURI(SequenceAnnotation* ann, const char* uri);
+
 /// Set where on the annotated DNAComponent this feature starts.
 SBOLAPIEXPORTS void setSequenceAnnotationStart(SequenceAnnotation* ann, int start);
 
