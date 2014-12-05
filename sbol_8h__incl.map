@@ -1,11 +1,11 @@
-<map id="G" name="G">
-<area shape="rect" id="node3" href="$document_8h.html" title="Defines the Document struct, as well as functions for operating on it." alt="" coords="5,83,104,112"/>
-<area shape="rect" id="node7" href="$dnasequence_8h.html" title="Defines the DNASequence struct, as well as functions for operating on it." alt="" coords="128,83,248,112"/>
-<area shape="rect" id="node10" href="$sequenceannotation_8h.html" title="This file contains the SequenceAnnotation struct, as well as functions for operating on it..." alt="" coords="272,83,437,112"/>
-<area shape="rect" id="node13" href="$dnacomponent_8h.html" title="Contains the DNAComponent struct, as well as functions for operating on it." alt="" coords="461,83,592,112"/>
-<area shape="rect" id="node16" href="$collection_8h.html" title="Defines the Collection struct, as well as functions for operating on it." alt="" coords="616,83,709,112"/>
-<area shape="rect" id="node19" href="$validator_8h.html" title="This file defines the isValidSBOL function, which is used to verify SBOL documents before parsing..." alt="" coords="824,83,912,112"/>
-<area shape="rect" id="node24" href="$reader_8h.html" title="Contains functions for importing SBOL objects from an XML file." alt="" coords="936,83,1011,112"/>
-<area shape="rect" id="node31" href="$writer_8h.html" title="This file contains functions for writing the SBOL core to an XML file." alt="" coords="733,83,800,112"/>
-<area shape="rect" id="node5" href="$prototypes_8h.html" title="Declares all the major structs, unions, and enums so the compiler will recognize them when reading th..." alt="" coords="544,160,645,189"/>
+<map id="C:/Users/user/Dev/libSBOLc_v1/libSBOLc/source/sbol.h" name="C:/Users/user/Dev/libSBOLc_v1/libSBOLc/source/sbol.h">
+<area shape="rect" id="node2" href="$document_8h.html" title="Defines the Document struct, as well as functions for operating on it. " alt="" coords="5,95,95,121"/>
+<area shape="rect" id="node4" href="$dnasequence_8h.html" title="Defines the DNASequence struct, as well as functions for operating on it. " alt="" coords="119,95,227,121"/>
+<area shape="rect" id="node5" href="$sequenceannotation_8h.html" title="This file contains the SequenceAnnotation struct, as well as functions for operating on it..." alt="" coords="251,95,398,121"/>
+<area shape="rect" id="node6" href="$dnacomponent_8h.html" title="Contains the DNAComponent struct, as well as functions for operating on it. " alt="" coords="422,95,539,121"/>
+<area shape="rect" id="node7" href="$collection_8h.html" title="Defines the Collection struct, as well as functions for operating on it. " alt="" coords="564,95,651,121"/>
+<area shape="rect" id="node8" href="$validator_8h.html" title="This file defines the isValidSBOL function, which is used to verify SBOL documents before parsing..." alt="" coords="766,95,849,121"/>
+<area shape="rect" id="node10" href="$reader_8h.html" title="Contains functions for importing SBOL objects from an XML file. " alt="" coords="873,95,944,121"/>
+<area shape="rect" id="node13" href="$writer_8h.html" title="This file contains functions for writing the SBOL core to an XML file. " alt="" coords="675,95,742,121"/>
+<area shape="rect" id="node3" href="$prototypes_8h.html" title="Declares all the major structs, unions, and enums so the compiler will recognize them when reading th..." alt="" coords="497,169,590,196"/>
 </map>
