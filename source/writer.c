@@ -207,7 +207,7 @@ static void writeDNAComponent(DNAComponent* com) {
 				indentLess();
 			}
 		}
-		
+		////Attempt to pass a structured annotation to the destination document as an xml node object
 		//xmlNode *node;
 		//printf("%s\n", getDNAComponentURI(com));
 		////printf("%d\n", getNumPointersInArray(com->base->base->xml_annotations));

@@ -269,40 +269,35 @@ static void readDNAComponentContent(xmlNode *node) {
 		xmlFree(results);
 	}
 
-	//printf("%s\n", (char *)node->name);
-	child_node = node->children;
-	while (child_node) {
-		//if ((char *)result->name == "text") {
-		//	printf("Node content:%s\n", (char *)xmlNodeGetContent(result));
-		//if (result->type == XML_TEXT_NODE) {
-		//printf("Node content:%s\n", (char *)xmlNodeGetContent(result));
-		//printf("Node content:%s\n", (char *)result->content);
-		//}
-		//printf("Node content:%s\n", (char *)xmlNodeGetContent(result));
-		//printf("%s\n", (char *)child_node->name);
-		if (child_node->ns &&
-			strcmp((char*)child_node->ns->href, NSURL_RDF) != 0 &&
-			strcmp((char*)child_node->ns->href, NSURL_RDFS) != 0 &&
-			strcmp((char*)child_node->ns->href, NSURL_SO) != 0 &&
-			strcmp((char*)child_node->ns->href, NSURL_SBOL) != 0) {
-			printf("%s:\t%s\n", child_node->ns->prefix, child_node->ns->href);
-			xmlBufferPtr buffer = xmlBufferCreate();
-			xmlKeepBlanksDefault(0);
-			int size = xmlNodeDump(buffer, DOCUMENT, child_node, 0, 0);
-			printf("%s\n", buffer->content);
-			//xmlNodeDumpOutput(buffer, DOCUMENT, child_node, 0, 1, "UTF-8");
-			//xmlChar *s;
-			//int size;
+	////printf("%s\n", (char *)node->name);
+	//child_node = node->children;
+	//while (child_node) {
+	//	//if ((char *)result->name == "text") {
+	//	//	printf("Node content:%s\n", (char *)xmlNodeGetContent(result));
+	//	//if (result->type == XML_TEXT_NODE) {
+	//	//printf("Node content:%s\n", (char *)xmlNodeGetContent(result));
+	//	//printf("Node content:%s\n", (char *)result->content);
+	//	//}
+	//	//printf("Node content:%s\n", (char *)xmlNodeGetContent(result));
+	//	//printf("%s\n", (char *)child_node->name);
+	//	if (child_node->ns &&
+	//		strcmp((char*)child_node->ns->href, NSURL_RDF) != 0 &&
+	//		strcmp((char*)child_node->ns->href, NSURL_RDFS) != 0 &&
+	//		strcmp((char*)child_node->ns->href, NSURL_SO) != 0 &&
+	//		strcmp((char*)child_node->ns->href, NSURL_SBOL) != 0) {
+	//		printf("%s:\t%s\n", child_node->ns->prefix, child_node->ns->href);
+	//		
+	//		// print this node as raw text
+	//		xmlBufferPtr buffer = xmlBufferCreate();
+	//		xmlKeepBlanksDefault(0);
+	//		int size = xmlNodeDump(buffer, DOCUMENT, child_node, 0, 0);
+	//		printf("%s\n", buffer->content);
 
-			//xmlDocDumpMemory((xmlDocPtr)child_node, &s, &size);
-
-			//printf("%s\n", (char *)s);
-			//xmlFree(s);
-		}
-	child_node = child_node->next;
-	}
-	xmlFree(test_node);
-	//xmlFree(child_node);
+	//	}
+	//child_node = child_node->next;
+	//}
+	//xmlFree(test_node);
+	//// Not necessary to use xmlFree(child_node) because we want to save it for later output!
 }
 
 static void readDNAComponentReferences(xmlNode *node) {
