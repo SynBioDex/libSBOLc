@@ -1,0 +1,5 @@
+<map id="getCollectionName" name="getCollectionName">
+<area shape="rect" id="node2" href="$group___s_b_o_l_compound_object.html#gaa425fc1a270ad4ac10584a7d5015034d" title="Get the name of an SBOLCompoundObject. " alt="" coords="181,5,383,32"/>
+<area shape="rect" id="node3" href="$property_8h.html#a3cae3c4b1e047afc62fc40b87a0b0c44" title="Retrieve the string stored in a TextProperty. " alt="" coords="431,5,544,32"/>
+<area shape="rect" id="node4" href="$property_8h.html#aa7a95a21606fd7337810531c2d31f680" title="Retrieve the string stored in a Property. " alt="" coords="592,5,671,32"/>
+</map>

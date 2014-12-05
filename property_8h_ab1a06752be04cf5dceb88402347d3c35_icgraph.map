@@ -1,0 +1,39 @@
+<map id="getURIProperty" name="getURIProperty">
+<area shape="rect" id="node2" href="$group___d_c.html#ga850287eda1f7140f51470ba617000d16" title="Get the type of a DNAComponent. " alt="" coords="582,150,739,177"/>
+<area shape="rect" id="node6" href="$group___s_b_o_l_object.html#ga50809fa85d2a02cc3653e03a3fc24bdd" title="Get the URI of an SBOLObject. " alt="" coords="161,302,288,329"/>
+<area shape="rect" id="node38" href="$property_8h.html#a3e8fb92a69b775f2c006226f20b6f397" title="Retrieve the uri stored in a TypeProperty. " alt="" coords="167,353,283,380"/>
+<area shape="rect" id="node3" href="$group___d_c.html#ga2f53ac8c728bd591f52b17a4f908e4ab" title="Clone a DNAComponent object. " alt="" coords="2387,424,2524,450"/>
+<area shape="rect" id="node4" href="$group___d_c.html#gac5b87bbceb04bd529560e0159e0ce404" title="Print an outline of a DNAComponent to stdout. " alt="" coords="813,252,950,278"/>
+<area shape="rect" id="node5" href="$group___doc.html#ga4017a9b69658b550d56ffc8ffb47a15d" title="Print all the SBOL objects in a Document to stdout. " alt="" coords="1020,302,1125,329"/>
+<area shape="rect" id="node7" href="$group___seq.html#ga3156c4f3407c9bca47f3c51b1f9c763d" title="Get the URI of a DNASequence. " alt="" coords="591,201,731,228"/>
+<area shape="rect" id="node26" href="$group___s_b_o_l_object.html#ga3e0ef5cac89cf5b4e10467622cb476b6" title="Get the URI of an SBOLCompoundObject. " alt="" coords="336,353,524,380"/>
+<area shape="rect" id="node35" href="$group___s_a.html#gaf4016b9619db9f0f70c44f12d76355af" title="Get the URI associated with a SequenceAnnotation. " alt="" coords="572,606,749,633"/>
+<area shape="rect" id="node8" href="$group___seq.html#ga3a7a6a2f8465a5f904ecd0a856808437" title="Clone a DNASequence object. " alt="" coords="1988,226,2116,253"/>
+<area shape="rect" id="node9" href="$group___seq.html#ga17f216d2f3cd0692e44d616cc7857f5d" title="Print a DNASequence to stdout. " alt="" coords="817,150,945,177"/>
+<area shape="rect" id="node10" href="$group___doc.html#ga9a625dee1e220bd6febefcde89fa12d2" title="Find out whether there&#39;s a DNASequence with this URI in this Document. " alt="" coords="816,201,947,228"/>
+<area shape="rect" id="node25" href="$group___doc.html#ga4437cf83af2614bea6dd38517b9aa0d6" title="Get the DNASequence associated with this URI in this Document. " alt="" coords="821,49,941,76"/>
+<area shape="rect" id="node11" href="$group___doc.html#ga8563314c725ef3b8b4285d934a6296b9" title="Find out whether there&#39;s an SBOL object with this URI in this Document. " alt="" coords="1013,404,1132,430"/>
+<area shape="rect" id="node12" href="$group___col.html#ga7fe2662a0adfa42f0e26b950f8340e5c" title="Create an empty Collection. " alt="" coords="1995,390,2109,417"/>
+<area shape="rect" id="node13" href="$group___d_c.html#ga9cf6255fdc0cf5dabda22d972d06638d" title="Create an empty DNAComponent. " alt="" coords="1979,505,2125,532"/>
+<area shape="rect" id="node15" href="$group___seq.html#ga33fee94fed1c78706b0b46cf40bfdae9" title="Create an empty DNASequence. " alt="" coords="1768,226,1907,253"/>
+<area shape="rect" id="node16" href="$group___s_b_o_l_object.html#ga6831069e3f5b4be739e6d102b7e30daf" title="Create an empty SBOLObject. " alt="" coords="1540,404,1665,430"/>
+<area shape="rect" id="node17" href="$group___s_b_o_l_object.html#gaeea1364caa7e5e00836347df9f1b129a" title="Create an empty SBOLCompoundObject. " alt="" coords="1744,429,1931,456"/>
+<area shape="rect" id="node18" href="$group___s_a.html#gaa972285326409e2a091b653c8081c5fc" title="Create an empty SequenceAnnotation. " alt="" coords="1750,556,1925,582"/>
+<area shape="rect" id="node19" href="$property_8h.html#ad6dbe2a1112ce9e5963b4eec2662141b" title="Store a string in a URIProperty. " alt="" coords="1180,302,1287,329"/>
+<area shape="rect" id="node14" href="$group___s_a.html#ga1425142e21a2346da3e97b4c3519d61b" title="Clone a SequenceAnnotation object. " alt="" coords="2173,556,2339,582"/>
+<area shape="rect" id="node20" href="$group___s_b_o_l_object.html#gaaa06a93048cf5da20bc9a9837d6bcb95" title="Set the URI of an SBOLObject. " alt="" coords="1335,252,1461,278"/>
+<area shape="rect" id="node23" href="$property_8h.html#a80d43d4b07f0826e537a6b0adf8f6005" title="Store a uri in a TypeProperty. " alt="" coords="1341,302,1455,329"/>
+<area shape="rect" id="node21" href="$group___s_b_o_l_object.html#ga610f42487fe44a2485fe60efa5829fb1" title="Set the URI of an SBOLComoundObject. " alt="" coords="1509,150,1696,177"/>
+<area shape="rect" id="node22" href="$group___d_c.html#ga3e8baba4bf73bf73c6bb948283ee1374" title="Set the uri of a DNAComponent. " alt="" coords="1763,150,1911,177"/>
+<area shape="rect" id="node24" href="$group___d_c.html#ga69ac271a8679110ca3e780fdf76d77b1" title="Set the type of a DNAComponent. " alt="" coords="2178,378,2334,405"/>
+<area shape="rect" id="node27" href="$group___col.html#gafd5da9b3085b4baeb21f9f5c5124ec5b" title="Get the uri of a Collection. " alt="" coords="603,353,718,380"/>
+<area shape="rect" id="node31" href="$group___d_c.html#ga8c2b467cc4507605a4dcad126bf2b3c0" title="Get the uri of a DNAComponent. " alt="" coords="586,480,735,506"/>
+<area shape="rect" id="node28" href="$group___col.html#gab25c6cd5bff85b69556978c68485e68d" title="Print an outline of a Collection to stdout. " alt="" coords="830,404,933,430"/>
+<area shape="rect" id="node29" href="$group___doc.html#ga6172aab8b0fddce94e47e073adc71aae" title="Find out if there&#39;s a Collection with this uri in this Document. " alt="" coords="828,353,935,380"/>
+<area shape="rect" id="node30" href="$group___doc.html#ga58fbc754910b7a935c3cf678be378b0c" title="Get the Collection associated with this uri in this Document. " alt="" coords="834,302,929,329"/>
+<area shape="rect" id="node32" href="$group___doc.html#gacd0f89527933f405b542d10f9392d957" title="Find out if there&#39;s a DNAComponent with this uri in this Document. " alt="" coords="811,505,951,532"/>
+<area shape="rect" id="node33" href="$group___doc.html#ga20b3cc3d2aed12bcb208d285e3ab3194" title="Get the DNAComponent associated with this uri in this Document. " alt="" coords="817,454,946,481"/>
+<area shape="rect" id="node34" href="$group___s_a.html#ga3bf0475adea1282b6969d1994845560c" title="Print an outline of a SequenceAnnotation to stdout. " alt="" coords="799,556,964,582"/>
+<area shape="rect" id="node36" href="$group___doc.html#ga59fe20fbe3a3c06f33319f920364bc67" title="Find out whether this URI is associated with a SequenceAnnotation in this Document. " alt="" coords="797,657,965,684"/>
+<area shape="rect" id="node37" href="$group___doc.html#ga67137d91f53a37a9a278ea1399ab00af" title="Get the SequenceAnnotation associated with this URI in this Document. " alt="" coords="803,809,960,836"/>
+</map>

@@ -1,0 +1,11 @@
+<map id="getDNASequence" name="getDNASequence">
+<area shape="rect" id="node2" href="$group___doc.html#ga7981777319bfac35607c0d568b26f070" title="Get the total number of DNASequences in a Document. " alt="" coords="361,5,513,32"/>
+<area shape="rect" id="node4" href="$group___doc.html#ga0d702dc3322815ce3ea84e9a79e42cf7" title="Get the Nth DNASequnce in a Document. " alt="" coords="174,56,313,83"/>
+<area shape="rect" id="node6" href="$group___seq.html#ga3156c4f3407c9bca47f3c51b1f9c763d" title="Get the URI of a DNASequence. " alt="" coords="173,107,313,133"/>
+<area shape="rect" id="node3" href="$array_8h.html#ac866d8fd79355c021e68f3662921fc51" title="Get the number of pointers stored in a PointerArray. " alt="" coords="561,31,716,57"/>
+<area shape="rect" id="node5" href="$array_8h.html#aff165b4b431b1aaeca1978a60296ffa1" title="Get the Nth pointer from a PointerArray. " alt="" coords="367,56,508,83"/>
+<area shape="rect" id="node7" href="$group___s_b_o_l_compound_object.html#ga50809fa85d2a02cc3653e03a3fc24bdd" title="Get the URI of an SBOLObject. " alt="" coords="374,107,501,133"/>
+<area shape="rect" id="node8" href="$property_8h.html#ab1a06752be04cf5dceb88402347d3c35" title="Retrieve the string stored in a URIProperty. " alt="" coords="585,107,693,133"/>
+<area shape="rect" id="node9" href="$property_8h.html#a3cae3c4b1e047afc62fc40b87a0b0c44" title="Retrieve the string stored in a TextProperty. " alt="" coords="764,107,877,133"/>
+<area shape="rect" id="node10" href="$property_8h.html#aa7a95a21606fd7337810531c2d31f680" title="Retrieve the string stored in a Property. " alt="" coords="925,107,1004,133"/>
+</map>

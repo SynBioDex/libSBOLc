@@ -1,0 +1,5 @@
+<map id="setNucleotidesProperty" name="setNucleotidesProperty">
+<area shape="rect" id="node2" href="$group___seq.html#ga8aaa4277470919c1fb1aca322c73f304" title="Copy a string of nucleotides into this DNASequence. " alt="" coords="205,5,389,32"/>
+<area shape="rect" id="node3" href="$group___seq.html#ga3a7a6a2f8465a5f904ecd0a856808437" title="Clone a DNASequence object. " alt="" coords="437,5,565,32"/>
+<area shape="rect" id="node4" href="$group___d_c.html#ga2f53ac8c728bd591f52b17a4f908e4ab" title="Clone a DNAComponent object. " alt="" coords="613,5,751,32"/>
+</map>

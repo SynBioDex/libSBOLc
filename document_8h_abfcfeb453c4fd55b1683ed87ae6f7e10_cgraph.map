@@ -1,0 +1,5 @@
+<map id="getNthCollection" name="getNthCollection">
+<area shape="rect" id="node2" href="$document_8h.html#aae78a83bba3a860e0ecd38cd190eacf6" title="Get the total number of Collections in a Document. " alt="" coords="175,5,302,32"/>
+<area shape="rect" id="node4" href="$array_8h.html#aff165b4b431b1aaeca1978a60296ffa1" title="Get the Nth pointer from a PointerArray. " alt="" coords="168,56,309,83"/>
+<area shape="rect" id="node3" href="$array_8h.html#ac866d8fd79355c021e68f3662921fc51" title="Get the number of pointers stored in a PointerArray. " alt="" coords="357,31,512,57"/>
+</map>

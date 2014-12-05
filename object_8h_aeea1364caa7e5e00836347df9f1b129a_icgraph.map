@@ -1,0 +1,6 @@
+<map id="createSBOLCompoundObject" name="createSBOLCompoundObject">
+<area shape="rect" id="node2" href="$group___col.html#ga7fe2662a0adfa42f0e26b950f8340e5c" title="Create an empty Collection. " alt="" coords="257,5,370,32"/>
+<area shape="rect" id="node3" href="$group___d_c.html#ga9cf6255fdc0cf5dabda22d972d06638d" title="Create an empty DNAComponent. " alt="" coords="240,56,387,83"/>
+<area shape="rect" id="node4" href="$group___d_c.html#ga2f53ac8c728bd591f52b17a4f908e4ab" title="Clone a DNAComponent object. " alt="" coords="648,56,785,83"/>
+<area shape="rect" id="node5" href="$group___s_a.html#ga1425142e21a2346da3e97b4c3519d61b" title="Clone a SequenceAnnotation object. " alt="" coords="435,81,600,108"/>
+</map>

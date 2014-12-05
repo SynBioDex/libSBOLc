@@ -1,0 +1,9 @@
+<map id="deleteDNAComponent" name="deleteDNAComponent">
+<area shape="rect" id="node2" href="$group___s_b_o_l_compound_object.html#ga7a66b73ee66ad831fc353e4781269ad5" title="Delete an SBOLObject. " alt="" coords="200,31,385,57"/>
+<area shape="rect" id="node7" href="$array_8h.html#ae1ffea3be221821f9047c33b7c55792d" title="Delete a PointerArray. " alt="" coords="615,107,743,133"/>
+<area shape="rect" id="node8" href="$property_8h.html#a0819f3013d915947553e8289ec9f6808" title="Delete a TypeProperty. " alt="" coords="433,81,567,108"/>
+<area shape="rect" id="node3" href="$group___s_b_o_l_compound_object.html#gae787f4b151be1f7230cedaa4459422e5" title="Delete an SBOLObject. " alt="" coords="438,31,562,57"/>
+<area shape="rect" id="node5" href="$property_8h.html#a6a5874eb94a42b6174a05b3ce8d3186c" title="Delete a TextProperty. " alt="" coords="791,5,921,32"/>
+<area shape="rect" id="node4" href="$property_8h.html#aaa6562bc7d78d2d9174b0244cb82d453" title="Delete a URIProperty. " alt="" coords="616,31,741,57"/>
+<area shape="rect" id="node6" href="$property_8h.html#a7dc621607421beb1cc908fc5d72603a7" title="Delete a Property. " alt="" coords="969,5,1075,32"/>
+</map>

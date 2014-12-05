@@ -1,0 +1,4 @@
+<map id="getSequenceAnnotationStrand" name="getSequenceAnnotationStrand">
+<area shape="rect" id="node2" href="$property_8h.html#af80eb5c9fa1830fd6a0f8d19e89b00ef" title="Retrieve the int stored in a PolarityProperty. " alt="" coords="248,5,379,32"/>
+<area shape="rect" id="node3" href="$property_8h.html#aea9ae15fe41f8a851fd14da3ab1c96fc" title="Retrieve an int stored in a Property. " alt="" coords="427,5,512,32"/>
+</map>

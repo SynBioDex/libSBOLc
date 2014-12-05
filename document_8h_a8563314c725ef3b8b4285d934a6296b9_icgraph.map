@@ -1,0 +1,17 @@
+<map id="isSBOLObjectURI" name="isSBOLObjectURI">
+<area shape="rect" id="node2" href="$group___col.html#ga7fe2662a0adfa42f0e26b950f8340e5c" title="Create an empty Collection. " alt="" coords="992,17,1105,44"/>
+<area shape="rect" id="node3" href="$group___d_c.html#ga9cf6255fdc0cf5dabda22d972d06638d" title="Create an empty DNAComponent. " alt="" coords="975,93,1122,120"/>
+<area shape="rect" id="node6" href="$group___seq.html#ga33fee94fed1c78706b0b46cf40bfdae9" title="Create an empty DNASequence. " alt="" coords="760,195,899,221"/>
+<area shape="rect" id="node8" href="$object_8h.html#a6831069e3f5b4be739e6d102b7e30daf" title="Create an empty SBOLObject. " alt="" coords="532,195,657,221"/>
+<area shape="rect" id="node9" href="$object_8h.html#aeea1364caa7e5e00836347df9f1b129a" title="Create an empty SBOLCompoundObject. " alt="" coords="736,43,923,69"/>
+<area shape="rect" id="node10" href="$group___s_a.html#gaa972285326409e2a091b653c8081c5fc" title="Create an empty SequenceAnnotation. " alt="" coords="742,144,917,171"/>
+<area shape="rect" id="node11" href="$property_8h.html#ad6dbe2a1112ce9e5963b4eec2662141b" title="Store a string in a URIProperty. " alt="" coords="172,296,279,323"/>
+<area shape="rect" id="node4" href="$group___d_c.html#ga2f53ac8c728bd591f52b17a4f908e4ab" title="Clone a DNAComponent object. " alt="" coords="1388,169,1525,196"/>
+<area shape="rect" id="node5" href="$group___s_a.html#ga1425142e21a2346da3e97b4c3519d61b" title="Clone a SequenceAnnotation object. " alt="" coords="1175,144,1340,171"/>
+<area shape="rect" id="node7" href="$group___seq.html#ga3a7a6a2f8465a5f904ecd0a856808437" title="Clone a DNASequence object. " alt="" coords="1193,195,1321,221"/>
+<area shape="rect" id="node12" href="$object_8h.html#aaa06a93048cf5da20bc9a9837d6bcb95" title="Set the URI of an SBOLObject. " alt="" coords="327,296,453,323"/>
+<area shape="rect" id="node15" href="$property_8h.html#a80d43d4b07f0826e537a6b0adf8f6005" title="Store a uri in a TypeProperty. " alt="" coords="333,347,447,373"/>
+<area shape="rect" id="node13" href="$object_8h.html#a610f42487fe44a2485fe60efa5829fb1" title="Set the URI of an SBOLComoundObject. " alt="" coords="501,296,688,323"/>
+<area shape="rect" id="node14" href="$group___d_c.html#ga3e8baba4bf73bf73c6bb948283ee1374" title="Set the uri of a DNAComponent. " alt="" coords="755,296,903,323"/>
+<area shape="rect" id="node16" href="$group___d_c.html#ga69ac271a8679110ca3e780fdf76d77b1" title="Set the type of a DNAComponent. " alt="" coords="971,296,1127,323"/>
+</map>

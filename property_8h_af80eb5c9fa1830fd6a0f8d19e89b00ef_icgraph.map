@@ -1,0 +1,7 @@
+<map id="getPolarityProperty" name="getPolarityProperty">
+<area shape="rect" id="node2" href="$group___s_a.html#gae87b06ee7884eb9b241e74186755be0a" title="Find out the orientation of this feature relative to the annotated DNAComponent. " alt="" coords="184,5,379,32"/>
+<area shape="rect" id="node5" href="$group___s_a.html#ga3bf0475adea1282b6969d1994845560c" title="Print an outline of a SequenceAnnotation to stdout. " alt="" coords="199,56,364,83"/>
+<area shape="rect" id="node3" href="$group___s_a.html#ga1425142e21a2346da3e97b4c3519d61b" title="Clone a SequenceAnnotation object. " alt="" coords="427,5,592,32"/>
+<area shape="rect" id="node4" href="$group___d_c.html#ga2f53ac8c728bd591f52b17a4f908e4ab" title="Clone a DNAComponent object. " alt="" coords="640,5,777,32"/>
+<area shape="rect" id="node6" href="$group___doc.html#ga4017a9b69658b550d56ffc8ffb47a15d" title="Print all the SBOL objects in a Document to stdout. " alt="" coords="457,56,562,83"/>
+</map>

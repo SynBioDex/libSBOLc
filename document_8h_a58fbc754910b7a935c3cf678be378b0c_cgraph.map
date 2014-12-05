@@ -1,0 +1,12 @@
+<map id="getCollection" name="getCollection">
+<area shape="rect" id="node2" href="$document_8h.html#aae78a83bba3a860e0ecd38cd190eacf6" title="Get the total number of Collections in a Document. " alt="" coords="341,5,468,32"/>
+<area shape="rect" id="node4" href="$document_8h.html#abfcfeb453c4fd55b1683ed87ae6f7e10" title="Get the Nth Collection in a Document. " alt="" coords="148,56,263,83"/>
+<area shape="rect" id="node6" href="$group___col.html#gafd5da9b3085b4baeb21f9f5c5124ec5b" title="Get the uri of a Collection. " alt="" coords="148,107,263,133"/>
+<area shape="rect" id="node3" href="$array_8h.html#ac866d8fd79355c021e68f3662921fc51" title="Get the number of pointers stored in a PointerArray. " alt="" coords="547,31,701,57"/>
+<area shape="rect" id="node5" href="$array_8h.html#aff165b4b431b1aaeca1978a60296ffa1" title="Get the Nth pointer from a PointerArray. " alt="" coords="334,56,475,83"/>
+<area shape="rect" id="node7" href="$object_8h.html#a3e0ef5cac89cf5b4e10467622cb476b6" title="Get the URI of an SBOLCompoundObject. " alt="" coords="311,107,499,133"/>
+<area shape="rect" id="node8" href="$object_8h.html#a50809fa85d2a02cc3653e03a3fc24bdd" title="Get the URI of an SBOLObject. " alt="" coords="561,107,687,133"/>
+<area shape="rect" id="node9" href="$property_8h.html#ab1a06752be04cf5dceb88402347d3c35" title="Retrieve the string stored in a URIProperty. " alt="" coords="749,107,857,133"/>
+<area shape="rect" id="node10" href="$property_8h.html#a3cae3c4b1e047afc62fc40b87a0b0c44" title="Retrieve the string stored in a TextProperty. " alt="" coords="905,107,1019,133"/>
+<area shape="rect" id="node11" href="$property_8h.html#aa7a95a21606fd7337810531c2d31f680" title="Retrieve the string stored in a Property. " alt="" coords="1067,107,1145,133"/>
+</map>

@@ -1,0 +1,7 @@
+<map id="setCollectionDisplayID" name="setCollectionDisplayID">
+<area shape="rect" id="node2" href="$group___s_b_o_l_compound_object.html#gaeb94d929608a0d10abd3d31891f62276" title="Set the displayID of an SBOLCompoundObject. " alt="" coords="200,56,419,83"/>
+<area shape="rect" id="node3" href="$property_8h.html#a1b4bf73fab652f3898f835c95971e999" title="Store a string in a TextProperty. " alt="" coords="467,56,579,83"/>
+<area shape="rect" id="node4" href="$property_8h.html#a7dc621607421beb1cc908fc5d72603a7" title="Delete a Property. " alt="" coords="627,5,733,32"/>
+<area shape="rect" id="node5" href="$property_8h.html#a1d0d1a341ed27038256b0b80dfe75279" title="Create an empty Property. " alt="" coords="627,56,733,83"/>
+<area shape="rect" id="node6" href="$property_8h.html#a9b9f6b5e14b08f8111befd73e7470c13" title="Store a string in a Property. " alt="" coords="641,107,719,133"/>
+</map>

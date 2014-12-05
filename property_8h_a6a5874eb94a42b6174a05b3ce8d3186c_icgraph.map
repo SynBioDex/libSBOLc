@@ -1,0 +1,12 @@
+<map id="deleteTextProperty" name="deleteTextProperty">
+<area shape="rect" id="node2" href="$group___s_b_o_l_object.html#ga7a66b73ee66ad831fc353e4781269ad5" title="Delete an SBOLObject. " alt="" coords="584,5,769,32"/>
+<area shape="rect" id="node6" href="$property_8h.html#aaa6562bc7d78d2d9174b0244cb82d453" title="Delete a URIProperty. " alt="" coords="207,69,332,96"/>
+<area shape="rect" id="node11" href="$property_8h.html#a255ceffbe9cc66e7cc48f07037acc9f0" title="Delete a NucleotidesProperty. " alt="" coords="184,145,355,172"/>
+<area shape="rect" id="node3" href="$group___col.html#ga620f32d929d285f5d0e11a42fdb244f6" title="Delete a Collection. " alt="" coords="849,5,961,32"/>
+<area shape="rect" id="node5" href="$group___d_c.html#ga892f21b08ec0404bed820b9cbfb1342e" title="Delete a DNAComponent. " alt="" coords="831,56,978,83"/>
+<area shape="rect" id="node4" href="$group___doc.html#ga59ebe18448a4ec176b913c0f41f4429e" title="Delete a Document. " alt="" coords="1040,81,1155,108"/>
+<area shape="rect" id="node7" href="$group___s_b_o_l_object.html#gae787f4b151be1f7230cedaa4459422e5" title="Delete an SBOLObject. " alt="" coords="407,107,531,133"/>
+<area shape="rect" id="node10" href="$property_8h.html#a0819f3013d915947553e8289ec9f6808" title="Delete a TypeProperty. " alt="" coords="403,56,536,83"/>
+<area shape="rect" id="node8" href="$group___seq.html#ga5527ada2b682004b24590af9ab2a64ac" title="Delete a DNASequence. " alt="" coords="608,157,745,184"/>
+<area shape="rect" id="node9" href="$group___s_a.html#gaa0a92e2c214bc32e93c0aaac5b4f2a5d" title="Delete a SequenceAnnotation. " alt="" coords="817,107,992,133"/>
+</map>

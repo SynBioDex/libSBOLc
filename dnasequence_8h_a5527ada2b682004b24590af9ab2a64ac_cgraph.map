@@ -1,0 +1,7 @@
+<map id="deleteDNASequence" name="deleteDNASequence">
+<area shape="rect" id="node2" href="$object_8h.html#ae787f4b151be1f7230cedaa4459422e5" title="Delete an SBOLObject. " alt="" coords="191,5,315,32"/>
+<area shape="rect" id="node6" href="$property_8h.html#a255ceffbe9cc66e7cc48f07037acc9f0" title="Delete a NucleotidesProperty. " alt="" coords="363,56,533,83"/>
+<area shape="rect" id="node3" href="$property_8h.html#aaa6562bc7d78d2d9174b0244cb82d453" title="Delete a URIProperty. " alt="" coords="385,5,511,32"/>
+<area shape="rect" id="node4" href="$property_8h.html#a6a5874eb94a42b6174a05b3ce8d3186c" title="Delete a TextProperty. " alt="" coords="581,31,712,57"/>
+<area shape="rect" id="node5" href="$property_8h.html#a7dc621607421beb1cc908fc5d72603a7" title="Delete a Property. " alt="" coords="760,31,865,57"/>
+</map>

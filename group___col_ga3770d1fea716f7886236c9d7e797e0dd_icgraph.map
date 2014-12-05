@@ -1,0 +1,5 @@
+<map id="getNthDNAComponentIn" name="getNthDNAComponentIn">
+<area shape="rect" id="node2" href="$group___col.html#ga4b2260b492dacd93fb459e2abd5e532d" title="Find out whether a DNAComponent is inside a Collection. " alt="" coords="212,5,387,32"/>
+<area shape="rect" id="node3" href="$group___col.html#gab25c6cd5bff85b69556978c68485e68d" title="Print an outline of a Collection to stdout. " alt="" coords="248,56,351,83"/>
+<area shape="rect" id="node4" href="$group___doc.html#ga4017a9b69658b550d56ffc8ffb47a15d" title="Print all the SBOL objects in a Document to stdout. " alt="" coords="435,56,540,83"/>
+</map>

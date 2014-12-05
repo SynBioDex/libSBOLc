@@ -1,0 +1,7 @@
+<map id="deleteSBOLCompoundObject" name="deleteSBOLCompoundObject">
+<area shape="rect" id="node2" href="$object_8h.html#ae787f4b151be1f7230cedaa4459422e5" title="Delete an SBOLObject. " alt="" coords="239,56,363,83"/>
+<area shape="rect" id="node4" href="$property_8h.html#a6a5874eb94a42b6174a05b3ce8d3186c" title="Delete a TextProperty. " alt="" coords="587,56,717,83"/>
+<area shape="rect" id="node3" href="$property_8h.html#aaa6562bc7d78d2d9174b0244cb82d453" title="Delete a URIProperty. " alt="" coords="412,5,537,32"/>
+<area shape="rect" id="node6" href="$array_8h.html#ae1ffea3be221821f9047c33b7c55792d" title="Delete a PointerArray. " alt="" coords="411,56,539,83"/>
+<area shape="rect" id="node5" href="$property_8h.html#a7dc621607421beb1cc908fc5d72603a7" title="Delete a Property. " alt="" coords="765,56,871,83"/>
+</map>

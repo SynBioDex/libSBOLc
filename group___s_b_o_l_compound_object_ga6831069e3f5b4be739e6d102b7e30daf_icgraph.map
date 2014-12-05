@@ -1,0 +1,10 @@
+<map id="createSBOLObject" name="createSBOLObject">
+<area shape="rect" id="node2" href="$group___seq.html#ga33fee94fed1c78706b0b46cf40bfdae9" title="Create an empty DNASequence. " alt="" coords="203,5,341,32"/>
+<area shape="rect" id="node5" href="$group___s_b_o_l_compound_object.html#gaeea1364caa7e5e00836347df9f1b129a" title="Create an empty SBOLCompoundObject. " alt="" coords="179,68,365,95"/>
+<area shape="rect" id="node9" href="$group___s_a.html#gaa972285326409e2a091b653c8081c5fc" title="Create an empty SequenceAnnotation. " alt="" coords="413,144,588,171"/>
+<area shape="rect" id="node3" href="$group___seq.html#ga3a7a6a2f8465a5f904ecd0a856808437" title="Clone a DNASequence object. " alt="" coords="655,5,783,32"/>
+<area shape="rect" id="node4" href="$group___d_c.html#ga2f53ac8c728bd591f52b17a4f908e4ab" title="Clone a DNAComponent object. " alt="" coords="849,81,987,108"/>
+<area shape="rect" id="node6" href="$group___col.html#ga7fe2662a0adfa42f0e26b950f8340e5c" title="Create an empty Collection. " alt="" coords="444,43,557,69"/>
+<area shape="rect" id="node7" href="$group___d_c.html#ga9cf6255fdc0cf5dabda22d972d06638d" title="Create an empty DNAComponent. " alt="" coords="427,93,574,120"/>
+<area shape="rect" id="node8" href="$group___s_a.html#ga1425142e21a2346da3e97b4c3519d61b" title="Clone a SequenceAnnotation object. " alt="" coords="636,132,801,159"/>
+</map>

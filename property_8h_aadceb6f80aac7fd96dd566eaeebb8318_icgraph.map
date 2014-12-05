@@ -1,0 +1,6 @@
+<map id="setPositionProperty" name="setPositionProperty">
+<area shape="rect" id="node2" href="$group___s_a.html#ga9ab16e2463c9d2fb4e27216d41dda6f6" title="Set where on the annotated DNAComponent this feature starts. " alt="" coords="184,5,368,32"/>
+<area shape="rect" id="node5" href="$group___s_a.html#gaf47d59f13eee0d35865a0d7b9891ac60" title="Set where on the annotated DNAComponent this feature ends. " alt="" coords="187,56,365,83"/>
+<area shape="rect" id="node3" href="$group___s_a.html#ga1425142e21a2346da3e97b4c3519d61b" title="Clone a SequenceAnnotation object. " alt="" coords="416,31,581,57"/>
+<area shape="rect" id="node4" href="$group___d_c.html#ga2f53ac8c728bd591f52b17a4f908e4ab" title="Clone a DNAComponent object. " alt="" coords="629,31,767,57"/>
+</map>

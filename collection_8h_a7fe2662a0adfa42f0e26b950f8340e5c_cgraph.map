@@ -1,0 +1,37 @@
+<map id="createCollection" name="createCollection">
+<area shape="rect" id="node2" href="$document_8h.html#a8563314c725ef3b8b4285d934a6296b9" title="Find out whether there&#39;s an SBOL object with this URI in this Document. " alt="" coords="928,344,1047,370"/>
+<area shape="rect" id="node26" href="$object_8h.html#aeea1364caa7e5e00836347df9f1b129a" title="Create an empty SBOLCompoundObject. " alt="" coords="167,458,353,485"/>
+<area shape="rect" id="node36" href="$array_8h.html#add75669fba33aa9e2d976f80889adb7c" title="Create an empty PointerArray. " alt="" coords="195,509,325,536"/>
+<area shape="rect" id="node3" href="$document_8h.html#a9a625dee1e220bd6febefcde89fa12d2" title="Find out whether there&#39;s a DNASequence with this URI in this Document. " alt="" coords="1113,332,1244,358"/>
+<area shape="rect" id="node13" href="$document_8h.html#a59fe20fbe3a3c06f33319f920364bc67" title="Find out whether this URI is associated with a SequenceAnnotation in this Document. " alt="" coords="1095,428,1263,454"/>
+<area shape="rect" id="node17" href="$document_8h.html#acd0f89527933f405b542d10f9392d957" title="Find out if there&#39;s a DNAComponent with this uri in this Document. " alt="" coords="1109,50,1249,77"/>
+<area shape="rect" id="node22" href="$document_8h.html#a6172aab8b0fddce94e47e073adc71aae" title="Find out if there&#39;s a Collection with this uri in this Document. " alt="" coords="1125,202,1232,229"/>
+<area shape="rect" id="node4" href="$document_8h.html#a7981777319bfac35607c0d568b26f070" title="Get the total number of DNASequences in a Document. " alt="" coords="1553,304,1705,330"/>
+<area shape="rect" id="node6" href="$document_8h.html#a0d702dc3322815ce3ea84e9a79e42cf7" title="Get the Nth DNASequnce in a Document. " alt="" coords="1329,278,1468,305"/>
+<area shape="rect" id="node8" href="$dnasequence_8h.html#a3156c4f3407c9bca47f3c51b1f9c763d" title="Get the URI of a DNASequence. " alt="" coords="1329,380,1469,406"/>
+<area shape="rect" id="node5" href="$array_8h.html#ac866d8fd79355c021e68f3662921fc51" title="Get the number of pointers stored in a PointerArray. " alt="" coords="1772,253,1927,280"/>
+<area shape="rect" id="node7" href="$array_8h.html#aff165b4b431b1aaeca1978a60296ffa1" title="Get the Nth pointer from a PointerArray. " alt="" coords="1559,253,1700,280"/>
+<area shape="rect" id="node9" href="$object_8h.html#a50809fa85d2a02cc3653e03a3fc24bdd" title="Get the URI of an SBOLObject. " alt="" coords="1786,380,1913,406"/>
+<area shape="rect" id="node10" href="$property_8h.html#ab1a06752be04cf5dceb88402347d3c35" title="Retrieve the string stored in a URIProperty. " alt="" coords="1975,380,2083,406"/>
+<area shape="rect" id="node11" href="$property_8h.html#a3cae3c4b1e047afc62fc40b87a0b0c44" title="Retrieve the string stored in a TextProperty. " alt="" coords="2131,380,2244,406"/>
+<area shape="rect" id="node12" href="$property_8h.html#aa7a95a21606fd7337810531c2d31f680" title="Retrieve the string stored in a Property. " alt="" coords="2292,380,2371,406"/>
+<area shape="rect" id="node14" href="$document_8h.html#a6e92eaaf69f4642d282f56e5f3fe15f9" title="Get the total number of SequenceAnnotations in a Document. " alt="" coords="1535,430,1724,457"/>
+<area shape="rect" id="node15" href="$document_8h.html#a563e25015c9a809e73bc899d139fd472" title="Get the Nth SequenceAnnotation in a Document. " alt="" coords="1311,430,1487,457"/>
+<area shape="rect" id="node16" href="$group___s_a.html#gaf4016b9619db9f0f70c44f12d76355af" title="Get the URI associated with a SequenceAnnotation. " alt="" coords="1541,506,1718,533"/>
+<area shape="rect" id="node18" href="$document_8h.html#a95149bcfe7a743073f28d9aee080953e" title="Get the total number of DNAComponents in a Document. " alt="" coords="1549,25,1710,52"/>
+<area shape="rect" id="node19" href="$document_8h.html#a943e6761d56db524b4f3ed571606f6eb" title="Get the Nth DNAComponent in a Document. " alt="" coords="1325,25,1473,52"/>
+<area shape="rect" id="node20" href="$group___d_c.html#ga8c2b467cc4507605a4dcad126bf2b3c0" title="Get the uri of a DNAComponent. " alt="" coords="1324,76,1473,102"/>
+<area shape="rect" id="node21" href="$object_8h.html#a3e0ef5cac89cf5b4e10467622cb476b6" title="Get the URI of an SBOLCompoundObject. " alt="" coords="1535,126,1723,153"/>
+<area shape="rect" id="node23" href="$document_8h.html#aae78a83bba3a860e0ecd38cd190eacf6" title="Get the total number of Collections in a Document. " alt="" coords="1566,202,1693,229"/>
+<area shape="rect" id="node24" href="$document_8h.html#abfcfeb453c4fd55b1683ed87ae6f7e10" title="Get the Nth Collection in a Document. " alt="" coords="1341,228,1456,254"/>
+<area shape="rect" id="node25" href="$collection_8h.html#afd5da9b3085b4baeb21f9f5c5124ec5b" title="Get the uri of a Collection. " alt="" coords="1341,126,1456,153"/>
+<area shape="rect" id="node27" href="$object_8h.html#a6831069e3f5b4be739e6d102b7e30daf" title="Create an empty SBOLObject. " alt="" coords="401,421,527,448"/>
+<area shape="rect" id="node29" href="$property_8h.html#add2b50f2301ae40892bf2be2a4f2e14f" title="Create an empty TextProperty. " alt="" coords="749,548,880,574"/>
+<area shape="rect" id="node28" href="$property_8h.html#a3e1137c0a6975d09ed29a3093dad6453" title="Create an empty URIProperty. " alt="" coords="575,446,701,473"/>
+<area shape="rect" id="node31" href="$object_8h.html#aaa06a93048cf5da20bc9a9837d6bcb95" title="Set the URI of an SBOLObject. " alt="" coords="575,396,701,422"/>
+<area shape="rect" id="node30" href="$property_8h.html#a1d0d1a341ed27038256b0b80dfe75279" title="Create an empty Property. " alt="" coords="1125,580,1232,606"/>
+<area shape="rect" id="node32" href="$property_8h.html#ad6dbe2a1112ce9e5963b4eec2662141b" title="Store a string in a URIProperty. " alt="" coords="761,396,868,422"/>
+<area shape="rect" id="node33" href="$property_8h.html#a1b4bf73fab652f3898f835c95971e999" title="Store a string in a TextProperty. " alt="" coords="931,497,1043,524"/>
+<area shape="rect" id="node34" href="$property_8h.html#a7dc621607421beb1cc908fc5d72603a7" title="Delete a Property. " alt="" coords="1126,529,1231,556"/>
+<area shape="rect" id="node35" href="$property_8h.html#a9b9f6b5e14b08f8111befd73e7470c13" title="Store a string in a Property. " alt="" coords="1139,478,1218,505"/>
+</map>

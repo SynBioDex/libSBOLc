@@ -1,0 +1,7 @@
+<map id="getNucleotidesProperty" name="getNucleotidesProperty">
+<area shape="rect" id="node2" href="$group___seq.html#gae4855c7cc62a0fe90b09d541569a0127" title="Get a copy of the nucleotides contained in this DNASequence. " alt="" coords="207,31,392,57"/>
+<area shape="rect" id="node3" href="$group___seq.html#ga3a7a6a2f8465a5f904ecd0a856808437" title="Clone a DNASequence object. " alt="" coords="440,5,568,32"/>
+<area shape="rect" id="node5" href="$group___seq.html#ga17f216d2f3cd0692e44d616cc7857f5d" title="Print a DNASequence to stdout. " alt="" coords="440,56,568,83"/>
+<area shape="rect" id="node4" href="$group___d_c.html#ga2f53ac8c728bd591f52b17a4f908e4ab" title="Clone a DNAComponent object. " alt="" coords="616,5,753,32"/>
+<area shape="rect" id="node6" href="$group___doc.html#ga4017a9b69658b550d56ffc8ffb47a15d" title="Print all the SBOL objects in a Document to stdout. " alt="" coords="632,56,737,83"/>
+</map>

@@ -1,0 +1,4 @@
+<map id="readDocument" name="readDocument">
+<area shape="rect" id="node2" href="$utilities_8h.html#abb3871d4aea961b9d0cb6ae724bc0f29" title="Works around a bug involving libxml and MinGW. " alt="" coords="159,5,281,32"/>
+<area shape="rect" id="node3" href="$validator_8h.html#a9e333afef1de0cd1d216f1eb74fc0e2f" title="Checks an xmlDoc against the SBOL schema. " alt="" coords="175,56,265,83"/>
+</map>

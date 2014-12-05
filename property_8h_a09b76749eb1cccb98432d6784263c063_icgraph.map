@@ -1,0 +1,7 @@
+<map id="setPolarityProperty" name="setPolarityProperty">
+<area shape="rect" id="node2" href="$property_8h.html#a1a031e2b44f830559a3340c3f342dd7e" title="Create an empty PolarityProperty. " alt="" coords="183,5,331,32"/>
+<area shape="rect" id="node6" href="$group___s_a.html#gab29d80a108ff8b4ad1af476520e43c00" title="Set the orientation of this feature relative to the annotated DNAComponent. " alt="" coords="379,56,573,83"/>
+<area shape="rect" id="node3" href="$group___s_a.html#gaa972285326409e2a091b653c8081c5fc" title="Create an empty SequenceAnnotation. " alt="" coords="389,5,563,32"/>
+<area shape="rect" id="node4" href="$group___s_a.html#ga1425142e21a2346da3e97b4c3519d61b" title="Clone a SequenceAnnotation object. " alt="" coords="621,31,787,57"/>
+<area shape="rect" id="node5" href="$group___d_c.html#ga2f53ac8c728bd591f52b17a4f908e4ab" title="Clone a DNAComponent object. " alt="" coords="835,31,972,57"/>
+</map>

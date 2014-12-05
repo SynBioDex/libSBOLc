@@ -1,0 +1,13 @@
+<map id="writeDocumentToString" name="writeDocumentToString">
+<area shape="rect" id="node2" href="$writer_8h.html#ae086a14ff9603e5a3a223a1dcb6bcff4" title="Write document to static xmlDoc. " alt="" coords="211,142,319,169"/>
+<area shape="rect" id="node3" href="$group___doc.html#gaae78a83bba3a860e0ecd38cd190eacf6" title="Get the total number of Collections in a Document. " alt="" coords="622,41,749,67"/>
+<area shape="rect" id="node5" href="$group___doc.html#gabfcfeb453c4fd55b1683ed87ae6f7e10" title="Get the Nth Collection in a Document. " alt="" coords="397,66,512,93"/>
+<area shape="rect" id="node7" href="$group___doc.html#ga95149bcfe7a743073f28d9aee080953e" title="Get the total number of DNAComponents in a Document. " alt="" coords="605,91,766,118"/>
+<area shape="rect" id="node8" href="$group___doc.html#ga943e6761d56db524b4f3ed571606f6eb" title="Get the Nth DNAComponent in a Document. " alt="" coords="381,117,529,143"/>
+<area shape="rect" id="node9" href="$group___doc.html#ga7981777319bfac35607c0d568b26f070" title="Get the total number of DNASequences in a Document. " alt="" coords="609,193,761,219"/>
+<area shape="rect" id="node10" href="$group___doc.html#ga0d702dc3322815ce3ea84e9a79e42cf7" title="Get the Nth DNASequnce in a Document. " alt="" coords="385,167,524,194"/>
+<area shape="rect" id="node11" href="$group___doc.html#ga6e92eaaf69f4642d282f56e5f3fe15f9" title="Get the total number of SequenceAnnotations in a Document. " alt="" coords="591,243,780,270"/>
+<area shape="rect" id="node12" href="$group___doc.html#ga563e25015c9a809e73bc899d139fd472" title="Get the Nth SequenceAnnotation in a Document. " alt="" coords="367,218,543,245"/>
+<area shape="rect" id="node4" href="$array_8h.html#ac866d8fd79355c021e68f3662921fc51" title="Get the number of pointers stored in a PointerArray. " alt="" coords="828,142,983,169"/>
+<area shape="rect" id="node6" href="$array_8h.html#aff165b4b431b1aaeca1978a60296ffa1" title="Get the Nth pointer from a PointerArray. " alt="" coords="615,142,756,169"/>
+</map>

@@ -1,0 +1,27 @@
+<map id="getNumDNAComponents" name="getNumDNAComponents">
+<area shape="rect" id="node2" href="$document_8h.html#acd0f89527933f405b542d10f9392d957" title="Find out if there&#39;s a DNAComponent with this uri in this Document. " alt="" coords="411,144,551,171"/>
+<area shape="rect" id="node19" href="$document_8h.html#ad03aeedf4b59b271580a05aa72d3f05f" title="Find out the total number of SBOL objects in a Document. " alt="" coords="219,175,358,201"/>
+<area shape="rect" id="node20" href="$document_8h.html#a20b3cc3d2aed12bcb208d285e3ab3194" title="Get the DNAComponent associated with this uri in this Document. " alt="" coords="416,232,545,259"/>
+<area shape="rect" id="node21" href="$document_8h.html#a943e6761d56db524b4f3ed571606f6eb" title="Get the Nth DNAComponent in a Document. " alt="" coords="215,327,363,353"/>
+<area shape="rect" id="node22" href="$document_8h.html#a59ebe18448a4ec176b913c0f41f4429e" title="Delete a Document. " alt="" coords="423,308,538,335"/>
+<area shape="rect" id="node23" href="$document_8h.html#a4017a9b69658b550d56ffc8ffb47a15d" title="Print all the SBOL objects in a Document to stdout. " alt="" coords="428,371,533,397"/>
+<area shape="rect" id="node24" href="$writer_8h.html#ae086a14ff9603e5a3a223a1dcb6bcff4" title="Write document to static xmlDoc. " alt="" coords="427,421,535,448"/>
+<area shape="rect" id="node3" href="$document_8h.html#a8563314c725ef3b8b4285d934a6296b9" title="Find out whether there&#39;s an SBOL object with this URI in this Document. " alt="" coords="618,144,737,171"/>
+<area shape="rect" id="node4" href="$group___col.html#ga7fe2662a0adfa42f0e26b950f8340e5c" title="Create an empty Collection. " alt="" coords="1624,17,1737,44"/>
+<area shape="rect" id="node5" href="$group___d_c.html#ga9cf6255fdc0cf5dabda22d972d06638d" title="Create an empty DNAComponent. " alt="" coords="1607,93,1754,120"/>
+<area shape="rect" id="node8" href="$group___seq.html#ga33fee94fed1c78706b0b46cf40bfdae9" title="Create an empty DNASequence. " alt="" coords="1392,195,1531,221"/>
+<area shape="rect" id="node10" href="$object_8h.html#a6831069e3f5b4be739e6d102b7e30daf" title="Create an empty SBOLObject. " alt="" coords="1164,195,1289,221"/>
+<area shape="rect" id="node11" href="$object_8h.html#aeea1364caa7e5e00836347df9f1b129a" title="Create an empty SBOLCompoundObject. " alt="" coords="1368,43,1555,69"/>
+<area shape="rect" id="node12" href="$group___s_a.html#gaa972285326409e2a091b653c8081c5fc" title="Create an empty SequenceAnnotation. " alt="" coords="1374,144,1549,171"/>
+<area shape="rect" id="node13" href="$property_8h.html#ad6dbe2a1112ce9e5963b4eec2662141b" title="Store a string in a URIProperty. " alt="" coords="804,296,911,323"/>
+<area shape="rect" id="node6" href="$group___d_c.html#ga2f53ac8c728bd591f52b17a4f908e4ab" title="Clone a DNAComponent object. " alt="" coords="2020,169,2157,196"/>
+<area shape="rect" id="node7" href="$group___s_a.html#ga1425142e21a2346da3e97b4c3519d61b" title="Clone a SequenceAnnotation object. " alt="" coords="1807,144,1972,171"/>
+<area shape="rect" id="node9" href="$group___seq.html#ga3a7a6a2f8465a5f904ecd0a856808437" title="Clone a DNASequence object. " alt="" coords="1825,195,1953,221"/>
+<area shape="rect" id="node14" href="$object_8h.html#aaa06a93048cf5da20bc9a9837d6bcb95" title="Set the URI of an SBOLObject. " alt="" coords="959,296,1085,323"/>
+<area shape="rect" id="node17" href="$property_8h.html#a80d43d4b07f0826e537a6b0adf8f6005" title="Store a uri in a TypeProperty. " alt="" coords="965,347,1079,373"/>
+<area shape="rect" id="node15" href="$object_8h.html#a610f42487fe44a2485fe60efa5829fb1" title="Set the URI of an SBOLComoundObject. " alt="" coords="1133,296,1320,323"/>
+<area shape="rect" id="node16" href="$group___d_c.html#ga3e8baba4bf73bf73c6bb948283ee1374" title="Set the uri of a DNAComponent. " alt="" coords="1387,296,1535,323"/>
+<area shape="rect" id="node18" href="$group___d_c.html#ga69ac271a8679110ca3e780fdf76d77b1" title="Set the type of a DNAComponent. " alt="" coords="1603,296,1759,323"/>
+<area shape="rect" id="node25" href="$writer_8h.html#a10870873315819f1c3e771abe5cfc4c3" title="Create, validate, and save an XML document based on the SBOLObjects currently in memory. " alt="" coords="606,396,749,423"/>
+<area shape="rect" id="node26" href="$writer_8h.html#adef5fb6d01e689be52484ec8c7ad5dea" title="Create and return contents of XML written for SBOLObjects currently in memory. " alt="" coords="599,447,756,473"/>
+</map>

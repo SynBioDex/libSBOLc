@@ -1,0 +1,6 @@
+<map id="getNumPrecedes" name="getNumPrecedes">
+<area shape="rect" id="node2" href="$group___s_a.html#ga0237cdb59ef4ae24381d870ebf5a2289" title="Get the Nth SequenceAnnotation that must be placed after this one. " alt="" coords="172,31,283,57"/>
+<area shape="rect" id="node3" href="$group___s_a.html#ga645cd14071ed28e92a8053776384c7e6" title="Find out whether one SequenceAnnotation is restricted to appearing before another one..." alt="" coords="376,5,451,32"/>
+<area shape="rect" id="node4" href="$group___s_a.html#ga3bf0475adea1282b6969d1994845560c" title="Print an outline of a SequenceAnnotation to stdout. " alt="" coords="331,68,496,95"/>
+<area shape="rect" id="node5" href="$group___doc.html#ga4017a9b69658b550d56ffc8ffb47a15d" title="Print all the SBOL objects in a Document to stdout. " alt="" coords="544,68,649,95"/>
+</map>

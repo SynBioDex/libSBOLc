@@ -1,0 +1,5 @@
+<map id="getDNAComponentName" name="getDNAComponentName">
+<area shape="rect" id="node2" href="$dnacomponent_8h.html#a2f53ac8c728bd591f52b17a4f908e4ab" title="Clone a DNAComponent object. " alt="" coords="216,5,353,32"/>
+<area shape="rect" id="node3" href="$dnacomponent_8h.html#ac5b87bbceb04bd529560e0159e0ce404" title="Print an outline of a DNAComponent to stdout. " alt="" coords="216,56,353,83"/>
+<area shape="rect" id="node4" href="$document_8h.html#a4017a9b69658b550d56ffc8ffb47a15d" title="Print all the SBOL objects in a Document to stdout. " alt="" coords="401,56,507,83"/>
+</map>

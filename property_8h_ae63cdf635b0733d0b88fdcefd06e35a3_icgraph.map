@@ -1,0 +1,5 @@
+<map id="compareTextProperty" name="compareTextProperty">
+<area shape="rect" id="node2" href="$property_8h.html#a6fc8c24edc0bc01f1b1109024e10b0c2" title="Compare two URIProperties for string equality. " alt="" coords="221,5,361,32"/>
+<area shape="rect" id="node4" href="$property_8h.html#a87df999402030e8dcbebd7d37e4ba066" title="Compare two NucleotidesProperties for string equality. " alt="" coords="199,56,384,83"/>
+<area shape="rect" id="node3" href="$property_8h.html#a67a08c8badd349e2957d79f33d344c41" title="Compare two TypeProperties for uri equality. " alt="" coords="432,5,580,32"/>
+</map>

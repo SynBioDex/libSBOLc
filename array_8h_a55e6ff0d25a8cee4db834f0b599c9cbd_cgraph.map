@@ -1,0 +1,5 @@
+<map id="pointerContainedInArray" name="pointerContainedInArray">
+<area shape="rect" id="node2" href="$array_8h.html#aa5a8790f623b927dc581865e9144e9cd" title="Get the index of a pointer stored in a PointerArray. " alt="" coords="215,5,361,32"/>
+<area shape="rect" id="node3" href="$array_8h.html#ac866d8fd79355c021e68f3662921fc51" title="Get the number of pointers stored in a PointerArray. " alt="" coords="599,5,753,32"/>
+<area shape="rect" id="node4" href="$array_8h.html#aff165b4b431b1aaeca1978a60296ffa1" title="Get the Nth pointer from a PointerArray. " alt="" coords="409,31,551,57"/>
+</map>
