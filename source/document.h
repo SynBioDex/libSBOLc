@@ -10,6 +10,7 @@
 
 #include "constants.h"
 #include "prototypes.h"
+#include <libxml/parser.h>
 
 /// Represents an SBOL document that can be read from or written to a file.
 /// It also holds pointers to all the SBOL objects in the document,
@@ -32,6 +33,7 @@ struct _Document{
     PointerArray* annotations; ///< All the SequenceAnnotations in the Document.
     PointerArray* components;  ///< All the DNAComponents in the Document.
     PointerArray* collections; ///< All the Collections in the Document.
+	xmlDoc* xml_doc;
 };
 /// @name Methods
 /// @{

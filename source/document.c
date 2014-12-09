@@ -1,6 +1,8 @@
 #include <stdio.h>
 #include <stdlib.h>
 
+#include <libxml/parser.h>
+
 #include "document.h"
 #include "array.h"
 #include "dnasequence.h"
@@ -322,6 +324,7 @@ Document* createDocument() {
 	doc->annotations = createPointerArray();
 	doc->components       = createPointerArray();
 	doc->collections         = createPointerArray();
+	doc->xml_doc = xmlNewDoc(BAD_CAST "1.0");
 	return doc;
 }
 
@@ -376,6 +379,10 @@ void deleteDocument(Document* doc) {
 		doc->collections = NULL;
 	}
 
+	// structured xml annotations
+	if (doc->xml_doc) {
+		xmlFreeDoc(doc->xml_doc);
+	}
 	free(doc);
 	doc = NULL;
 }

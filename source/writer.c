@@ -64,6 +64,9 @@ static void startSBOLDocument() {
 	xmlTextWriterWriteAttribute(WRITER, xmlCharStrdup("xmlns:" NSPREFIX_RDFS), xmlCharStrdup(NSURL_RDFS));
 	xmlTextWriterWriteAttribute(WRITER, xmlCharStrdup("xmlns:" NSPREFIX_SO),   xmlCharStrdup(NSURL_SO));
 	xmlTextWriterWriteAttribute(WRITER, xmlCharStrdup("xmlns:" NSPREFIX_SBOL), xmlCharStrdup(NSURL_SBOL));
+	// Look for non-SBOL namespaces included as structural annotations
+	xmlTextWriterWriteAttribute(WRITER, xmlCharStrdup("xmlns:grn"), xmlCharStrdup("urn:bbn.com:tasbe:grn"));
+
 	indentMore();
 }
 
@@ -87,6 +90,86 @@ static int saveSBOLDocument(const char* filename) {
  * functions for writing individual
  * SBOLObjects to the WRITER
  ************************************/
+
+// Writes xml nodes with namespaces not used by SBOL
+static void writeStructuredAnnotation(xmlNode *node) {
+	printf("Node type: %d\n", (int)node->type);
+	if (node->type != 1) {
+		printf("%s\n", node->name);
+		return;
+	}
+	else {
+		//printf("Writing namespace %s:%s\n", node->ns->prefix, node->name);
+		//xmlChar *path;
+		//sprintf(path, "%s:%s", node->ns->prefix, node->name);
+		//xmlChar* PREFIX = node->ns->prefix;  // need xmlStrCopy here, otherwise just copies address
+		//xmlChar* NAME = node->name;  // need xmlStrCopy here
+		//xmlChar *path2 = xmlStrcat(PREFIX, xmlCharStrdup(":"));
+		//xmlChar *path = xmlStrcat(path2, NAME);
+
+		// Assemble the structural annotation's XPath address as an xmlChar 
+		// using the node namespace prefix and name
+		// @TODO remove PREFIX and NAME
+		xmlChar* PREFIX = xmlStrncatNew(node->ns->prefix, xmlCharStrdup(":"), -1);
+		xmlChar* NAME = xmlStrncatNew(PREFIX, node->name, -1);
+		xmlChar *path = xmlStrncatNew(PREFIX, node->name, -1);
+
+		printf("Writing namespace %s\n", path);
+
+		xmlTextWriterStartElement(WRITER, path);
+
+		printf("Writing attributes.\n");
+		xmlAttr *attr = node->properties;
+		while (attr)
+		{
+			if (attr->name && attr->children->content) {
+				printf("Attr Name:%s\tAttr Properties:%s\n", attr->name, attr->children->content);
+				//xmlTextWriterStartAttributeNS(WRITER, node->ns->prefix, attr->name, node->ns->href);
+				//xmlTextWriterStartAttribute(WRITER, node->name);
+				xmlTextWriterWriteAttribute(WRITER, attr->name, attr->children->content);
+				//xmlTextWriterEndAttribute(WRITER);
+			}
+			attr = attr->next;
+		}
+
+		if (node->content) xmlTextWriterWriteElement(WRITER, path, node->content);
+
+		printf("Writing child nodes\n");
+		xmlNode *child_node;
+		child_node = node->children;
+		while (child_node) {
+			printf("Recursing into children.\n");
+			indentMore();
+			writeStructuredAnnotation(child_node);
+			indentLess();
+			child_node = child_node->next;
+		}
+		printf("Ending element.\n");
+
+		xmlTextWriterEndElement(WRITER);
+
+		return;
+	}
+	//xmlNs **ns_list = xmlGetNsList(DOCUMENT, child_node);
+	//for (i = 0; ns_list[i] != NULL; i++) {
+	//	printf("%s\t%s\n", ns_list[i]->prefix, ns_list[i]->href);
+	//	xmlGetNsProp(const xmlNode * node,
+	//		const xmlChar * name,
+	//		const xmlChar * nameSpace)
+	//}
+	//xmlFree(ns_list);
+	
+	//xmlNode *node;
+	//xmlBufferPtr buffer = xmlBufferCreate();
+	// print this node as raw text
+	//xmlKeepBlanksDefault(0);
+	//int size = xmlNodeDump(buffer, com->doc->xml_doc, node, 0, 0);
+	//if (buffer->content) {
+	//	printf("%s\n", buffer->content);
+	//xmlFree(buffer);
+	//}
+
+}
 
 static void writeDNASequence(DNASequence* seq) {
 	if (!seq)
@@ -207,19 +290,18 @@ static void writeDNAComponent(DNAComponent* com) {
 				indentLess();
 			}
 		}
-		////Attempt to pass a structured annotation to the destination document as an xml node object
-		//xmlNode *node;
-		//printf("%s\n", getDNAComponentURI(com));
-		////printf("%d\n", getNumPointersInArray(com->base->base->xml_annotations));
-		//for (n = 0; n < getNumPointersInArray(com->base->base->xml_annotations); n++) {
-		//	node = (xmlNode *)getNthPointerInArray(com->base->base->xml_annotations, n);
-		//	printf("Node %d name:%s\n", n, (char *)node->name);
-		//	//xmlTextWriterWriteElementNS(WRITER, (char *)node->ns->prefix, 
-		//	//	                                (char *)node->name, 
-		//	//									(char *)node->ns->href, 
-		//	//									(char *)node->content);
-		//}
-		//xmlFree(node);
+		//// Copy a structured annotation as an xml node object from the base Document's xml_doc to 
+		// the destination document
+		
+		xmlNode *node;
+		xmlNode *node_copy;
+		for (n = 0; n < getNumPointersInArray(com->base->base->xml_annotations); n++) {
+			node = (xmlNode *)getNthPointerInArray(com->base->base->xml_annotations, n);
+			node_copy = xmlDocCopyNode(node, OUTPUT, 1);
+			indentMore();
+			writeStructuredAnnotation(node_copy);
+			indentLess();
+		}
 		indentLess();
 		
 	} else

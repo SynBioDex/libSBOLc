@@ -240,17 +240,18 @@ static void readSequenceAnnotationReferences(xmlNode *node) {
 	}
 }
 
+
 static void readDNAComponentContent(xmlNode *node) {
     DNAComponent *com;
     xmlChar *com_uri;
 	xmlChar *path;
 	xmlChar *type_property;
 	xmlNode *type_node;
-	xmlNode *child_node;
-	xmlNode *test_node;
+	xmlNode *child_node; // structured xml annotation
+
 	//xmlOutputBufferPtr buffer;
 	PointerArray *results;
-	int n;
+	int i;
 
     // create DNAComponent
     com_uri = getNodeURI(node);
@@ -269,35 +270,24 @@ static void readDNAComponentContent(xmlNode *node) {
 		xmlFree(results);
 	}
 
-	////printf("%s\n", (char *)node->name);
-	//child_node = node->children;
-	//while (child_node) {
-	//	//if ((char *)result->name == "text") {
-	//	//	printf("Node content:%s\n", (char *)xmlNodeGetContent(result));
-	//	//if (result->type == XML_TEXT_NODE) {
-	//	//printf("Node content:%s\n", (char *)xmlNodeGetContent(result));
-	//	//printf("Node content:%s\n", (char *)result->content);
-	//	//}
-	//	//printf("Node content:%s\n", (char *)xmlNodeGetContent(result));
-	//	//printf("%s\n", (char *)child_node->name);
-	//	if (child_node->ns &&
-	//		strcmp((char*)child_node->ns->href, NSURL_RDF) != 0 &&
-	//		strcmp((char*)child_node->ns->href, NSURL_RDFS) != 0 &&
-	//		strcmp((char*)child_node->ns->href, NSURL_SO) != 0 &&
-	//		strcmp((char*)child_node->ns->href, NSURL_SBOL) != 0) {
-	//		printf("%s:\t%s\n", child_node->ns->prefix, child_node->ns->href);
-	//		
-	//		// print this node as raw text
-	//		xmlBufferPtr buffer = xmlBufferCreate();
-	//		xmlKeepBlanksDefault(0);
-	//		int size = xmlNodeDump(buffer, DOCUMENT, child_node, 0, 0);
-	//		printf("%s\n", buffer->content);
-
-	//	}
-	//child_node = child_node->next;
-	//}
-	//xmlFree(test_node);
-	//// Not necessary to use xmlFree(child_node) because we want to save it for later output!
+	// scan other xml nodes attached to this DNAComponent for structured xml annotations
+	//printf("%s\n", (char *)node->name);
+	child_node = node->children;
+	while (child_node) {
+		if (child_node->ns &&
+			strcmp((char*)child_node->ns->href, NSURL_RDF) != 0 &&
+			strcmp((char*)child_node->ns->href, NSURL_RDFS) != 0 &&
+			strcmp((char*)child_node->ns->href, NSURL_SO) != 0 &&
+			strcmp((char*)child_node->ns->href, NSURL_SBOL) != 0) {
+			
+			// copy xml node and append to SBOLDocument as a structural annotation 
+			// Not necessary to use xmlFree(node_copy) because we want to save it for later output!
+			xmlNode* node_copy = xmlDocCopyNode(child_node, com->doc->xml_doc, 1);
+			insertPointerIntoArray(com->base->base->xml_annotations, node_copy);
+			printf("Added node %s:%s\n", node_copy->ns->prefix, node_copy->name);
+		}
+		child_node = child_node->next;
+	}
 }
 
 static void readDNAComponentReferences(xmlNode *node) {
@@ -449,8 +439,8 @@ void readDocument(Document* destination, char* filename) {
 	#undef GLOBAL_XPATH
 	
 	// clean up
-	xmlXPathFreeContext(CONTEXT);
-	xmlFreeDoc(DOCUMENT);
-	DESTINATION = NULL;
-	xmlCleanupParser();
+	//xmlXPathFreeContext(CONTEXT);
+	//xmlFreeDoc(DOCUMENT);
+	//DESTINATION = NULL;
+	//xmlCleanupParser();
 }
