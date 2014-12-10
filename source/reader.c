@@ -439,8 +439,8 @@ void readDocument(Document* destination, char* filename) {
 	#undef GLOBAL_XPATH
 	
 	// clean up
-	//xmlXPathFreeContext(CONTEXT);
-	//xmlFreeDoc(DOCUMENT);
-	//DESTINATION = NULL;
-	//xmlCleanupParser();
+	xmlXPathFreeContext(CONTEXT);
+	xmlFreeDoc(DOCUMENT);
+	DESTINATION = NULL;
+	xmlCleanupParser();
 }
