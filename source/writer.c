@@ -71,39 +71,23 @@ static void startSBOLDocument() {
 }
 
 static void addNamespacesToDocument(Document *doc) {
-	// write components
-	int n, m;
-	DNAComponent* com;
-	xmlNode* node;
-	for (n = 0; n<getNumDNAComponents(doc); n++) {
-		com = getNthDNAComponent(doc, n);
-		printf("Retrieving annotations for component %d:%s\n", n, getDNAComponentURI(com));
-		for (m = 0; m < getNumPointersInArray(com->base->base->xml_annotations); m++) {
-			node = (xmlNode *)getNthPointerInArray(com->base->base->xml_annotations, m);
-			printf("\tRetrieving annotation %d: %s\n", m, (char *)node->name);
-			if (node->ns) {
-				printf("\t\t%s: %s\n", node->ns->prefix, node->ns->href);
-			}
-		}
+	xmlNode *root = xmlDocGetRootElement(doc->xml_doc);
+	xmlNs *ns = root->nsDef;
+	while (ns) {
+		printf("Retrieving namespace from root %s: %s\n", ns->prefix, ns->href);
+		ns = ns->next;
+	}
+	// Construct element path for non-SBOL namespace
+	
+	//Write namespace attributes
+	//xmlTextWriterWriteAttribute(WRITER, xmlCharStrdup("xmlns:grn"), xmlCharStrdup("urn:bbn.com:tasbe:grn"));
+
+	// Show that the intermediate Document->xml_doc updated its namespace correctly
+	printf("Namespaces currently in document:\n");
+	if (root->nsDef) {
+		printf("\t\t%s: %s\n", root->nsDef->prefix, root->nsDef->href);
 	}
 
-	printf("Namespaces currently in document:\n");
-	xmlNs **ns_list;
-	xmlNs *ns;
-	printf("Getting root node\n");
-	node = xmlDocGetRootElement(doc->xml_doc);
-	if (node->ns) {
-		printf("\t\t%s: %s\n", node->ns->prefix, node->ns->href);
-	}
-	if (node->nsDef) {
-		printf("\t\t%s: %s\n", node->nsDef->prefix, node->nsDef->href);
-	}
-	/*ns_list = xmlGetNsList(doc->xml_doc, xmlDocGetRootElement(doc->xml_doc));
-	ns = ns_list[0];
-	while (ns) {
-		printf("%s:%s\n", ns->prefix, ns->href);
-		ns = ns->next;
-	}*/
 	return;
 }
 
