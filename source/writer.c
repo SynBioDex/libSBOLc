@@ -70,6 +70,43 @@ static void startSBOLDocument() {
 	indentMore();
 }
 
+static void addNamespacesToDocument(Document *doc) {
+	// write components
+	int n, m;
+	DNAComponent* com;
+	xmlNode* node;
+	for (n = 0; n<getNumDNAComponents(doc); n++) {
+		com = getNthDNAComponent(doc, n);
+		printf("Retrieving annotations for component %d:%s\n", n, getDNAComponentURI(com));
+		for (m = 0; m < getNumPointersInArray(com->base->base->xml_annotations); m++) {
+			node = (xmlNode *)getNthPointerInArray(com->base->base->xml_annotations, m);
+			printf("\tRetrieving annotation %d: %s\n", m, (char *)node->name);
+			if (node->ns) {
+				printf("\t\t%s: %s\n", node->ns->prefix, node->ns->href);
+			}
+		}
+	}
+
+	printf("Namespaces currently in document:\n");
+	xmlNs **ns_list;
+	xmlNs *ns;
+	printf("Getting root node\n");
+	node = xmlDocGetRootElement(doc->xml_doc);
+	if (node->ns) {
+		printf("\t\t%s: %s\n", node->ns->prefix, node->ns->href);
+	}
+	if (node->nsDef) {
+		printf("\t\t%s: %s\n", node->nsDef->prefix, node->nsDef->href);
+	}
+	/*ns_list = xmlGetNsList(doc->xml_doc, xmlDocGetRootElement(doc->xml_doc));
+	ns = ns_list[0];
+	while (ns) {
+		printf("%s:%s\n", ns->prefix, ns->href);
+		ns = ns->next;
+	}*/
+	return;
+}
+
 static void endSBOLDocument() {
 	indentLess();
 	xmlTextWriterEndElement(WRITER);
@@ -85,6 +122,8 @@ static int saveSBOLDocument(const char* filename) {
 	int written = xmlSaveFile(filename, OUTPUT);
 	return (int) invalid || written == -1;
 }
+
+
 
 /************************************
  * functions for writing individual
@@ -355,6 +394,7 @@ static void writeCollection(Collection* col) {
 void writeDocument(Document* doc) {
 	int n;
 	startSBOLDocument();
+	addNamespacesToDocument(doc);
 
 	// write collections
 	Collection* col;

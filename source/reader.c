@@ -283,6 +283,9 @@ static void readDNAComponentContent(xmlNode *node) {
 			// copy xml node and append to SBOLDocument as a structural annotation 
 			// Not necessary to use xmlFree(node_copy) because we want to save it for later output!
 			xmlNode* node_copy = xmlDocCopyNode(child_node, com->doc->xml_doc, 1);
+			node_copy = xmlAddChild(xmlDocGetRootElement(com->doc->xml_doc), node_copy);
+			i = xmlReconciliateNs(com->doc->xml_doc, xmlDocGetRootElement(com->doc->xml_doc));
+			printf("Reconciled %d namespaces\n");
 			insertPointerIntoArray(com->base->base->xml_annotations, node_copy);
 			printf("Added node %s:%s\n", node_copy->ns->prefix, node_copy->name);
 		}

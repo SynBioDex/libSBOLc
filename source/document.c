@@ -325,6 +325,7 @@ Document* createDocument() {
 	doc->components       = createPointerArray();
 	doc->collections         = createPointerArray();
 	doc->xml_doc = xmlNewDoc(BAD_CAST "1.0");
+	xmlDocSetRootElement(doc->xml_doc, xmlNewNode(NULL, "root"));
 	return doc;
 }
 
