@@ -127,7 +127,8 @@ static int saveSBOLDocument(const char* filename) {
 // Writes xml nodes with namespaces not used by SBOL
 static void writeStructuredAnnotation(xmlNode *node) {
 	printf("Node type: %d\n", (int)node->type);
-	if (node->type != 1) {
+	// Ignore all non-Element xml nodes, eg, text
+	if (node->type != XML_ELEMENT_NODE) {
 		printf("%s\n", node->name);
 		return;
 	}

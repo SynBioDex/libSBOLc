@@ -9,6 +9,7 @@
 
 #include "constants.h"
 #include "prototypes.h"
+#include <libxml/tree.h>
 
 /**************
  * SBOLObject
@@ -53,6 +54,15 @@ void setSBOLObjectURI(SBOLObject* obj, const char* uri);
 /// Get the URI of an SBOLObject.
 /// This shouldn't be called directly.
 char* getSBOLObjectURI(const SBOLObject* obj);
+
+// Returns numer of structured XML annotations associated with this object
+SBOLAPIEXPORTS int getNumStructuredAnnotations(SBOLObject* obj);
+
+// Returns a structured annotation as a libXML2 xml node
+SBOLAPIEXPORTS xmlNode* getNthStructuredAnnotationAsXML(SBOLObject* obj, int n);
+
+// Returns a structured annotation as raw text
+SBOLAPIEXPORTS char* getNthStructuredAnnotationAsText(SBOLObject* obj, int n);
 
 /// @}
 /// @}

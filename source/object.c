@@ -1,8 +1,11 @@
 #include <stdlib.h>
-
+#include <string.h>
 #include "property.h"
 #include "array.h"
 #include "object.h"
+#include "document.h"
+#include <libxml/tree.h>
+#include <libxml/xmlstring.h>
 
 /**************
  * SBOLObject
@@ -44,6 +47,39 @@ char* getSBOLObjectURI(const SBOLObject* obj) {
 	else
 		return NULL;
 }
+
+int getNumStructuredAnnotations(SBOLObject* obj) {
+	return getNumPointersInArray(obj->xml_annotations);
+}
+
+// Returns a structured annotation as a libXML2 xml node
+xmlNode* getNthStructuredAnnotationAsXML(SBOLObject* obj, const int n) {
+	if (n >= getNumStructuredAnnotations(obj)) {
+		return;
+	} else {
+		return (xmlNode *)getNthPointerInArray(obj->xml_annotations, n);
+	}
+}
+
+// Returns a structured annotation as raw text
+char* getNthStructuredAnnotationAsText(SBOLObject* obj, const int n) {
+	if (n >= getNumStructuredAnnotations(obj)) {
+		return;
+	} else {
+		xmlBufferPtr buffer = xmlBufferCreate();
+		xmlKeepBlanksDefault(0);
+		char *text = NULL;
+
+		int size = xmlNodeDump(buffer, obj->uri->doc->xml_doc, getNthStructuredAnnotationAsXML(obj, n), 0, 0);
+		if (buffer->content) {
+			text = malloc(sizeof(xmlChar)*xmlStrlen(buffer->content));
+			strcpy(text, buffer->content);
+		}
+		xmlFree(buffer);
+		return (char *)text;
+	}
+}
+
 
 /**********************
  * SBOLCompoundObject

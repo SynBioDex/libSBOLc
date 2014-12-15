@@ -143,6 +143,7 @@ char* getDNAComponentType(const DNAComponent* com) {
         return NULL;
 }
 
+
 /********************
  * set... functions
  ********************/

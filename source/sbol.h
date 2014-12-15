@@ -22,5 +22,6 @@
 #include "validator.h"
 #include "reader.h"
 #include "writer.h"
-
+#include "object.h"
+#include "property.h"
 #endif
