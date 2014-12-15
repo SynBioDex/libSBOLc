@@ -65,19 +65,29 @@ static void startSBOLDocument() {
 	xmlTextWriterWriteAttribute(WRITER, xmlCharStrdup("xmlns:" NSPREFIX_SO),   xmlCharStrdup(NSURL_SO));
 	xmlTextWriterWriteAttribute(WRITER, xmlCharStrdup("xmlns:" NSPREFIX_SBOL), xmlCharStrdup(NSURL_SBOL));
 	// Look for non-SBOL namespaces included as structural annotations
-	xmlTextWriterWriteAttribute(WRITER, xmlCharStrdup("xmlns:grn"), xmlCharStrdup("urn:bbn.com:tasbe:grn"));
+	//xmlTextWriterWriteAttribute(WRITER, xmlCharStrdup("xmlns:grn"), xmlCharStrdup("urn:bbn.com:tasbe:grn"));
 
 	indentMore();
+}
+
+// Joins two xmlChar*s with a ":"
+static xmlChar* constructXPath(const xmlChar *prefix, const xmlChar *name) {
+	xmlChar* token = xmlStrncatNew(prefix, xmlCharStrdup(":"), -1);
+	return xmlStrncatNew(token, name, -1);
 }
 
 static void addNamespacesToDocument(Document *doc) {
 	xmlNode *root = xmlDocGetRootElement(doc->xml_doc);
 	xmlNs *ns = root->nsDef;
+	indentLess();
 	while (ns) {
 		printf("Retrieving namespace from root %s: %s\n", ns->prefix, ns->href);
+		// Construct element path for non-SBOL namespace
+		printf("%s\n", (char*)constructXPath(xmlCharStrdup("xmlns"), ns->prefix));
+		xmlTextWriterWriteAttribute(WRITER, constructXPath(xmlCharStrdup("xmlns"), ns->prefix), ns->href);
 		ns = ns->next;
 	}
-	// Construct element path for non-SBOL namespace
+	indentMore();
 	
 	//Write namespace attributes
 	//xmlTextWriterWriteAttribute(WRITER, xmlCharStrdup("xmlns:grn"), xmlCharStrdup("urn:bbn.com:tasbe:grn"));
@@ -133,10 +143,11 @@ static void writeStructuredAnnotation(xmlNode *node) {
 		// Assemble the structural annotation's XPath address as an xmlChar 
 		// using the node namespace prefix and name
 		// @TODO remove PREFIX and NAME
-		xmlChar* PREFIX = xmlStrncatNew(node->ns->prefix, xmlCharStrdup(":"), -1);
+		/*xmlChar* PREFIX = xmlStrncatNew(node->ns->prefix, xmlCharStrdup(":"), -1);
 		xmlChar* NAME = xmlStrncatNew(PREFIX, node->name, -1);
-		xmlChar *path = xmlStrncatNew(PREFIX, node->name, -1);
+		xmlChar *path = xmlStrncatNew(PREFIX, node->name, -1);*/
 
+		xmlChar *path = constructXPath(node->ns->prefix, node->name);
 		printf("Writing namespace %s\n", path);
 
 		xmlTextWriterStartElement(WRITER, path);

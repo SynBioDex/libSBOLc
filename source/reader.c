@@ -121,6 +121,14 @@ static void processNodes(void (*read)(xmlNode *), xmlChar *path) {
 	applyFunctionToNodesMatchingXPath(read, NULL, path);
 }
 
+static int isSBOLNamespace(const xmlChar *uri) {
+	return (strcmp(uri, NSURL_RDF) == 0 ||
+		strcmp(uri, NSURL_RDFS) == 0 ||
+		strcmp(uri, NSURL_SO) == 0 ||
+		strcmp(uri, NSURL_SBOL) == 0);
+}
+
+
 /***************************
  * functions for reading
  * individual SBOL objects
@@ -249,7 +257,6 @@ static void readDNAComponentContent(xmlNode *node) {
 	xmlNode *type_node;
 	xmlNode *child_node; // structured xml annotation
 
-	//xmlOutputBufferPtr buffer;
 	PointerArray *results;
 	int i;
 
@@ -274,14 +281,8 @@ static void readDNAComponentContent(xmlNode *node) {
 	//printf("%s\n", (char *)node->name);
 	child_node = node->children;
 	while (child_node) {
-		if (child_node->ns &&
-			strcmp((char*)child_node->ns->href, NSURL_RDF) != 0 &&
-			strcmp((char*)child_node->ns->href, NSURL_RDFS) != 0 &&
-			strcmp((char*)child_node->ns->href, NSURL_SO) != 0 &&
-			strcmp((char*)child_node->ns->href, NSURL_SBOL) != 0) {
-			
-			// copy xml node and append to SBOLDocument as a structural annotation 
-			// Not necessary to use xmlFree(node_copy) because we want to save it for later output!
+		if (child_node->ns && !isSBOLNamespace(child_node->ns->href)) {
+			// copy xml tree and save it in the SBOLDocument object as a structural annotation 
 			xmlNode* node_copy = xmlDocCopyNode(child_node, com->doc->xml_doc, 1);
 			node_copy = xmlAddChild(xmlDocGetRootElement(com->doc->xml_doc), node_copy);
 			i = xmlReconciliateNs(com->doc->xml_doc, xmlDocGetRootElement(com->doc->xml_doc));
