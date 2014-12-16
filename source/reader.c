@@ -165,6 +165,8 @@ static void readDNASequenceContent(xmlNode *node) {
 	xmlChar *path;
 	xmlChar *nt;
 	DNASequence *seq;
+	xmlNode *child_node; // structured xml annotation
+	int i;
 
 	// create DNASequence
 	uri = getNodeURI(node);
@@ -176,7 +178,20 @@ static void readDNASequenceContent(xmlNode *node) {
 		setDNASequenceNucleotides(seq, (char *)nt);
 		xmlFree(nt);
 	}
-
+	// scan other xml nodes attached to this Annotation for structured xml annotations
+	// @TODO factor out this block of code.  This routine is generally used by each of the SBOL core objects
+	// but it requires some custom knowledge of the calling object (in this case, Annotation)
+	child_node = node->children;
+	while (child_node) {
+		if (child_node->ns && !isSBOLNamespace(child_node->ns->href)) {
+			// copy xml tree and save it in the SBOLDocument object as a structural annotation 
+			xmlNode* node_copy = xmlDocCopyNode(child_node, seq->doc->xml_doc, 1);
+			node_copy = xmlAddChild(xmlDocGetRootElement(seq->doc->xml_doc), node_copy);
+			i = xmlReconciliateNs(seq->doc->xml_doc, xmlDocGetRootElement(seq->doc->xml_doc));
+			insertPointerIntoArray(seq->base->xml_annotations, node_copy);
+		}
+		child_node = child_node->next;
+	}
 	xmlFree(uri);
 }
 
@@ -185,6 +200,8 @@ static void readSequenceAnnotationContent(xmlNode *node) {
 	xmlChar *ann_uri;
 	xmlChar *path;
 	xmlChar *contents;
+	xmlNode *child_node; // structured xml annotation
+	int i;
 
 	// create SequenceAnnotation
 	ann_uri = getNodeURI(node);
@@ -210,6 +227,21 @@ static void readSequenceAnnotationContent(xmlNode *node) {
 	if (contents = getContentsOfNodeMatchingXPath(node, path)) {
 		setSequenceAnnotationStrand(ann, strToPolarity((char *)contents));
 		xmlFree(contents);
+	}
+
+	// scan other xml nodes attached to this Annotation for structured xml annotations
+	// @TODO factor out this block of code.  This routine is generally used by each of the SBOL core objects
+	// but it requires some custom knowledge of the calling object (in this case, Annotation)
+	child_node = node->children;
+	while (child_node) {
+		if (child_node->ns && !isSBOLNamespace(child_node->ns->href)) {
+			// copy xml tree and save it in the SBOLDocument object as a structural annotation 
+			xmlNode* node_copy = xmlDocCopyNode(child_node, ann->doc->xml_doc, 1);
+			node_copy = xmlAddChild(xmlDocGetRootElement(ann->doc->xml_doc), node_copy);
+			i = xmlReconciliateNs(ann->doc->xml_doc, xmlDocGetRootElement(ann->doc->xml_doc));
+			insertPointerIntoArray(ann->base->xml_annotations, node_copy);
+		}
+		child_node = child_node->next;
 	}
 }
 
@@ -278,7 +310,8 @@ static void readDNAComponentContent(xmlNode *node) {
 	}
 
 	// scan other xml nodes attached to this DNAComponent for structured xml annotations
-	//printf("%s\n", (char *)node->name);
+	// @TODO factor out this block of code.  This routine is generally used by each of the SBOL core objects
+	// but it requires some custom knowledge of the calling object (in this case, DNAComponent)
 	child_node = node->children;
 	while (child_node) {
 		if (child_node->ns && !isSBOLNamespace(child_node->ns->href)) {
@@ -292,6 +325,7 @@ static void readDNAComponentContent(xmlNode *node) {
 		}
 		child_node = child_node->next;
 	}
+
 }
 
 static void readDNAComponentReferences(xmlNode *node) {
@@ -333,6 +367,8 @@ static void readDNAComponentReferences(xmlNode *node) {
 static void readCollectionContent(xmlNode *node) {
     Collection *col;
     xmlChar *col_uri;
+	xmlNode *child_node; // structured xml annotation
+	int i;
 
     // create Collection
     col_uri = getNodeURI(node);
@@ -341,6 +377,22 @@ static void readCollectionContent(xmlNode *node) {
 
     // add displayID, name, description
     readSBOLCompoundObject(col->base, node);
+
+	// scan other xml nodes attached to this Collection for structured xml annotations
+	// @TODO factor out this block of code.  This routine is generally used by each of the SBOL core objects
+	// but it requires some custom knowledge of the calling object (in this case, Collection)
+	child_node = node->children;
+	while (child_node) {
+		if (child_node->ns && !isSBOLNamespace(child_node->ns->href)) {
+			// copy xml tree and save it in the SBOLDocument object as a structural annotation 
+			xmlNode* node_copy = xmlDocCopyNode(child_node, col->doc->xml_doc, 1);
+			node_copy = xmlAddChild(xmlDocGetRootElement(col->doc->xml_doc), node_copy);
+			i = xmlReconciliateNs(col->doc->xml_doc, xmlDocGetRootElement(col->doc->xml_doc));
+			insertPointerIntoArray(col->base->base->xml_annotations, node_copy);
+		}
+		child_node = child_node->next;
+	}
+
 }
 
 static void readCollectionReferences(xmlNode *node) {
