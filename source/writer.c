@@ -81,23 +81,11 @@ static void addNamespacesToDocument(Document *doc) {
 	xmlNs *ns = root->nsDef;
 	indentLess();
 	while (ns) {
-		printf("Retrieving namespace from root %s: %s\n", ns->prefix, ns->href);
 		// Construct element path for non-SBOL namespace
-		printf("%s\n", (char*)constructXPath(xmlCharStrdup("xmlns"), ns->prefix));
 		xmlTextWriterWriteAttribute(WRITER, constructXPath(xmlCharStrdup("xmlns"), ns->prefix), ns->href);
 		ns = ns->next;
 	}
 	indentMore();
-	
-	//Write namespace attributes
-	//xmlTextWriterWriteAttribute(WRITER, xmlCharStrdup("xmlns:grn"), xmlCharStrdup("urn:bbn.com:tasbe:grn"));
-
-	// Show that the intermediate Document->xml_doc updated its namespace correctly
-	printf("Namespaces currently in document:\n");
-	if (root->nsDef) {
-		printf("\t\t%s: %s\n", root->nsDef->prefix, root->nsDef->href);
-	}
-
 	return;
 }
 
@@ -126,84 +114,35 @@ static int saveSBOLDocument(const char* filename) {
 
 // Writes xml nodes with namespaces not used by SBOL
 static void writeStructuredAnnotation(xmlNode *node) {
-	printf("Node type: %d\n", (int)node->type);
 	// Ignore all non-Element xml nodes, eg, text
 	if (node->type != XML_ELEMENT_NODE) {
-		printf("%s\n", node->name);
 		return;
 	}
 	else {
-		//printf("Writing namespace %s:%s\n", node->ns->prefix, node->name);
-		//xmlChar *path;
-		//sprintf(path, "%s:%s", node->ns->prefix, node->name);
-		//xmlChar* PREFIX = node->ns->prefix;  // need xmlStrCopy here, otherwise just copies address
-		//xmlChar* NAME = node->name;  // need xmlStrCopy here
-		//xmlChar *path2 = xmlStrcat(PREFIX, xmlCharStrdup(":"));
-		//xmlChar *path = xmlStrcat(path2, NAME);
-
-		// Assemble the structural annotation's XPath address as an xmlChar 
-		// using the node namespace prefix and name
-		// @TODO remove PREFIX and NAME
-		/*xmlChar* PREFIX = xmlStrncatNew(node->ns->prefix, xmlCharStrdup(":"), -1);
-		xmlChar* NAME = xmlStrncatNew(PREFIX, node->name, -1);
-		xmlChar *path = xmlStrncatNew(PREFIX, node->name, -1);*/
-
 		xmlChar *path = constructXPath(node->ns->prefix, node->name);
-		printf("Writing namespace %s\n", path);
-
 		xmlTextWriterStartElement(WRITER, path);
-
-		printf("Writing attributes.\n");
 		xmlAttr *attr = node->properties;
 		while (attr)
 		{
 			if (attr->name && attr->children->content) {
-				printf("Attr Name:%s\tAttr Properties:%s\n", attr->name, attr->children->content);
-				//xmlTextWriterStartAttributeNS(WRITER, node->ns->prefix, attr->name, node->ns->href);
-				//xmlTextWriterStartAttribute(WRITER, node->name);
 				xmlTextWriterWriteAttribute(WRITER, attr->name, attr->children->content);
-				//xmlTextWriterEndAttribute(WRITER);
 			}
 			attr = attr->next;
 		}
 
 		if (node->content) xmlTextWriterWriteElement(WRITER, path, node->content);
 
-		printf("Writing child nodes\n");
 		xmlNode *child_node;
 		child_node = node->children;
 		while (child_node) {
-			printf("Recursing into children.\n");
 			indentMore();
 			writeStructuredAnnotation(child_node);
 			indentLess();
 			child_node = child_node->next;
 		}
-		printf("Ending element.\n");
-
 		xmlTextWriterEndElement(WRITER);
-
 		return;
 	}
-	//xmlNs **ns_list = xmlGetNsList(DOCUMENT, child_node);
-	//for (i = 0; ns_list[i] != NULL; i++) {
-	//	printf("%s\t%s\n", ns_list[i]->prefix, ns_list[i]->href);
-	//	xmlGetNsProp(const xmlNode * node,
-	//		const xmlChar * name,
-	//		const xmlChar * nameSpace)
-	//}
-	//xmlFree(ns_list);
-	
-	//xmlNode *node;
-	//xmlBufferPtr buffer = xmlBufferCreate();
-	// print this node as raw text
-	//xmlKeepBlanksDefault(0);
-	//int size = xmlNodeDump(buffer, com->doc->xml_doc, node, 0, 0);
-	//if (buffer->content) {
-	//	printf("%s\n", buffer->content);
-	//xmlFree(buffer);
-	//}
-
 }
 
 static void writeDNASequence(DNASequence* seq) {

@@ -319,9 +319,7 @@ static void readDNAComponentContent(xmlNode *node) {
 			xmlNode* node_copy = xmlDocCopyNode(child_node, com->doc->xml_doc, 1);
 			node_copy = xmlAddChild(xmlDocGetRootElement(com->doc->xml_doc), node_copy);
 			i = xmlReconciliateNs(com->doc->xml_doc, xmlDocGetRootElement(com->doc->xml_doc));
-			printf("Reconciled %d namespaces\n");
 			insertPointerIntoArray(com->base->base->xml_annotations, node_copy);
-			printf("Added node %s:%s\n", node_copy->ns->prefix, node_copy->name);
 		}
 		child_node = child_node->next;
 	}
@@ -450,36 +448,6 @@ void readDocument(Document* destination, char* filename) {
 	xmlXPathRegisterNs(CONTEXT, NSPREFIX_RDF, NSURL_RDF);
 
 	#define GLOBAL_XPATH BAD_CAST "//" NSPREFIX_SBOL ":"
-
-	//xmlNode *result;
-	//xmlAttr *attr;
-	//xmlNs *ns;
-	//namespaces = getContentsOfNodeMatchingXPath(NULL, BAD_CAST "//" NSPREFIX_RDF ":" NODENAME_RDF);
-	//result = getSingleNodeMatchingXPath(NULL, BAD_CAST "//" NSPREFIX_RDF ":" NODENAME_RDF);
-	//ns = result->nsDef;
-	//while (ns)
-	//{
-	//	printf("%s:\t%s\n", ns->prefix, ns->href);
-	//	ns = ns->next;
-	//}
-
-	//result = getSingleNodeMatchingXPath(NULL, GLOBAL_XPATH NODENAME_DNACOMPONENT);
-	//printf("%s\n", (char *)result->name);
-	//result = result->children;
-	//while (result){
-		//printf("%s\n", (char *)result->name);
-		//if ((char *)result->name == "text") {
-		//	printf("Node content:%s\n", (char *)xmlNodeGetContent(result));
-		//if (result->type == XML_TEXT_NODE) {
-			//printf("Node content:%s\n", (char *)xmlNodeGetContent(result));
-			//printf("Node content:%s\n", (char *)result->content);
-		//}
-		//printf("Node content:%s\n", (char *)xmlNodeGetContent(result));
-		//if (result->ns) {
-			//printf("%s:\t%s\n", result->ns->prefix, result->ns->href);
-		//}
-		//result = result->next;
-	//}
 
 	// create all the SBOLObjects
 	processNodes(readDNASequenceContent,        GLOBAL_XPATH NODENAME_DNASEQUENCE);
