@@ -269,8 +269,11 @@ static void writeDNAComponent(DNAComponent* com) {
 		
 		xmlNode *node;
 		xmlNode *node_copy;
+		printDNAComponent(com, 0);
 		for (n = 0; n < getNumPointersInArray(com->base->base->xml_annotations); n++) {
+			printf("\tWriting xml annotation %d of %d\n", n, getNumPointersInArray(com->base->base->xml_annotations));
 			node = (xmlNode *)getNthPointerInArray(com->base->base->xml_annotations, n);
+			printf("%s\n", getNthStructuredAnnotationAsText(com->base->base, 0));
 			node_copy = xmlDocCopyNode(node, OUTPUT, 1);
 			indentMore();
 			writeStructuredAnnotation(node_copy);
@@ -330,6 +333,7 @@ void writeDocument(Document* doc) {
 	int n;
 	startSBOLDocument();
 	addNamespacesToDocument(doc);
+	printf("Namespaces added to document\n");
 
 	// write collections
 	Collection* col;
@@ -339,6 +343,7 @@ void writeDocument(Document* doc) {
 			writeCollection(col);
 	}
 
+	printf("Writing components\n");
 	// write components
 	DNAComponent* com;
 	for (n=0; n<getNumDNAComponents(doc); n++) {
@@ -346,6 +351,7 @@ void writeDocument(Document* doc) {
 		if (!alreadyProcessed((void *)com))
 			writeDNAComponent(com);
 	}
+	printf("Components written\n");
 
 	// At this point there shouldn't be anything left.
 	// But in case there are orphaned DNASequences or

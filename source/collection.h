@@ -84,6 +84,10 @@ SBOLAPIEXPORTS int dnaComponentInCollection(const DNAComponent* com, const Colle
 /// Print an outline of a Collection to stdout.
 SBOLAPIEXPORTS void printCollection(const Collection* col, int tabs);
 
+SBOLAPIEXPORTS void addXMLAnnotationToCollection(Collection *col, xmlNode *node);
+
+SBOLAPIEXPORTS void removeXMLAnnotationFromCollection(Collection *col, int index);
+
 /// @}
 /// @}
 #endif

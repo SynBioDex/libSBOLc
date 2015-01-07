@@ -59,6 +59,10 @@ SBOLAPIEXPORTS void setDNASequenceURI(DNASequence* seq, const char* uri);
 /// Mainly for debugging.
 SBOLAPIEXPORTS void printDNASequence(const DNASequence* seq, int tabs);
 
+SBOLAPIEXPORTS void addXMLAnnotationToDNASequence(DNASequence *seq, xmlNode *node);
+
+SBOLAPIEXPORTS void removeXMLAnnotationFromDNASequence(DNASequence *seq, int index);
+
 /// @}
 /// @}
 

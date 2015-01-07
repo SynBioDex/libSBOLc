@@ -149,3 +149,12 @@ void printCollection(const Collection* col, int tabs) {
     }
 }
 
+void addXMLAnnotationToCollection(Collection *col, xmlNode *node) {
+	addXMLAnnotationToSBOLObject(col->base->base, node, col->doc->xml_doc);
+	return;
+}
+
+void removeXMLAnnotationFromCollection(Collection *col, int index) {
+	removeXMLAnnotationFromSBOLObject(col->base->base, index, col->doc->xml_doc);
+	return;
+}

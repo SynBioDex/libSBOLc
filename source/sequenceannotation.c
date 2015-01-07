@@ -212,3 +212,12 @@ void printSequenceAnnotation(const SequenceAnnotation* ann, int tabs) {
     }
 }
 
+void addXMLAnnotationToSequenceAnnotation(SequenceAnnotation *ann, xmlNode *node) {
+	addXMLAnnotationToSBOLObject(ann->base, node, ann->doc->xml_doc);
+	return;
+}
+
+void removeXMLAnnotationFromSequenceAnnotation(SequenceAnnotation *ann, int index) {
+	removeXMLAnnotationFromSBOLObject(ann->base, index, ann->doc->xml_doc);
+	return;
+}

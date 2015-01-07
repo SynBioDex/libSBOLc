@@ -93,6 +93,36 @@ void printDNAComponent(const DNAComponent* com, int tabs) {
 	}
 }
 
+// Annotate a DNAComponent with extra data structured as XML
+void addXMLAnnotationToDNAComponent(DNAComponent* com, xmlNode *node) {
+	addXMLAnnotationToSBOLObject(com->base->base, node, com->doc->xml_doc);
+	return;
+}
+
+// Annotate a DNAComponent with extra data structured as XML
+//void addXMLAnnotationToDNAComponent(DNAComponent* com, xmlNode *node) {
+//	node = xmlAddChild(xmlDocGetRootElement(com->doc->xml_doc), node);
+//	insertPointerIntoArray(com->base->base->xml_annotations, node);
+//	int i = xmlReconciliateNs(com->doc->xml_doc, xmlDocGetRootElement(com->doc->xml_doc));
+//}
+
+
+// Remove XML annotation from DNAComponent
+// Methods allowing lookup of XML nodes by name are restricted to reader.c so that
+// means we have to look up XML annotations using a PointerArray instead
+//void removeXMLAnnotationFromDNAComponent(DNAComponent *com, char* ns_prefix, char* node_name) {
+//	xmlChar *path = constructXPath(ns_prefix, node_name);
+//	xmlNode *node = getSingleNodeMatchingXPath(xmlDocGetRootElement(com->doc->xml_doc), path);
+//	xmlUnlinkNode(node);
+//	xmlFreeNode(node);
+//}
+
+// Remove XML annotation from DNAComponent
+void removeXMLAnnotationFromDNAComponent(DNAComponent *com, int index) {
+	removeXMLAnnotationFromSBOLObject(com->base->base, index, com->doc->xml_doc);
+	return;
+}
+
 /********************
  * get... functions
  ********************/

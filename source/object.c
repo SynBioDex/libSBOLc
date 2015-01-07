@@ -72,14 +72,29 @@ char* getNthStructuredAnnotationAsText(SBOLObject* obj, const int n) {
 
 		int size = xmlNodeDump(buffer, obj->uri->doc->xml_doc, getNthStructuredAnnotationAsXML(obj, n), 0, 0);
 		if (buffer->content) {
-			text = malloc(sizeof(xmlChar)*xmlStrlen(buffer->content));
+			text = malloc(size + 1);  // Allocate an extra byte for termination char
 			strcpy(text, buffer->content);
 		}
 		xmlFree(buffer);
-		return (char *)text;
+		return text;
 	}
 }
 
+void addXMLAnnotationToSBOLObject(SBOLObject* obj, xmlNode *node, xmlDoc* xml_doc) {
+	node = xmlAddChild(xmlDocGetRootElement(xml_doc), node);
+	insertPointerIntoArray(obj->xml_annotations, node);
+	int i = xmlReconciliateNs(xml_doc, xmlDocGetRootElement(xml_doc));
+	return;
+}
+
+void removeXMLAnnotationFromSBOLObject(SBOLObject* obj, int index, xmlDoc* xml_doc) {
+	xmlNode *node = getNthStructuredAnnotationAsXML(obj, index);
+	removePointerFromArray(obj->xml_annotations, index);
+	xmlUnlinkNode(node);
+	xmlFreeNode(node);
+	int i = xmlReconciliateNs(xml_doc, xmlDocGetRootElement(xml_doc));
+	return;
+}
 
 /**********************
  * SBOLCompoundObject
