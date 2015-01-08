@@ -1,0 +1,10 @@
+<map id="removePointerFromArray" name="removePointerFromArray">
+<area shape="rect" id="node2" href="$group___col.html#gab78d47b69dd6d175a33c51188c1ac5dd" title="Delete a Component from a Collection&#39;s list of components. " alt="" coords="224,5,463,32"/>
+<area shape="rect" id="node3" href="$group___d_c.html#ga8b65696d7c814dde9b59ed33554de3b4" title="Delete a SequenceAnnotation from a DNAComponent&#39;s list of annotations. " alt="" coords="252,57,435,98"/>
+<area shape="rect" id="node4" href="$group___s_b_o_l_object.html#ga24a04fcd1259e3bed4e9525d9e49f687" title="Private low&#45;level accessor used to remove an XML annotation. " alt="" coords="220,123,467,149"/>
+<area shape="rect" id="node9" href="$group___s_a.html#gaa0373e6e95c7df631e6ad5e9c31684e3" title="Remove the precedes relationship when specifying a new order of SequenceAnnotations. " alt="" coords="250,173,437,200"/>
+<area shape="rect" id="node5" href="$group___col.html#ga3a278766923f74fb394c357955c7130f" title="Remove the nth XML annotation from Collection specified by the index. " alt="" coords="532,47,767,73"/>
+<area shape="rect" id="node6" href="$group___d_c.html#gafcb1c5e7c423817551d2e0a78850c6c0" title="Remove XML annotation from DNAComponent. " alt="" coords="515,97,784,124"/>
+<area shape="rect" id="node7" href="$group___seq.html#gae2040c947f0a90cc56d61c6db59b86c9" title="Remove XML annotation from DNAComponent. " alt="" coords="519,148,779,175"/>
+<area shape="rect" id="node8" href="$group___s_a.html#gacf8309bec86e64c728efb78fd3f2731e" title="Remove XML annotation from a SequenceAnnotation. " alt="" coords="531,199,767,241"/>
+</map>

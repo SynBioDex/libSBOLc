@@ -1,7 +1,0 @@
-<map id="getSBOLCompoundObjectDisplayID" name="getSBOLCompoundObjectDisplayID">
-<area shape="rect" id="node2" href="$group___col.html#gacdfda6be1417d89b48498e94c5a55765" title="Get the displayID of a Collection. " alt="" coords="291,5,437,32"/>
-<area shape="rect" id="node3" href="$group___d_c.html#ga7bff15249b0eab19769b0cf06447a311" title="Get the displayID of a DNAComponent. " alt="" coords="273,56,455,83"/>
-<area shape="rect" id="node4" href="$group___d_c.html#ga2f53ac8c728bd591f52b17a4f908e4ab" title="Clone a DNAComponent object. " alt="" coords="503,31,640,57"/>
-<area shape="rect" id="node5" href="$group___d_c.html#gac5b87bbceb04bd529560e0159e0ce404" title="Print an outline of a DNAComponent to stdout. " alt="" coords="503,81,640,108"/>
-<area shape="rect" id="node6" href="$group___doc.html#ga4017a9b69658b550d56ffc8ffb47a15d" title="Print all the SBOL objects in a Document to stdout. " alt="" coords="688,81,793,108"/>
-</map>

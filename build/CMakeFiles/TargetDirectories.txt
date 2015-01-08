@@ -1,0 +1,2 @@
+C:/Users/user/Dev/libSBOLc_v1/libSBOLc/build/source/CMakeFiles/sbol.dir
+C:/Users/user/Dev/libSBOLc_v1/libSBOLc/build/source/libxml2/CMakeFiles/xml2.dir

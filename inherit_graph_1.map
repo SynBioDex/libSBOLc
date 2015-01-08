@@ -1,0 +1,9 @@
+<map id="Graphical Class Hierarchy" name="Graphical Class Hierarchy">
+<area shape="rect" id="node2" href="$classsbol_1_1sbol_1_1_collection.html" title="Individual instances of the Collection class represent an organizational container which helps users ..." alt="" coords="143,5,221,32"/>
+<area shape="rect" id="node3" href="$classsbol_1_1sbol_1_1_d_n_a_component.html" title="Instances of the DNAComponent class represent segments of DNA. " alt="" coords="125,56,239,83"/>
+<area shape="rect" id="node4" href="$classsbol_1_1sbol_1_1_d_n_a_sequence.html" title="Instances of the DNASequence class contain the actual DNA sequence string. " alt="" coords="129,107,235,133"/>
+<area shape="rect" id="node5" href="$classsbol_1_1sbol_1_1_document.html" title="Represents an SBOL document that can be read from or written to a file. " alt="" coords="141,157,223,184"/>
+<area shape="rect" id="node6" href="$classsbol_1_1sbol_1_1_s_b_o_l_object_array.html" title="An array that partly supports Python list&#45;like operations including slice indexing. " alt="" coords="119,208,245,235"/>
+<area shape="rect" id="node8" href="$classsbol_1_1sbol_1_1_sequence_annotation.html" title="Analogous to &#39;a feature&#39; in other systems, the SequenceAnnotation indicates information about the par..." alt="" coords="111,259,253,285"/>
+<area shape="rect" id="node7" href="$classsbol_1_1sbol_1_1_extendable_s_b_o_l_object_array.html" title="The ExtendableSBOLObjectArray contains a list of SBOL objects that CAN exist independently of a paren..." alt="" coords="301,208,492,235"/>
+</map>

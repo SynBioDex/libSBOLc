@@ -1,0 +1,15 @@
+<map id="C:/Users/user/Dev/libSBOLc_v1/libSBOLc/source/prototypes.h" name="C:/Users/user/Dev/libSBOLc_v1/libSBOLc/source/prototypes.h">
+<area shape="rect" id="node2" href="$array_8h.html" title="Defines the PointerArray struct, as well as functions for operating on it. " alt="" coords="5,95,191,136"/>
+<area shape="rect" id="node3" href="$property_8h.html" title="Defines a hierarchy of Properties, which hold data for SBOLObjects. " alt="" coords="215,95,418,136"/>
+<area shape="rect" id="node5" href="$object_8h.html" title="Defines the SBOLObject struct, as well as functions for operating on it. " alt="" coords="443,95,633,136"/>
+<area shape="rect" id="node6" href="$document_8h.html" title="Defines the Document struct, as well as functions for operating on it. " alt="" coords="658,95,869,136"/>
+<area shape="rect" id="node7" href="$collection_8h.html" title="Defines the Collection struct, as well as functions for operating on it. " alt="" coords="893,95,1101,136"/>
+<area shape="rect" id="node8" href="$dnacomponent_8h.html" title="Contains the DNAComponent struct, as well as functions for operating on it. " alt="" coords="1125,95,1364,136"/>
+<area shape="rect" id="node9" href="$sequenceannotation_8h.html" title="This file contains the SequenceAnnotation struct, as well as functions for operating on it..." alt="" coords="1389,95,1658,136"/>
+<area shape="rect" id="node10" href="$dnasequence_8h.html" title="Defines the DNASequence struct, as well as functions for operating on it. " alt="" coords="1683,95,1913,136"/>
+<area shape="rect" id="node11" href="$reader_8h.html" title="Contains functions for importing SBOL objects from an XML file. " alt="" coords="1937,95,2131,136"/>
+<area shape="rect" id="node12" href="$validator_8h.html" title="This file defines the isValidSBOL function, which is used to verify SBOL documents before parsing..." alt="" coords="2155,95,2359,136"/>
+<area shape="rect" id="node13" href="$writer_8h.html" title="This file contains functions for writing the SBOL core to an XML file. " alt="" coords="2383,95,2573,136"/>
+<area shape="rect" id="node14" href="$utilities_8h.html" title="This file defines SBOL utility functions that don&#39;t really fit in anywhere else. " alt="" coords="2597,95,2791,136"/>
+<area shape="rect" id="node4" href="$sbol_8h.html" title="Gathers together all the SBOL functions so they can be easily #included. " alt="" coords="1292,184,1475,225"/>
+</map>

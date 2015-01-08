@@ -1,7 +1,0 @@
-<map id="insertPointerIntoArray" name="insertPointerIntoArray">
-<area shape="rect" id="node2" href="$group___col.html#gabd9a001483d878de14a1a7270f3129a6" title="Add a DNAComponent to a Collection. " alt="" coords="200,5,403,32"/>
-<area shape="rect" id="node3" href="$group___d_c.html#ga3f0eae8eb04c18bfb5b920134a43cd84" title="Add a SequenceAnnotation to a DNAComponent. " alt="" coords="221,56,381,83"/>
-<area shape="rect" id="node5" href="$group___s_a.html#ga1425142e21a2346da3e97b4c3519d61b" title="Clone a SequenceAnnotation object. " alt="" coords="219,107,384,133"/>
-<area shape="rect" id="node6" href="$group___s_a.html#ga03d1a358bf602632938958eb53cd0201" title="Specify that one SequenceAnnotation must appear before another along a strand of DNA. " alt="" coords="219,157,383,184"/>
-<area shape="rect" id="node4" href="$group___d_c.html#ga2f53ac8c728bd591f52b17a4f908e4ab" title="Clone a DNAComponent object. " alt="" coords="451,81,588,108"/>
-</map>

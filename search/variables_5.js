@@ -1,5 +1,4 @@
 var searchData=
 [
-  ['genbankend',['genbankEnd',['../group___s_a.html#ga95cecc405884a13eb9a83a1ae64ad828',1,'_SequenceAnnotation']]],
-  ['genbankstart',['genbankStart',['../group___s_a.html#ga632e7808fe908e73bb137acbd4719b0d',1,'_SequenceAnnotation']]]
+  ['remove_5ffn',['remove_fn',['../classsbol_1_1sbol_1_1_s_b_o_l_object_array.html#a97f8775e9e1fd65b1b859a49050e9284',1,'sbol::sbol::SBOLObjectArray']]]
 ];

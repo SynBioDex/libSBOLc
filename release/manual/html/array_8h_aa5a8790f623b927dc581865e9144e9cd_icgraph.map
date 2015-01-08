@@ -1,0 +1,10 @@
+<map id="indexOfPointerInArray" name="indexOfPointerInArray">
+<area shape="rect" id="node2" href="$array_8h.html#a55e6ff0d25a8cee4db834f0b599c9cbd" title="Find out whether a PointerArray contains a certain pointer. " alt="" coords="239,5,400,32"/>
+<area shape="rect" id="node4" href="$group___col.html#gab78d47b69dd6d175a33c51188c1ac5dd" title="Delete a Component from a Collection&#39;s list of components. " alt="" coords="200,56,439,83"/>
+<area shape="rect" id="node5" href="$group___d_c.html#ga8b65696d7c814dde9b59ed33554de3b4" title="Delete a SequenceAnnotation from a DNAComponent&#39;s list of annotations. " alt="" coords="228,107,411,149"/>
+<area shape="rect" id="node6" href="$group___doc.html#ga8432bf7b16b9dae5d370d95ee2dbd80a" title="Find out whether a pointer points to a DNASequence in this Document. " alt="" coords="264,173,375,200"/>
+<area shape="rect" id="node7" href="$group___doc.html#gaeb21071924b484ca3547085d68f91b48" title="Find out whether a pointer points to a SequenceAnnotation in this Document. " alt="" coords="245,224,393,251"/>
+<area shape="rect" id="node8" href="$group___doc.html#ga53781f39eab664b5d13532ae4c785309" title="Find out whether this pointer points to a DNAComponent in this Document. " alt="" coords="259,275,379,301"/>
+<area shape="rect" id="node9" href="$group___s_a.html#gaa0373e6e95c7df631e6ad5e9c31684e3" title="Remove the precedes relationship when specifying a new order of SequenceAnnotations. " alt="" coords="226,325,413,352"/>
+<area shape="rect" id="node3" href="$group___doc.html#gaf8727c88c465f7fdcd6b6895d101f70c" title="Find out whether this pointer points to a Collection in this Document. " alt="" coords="487,5,573,32"/>
+</map>

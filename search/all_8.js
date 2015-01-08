@@ -1,8 +1,4 @@
 var searchData=
 [
-  ['name',['name',['../group___s_b_o_l_compound_object.html#ga2e998e3d3224e948a0afec8dec11c857',1,'_SBOLCompoundObject']]],
-  ['nucleotides',['nucleotides',['../struct___d_n_a_sequence.html#a699ad2224f0ec6369f1503e58c0f995c',1,'_DNASequence']]],
-  ['nucleotides_5fto_5fprint',['NUCLEOTIDES_TO_PRINT',['../dnasequence_8h.html#a11207cdb1827e6e0af8b67771a36577f',1,'dnasequence.h']]],
-  ['numpointersinuse',['numPointersInUse',['../struct___pointer_array.html#a07d0f024cca5fed64f284d8f20d970c8',1,'_PointerArray']]],
-  ['numpointerstotal',['numPointersTotal',['../struct___pointer_array.html#a17c1916072c721ce45b642ea72855d16',1,'_PointerArray']]]
+  ['ptr',['ptr',['../classsbol_1_1sbol_1_1_s_b_o_l_object_array.html#a37c32eedc4fbd64837b631c06863691e',1,'sbol.sbol.SBOLObjectArray.ptr()'],['../classsbol_1_1sbol_1_1_document.html#a37c32eedc4fbd64837b631c06863691e',1,'sbol.sbol.Document.ptr()'],['../classsbol_1_1sbol_1_1_d_n_a_sequence.html#a37c32eedc4fbd64837b631c06863691e',1,'sbol.sbol.DNASequence.ptr()'],['../classsbol_1_1sbol_1_1_sequence_annotation.html#a37c32eedc4fbd64837b631c06863691e',1,'sbol.sbol.SequenceAnnotation.ptr()'],['../classsbol_1_1sbol_1_1_d_n_a_component.html#a37c32eedc4fbd64837b631c06863691e',1,'sbol.sbol.DNAComponent.ptr()'],['../classsbol_1_1sbol_1_1_collection.html#a37c32eedc4fbd64837b631c06863691e',1,'sbol.sbol.Collection.ptr()']]]
 ];

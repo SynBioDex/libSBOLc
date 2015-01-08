@@ -1,8 +1,11 @@
 var searchData=
 [
-  ['readdocument',['readDocument',['../reader_8h.html#a2ae946b9723f9d4ab6259804ea9ef550',1,'reader.c']]],
-  ['reader_2eh',['reader.h',['../reader_8h.html',1,'']]],
-  ['removednacomponentfromcollection',['removeDNAComponentFromCollection',['../group___col.html#gab78d47b69dd6d175a33c51188c1ac5dd',1,'removeDNAComponentFromCollection(Collection *col, DNAComponent *com):&#160;collection.c'],['../group___col.html#gab78d47b69dd6d175a33c51188c1ac5dd',1,'removeDNAComponentFromCollection(Collection *col, DNAComponent *com):&#160;collection.c']]],
-  ['removepointerfromarray',['removePointerFromArray',['../array_8h.html#a4bfd7ef3a3b5f71bfd4bc463f8cb467f',1,'array.c']]],
-  ['removeprecedesrelationship',['removePrecedesRelationship',['../group___s_a.html#gaa0373e6e95c7df631e6ad5e9c31684e3',1,'removePrecedesRelationship(SequenceAnnotation *upstream, SequenceAnnotation *downstream):&#160;sequenceannotation.c'],['../group___s_a.html#gaa0373e6e95c7df631e6ad5e9c31684e3',1,'removePrecedesRelationship(SequenceAnnotation *upstream, SequenceAnnotation *downstream):&#160;sequenceannotation.c']]]
+  ['testcollection',['TestCollection',['../classsbol_1_1sbol__test_1_1_test_collection.html',1,'sbol::sbol_test']]],
+  ['testdnacomponent',['TestDNAComponent',['../classsbol_1_1sbol__test_1_1_test_d_n_a_component.html',1,'sbol::sbol_test']]],
+  ['testdnasequence',['TestDNASequence',['../classsbol_1_1sbol__test_1_1_test_d_n_a_sequence.html',1,'sbol::sbol_test']]],
+  ['testsbolcompoundobject',['TestSBOLCompoundObject',['../classsbol_1_1sbol__test_1_1_test_s_b_o_l_compound_object.html',1,'sbol::sbol_test']]],
+  ['testsbolobject',['TestSBOLObject',['../classsbol_1_1sbol__test_1_1_test_s_b_o_l_object.html',1,'sbol::sbol_test']]],
+  ['testsequenceannotation',['TestSequenceAnnotation',['../classsbol_1_1sbol__test_1_1_test_sequence_annotation.html',1,'sbol::sbol_test']]],
+  ['todo_20list',['Todo List',['../todo.html',1,'']]],
+  ['type',['type',['../classsbol_1_1sbol_1_1_d_n_a_component.html#a6fd3149402a39b8fbf719937bad52a38',1,'sbol::sbol::DNAComponent']]]
 ];

@@ -1,5 +1,0 @@
-<map id="getNthSequenceAnnotation" name="getNthSequenceAnnotation">
-<area shape="rect" id="node2" href="$document_8h.html#a6e92eaaf69f4642d282f56e5f3fe15f9" title="Get the total number of SequenceAnnotations in a Document. " alt="" coords="229,5,419,32"/>
-<area shape="rect" id="node4" href="$array_8h.html#aff165b4b431b1aaeca1978a60296ffa1" title="Get the Nth pointer from a PointerArray. " alt="" coords="253,56,395,83"/>
-<area shape="rect" id="node3" href="$array_8h.html#ac866d8fd79355c021e68f3662921fc51" title="Get the number of pointers stored in a PointerArray. " alt="" coords="467,31,621,57"/>
-</map>

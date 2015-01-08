@@ -1,0 +1,44 @@
+<map id="deleteProperty" name="deleteProperty">
+<area shape="rect" id="node2" href="$property_8h.html#a6a5874eb94a42b6174a05b3ce8d3186c" title="Delete a TextProperty. " alt="" coords="168,132,299,159"/>
+<area shape="rect" id="node13" href="$property_8h.html#a1b4bf73fab652f3898f835c95971e999" title="Store a string in a TextProperty. " alt="" coords="177,385,289,412"/>
+<area shape="rect" id="node42" href="$property_8h.html#a790c565ec159f38254d8fc5e8264fb28" title="Delete a PositionProperty. " alt="" coords="159,436,308,463"/>
+<area shape="rect" id="node43" href="$property_8h.html#a547cb88690dfcbbdd88cbc3dc45db616" title="Delete a PolarityProperty. " alt="" coords="160,487,307,513"/>
+<area shape="rect" id="node3" href="$group___s_b_o_l_object.html#ga7a66b73ee66ad831fc353e4781269ad5" title="Delete an SBOLObject. " alt="" coords="841,5,1026,32"/>
+<area shape="rect" id="node7" href="$property_8h.html#aaa6562bc7d78d2d9174b0244cb82d453" title="Delete a URIProperty. " alt="" coords="409,107,534,133"/>
+<area shape="rect" id="node12" href="$property_8h.html#a255ceffbe9cc66e7cc48f07037acc9f0" title="Delete a NucleotidesProperty. " alt="" coords="386,157,557,184"/>
+<area shape="rect" id="node4" href="$group___col.html#ga620f32d929d285f5d0e11a42fdb244f6" title="Delete a Collection. " alt="" coords="1112,5,1224,32"/>
+<area shape="rect" id="node6" href="$group___d_c.html#ga892f21b08ec0404bed820b9cbfb1342e" title="Delete a DNAComponent. " alt="" coords="1095,56,1241,83"/>
+<area shape="rect" id="node5" href="$group___doc.html#ga59ebe18448a4ec176b913c0f41f4429e" title="Delete a Document. " alt="" coords="1339,81,1454,108"/>
+<area shape="rect" id="node8" href="$group___s_b_o_l_object.html#gae787f4b151be1f7230cedaa4459422e5" title="Delete an SBOLObject. " alt="" coords="651,107,775,133"/>
+<area shape="rect" id="node11" href="$property_8h.html#a0819f3013d915947553e8289ec9f6808" title="Delete a TypeProperty. " alt="" coords="867,56,1000,83"/>
+<area shape="rect" id="node9" href="$group___seq.html#ga5527ada2b682004b24590af9ab2a64ac" title="Delete a DNASequence. " alt="" coords="865,157,1002,184"/>
+<area shape="rect" id="node10" href="$group___s_a.html#gaa0a92e2c214bc32e93c0aaac5b4f2a5d" title="Delete a SequenceAnnotation. " alt="" coords="1081,107,1255,133"/>
+<area shape="rect" id="node14" href="$group___s_b_o_l_object.html#gaeb94d929608a0d10abd3d31891f62276" title="Set the displayID of an SBOLCompoundObject. " alt="" coords="362,259,581,285"/>
+<area shape="rect" id="node18" href="$group___s_b_o_l_object.html#ga409006fe24b56905f59d33bb1867504e" title="Set the name of an SBOLCompoundObject. " alt="" coords="371,360,571,387"/>
+<area shape="rect" id="node21" href="$group___s_b_o_l_object.html#ga6b734ebc48f8387034da8c98e022c266" title="Set the description of an SBOLCompoundObject. " alt="" coords="356,411,587,437"/>
+<area shape="rect" id="node24" href="$property_8h.html#ad6dbe2a1112ce9e5963b4eec2662141b" title="Store a string in a URIProperty. " alt="" coords="418,588,525,615"/>
+<area shape="rect" id="node40" href="$property_8h.html#a6db30af1b5c42bdac91b3224df20b892" title="Store a string in a NucleotidesProperty. " alt="" coords="637,512,789,539"/>
+<area shape="rect" id="node15" href="$group___col.html#gab3b13014274b1f135eb2a0b88f6481f0" title="Set the displayID of a Collection. " alt="" coords="640,259,787,285"/>
+<area shape="rect" id="node16" href="$group___d_c.html#ga2a6aa56023f263481a9e3dc48452f140" title="Set the displayID of a DNAComponent. " alt="" coords="1537,247,1717,273"/>
+<area shape="rect" id="node17" href="$group___d_c.html#ga2f53ac8c728bd591f52b17a4f908e4ab" title="Clone a DNAComponent object. " alt="" coords="1771,461,1908,488"/>
+<area shape="rect" id="node19" href="$group___col.html#ga652b9ace14e8cecb9df9c785650161da" title="Set the name of a Collection. " alt="" coords="650,360,777,387"/>
+<area shape="rect" id="node20" href="$group___d_c.html#ga6398093d44264b00a9e069ddf40cedb5" title="Set the name of a DNAComponent. " alt="" coords="1547,335,1708,361"/>
+<area shape="rect" id="node22" href="$group___col.html#ga02bd9640c9c821d98f19081e9c49fa96" title="Set the description of a Collection. " alt="" coords="635,461,792,488"/>
+<area shape="rect" id="node23" href="$group___d_c.html#ga883382bc7e91bfe0f41b8f3f171d976a" title="Set the description of a DNAComponent. " alt="" coords="1532,411,1723,437"/>
+<area shape="rect" id="node25" href="$group___s_b_o_l_object.html#gaaa06a93048cf5da20bc9a9837d6bcb95" title="Set the URI of an SBOLObject. " alt="" coords="650,588,777,615"/>
+<area shape="rect" id="node38" href="$property_8h.html#a80d43d4b07f0826e537a6b0adf8f6005" title="Store a uri in a TypeProperty. " alt="" coords="656,689,771,716"/>
+<area shape="rect" id="node26" href="$group___seq.html#ga9807ab39ad15652371c784c1baa87d27" title="Set the URI of a DNASequence. " alt="" coords="864,664,1003,691"/>
+<area shape="rect" id="node27" href="$group___s_b_o_l_object.html#ga6831069e3f5b4be739e6d102b7e30daf" title="Create an empty SBOLObject. " alt="" coords="871,613,996,640"/>
+<area shape="rect" id="node35" href="$group___s_b_o_l_object.html#ga610f42487fe44a2485fe60efa5829fb1" title="Set the URI of an SBOLComoundObject. " alt="" coords="840,512,1027,539"/>
+<area shape="rect" id="node37" href="$group___s_a.html#ga2a429d84f0889a9170228a0bb21e61f4" title="Set the uri of a SequenceAnnotation. " alt="" coords="845,563,1021,589"/>
+<area shape="rect" id="node28" href="$group___seq.html#ga33fee94fed1c78706b0b46cf40bfdae9" title="Create an empty DNASequence. " alt="" coords="1099,563,1237,589"/>
+<area shape="rect" id="node30" href="$group___s_b_o_l_object.html#gaeea1364caa7e5e00836347df9f1b129a" title="Create an empty SBOLCompoundObject. " alt="" coords="1075,613,1261,640"/>
+<area shape="rect" id="node34" href="$group___s_a.html#gaa972285326409e2a091b653c8081c5fc" title="Create an empty SequenceAnnotation. " alt="" coords="1309,664,1484,691"/>
+<area shape="rect" id="node29" href="$group___seq.html#ga3a7a6a2f8465a5f904ecd0a856808437" title="Clone a DNASequence object. " alt="" coords="1333,461,1461,488"/>
+<area shape="rect" id="node31" href="$group___col.html#ga7fe2662a0adfa42f0e26b950f8340e5c" title="Create an empty Collection. " alt="" coords="1340,613,1453,640"/>
+<area shape="rect" id="node32" href="$group___d_c.html#ga9cf6255fdc0cf5dabda22d972d06638d" title="Create an empty DNAComponent. " alt="" coords="1323,563,1470,589"/>
+<area shape="rect" id="node33" href="$group___s_a.html#ga1425142e21a2346da3e97b4c3519d61b" title="Clone a SequenceAnnotation object. " alt="" coords="1545,563,1710,589"/>
+<area shape="rect" id="node36" href="$group___d_c.html#ga3e8baba4bf73bf73c6bb948283ee1374" title="Set the uri of a DNAComponent. " alt="" coords="1094,512,1242,539"/>
+<area shape="rect" id="node39" href="$group___d_c.html#ga69ac271a8679110ca3e780fdf76d77b1" title="Set the type of a DNAComponent. " alt="" coords="1549,664,1705,691"/>
+<area shape="rect" id="node41" href="$group___seq.html#ga8aaa4277470919c1fb1aca322c73f304" title="Copy a string of nucleotides into this DNASequence. " alt="" coords="1076,461,1260,488"/>
+</map>

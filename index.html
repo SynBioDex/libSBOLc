@@ -4,7 +4,7 @@
 <meta http-equiv="Content-Type" content="text/xhtml;charset=UTF-8"/>
 <meta http-equiv="X-UA-Compatible" content="IE=9"/>
 <meta name="generator" content="Doxygen 1.8.8"/>
-<title>libSBOLc: Main Page</title>
+<title>My Project: Main Page</title>
 <link href="tabs.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="jquery.js"></script>
 <script type="text/javascript" src="dynsections.js"></script>
@@ -21,10 +21,8 @@
 <table cellspacing="0" cellpadding="0">
  <tbody>
  <tr style="height: 56px;">
-  <td id="projectlogo"><img alt="Logo" src="SBOLlogo2_high_res.jpg"/></td>
   <td style="padding-left: 0.5em;">
-   <div id="projectname">libSBOLc
-   &#160;<span id="projectnumber">1.1</span>
+   <div id="projectname">My Project
    </div>
   </td>
  </tr>
@@ -38,10 +36,8 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 </script>
   <div id="navrow1" class="tabs">
     <ul class="tablist">
-      <li class="current"><a href="index.html"><span>Introduction</span></a></li>
-      <li><a href="developers_page.html"><span>Code&#160;Overview</span></a></li>
-      <li><a href="custom_class_page.html"><span>Classes&#160;and&#160;API</span></a></li>
-      <li><a href="files.html"><span>Files</span></a></li>
+      <li class="current"><a href="index.html"><span>Main&#160;Page</span></a></li>
+      <li><a href="custom_class_page.html"><span>Classes</span></a></li>
       <li>
         <div id="MSearchBox" class="MSearchBoxInactive">
         <span class="left">
@@ -66,7 +62,7 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
      onmouseover="return searchBox.OnSearchSelectShow()"
      onmouseout="return searchBox.OnSearchSelectHide()"
      onkeydown="return searchBox.OnSearchSelectKey(event)">
-<a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(0)"><span class="SelectionMark">&#160;</span>All</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(1)"><span class="SelectionMark">&#160;</span>Classes</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(2)"><span class="SelectionMark">&#160;</span>Files</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(3)"><span class="SelectionMark">&#160;</span>Functions</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(4)"><span class="SelectionMark">&#160;</span>Variables</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(5)"><span class="SelectionMark">&#160;</span>Macros</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(6)"><span class="SelectionMark">&#160;</span>Modules</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(7)"><span class="SelectionMark">&#160;</span>Pages</a></div>
+<a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(0)"><span class="SelectionMark">&#160;</span>All</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(1)"><span class="SelectionMark">&#160;</span>Pages</a></div>
 
 <!-- iframe showing the search results (closed by default) -->
 <div id="MSearchResultsWindow">
@@ -77,88 +73,66 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 
 <div class="header">
   <div class="headertitle">
-<div class="title">libSBOLc Documentation</div>  </div>
+<div class="title">My Project Documentation</div>  </div>
 </div><!--header-->
 <div class="contents">
-<div class="textblock"><h2>Introduction </h2>
-<p><a href="https://github.com/SynBioDex/libSBOLc">libSBOLc</a> is a C library for working with the <a href="http://sbolstandard.org">Synthetic Biology Open Language (SBOL)</a>. It uses the XML schema and example files from <a href="https://github.com/SynBioDex/libSBOLj">libSBOLj</a>, but the rest of the code was developed separately. The two libraries should eventually present similar interfaces, except where language conventions differ.</p>
-<p>Here is some example client code that will recreate valid04_dna_component_annotation.xml, which is one of the test cases from libSBOLj. </p><pre class="fragment">#include "sbol.h"
-
-    Document* CreateValid04() {
-            Document* doc = createDocument();
-
-            // components
-            DNAComponent *dc1 = createDNAComponent(doc, "http://example.com/dc1");
-            DNAComponent *dc2 = createDNAComponent(doc, "http://example.com/dc2");
-            setDNAComponentDisplayID(dc1, "DC1");
-            setDNAComponentDisplayID(dc2, "DC2");
-            setDNAComponentName(dc1, "DnaComponent1");
-            setDNAComponentName(dc2, "DnaComponent2");
-            setDNAComponentDescription(dc1, "DnaComponent with one sequence annotation");
-            setDNAComponentDescription(dc2, "Another DNA component");
-
-            // sequence
-            DNASequence *ds1 = createDNASequence(doc, "http://example.com/ds1");
-            setDNASequenceNucleotides(ds1, "tccctatcagtgat");
-            setDNAComponentSequence(dc1, ds1);
-
-            // annotation
-            SequenceAnnotation *sa1 = createSequenceAnnotation(doc, "http://example.com/sa1");
-            setSequenceAnnotationSubComponent(sa1, dc2);
-            addSequenceAnnotation(dc1, sa1);
-
-            return doc;
-    }
-</pre><p>To make a complete program, you could add: </p><pre class="fragment">void main() {
-    Document *doc = CreateValid04();
-    writeDocument(doc, "valid04_dna_component_annotation.xml");
-    deleteDocument(doc);
-}
-</pre><p>The other examples follow the same format, and can be found <a href="https://github.com/SynBioDex/libSBOLc/tree/master/examples/code">here</a>.</p>
-<p>The rest of this file is a quick guide to getting started with common tasks. For more detailed information about the code itself, see <a href="http://synbiodex.github.com/libSBOLc">the online documentation</a>.</p>
-<h2>Downloading the binaries </h2>
-<p>Shared library files are available <a href="https://github.com/SynBioDex/libSBOLc/downloads">here</a> for Windows, Mac OSX, and Linux/Unix.</p>
-<h2>Building from source </h2>
-<p>To compile libSBOLc, you will need:</p>
+<div class="textblock"><h1><a class="anchor" id="overview"></a>
+Overview</h1>
+<p>There are a few different top-level subdirectories in the libSBOLc folder:</p>
 <ul>
-<li><a href="http://git-scm.com/">git</a> for downloading the source code</li>
-<li><a href="http://www.cmake.org/cmake/resources/software.html">CMake</a> for generating platform-specific build /// instructions</li>
-<li>a C compiler, such as <a href="http://gcc.gnu.org/">gcc</a> or <a href="http://www.mingw.org/wiki/InstallationHOWTOforMinGW">MinGW</a></li>
+<li><a href="https://github.com/SynBioDex/libSBOLc/tree/master/schema">schema</a> holds the SBOL schema files copied from libSBOLj</li>
+<li><a href="https://github.com/SynBioDex/libSBOLc/tree/master/source">source</a> contains source code for the library</li>
+<li><a href="https://github.com/SynBioDex/libSBOLc/tree/master/examples">examples</a> contains example code that uses the library, as well as the xml test files from libSBOLj</li>
+<li><a href="https://github.com/SynBioDex/libSBOLc/tree/master/manual">manual</a> contains source code for generating the online documentation</li>
+<li><a href="https://github.com/SynBioDex/libSBOLc/tree/master/tests">tests</a> contains unit tests, as well as tests that verify correct handling of the example xml files</li>
+<li><a href="https://github.com/SynBioDex/libSBOLc/tree/master/wrapper">wrapper</a> contains code for generating the Python wrapper using SWIG</li>
+<li>Finally, there's the build folder for temporary build files, and the release folder for finished binaries. They're created by CMake.</li>
 </ul>
-<p>First, download them from the links above. Or if you're on Debian/Ubuntu this command should install /// everything: </p><pre class="fragment">sudo apt-get install git cmake-qt-gui build-essential libxml2-dev
-</pre><p>If you want to update the documentation you also need <a href="http://www.stack.nl/~dimitri/doxygen/">Doxygen</a>, and to generate the Python wrapper you need <a href="http://www.swig.org/">SWIG</a>. To install them on Debian/Ubuntu: </p><pre class="fragment">sudo apt-get install doxygen-gui swig
-</pre><p>Then, clone the repository: </p><pre class="fragment">git clone git://github.com/SynBioDex/libSBOLc.git
-</pre><p>This will create a <code>libSBOLc</code> directory with the code. Next, run CMake (cmake-qt-gui on linux). For "Where is the source code" enter the path to your <code>libSBOLc</code> folder. "Where to
-build the binaries" can technically be anywhere, but it's only been tested with <code>libSBOLc/build</code>.</p>
-<p>Click <code>Configure</code>, and choose what type of compiler you want to generate instructions for. /// All the development has been done using "default native compilers" and MinGW on Windows or Unix makefiles on Mac/Linux. CMake should also be able to generate projects for Eclipse, Visual Studio, XCode, etc. However, that will probably involve adjusting some paths.</p>
-<p>The first time you click <code>Configure</code> CMake will list variables, like <code>CMAKE_BUILD_TYPE</code> and <code>LIBXML2_INCLUDE_DIR</code>, in red. That means they've been updated. To build the main SBOL library, just click <code>Configure</code> again until the red goes away. This is also where you set up the optional targets: examples, tests, manual, and Python wrapper. To add them check the appropriate boxes (SBOL_BUILD_EXAMPLES, for example) and then <code>Configure</code> again to adjust the settings. There's one other SBOL-specific option: <code>SBOL_DEBUG_STATEMENTS</code> will cause libSBOLc to be compiled with some extra debugging statements. A lot of other options might be visibile too; checking <code>Grouped</code> at the top makes things more managable. Once it's all set, click <code>Generate</code> to create the compiler instructions.</p>
-<p>The last step is to <code>cd</code> into the <code>libSBOLc/build</code> folder and run the compiler. </p><pre class="fragment">make
-</pre><p>or </p><pre class="fragment">mingw32-make.exe
-</pre><p>Binaries will be generated in the <code>libSBOLc/release</code> folder.</p>
-<h2>Testing </h2>
-<p>Once you've configured and built libSBOLc, you can run some simple tests to check that everything works. <code>cd</code> into the <code>libSBOLc/release/tests</code> folder and run: </p><pre class="fragment">./sbol_run_tests
-</pre><p>or </p><pre class="fragment">sbol_run_tests.exe
-</pre><h2>Incorporating SBOL into your code </h2>
-<p>To use libSBOLc in your own code, <code>#include "sbol.h"</code>. Then there are only a few important /// functions you need to know to get started reading, writing, and manipulating SBOL files:</p>
+<p>When running CMake and compiling, the main sbol library is always created first because most of the optional targets depend on it: </p><div class="image">
+<img src="build_dependencies.png" alt="build_dependencies.png"/>
+</div>
+<p>Once built, the executables just depend on finding the correct xml files: </p><div class="image">
+<img src="runtime_dependencies.png" alt="runtime_dependencies.png"/>
+</div>
+<h1><a class="anchor" id="tour"></a>
+A brief tour of the source code</h1>
+<p>There are a bunch of C source files, but they fall into a few general categories:</p>
 <ul>
-<li>createDocument makes a new Document, and deleteDocument frees it from memory. The other SBOL objects are created with an existing Document as their first argument.</li>
-<li>readDocument imports SBOL objects from a file, and writeDocument serializes them again.</li>
-<li>isValidSBOL checks that an xmlDoc conforms to the SBOL schema. Using it involves parsing with libxml. There's an example of that in <a href="https://github.com/SynBioDex/libSBOLc/blob/master/examples/code/sbol_validate.c">sbol_validate.c</a>, but it shouldn't be necessary in most cases since readDocument and writeDocument both call it internally.</li>
-<li>There are constructors, destructors, getters, and setters for each type of SBOL object. For the most part they follow a pretty obvious formula: setDNAComponentDisplayID and getDNAComponentDisplayID, for example. But there are also some non-obvious ones, like addPrecedesRelationship. For those the <a href="http://synbiodex.github.com/libSBOLc/globals_func.html">index of all available functions</a> is a good place to look. There's also code to create each of the xml example files in <a href="https://github.com/SynBioDex/libSBOLc/tree/master/examples/code">libSBOLc/examples/code</a>.</li>
+<li>dnasequence.h, sequenceannotation.h, dnacomponent.h, and collection.h define the SBOL Core objects.</li>
+<li>array.h, object.h, and property.h define building blocks for those objects.</li>
+<li>document.h defines an SBOL Document.</li>
+<li>validator.h, reader.h, and writer.h perform operations on documents. They each have one main algorithm, plus maybe some non-exported supporting functions.</li>
+<li>Then there are a few other miscellaneous files like prototypes.h, constants.h.in, and utilities.h; they each do something unique but limited.</li>
 </ul>
-<h2>Linking to the SBOL library </h2>
-<p>There are different ways to do this, but this is probably the simplest. To compile the sbol_validate /// example using MinGW on Windows: </p><pre class="fragment">mingw32-gcc.exe -I headers sbol_validate.c -o validate libsbol.dll
-</pre><p>and the equivalent command on Mac/Linux: </p><pre class="fragment">gcc -I headers sbol_validate.c -o validate libsbol.so
-</pre><p>The <code>-I</code> tells <code>gcc</code> where to look for headers, and <code>-o</code> gives the /// name of the generated executable. If you get an error like "library not loaded... image not found" on /// Mac OSX, you probably need to tell the system to look in the current folder for libsbol: </p><pre class="fragment">export DYLD_LIBRARY_PATH=.:$DYLD_LIBRARY_PATH
-</pre><p>The same thing should work in Linux, except it's <code>LD_LIBRARY_PATH</code>. Another possible problem is that gcc doesn't know to use libxml, which will result in "undefined symbols... \_xmlFree
-\_xmlFreeDoc" etc. Try adding <code>-lxml</code> or <code>-lxml2</code> to the compile command.</p>
-<p>For more complex programs CMake is a good choice. It lets you write detailed build scripts that configure files, create directories, find system libraries, etc.</p>
-<h2>Updating the documentation </h2>
-<p>To update this file, just edit README.md. <a href="http://daringfireball.net/projects/markdown/">This description of markdown syntax</a> is helpful. To update the full Doxygen documentation, see <a href="http://synbiodex.github.com/libSBOLc#doxygen">here</a>. </p>
+<p>You might be confused and/or annoyed with the profusion of similarly-named structs and functions relating to SBOL objects. I know I would be seeing it for the first time. Here are a couple diagrams to clarify what they're supposed to represent:</p>
+<div class="image">
+<img src="property_hierarchy.png" alt="property_hierarchy.png"/>
+</div>
+<div class="image">
+<img src="struct_hierarchy.png" alt="struct_hierarchy.png"/>
+</div>
+<h1><a class="anchor" id="doxygen"></a>
+Updating this documentation</h1>
+<p>The code for this page is in mainpage.dox; the rest of the documentation is scattered throughout the source/*.h files. There are also a couple graphs, which can be edited with the yEd graph editor from <a href="http://www.yworks.com/en/products_yed_about.html">http://www.yworks.com/en/products_yed_about.html</a></p>
+<p>After editing the source files, you also need to generate html using Doxygen, and upload it to GitHub.</p>
+<p>First, make sure you have Doxygen installed. Then check <code>SBOL_GENERATE_MANUAL</code> in CMake, <code>cd</code> into <code>libSBOLc/build</code>, and run <code>make</code>. Doxygen will generate a <code>libSBOLc/release/manual/html</code> folder full of html files. To change settings, edit Doxyfile.in first.</p>
+<p>Copy the HTML to somewhere outside the main libSBOLc directory, then <code>git checkout gh-pages</code>. It's a special branch with nothing but HTML files. There may also be some leftover untracked files from the master branch. Delete everything in there, and replace it with the newly generated html files. Then <code>git push origin gh-pages</code>. A minute or so later, the new documentation should be available at <a href="http://SynBioDex.github.com/libSBOLc/">http://SynBioDex.github.com/libSBOLc/</a></p>
+<h1><a class="anchor" id="swig"></a>
+Updating the Python wrapper</h1>
+<p>To update the low-level Python wrapper, all you need to do is:</p>
+<ul>
+<li>check SBOL_GENERATE_PYTHON in CMake</li>
+<li>build the project</li>
+<li>keep _libsbol.so and libsbol.py from the libSBOLc/release/wrapper folder</li>
+</ul>
+<p>These are generated by SWIG, and represent a direct translation of the C functions into Python. They're cross-platform so you should only need to generate them once.</p>
+<p>There is also a high-level wrapper that maps the C-like SWIG functions into a more natural Python interface. It's kept in a separate repository at <a href="https://github.com/SynBioDex/libSBOLpy,">https://github.com/SynBioDex/libSBOLpy,</a> and will need to be manually adjusted when new functions are added to the SWIG wrapper.</p>
+<p>The low-level wrapper also works by itself though. From the Python interpreter, import libsbol to use it. While the high-level interface is more pythonic, the low-level one is more useful for prototyping algorithms that will be re-written in C.</p>
+<p>One other thing to remember is that although the generated files are cross-platform, they only work with the version of Python they were compiled against. If you try to import the libsbol module from a different version you may get a seeminly unrelated error like "Fatal Python error: PyThreadState_Get: no current thread". </p>
 </div></div><!-- contents -->
 <!-- start footer part -->
 <hr class="footer"/><address class="footer"><small>
-Generated on Thu Dec 4 2014 16:35:10 for libSBOLc by &#160;<a href="http://www.doxygen.org/index.html">
+Generated on Thu Nov 20 2014 20:24:21 for My Project by &#160;<a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/>
 </a> 1.8.8
 </small></address>

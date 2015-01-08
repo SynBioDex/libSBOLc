@@ -1,0 +1,51 @@
+<map id="getNthPointerInArray" name="getNthPointerInArray">
+<area shape="rect" id="node2" href="$array_8h.html#aa5a8790f623b927dc581865e9144e9cd" title="Get the index of a pointer stored in a PointerArray. " alt="" coords="219,195,365,221"/>
+<area shape="rect" id="node11" href="$group___col.html#ga3770d1fea716f7886236c9d7e797e0dd" title="Get the Nth DNAComponent inside a Collection. " alt="" coords="213,427,371,453"/>
+<area shape="rect" id="node15" href="$group___d_c.html#gaceca3665491a09cbbb2a3d23b1da51e2" title="Get the Nth SequenceAnnotation for a DNAComponent. " alt="" coords="195,528,389,555"/>
+<area shape="rect" id="node18" href="$group___doc.html#ga0d702dc3322815ce3ea84e9a79e42cf7" title="Get the Nth DNASequnce in a Document. " alt="" coords="223,756,361,783"/>
+<area shape="rect" id="node27" href="$group___doc.html#ga563e25015c9a809e73bc899d139fd472" title="Get the Nth SequenceAnnotation in a Document. " alt="" coords="204,883,380,909"/>
+<area shape="rect" id="node30" href="$group___doc.html#ga943e6761d56db524b4f3ed571606f6eb" title="Get the Nth DNAComponent in a Document. " alt="" coords="218,959,366,985"/>
+<area shape="rect" id="node33" href="$group___doc.html#gabfcfeb453c4fd55b1683ed87ae6f7e10" title="Get the Nth Collection in a Document. " alt="" coords="235,1047,349,1073"/>
+<area shape="rect" id="node36" href="$group___s_b_o_l_object.html#ga00e5f4ab3510499be197e392ab1262e5" title="Returns a structured annotation as a libXML2 xmlNode object. " alt="" coords="202,1507,382,1549"/>
+<area shape="rect" id="node47" href="$group___s_a.html#ga1425142e21a2346da3e97b4c3519d61b" title="Clone a SequenceAnnotation object. " alt="" coords="209,477,375,504"/>
+<area shape="rect" id="node48" href="$group___s_a.html#ga0237cdb59ef4ae24381d870ebf5a2289" title="Get the Nth SequenceAnnotation that must be placed after this one. " alt="" coords="237,1288,347,1315"/>
+<area shape="rect" id="node3" href="$array_8h.html#a55e6ff0d25a8cee4db834f0b599c9cbd" title="Find out whether a PointerArray contains a certain pointer. " alt="" coords="488,56,649,83"/>
+<area shape="rect" id="node5" href="$group___col.html#gab78d47b69dd6d175a33c51188c1ac5dd" title="Delete a Component from a Collection&#39;s list of components. " alt="" coords="449,107,688,133"/>
+<area shape="rect" id="node6" href="$group___d_c.html#ga8b65696d7c814dde9b59ed33554de3b4" title="Delete a SequenceAnnotation from a DNAComponent&#39;s list of annotations. " alt="" coords="477,158,660,199"/>
+<area shape="rect" id="node7" href="$group___doc.html#ga8432bf7b16b9dae5d370d95ee2dbd80a" title="Find out whether a pointer points to a DNASequence in this Document. " alt="" coords="513,224,624,251"/>
+<area shape="rect" id="node8" href="$group___doc.html#gaeb21071924b484ca3547085d68f91b48" title="Find out whether a pointer points to a SequenceAnnotation in this Document. " alt="" coords="495,275,643,301"/>
+<area shape="rect" id="node9" href="$group___doc.html#ga53781f39eab664b5d13532ae4c785309" title="Find out whether this pointer points to a DNAComponent in this Document. " alt="" coords="509,325,629,352"/>
+<area shape="rect" id="node10" href="$group___s_a.html#gaa0373e6e95c7df631e6ad5e9c31684e3" title="Remove the precedes relationship when specifying a new order of SequenceAnnotations. " alt="" coords="475,5,662,32"/>
+<area shape="rect" id="node4" href="$group___doc.html#gaf8727c88c465f7fdcd6b6895d101f70c" title="Find out whether this pointer points to a Collection in this Document. " alt="" coords="839,56,926,83"/>
+<area shape="rect" id="node12" href="$group___col.html#ga4b2260b492dacd93fb459e2abd5e532d" title="Find out whether a DNAComponent is inside a Collection. " alt="" coords="481,376,656,403"/>
+<area shape="rect" id="node13" href="$group___col.html#gab25c6cd5bff85b69556978c68485e68d" title="Print an outline of a Collection to stdout. " alt="" coords="517,427,620,453"/>
+<area shape="rect" id="node14" href="$group___doc.html#ga4017a9b69658b550d56ffc8ffb47a15d" title="Print all the SBOL objects in a Document to stdout. " alt="" coords="830,731,935,757"/>
+<area shape="rect" id="node16" href="$group___d_c.html#ga2f53ac8c728bd591f52b17a4f908e4ab" title="Clone a DNAComponent object. " alt="" coords="500,477,637,504"/>
+<area shape="rect" id="node17" href="$group___d_c.html#gac5b87bbceb04bd529560e0159e0ce404" title="Print an outline of a DNAComponent to stdout. " alt="" coords="500,528,637,555"/>
+<area shape="rect" id="node19" href="$group___doc.html#ga9a625dee1e220bd6febefcde89fa12d2" title="Find out whether there&#39;s a DNASequence with this URI in this Document. " alt="" coords="503,680,634,707"/>
+<area shape="rect" id="node22" href="$group___doc.html#ga4437cf83af2614bea6dd38517b9aa0d6" title="Get the DNASequence associated with this URI in this Document. " alt="" coords="509,629,629,656"/>
+<area shape="rect" id="node23" href="$group___doc.html#ga59ebe18448a4ec176b913c0f41f4429e" title="Delete a Document. " alt="" coords="511,984,626,1011"/>
+<area shape="rect" id="node24" href="$writer_8h.html#ae086a14ff9603e5a3a223a1dcb6bcff4" title="Write document to static xmlDoc. " alt="" coords="515,883,623,909"/>
+<area shape="rect" id="node20" href="$group___doc.html#ga8563314c725ef3b8b4285d934a6296b9" title="Find out whether there&#39;s an SBOL object with this URI in this Document. " alt="" coords="823,1048,942,1075"/>
+<area shape="rect" id="node21" href="$group___col.html#ga7fe2662a0adfa42f0e26b950f8340e5c" title="Create an empty Collection. " alt="" coords="1065,1048,1179,1075"/>
+<area shape="rect" id="node25" href="$writer_8h.html#a10870873315819f1c3e771abe5cfc4c3" title="Create, validate, and save an XML document based on the SBOLObjects currently in memory. " alt="" coords="811,908,954,935"/>
+<area shape="rect" id="node26" href="$writer_8h.html#adef5fb6d01e689be52484ec8c7ad5dea" title="Create and return contents of XML written for SBOLObjects currently in memory. " alt="" coords="804,857,961,884"/>
+<area shape="rect" id="node28" href="$group___doc.html#ga59fe20fbe3a3c06f33319f920364bc67" title="Find out whether this URI is associated with a SequenceAnnotation in this Document. " alt="" coords="485,933,653,960"/>
+<area shape="rect" id="node29" href="$group___doc.html#ga67137d91f53a37a9a278ea1399ab00af" title="Get the SequenceAnnotation associated with this URI in this Document. " alt="" coords="490,781,647,808"/>
+<area shape="rect" id="node31" href="$group___doc.html#gacd0f89527933f405b542d10f9392d957" title="Find out if there&#39;s a DNAComponent with this uri in this Document. " alt="" coords="499,1136,639,1163"/>
+<area shape="rect" id="node32" href="$group___doc.html#ga20b3cc3d2aed12bcb208d285e3ab3194" title="Get the DNAComponent associated with this uri in this Document. " alt="" coords="504,1035,633,1061"/>
+<area shape="rect" id="node34" href="$group___doc.html#ga6172aab8b0fddce94e47e073adc71aae" title="Find out if there&#39;s a Collection with this uri in this Document. " alt="" coords="515,1237,622,1264"/>
+<area shape="rect" id="node35" href="$group___doc.html#ga58fbc754910b7a935c3cf678be378b0c" title="Get the Collection associated with this uri in this Document. " alt="" coords="521,1187,616,1213"/>
+<area shape="rect" id="node37" href="$group___col.html#ga0b1aadb107868865c0a53e6f22b3d2ae" title="Retrieve extra information about a Collection stored as structured XML. " alt="" coords="454,1573,683,1600"/>
+<area shape="rect" id="node38" href="$group___d_c.html#ga196f211a074bf795cc2f88614622f1f4" title="Retrieve extra information about a DNAComponent stored as structured XML. " alt="" coords="437,1624,700,1651"/>
+<area shape="rect" id="node39" href="$group___seq.html#gad5409bdc679544458c5bc5a4135a5704" title="Retrieve extra information about a DNAComponent stored as structured XML. " alt="" coords="441,1675,696,1701"/>
+<area shape="rect" id="node40" href="$group___s_b_o_l_object.html#ga4764f4b653f6c55e5c9f33b958baef4a" title="Returns a structured annotation as raw text. " alt="" coords="479,1390,659,1431"/>
+<area shape="rect" id="node41" href="$group___s_b_o_l_object.html#ga24a04fcd1259e3bed4e9525d9e49f687" title="Private low&#45;level accessor used to remove an XML annotation. " alt="" coords="445,1456,692,1483"/>
+<area shape="rect" id="node46" href="$group___s_a.html#gad6e8b86f27c2cb9b8dcfa3af52376204" title="Retrieve extra information about a SequenceAnnotation stored as structured XML. " alt="" coords="453,1507,684,1549"/>
+<area shape="rect" id="node42" href="$group___col.html#ga3a278766923f74fb394c357955c7130f" title="Remove the nth XML annotation from Collection specified by the index. " alt="" coords="765,1544,1000,1571"/>
+<area shape="rect" id="node43" href="$group___d_c.html#gafcb1c5e7c423817551d2e0a78850c6c0" title="Remove XML annotation from DNAComponent. " alt="" coords="748,1376,1017,1403"/>
+<area shape="rect" id="node44" href="$group___seq.html#gae2040c947f0a90cc56d61c6db59b86c9" title="Remove XML annotation from DNAComponent. " alt="" coords="753,1427,1013,1453"/>
+<area shape="rect" id="node45" href="$group___s_a.html#gacf8309bec86e64c728efb78fd3f2731e" title="Remove XML annotation from a SequenceAnnotation. " alt="" coords="765,1478,1001,1519"/>
+<area shape="rect" id="node49" href="$group___s_a.html#ga645cd14071ed28e92a8053776384c7e6" title="Find out whether one SequenceAnnotation is restricted to appearing before another one..." alt="" coords="531,1339,606,1365"/>
+<area shape="rect" id="node50" href="$group___s_a.html#ga3bf0475adea1282b6969d1994845560c" title="Print an outline of a SequenceAnnotation to stdout. " alt="" coords="486,1288,651,1315"/>
+</map>

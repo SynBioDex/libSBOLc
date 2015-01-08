@@ -1,0 +1,7 @@
+<map id="TestSBOLObject" name="TestSBOLObject">
+<area shape="rect" id="node3" href="$classsbol_1_1sbol__test_1_1_test_d_n_a_sequence.html" title="TestDNASequence" alt="" coords="5,155,137,181"/>
+<area shape="rect" id="node4" href="$classsbol_1_1sbol__test_1_1_test_s_b_o_l_compound_object.html" title="TestSBOLCompoundObject" alt="" coords="161,155,344,181"/>
+<area shape="rect" id="node7" href="$classsbol_1_1sbol__test_1_1_test_sequence_annotation.html" title="TestSequenceAnnotation" alt="" coords="368,155,535,181"/>
+<area shape="rect" id="node5" href="$classsbol_1_1sbol__test_1_1_test_collection.html" title="TestCollection" alt="" coords="127,229,231,256"/>
+<area shape="rect" id="node6" href="$classsbol_1_1sbol__test_1_1_test_d_n_a_component.html" title="TestDNAComponent" alt="" coords="256,229,396,256"/>
+</map>

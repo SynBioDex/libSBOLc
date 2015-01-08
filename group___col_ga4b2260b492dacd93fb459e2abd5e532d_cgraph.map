@@ -1,6 +1,0 @@
-<map id="dnaComponentInCollection" name="dnaComponentInCollection">
-<area shape="rect" id="node2" href="$group___col.html#ga98da7c5daf50caaddd9875a9a68a8375" title="Get the number of DNAComponents in a Collection. " alt="" coords="435,5,607,32"/>
-<area shape="rect" id="node4" href="$group___col.html#ga3770d1fea716f7886236c9d7e797e0dd" title="Get the Nth DNAComponent inside a Collection. " alt="" coords="228,56,387,83"/>
-<area shape="rect" id="node3" href="$array_8h.html#ac866d8fd79355c021e68f3662921fc51" title="Get the number of pointers stored in a PointerArray. " alt="" coords="655,31,809,57"/>
-<area shape="rect" id="node5" href="$array_8h.html#aff165b4b431b1aaeca1978a60296ffa1" title="Get the Nth pointer from a PointerArray. " alt="" coords="450,56,591,83"/>
-</map>

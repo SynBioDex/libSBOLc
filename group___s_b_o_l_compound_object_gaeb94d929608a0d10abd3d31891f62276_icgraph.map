@@ -1,5 +1,0 @@
-<map id="setSBOLCompoundObjectDisplayID" name="setSBOLCompoundObjectDisplayID">
-<area shape="rect" id="node2" href="$group___col.html#gab3b13014274b1f135eb2a0b88f6481f0" title="Set the displayID of a Collection. " alt="" coords="289,5,435,32"/>
-<area shape="rect" id="node3" href="$group___d_c.html#ga2a6aa56023f263481a9e3dc48452f140" title="Set the displayID of a DNAComponent. " alt="" coords="272,56,452,83"/>
-<area shape="rect" id="node4" href="$group___d_c.html#ga2f53ac8c728bd591f52b17a4f908e4ab" title="Clone a DNAComponent object. " alt="" coords="500,56,637,83"/>
-</map>

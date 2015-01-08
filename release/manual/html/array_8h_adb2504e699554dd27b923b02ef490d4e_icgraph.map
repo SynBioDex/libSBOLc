@@ -1,0 +1,12 @@
+<map id="insertPointerIntoArray" name="insertPointerIntoArray">
+<area shape="rect" id="node2" href="$group___col.html#gabd9a001483d878de14a1a7270f3129a6" title="Add a DNAComponent to a Collection. " alt="" coords="204,5,407,32"/>
+<area shape="rect" id="node3" href="$group___d_c.html#ga3f0eae8eb04c18bfb5b920134a43cd84" title="Add a SequenceAnnotation to a DNAComponent. " alt="" coords="225,56,385,83"/>
+<area shape="rect" id="node5" href="$group___s_b_o_l_object.html#ga1221032c92574a9ebaad4c45737be336" title="Private low&#45;level accessor used to add an XML annotation. " alt="" coords="200,157,411,184"/>
+<area shape="rect" id="node10" href="$group___s_a.html#ga1425142e21a2346da3e97b4c3519d61b" title="Clone a SequenceAnnotation object. " alt="" coords="223,107,388,133"/>
+<area shape="rect" id="node11" href="$group___s_a.html#ga03d1a358bf602632938958eb53cd0201" title="Specify that one SequenceAnnotation must appear before another along a strand of DNA. " alt="" coords="223,208,387,235"/>
+<area shape="rect" id="node4" href="$group___d_c.html#ga2f53ac8c728bd591f52b17a4f908e4ab" title="Clone a DNAComponent object. " alt="" coords="506,56,643,83"/>
+<area shape="rect" id="node6" href="$group___col.html#gaefd504a24e8cb29310917ff9f43ea9ed" title="Annotate a Collection object with structured XML. " alt="" coords="475,107,674,133"/>
+<area shape="rect" id="node7" href="$group___d_c.html#gab06a3f2f6b16eb454ab44d546e6daa46" title="Annotate this DNAComponent with structured XML. " alt="" coords="459,157,691,184"/>
+<area shape="rect" id="node8" href="$group___seq.html#ga21f867e5159f83f01fc6e5e763f2266a" title="Annotate this DNAComponent with structured XML. " alt="" coords="463,208,686,235"/>
+<area shape="rect" id="node9" href="$group___s_a.html#gadd90e255b218336fd8e1d16cab77abee" title="Annotate a SequenceAnnotation with extra data structured as XML. " alt="" coords="475,259,674,301"/>
+</map>

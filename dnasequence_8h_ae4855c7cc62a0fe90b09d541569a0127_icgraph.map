@@ -1,6 +1,0 @@
-<map id="getDNASequenceNucleotides" name="getDNASequenceNucleotides">
-<area shape="rect" id="node2" href="$dnasequence_8h.html#a3a7a6a2f8465a5f904ecd0a856808437" title="Clone a DNASequence object. " alt="" coords="239,5,367,32"/>
-<area shape="rect" id="node4" href="$dnasequence_8h.html#a17f216d2f3cd0692e44d616cc7857f5d" title="Print a DNASequence to stdout. " alt="" coords="239,56,367,83"/>
-<area shape="rect" id="node3" href="$group___d_c.html#ga2f53ac8c728bd591f52b17a4f908e4ab" title="Clone a DNAComponent object. " alt="" coords="415,5,552,32"/>
-<area shape="rect" id="node5" href="$document_8h.html#a4017a9b69658b550d56ffc8ffb47a15d" title="Print all the SBOL objects in a Document to stdout. " alt="" coords="431,56,536,83"/>
-</map>

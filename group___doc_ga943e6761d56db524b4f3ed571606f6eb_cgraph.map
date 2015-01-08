@@ -1,5 +1,0 @@
-<map id="getNthDNAComponent" name="getNthDNAComponent">
-<area shape="rect" id="node2" href="$group___doc.html#ga95149bcfe7a743073f28d9aee080953e" title="Get the total number of DNAComponents in a Document. " alt="" coords="201,5,363,32"/>
-<area shape="rect" id="node4" href="$array_8h.html#aff165b4b431b1aaeca1978a60296ffa1" title="Get the Nth pointer from a PointerArray. " alt="" coords="211,56,353,83"/>
-<area shape="rect" id="node3" href="$array_8h.html#ac866d8fd79355c021e68f3662921fc51" title="Get the number of pointers stored in a PointerArray. " alt="" coords="411,31,565,57"/>
-</map>
