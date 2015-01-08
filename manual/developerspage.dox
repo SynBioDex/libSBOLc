@@ -2,6 +2,11 @@
 /// @page developers_page
 /// 
 /// @section overview Overview for Developers
+///
+/// [libSBOLc](https://github.com/SynBioDex/libSBOLc) uses the XML schema and example files from
+/// [libSBOLj](https://github.com/SynBioDex/libSBOLj), but the rest of the code was developed separately.
+/// The two libraries present similar interfaces, except where language conventions differ, and 
+/// read and write files in the standardized SBOL data format.
 /// 
 /// There are a few different top-level subdirectories in the libSBOLc folder:
 /// 

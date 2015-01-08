@@ -13,15 +13,16 @@
 #include "prototypes.h"
 
 
-/// Implements the SBOL Core DNAComponent object.
 /// @defgroup DC DNA Component
 /// @{
 /// @struct _DNAComponent
+/// @brief Implements the SBOL Core DNAComponent object.
 /// @var _DNAComponent::doc
 /// @var _DNAComponent::base
 /// @var _DNAComponent::dnaSequence
 /// @var _DNAComponent::annotations
 /// @var _DNAComponent::type
+///
 struct _DNAComponent {
 	Document* doc;             ///< parent Document
 	SBOLCompoundObject* base;  ///< uri, displayID, name, description
@@ -29,6 +30,7 @@ struct _DNAComponent {
 	PointerArray* annotations; ///< array of SequenceAnnotations
     TypeProperty* type;        ///< type
 };
+
 /// @name Methods
 /// @{
 
@@ -99,22 +101,21 @@ SBOLAPIEXPORTS void setDNAComponentType(DNAComponent* com, const char* uri);
 /// @todo how should this handle docs?
 SBOLAPIEXPORTS void addSequenceAnnotation(DNAComponent* com, SequenceAnnotation* ann);
 
-SBOLAPIEXPORTS void removeSequenceAnnotationFromDNAComponent(DNAComponent* com, SequenceAnnotation* ann);
 /// Delete a SequenceAnnotation from a DNAComponent's list of annotations.
 /// @todo where should this go? here, sequenceannotation.h, sbol.h?
 /// @todo how should this handle docs?
-SBOLAPIEXPORTS void addSequenceAnnotation(DNAComponent* com, SequenceAnnotation* ann);
+SBOLAPIEXPORTS void removeSequenceAnnotationFromDNAComponent(DNAComponent* com, SequenceAnnotation* ann);
 
 /// Print an outline of a DNAComponent to stdout.
 SBOLAPIEXPORTS void printDNAComponent(const DNAComponent* com, int tabs);
 
-// Retrieve extra information about a DNAComponent stored as structured XML
+/// Retrieve extra information about a DNAComponent stored as structured XML
 SBOLAPIEXPORTS xmlNode* getNthXMLAnnotationFromDNAComponent(DNAComponent *com, int index);
 
-// Annotate this DNAComponent with structured XML
+/// Annotate this DNAComponent with structured XML
 SBOLAPIEXPORTS void addXMLAnnotationToDNAComponent(DNAComponent* com, xmlNode *node);
 
-// Remove XML annotation from DNAComponent
+/// Remove XML annotation from DNAComponent
 SBOLAPIEXPORTS xmlNode* removeXMLAnnotationFromDNAComponent(DNAComponent *com, int index);
 
 /// @}

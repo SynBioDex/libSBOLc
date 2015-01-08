@@ -3,22 +3,20 @@
 /// Introduction
 /// ------------
 /// 
-/// [libSBOLc](https://github.com/SynBioDex/libSBOLc) is a C library for working with the [Synthetic 
-/// Biology Open Language (SBOL)](http://sbolstandard.org). It uses the XML schema and example files from
-/// [libSBOLj](https://github.com/SynBioDex/libSBOLj), but the rest of the code was developed separately.
-/// The two libraries should eventually present similar interfaces, except where language conventions
-/// differ.
+/// [libSBOLc](https://github.com/SynBioDex/libSBOLc) is a C library for reading, writing,
+/// and manipulating genetic "designs" stored in DNA repositories and data banks in the 
+/// standardized SBOL data format.  [Learn more about the Synthetic Biology Open Language (SBOL)](http://sbolstandard.org). 
 /// 
 /// Here is some example client code that will recreate valid04_dna_component_annotation.xml, which is one
 /// of the test cases from libSBOLj.
 /// 
 ///     #include "sbol.h"
 ///
-/// 	Document* CreateValid04() {
+///     Document* CreateValid04() {
 /// 		Document* doc = createDocument();
 /// 
 /// 		// components
-///		 	DNAComponent *dc1 = createDNAComponent(doc, "http://example.com/dc1");
+///			DNAComponent *dc1 = createDNAComponent(doc, "http://example.com/dc1");
 /// 		DNAComponent *dc2 = createDNAComponent(doc, "http://example.com/dc2");
 /// 		setDNAComponentDisplayID(dc1, "DC1");
 /// 		setDNAComponentDisplayID(dc2, "DC2");

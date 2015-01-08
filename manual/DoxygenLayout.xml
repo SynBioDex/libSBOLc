@@ -64,7 +64,7 @@
       <related title="" subtitle=""/>
       <membergroups visible="yes"/>
     </memberdecl>
-    <detaileddescription title=""/>
+    <detaileddescription title="" visible="yes"/>
     <memberdef>
       <inlineclasses visible="yes" title=""/>
       <typedefs visible="yes" title=""/>

@@ -12,18 +12,20 @@
 
 #define NUCLEOTIDES_TO_PRINT "50" ///< Cutoff for how much of a long sequence to print.
 
-/// Implements the SBOL Core DNASequence object.
 /// @defgroup Seq DNA Sequence
 /// @{
 /// @struct _DNASequence
+/// @brief Implements the SBOL Core DNASequence object.
 /// @var _DNASequence::doc
 /// @var _DNASequence::base
 /// @var _DNASequence::nucleotides
+///
 struct _DNASequence {
 	Document* doc;                    ///< parent Document
 	SBOLObject* base;                 ///< uri
 	NucleotidesProperty* nucleotides; ///< sequence
 };
+
 /// @name Methods
 /// @{
 
@@ -59,10 +61,13 @@ SBOLAPIEXPORTS void setDNASequenceURI(DNASequence* seq, const char* uri);
 /// Mainly for debugging.
 SBOLAPIEXPORTS void printDNASequence(const DNASequence* seq, int tabs);
 
+/// Retrieve extra information about a DNAComponent stored as structured XML
 SBOLAPIEXPORTS xmlNode* getNthXMLAnnotationFromDNASequence(DNASequence *seq, int index);
 
+/// Annotate this DNAComponent with structured XML
 SBOLAPIEXPORTS void addXMLAnnotationToDNASequence(DNASequence *seq, xmlNode *node);
 
+/// Remove XML annotation from DNAComponent
 SBOLAPIEXPORTS xmlNode* removeXMLAnnotationFromDNASequence(DNASequence *seq, int index);
 
 /// @}

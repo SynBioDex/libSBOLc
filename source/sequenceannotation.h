@@ -10,10 +10,10 @@
 #include "constants.h"
 #include "prototypes.h"
 
-/// Implements the SBOL Core SequenceAnnotation object.
 /// @defgroup SA Sequence Annotation
 /// @{
 /// @struct _SequenceAnnotation
+/// @brief Implements the SBOL Core SequenceAnnotation object.
 /// @var _SequenceAnnotation::doc
 /// @var _SequenceAnnotation::base
 /// @var _SequenceAnnotation::genbankStart
@@ -21,6 +21,7 @@
 /// @var _SequenceAnnotation::strand
 /// @var _SequenceAnnotation::subComponent
 /// @var _SequenceAnnotation::precedes
+///
 struct _SequenceAnnotation {
 	Document* doc;                  ///< parent Document
 	SBOLObject* base;               ///< uri, displayID, name, description
@@ -112,13 +113,13 @@ SBOLAPIEXPORTS int precedes(const SequenceAnnotation* upstream, const SequenceAn
 /// Mainly for debugging.
 SBOLAPIEXPORTS void printSequenceAnnotation(const SequenceAnnotation* seq, int tabs);
 
-// Retrieve extra information about a SequenceAnnotation stored as structured XML
+/// Retrieve extra information about a SequenceAnnotation stored as structured XML
 SBOLAPIEXPORTS xmlNode* getNthXMLAnnotationFromSequenceAnnotation(SequenceAnnotation *ann, int index);
 
-// Annotate a SequenceAnnotation with extra data structured as XML
+/// Annotate a SequenceAnnotation with extra data structured as XML
 SBOLAPIEXPORTS void addXMLAnnotationToSequenceAnnotation(SequenceAnnotation *ann, xmlNode *node);
 
-// Remove XML annotation from a SequenceAnnotation
+/// Remove XML annotation from a SequenceAnnotation
 SBOLAPIEXPORTS xmlNode* removeXMLAnnotationFromSequenceAnnotation(SequenceAnnotation *ann, int index);
 
 /// @}

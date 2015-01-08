@@ -12,22 +12,22 @@
 #include "prototypes.h"
 #include <libxml/parser.h>
 
-/// Represents an SBOL document that can be read from or written to a file.
-/// It also holds pointers to all the SBOL objects in the document,
+/// @todo Objects should be able to belong to multiple documents
+/// @defgroup Doc Document
+/// @{
+/// @struct _Document
+/// @brief Represents an SBOL document that can be read from or written to a file.
+/// @details It also holds pointers to all the SBOL objects in the document,
 /// so it can be used for iterating through all the objects of a certain kind,
 /// retrieving the object with a certain URI, checking the type of a pointer, etc.
 /// Deleting a Document also deletes the SBOL objects it contains.
 /// Each SBOL object must be associated with a document, for two main reasons:
 /// to ensure that its URI is unique, and to make memory management simpler.
-/// @todo Objects should be able to belong to multiple documents
-/// @defgroup Doc Document
-/// @{
-/// @struct _Document
 /// @var _Document::sequences
 /// @var _Document::annotations
 /// @var _Document::components
 /// @var _Document::collections
-
+///
 struct _Document{
     PointerArray* sequences;   ///< All the DNASequences in the Document.
     PointerArray* annotations; ///< All the SequenceAnnotations in the Document.

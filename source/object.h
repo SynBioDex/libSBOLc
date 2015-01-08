@@ -15,17 +15,20 @@
  * SBOLObject
  **************/
 
-/// A simple struct that just holds a uri so far.
-/// Used as a makeshift "base class" for DNASequence, 
-/// SequenceAnnotation, DNAComponent, and Collection.
-/// This is where to put anything that needs to be 
-/// accessible from each of the four main structs.
 /// @defgroup SBOLObject SBOLObject
 /// @{
 /// @struct _SBOLObject
+/// @brief SBOL base object, mainly consisting of a uri.
+/// @details Used as a makeshift "base class" for DNASequence, 
+/// SequenceAnnotation, DNAComponent, and Collection.
+/// This is where to put anything that needs to be 
+/// accessible from each of the four main structs.
+/// Arbitrary XML objects that contain additional
+/// descriptive information about an SBOL object
+/// can also be added
 /// @var _SBOLObject::uri
 /// @var _SBOLObject::xml_annotations
-
+///
 struct _SBOLObject {
 	URIProperty* uri; ///< Unique string for identification.
 	PointerArray* xml_annotations; ///< Array of optional non-SBOL annotations
@@ -55,17 +58,21 @@ void setSBOLObjectURI(SBOLObject* obj, const char* uri);
 /// This shouldn't be called directly.
 char* getSBOLObjectURI(const SBOLObject* obj);
 
-// Returns numer of structured XML annotations associated with this object
+/// Returns numer of structured XML annotations associated with this object
 SBOLAPIEXPORTS int getNumStructuredAnnotations(SBOLObject* obj);
 
-// Returns a structured annotation as a libXML2 xml node
+/// Returns a structured annotation as a libXML2 xmlNode object
 SBOLAPIEXPORTS xmlNode* getNthStructuredAnnotationAsXML(SBOLObject* obj, int n);
 
-// Returns a structured annotation as raw text
+/// Returns a structured annotation as raw text
 SBOLAPIEXPORTS char* getNthStructuredAnnotationAsText(SBOLObject* obj, int n);
 
+/// Private low-level accessor used to add an XML annotation.  Use the high-level
+/// accessors instead, eg addXMLAnnotationToDNAComponent
 SBOLAPIEXPORTS void addXMLAnnotationToSBOLObject(SBOLObject* obj, xmlNode *node, xmlDoc* xml_doc);
 
+/// Private low-level accessor used to remove an XML annotation.  Use the high-level
+/// accessors instead, eg removeXMLAnnotationToDNAComponent
 SBOLAPIEXPORTS xmlNode* removeXMLAnnotationFromSBOLObject(SBOLObject* obj, int index, xmlDoc* xml_doc);
 
 
@@ -76,12 +83,12 @@ SBOLAPIEXPORTS xmlNode* removeXMLAnnotationFromSBOLObject(SBOLObject* obj, int i
  * SBOLCompoundObject
  **********************/
 
-/// SBOLObject that also includes a name,
-/// displayID, and description.
-/// Used a base struct for DNAComponent and Collection.
 /// @defgroup SBOLCompoundObject SBOLCompoundObject
 /// @{
 /// @struct _SBOLCompoundObject
+/// @brief SBOLObject that also includes a name,
+/// displayID, and description.
+/// @details Used a base struct for DNAComponent and Collection.
 /// @var _SBOLCompoundObject::base
 /// @var _SBOLCompoundObject::displayID
 /// @var _SBOLCompoundObject::name

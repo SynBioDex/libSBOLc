@@ -10,10 +10,10 @@
 #include "constants.h"
 #include "prototypes.h"
 
-/// Implements the SBOL Core Collection object.
 /// @defgroup Col Collection
 /// @{
 /// @struct _Collection
+/// @brief Implements the SBOL Core Collection object.
 /// @var _Collection::doc
 /// @var _Collection::base
 /// @var _Collection::components
@@ -84,13 +84,13 @@ SBOLAPIEXPORTS int dnaComponentInCollection(const DNAComponent* com, const Colle
 /// Print an outline of a Collection to stdout.
 SBOLAPIEXPORTS void printCollection(const Collection* col, int tabs);
 
-// Retrieve extra information about a Collection stored as structured XML
+/// Retrieve extra information about a Collection stored as structured XML
 SBOLAPIEXPORTS xmlNode* getNthXMLAnnotationFromCollection(Collection *col, int index);
 
-// Annotate a Collection object with structured XML
+/// Annotate a Collection object with structured XML
 SBOLAPIEXPORTS void addXMLAnnotationToCollection(Collection *col, xmlNode *node);
 
-// Remove the nth XML annotation from Collection specified by the index
+/// Remove the nth XML annotation from Collection specified by the index
 SBOLAPIEXPORTS xmlNode* removeXMLAnnotationFromCollection(Collection *col, int index);
 
 /// @}
