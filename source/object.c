@@ -87,13 +87,13 @@ void addXMLAnnotationToSBOLObject(SBOLObject* obj, xmlNode *node, xmlDoc* xml_do
 	return;
 }
 
-void removeXMLAnnotationFromSBOLObject(SBOLObject* obj, int index, xmlDoc* xml_doc) {
+xmlNode* removeXMLAnnotationFromSBOLObject(SBOLObject* obj, int index, xmlDoc* xml_doc) {
 	xmlNode *node = getNthStructuredAnnotationAsXML(obj, index);
 	removePointerFromArray(obj->xml_annotations, index);
 	xmlUnlinkNode(node);
-	xmlFreeNode(node);
+	// xmlFreeNode(node);
 	int i = xmlReconciliateNs(xml_doc, xmlDocGetRootElement(xml_doc));
-	return;
+	return node;
 }
 
 /**********************

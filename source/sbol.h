@@ -15,6 +15,8 @@
 
 #include "constants.h"
 #include "document.h"
+#include "object.h"
+#include "property.h"
 #include "dnasequence.h"
 #include "sequenceannotation.h"
 #include "dnacomponent.h"
@@ -22,6 +24,4 @@
 #include "validator.h"
 #include "reader.h"
 #include "writer.h"
-#include "object.h"
-#include "property.h"
 #endif

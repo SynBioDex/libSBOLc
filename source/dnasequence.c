@@ -87,12 +87,16 @@ void printDNASequence(const DNASequence* seq, int tabs) {
 	printf("\n");
 }
 
+xmlNode* getNthXMLAnnotationFromDNASequence(DNASequence *seq, int index) {
+	return getNthStructuredAnnotationAsXML(seq->base, index);
+}
+
 void addXMLAnnotationToDNASequence(DNASequence *seq, xmlNode *node) {
 	addXMLAnnotationToSBOLObject(seq->base, node, seq->doc->xml_doc);
 	return;
 }
 
-void removeXMLAnnotationFromDNASequence(DNASequence *seq, int index) {
-	removeXMLAnnotationFromSBOLObject(seq->base, index, seq->doc->xml_doc);
-	return;
+xmlNode* removeXMLAnnotationFromDNASequence(DNASequence *seq, int index) {
+	xmlNode* node = removeXMLAnnotationFromSBOLObject(seq->base, index, seq->doc->xml_doc);
+	return node;
 }

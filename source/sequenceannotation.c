@@ -212,12 +212,16 @@ void printSequenceAnnotation(const SequenceAnnotation* ann, int tabs) {
     }
 }
 
+xmlNode* getNthXMLAnnotationFromSequenceAnnotation(SequenceAnnotation *ann, int index) {
+	return getNthStructuredAnnotationAsXML(ann->base, index);
+}
+
 void addXMLAnnotationToSequenceAnnotation(SequenceAnnotation *ann, xmlNode *node) {
 	addXMLAnnotationToSBOLObject(ann->base, node, ann->doc->xml_doc);
 	return;
 }
 
-void removeXMLAnnotationFromSequenceAnnotation(SequenceAnnotation *ann, int index) {
-	removeXMLAnnotationFromSBOLObject(ann->base, index, ann->doc->xml_doc);
-	return;
+xmlNode* removeXMLAnnotationFromSequenceAnnotation(SequenceAnnotation *ann, int index) {
+	xmlNode *node = removeXMLAnnotationFromSBOLObject(ann->base, index, ann->doc->xml_doc);
+	return node;
 }

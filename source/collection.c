@@ -149,12 +149,16 @@ void printCollection(const Collection* col, int tabs) {
     }
 }
 
+xmlNode* getNthXMLAnnotationFromCollection(Collection *col, int index) {
+	return getNthStructuredAnnotationAsXML(col->base->base, index);
+}
+
 void addXMLAnnotationToCollection(Collection *col, xmlNode *node) {
 	addXMLAnnotationToSBOLObject(col->base->base, node, col->doc->xml_doc);
 	return;
 }
 
-void removeXMLAnnotationFromCollection(Collection *col, int index) {
-	removeXMLAnnotationFromSBOLObject(col->base->base, index, col->doc->xml_doc);
-	return;
+xmlNode* removeXMLAnnotationFromCollection(Collection *col, int index) {
+	xmlNode *node = removeXMLAnnotationFromSBOLObject(col->base->base, index, col->doc->xml_doc);
+	return node;
 }

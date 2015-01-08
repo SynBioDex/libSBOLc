@@ -108,11 +108,14 @@ SBOLAPIEXPORTS void addSequenceAnnotation(DNAComponent* com, SequenceAnnotation*
 /// Print an outline of a DNAComponent to stdout.
 SBOLAPIEXPORTS void printDNAComponent(const DNAComponent* com, int tabs);
 
+// Retrieve extra information about a DNAComponent stored as structured XML
+SBOLAPIEXPORTS xmlNode* getNthXMLAnnotationFromDNAComponent(DNAComponent *com, int index);
+
 // Annotate this DNAComponent with structured XML
 SBOLAPIEXPORTS void addXMLAnnotationToDNAComponent(DNAComponent* com, xmlNode *node);
 
 // Remove XML annotation from DNAComponent
-SBOLAPIEXPORTS void removeXMLAnnotationFromDNAComponent(DNAComponent *com, int index);
+SBOLAPIEXPORTS xmlNode* removeXMLAnnotationFromDNAComponent(DNAComponent *com, int index);
 
 /// @}
 /// @}

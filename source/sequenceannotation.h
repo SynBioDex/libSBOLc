@@ -112,11 +112,14 @@ SBOLAPIEXPORTS int precedes(const SequenceAnnotation* upstream, const SequenceAn
 /// Mainly for debugging.
 SBOLAPIEXPORTS void printSequenceAnnotation(const SequenceAnnotation* seq, int tabs);
 
-// Annotate a DNAComponent with extra data structured as XML
+// Retrieve extra information about a SequenceAnnotation stored as structured XML
+SBOLAPIEXPORTS xmlNode* getNthXMLAnnotationFromSequenceAnnotation(SequenceAnnotation *ann, int index);
+
+// Annotate a SequenceAnnotation with extra data structured as XML
 SBOLAPIEXPORTS void addXMLAnnotationToSequenceAnnotation(SequenceAnnotation *ann, xmlNode *node);
 
-// Remove XML annotation from a DNAComponent
-SBOLAPIEXPORTS void removeXMLAnnotationFromSequenceAnnotation(SequenceAnnotation *ann, int index);
+// Remove XML annotation from a SequenceAnnotation
+SBOLAPIEXPORTS xmlNode* removeXMLAnnotationFromSequenceAnnotation(SequenceAnnotation *ann, int index);
 
 /// @}
 /// @}
