@@ -1,0 +1,2 @@
+# Hashes of file build rules.
+82e99e5af7c2099c1ac759fb241e6a1d manual/CMakeFiles/sbol_manual

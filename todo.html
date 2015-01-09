@@ -4,7 +4,7 @@
 <meta http-equiv="Content-Type" content="text/xhtml;charset=UTF-8"/>
 <meta http-equiv="X-UA-Compatible" content="IE=9"/>
 <meta name="generator" content="Doxygen 1.8.8"/>
-<title>pySBOL: Todo List</title>
+<title>libSBOLc: Todo List</title>
 <link href="tabs.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="jquery.js"></script>
 <script type="text/javascript" src="dynsections.js"></script>
@@ -21,9 +21,8 @@
 <table cellspacing="0" cellpadding="0">
  <tbody>
  <tr style="height: 56px;">
-  <td id="projectlogo"><img alt="Logo" src="SBOLlogo2_high_res.jpg"/></td>
   <td style="padding-left: 0.5em;">
-   <div id="projectname">pySBOL
+   <div id="projectname">libSBOLc
    &#160;<span id="projectnumber">1.1</span>
    </div>
   </td>
@@ -39,7 +38,8 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
   <div id="navrow1" class="tabs">
     <ul class="tablist">
       <li><a href="index.html"><span>Introduction</span></a></li>
-      <li><a href="annotated.html"><span>Classes&#160;and&#160;API</span></a></li>
+      <li><a href="developers_page.html"><span>Code&#160;Overview</span></a></li>
+      <li><a href="custom_class_page.html"><span>Classes&#160;and&#160;API</span></a></li>
       <li><a href="files.html"><span>Files</span></a></li>
       <li>
         <div id="MSearchBox" class="MSearchBoxInactive">
@@ -64,7 +64,7 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
      onmouseover="return searchBox.OnSearchSelectShow()"
      onmouseout="return searchBox.OnSearchSelectHide()"
      onkeydown="return searchBox.OnSearchSelectKey(event)">
-<a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(0)"><span class="SelectionMark">&#160;</span>All</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(1)"><span class="SelectionMark">&#160;</span>Classes</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(2)"><span class="SelectionMark">&#160;</span>Namespaces</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(3)"><span class="SelectionMark">&#160;</span>Files</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(4)"><span class="SelectionMark">&#160;</span>Functions</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(5)"><span class="SelectionMark">&#160;</span>Variables</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(6)"><span class="SelectionMark">&#160;</span>Pages</a></div>
+<a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(0)"><span class="SelectionMark">&#160;</span>All</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(1)"><span class="SelectionMark">&#160;</span>Data Structures</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(2)"><span class="SelectionMark">&#160;</span>Files</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(3)"><span class="SelectionMark">&#160;</span>Functions</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(4)"><span class="SelectionMark">&#160;</span>Variables</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(5)"><span class="SelectionMark">&#160;</span>Macros</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(6)"><span class="SelectionMark">&#160;</span>Modules</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(7)"><span class="SelectionMark">&#160;</span>Pages</a></div>
 
 <!-- iframe showing the search results (closed by default) -->
 <div id="MSearchResultsWindow">
@@ -80,13 +80,109 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 </div><!--header-->
 <div class="contents">
 <div class="textblock"><dl class="reflist">
-<dt><a class="anchor" id="_todo000001"></a>Class <a class="el" href="classsbol_1_1sbol_1_1_document.html">Document</a>  </dt>
-<dd>Objects should be able to belong to multiple documents </dd>
+<dt><a class="anchor" id="_todo000005"></a>Global <a class="el" href="group___col.html#gabd9a001483d878de14a1a7270f3129a6">addDNAComponentToCollection</a>  (Collection *col, DNAComponent *com)</dt>
+<dd>move to <a class="el" href="dnacomponent_8h.html" title="Contains the DNAComponent struct, as well as functions for operating on it. ">dnacomponent.h</a>?  </dd>
+<dt><a class="anchor" id="_todo000035"></a>Global <a class="el" href="group___s_a.html#ga03d1a358bf602632938958eb53cd0201">addPrecedesRelationship</a>  (SequenceAnnotation *upstream, SequenceAnnotation *downstream)</dt>
+<dd><p class="startdd">removeSequenceAnnotationSubComponent </p>
+<p>how should this handle docs? </p>
+<p>Is the strand a DNAComponent? Or not yet part of SBOL? </p>
+<p class="enddd">Is the strand a DNAComponent? Or not yet part of SBOL?  </p>
+</dd>
+<dt><a class="anchor" id="_todo000012"></a>Global <a class="el" href="group___d_c.html#ga3f0eae8eb04c18bfb5b920134a43cd84">addSequenceAnnotation</a>  (DNAComponent *com, SequenceAnnotation *ann)</dt>
+<dd><p class="startdd">where should this go? here, <a class="el" href="sequenceannotation_8h.html" title="This file contains the SequenceAnnotation struct, as well as functions for operating on it...">sequenceannotation.h</a>, <a class="el" href="sbol_8h.html" title="Gathers together all the SBOL functions so they can be easily #included. ">sbol.h</a>? </p>
+<p class="enddd">how should this handle docs?  </p>
+</dd>
+<dt><a class="anchor" id="_todo000001"></a>File <a class="el" href="array_8h.html">array.h</a>  </dt>
+<dd><p class="startdd">Rename PointerArray to SBOLObjectArray? </p>
+<p class="enddd">Actually convert it to hold SBOLObjects via casts?  </p>
+</dd>
+<dt><a class="anchor" id="_todo000017"></a>Global <a class="el" href="group___s_b_o_l_object.html#ga720a9be97fff4cede1ad63cfa7190258">cleanupSBOLObjects</a>  (Document *doc)</dt>
+<dd>remove this? is it ever used?  </dd>
+<dt><a class="anchor" id="_todo000025"></a>Global <a class="el" href="property_8h.html#a6fc8c24edc0bc01f1b1109024e10b0c2">compareURIProperty</a>  (const URIProperty *pro1, const URIProperty *pro2)</dt>
+<dd>Check that that's true.  </dd>
+<dt><a class="anchor" id="_todo000007"></a>File <a class="el" href="constants_8h_8in.html">constants.h.in</a>  </dt>
+<dd><p class="startdd">bring up "dnaSequence" vs "DnaSequence" </p>
+<p class="enddd">and "component" vs "DnaComponent"  </p>
+</dd>
+<dt><a class="anchor" id="_todo000002"></a>Global <a class="el" href="group___col.html#ga7fe2662a0adfa42f0e26b950f8340e5c">createCollection</a>  (Document *doc, const char *uri)</dt>
+<dd>remove?  </dd>
+<dt><a class="anchor" id="_todo000010"></a>Global <a class="el" href="group___d_c.html#ga9cf6255fdc0cf5dabda22d972d06638d">createDNAComponent</a>  (Document *doc, const char *uri)</dt>
+<dd>remove?  </dd>
+<dt><a class="anchor" id="_todo000032"></a>Global <a class="el" href="group___s_a.html#gaa972285326409e2a091b653c8081c5fc">createSequenceAnnotation</a>  (Document *doc, const char *uri)</dt>
+<dd>remove?  </dd>
+<dt><a class="anchor" id="_todo000023"></a>Global <a class="el" href="property_8h.html#a6a5874eb94a42b6174a05b3ce8d3186c">deleteTextProperty</a>  (TextProperty *pro)</dt>
+<dd>Make sure that's true.  </dd>
+<dt><a class="anchor" id="_todo000024"></a>Global <a class="el" href="property_8h.html#aaa6562bc7d78d2d9174b0244cb82d453">deleteURIProperty</a>  (URIProperty *pro)</dt>
+<dd>Make sure that's true.  </dd>
+<dt><a class="anchor" id="_todo000006"></a>Global <a class="el" href="group___col.html#ga4b2260b492dacd93fb459e2abd5e532d">dnaComponentInCollection</a>  (const DNAComponent *com, const Collection *col)</dt>
+<dd>better name Gotcha: lowercase dna  </dd>
+<dt><a class="anchor" id="_todo000016"></a>Module <a class="el" href="group___doc.html">Doc</a>  </dt>
+<dd><p class="startdd">Objects should be able to belong to multiple documents</p>
+<p class="enddd"></p>
+</dd>
+<dt><a class="anchor" id="_todo000014"></a>Global <a class="el" href="group___seq.html#gae4855c7cc62a0fe90b09d541569a0127">getDNASequenceNucleotides</a>  (const DNASequence *seq)</dt>
+<dd>rename to getDNASequenceNucleotides?  </dd>
+<dt><a class="anchor" id="_todo000022"></a>Global <a class="el" href="property_8h.html#aa7a95a21606fd7337810531c2d31f680">getLetters</a>  (const Property *pro)</dt>
+<dd>Check that this one copies.  </dd>
+<dt><a class="anchor" id="_todo000004"></a>Global <a class="el" href="group___col.html#ga3770d1fea716f7886236c9d7e797e0dd">getNthDNAComponentIn</a>  (const Collection *col, int n)</dt>
+<dd>rename to NOT reflect doc  </dd>
+<dt><a class="anchor" id="_todo000003"></a>Global <a class="el" href="group___col.html#ga98da7c5daf50caaddd9875a9a68a8375">getNumDNAComponentsIn</a>  (const Collection *col)</dt>
+<dd>rename to NOT reflect doc  </dd>
+<dt><a class="anchor" id="_todo000044"></a>Global <a class="el" href="validator_8h.html#a9e333afef1de0cd1d216f1eb74fc0e2f">isValidSBOL</a>  (const xmlDocPtr doc)</dt>
+<dd>remove?  </dd>
+<dt><a class="anchor" id="_todo000027"></a>Class <a class="el" href="struct___polarity_property.html">PolarityProperty</a>  </dt>
+<dd>rename to StrandProperty? or OrientationProperty?  </dd>
+<dt><a class="anchor" id="_todo000041"></a>Global <a class="el" href="utilities_8h.html#a7d9556671426e0ddae773934d7514504">polarityToChar</a>  (int polarity)</dt>
+<dd>better char for bidirectional?  </dd>
+<dt><a class="anchor" id="_todo000026"></a>Class <a class="el" href="struct___position_property.html">PositionProperty</a>  </dt>
+<dd>Is 0 a valid position?  </dd>
+<dt><a class="anchor" id="_todo000037"></a>Global <a class="el" href="group___s_a.html#ga645cd14071ed28e92a8053776384c7e6">precedes</a>  (const SequenceAnnotation *upstream, const SequenceAnnotation *downstream)</dt>
+<dd>how should this handle docs?  </dd>
+<dt><a class="anchor" id="_todo000020"></a>Global <a class="el" href="property_8h.html#ac695f446dcffbf36c1182a4a1ea5c61a">printNucleotidesProperty</a>  (const NucleotidesProperty *pro)</dt>
+<dd>cut off printing of long sequnces at 50 chars or so?  </dd>
+<dt><a class="anchor" id="_todo000038"></a>Global <a class="el" href="group___s_a.html#ga3bf0475adea1282b6969d1994845560c">printSequenceAnnotation</a>  (const SequenceAnnotation *seq, int tabs)</dt>
+<dd>removePrecedesRelationship  </dd>
+<dt><a class="anchor" id="_todo000021"></a>File <a class="el" href="property_8h.html">property.h</a>  </dt>
+<dd><p class="startdd">Make enums for any magic numbers </p>
+<p class="enddd">See if separating docs into user, devel works.  </p>
+</dd>
+<dt><a class="anchor" id="_todo000030"></a>Global <a class="el" href="reader_8h.html#a2ae946b9723f9d4ab6259804ea9ef550">readDocument</a>  (Document *doc, char *filename)</dt>
+<dd>Return an error code on invalid documents  </dd>
+<dt><a class="anchor" id="_todo000028"></a>File <a class="el" href="reader_8h.html">reader.h</a>  </dt>
+<dd>Figure out how to generate documentation for static functions.  </dd>
+<dt><a class="anchor" id="_todo000013"></a>Global <a class="el" href="group___d_c.html#ga8b65696d7c814dde9b59ed33554de3b4">removeSequenceAnnotationFromDNAComponent</a>  (DNAComponent *com, SequenceAnnotation *ann)</dt>
+<dd><p class="startdd">where should this go? here, <a class="el" href="sequenceannotation_8h.html" title="This file contains the SequenceAnnotation struct, as well as functions for operating on it...">sequenceannotation.h</a>, <a class="el" href="sbol_8h.html" title="Gathers together all the SBOL functions so they can be easily #included. ">sbol.h</a>? </p>
+<p class="enddd">how should this handle docs?  </p>
+</dd>
+<dt><a class="anchor" id="_todo000042"></a>Global <a class="el" href="utilities_8h.html#abb3871d4aea961b9d0cb6ae724bc0f29">safeXmlInitParser</a>  ()</dt>
+<dd>find a way not to export this?  </dd>
+<dt><a class="anchor" id="_todo000031"></a>File <a class="el" href="sbol_8h.html">sbol.h</a>  </dt>
+<dd>make a lot of the functions static  </dd>
+<dt><a class="anchor" id="_todo000011"></a>Global <a class="el" href="group___d_c.html#ga58d6160b010570aad37fedba885ff5cf">setDNAComponentSequence</a>  (DNAComponent *com, DNASequence *seq)</dt>
+<dd>how should this handle docs?  </dd>
+<dt><a class="anchor" id="_todo000015"></a>Global <a class="el" href="group___seq.html#ga8aaa4277470919c1fb1aca322c73f304">setDNASequenceNucleotides</a>  (DNASequence *seq, const char *nucleotides)</dt>
+<dd>rename to setDNASequenceNucleotides?  </dd>
+<dt><a class="anchor" id="_todo000019"></a>Global <a class="el" href="property_8h.html#a6db30af1b5c42bdac91b3224df20b892">setNucleotidesProperty</a>  (NucleotidesProperty *pro, const char *nucleotides)</dt>
+<dd>restrict to setting valid nucleotides  </dd>
+<dt><a class="anchor" id="_todo000034"></a>Global <a class="el" href="group___s_a.html#ga0f88c144140bae273f220ef276c390c6">setSequenceAnnotationSubComponent</a>  (SequenceAnnotation *ann, DNAComponent *com)</dt>
+<dd><p class="startdd">move this to <a class="el" href="sequenceannotation_8h.html" title="This file contains the SequenceAnnotation struct, as well as functions for operating on it...">sequenceannotation.h</a>? </p>
+<p class="enddd">how should this handle docs?  </p>
+</dd>
+<dt><a class="anchor" id="_todo000018"></a>Global <a class="el" href="property_8h.html#a1b4bf73fab652f3898f835c95971e999">setTextProperty</a>  (TextProperty *pro, const char *text)</dt>
+<dd><p class="startdd">remove the pro-&gt;text != NULL restriction? </p>
+<p class="enddd">warn that you need to free() anything from a Property  </p>
+</dd>
+<dt><a class="anchor" id="_todo000040"></a>Global <a class="el" href="utilities_8h.html#afae7344e0c6864523b4e002318a26962">strToPolarity</a>  (const char *input)</dt>
+<dd><p class="startdd">move to polarityproperty, writer, or types? </p>
+<p class="enddd">better char for bidirectional?  </p>
+</dd>
+<dt><a class="anchor" id="_todo000039"></a>File <a class="el" href="utilities_8h.html">utilities.h</a>  </dt>
+<dd>Don't export this stuff with the library. </dd>
 </dl>
 </div></div><!-- contents -->
 <!-- start footer part -->
 <hr class="footer"/><address class="footer"><small>
-Generated on Mon Dec 29 2014 13:48:13 for pySBOL by &#160;<a href="http://www.doxygen.org/index.html">
+Generated on Thu Jan 8 2015 18:08:02 for libSBOLc by &#160;<a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/>
 </a> 1.8.8
 </small></address>
