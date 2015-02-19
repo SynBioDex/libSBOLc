@@ -55,7 +55,7 @@ int getNumStructuredAnnotations(SBOLObject* obj) {
 // Returns a structured annotation as a libXML2 xml node
 xmlNode* getNthStructuredAnnotationAsXML(SBOLObject* obj, const int n) {
 	if (n >= getNumStructuredAnnotations(obj)) {
-		return;
+        return NULL;
 	} else {
 		return (xmlNode *)getNthPointerInArray(obj->xml_annotations, n);
 	}
@@ -64,7 +64,7 @@ xmlNode* getNthStructuredAnnotationAsXML(SBOLObject* obj, const int n) {
 // Returns a structured annotation as raw text
 char* getNthStructuredAnnotationAsText(SBOLObject* obj, const int n) {
 	if (n >= getNumStructuredAnnotations(obj)) {
-		return;
+        return NULL;
 	} else {
 		xmlBufferPtr buffer = xmlBufferCreate();
 		xmlKeepBlanksDefault(0);
