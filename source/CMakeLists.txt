@@ -71,3 +71,4 @@ ELSE()  	# build shared library for release
 
 ENDIF()
 install(TARGETS sbol DESTINATION bin)
+install(FILES ${SBOL_HEADER_FILES} DESTINATION include)
