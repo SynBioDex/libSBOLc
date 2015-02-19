@@ -70,5 +70,5 @@ ELSE()  	# build shared library for release
 	#target_link_libraries(sbol -Wl,-whole-archive -l${xml2} -l${ws2_32} -Wl,-no-whole-archive  )
 
 ENDIF()
-install(TARGETS sbol DESTINATION bin)
-install(FILES ${SBOL_HEADER_FILES} DESTINATION include)
+INSTALL(TARGETS sbol DESTINATION lib)
+INSTALL(FILES ${SBOL_HEADER_FILES} DESTINATION include)
