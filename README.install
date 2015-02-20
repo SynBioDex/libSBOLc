@@ -1,0 +1,13 @@
+To install, first ensure that you have cmake installed
+
+In the project directory, run:
+  ccmake .
+In this interface, select whether you want tests, examples, etc. to build
+Press c to configure, then g to generate, and e to exit
+Ccmake might give a warning which you can ignore.  
+
+Then to compile, run:
+  make
+
+For unit tests run sbol_run_tests in directory release/tests run.  
+Currently 1 of 37 tests fails, TestCreateNullDNASequence.
