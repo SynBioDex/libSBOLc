@@ -70,4 +70,8 @@ ELSE()  	# build shared library for release
 	#target_link_libraries(sbol -Wl,-whole-archive -l${xml2} -l${ws2_32} -Wl,-no-whole-archive  )
 
 ENDIF()
-install(TARGETS sbol DESTINATION bin)
+INSTALL(TARGETS sbol DESTINATION lib)
+FILE(COPY ${LIBXML2_HEADER_FILES} DESTINATION  ${CMAKE_INSTALL_PREFIX}/include )
+FILE(COPY ${SBOL_HEADER_FILES} DESTINATION  ${CMAKE_INSTALL_PREFIX}/include )
+
+#INSTALL(FILES ${SBOL_HEADER_FILES} DESTINATION include)
