@@ -4,11 +4,16 @@ CONFIGURE_FILE(
 	${SBOL_SOURCE_DIR}/constants.h
 )
 
-#adjust paths
+# adjust paths
 SET( SBOL_RELEASE_DIR       ${SBOL_RELEASE_DIR}/library )
 SET( LIBRARY_OUTPUT_PATH    ${SBOL_RELEASE_DIR} )
 SET( LIBXML2_STATICLIB_OUTPUT_PATH	${LIBRARY_OUTPUT_PATH} )
-SET( HEADER_OUTPUT_PATH		${SBOL_RELEASE_DIR}/include )
+# the relative path for headers in the release directory should correspond to the ultimate install paths, depending on platform
+IF( WIN32 )
+   SET( HEADER_OUTPUT_PATH		${SBOL_RELEASE_DIR}/include/ )
+ELSE()
+   SET( HEADER_OUTPUT_PATH		${SBOL_RELEASE_DIR}/include/SBOL )
+ENDIF()
 
 # find/build libxml
 IF( WIN32 )
@@ -70,5 +75,6 @@ ELSE()  	# build shared library for release
 	#target_link_libraries(sbol -Wl,-whole-archive -l${xml2} -l${ws2_32} -Wl,-no-whole-archive  )
 
 ENDIF()
+MESSAGE(${HEADER_OUTPUT_PATH})
 INSTALL(TARGETS sbol DESTINATION lib)
-INSTALL(DIRECTORY ${HEADER_OUTPUT_PATH} DESTINATION ${CMAKE_INSTALL_PREFIX}/include/SBOL)
+INSTALL(DIRECTORY ${HEADER_OUTPUT_PATH} DESTINATION ${CMAKE_INSTALL_PREFIX}/include)
