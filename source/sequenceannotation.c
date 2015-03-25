@@ -57,8 +57,10 @@ SequenceAnnotation* copySequenceAnnotation(SequenceAnnotation* ann, char* id_mod
 
 	// Copy precedes property
 	copy->precedes = createPointerArray();
+	char *target_uri;
 	for (i = 0; i < getNumPointersInArray(ann->precedes); i++) {
-		insertPointerIntoArray(copy->precedes, getNthPointerInArray(ann->precedes, i));
+		target_uri = (char *)getNthPointerInArray(ann->precedes, i);
+		insertPointerIntoArray(copy->precedes, augmentURI(getSequenceAnnotationURI(ann), id_modifier));
 	}
 
 	// Copy SubComponent tree recursively
@@ -155,20 +157,47 @@ int getSequenceAnnotationStrand(const SequenceAnnotation* ann) {
  *******************/
 
 void addPrecedesRelationship(SequenceAnnotation * upstream, SequenceAnnotation * downstream) {
-	if (upstream && downstream)
-		insertPointerIntoArray(upstream->precedes, downstream);
+	if (upstream && downstream) {
+		char *downstream_uri = getSequenceAnnotationURI(downstream);
+		insertPointerIntoArray(upstream->precedes, downstream_uri);
+		printf("uri of downstream annotation:%s\n", getNthPointerInArray(upstream->precedes, 0));
+		//insertPointerIntoArray(upstream->precedes, downstream);
+	}
 }
 
 void removePrecedesRelationship(SequenceAnnotation* upstream, SequenceAnnotation* downstream) {
 	if (upstream && downstream) {
-		int index = indexOfPointerInArray(upstream->precedes, downstream);
-		removePointerFromArray(upstream->precedes, index);
+		char *target_uri = getSequenceAnnotationURI(downstream);
+		printf("\n%s\n", target_uri);
+		char *query_uri;
+		int FOUND = 0; // found URI in list of URIs
+		int EOL = 0; // end of list
+		int i_uri = 0;  // index of URI in list
+		while (!FOUND && !EOL) {
+			query_uri = (char *)getNthPointerInArray(upstream->precedes, i_uri);
+			printf("\n%s\n", query_uri);
+			if (strcmp(query_uri, target_uri) == 0) {
+				FOUND++;
+				removePointerFromArray(upstream->precedes, i_uri);
+			}
+			i_uri++;
+			if (i_uri == getNumPointersInArray(upstream->precedes)) {
+				EOL++;
+			}
+		}
+
+		//int index = indexOfPointerInArray(upstream->precedes, downstream);
+		//removePointerFromArray(upstream->precedes, index);
 	}
+	return;
 }
 
 SequenceAnnotation* getNthPrecedes(const SequenceAnnotation* ann, int n) {
-	if (ann && getNumPrecedes(ann) >= n)
-		return (SequenceAnnotation*) getNthPointerInArray(ann->precedes, n);
+	if (ann && getNumPrecedes(ann) >= n) {
+		char *uri = (char *)getNthPointerInArray(ann->precedes, n);
+		return getSequenceAnnotation(ann->doc, uri);
+		//return (SequenceAnnotation*) getNthPointerInArray(ann->precedes, n);
+	}
 	else
 		return NULL;
 }
