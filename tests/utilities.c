@@ -47,7 +47,7 @@ char** getFilenames(char* dirname) {
 	// (excluding . and ..)
 	numFiles = 0;
 	dir = opendir(dirname);
-	while (ent = readdir(dir)) {
+	while ((ent = readdir(dir))) {
 		if (strcmp(ent->d_name, "." ) != 0
 		 && strcmp(ent->d_name, "..") != 0) {
 			numFiles++;

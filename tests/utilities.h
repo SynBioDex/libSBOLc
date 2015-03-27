@@ -8,5 +8,6 @@ char* randomString();
 char* randomUniqueURI(Document* doc);
 int randomNumber(int max);
 char** getFilenames(char* dirname);
+void safeXmlInitParser();
 
 #endif

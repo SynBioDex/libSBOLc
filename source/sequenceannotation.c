@@ -9,6 +9,7 @@
 #include "document.h"
 #include "dnacomponent.h"
 #include "sequenceannotation.h"
+#include "utilities.h"
 
 SequenceAnnotation* createSequenceAnnotation(Document* doc, const char* uri) {
 	if (!doc || !uri || isSBOLObjectURI(doc, uri))
