@@ -10,6 +10,7 @@
 #include "sequenceannotation.h"
 #include "object.h"
 #include "dnasequence.h"
+#include "utilities.h"
 
 DNAComponent* createDNAComponent(Document* doc, const char* uri) {
 	if (!doc || !uri || isSBOLObjectURI(doc, uri))
@@ -68,7 +69,8 @@ DNAComponent* copyDNAComponent(const DNAComponent* com, char* id_modifier) {
 		}
 		
 		return (DNAComponent *)copy;
-	}
+	} else 
+          return NULL; // TODO: is this right?
 }
 
 void printDNAComponent(const DNAComponent* com, int tabs) {
@@ -138,6 +140,8 @@ char* getDNAComponentType(const DNAComponent* com) {
         TypeProperty* t  = com->type;
         if (t->uri)
             return getURIProperty(t->uri);
+        else
+          return NULL;
     }
     else
         return NULL;

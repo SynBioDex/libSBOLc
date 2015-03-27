@@ -42,5 +42,8 @@ char polarityToChar(int polarity);
 SBOLAPIEXPORTS void safeXmlInitParser();
 
 void registerSequenceAnnotation(SequenceAnnotation* ann);
+void registerCollection(Collection* col);
+void registerDNASequence(DNASequence* seq);
+void registerDNAComponent(DNAComponent* com);
 
 #endif

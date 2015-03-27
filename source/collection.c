@@ -9,6 +9,7 @@
 #include "document.h"
 #include "collection.h"
 #include "dnacomponent.h"
+#include "utilities.h"
 
 Collection* createCollection(Document* doc, const char* uri) {
 	if (!doc || !uri || isSBOLObjectURI(doc, uri))

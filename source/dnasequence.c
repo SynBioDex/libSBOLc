@@ -7,6 +7,7 @@
 #include "object.h"
 #include "document.h"
 #include "dnasequence.h"
+#include "utilities.h"
 
 // TODO constrain to actg and sometimes n?
 DNASequence* createDNASequence(Document* doc, const char* uri) {
@@ -27,7 +28,8 @@ DNASequence* copyDNASequence(const DNASequence* seq, char* id_modifier) {
 		DNASequence* copy = createDNASequence(seq->doc, copy_uri);
 		setDNASequenceNucleotides(copy, getDNASequenceNucleotides(seq));
 		return (DNASequence *)copy;
-	}
+	} else 
+          return NULL; // TODO: is this rgith?
 }
 
 void setDNASequenceURI(DNASequence* seq, const char* uri) {
@@ -69,6 +71,8 @@ char* getDNASequenceURI(const DNASequence* seq) {
 char* getDNASequenceNucleotides(const DNASequence* seq) {
 	if (seq)
 	    return getNucleotidesProperty(seq->nucleotides);
+        else
+            return NULL;
 }
 
 void printDNASequence(const DNASequence* seq, int tabs) {

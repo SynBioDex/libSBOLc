@@ -1,5 +1,6 @@
 #include <stdio.h>
 #include <stdlib.h>
+#include <string.h>
 
 #include <libxml/parser.h>
 
@@ -215,7 +216,8 @@ int isDNAComponent(const Document* doc, const void* ptr) {
 int isCollection(Document* doc, const void* pointer) {
 	if (doc && doc->collections && pointer) {
 		return pointerContainedInArray(doc->collections, pointer);
-	}
+	} else 
+		return 0; /// @todo return -1 instead?
 }
 
 /******************
@@ -325,7 +327,7 @@ Document* createDocument() {
 	doc->components       = createPointerArray();
 	doc->collections         = createPointerArray();
 	doc->xml_doc = xmlNewDoc(BAD_CAST "1.0");
-	xmlDocSetRootElement(doc->xml_doc, xmlNewNode(NULL, "root"));
+	xmlDocSetRootElement(doc->xml_doc, xmlNewNode(NULL, (unsigned char*)"root"));
 	return doc;
 }
 
