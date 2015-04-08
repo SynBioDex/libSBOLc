@@ -14,14 +14,14 @@
 
 // folder structure
 // set using CMake
-#define SBOL_SOURCE_DIR  "C:/Users/user/Dev/libSBOLc_v1/libSBOLc/source"  ///< Holds source code for libSBOLc.
-#define SBOL_ROOT_DIR    "C:/Users/user/Dev/libSBOLc_v1/libSBOLc"    ///< Top-level project folder.
-#define SBOL_BUILD_DIR   "C:/Users/user/Dev/libSBOLc_v1/libSBOLc/build"   ///< Folder for temporary build files.
-#define SBOL_SCHEMA_DIR  "C:/Users/user/Dev/libSBOLc_v1/libSBOLc/schema"  ///< Holds the SBOL schema files.
-#define SBOL_TEST_DIR    "C:/Users/user/Dev/libSBOLc_v1/libSBOLc/tests"    ///< Holds source code for the tests.
-#define SBOL_EXAMPLE_DIR "C:/Users/user/Dev/libSBOLc_v1/libSBOLc/examples" ///< Holds example SBOL documents and code.
-#define SBOL_RELEASE_DIR "C:/Users/user/Dev/libSBOLc_v1/libSBOLc/release" ///< Folder for generated binaries, docs, etc.
-#define SBOL_MANUAL_DIR  "C:/Users/user/Dev/libSBOLc_v1/libSBOLc/manual"  ///< Holds source code for the SBOL manual.
+#define SBOL_SOURCE_DIR  "/Users/jakebeal/projects/SynBioIRAD/BioCompiler/libSBOLc/source"  ///< Holds source code for libSBOLc.
+#define SBOL_ROOT_DIR    "/Users/jakebeal/projects/SynBioIRAD/BioCompiler/libSBOLc"    ///< Top-level project folder.
+#define SBOL_BUILD_DIR   "/Users/jakebeal/projects/SynBioIRAD/BioCompiler/libSBOLc/build"   ///< Folder for temporary build files.
+#define SBOL_SCHEMA_DIR  "/Users/jakebeal/projects/SynBioIRAD/BioCompiler/libSBOLc/schema"  ///< Holds the SBOL schema files.
+#define SBOL_TEST_DIR    "/Users/jakebeal/projects/SynBioIRAD/BioCompiler/libSBOLc/tests"    ///< Holds source code for the tests.
+#define SBOL_EXAMPLE_DIR "/Users/jakebeal/projects/SynBioIRAD/BioCompiler/libSBOLc/examples" ///< Holds example SBOL documents and code.
+#define SBOL_RELEASE_DIR "/Users/jakebeal/projects/SynBioIRAD/BioCompiler/libSBOLc/release" ///< Folder for generated binaries, docs, etc.
+#define SBOL_MANUAL_DIR  "/Users/jakebeal/projects/SynBioIRAD/BioCompiler/libSBOLc/manual"  ///< Holds source code for the SBOL manual.
 
 #define SBOL_SCHEMA_FILENAME SBOL_SCHEMA_DIR "/sbol.xsd" ///< Schema to use when validating documents.
 

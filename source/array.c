@@ -51,15 +51,15 @@ int indexOfPointerInArray(const PointerArray* arr, const void* ptr) {
 				return n;
 		return -1;
 	}
-	#ifdef SBOL_DEBUG_STATEMENTS
 	else {
+	#ifdef SBOL_DEBUG_STATEMENTS
 		if (!arr)
 			printf("Tried to get index of pointer in NULL array\n");
 		else
 			printf("Tried to get array index of NULL pointer\n");
+	#endif
 		return -1;
 	}
-	#endif
 }
 
 int pointerContainedInArray(const PointerArray* arr, const void* ptr) {

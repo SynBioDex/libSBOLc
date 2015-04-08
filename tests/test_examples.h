@@ -23,4 +23,8 @@ char     *TEST_OUTPUT_FILENAMES[NUM_VALID_EXAMPLES];
 // the example content was loaded correctly
 void (*TEST_LOADED_FUNCTIONS[NUM_VALID_EXAMPLES])(CuTest* tc, Document* doc);
 
+// Prototyping for tests
+void TestNothingLoaded(CuTest *tc, Document* doc);
+
+
 #endif

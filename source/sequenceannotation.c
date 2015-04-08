@@ -4,6 +4,7 @@
 #include <malloc.h>
 
 /// @todo remove?
+<<<<<<< HEAD
 #include "sbol.h"
 //#include "property.h"
 //#include "array.h"
@@ -11,6 +12,15 @@
 //#include "document.h"
 //#include "dnacomponent.h"
 //#include "sequenceannotation.h"
+=======
+#include "property.h"
+#include "array.h"
+#include "object.h"
+#include "document.h"
+#include "dnacomponent.h"
+#include "sequenceannotation.h"
+#include "utilities.h"
+>>>>>>> 359edf6a48b340a3707cf503c5a2d495fa27b4d8
 
 SequenceAnnotation* createSequenceAnnotation(Document* doc, const char* uri) {
 	if (!doc || !uri || isSBOLObjectURI(doc, uri))

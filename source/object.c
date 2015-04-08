@@ -73,7 +73,7 @@ char* getNthStructuredAnnotationAsText(SBOLObject* obj, const int n) {
 		int size = xmlNodeDump(buffer, obj->uri->doc->xml_doc, getNthStructuredAnnotationAsXML(obj, n), 0, 0);
 		if (buffer->content) {
 			text = malloc(size + 1);  // Allocate an extra byte for termination char
-			strcpy(text, buffer->content);
+			strcpy(text, (char*)buffer->content);
 		}
 		xmlFree(buffer);
 		return text;

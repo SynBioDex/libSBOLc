@@ -41,4 +41,9 @@ char polarityToChar(int polarity);
 /// @todo find a way not to export this?
 SBOLAPIEXPORTS void safeXmlInitParser();
 
+void registerSequenceAnnotation(SequenceAnnotation* ann);
+void registerCollection(Collection* col);
+void registerDNASequence(DNASequence* seq);
+void registerDNAComponent(DNAComponent* com);
+
 #endif
