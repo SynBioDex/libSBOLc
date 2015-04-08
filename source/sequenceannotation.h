@@ -107,7 +107,12 @@ SBOLAPIEXPORTS SequenceAnnotation* getNthPrecedes(const SequenceAnnotation* ann,
 /// @todo how should this handle docs?
 SBOLAPIEXPORTS int precedes(const SequenceAnnotation* upstream, const SequenceAnnotation* downstream);
 
-/// @todo removePrecedesRelationship
+//  Inserts a new SequenceAnnotation downstream of the specified upstream SequenceAnnotation. Updates the relative order of
+//  SequenceAnnotations and the Start and End properties of all the downstream SequenceAnnotations. Assumes you have first 
+//  disassembled a parent DNAComponent composite into its child subComponents with sequence
+/// @param upstream The SequenceAnnotation presumed to come first.
+/// @param new_annotation The new SequenceAnnotation that will be inserted immediately downstream.
+SBOLAPIEXPORTS void insertAnnotationAfter(SequenceAnnotation* upstream, SequenceAnnotation* new_annotation);
 
 /// Print an outline of a SequenceAnnotation to stdout.
 /// Mainly for debugging.

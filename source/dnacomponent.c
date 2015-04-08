@@ -215,6 +215,161 @@ SequenceAnnotation* getNthSequenceAnnotationFor(const DNAComponent* com, int n) 
 		return NULL;
 }
 
+void assemble(DNAComponent* parent) {
+	// Validate annotations
+	SequenceAnnotation* current_annotation = NULL;
+	int current_start, current_end = 0;
+	int seq_length, cumulative_seq_length = 0;
+	int i, j = 0;
+	if (getNumSequenceAnnotationsFor(parent) < 1) {
+		fprintf(stdout, "Parent component does not have any annotations to assemble");
+		return;
+	}
+	for (i = 0; i < getNumSequenceAnnotationsFor(parent); i++) {
+		current_annotation = getNthSequenceAnnotationFor(parent, i);
+		if (!current_annotation->subComponent) {
+			fprintf(stdout, "Some annotations are missing subComponents\n");
+			return;
+		}
+		if (!current_annotation->subComponent->dnaSequence) {
+			fprintf(stdout, "Some subComponents are missing dnaSequences\n");
+			return;
+		}
+		seq_length = strlen(getDNASequenceNucleotides(getDNAComponentSequence(current_annotation->subComponent)));
+		current_start = getPositionProperty(current_annotation->genbankStart);
+		current_end = getPositionProperty(current_annotation->genbankEnd);
+		if (current_start < 0 || current_end < 0) {
+			printf("Sequence annotations are not initialized\n");
+			return;
+		}
+		if ((current_end - current_start) > seq_length) {
+			printf("Annotation start and end not consistent with sequence length\n");
+			printf("%d\t%d\t%d\t%n", current_start, current_end, seq_length);
+			return;
+		}
+		cumulative_seq_length += seq_length;
+		printf("Cumulative seq length: %d\n", cumulative_seq_length);
+	}
+
+	// Assemble subComponent sequences and assign new parent sequence
+	DNASequence* subComponent_seq;
+	char* subComponent_seq_nt;
+	char* assembled_seq_nt;
+	assembled_seq_nt = malloc(cumulative_seq_length + 1);
+	assembled_seq_nt[cumulative_seq_length] = '\0';
+
+	for (i = 0; i < getNumSequenceAnnotationsFor(parent); i++) {
+		current_annotation = getNthSequenceAnnotationFor(parent, i);
+		current_start = getPositionProperty(current_annotation->genbankStart);
+		current_start -= 1;  // adjust because C arrays index from 0, GenBank indexes from 1
+		subComponent_seq = current_annotation->subComponent->dnaSequence;
+		subComponent_seq_nt = getDNASequenceNucleotides(subComponent_seq);
+		seq_length = strlen(subComponent_seq_nt);
+		for (j = 0; j < seq_length; j++) {
+			assembled_seq_nt[current_start + j] = subComponent_seq_nt[j];
+			printf("%d\t%c\n", current_start + j, subComponent_seq_nt[j]);
+		}
+		// Sequence objects at the lower level of the hierarchy must be deleted,
+		// otherwise an XML Schema error occurs
+		// deleteDNASequence(subComponent_seq);
+		// current_annotation->subComponent->dnaSequence = NULL;
+	}
+	j = 0;
+	for (i = 0; i < cumulative_seq_length; i++) {
+		if (assembled_seq_nt[i] == '\0') j++;
+	}
+
+	setDNASequenceNucleotides(parent->dnaSequence, assembled_seq_nt);
+}
+
+
+void disassemble(DNAComponent* parent) {
+	// Should populate subcomponents even if part of parent sequence is not annotated
+
+	// Validate annotations
+	if (getNumSequenceAnnotationsFor(parent) < 1) {
+		printf("Parent component does not have any annotations to populate");
+		return;
+	}
+	// Check if parent has valid sequence
+	int seq_length = 0;
+	char* parent_seq_nt;
+	if (!parent->dnaSequence->nucleotides) {
+		printf("Parent component does not have a valid sequence");
+		return;
+	}
+	parent_seq_nt = getDNASequenceNucleotides(getDNAComponentSequence(parent));
+	seq_length = strlen(parent_seq_nt);
+
+
+	// Check if annotation starts and ends are initialized (-1 is the default)
+	// Check if largest end value is less than length of parent sequence
+	SequenceAnnotation* current_annotation = NULL;
+	int current_start, current_end = 0;
+	int i, j = 0;
+	for (i = 0; i < getNumSequenceAnnotationsFor(parent); i++) {
+		current_annotation = getNthSequenceAnnotationFor(parent, i);
+		current_start = getPositionProperty(current_annotation->genbankStart);
+		current_end = getPositionProperty(current_annotation->genbankEnd);
+		if (current_start < 0 || current_end < 0) {
+			printf("Sequence annotations are not initialized");
+			return;
+		}
+		if (current_start > seq_length || current_end > seq_length) {
+			printf("Annotation start or end exceeds parent sequence length");
+			return;
+		}
+	}
+
+	// Check if annotations are already populated with subcomponents and sequences
+	for (i = 0; i < getNumSequenceAnnotationsFor(parent); i++) {
+		current_annotation = getNthSequenceAnnotationFor(parent, i);
+		// instantiate new DNAComponent and attach to current annotation
+		if (!current_annotation->subComponent) {
+			// @TODO: instantiate new DNAComponent
+		}
+
+		// instantatiate new DNASequence and attach to subComponent
+		DNASequence* new_seq = NULL;
+		char* DEFAULT_SEQ_URI = "http://examples.org//subComponent";
+		char* indexed_seq_URI;
+		int digits = 1;
+		int max = 10;
+		if (!current_annotation->subComponent->dnaSequence) {
+			// create unique URI for each new dnaSequence object
+			// @TODO define a rule for default URIs
+			// @TODO define a function that appends indices to URIs that make up an aggregation
+			while (i / max) {
+				digits++;
+				max *= 10;
+			}
+			indexed_seq_URI = malloc(strlen(DEFAULT_SEQ_URI) + digits + 2);
+			sprintf(indexed_seq_URI, "%s_%d\0", DEFAULT_SEQ_URI, i); // append index to default URI
+			new_seq = createDNASequence(parent->doc, indexed_seq_URI);
+			if (current_annotation->subComponent && new_seq) {
+				setDNAComponentSequence(current_annotation->subComponent, new_seq);
+			}
+		}
+		// Extract subsequence from parent and assign to subcomponent
+		char* subComponent_seq_nt = NULL;
+		current_start = getPositionProperty(current_annotation->genbankStart);
+		current_start -= 1;  // adjust because C arrays index from 0, GenBank indexes from 1
+		current_end = getPositionProperty(current_annotation->genbankEnd);
+		current_end -= 1;  // adjust because C arrays index from 0, GenBank indexes from 1
+		seq_length = current_end + 1 - current_start;
+		subComponent_seq_nt = malloc(seq_length + 1);
+		subComponent_seq_nt[seq_length] = '\0';
+
+		for (j = 0; j < seq_length; j++) {
+			subComponent_seq_nt[j] = parent_seq_nt[j + current_start];
+		}
+		new_seq = getDNAComponentSequence(current_annotation->subComponent);
+		setDNASequenceNucleotides(new_seq, subComponent_seq_nt);
+		setDNAComponentSequence(current_annotation->subComponent, new_seq);
+	}
+}
+
+
 /************************
 * arbitrary xml annotation of DNAComponent objects
 ************************/

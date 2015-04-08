@@ -16,6 +16,7 @@
 #include "constants.h"
 #include "document.h"
 #include "object.h"
+#include "array.h"
 #include "property.h"
 #include "dnasequence.h"
 #include "sequenceannotation.h"

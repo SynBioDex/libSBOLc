@@ -106,6 +106,15 @@ SBOLAPIEXPORTS void addSequenceAnnotation(DNAComponent* com, SequenceAnnotation*
 /// @todo how should this handle docs?
 SBOLAPIEXPORTS void removeSequenceAnnotationFromDNAComponent(DNAComponent* com, SequenceAnnotation* ann);
 
+// Assembles a new parent Sequence from the bottom-up based on the Sequences of its child subComponents.
+// @param parent 
+SBOLAPIEXPORTS void assemble(DNAComponent* parent);
+
+// Given a composite SBOL object consisting of a DNAComponent, a child Sequence, and any number of child SequenceAnnotations, the disassemble function will create a 
+// partonomic hierarchy.  In other words, the disassemble function takes a parent design and decomposes it into subcomponents.  
+// @param parent A DNAComponent forming a composite object with child Sequence and child Annotations
+SBOLAPIEXPORTS void disassemble(DNAComponent* parent);
+
 /// Print an outline of a DNAComponent to stdout.
 SBOLAPIEXPORTS void printDNAComponent(const DNAComponent* com, int tabs);
 
