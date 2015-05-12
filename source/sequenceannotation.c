@@ -7,6 +7,7 @@
 #include "object.h"
 #include "document.h"
 #include "dnacomponent.h"
+#include "dnasequence.h"
 #include "sequenceannotation.h"
 #include "utilities.h"
 
