@@ -1,4 +1,4 @@
-FIND_PACKAGE( SWIG )
+FIND_PACKAGE( SWIG REQUIRED )
 IF( SWIG_FOUND )
 
 	# adjust paths
@@ -29,11 +29,16 @@ IF( SWIG_FOUND )
 	TARGET_LINK_LIBRARIES( sbol_swig
 		xml2
 	)
+
+  INSTALL(TARGETS sbol_swig DESTINATION lib)
 	
 	# set up some SWIG stuff
     INCLUDE( ${SWIG_USE_FILE} )
-    FIND_PACKAGE( PythonLibs )
-    INCLUDE_DIRECTORIES( ${PYTHON_INCLUDE_PATH} )
+    FIND_PACKAGE( PythonLibs REQUIRED )
+    IF(NOT PYTHONLIBS_FOUND)
+      MESSAGE( "Python libraries not found; unable to generate Python bindings" )
+    ENDIF()
+    INCLUDE_DIRECTORIES( ${PYTHON_INCLUDE_DIRS} )
     SET( CMAKE_SWIG_FLAGS "" )
     SET( CMAKE_SWIG_OUTDIR ${SBOL_RELEASE_DIR} )
 
@@ -48,6 +53,8 @@ IF( SWIG_FOUND )
         xml2
         sbol_swig
     )
+
+    INSTALL(TARGETS _libsbol DESTINATION lib)
 
 ELSE()
 
