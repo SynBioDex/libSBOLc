@@ -48,15 +48,21 @@ IF( SWIG_FOUND )
         libsbol.i
         ${SBOL_SOURCE_FILES}
     )
-    SWIG_LINK_LIBRARIES( libsbol
-        ${PYTHON_LIBRARIES}
-        xml2
-        sbol_swig
-    )
-
     IF(APPLE)
+      # Do not link in the Python libraries
+      SWIG_LINK_LIBRARIES( libsbol
+          xml2
+          sbol_swig
+      )
+
       # Resolve Pyhton symbols dynamically due to differing runtime env
       SET_TARGET_PROPERTIES(_libsbol PROPERTIES LINK_FLAGS "-undefined dynamic_lookup")
+    ELSE()
+      SWIG_LINK_LIBRARIES( libsbol
+          ${PYTHON_LIBRARIES}
+          xml2
+          sbol_swig
+      )
     ENDIF()
 
     INSTALL(TARGETS _libsbol DESTINATION lib)
