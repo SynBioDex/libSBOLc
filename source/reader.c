@@ -4,6 +4,7 @@
 
 #include <libxml/parser.h>
 #include <libxml/xpath.h>
+#include <libxml/xpathInternals.h>
 
 #include "array.h"
 #include "document.h"
@@ -446,8 +447,8 @@ void readDocument(Document* destination, char* filename) {
 		
 	// create XPath context
 	CONTEXT = xmlXPathNewContext(DOCUMENT);
-	xmlXPathRegisterNs(CONTEXT, NSPREFIX_SBOL, NSURL_SBOL);
-	xmlXPathRegisterNs(CONTEXT, NSPREFIX_RDF, NSURL_RDF);
+	xmlXPathRegisterNs(CONTEXT, (const xmlChar*)NSPREFIX_SBOL, (const xmlChar*)NSURL_SBOL);
+	xmlXPathRegisterNs(CONTEXT, (const xmlChar*)NSPREFIX_RDF, (const xmlChar*)NSURL_RDF);
 
 	#define GLOBAL_XPATH BAD_CAST "//" NSPREFIX_SBOL ":"
 

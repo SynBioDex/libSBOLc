@@ -1,13 +1,13 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
-#include <malloc.h>
 
 #include "property.h"
 #include "array.h"
 #include "object.h"
 #include "document.h"
 #include "dnacomponent.h"
+#include "dnasequence.h"
 #include "sequenceannotation.h"
 #include "utilities.h"
 
