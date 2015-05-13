@@ -23,7 +23,7 @@ IF( SWIG_FOUND )
 	# in writing a higher-level wrapper, and because Python
 	# will try to import them anyway and fail
 	ADD_LIBRARY( sbol_swig
-		SHARED
+		STATIC
 		${SBOL_SOURCE_FILES}
 	)
 	TARGET_LINK_LIBRARIES( sbol_swig
