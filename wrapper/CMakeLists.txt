@@ -54,6 +54,11 @@ IF( SWIG_FOUND )
         sbol_swig
     )
 
+    IF(APPLE)
+      # Resolve Pyhton symbols dynamically due to differing runtime env
+      SET_TARGET_PROPERTIES(_libsbol PROPERTIES LINK_FLAGS "-undefined dynamic_lookup")
+    ENDIF()
+
     INSTALL(TARGETS _libsbol DESTINATION lib)
 
 ELSE()
