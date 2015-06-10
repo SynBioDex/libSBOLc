@@ -58,6 +58,9 @@ SBOLAPIEXPORTS char* getCollectionName(const Collection* col);
 /// Get the description of a Collection.
 SBOLAPIEXPORTS char* getCollectionDescription(const Collection* col);
 
+/// Set the uri of a Collection.
+SBOLAPIEXPORTS void setCollectionURI(Collection* col, const char* uri);
+
 /// Set the displayID of a Collection.
 /// Gotcha: this is different from both name and displayID.
 SBOLAPIEXPORTS void setCollectionDisplayID(Collection* col, const char* id);
