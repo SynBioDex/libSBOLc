@@ -4,21 +4,6 @@
 
 /// @todo remove?
 #include "sbol.h"
-//#include "property.h"
-//#include "array.h"
-//#include "object.h"
-//#include "document.h"
-//#include "dnacomponent.h"
-//#include "sequenceannotation.h"
-
->>>>>>> 11efbc86bc2d56256deaeef78a3bf74d2e24fa65
-#include "property.h"
-#include "array.h"
-#include "object.h"
-#include "document.h"
-#include "dnacomponent.h"
-#include "dnasequence.h"
-#include "sequenceannotation.h"
 #include "utilities.h"
 
 SequenceAnnotation* createSequenceAnnotation(Document* doc, const char* uri) {
