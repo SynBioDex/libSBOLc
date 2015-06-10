@@ -1,4 +1,4 @@
-FIND_PACKAGE( SWIG )
+FIND_PACKAGE( SWIG REQUIRED )
 IF( SWIG_FOUND )
 
 	# adjust paths
@@ -23,17 +23,22 @@ IF( SWIG_FOUND )
 	# in writing a higher-level wrapper, and because Python
 	# will try to import them anyway and fail
 	ADD_LIBRARY( sbol_swig
-		SHARED
+		STATIC
 		${SBOL_SOURCE_FILES}
 	)
 	TARGET_LINK_LIBRARIES( sbol_swig
 		xml2
 	)
+
+  INSTALL(TARGETS sbol_swig DESTINATION lib)
 	
 	# set up some SWIG stuff
     INCLUDE( ${SWIG_USE_FILE} )
-    FIND_PACKAGE( PythonLibs )
-    INCLUDE_DIRECTORIES( ${PYTHON_INCLUDE_PATH} )
+    FIND_PACKAGE( PythonLibs REQUIRED )
+    IF(NOT PYTHONLIBS_FOUND)
+      MESSAGE( "Python libraries not found; unable to generate Python bindings" )
+    ENDIF()
+    INCLUDE_DIRECTORIES( ${PYTHON_INCLUDE_DIRS} )
     SET( CMAKE_SWIG_FLAGS "" )
     SET( CMAKE_SWIG_OUTDIR ${SBOL_RELEASE_DIR} )
 
@@ -43,11 +48,24 @@ IF( SWIG_FOUND )
         libsbol.i
         ${SBOL_SOURCE_FILES}
     )
-    SWIG_LINK_LIBRARIES( libsbol
-        ${PYTHON_LIBRARIES}
-        xml2
-        sbol_swig
-    )
+    IF(APPLE)
+      # Do not link in the Python libraries
+      SWIG_LINK_LIBRARIES( libsbol
+          xml2
+          sbol_swig
+      )
+
+      # Resolve Pyhton symbols dynamically due to differing runtime env
+      SET_TARGET_PROPERTIES(_libsbol PROPERTIES LINK_FLAGS "-undefined dynamic_lookup")
+    ELSE()
+      SWIG_LINK_LIBRARIES( libsbol
+          ${PYTHON_LIBRARIES}
+          xml2
+          sbol_swig
+      )
+    ENDIF()
+
+    INSTALL(TARGETS _libsbol DESTINATION lib)
 
 ELSE()
 
