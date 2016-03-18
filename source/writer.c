@@ -188,6 +188,11 @@ static void writeSequenceAnnotation(SequenceAnnotation* ann) {
 	if (end>0)
 		xmlTextWriterWriteElement(WRITER, xmlCharStrdup(NSPREFIX_SBOL ":" NODENAME_BIOEND),  xmlCharStrdup(intToStr(end)));
 	
+	// strand
+	char *strand = malloc(sizeof(char));
+	*strand = polarityToChar( getPolarityProperty(ann->strand) );
+	xmlTextWriterWriteElement(WRITER, xmlCharStrdup(NSPREFIX_SBOL ":" NODENAME_STRAND), xmlCharStrdup(strand));
+
 	// subComponent
 	char* uri;
 	indentMore();
