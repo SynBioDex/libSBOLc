@@ -12,3 +12,7 @@ release/
 #schema/sbol.xsd
 #source/constants.h
 #manual/Doxyfile
+
+/.cproject
+/.project
+/.DS_Store
