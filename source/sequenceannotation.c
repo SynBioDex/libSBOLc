@@ -84,7 +84,7 @@ void setSequenceAnnotationEnd(SequenceAnnotation* ann, int end) {
 
 // TODO use PolarityProperty
 void setSequenceAnnotationStrand(SequenceAnnotation* ann, int polarity) {
-	if (!ann || polarity < -1 || polarity > 1)
+	if (!ann || polarity < STRAND_FORWARD || polarity > STRAND_REVERSE)
 		return;
 	setPolarityProperty(ann->strand, polarity);
 }
